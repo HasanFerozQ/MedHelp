@@ -24,6 +24,18 @@
     "category": "Respiratory"
   },
   {
+    "code": "L20.9",
+    "description": "Atopic dermatitis, unspecified (Eczema)",
+    "type": "ICD10",
+    "category": "Dermatology"
+  },
+  {
+    "code": "L20.83",
+    "description": "Flexural eczema",
+    "type": "ICD10",
+    "category": "Dermatology"
+  },
+  {
     "code": "99213",
     "description": "Office or other outpatient visit, established patient, low complexity",
     "type": "CPT",

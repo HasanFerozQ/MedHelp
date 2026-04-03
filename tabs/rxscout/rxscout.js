@@ -78,8 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       
       const goodRxUrl = `https://www.goodrx.com/${encodeURIComponent(queryLower)}`;
-      const costPlusUrl = `https://costplusdrugs.com/medications/`; // Generic search base
+      const costPlusUrl = `https://costplusdrugs.com/medications/`; 
       const amazonUrl = `https://pharmacy.amazon.com/`;
+      const singleCareUrl = `https://www.singlecare.com/prescription/${encodeURIComponent(queryLower)}`;
+      const drugsComUrl = `https://www.drugs.com/price-guide/${encodeURIComponent(queryLower)}`;
 
       resultsContainer.innerHTML = `
         <div class="result-card" style="flex-direction: column;">
@@ -87,18 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
           <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">RXCUI: ${result.rxcui}</div>
           ${shortageAlert}
           
-          <div style="margin-top: 12px; padding: 12px; background: var(--bg-primary); border-radius: 8px; border: 1px solid var(--border-light);">
+          <div style="margin-top: 12px; padding: 12px; background: var(--bg-primary); border-radius: 8px; border: 1px solid var(--border-light); width: 100%; box-sizing: border-box;">
             <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Compare Free Prices</div>
-            <div style="display: flex; flex-direction: column; gap: 6px;">
-              <a href="${goodRxUrl}" target="_blank" class="primary-btn" style="text-align: center; text-decoration: none; padding: 8px; font-size: 12px;">Check GoodRx Deals ↗</a>
-              <div style="display: flex; gap: 6px;">
-                <a href="${costPlusUrl}" target="_blank" class="primary-btn" style="flex: 1; background: #0f172a; text-align: center; text-decoration: none; padding: 8px; font-size: 12px;">Cost Plus ↗</a>
-                <a href="${amazonUrl}" target="_blank" class="primary-btn" style="flex: 1; background: #0284c7; text-align: center; text-decoration: none; padding: 8px; font-size: 12px;">Amazon ↗</a>
-              </div>
+            <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+              <a href="${goodRxUrl}" target="_blank" class="primary-btn" style="width: 100%; box-sizing: border-box; text-align: center; text-decoration: none; padding: 10px; font-size: 13px; background: #004d40;">GoodRx ↗</a>
+              <a href="${costPlusUrl}" target="_blank" class="primary-btn" style="width: 100%; box-sizing: border-box; text-align: center; text-decoration: none; padding: 10px; font-size: 13px; background: #0f172a;">Cost Plus Drugs ↗</a>
+              <a href="${amazonUrl}" target="_blank" class="primary-btn" style="width: 100%; box-sizing: border-box; text-align: center; text-decoration: none; padding: 10px; font-size: 13px; background: #0284c7;">Amazon Pharmacy ↗</a>
+              <a href="${singleCareUrl}" target="_blank" class="primary-btn" style="width: 100%; box-sizing: border-box; text-align: center; text-decoration: none; padding: 10px; font-size: 13px; background: #ea580c;">SingleCare ↗</a>
+              <a href="${drugsComUrl}" target="_blank" class="primary-btn" style="width: 100%; box-sizing: border-box; text-align: center; text-decoration: none; padding: 10px; font-size: 13px; background: #475569;">Drugs.com ↗</a>
             </div>
           </div>
           
-          <div style="font-size: 10px; color: var(--text-muted); margin-top: 8px; text-align: center;">
+          <div style="font-size: 10px; color: var(--text-muted); margin-top: 10px; text-align: center;">
             Disclaimer: Prices are reference only and vary by location and insurance.
           </div>
         </div>

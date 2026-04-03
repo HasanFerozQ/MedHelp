@@ -11,6 +11,8 @@ mock_codes = [
     {"code": "E11.9", "description": "Type 2 diabetes mellitus without complications", "type": "ICD10", "category": "Endocrine"},
     {"code": "I10", "description": "Essential (primary) hypertension", "type": "ICD10", "category": "Circulatory"},
     {"code": "J01.90", "description": "Acute sinusitis, unspecified", "type": "ICD10", "category": "Respiratory"},
+    {"code": "L20.9", "description": "Atopic dermatitis, unspecified (Eczema)", "type": "ICD10", "category": "Dermatology"},
+    {"code": "L20.83", "description": "Flexural eczema", "type": "ICD10", "category": "Dermatology"},
     {"code": "99213", "description": "Office or other outpatient visit, established patient, low complexity", "type": "CPT", "category": "Evaluation & Management"},
     {"code": "99214", "description": "Office or other outpatient visit, established patient, moderate complexity", "type": "CPT", "category": "Evaluation & Management"},
     {"code": "80053", "description": "Comprehensive metabolic panel", "type": "CPT", "category": "Pathology and Laboratory"},
