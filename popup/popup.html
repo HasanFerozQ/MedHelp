@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="app-header">
+    <div class="logo-area">
+      <img src="../icons/icon16.png" alt="" class="logo"/>
+      <span class="app-name">MedHelp</span>
+      <span class="version">v1.0</span>
+    </div>
+    <div class="privacy-badge">
+      <span class="shield-icon">🛡️</span>
+      <span>100% Local</span>
+    </div>
+  </header>
+
+  <nav class="tab-bar">
+    <button class="tab" data-tab="medbill">Bill<br>Audit</button>
+    <button class="tab active" data-tab="codesearch">Code<br>Search</button>
+    <button class="tab" data-tab="rxscout">Rx<br>Prices</button>
+  </nav>
+
+  <main>
+    <!-- TAB 1: Bill Audit -->
+    <section id="tab-medbill" class="tab-panel">
+      <div class="audit-mode">
+        <h3>Paste or Drop Bill</h3>
+        <p class="subtitle">Extract CPT codes & compare Medicare prices securely.</p>
+        <!-- For Phase 2 -->
+        <div class="drop-zone" id="pdf-drop-zone">
+          <p>Drag & drop PDF here<br>or <button class="upload-btn">Browse</button></p>
+        </div>
+        <textarea id="paste-area" placeholder="Or paste your raw bill text here..."></textarea>
+        <button class="primary-btn" id="audit-btn">Audit My Bill</button>
+      </div>
+      <div id="audit-results" class="hidden">
+        <!-- Results injected here -->
+      </div>
+    </section>
+
+    <!-- TAB 2: Code Search -->
+    <section id="tab-codesearch" class="tab-panel active">
+      <div class="search-container">
+        <input type="text" id="code-search-input" placeholder="Search ICD-10, CPT, or condition..." autofocus>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="ALL">All</button>
+          <button class="filter-btn" data-filter="ICD10">ICD-10</button>
+          <button class="filter-btn" data-filter="CPT">CPT</button>
+          <button class="filter-btn" data-filter="MODIFIER">Mod</button>
+        </div>
+      </div>
+      <div id="search-results-list" class="results-list">
+        <div class="empty-state">Start typing to search thousands of medical codes instantly and offline.</div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Rx Prices -->
+    <section id="tab-rxscout" class="tab-panel">
+      <h3>Rx Price Scout</h3>
+      <p class="subtitle">Search generic and brand name drugs</p>
+      <input type="text" id="rx-search-input" placeholder="e.g. Lisinopril">
+      <div id="rx-results" class="results-list"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <button id="report-portal" class="text-link">Report portal issue</button>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../lib/fuse.min.js"></script>
+  <script src="popup.js"></script>
+  <script src="../tabs/codesearch/codesearch.js"></script>
+  <script src="../tabs/medbill/medbill.js"></script>
+  <script src="../tabs/rxscout/rxscout.js"></script>
+</body>
+</html>

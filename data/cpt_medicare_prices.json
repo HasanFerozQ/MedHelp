@@ -1,0 +1,27 @@
+{
+  "99213": {
+    "description": "Office visit, low complexity",
+    "non_facility_price": 92.45,
+    "facility_price": 68.32
+  },
+  "99214": {
+    "description": "Office visit, moderate complexity",
+    "non_facility_price": 131.25,
+    "facility_price": 98.5
+  },
+  "80053": {
+    "description": "Comprehensive metabolic panel",
+    "non_facility_price": 14.5,
+    "facility_price": 14.5
+  },
+  "36415": {
+    "description": "Venipuncture",
+    "non_facility_price": 3.0,
+    "facility_price": 3.0
+  },
+  "70450": {
+    "description": "CT head without contrast",
+    "non_facility_price": 125.0,
+    "facility_price": 85.0
+  }
+}
