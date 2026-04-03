@@ -2,6 +2,10 @@ const RXNAV_BASE = 'https://rxnav.nlm.nih.gov/REST';
 
 async function searchDrug(name) {
   try {
+    const cacheKey = `rx_${name.toLowerCase()}`;
+    const cached = await new Promise(resolve => chrome.storage.local.get(cacheKey, resolve));
+    if (cached[cacheKey]) return cached[cacheKey];
+
     // 1. Get RxNorm concept ID
     const approxRes = await fetch(`${RXNAV_BASE}/approximateTerm.json?term=${encodeURIComponent(name)}&maxEntries=5`);
     const approx = await approxRes.json();
@@ -17,13 +21,17 @@ async function searchDrug(name) {
     
     const properName = details.propConceptGroup?.propConcept?.[0]?.propValue || name;
     
-    return {
+    const result = {
       found: true,
       rxcui,
       name: properName,
       costPlusPrice: null, // Note: We'd load cost_plus CSV here in real build
       outboundUrl: `https://www.goodrx.com/${encodeURIComponent(name.toLowerCase())}`
     };
+
+    // Save to cache
+    chrome.storage.local.set({ [cacheKey]: result });
+    return result;
   } catch (error) {
     console.error("RxNav API Error:", error);
     return { found: false, error: true };

@@ -58,7 +58,10 @@ function flagOvercharge(charged, medicare) {
   return { flag: 'FAIR', color: '#16a34a' }; // Green
 }
 
+let latestFindings = [];
+
 function renderAuditResults(findings) {
+  latestFindings = findings; // Store for inline updates
   const container = document.getElementById('audit-results');
   container.classList.remove('hidden');
   
@@ -72,23 +75,40 @@ function renderAuditResults(findings) {
   
   let html = '<div class="results-list">';
   
-  findings.forEach(item => {
+  findings.forEach((item, index) => {
     const priceInfo = item.code && cptData ? cptData[item.code] : null;
     
     let medicarePriceDisplay = 'N/A';
     let flagBadge = '';
+    let chargeDisplay = '';
     
     if (priceInfo) {
       const medicarePrice = priceInfo.non_facility_price;
       medicarePriceDisplay = `$${medicarePrice.toFixed(2)}`;
       
-      if (item.charge) {
+      if (item.charge !== null) {
         totalCharged += item.charge;
         totalMedicare += medicarePrice;
         
         const flag = flagOvercharge(item.charge, medicarePrice);
         flagBadge = `<span class="code-tag" style="background-color: ${flag.color}20; color: ${flag.color}; margin-left: auto;">${flag.flag}</span>`;
+        chargeDisplay = `$${item.charge.toFixed(2)}`;
+      } else {
+        // Fallback inline input for missing prices
+        chargeDisplay = `<input type="number" class="inline-price-input" data-index="${index}" placeholder="Price $" step="0.01">`;
       }
+    } else {
+      chargeDisplay = '---';
+    }
+
+    // Upcoding warning
+    let upcodeWarningHtml = '';
+    if (item.code === '99214' || item.code === '99215') {
+      upcodeWarningHtml = `
+        <div class="upcode-warning">
+          <strong>Upcoding Alert:</strong> ${item.code} is a high-severity code. Hospitals often use this to overcharge for simple 10-minute visits. Ensure your visit actually required complex medical decision making.
+        </div>
+      `;
     }
     
     html += `
@@ -98,8 +118,9 @@ function renderAuditResults(findings) {
           ${flagBadge}
         </div>
         <div class="result-desc">${priceInfo ? priceInfo.description : 'Unknown medical code'}</div>
-        <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; border-top: 1px solid var(--border-light); padding-top: 8px; width: 100%;">
-          <span><b>Charged:</b> ${item.charge ? '$'+item.charge.toFixed(2) : '---'}</span>
+        ${upcodeWarningHtml}
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 12px; border-top: 1px solid var(--border-light); padding-top: 8px; width: 100%;">
+          <span><b>Charged:</b> ${chargeDisplay}</span>
           <span><b>Medicare:</b> ${medicarePriceDisplay}</span>
         </div>
       </div>
@@ -113,12 +134,12 @@ function renderAuditResults(findings) {
     const overcharge = totalCharged - totalMedicare;
     const isOver = overcharge > 0;
     const headerHtml = `
-      <div style="background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: 8px; padding: 12px; margin-bottom: 12px; text-align: center;">
+      <div style="background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
         <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Estimated Discrepancy</div>
-        <div style="font-size: 24px; font-weight: 600; color: ${isOver ? '#dc2626' : '#16a34a'}; margin: 4px 0;">
+        <div style="font-size: 28px; font-weight: 700; color: ${isOver ? '#dc2626' : '#16a34a'}; margin: 4px 0;">
           ${isOver ? '+' : ''}$${overcharge.toFixed(2)}
         </div>
-        <div style="font-size: 12px; color: var(--text-muted);">
+        <div style="font-size: 13px; color: var(--text-muted);">
           Billed: $${totalCharged.toFixed(2)} vs Medicare: $${totalMedicare.toFixed(2)}
         </div>
       </div>
@@ -129,12 +150,28 @@ function renderAuditResults(findings) {
   
   container.innerHTML = html;
 
-  // Add click listener to mock dispute
+  // Listeners for inline inputs
+  document.querySelectorAll('.inline-price-input').forEach(input => {
+    input.addEventListener('blur', handleInlinePrice);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleInlinePrice(e);
+    });
+  });
+
   const mockBtn = document.getElementById('mock-dispute-btn');
   if (mockBtn) {
     mockBtn.addEventListener('click', () => {
       alert("Mock Premium Feature: This would launch the jsPDF dispute letter generator and payment gateway.");
     });
+  }
+}
+
+function handleInlinePrice(e) {
+  const val = parseFloat(e.target.value);
+  if (!isNaN(val)) {
+    const idx = e.target.dataset.index;
+    latestFindings[idx].charge = val;
+    renderAuditResults(latestFindings);
   }
 }
 
