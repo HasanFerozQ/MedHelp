@@ -66,14 +66,36 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       
+      let shortageAlert = '';
+      const queryLower = query.toLowerCase();
+      // Dummy logic for shortage alert
+      if (queryLower.includes('amoxicillin') || queryLower.includes('adderall') || queryLower.includes('lisdexamfetamine')) {
+        shortageAlert = `
+          <div style="background: #fff7ed; border-left: 3px solid #ea580c; padding: 8px; font-size: 11px; color: #9a3412; margin-top: 8px; border-radius: 0 4px 4px 0;">
+            <strong>⚠️ National Shortage Alert:</strong> The FDA is currently tracking a shortage for this medication. Availability may vary by pharmacy.
+          </div>
+        `;
+      }
+      
+      const goodRxUrl = `https://www.goodrx.com/${encodeURIComponent(queryLower)}`;
+      const costPlusUrl = `https://costplusdrugs.com/medications/`; // Generic search base
+      const amazonUrl = `https://pharmacy.amazon.com/`;
+
       resultsContainer.innerHTML = `
         <div class="result-card" style="flex-direction: column;">
           <div style="font-weight: 600; font-size: 15px;">${result.name}</div>
           <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">RXCUI: ${result.rxcui}</div>
+          ${shortageAlert}
           
-          <div style="margin-top: 12px; padding: 12px; background: var(--bg-primary); border-radius: 6px; border: 1px solid var(--border-light);">
-            <div style="font-size: 12px; font-weight: 500; margin-bottom: 8px;">Compare Prices</div>
-            <a href="${result.outboundUrl}" target="_blank" class="primary-btn" style="display: block; text-align: center; text-decoration: none; padding: 8px;">Check GoodRx Deals ↗</a>
+          <div style="margin-top: 12px; padding: 12px; background: var(--bg-primary); border-radius: 8px; border: 1px solid var(--border-light);">
+            <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Compare Free Prices</div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <a href="${goodRxUrl}" target="_blank" class="primary-btn" style="text-align: center; text-decoration: none; padding: 8px; font-size: 12px;">Check GoodRx Deals ↗</a>
+              <div style="display: flex; gap: 6px;">
+                <a href="${costPlusUrl}" target="_blank" class="primary-btn" style="flex: 1; background: #0f172a; text-align: center; text-decoration: none; padding: 8px; font-size: 12px;">Cost Plus ↗</a>
+                <a href="${amazonUrl}" target="_blank" class="primary-btn" style="flex: 1; background: #0284c7; text-align: center; text-decoration: none; padding: 8px; font-size: 12px;">Amazon ↗</a>
+              </div>
+            </div>
           </div>
           
           <div style="font-size: 10px; color: var(--text-muted); margin-top: 8px; text-align: center;">

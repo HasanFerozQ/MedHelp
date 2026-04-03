@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "description": "Audit medical bills, search codes, compare drug prices - locally and privately.",
   "permissions": [
-    "storage"
+    "storage",
+    "unlimitedStorage",
+    "alarms"
   ],
   "host_permissions": [
     "https://rxnav.nlm.nih.gov/*"

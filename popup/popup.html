@@ -30,11 +30,15 @@
       <div class="audit-mode">
         <h3>Paste or Drop Bill</h3>
         <p class="subtitle">Extract CPT codes & compare Medicare prices securely.</p>
-        <!-- For Phase 2 -->
         <div class="drop-zone" id="pdf-drop-zone">
-          <p>Drag & drop PDF here<br>or <button class="upload-btn">Browse</button></p>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tint-teal); margin-bottom: 8px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          <div class="drop-text">Drag & drop PDF here</div>
+          <div style="font-size: 11px; margin-top: 4px; opacity: 0.7;">or <span class="upload-link">Browse files</span></div>
         </div>
-        <textarea id="paste-area" placeholder="Or paste your raw bill text here..."></textarea>
+        <div style="position: relative;">
+          <textarea id="paste-area" placeholder="Or paste your raw bill text here..."></textarea>
+          <div class="paste-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg></div>
+        </div>
         <button class="primary-btn" id="audit-btn">Audit My Bill</button>
       </div>
       <div id="audit-results" class="hidden">
@@ -45,7 +49,7 @@
     <!-- TAB 2: Code Search -->
     <section id="tab-codesearch" class="tab-panel active">
       <div class="search-container">
-        <input type="text" id="code-search-input" placeholder="Search ICD-10, CPT, or condition..." autofocus>
+        <input type="text" id="code-search-input" placeholder="Search code, condition, or symptom..." autofocus>
         <div class="filters">
           <button class="filter-btn active" data-filter="ALL">All</button>
           <button class="filter-btn" data-filter="ICD10">ICD-10</button>

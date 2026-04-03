@@ -276,15 +276,36 @@ h3 {
   border-radius: 12px;
   padding: 24px;
   text-align: center;
-  background: var(--bg-secondary);
+  background: #f8fafc;
   color: var(--text-muted);
   font-size: 13px;
   transition: all 0.2s;
+  cursor: pointer;
 }
 
 .drop-zone:hover {
   border-color: var(--tint-teal);
   background: var(--tint-teal-light);
+}
+
+.drop-text {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.upload-link {
+  color: var(--tint-teal);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.paste-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: var(--text-muted);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 textarea {
@@ -294,10 +315,11 @@ textarea {
   border: 1px solid var(--border-light);
   border-radius: 12px;
   font-family: monospace;
-  font-size: 12px;
+  font-size: 13px;
   resize: none;
   box-sizing: border-box;
   background: #ffffff;
+  color: var(--text-main);
 }
 
 textarea:focus {

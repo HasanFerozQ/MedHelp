@@ -143,7 +143,10 @@ function renderAuditResults(findings) {
           Billed: $${totalCharged.toFixed(2)} vs Medicare: $${totalMedicare.toFixed(2)}
         </div>
       </div>
-      <button class="primary-btn" id="mock-dispute-btn" style="width: 100%; margin-bottom: 16px; background-color: var(--text-main);">Generate PDF Dispute Letter ($9)</button>
+      <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+        <button class="primary-btn" id="export-csv-btn" style="flex: 1; background-color: var(--bg-primary); color: var(--tint-teal); border: 1px solid var(--tint-teal);">Export to CSV</button>
+        <button class="primary-btn" id="mock-dispute-btn" style="flex: 1; background-color: var(--text-main);">Dispute Letter ($9)</button>
+      </div>
     `;
     html = headerHtml + html;
   }
@@ -157,6 +160,27 @@ function renderAuditResults(findings) {
       if (e.key === 'Enter') handleInlinePrice(e);
     });
   });
+
+  const exportBtn = document.getElementById('export-csv-btn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      const csvLines = ['Code,Modifier,Description,Charged,Medicare_Price'];
+      latestFindings.forEach(item => {
+        const priceInfo = item.code && cptData ? cptData[item.code] : null;
+        let p = priceInfo ? priceInfo.non_facility_price : 0;
+        let desc = priceInfo ? `"${priceInfo.description.replace(/"/g, '""')}"` : '"Unknown"';
+        csvLines.push(`${item.code},${item.modifier || ''},${desc},${item.charge || 0},${p}`);
+      });
+      const csvStr = csvLines.join('\n');
+      const blob = new Blob([csvStr], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'MedHelp_Audit.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
 
   const mockBtn = document.getElementById('mock-dispute-btn');
   if (mockBtn) {
