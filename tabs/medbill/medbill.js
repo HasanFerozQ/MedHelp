@@ -1,5 +1,5 @@
-// CPT code regex (5-digits optionally followed by a 2-char modifier)
-const CPT_REGEX = /\b(\d{5})([-]?[A-Z0-9]{2})?\b/g;
+// CPT code regex (5-digits optionally followed by a dashed 2-char modifier)
+const CPT_REGEX = /\b(\d{5})(?:-([A-Z0-9]{2}))?\b/g;
 // Regex to catch dollar amounts optionally nearby
 const DOLLAR_REGEX = /\$\s*(\d+(?:\.\d{2})?)/g;
 
@@ -26,16 +26,22 @@ function extractCodesWithCharges(text) {
     let match;
     while ((match = CPT_REGEX.exec(line)) !== null) {
       const code = match[1];
-      const modifier = match[2] ? match[2].replace('-', '') : null;
-      
-      // Look for a dollar amount on the same line
-      let charge = null;
-      const dMatch = DOLLAR_REGEX.exec(line);
-      if (dMatch) {
-         charge = parseFloat(dMatch[1]);
+      const modifier = match[2] || null;
+      // Push the discovered code without a charge initially
+      results.push({ code, modifier, charge: null, rawLine: line.trim() });
+    }
+    
+    // Look for a dollar amount on this line
+    const dMatch = DOLLAR_REGEX.exec(line);
+    if (dMatch) {
+      const charge = parseFloat(dMatch[1]);
+      // Assign the dollar amount to the latest CPT code that doesn't have a charge yet
+      for (let i = results.length - 1; i >= 0; i--) {
+        if (results[i].charge === null) {
+          results[i].charge = charge;
+          break;
+        }
       }
-      
-      results.push({ code, modifier, charge, rawLine: line.trim() });
     }
   });
   
