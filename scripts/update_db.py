@@ -1,62 +1,96 @@
 import os
-import sys
-import pandas as pd
+import time
+import requests
 from supabase import create_client, Client
 
-# Environment Variables (Passed securely from GitHub Actions Secrets)
-SUPABASE_URL = os.environ.get("SUPABASE_URL")
-SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-
-if not SUPABASE_URL or not SUPABASE_SERVICE_KEY:
-    print("ERROR: Missing Supabase environment variables.")
-    sys.exit(1)
-
-# Initialize Supabase Client with Service Role Key (Bypasses RLS to allow inserts)
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
-
-def fetch_and_parse_csv(url: str) -> pd.DataFrame:
-    """
-    Helper function to download and parse a CSV file.
-    In a production scenario with CMS, you would put the static CSV download link here.
-    Because CMS updates URLs quarterly, you often point this to a stable endpoint 
-    or a folder of CSVs you commit to the repo.
-    """
-    try:
-        # Example: df = pd.read_csv(url)
-        # For demonstration of the data pipeline, we are returning an empty DataFrame.
-        # When you get the exact CMS CSV URLs, you inject them here!
-        print(f"Fetching data from: {url}")
-        return pd.DataFrame() 
-    except Exception as e:
-        print(f"Error fetching {url}: {e}")
-        return pd.DataFrame()
-
-def update_carc_codes():
-    print("Updating CARC Codes...")
-    # NOTE: Replace with actual CMS X12 CSV URL or local file path
-    df = fetch_and_parse_csv("https://example.com/latest_carc.csv")
+def get_supabase_client() -> Client:
+    url: str = os.environ.get("SUPABASE_URL")
+    key: str = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
     
-    # Example Mock Data processing
-    mock_data = [
-        {"code": "CO-45", "description": "Charge exceeds fee schedule/maximum allowable or contracted/legislated fee arrangement.", "effective_date": "2023-01-01"},
-        {"code": "PR-1", "description": "Deductible amount", "effective_date": "2023-01-01"},
-    ]
-    
-    # Upsert data into Supabase (Update if exists, Insert if new)
-    try:
-        response = supabase.table("carc_codes").upsert(mock_data).execute()
-        print("Successfully updated CARC codes.")
-    except Exception as e:
-        print(f"Database error during CARC update: {e}")
+    if not url or not key:
+        print("ERROR: Supabase credentials not found in environment variables.")
+        print("Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in your GitHub Secrets.")
+        exit(1)
+        
+    return create_client(url, key)
 
-def update_ncci_edits():
-    print("Updating NCCI Edits...")
-    # NCCI CSVs are massive (2.3M+ records). We process them in chunks.
-    # mock_data = [{"primary_code": "99213", "secondary_code": "36415", "modifier_allowed": "1", "effective_date": "2023-01-01"}]
-    pass
+def fetch_icd10_codes():
+    print("Connecting to National Library of Medicine API...")
+    base_url = "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&cf=code,name&terms=&df=code,name&maxList=600&offset={}"
+    
+    all_codes = []
+    offset = 0
+    total_expected = 74719 # Approximation, API gives exact in index 0
+    
+    while True:
+        try:
+            print(f"Fetching from offset {offset}...")
+            # We use urllib for zero-dependency parsing if requests fails, but requests is cleaner
+            response = requests.get(base_url.format(offset), timeout=10)
+            if response.status_code != 200:
+                print(f"Error fetching data: {response.status_code}")
+                break
+                
+            data = response.json()
+            total_records_in_db = data[0]
+            records = data[3] # index 3 contains the actual [code, description] array
+            
+            if not records or len(records) == 0:
+                break
+                
+            for record in records:
+                code_val = record[0]
+                desc = record[1]
+                
+                # Truncate description if extremely long (safety measure)
+                if len(desc) > 950:
+                    desc = desc[:950] + "..."
+                    
+                all_codes.append({
+                    "code": code_val,
+                    "code_type": "ICD10",
+                    "short_description": desc,
+                    "long_description": desc,
+                    "effective_date": "2024-01-01"
+                })
+            
+            offset += len(records)
+            time.sleep(0.1) # Small throttle to not slam the NLM API
+            
+            if offset >= total_records_in_db:
+                break
+                
+        except Exception as e:
+            print(f"Error during API fetch: {e}")
+            break
+            
+    return all_codes
+
+def upload_to_supabase(supabase: Client, data: list):
+    print(f"Uploading {len(data)} codes to Supabase...")
+    
+    chunk_size = 500 # Supabase typically limits bulk inserts to 1000-2000
+    success_count = 0
+    
+    for i in range(0, len(data), chunk_size):
+        chunk = data[i:i + chunk_size]
+        try:
+            # Using upsert to avoid duplicate key errors if the script runs again
+            res = supabase.table("medical_codes").upsert(chunk, on_conflict="code,code_type").execute()
+            success_count += len(chunk)
+            print(f"Progress: {success_count} / {len(data)} uploaded.")
+        except Exception as e:
+            print(f"Error uploading chunk at index {i}: {e}")
+            
 
 if __name__ == "__main__":
-    print("Starting automated MedHelp database update pipeline...")
-    update_carc_codes()
-    update_ncci_edits()
-    print("Update pipeline finished.")
+    print("--- Starting Medical Data Pipeline ---")
+    supabase_client = get_supabase_client()
+    
+    icd10_payload = fetch_icd10_codes()
+    print(f"Fetched {len(icd10_payload)} active ICD-10 codes from NLM.")
+    
+    if len(icd10_payload) > 0:
+        upload_to_supabase(supabase_client, icd10_payload)
+        
+    print("--- Data Pipeline Finished Successfully ---")
