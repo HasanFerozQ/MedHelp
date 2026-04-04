@@ -176,7 +176,7 @@ function renderAuditResults(findings) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'MedHelp_Audit.csv';
+      a.download = 'MediHelp_Now_Audit.csv';
       a.click();
       URL.revokeObjectURL(url);
     });

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "MedHelp",
+  "name": "MediHelp Now",
   "version": "1.0.0",
   "description": "Audit medical bills, search codes, compare drug prices - locally and privately.",
   "icons": {

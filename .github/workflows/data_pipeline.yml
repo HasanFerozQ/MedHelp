@@ -1,4 +1,4 @@
-name: Automate MedHelp CMS Data Sync
+name: Automate MediHelp Now CMS Data Sync
 
 on:
   # Run automatically on the 1st of every month (or quarterly depending on your preference)
