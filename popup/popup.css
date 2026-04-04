@@ -134,7 +134,9 @@ main {
 }
 
 #code-search-input,
-#rx-search-input {
+#rx-search-input,
+#denial-search-input,
+#npi-search-input {
   width: 100%;
   padding: 14px;
   border: 1px solid var(--border-light);
@@ -146,7 +148,9 @@ main {
 }
 
 #code-search-input:focus,
-#rx-search-input:focus {
+#rx-search-input:focus,
+#denial-search-input:focus,
+#npi-search-input:focus {
   outline: none;
   border-color: var(--tint-teal);
   box-shadow: 0 0 0 3px var(--tint-teal-light);

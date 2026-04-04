@@ -1,0 +1,35 @@
+name: Automate MedHelp CMS Data Sync
+
+on:
+  # Run automatically on the 1st of every month (or quarterly depending on your preference)
+  schedule:
+    - cron: '0 0 1 * *'
+  # Allow manual trigger from the GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync_database:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r scripts/requirements.txt
+
+    - name: Run Data Pipeline Script
+      env:
+        # These secrets must be added to your GitHub Repository Settings
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      run: |
+        python scripts/update_db.py

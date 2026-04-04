@@ -48,14 +48,39 @@ function setupEventListeners() {
   });
 }
 
-function performSearch(query) {
+async function performSearch(query) {
   const listContainer = document.getElementById('search-results-list');
   
-  if (!fuse || query.length < 2) {
-    listContainer.innerHTML = '<div class="empty-state">Start typing to search thousands of medical codes instantly and offline.</div>';
+  if (query.length < 2) {
+    listContainer.innerHTML = '<div class="empty-state">Start typing to search instantly...</div>';
     return;
   }
 
+  // If NCCI Edits filter is selected, query Supabase directly
+  if (currentFilter === 'NCCI') {
+    listContainer.innerHTML = '<div class="empty-state">Checking NCCI database...</div>';
+    if (!window.dbClient) {
+      listContainer.innerHTML = '<div class="empty-state" style="color:red">Database not connected</div>';
+      return;
+    }
+    try {
+      const { data, error } = await window.dbClient
+        .from('ncci_edits')
+        .select('*')
+        .eq('primary_code', query)
+        .limit(20);
+        
+      if (error) throw error;
+      renderNCCIResults(data);
+    } catch(err) {
+      console.error(err);
+      listContainer.innerHTML = '<div class="empty-state" style="color:red">Error fetching NCCI edits</div>';
+    }
+    return;
+  }
+
+  // Otherwise use local mock Fuse search
+  if (!fuse) return;
   let results = fuse.search(query, { limit: 20 });
   
   // Apply Filter
@@ -77,11 +102,15 @@ function renderResults(results) {
   let html = '';
   results.forEach(r => {
     const item = r.item;
+    // Map internal types to user-friendly tags
+    let tagClass = `tag-${item.type || 'HCPCS'}`;
+    let displayType = (item.type || 'HCPCS').replace('ICD10', 'ICD-10');
+    
     html += `
       <div class="result-card">
         <div class="result-code-area">
           <span class="code-val">${item.code}</span>
-          <span class="code-tag tag-${item.type}">${item.type.replace('ICD10', 'ICD-10')}</span>
+          <span class="code-tag ${tagClass}">${displayType}</span>
         </div>
         <div class="result-desc">${item.description}</div>
         <button class="copy-btn" data-code="${item.code}" title="Copy to clipboard">
@@ -92,13 +121,38 @@ function renderResults(results) {
   });
   
   listContainer.innerHTML = html;
+  attachCopyListeners();
+}
 
-  // Add listener for copy buttons
+function renderNCCIResults(results) {
+  const listContainer = document.getElementById('search-results-list');
+  if (!results || results.length === 0) {
+    listContainer.innerHTML = '<div class="empty-state">No NCCI bundling edits found for this code.</div>';
+    return;
+  }
+
+  let html = '';
+  results.forEach(item => {
+    html += `
+      <div class="result-card" style="border-left: 3px solid var(--tint-teal);">
+        <div style="font-weight: 500; color: var(--text-dark); margin-bottom: 4px;">
+          Bundled with: <span style="font-family: monospace; font-weight: 600;">${item.secondary_code}</span>
+        </div>
+        <div style="font-size: 11px; color: var(--text-muted);">
+          Modifier Allowed: <strong>${item.modifier_allowed === '1' ? 'Yes' : 'No'}</strong>
+          ${item.effective_date ? `&bull; Effective: ${item.effective_date}` : ''}
+        </div>
+      </div>
+    `;
+  });
+  listContainer.innerHTML = html;
+}
+
+function attachCopyListeners() {
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const code = e.currentTarget.dataset.code;
       navigator.clipboard.writeText(code).then(() => {
-        // Simple visual feedback
         const originalIcon = e.currentTarget.innerHTML;
         e.currentTarget.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
         setTimeout(() => e.currentTarget.innerHTML = originalIcon, 1500);

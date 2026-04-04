@@ -20,7 +20,9 @@
 
   <nav class="tab-bar">
     <button class="tab" data-tab="medbill">Bill<br>Audit</button>
-    <button class="tab active" data-tab="codesearch">Code<br>Search</button>
+    <button class="tab active" data-tab="codesearch">Codes<br>& Edits</button>
+    <button class="tab" data-tab="denials">Claim<br>Denials</button>
+    <button class="tab" data-tab="providers">Find<br>Provider</button>
     <button class="tab" data-tab="rxscout">Rx<br>Prices</button>
   </nav>
 
@@ -54,7 +56,8 @@
           <button class="filter-btn active" data-filter="ALL">All</button>
           <button class="filter-btn" data-filter="ICD10">ICD-10</button>
           <button class="filter-btn" data-filter="CPT">CPT</button>
-          <button class="filter-btn" data-filter="MODIFIER">Mod</button>
+          <button class="filter-btn" data-filter="HCPCS">HCPCS</button>
+          <button class="filter-btn" data-filter="NCCI">NCCI Edits</button>
         </div>
       </div>
       <div id="search-results-list" class="results-list">
@@ -69,6 +72,22 @@
       <input type="text" id="rx-search-input" placeholder="e.g. Lisinopril">
       <div id="rx-results" class="results-list"></div>
     </section>
+
+    <!-- TAB 4: Claim Denials (CARC/RARC) -->
+    <section id="tab-denials" class="tab-panel">
+      <h3>Claim Denial Explorer</h3>
+      <p class="subtitle">Decode CARC & RARC codes instantly from Supabase.</p>
+      <input type="text" id="denial-search-input" placeholder="e.g. CO-45, PR-1, N362">
+      <div id="denial-results" class="results-list"></div>
+    </section>
+
+    <!-- TAB 5: Provider Lookup (NPI) -->
+    <section id="tab-providers" class="tab-panel">
+      <h3>National Provider Search</h3>
+      <p class="subtitle">Search NPI Registry for doctors and practices.</p>
+      <input type="text" id="npi-search-input" placeholder="Enter 10-digit NPI or Name">
+      <div id="npi-results" class="results-list"></div>
+    </section>
   </main>
 
   <footer class="app-footer">
@@ -77,9 +96,13 @@
 
   <!-- Scripts -->
   <script src="../lib/fuse.min.js"></script>
+  <script src="../lib/supabase.min.js"></script>
+  <script src="../lib/supabaseClient.js"></script>
   <script src="popup.js"></script>
   <script src="../tabs/codesearch/codesearch.js"></script>
   <script src="../tabs/medbill/medbill.js"></script>
   <script src="../tabs/rxscout/rxscout.js"></script>
+  <script src="../tabs/denials/denials.js"></script>
+  <script src="../tabs/providers/providers.js"></script>
 </body>
 </html>
