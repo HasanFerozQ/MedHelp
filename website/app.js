@@ -32,54 +32,49 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── 2. Denial codes (CARC / RARC) ──────────────────────────────────────
   bindSearch('denials-input', 'denials-results', searchDenials);
 
-  // ── 3. Rx drug search Insights ─────────────────────────────────────────
+  // ── 3. Rx drug search & Autocomplete ─────────────────────────────────
   const rxInput = document.getElementById('rx-input');
   const rxResults = document.getElementById('rx-results');
+  const rxSugg = document.getElementById('rx-suggestions');
+  
   if (rxInput && rxResults) {
-    rxInput.addEventListener('input', debounce(() => {
+    rxInput.addEventListener('input', debounce(async () => {
       const q = rxInput.value.trim().toLowerCase();
-      if (q.length < 3) { rxResults.innerHTML = ''; return; }
-      
-      const match = Object.entries(RX_INSIGHTS).find(([k]) => q.includes(k) || k.includes(q));
-      if (match) {
-        const [name, info] = match;
-        rxResults.innerHTML = `
-          <div class="result-card" style="border-left: 4px solid var(--accent); display:block; text-align:left;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-              <strong style="color:var(--text-h); font-size:16px; text-transform:capitalize;">${name} Insights</strong>
-              <span class="result-badge uk">${info.class}</span>
-            </div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
-              <p style="margin:0; font-size:13px;"><strong>Generic:</strong> ${info.generic}</p>
-              <p style="margin:0; font-size:13px;"><strong>Stock:</strong> <span style="color:var(--success);">${info.stock}</span></p>
-              <p style="margin:0; font-size:13px;"><strong>Typical Cost:</strong> ${info.cost}</p>
-              <p style="margin:0; font-size:13px;"><strong>Pricing:</strong> <span style="color:var(--accent);">${info.price_hint}</span></p>
-            </div>
-            <p style="margin:8px 0 16px; font-size:12px; color:var(--text-muted); font-style:italic; line-height:1.4;"><strong>Pro Tip:</strong> ${info.tip}</p>
-            
-            <div class="rx-vertical-stack" style="max-width: 100%;">
-              <a href="https://www.goodrx.com/drugs/search?query=${name}" target="_blank" class="rx-btn brand-goodrx">GoodRx ↗</a>
-              <a href="https://costplusdrugs.com/medications/" target="_blank" class="rx-btn brand-costplus">Cost Plus Drugs ↗</a>
-              <a href="https://www.amazon.com/pharmacy" target="_blank" class="rx-btn brand-amazon">Amazon Pharmacy ↗</a>
-              <a href="https://www.singlecare.com/prescription/${name}" target="_blank" class="rx-btn brand-singlecare">SingleCare ↗</a>
-              <a href="https://www.drugs.com/price-guide/" target="_blank" class="rx-btn brand-drugs">Drugs.com ↗</a>
-            </div>
-          </div>`;
-      } else {
-        rxResults.innerHTML = `
-          <div class="rx-vertical-stack" style="margin-top: 10px;">
-            <p class="status-msg" style="text-align:left; margin-bottom: 20px;">No exact insights for "${q}". Search external partners below:</p>
-            <a href="https://www.goodrx.com/drugs/search?query=${q}" target="_blank" class="rx-btn brand-goodrx">GoodRx ↗</a>
-            <a href="https://costplusdrugs.com/medications/" target="_blank" class="rx-btn brand-costplus">Cost Plus Drugs ↗</a>
-            <a href="https://www.amazon.com/pharmacy" target="_blank" class="rx-btn brand-amazon">Amazon Pharmacy ↗</a>
-            <a href="https://www.singlecare.com/prescription/${q}" target="_blank" class="rx-btn brand-singlecare">SingleCare ↗</a>
-            <a href="https://www.drugs.com/price-guide/" target="_blank" class="rx-btn brand-drugs">Drugs.com ↗</a>
-          </div>`;
+      if (q.length < 3) { 
+        rxResults.innerHTML = ''; 
+        rxSugg.innerHTML = '';
+        rxSugg.classList.remove('active');
+        return; 
       }
+      
+      // Fetch Suggestions from NIH RxTerms
+      try {
+        const res = await fetch(`https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search?terms=${q}&maxList=8`);
+        const data = await res.json();
+        const suggestions = data[1] || [];
+        
+        if (suggestions.length > 0) {
+          rxSugg.innerHTML = suggestions.map(s => `<div class="suggestion-item" onclick="selectRx('${s}')">${s}</div>`).join('');
+          rxSugg.classList.add('active');
+        } else {
+          rxSugg.classList.remove('active');
+        }
+      } catch(e) { console.error('Rx Suggestion error:', e); }
+
+      // Show Insights if exact match, otherwise show stack
+      const match = Object.entries(RX_INSIGHTS).find(([k]) => q.includes(k) || k.includes(q));
+      renderRxResults(q, match);
     }, 300));
+
+    // Close suggestions on blur
+    document.addEventListener('click', (e) => {
+      if (!rxInput.contains(e.target) && !rxSugg.contains(e.target)) {
+        rxSugg.classList.remove('active');
+      }
+    });
   }
 
-  // ── 4. NPI Search (With Fallback) ───────────────────────────────────────
+  // ── 4. National Provider Search (NPI with Proxy) ────────────────────────
   const npiNameInput = document.getElementById('npi-name');
   if (npiNameInput) {
     npiNameInput.addEventListener('keydown', (e) => {
@@ -259,22 +254,25 @@ async function searchNPI() {
   results.innerHTML = `<p class="status-msg"><span class="spinner"></span>Querying Registry...</p>`;
 
   try {
-    let url = `https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=10&pretty=true`;
-    if (/^\d{10}$/.test(q)) url += `&number=${q}`;
+    let cmsUrl = `https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15`;
+    if (/^\d{10}$/.test(q)) cmsUrl += `&number=${q}`;
     else {
       const parts = q.split(/\s+/);
       if (parts.length >= 2) {
-        url += `&first_name=${encodeURIComponent(parts[0])}&last_name=${encodeURIComponent(parts.slice(1).join(' '))}`;
+        cmsUrl += `&first_name=${encodeURIComponent(parts[0])}&last_name=${encodeURIComponent(parts.slice(1).join(' '))}`;
       } else {
-        url += `&organization_name=${encodeURIComponent(q)}`;
+        cmsUrl += `&organization_name=${encodeURIComponent(q)}`;
       }
-      if (state) url += `&state=${state}`;
+      if (state) cmsUrl += `&state=${state}`;
     }
 
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('CORS_BLOCKED');
+    // BYPASS CORS using AllOrigins Proxy
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(cmsUrl)}`;
+    const res = await fetch(proxyUrl);
+    if (!res.ok) throw new Error('NETWORK_ERROR');
     
-    const json = await res.json();
+    const wrapper = await res.json();
+    const json = JSON.parse(wrapper.contents);
     const list = json.results || [];
 
     if (list.length === 0) {
@@ -283,32 +281,99 @@ async function searchNPI() {
     }
 
     results.innerHTML = list.map(p => {
-      const name = p.basic?.organization_name 
+      const isOrg = !!p.basic?.organization_name;
+      const name = isOrg 
         ? p.basic.organization_name 
         : `${p.basic?.first_name || ''} ${p.basic?.last_name || ''}`.trim();
+      
+      const addr = p.addresses?.[0] || {};
+      const taxo = p.taxonomies?.[0]?.desc || 'General Practitioner';
+      
       return `
-        <div class="provider-card" style="text-align:left;">
-          <div class="provider-name">${name}</div>
-          <div class="provider-npi">NPI: ${p.number} | ${p.basic?.credential || ''}</div>
-          <div class="provider-address">📍 ${p.addresses?.[0]?.city}, ${p.addresses?.[0]?.state}</div>
+        <div class="provider-card">
+          <div class="provider-info">
+            <div class="provider-name">${name}</div>
+            <div class="provider-npi">NPI: <strong>${p.number}</strong> | ${p.basic?.credential || (isOrg ? 'ORG' : 'MD')}</div>
+            <div class="provider-taxonomy">Taxonomy: <span>${taxo}</span></div>
+          </div>
+          <div class="provider-address">
+            📍 ${addr.address_1 || ''}<br>
+            ${addr.city || ''}, ${addr.state || ''} ${addr.postal_code || ''}
+          </div>
         </div>`;
     }).join('');
 
   } catch (e) {
-    // PREMIUM FALLBACK UI
+    console.error('NPS Error:', e);
+    // FALLBACK UI with Direct Link
     results.innerHTML = `
       <div class="result-card" style="border: 1px solid var(--border-accent); background: var(--bg-elevated); text-align:center; padding: 40px;">
         <div style="font-size: 40px; margin-bottom: 20px;">🛡️</div>
-        <strong style="color:var(--text-h); display:block; margin-bottom:12px; font-size: 18px;">Security Fallback Activated</strong>
-        <p style="font-size:14px; color:var(--text-muted); line-height:1.6; max-width: 400px; margin: 0 auto 24px;">The official CMS registry has high security (CORS) which sometimes blocks direct browser requests. We have pre-filled the official registry for you:</p>
+        <strong style="color:var(--text-h); display:block; margin-bottom:12px; font-size: 18px;">Registry Access Limited</strong>
+        <p style="font-size:14px; color:var(--text-muted); line-height:1.6; max-width: 400px; margin: 0 auto 24px;">The CMS registry sometimes restricts high-volume browser requests. Use the direct verification portal below:</p>
         <div>
-          <a href="https://npiregistry.cms.hhs.gov/search-results?first_name=${encodeURIComponent(q)}&last_name=&city=&state=${state}" target="_blank" class="btn btn-primary">
-            Verify Directly on CMS.gov →
+          <a href="https://npiregistry.cms.hhs.gov/search-results?organization_name=${encodeURIComponent(q)}&first_name=&last_name=&city=&state=${state}" target="_blank" class="btn btn-primary">
+            Search on CMS Registry Site →
           </a>
         </div>
       </div>`;
-    if(MediHelp.logError) MediHelp.logError('searchNPI Fallback: ' + e.message);
+    MediHelp.logError('searchNPI: ' + e.message);
   }
+}
+
+// ── Rx Results Rendering Helper ──────────────────────────────────────────
+function renderRxResults(q, match) {
+  const rxResults = document.getElementById('rx-results');
+  if (!rxResults) return;
+
+  if (match) {
+    const [name, info] = match;
+    rxResults.innerHTML = `
+      <div class="result-card" style="border-left: 4px solid var(--accent); display:block; text-align:left;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+          <strong style="color:var(--text-h); font-size:16px; text-transform:capitalize;">${name} Insights</strong>
+          <span class="result-badge uk">${info.class}</span>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+          <p style="margin:0; font-size:13px;"><strong>Generic:</strong> ${info.generic}</p>
+          <p style="margin:0; font-size:13px;"><strong>Stock:</strong> <span style="color:var(--success);">${info.stock}</span></p>
+          <p style="margin:0; font-size:13px;"><strong>Typical Cost:</strong> ${info.cost}</p>
+          <p style="margin:0; font-size:13px;"><strong>Pricing:</strong> <span style="color:var(--accent);">${info.price_hint}</span></p>
+        </div>
+        <p style="margin:8px 0 16px; font-size:12px; color:var(--text-muted); font-style:italic; line-height:1.4;"><strong>Pro Tip:</strong> ${info.tip}</p>
+        
+        <div class="rx-vertical-stack" style="max-width: 100%;">
+          <a href="https://www.goodrx.com/drugs/search?query=${name}" target="_blank" class="rx-btn brand-goodrx">GoodRx ↗</a>
+          <a href="https://costplusdrugs.com/medications/" target="_blank" class="rx-btn brand-costplus">Cost Plus Drugs ↗</a>
+          <a href="https://www.amazon.com/pharmacy" target="_blank" class="rx-btn brand-amazon">Amazon Pharmacy ↗</a>
+          <a href="https://www.singlecare.com/prescription/${name}" target="_blank" class="rx-btn brand-singlecare">SingleCare ↗</a>
+          <a href="https://www.drugs.com/price-guide/" target="_blank" class="rx-btn brand-drugs">Drugs.com ↗</a>
+        </div>
+      </div>`;
+  } else {
+    rxResults.innerHTML = `
+      <div class="rx-vertical-stack" style="margin-top: 10px;">
+        <p class="status-msg" style="text-align:left; margin-bottom: 20px;">No exact insights for "${q}". Search external partners below:</p>
+        <a href="https://www.goodrx.com/drugs/search?query=${q}" target="_blank" class="rx-btn brand-goodrx">GoodRx ↗</a>
+        <a href="https://costplusdrugs.com/medications/" target="_blank" class="rx-btn brand-costplus">Cost Plus Drugs ↗</a>
+        <a href="https://www.amazon.com/pharmacy" target="_blank" class="rx-btn brand-amazon">Amazon Pharmacy ↗</a>
+        <a href="https://www.singlecare.com/prescription/${q}" target="_blank" class="rx-btn brand-singlecare">SingleCare ↗</a>
+        <a href="https://www.drugs.com/price-guide/" target="_blank" class="rx-btn brand-drugs">Drugs.com ↗</a>
+      </div>`;
+  }
+}
+
+function selectRx(name) {
+  const rxInput = document.getElementById('rx-input');
+  const rxSugg = document.getElementById('rx-suggestions');
+  if (!rxInput || !rxSugg) return;
+  
+  rxInput.value = name;
+  rxSugg.classList.remove('active');
+  
+  const q = name.toLowerCase();
+  const match = Object.entries(RX_INSIGHTS).find(([k]) => q.includes(k) || k.includes(q));
+  renderRxResults(q, match);
 }
 
 // ── Bill Audit Engine ─────────────────────────────────────────────────────
