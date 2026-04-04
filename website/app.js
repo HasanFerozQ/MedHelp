@@ -241,6 +241,7 @@ async function searchDenials(q, container) {
 }
 
 // ── NPI Search (With Advanced CORS Fallback) ───────────────────────────
+// ── National Provider Search (NIH Native Integration) ───────────────────
 async function searchNPI() {
   const nameInput = document.getElementById('npi-name');
   const stateInput = document.getElementById('npi-state');
@@ -251,73 +252,61 @@ async function searchNPI() {
   const state = stateInput?.value || '';
   if (q.length < 3) { results.innerHTML = '<p class="status-msg">Min 3 characters required.</p>'; return; }
 
-  results.innerHTML = `<p class="status-msg"><span class="spinner"></span>Querying Registry...</p>`;
+  results.innerHTML = `<p class="status-msg"><span class="spinner"></span>Querying NIH Medical Registry...</p>`;
 
   try {
-    let cmsUrl = `https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15`;
-    if (/^\d{10}$/.test(q)) cmsUrl += `&number=${q}`;
-    else {
-      const parts = q.split(/\s+/);
-      if (parts.length >= 2) {
-        cmsUrl += `&first_name=${encodeURIComponent(parts[0])}&last_name=${encodeURIComponent(parts.slice(1).join(' '))}`;
-      } else {
-        cmsUrl += `&organization_name=${encodeURIComponent(q)}`;
-      }
-      if (state) cmsUrl += `&state=${state}`;
-    }
+    // Dual Search: Doctors (idv) and Organizations (org)
+    const [resIdv, resOrg] = await Promise.all([
+      fetch(`https://clinicaltables.nlm.nih.gov/api/npi_idv/v3/search?terms=${encodeURIComponent(q)}&state=${state}&maxList=12`),
+      fetch(`https://clinicaltables.nlm.nih.gov/api/npi_org/v3/search?terms=${encodeURIComponent(q)}&state=${state}&maxList=12`)
+    ]);
 
-    // BYPASS CORS using AllOrigins Proxy
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(cmsUrl)}`;
-    const res = await fetch(proxyUrl);
-    if (!res.ok) throw new Error('NETWORK_ERROR');
+    const [dataIdv, dataOrg] = await Promise.all([resIdv.json(), resOrg.json()]);
+
+    // NIH Format: [count, [npi1, npi2], null, [[name, npi, taxonomy, address_line]]]
+    const idvList = dataIdv[3] || [];
+    const orgList = dataOrg[3] || [];
     
-    const wrapper = await res.json();
-    const json = JSON.parse(wrapper.contents);
-    const list = json.results || [];
+    const combined = [...idvList.map(p => ({...p, type:'MD'})), ...orgList.map(p => ({...p, type:'ORG'}))];
 
-    if (list.length === 0) {
-      results.innerHTML = `<p class="status-msg">No providers found for "${q}".</p>`;
+    if (combined.length === 0) {
+      results.innerHTML = `<p class="status-msg">No providers found for "<strong>${q}</strong>". Try a different state or name.</p>`;
       return;
     }
 
-    results.innerHTML = list.map(p => {
-      const isOrg = !!p.basic?.organization_name;
-      const name = isOrg 
-        ? p.basic.organization_name 
-        : `${p.basic?.first_name || ''} ${p.basic?.last_name || ''}`.trim();
-      
-      const addr = p.addresses?.[0] || {};
-      const taxo = p.taxonomies?.[0]?.desc || 'General Practitioner';
+    results.innerHTML = combined.map(p => {
+      const name = p[0] || 'Unknown';
+      const npi = p[1] || '—';
+      const taxo = p[2] || 'Medical Specialist';
+      const addr = p[3] || 'Contact registry for address';
       
       return `
         <div class="provider-card">
           <div class="provider-info">
             <div class="provider-name">${name}</div>
-            <div class="provider-npi">NPI: <strong>${p.number}</strong> | ${p.basic?.credential || (isOrg ? 'ORG' : 'MD')}</div>
+            <div class="provider-npi">NPI: <strong>${npi}</strong> | ${p.type === 'ORG' ? 'Facility' : 'Provider'}</div>
             <div class="provider-taxonomy">Taxonomy: <span>${taxo}</span></div>
           </div>
           <div class="provider-address">
-            📍 ${addr.address_1 || ''}<br>
-            ${addr.city || ''}, ${addr.state || ''} ${addr.postal_code || ''}
+            📍 ${addr.split(',')[0]}<br>
+            ${addr.split(',').slice(1).join(', ').trim()}
           </div>
         </div>`;
     }).join('');
 
   } catch (e) {
     console.error('NPS Error:', e);
-    // FALLBACK UI with Direct Link
     results.innerHTML = `
       <div class="result-card" style="border: 1px solid var(--border-accent); background: var(--bg-elevated); text-align:center; padding: 40px;">
         <div style="font-size: 40px; margin-bottom: 20px;">🛡️</div>
-        <strong style="color:var(--text-h); display:block; margin-bottom:12px; font-size: 18px;">Registry Access Limited</strong>
-        <p style="font-size:14px; color:var(--text-muted); line-height:1.6; max-width: 400px; margin: 0 auto 24px;">The CMS registry sometimes restricts high-volume browser requests. Use the direct verification portal below:</p>
+        <strong style="color:var(--text-h); display:block; margin-bottom:12px; font-size: 18px;">Registry Connection Reset</strong>
+        <p style="font-size:14px; color:var(--text-muted); line-height:1.6; max-width: 400px; margin: 0 auto 24px;">National provider data is temporarily unavailable. Please verify directly on the official portal:</p>
         <div>
-          <a href="https://npiregistry.cms.hhs.gov/search-results?organization_name=${encodeURIComponent(q)}&first_name=&last_name=&city=&state=${state}" target="_blank" class="btn btn-primary">
-            Search on CMS Registry Site →
+          <a href="https://npiregistry.cms.hhs.gov/search-results?organization_name=${encodeURIComponent(q)}" target="_blank" class="btn btn-primary">
+            Open CMS NPI Registry →
           </a>
         </div>
       </div>`;
-    MediHelp.logError('searchNPI: ' + e.message);
   }
 }
 

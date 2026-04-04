@@ -307,17 +307,19 @@ def fetch_and_sync_icd10():
                     "country": "US"
                 })
             
-            # Immediate Upsert for this chunk
+            # Immediate Upsert for this chunk (Optimized for 500 records)
+            print(f"  Upserting chunk {offset} to {offset+len(records)}...")
             rest_upsert("medical_codes", chunk)
             total_synced += len(records)
             
             offset += len(records)
-            time.sleep(0.05) # Rate limit handling
+            time.sleep(0.5) # Increased delay to prevent server-side disconnects
             if offset >= total:
                 break
         except Exception as e:
             print(f"  Error: {e}")
-            break
+            time.sleep(5) # Wait and retry if server is busy
+            continue 
     print(f"  Finished streaming {total_synced} ICD-10 codes.")
 
 
