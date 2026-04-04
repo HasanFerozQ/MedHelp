@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediHelp Dispatch | Medical Insights & Innovations</title>
+  <link rel="icon" href="/icons/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="images/logo.png" alt="MediHelp Logo">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Back to Tools</a>
+        <a href="audit.html">Bill Audit</a>
+        <a href="blog.html">Blog</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero container" style="padding-bottom: 40px;">
+    <h1 style="font-family: 'Playfair Display', serif; font-style: italic;">The Dispatch.</h1>
+    <p>Insightful medical billing trends and global health news.</p>
+  </section>
+
+  <!-- Most Recent Post Container -->
+  <section class="container" id="recent-post-hero"></section>
+
+  <!-- Suggested Grid Container -->
+  <section class="container blog-grid" id="blog-list-container"></section>
+
+  <footer class="container">
+    <div class="footer-bottom">
+      &copy; 2026 MediHelp. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script src="blog_handler.js"></script>
+  <script>
+    const SUPABASE_URL = 'https://bisqgousuvljttesjkkm.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const posts = await MediHelp.fetchBlogs();
+      const heroContainer = document.getElementById('recent-post-hero');
+      const gridContainer = document.getElementById('blog-list-container');
+
+      if (posts.length === 0) {
+        heroContainer.innerHTML = '<p style="text-align:center;">No blog posts found.</p>';
+        return;
+      }
+
+      // Most Recent Hero
+      const recent = posts[0];
+      heroContainer.innerHTML = `
+        <a href="blog-post.html?slug=${recent.slug}" class="feature-card" style="display: flex; gap: 40px; text-decoration: none; align-items: center; background: rgba(255,255,255,0.03);">
+          <img src="${recent.thumbnail}" style="width: 50%; height: 400px; object-fit: cover; border-radius: 16px;">
+          <div style="flex: 1;">
+            <span class="blog-category">${recent.category}</span>
+            <h2 style="font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 16px;">${recent.title}</h2>
+            <p>${recent.summary}</p>
+            <div style="margin-top: 24px; color: var(--accent); font-weight: 700;">Read Most Recent →</div>
+          </div>
+        </a>
+      `;
+
+      // Previous Suggestions
+      const suggestions = posts.slice(1, 4);
+      gridContainer.innerHTML = suggestions.map(p => `
+        <a href="blog-post.html?slug=${p.slug}" class="blog-card">
+          <img src="${p.thumbnail}" class="blog-thumb">
+          <div class="blog-info">
+            <span class="blog-category">${p.category}</span>
+            <h3 style="color:#fff; margin-bottom: 12px; font-size: 20px;">${p.title}</h3>
+            <p style="font-size: 14px; margin-bottom: 16px;">${p.summary.substring(0, 100)}...</p>
+            <div style="color: var(--accent); font-size: 13px; font-weight: 700;">Read More →</div>
+          </div>
+        </a>
+      `).join('');
+    });
+  </script>
+</body>
+</html>

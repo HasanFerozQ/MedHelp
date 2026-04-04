@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediHelp | National Provider Search (NPI)</title>
+  <link rel="icon" href="/icons/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="images/logo.png" alt="MediHelp Logo">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Back to Tools</a>
+        <a href="audit.html">Bill Audit</a>
+        <a href="blog.html">Blog</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero container">
+    <h1>National Provider <br>Identifier Search.</h1>
+    <p>Search over 6 million healthcare providers in the official CMS NPPES Registry by name, NPI, or specialty.</p>
+  </section>
+
+  <div class="container">
+    <div class="tabs-container">
+      <div class="search-wrapper">
+        <input type="text" id="npi-input" class="search-input" placeholder="Search by name, specialty, or NPI...">
+        <div id="npi-results" class="results-grid" style="margin-top: 40px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="container">
+    <div class="footer-bottom">
+      &copy; 2026 MediHelp. All Rights Reserved. Not a government agency.
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

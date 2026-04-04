@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediHelp Dispatch | Post</title>
+  <link rel="icon" href="/icons/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    .blog-content { max-width: 800px; margin: 0 auto; color: #fff; font-size: 18px; line-height: 1.8; }
+    .blog-content h1, .blog-content h2, .blog-content h3 { color: var(--accent); margin-top: 40px; margin-bottom: 20px; font-family: 'Playfair Display', serif; }
+    .blog-content p { color: var(--text-secondary); margin-bottom: 24px; }
+    .blog-content img { width: 100%; border-radius: 16px; margin: 40px 0; border: 1px solid var(--border); }
+    .blog-stats-bar { display: flex; gap: 20px; font-size: 13px; color: var(--text-secondary); padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="images/logo.png" alt="MediHelp Logo">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="blog.html">All Blogs</a>
+        <a href="audit.html">Audit</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="container blog-content" style="margin-top: 60px;">
+    <div id="post-header"></div>
+    <div class="blog-stats-bar" id="stats-bar">
+      <span id="read-count">... reads</span>
+      <span id="reading-time">... min read</span>
+    </div>
+    <div id="post-body"></div>
+  </article>
+
+  <footer class="container">
+    <div class="footer-bottom">
+      &copy; 2026 MediHelp. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script src="blog_handler.js"></script>
+  <script>
+    const SUPABASE_URL = 'https://bisqgousuvljttesjkkm.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug');
+      if (!slug) { window.location.href = 'blog.html'; return; }
+
+      const blogs = await MediHelp.fetchBlogs();
+      const post = blogs.find(b => b.slug === slug);
+
+      if (!post) {
+        document.getElementById('post-body').innerHTML = '<p>Post not found.</p>';
+        return;
+      }
+
+      // Render Title & Header
+      document.getElementById('post-header').innerHTML = `
+        <span class="blog-category" style="margin-bottom:12px;">${post.category}</span>
+        <h1 style="font-size: 48px; color:#fff; line-height:1.1; margin-bottom: 24px;">${post.title}</h1>
+      `;
+
+      // Parse and Render Content (Cleanup frontmatter)
+      const cleanMarkdown = post.raw.replace(/---[\s\S]*?---/, '');
+      document.getElementById('post-body').innerHTML = marked.parse(cleanMarkdown);
+
+      // Reading Time & Reads
+      const wpm = 200;
+      const wordCount = post.raw.split(/\s+/).length;
+      document.getElementById('reading-time').innerText = Math.ceil(wordCount / wpm) + ' min read';
+
+      // Record hit and Update counter
+      const finalCount = await MediHelp.incrementReadCount(slug);
+      document.getElementById('read-count').innerText = `${finalCount} reads`;
+    });
+  </script>
+</body>
+</html>

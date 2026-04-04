@@ -3,142 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediHelp Now | Free Medical Billing Audits & Code Lookup</title>
-  <meta name="description" content="Decode Claim Denials (CARC/RARC), verify NPI numbers, check NCCI edits, and audit medical bills instantly with our free Chrome Extension.">
+  <title>MediHelp | AI-Powered Medical Billing Suite</title>
+  <link rel="icon" href="/icons/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Supabase JS Client -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Google AdSense Auto-ads Placeholder -->
-  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 </head>
 <body>
 
   <nav class="navbar">
     <div class="container nav-content">
       <a href="/" class="nav-brand">
-        <!-- SVG Placeholder for Logo -->
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        MediHelp Now
+        <img src="images/logo.png" alt="MediHelp Logo">
+        MediHelp
       </a>
       <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#lookup">Code Lookup</a>
-        <a href="#faq">FAQ</a>
+        <a href="audit.html">Bill Audit</a>
+        <a href="providers.html">Find Provider</a>
+        <a href="blog.html">Blog</a>
       </div>
     </div>
   </nav>
 
   <section class="hero container">
-    <h1>Never guess why a <br>claim was denied again.</h1>
-    <p>The ultimate free browser extension for medical billers. Audit bills, search thousands of NCCI edits, verify NPI providers, and decode claim denials instantly.</p>
+    <h1>The Operating System for <br>Medical Billing.</h1>
+    <p>Empowering billers with real-time CMS datasets, AI-driven audits, and instant claim denial decoding.</p>
     <div class="hero-cta">
-      <a href="#" class="btn btn-primary" id="install-extension-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
-        Install for Chrome
-      </a>
-      <a href="#lookup" class="btn btn-outline">Try Web Search</a>
+      <a href="audit.html" class="btn btn-primary">Start Free Audit</a>
+      <a href="#suite" class="btn btn-outline">Explore Labs</a>
     </div>
   </section>
 
-  <!-- Top Ad Slot: Replace ca-pub-XXXXXXXXXXXXXXXX with your real AdSense publisher ID -->
-  <div class="ad-slot">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-         data-ad-slot="1234567890"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+  <div class="container">
+    <div class="ad-slot" id="top-ad"><!-- Adsense will be injected here --></div>
   </div>
 
-  <section id="features" class="container features">
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+  <section id="suite" class="container">
+    <div class="tabs-container">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('codes')">Code Lookup</button>
+        <button class="tab-btn" onclick="switchTab('denials')">Claim Denials</button>
+        <button class="tab-btn" onclick="switchTab('rx')">Rx Savings</button>
+      </div>
+
+      <!-- Code Lookup Tab -->
+      <div id="codes" class="tab-content active">
+        <div class="search-wrapper">
+          <input type="text" id="codes-input" class="search-input" placeholder="Search ICD-10 or CPT codes...">
+          <div id="codes-results" class="results-grid"></div>
         </div>
-        <h3>Decode Claim Denials</h3>
-        <p>Instantly search thousands of CARC and RARC codes. Get plain-english context on exactly why the claim bounced.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+
+      <!-- Denials Tab -->
+      <div id="denials" class="tab-content">
+        <div class="search-wrapper">
+          <input type="text" id="denials-input" class="search-input" placeholder="Search CARC or RARC codes (e.g. CO-45)...">
+          <div id="denials-results" class="results-grid"></div>
         </div>
-        <h3>Verify Providers (NPI)</h3>
-        <p>Hit the official CMS NPPES Registry in real-time. Verify National Provider Identifiers, taxonomies, and practice addresses fast.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+
+      <!-- Rx Savings Tab -->
+      <div id="rx" class="tab-content">
+        <div class="card-grid">
+          <a href="https://www.goodrx.com" target="_blank" class="feature-card">
+            <h3>GoodRx</h3>
+            <p>Save up to 80% on most prescriptions.</p>
+          </a>
+          <a href="https://www.singlecare.com" target="_blank" class="feature-card">
+            <h3>SingleCare</h3>
+            <p>Compare drug prices at local pharmacies.</p>
+          </a>
+          <a href="https://costplusdrugs.com" target="_blank" class="feature-card">
+            <h3>Mark Cuban Cost Plus</h3>
+            <p>Direct-to-consumer pharmacy low pricing.</p>
+          </a>
         </div>
-        <h3>NCCI Bundling Edits</h3>
-        <p>Catch bundling errors before you submit. Find out if procedures can be billed together and if modifiers are allowed.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="lookup" class="web-app-search">
-    <div class="container">
-      <h2 style="font-size: 40px; margin-bottom: 16px;">Live Claim Qualifier</h2>
-      <p style="color: var(--text-muted); margin-bottom: 40px;">Search CARC & RARC codes live on the website right now.</p>
-      
-      <div class="search-box">
-        <input type="text" id="web-search-input" class="search-input" placeholder="e.g. CO-45, PR-1, N362...">
-        <div id="search-results"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Middle Ad Slot: Replace ca-pub-XXXXXXXXXXXXXXXX with your real AdSense publisher ID -->
-  <div class="ad-slot">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-         data-ad-slot="0987654321"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-  </div>
-
-  <section id="faq" class="faq">
-    <h2>Frequently Asked Questions</h2>
-    
-    <div class="accordion">
-      <div class="accordion-header">
-        Is the MediHelp Now extension completely free?
-        <svg class="icon-plus" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--tint-cyan)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      </div>
-      <div class="accordion-content">
-        <p>Yes! The Chrome extension is 100% free to download and use. Searching for codes, checking NPIs, and running bill audits does not cost anything.</p>
-      </div>
-    </div>
-
-    <div class="accordion">
-      <div class="accordion-header">
-        Where does your data come from?
-        <svg class="icon-plus" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--tint-cyan)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      </div>
-      <div class="accordion-content">
-        <p>We source our datasets directly from the Centers for Medicare & Medicaid Services (CMS). Information like NPI and NCCI edits are synced from public CMS databases to ensure accuracy.</p>
-      </div>
-    </div>
-
-    <div class="accordion">
-      <div class="accordion-header">
-        Do you store patient PHI (Personal Health Information)?
-        <svg class="icon-plus" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--tint-cyan)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      </div>
-      <div class="accordion-content">
-        <p>Absolutely not. MediHelp Now only requests publicly available billing codes and provider numbers. All bill auditing happens completely locally on your machine, so NO patient information is ever sent to our servers. We are fundamentally built for HIPAA-compliance by design.</p>
-      </div>
-    </div>
-
-    <div class="accordion">
-      <div class="accordion-header">
-        Can I use this on a Mac or Safari?
-        <svg class="icon-plus" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--tint-cyan)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      </div>
-      <div class="accordion-content">
-        <p>The extension currently operates strictly on Chromium-based browsers like Google Chrome, Microsoft Edge, and Brave. You can use it on any operating system (Mac, Windows, Linux) as long as you use a supported browser.</p>
       </div>
     </div>
   </section>
@@ -146,31 +85,31 @@
   <footer class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <h3>MediHelp Now</h3>
-        <p>Empowering medical billers and patients with free, transparent, and accurate billing data tools.</p>
+        <h3>MediHelp</h3>
+        <p>Your global partner in medical billing transparency and accuracy.</p>
       </div>
       <div class="footer-links">
-        <h4>Navigation</h4>
+        <h4>Tools</h4>
         <ul>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#lookup">Code Search</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#">Install Extension</a></li>
+          <li><a href="audit.html">AI Bill Audit</a></li>
+          <li><a href="providers.html">NPI Lookup</a></li>
+          <li><a href="blog.html">Medical Blog</a></li>
         </ul>
       </div>
       <div class="footer-links">
         <h4>Legal</h4>
         <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2026 MediHelp Now. All rights reserved. Not affiliated with CMS or any government agency.
+      &copy; 2026 MediHelp. All Rights Reserved. Not a government agency.
     </div>
   </footer>
 
+  <script src="blog_handler.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
