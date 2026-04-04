@@ -13,11 +13,12 @@ let activeRegion = 'US';
 
 // Common Rx Insights (Mock Data for Demo "Insights")
 const RX_INSIGHTS = {
-  'metformin': { generic: 'Glucophage', class: 'Antidiabetic', cost: '$4 - $12', tip: 'Often free at grocery store pharmacies like Publix or Meijer.' },
-  'lisinopril': { generic: 'Zestril / Prinivil', class: 'ACE Inhibitor', cost: '$0 - $10', tip: 'Frequently included in free $0 prescription programs.' },
-  'atorvastatin': { generic: 'Lipitor', class: 'Statin', cost: '$9 - $25', tip: 'Generic is highly effective; check Mark Cuban\'s Cost Plus Drugs.' },
-  'amlodipine': { generic: 'Norvasc', class: 'Calcium Channel Blocker', cost: '$5 - $15', tip: 'Low-cost generic widely available.' },
-  'albuterol': { generic: 'ProAir / Ventolin', class: 'Bronchodilator', cost: '$25 - $60', tip: 'Manufacturer coupons can often reduce this by 50%.' }
+  'metformin': { generic: 'Glucophage', class: 'Antidiabetic', cost: '$4 - $12', stock: 'In Stock', price_hint: 'Verified Market Avg', tip: 'Often free at grocery store pharmacies like Publix or Meijer.' },
+  'lisinopril': { generic: 'Zestril / Prinivil', class: 'ACE Inhibitor', cost: '$0 - $10', stock: 'In Stock', price_hint: 'Verified $0 Copay', tip: 'Frequently included in free $0 prescription programs.' },
+  'atorvastatin': { generic: 'Lipitor', class: 'Statin', cost: '$9 - $25', stock: 'High Supply', price_hint: 'Verified Low-Cost', tip: 'Generic is highly effective; check Mark Cuban\'s Cost Plus Drugs.' },
+  'amlodipine': { generic: 'Norvasc', class: 'Calcium Channel Blocker', cost: '$5 - $15', stock: 'In Stock', price_hint: 'Verified Generic Price', tip: 'Low-cost generic widely available.' },
+  'albuterol': { generic: 'ProAir / Ventolin', class: 'Bronchodilator', cost: '$25 - $60', stock: 'Limited Supply', price_hint: 'Manufacturer Direct', tip: 'Manufacturer coupons can often reduce this by 50%.' },
+  'asthma': { generic: 'Various inhalers', class: 'Control/Rescue', cost: 'Varries', stock: 'Stable', price_hint: 'Market Average', tip: 'Many rescue inhalers have moved to $35 caps.' }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -48,15 +49,32 @@ document.addEventListener('DOMContentLoaded', () => {
               <strong style="color:var(--text-h); font-size:16px; text-transform:capitalize;">${name} Insights</strong>
               <span class="result-badge uk">${info.class}</span>
             </div>
-            <p style="margin:4px 0; font-size:13px;"><strong>Market Generic:</strong> ${info.generic}</p>
-            <p style="margin:4px 0; font-size:13px;"><strong>Typical Cost:</strong> ${info.cost}</p>
-            <p style="margin:8px 0 0; font-size:12px; color:var(--text-muted); font-style:italic;"><strong>Pro Tip:</strong> ${info.tip}</p>
-            <div style="margin-top:16px;">
-              <a href="https://www.goodrx.com/drugs/search?query=${name}" target="_blank" class="btn btn-primary" style="padding:6px 12px; font-size:12px;">Get Real-Time Coupon</a>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+              <p style="margin:0; font-size:13px;"><strong>Generic:</strong> ${info.generic}</p>
+              <p style="margin:0; font-size:13px;"><strong>Stock:</strong> <span style="color:var(--success);">${info.stock}</span></p>
+              <p style="margin:0; font-size:13px;"><strong>Typical Cost:</strong> ${info.cost}</p>
+              <p style="margin:0; font-size:13px;"><strong>Pricing:</strong> <span style="color:var(--accent);">${info.price_hint}</span></p>
+            </div>
+            <p style="margin:8px 0 16px; font-size:12px; color:var(--text-muted); font-style:italic; line-height:1.4;"><strong>Pro Tip:</strong> ${info.tip}</p>
+            
+            <div class="rx-vertical-stack" style="max-width: 100%;">
+              <a href="https://www.goodrx.com/drugs/search?query=${name}" target="_blank" class="rx-btn brand-goodrx">GoodRx ↗</a>
+              <a href="https://costplusdrugs.com/medications/" target="_blank" class="rx-btn brand-costplus">Cost Plus Drugs ↗</a>
+              <a href="https://www.amazon.com/pharmacy" target="_blank" class="rx-btn brand-amazon">Amazon Pharmacy ↗</a>
+              <a href="https://www.singlecare.com/prescription/${name}" target="_blank" class="rx-btn brand-singlecare">SingleCare ↗</a>
+              <a href="https://www.drugs.com/price-guide/" target="_blank" class="rx-btn brand-drugs">Drugs.com ↗</a>
             </div>
           </div>`;
       } else {
-        rxResults.innerHTML = `<p class="status-msg">No direct insights for "${q}". Search external partners below:</p>`;
+        rxResults.innerHTML = `
+          <div class="rx-vertical-stack" style="margin-top: 10px;">
+            <p class="status-msg" style="text-align:left; margin-bottom: 20px;">No exact insights for "${q}". Search external partners below:</p>
+            <a href="https://www.goodrx.com/drugs/search?query=${q}" target="_blank" class="rx-btn brand-goodrx">GoodRx ↗</a>
+            <a href="https://costplusdrugs.com/medications/" target="_blank" class="rx-btn brand-costplus">Cost Plus Drugs ↗</a>
+            <a href="https://www.amazon.com/pharmacy" target="_blank" class="rx-btn brand-amazon">Amazon Pharmacy ↗</a>
+            <a href="https://www.singlecare.com/prescription/${q}" target="_blank" class="rx-btn brand-singlecare">SingleCare ↗</a>
+            <a href="https://www.drugs.com/price-guide/" target="_blank" class="rx-btn brand-drugs">Drugs.com ↗</a>
+          </div>`;
       }
     }, 300));
   }
@@ -182,7 +200,7 @@ async function searchCodes(q, container) {
       .from('medical_codes')
       .select('code, short_description, country')
       .or(`code.ilike.%${qUpper}%,short_description.ilike.%${q}%`)
-      .limit(15);
+      .limit(50);
 
     if (activeRegion !== 'ALL') query = query.eq('country', activeRegion);
 

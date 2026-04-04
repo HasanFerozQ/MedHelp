@@ -490,11 +490,39 @@ body {
 .result-badge.me   { background: rgba(167,139,250,0.1); color: #c4b5fd; border-color: rgba(167,139,250,0.3); }
 
 /* Rx Cards */
-.rx-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+.rx-vertical-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 500px;
+  margin: 0 auto;
 }
+
+.rx-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+  border-radius: 100px; /* Full pill shape */
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  transition: var(--transition);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.rx-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  filter: brightness(1.1);
+}
+
+.brand-goodrx     { background: #00473e; }
+.brand-costplus   { background: #101827; }
+.brand-amazon     { background: #008296; }
+.brand-singlecare { background: #e65100; }
+.brand-drugs      { background: #455a64; }
 
 .rx-card {
   background: var(--bg-elevated);

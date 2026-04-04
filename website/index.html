@@ -74,9 +74,9 @@
         <div class="region-bar">
           <label>Region:</label>
           <div class="region-pills">
-            <button class="region-pill active" data-region="US" onclick="setRegion('US', this)">🇺🇸 US (ICD-10-CM)</button>
-            <button class="region-pill" data-region="UK" onclick="setRegion('UK', this)">🇬🇧 UK (ICD-10 WHO)</button>
-            <button class="region-pill" data-region="ME" onclick="setRegion('ME', this)">🌙 Middle East (WHO)</button>
+            <button class="region-pill active" data-region="US" onclick="setRegion('US', this)">US (ICD-10-CM)</button>
+            <button class="region-pill" data-region="UK" onclick="setRegion('UK', this)">UK (ICD-10 WHO)</button>
+            <button class="region-pill" data-region="ME" onclick="setRegion('ME', this)">Middle East (WHO)</button>
           </div>
         </div>
         <div class="search-box">
@@ -108,23 +108,22 @@
           </div>
         </div>
         <div id="rx-results" class="results-area">
-          <p class="status-msg" style="text-align:left; padding:0 0 24px;">Or browse trusted price comparison platforms:</p>
-          <div class="rx-grid">
-            <a href="https://www.goodrx.com" target="_blank" rel="noopener" class="rx-card">
-              <h3>GoodRx</h3>
-              <p>Save up to 80% on most prescriptions at any local pharmacy.</p>
+          <p class="status-msg" style="text-align:left; padding:0 0 20px; font-weight:700; color:var(--text-h);">Compare Free Prices</p>
+          <div class="rx-vertical-stack">
+            <a href="https://www.goodrx.com" target="_blank" rel="noopener" class="rx-btn brand-goodrx">
+              GoodRx ↗
             </a>
-            <a href="https://www.singlecare.com" target="_blank" rel="noopener" class="rx-card">
-              <h3>SingleCare</h3>
-              <p>Compare drug prices and get real-time coupon offers.</p>
+            <a href="https://costplusdrugs.com" target="_blank" rel="noopener" class="rx-btn brand-costplus">
+              Cost Plus Drugs ↗
             </a>
-            <a href="https://costplusdrugs.com" target="_blank" rel="noopener" class="rx-card">
-              <h3>Mark Cuban Cost Plus</h3>
-              <p>Radically low prices — direct from manufacturer with full transparency.</p>
+            <a href="https://www.amazon.com/pharmacy" target="_blank" rel="noopener" class="rx-btn brand-amazon">
+              Amazon Pharmacy ↗
             </a>
-            <a href="https://www.rxsaver.com" target="_blank" rel="noopener" class="rx-card">
-              <h3>RxSaver</h3>
-              <p>Find the lowest drug prices at pharmacies near you.</p>
+            <a href="https://www.singlecare.com" target="_blank" rel="noopener" class="rx-btn brand-singlecare">
+              SingleCare ↗
+            </a>
+            <a href="https://www.drugs.com" target="_blank" rel="noopener" class="rx-btn brand-drugs">
+              Drugs.com ↗
             </a>
           </div>
         </div>

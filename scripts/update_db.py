@@ -261,6 +261,13 @@ ME_CODES = [
     {"code": "R51", "description": "Headache (Saudi Standard)", "country": "ME"},
 ]
 
+US_SAMPLES = [
+    {"code": "J45.909", "description": "Asthma, unspecified, uncomplicated (ICD-10-CM)", "country": "US"},
+    {"code": "R07.9", "description": "Chest pain, unspecified", "country": "US"},
+    {"code": "I10", "description": "Essential (primary) hypertension", "country": "US"},
+    {"code": "E11.9", "description": "Type 2 diabetes mellitus without complications", "country": "US"},
+]
+
 def rest_upsert(table: str, rows: list):
     """Upsert rows directly via Supabase REST API — no SDK needed."""
     url = f"{SUPABASE_URL}/rest/v1/{table}"
@@ -299,8 +306,8 @@ def fetch_icd10_codes():
                     "country": "US"  # Default for NLM API
                 })
             offset += len(records)
-            time.sleep(0.1)
-            if offset >= total or offset >= 2000: # Limit for demo speed
+            time.sleep(0.05) # Rate limit handling
+            if offset >= total: # Full sync
                 break
         except Exception as e:
             print(f"  Error: {e}")
@@ -319,12 +326,12 @@ if __name__ == "__main__":
     if icd10:
         rest_upsert("medical_codes", icd10)
 
-    # 2. International Samples (UK/ME)
+    # 2. International Samples (US/UK/ME)
     intl = [
         {"code": c["code"], "short_description": c["description"], "country": c["country"], "effective_date": "2024-01-01"} 
-        for c in (UK_CODES + ME_CODES)
+        for c in (US_SAMPLES + UK_CODES + ME_CODES)
     ]
-    print(f"Uploading {len(intl)} International codes...")
+    print(f"Uploading {len(intl)} International/Common codes...")
     rest_upsert("medical_codes", intl)
 
     # 3. CARC/RARC codes
