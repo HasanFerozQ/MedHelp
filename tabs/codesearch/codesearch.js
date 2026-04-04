@@ -1,49 +1,31 @@
-let fuse = null;
 let currentFilter = 'ALL';
+let searchTimeout = null;
 
-// Initialize Search on Load
-async function initSearch() {
-  try {
-    const response = await fetch('../../data/icd10_cpt_codes.json');
-    const data = await response.json();
-    
-    const FUSE_OPTIONS = {
-      keys: [
-        { name: 'code', weight: 0.4 },
-        { name: 'description', weight: 0.6 }
-      ],
-      threshold: 0.35,
-      minMatchCharLength: 2,
-      includeScore: true
-    };
-    
-    // fuse is loaded via script tag in popup.html before popup.js
-    fuse = new Fuse(data, FUSE_OPTIONS);
-    
-    // Setup event listeners once data is loaded
-    setupEventListeners();
-  } catch (error) {
-    console.error("Error loading mock data:", error);
-  }
-}
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  setupEventListeners();
+});
 
 function setupEventListeners() {
   const searchInput = document.getElementById('code-search-input');
   const filterBtns = document.querySelectorAll('.filter-btn');
 
   searchInput.addEventListener('input', (e) => {
-    performSearch(e.target.value);
+    const query = e.target.value.trim();
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      performSearch(query);
+    }, 400); // 400ms debounce for network requests
   });
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      // Manage active states
       filterBtns.forEach(b => b.classList.remove('active'));
       const clickedBtn = e.target;
       clickedBtn.classList.add('active');
       
       currentFilter = clickedBtn.dataset.filter;
-      performSearch(searchInput.value);
+      performSearch(searchInput.value.trim());
     });
   });
 }
@@ -56,55 +38,62 @@ async function performSearch(query) {
     return;
   }
 
-  // If NCCI Edits filter is selected, query Supabase directly
-  if (currentFilter === 'NCCI') {
-    listContainer.innerHTML = '<div class="empty-state">Checking NCCI database...</div>';
-    if (!window.dbClient) {
-      listContainer.innerHTML = '<div class="empty-state" style="color:red">Database not connected</div>';
-      return;
-    }
-    try {
+  if (!window.dbClient) {
+    listContainer.innerHTML = '<div class="empty-state" style="color:var(--text-danger)">Database connection error.</div>';
+    return;
+  }
+
+  listContainer.innerHTML = '<div class="empty-state">Querying Supabase database...</div>';
+
+  try {
+    // Branch 1: NCCI Edits Lookup
+    if (currentFilter === 'NCCI') {
       const { data, error } = await window.dbClient
         .from('ncci_edits')
         .select('*')
-        .eq('primary_code', query)
+        .eq('primary_code', query.toUpperCase())
         .limit(20);
         
       if (error) throw error;
       renderNCCIResults(data);
-    } catch(err) {
-      console.error(err);
-      listContainer.innerHTML = '<div class="empty-state" style="color:red">Error fetching NCCI edits</div>';
+      return;
     }
-    return;
-  }
 
-  // Otherwise use local mock Fuse search
-  if (!fuse) return;
-  let results = fuse.search(query, { limit: 20 });
-  
-  // Apply Filter
-  if (currentFilter !== 'ALL') {
-    results = results.filter(r => r.item.type === currentFilter);
-  }
+    // Branch 2: Standard Medical Codes Lookup (ICD-10, CPT, HCPCS)
+    let dbQuery = window.dbClient
+      .from('medical_codes')
+      .select('*')
+      .or(`code.ilike.%${query}%,short_description.ilike.%${query}%`)
+      .limit(20);
 
-  renderResults(results);
+    if (currentFilter !== 'ALL') {
+      dbQuery = dbQuery.eq('code_type', currentFilter);
+    }
+
+    const { data, error } = await dbQuery;
+    
+    if (error) throw error;
+    renderResults(data);
+
+  } catch(err) {
+    console.error(err);
+    listContainer.innerHTML = '<div class="empty-state" style="color:var(--text-danger)">Error fetching code data.</div>';
+  }
 }
 
 function renderResults(results) {
   const listContainer = document.getElementById('search-results-list');
   
-  if (results.length === 0) {
-    listContainer.innerHTML = '<div class="empty-state">No matching codes found.</div>';
+  if (!results || results.length === 0) {
+    listContainer.innerHTML = '<div class="empty-state">No matching codes found in database.</div>';
     return;
   }
 
   let html = '';
-  results.forEach(r => {
-    const item = r.item;
+  results.forEach(item => {
     // Map internal types to user-friendly tags
-    let tagClass = `tag-${item.type || 'HCPCS'}`;
-    let displayType = (item.type || 'HCPCS').replace('ICD10', 'ICD-10');
+    let tagClass = `tag-${item.code_type || 'HCPCS'}`;
+    let displayType = (item.code_type || 'HCPCS').replace('ICD10', 'ICD-10');
     
     html += `
       <div class="result-card">
@@ -112,7 +101,7 @@ function renderResults(results) {
           <span class="code-val">${item.code}</span>
           <span class="code-tag ${tagClass}">${displayType}</span>
         </div>
-        <div class="result-desc">${item.description}</div>
+        <div class="result-desc">${item.short_description || item.long_description}</div>
         <button class="copy-btn" data-code="${item.code}" title="Copy to clipboard">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
         </button>
@@ -160,7 +149,3 @@ function attachCopyListeners() {
     });
   });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  initSearch();
-});
