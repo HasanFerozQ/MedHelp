@@ -3,8 +3,13 @@
   --bg-secondary: #ffffff;
   --text-main: #0f172a;
   --text-muted: #64748b;
+  --text-dark: #0f172a;
+  --text-normal: #334155;
+  --text-danger: #dc2626;
   --tint-teal: #0f766e;
   --tint-teal-light: #ccfbf1;
+  --tint-red: #dc2626;
+  --tint-blue: #2563eb;
   --border-light: #cbd5e1;
   
   --tag-icd: #dbeafe;
