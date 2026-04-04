@@ -283,11 +283,11 @@ def rest_upsert(table: str, rows: list):
             print(f"  ERROR at chunk {i}: {r.status_code} – {r.text[:200]}")
 
 
-def fetch_icd10_codes():
-    print("Fetching ICD-10-CM codes from NLM API...")
+def fetch_and_sync_icd10():
+    print("Fetching and Syncing ICD-10-CM codes (Streaming)...")
     base_url = "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&cf=code,name&terms=&df=code,name&maxList=500&offset={}"
-    all_codes = []
     offset = 0
+    total_synced = 0
     while True:
         try:
             print(f"  ICD-10 offset {offset}...")
@@ -297,49 +297,52 @@ def fetch_icd10_codes():
             records = data[3]
             if not records:
                 break
+            
+            chunk = []
             for rec in records:
                 desc = rec[1][:950] if len(rec[1]) > 950 else rec[1]
-                all_codes.append({
+                chunk.append({
                     "code": rec[0], "code_type": "ICD10",
                     "short_description": desc, "long_description": desc,
-                    "effective_date": "2024-01-01",
-                    "country": "US"  # Default for NLM API
+                    "country": "US"
                 })
+            
+            # Immediate Upsert for this chunk
+            rest_upsert("medical_codes", chunk)
+            total_synced += len(records)
+            
             offset += len(records)
             time.sleep(0.05) # Rate limit handling
-            if offset >= total: # Full sync
+            if offset >= total:
                 break
         except Exception as e:
             print(f"  Error: {e}")
             break
-    return all_codes
+    print(f"  Finished streaming {total_synced} ICD-10 codes.")
 
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("  MediHelp Now – Global CMS Data Pipeline")
+    print("  MediHelp Now — Global CMS Streaming Pipeline")
     print("=" * 60)
 
-    # 1. ICD-10 US
-    icd10 = fetch_icd10_codes()
-    print(f"Fetched {len(icd10)} ICD-10 codes. Uploading...")
-    if icd10:
-        rest_upsert("medical_codes", icd10)
-
-    # 2. International Samples (US/UK/ME)
+    # 1. International & Common Samples FIRST for immediate UI wins
     intl = [
-        {"code": c["code"], "short_description": c["description"], "country": c["country"], "effective_date": "2024-01-01"} 
+        {"code": c["code"], "short_description": c["description"], "country": c["country"], "code_type": "ICD10"} 
         for c in (US_SAMPLES + UK_CODES + ME_CODES)
     ]
     print(f"Uploading {len(intl)} International/Common codes...")
     rest_upsert("medical_codes", intl)
 
+    # 2. ICD-10 US (Full Streaming Sync)
+    fetch_and_sync_icd10()
+
     # 3. CARC/RARC codes
-    carc = [{"code": c[0], "description": c[1], "effective_date": "2024-01-01"} for c in CARC_CODES]
+    carc = [{"code": c[0], "description": c[1]} for c in CARC_CODES]
     print(f"Uploading {len(carc)} CARC codes...")
     rest_upsert("carc_codes", carc)
 
-    rarc = [{"code": c[0], "description": c[1], "effective_date": "2024-01-01"} for c in RARC_CODES]
+    rarc = [{"code": c[0], "description": c[1]} for c in RARC_CODES]
     print(f"Uploading {len(rarc)} RARC codes...")
     rest_upsert("rarc_codes", rarc)
 

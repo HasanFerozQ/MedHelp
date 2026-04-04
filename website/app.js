@@ -200,7 +200,7 @@ async function searchCodes(q, container) {
       .from('medical_codes')
       .select('code, short_description, country')
       .or(`code.ilike.%${qUpper}%,short_description.ilike.%${q}%`)
-      .limit(50);
+      .limit(200);
 
     if (activeRegion !== 'ALL') query = query.eq('country', activeRegion);
 
