@@ -1,91 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediHelp Dispatch | Medical Insights & Innovations</title>
+  <title>MediHelp Dispatch | Medical Insights & Global Health</title>
   <link rel="icon" href="/icons/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    .dispatch-header {
+      padding: 60px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 60px;
+    }
+    .dispatch-title {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900;
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--text-h);
+      margin-bottom: 12px;
+      letter-spacing: -2px;
+    }
+    .dispatch-subtitle {
+      color: var(--text-muted);
+      font-size: 17px;
+    }
+    .skeleton {
+      background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-sm);
+    }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    .skeleton-hero { height: 380px; margin-bottom: 60px; border-radius: var(--radius-lg); }
+    .skeleton-card { height: 340px; border-radius: var(--radius-lg); }
+  </style>
 </head>
 <body>
 
   <nav class="navbar">
     <div class="container nav-content">
-      <a href="/" class="nav-brand">
-        <img src="images/logo.png" alt="MediHelp Logo">
+      <a href="index.html" class="nav-brand">
+        <img src="images/logo.png" alt="MediHelp">
         MediHelp
       </a>
       <div class="nav-links">
-        <a href="/">Back to Tools</a>
+        <a href="index.html">Tools</a>
         <a href="audit.html">Bill Audit</a>
-        <a href="blog.html">Blog</a>
+        <a href="providers.html">Provider Search</a>
+        <a href="blog.html" class="active">Dispatch</a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
       </div>
     </div>
   </nav>
 
-  <section class="hero container" style="padding-bottom: 40px;">
-    <h1 style="font-family: 'Playfair Display', serif; font-style: italic;">The Dispatch.</h1>
-    <p>Insightful medical billing trends and global health news.</p>
-  </section>
+  <div class="dispatch-header container">
+    <div class="dispatch-title">The Dispatch.</div>
+    <p class="dispatch-subtitle">Global health insights, medical billing trends, and clinical breakthroughs.</p>
+  </div>
 
-  <!-- Most Recent Post Container -->
-  <section class="container" id="recent-post-hero"></section>
+  <!-- Loading Skeletons -->
+  <div class="container" id="blog-loading">
+    <div class="skeleton skeleton-hero"></div>
+    <div class="blog-grid">
+      <div class="skeleton skeleton-card"></div>
+      <div class="skeleton skeleton-card"></div>
+      <div class="skeleton skeleton-card"></div>
+    </div>
+  </div>
 
-  <!-- Suggested Grid Container -->
-  <section class="container blog-grid" id="blog-list-container"></section>
+  <!-- Most Recent Hero -->
+  <div class="container" id="blog-hero-container" style="display:none;"></div>
 
-  <footer class="container">
-    <div class="footer-bottom">
-      &copy; 2026 MediHelp. All Rights Reserved.
+  <!-- Previous Posts Grid -->
+  <div class="container" id="blog-grid-container" style="display:none;">
+    <div class="section-label" style="margin-bottom:24px;">Previous Posts</div>
+    <div class="blog-grid" id="blog-grid"></div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp Dispatch</h3>
+          <p>Published from GitHub. Each `.md` file you upload becomes a live article automatically.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="index.html">Code Lookup</a></li>
+            <li><a href="audit.html">Bill Audit</a></li>
+            <li><a href="providers.html">NPI Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
+      </div>
     </div>
   </footer>
 
   <script src="blog_handler.js"></script>
+  <script src="app.js"></script>
   <script>
     const SUPABASE_URL = 'https://bisqgousuvljttesjkkm.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
 
-    document.addEventListener('DOMContentLoaded', async () => {
+    async function loadBlog() {
       const posts = await MediHelp.fetchBlogs();
-      const heroContainer = document.getElementById('recent-post-hero');
-      const gridContainer = document.getElementById('blog-list-container');
+      document.getElementById('blog-loading').style.display = 'none';
 
       if (posts.length === 0) {
-        heroContainer.innerHTML = '<p style="text-align:center;">No blog posts found.</p>';
+        document.getElementById('blog-hero-container').style.display = 'block';
+        document.getElementById('blog-hero-container').innerHTML = `
+          <div style="text-align:center; padding:80px 0;">
+            <div style="font-size:48px; margin-bottom:20px;">📰</div>
+            <h2 style="color:var(--text-h); margin-bottom:12px;">No Posts Yet</h2>
+            <p style="color:var(--text-muted);">Upload a <code>.md</code> file to the <code>/blog</code> folder in GitHub to publish your first article.</p>
+          </div>`;
         return;
       }
 
-      // Most Recent Hero
+      // Recent hero post
       const recent = posts[0];
+      const heroContainer = document.getElementById('blog-hero-container');
+      heroContainer.style.display = 'block';
       heroContainer.innerHTML = `
-        <a href="blog-post.html?slug=${recent.slug}" class="feature-card" style="display: flex; gap: 40px; text-decoration: none; align-items: center; background: rgba(255,255,255,0.03);">
-          <img src="${recent.thumbnail}" style="width: 50%; height: 400px; object-fit: cover; border-radius: 16px;">
-          <div style="flex: 1;">
-            <span class="blog-category">${recent.category}</span>
-            <h2 style="font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 16px;">${recent.title}</h2>
+        <a href="blog-post.html?slug=${encodeURIComponent(recent.slug)}" class="blog-hero-post">
+          <img class="blog-hero-img" src="${recent.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80'}" alt="${recent.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80'">
+          <div class="blog-hero-body">
+            <span class="blog-tag">Most Recent · ${recent.category}</span>
+            <h2>${recent.title}</h2>
             <p>${recent.summary}</p>
-            <div style="margin-top: 24px; color: var(--accent); font-weight: 700;">Read Most Recent →</div>
+            <div class="blog-meta">
+              <span>📅 ${new Date(recent.date).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'})}</span>
+            </div>
+            <span class="blog-cta">Read Article →</span>
           </div>
-        </a>
-      `;
+        </a>`;
 
-      // Previous Suggestions
-      const suggestions = posts.slice(1, 4);
-      gridContainer.innerHTML = suggestions.map(p => `
-        <a href="blog-post.html?slug=${p.slug}" class="blog-card">
-          <img src="${p.thumbnail}" class="blog-thumb">
-          <div class="blog-info">
-            <span class="blog-category">${p.category}</span>
-            <h3 style="color:#fff; margin-bottom: 12px; font-size: 20px;">${p.title}</h3>
-            <p style="font-size: 14px; margin-bottom: 16px;">${p.summary.substring(0, 100)}...</p>
-            <div style="color: var(--accent); font-size: 13px; font-weight: 700;">Read More →</div>
-          </div>
-        </a>
-      `).join('');
-    });
+      // Previous posts
+      const prev = posts.slice(1, 10);
+      if (prev.length > 0) {
+        const gridContainer = document.getElementById('blog-grid-container');
+        gridContainer.style.display = 'block';
+        document.getElementById('blog-grid').innerHTML = prev.map(p => `
+          <a href="blog-post.html?slug=${encodeURIComponent(p.slug)}" class="blog-card">
+            <img class="blog-card-img" src="${p.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'}" alt="${p.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
+            <div class="blog-card-body">
+              <span class="blog-tag">${p.category}</span>
+              <h3>${p.title}</h3>
+              <p>${p.summary.substring(0, 120)}...</p>
+              <div class="blog-meta">
+                <span>📅 ${new Date(p.date).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})}</span>
+              </div>
+            </div>
+          </a>`).join('');
+      }
+    }
+
+    loadBlog();
   </script>
+
 </body>
 </html>

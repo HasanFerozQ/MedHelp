@@ -1,49 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediHelp | National Provider Search (NPI)</title>
+  <title>MediHelp | National Provider Search (NPI Lookup)</title>
   <link rel="icon" href="/icons/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <nav class="navbar">
     <div class="container nav-content">
-      <a href="/" class="nav-brand">
-        <img src="images/logo.png" alt="MediHelp Logo">
+      <a href="index.html" class="nav-brand">
+        <img src="images/logo.png" alt="MediHelp">
         MediHelp
       </a>
       <div class="nav-links">
-        <a href="/">Back to Tools</a>
+        <a href="index.html">Tools</a>
         <a href="audit.html">Bill Audit</a>
-        <a href="blog.html">Blog</a>
+        <a href="providers.html" class="active">Provider Search</a>
+        <a href="blog.html">Dispatch</a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
       </div>
     </div>
   </nav>
 
   <section class="hero container">
-    <h1>National Provider <br>Identifier Search.</h1>
-    <p>Search over 6 million healthcare providers in the official CMS NPPES Registry by name, NPI, or specialty.</p>
+    <div class="hero-eyebrow">CMS NPPES Registry · 6M+ Providers</div>
+    <h1>National Provider<br><span class="grad">Identifier Search.</span></h1>
+    <p>Search over 6 million US healthcare providers by name, NPI number, or medical specialty — sourced directly from CMS.</p>
   </section>
 
-  <div class="container">
-    <div class="tabs-container">
-      <div class="search-wrapper">
-        <input type="text" id="npi-input" class="search-input" placeholder="Search by name, specialty, or NPI...">
-        <div id="npi-results" class="results-grid" style="margin-top: 40px;"></div>
+  <div class="container" style="margin-bottom: 80px;">
+    <div class="suite-wrapper" style="padding: 40px;">
+
+      <!-- Search Filters -->
+      <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:12px; margin-bottom:24px; align-items:end;">
+        <div>
+          <label style="font-size:12px; font-weight:700; color:var(--text-muted); letter-spacing:0.1em; text-transform:uppercase; display:block; margin-bottom:8px;">Provider Name or NPI</label>
+          <div class="search-box" style="margin-bottom:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="npi-name" class="search-input" placeholder="e.g. Dr. John Smith or 1234567890">
+          </div>
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:700; color:var(--text-muted); letter-spacing:0.1em; text-transform:uppercase; display:block; margin-bottom:8px;">State</label>
+          <select id="npi-state" class="search-input" style="padding-left:20px; cursor:pointer;">
+            <option value="">All States</option>
+            <option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
+            <option>CA</option><option>CO</option><option>CT</option><option>DE</option>
+            <option>FL</option><option>GA</option><option>HI</option><option>ID</option>
+            <option>IL</option><option>IN</option><option>IA</option><option>KS</option>
+            <option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+            <option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+            <option>MO</option><option>MT</option><option>NE</option><option>NV</option>
+            <option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
+            <option>NC</option><option>ND</option><option>OH</option><option>OK</option>
+            <option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+            <option>SD</option><option>TN</option><option>TX</option><option>UT</option>
+            <option>VT</option><option>VA</option><option>WA</option><option>WV</option>
+            <option>WI</option><option>WY</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="npi-search-btn" onclick="searchNPI()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Search
+        </button>
+      </div>
+
+      <div id="npi-results" class="results-area">
+        <p class="status-msg">Enter a name or NPI number to search the registry.</p>
       </div>
     </div>
   </div>
 
-  <footer class="container">
-    <div class="footer-bottom">
-      &copy; 2026 MediHelp. All Rights Reserved. Not a government agency.
+  <!-- ── FAQ ── -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-label">Provider Search FAQ</div>
+      <h2 class="section-title">Understanding NPI Lookup</h2>
+      <div class="faq-grid" id="faq-providers"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Your free, global partner in medical billing accuracy and claim transparency.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="index.html">Code Lookup</a></li>
+            <li><a href="audit.html">Bill Audit</a></li>
+            <li><a href="blog.html">Dispatch Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
+        <span>Data sourced from CMS NPPES public registry.</span>
+      </div>
     </div>
   </footer>
 
+  <script src="blog_handler.js"></script>
   <script src="app.js"></script>
+  <script>
+    const providerFaqs = [
+      { q: 'What is an NPI number?', a: 'A National Provider Identifier (NPI) is a unique 10-digit identification number issued by CMS to all healthcare providers in the United States. It is used in all HIPAA-covered transactions.' },
+      { q: 'Is this data official?', a: 'Yes. All provider data comes directly from the CMS NPPES (National Plan & Provider Enumeration System) public registry, updated regularly.' },
+      { q: 'Can I search by specialty?', a: 'Currently you can search by name and state. Specialty filtering is coming soon. You can type a specialty keyword (e.g. "cardiologist") in the name field as a workaround.' },
+      { q: 'Why is a provider missing?', a: 'Providers must apply for an NPI and be enrolled in the NPPES system. If a provider is omitted, they may not yet have enrolled or may have a deactivated NPI.' },
+    ];
+    renderFAQ('faq-providers', providerFaqs);
+  </script>
+
 </body>
 </html>

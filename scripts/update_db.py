@@ -244,6 +244,23 @@ RARC_CODES = [
 ]
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# INTERNATIONAL DATASETS (UK / ME)
+# ─────────────────────────────────────────────────────────────────────────────
+UK_CODES = [
+    {"code": "G30.9", "description": "Alzheimer disease, unspecified", "country": "UK"},
+    {"code": "I10", "description": "Essential (primary) hypertension", "country": "UK"},
+    {"code": "E11.9", "description": "Type 2 diabetes mellitus without complications", "country": "UK"},
+    {"code": "Z00.0", "description": "General medical examination", "country": "UK"},
+    {"code": "W51.0", "description": "PROCEDURE: Appendicectomy (OPCS-4 Sample)", "country": "UK"},
+]
+
+ME_CODES = [
+    {"code": "H52.1", "description": "Myopia (UAE Standard)", "country": "ME"},
+    {"code": "J45.909", "description": "Asthma, unspecified, uncomplicated", "country": "ME"},
+    {"code": "R51", "description": "Headache (Saudi Standard)", "country": "ME"},
+]
+
 def rest_upsert(table: str, rows: list):
     """Upsert rows directly via Supabase REST API — no SDK needed."""
     url = f"{SUPABASE_URL}/rest/v1/{table}"
@@ -261,7 +278,7 @@ def rest_upsert(table: str, rows: list):
 
 def fetch_icd10_codes():
     print("Fetching ICD-10-CM codes from NLM API...")
-    base_url = "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&cf=code,name&terms=&df=code,name&maxList=600&offset={}"
+    base_url = "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&cf=code,name&terms=&df=code,name&maxList=500&offset={}"
     all_codes = []
     offset = 0
     while True:
@@ -278,11 +295,12 @@ def fetch_icd10_codes():
                 all_codes.append({
                     "code": rec[0], "code_type": "ICD10",
                     "short_description": desc, "long_description": desc,
-                    "effective_date": "2024-01-01"
+                    "effective_date": "2024-01-01",
+                    "country": "US"  # Default for NLM API
                 })
             offset += len(records)
             time.sleep(0.1)
-            if offset >= total:
+            if offset >= total or offset >= 2000: # Limit for demo speed
                 break
         except Exception as e:
             print(f"  Error: {e}")
@@ -292,21 +310,28 @@ def fetch_icd10_codes():
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("  MediHelp Now – Full CMS Data Pipeline")
+    print("  MediHelp Now – Global CMS Data Pipeline")
     print("=" * 60)
 
-    # 1. ICD-10 from NLM
+    # 1. ICD-10 US
     icd10 = fetch_icd10_codes()
     print(f"Fetched {len(icd10)} ICD-10 codes. Uploading...")
     if icd10:
         rest_upsert("medical_codes", icd10)
 
-    # 2. CARC codes
+    # 2. International Samples (UK/ME)
+    intl = [
+        {"code": c["code"], "short_description": c["description"], "country": c["country"], "effective_date": "2024-01-01"} 
+        for c in (UK_CODES + ME_CODES)
+    ]
+    print(f"Uploading {len(intl)} International codes...")
+    rest_upsert("medical_codes", intl)
+
+    # 3. CARC/RARC codes
     carc = [{"code": c[0], "description": c[1], "effective_date": "2024-01-01"} for c in CARC_CODES]
     print(f"Uploading {len(carc)} CARC codes...")
     rest_upsert("carc_codes", carc)
 
-    # 3. RARC codes
     rarc = [{"code": c[0], "description": c[1], "effective_date": "2024-01-01"} for c in RARC_CODES]
     print(f"Uploading {len(rarc)} RARC codes...")
     rest_upsert("rarc_codes", rarc)

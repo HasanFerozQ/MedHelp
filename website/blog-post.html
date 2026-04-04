@@ -1,89 +1,267 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediHelp Dispatch | Post</title>
+  <title>MediHelp Dispatch | Article</title>
   <link rel="icon" href="/icons/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
-    .blog-content { max-width: 800px; margin: 0 auto; color: #fff; font-size: 18px; line-height: 1.8; }
-    .blog-content h1, .blog-content h2, .blog-content h3 { color: var(--accent); margin-top: 40px; margin-bottom: 20px; font-family: 'Playfair Display', serif; }
-    .blog-content p { color: var(--text-secondary); margin-bottom: 24px; }
-    .blog-content img { width: 100%; border-radius: 16px; margin: 40px 0; border: 1px solid var(--border); }
-    .blog-stats-bar { display: flex; gap: 20px; font-size: 13px; color: var(--text-secondary); padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+    .post-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 60px;
+      align-items: start;
+      margin-bottom: 80px;
+    }
+    .post-sidebar {
+      position: sticky;
+      top: 90px;
+    }
+    .sidebar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .sidebar-card h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .sidebar-post-link {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      text-decoration: none;
+      color: inherit;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .sidebar-post-link:last-child { border-bottom: none; }
+    .sidebar-post-link:hover { transform: translateX(4px); }
+    .sidebar-post-link img {
+      width: 64px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .sidebar-post-link .sp-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-body);
+      line-height: 1.4;
+    }
+    .sidebar-post-link .sp-date {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent);
+      z-index: 9999;
+      transition: width 0.2s ease;
+      width: 0%;
+    }
+    @media (max-width: 900px) {
+      .post-layout { grid-template-columns: 1fr; }
+      .post-sidebar { position: static; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Reading progress bar -->
+  <div class="progress-bar" id="progress-bar"></div>
+
   <nav class="navbar">
     <div class="container nav-content">
-      <a href="/" class="nav-brand">
-        <img src="images/logo.png" alt="MediHelp Logo">
+      <a href="index.html" class="nav-brand">
+        <img src="images/logo.png" alt="MediHelp">
         MediHelp
       </a>
       <div class="nav-links">
-        <a href="blog.html">All Blogs</a>
-        <a href="audit.html">Audit</a>
+        <a href="index.html">Tools</a>
+        <a href="audit.html">Bill Audit</a>
+        <a href="providers.html">Provider Search</a>
+        <a href="blog.html" class="active">Dispatch</a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
       </div>
     </div>
   </nav>
 
-  <article class="container blog-content" style="margin-top: 60px;">
-    <div id="post-header"></div>
-    <div class="blog-stats-bar" id="stats-bar">
-      <span id="read-count">... reads</span>
-      <span id="reading-time">... min read</span>
-    </div>
-    <div id="post-body"></div>
-  </article>
+  <div class="container" style="padding-top: 48px;">
 
-  <footer class="container">
-    <div class="footer-bottom">
-      &copy; 2026 MediHelp. All Rights Reserved.
+    <!-- Breadcrumb -->
+    <div style="font-size:13px; color:var(--text-muted); margin-bottom:36px;">
+      <a href="blog.html" style="color:var(--accent); text-decoration:none;">← The Dispatch</a>
+    </div>
+
+    <div class="post-layout">
+
+      <!-- MAIN CONTENT -->
+      <main>
+        <div id="post-header" class="post-header">
+          <!-- Filled by JS -->
+          <div class="skeleton" style="height:42px; width:80%; margin-bottom:16px; border-radius:8px;"></div>
+          <div class="skeleton" style="height:24px; width:60%; border-radius:8px;"></div>
+        </div>
+
+        <div class="post-stats-bar" id="post-stats">
+          <span id="stat-date">📅 --</span>
+          <span id="stat-reads">👁 -- reads</span>
+          <span id="stat-time">⏱ -- min read</span>
+          <span id="stat-category"></span>
+        </div>
+
+        <img id="post-thumbnail" class="post-hero-img" src="" alt="" style="display:none;" onerror="this.style.display='none'">
+
+        <div id="post-body" class="post-body">
+          <!-- Skeleton lines -->
+          <div class="skeleton" style="height:18px; width:100%; margin-bottom:12px; border-radius:4px;"></div>
+          <div class="skeleton" style="height:18px; width:95%; margin-bottom:12px; border-radius:4px;"></div>
+          <div class="skeleton" style="height:18px; width:88%; margin-bottom:28px; border-radius:4px;"></div>
+          <div class="skeleton" style="height:18px; width:100%; margin-bottom:12px; border-radius:4px;"></div>
+          <div class="skeleton" style="height:18px; width:92%; margin-bottom:12px; border-radius:4px;"></div>
+        </div>
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside class="post-sidebar">
+        <div class="sidebar-card">
+          <h4>Suggested Reading</h4>
+          <div id="sidebar-suggested">
+            <div class="skeleton" style="height:60px; margin-bottom:12px; border-radius:8px;"></div>
+            <div class="skeleton" style="height:60px; margin-bottom:12px; border-radius:8px;"></div>
+            <div class="skeleton" style="height:60px; border-radius:8px;"></div>
+          </div>
+        </div>
+        <div class="sidebar-card" style="background:var(--accent-glow); border-color:var(--border-accent);">
+          <h4 style="color:var(--accent-light);">Audit Your Bill</h4>
+          <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px; line-height:1.6;">Found a suspicious charge? Run a free audit right now.</p>
+          <a href="audit.html" class="btn btn-primary" style="width:100%; justify-content:center;">Start Audit →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp Dispatch</h3>
+          <p>Insightful, evidence-based medical content from around the world.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="index.html">Code Lookup</a></li>
+            <li><a href="audit.html">Bill Audit</a></li>
+            <li><a href="providers.html">NPI Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
+      </div>
     </div>
   </footer>
 
   <script src="blog_handler.js"></script>
+  <script src="app.js"></script>
   <script>
     const SUPABASE_URL = 'https://bisqgousuvljttesjkkm.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
 
-    document.addEventListener('DOMContentLoaded', async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const slug = urlParams.get('slug');
+    // Reading progress bar
+    window.addEventListener('scroll', () => {
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docH > 0 ? (window.scrollY / docH) * 100 : 0;
+      document.getElementById('progress-bar').style.width = pct + '%';
+    });
+
+    async function loadPost() {
+      const slug = new URLSearchParams(window.location.search).get('slug');
       if (!slug) { window.location.href = 'blog.html'; return; }
 
-      const blogs = await MediHelp.fetchBlogs();
-      const post = blogs.find(b => b.slug === slug);
+      const posts = await MediHelp.fetchBlogs();
+      const post = posts.find(p => p.slug === decodeURIComponent(slug));
 
       if (!post) {
-        document.getElementById('post-body').innerHTML = '<p>Post not found.</p>';
+        document.getElementById('post-body').innerHTML = '<p style="color:var(--text-muted);">Post not found. <a href="blog.html" style="color:var(--accent);">Return to Dispatch →</a></p>';
         return;
       }
 
-      // Render Title & Header
+      // Update page title
+      document.title = `${post.title} | MediHelp Dispatch`;
+
+      // Header
       document.getElementById('post-header').innerHTML = `
-        <span class="blog-category" style="margin-bottom:12px;">${post.category}</span>
-        <h1 style="font-size: 48px; color:#fff; line-height:1.1; margin-bottom: 24px;">${post.title}</h1>
-      `;
+        <span class="blog-tag" style="margin-bottom:16px; display:block;">${post.category}</span>
+        <h1 style="font-size:clamp(26px,4vw,42px); font-weight:900; color:var(--text-h); line-height:1.15; letter-spacing:-1px; margin-bottom:0;">${post.title}</h1>`;
 
-      // Parse and Render Content (Cleanup frontmatter)
-      const cleanMarkdown = post.raw.replace(/---[\s\S]*?---/, '');
-      document.getElementById('post-body').innerHTML = marked.parse(cleanMarkdown);
+      // Stats bar
+      document.getElementById('stat-date').textContent = `📅 ${new Date(post.date).toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})}`;
+      document.getElementById('stat-category').innerHTML = `<span style="font-family:var(--font-mono); color:var(--accent); font-size:11px;">${post.category}</span>`;
 
-      // Reading Time & Reads
-      const wpm = 200;
-      const wordCount = post.raw.split(/\s+/).length;
-      document.getElementById('reading-time').innerText = Math.ceil(wordCount / wpm) + ' min read';
+      // Thumbnail
+      if (post.thumbnail) {
+        const img = document.getElementById('post-thumbnail');
+        img.src = post.thumbnail;
+        img.alt = post.title;
+        img.style.display = 'block';
+      }
 
-      // Record hit and Update counter
-      const finalCount = await MediHelp.incrementReadCount(slug);
-      document.getElementById('read-count').innerText = `${finalCount} reads`;
-    });
+      // Render markdown body (strip frontmatter)
+      const cleanMd = post.raw.replace(/^---[\s\S]*?---\n?/, '').replace(/^# .+\n?/, '').trim();
+      document.getElementById('post-body').innerHTML = marked.parse(cleanMd);
+
+      // Reading time
+      const words = post.raw.split(/\s+/).length;
+      const mins = Math.max(1, Math.ceil(words / 220));
+      document.getElementById('stat-time').textContent = `⏱ ${mins} min read`;
+
+      // Read count
+      const count = await MediHelp.incrementReadCount(post.slug, SUPABASE_URL, SUPABASE_ANON_KEY);
+      document.getElementById('stat-reads').textContent = `👁 ${count} reads`;
+
+      // Sidebar: 3 suggested posts (excluding current)
+      const suggested = posts.filter(p => p.slug !== post.slug).slice(0, 3);
+      document.getElementById('sidebar-suggested').innerHTML = suggested.length > 0
+        ? suggested.map(s => `
+          <a href="blog-post.html?slug=${encodeURIComponent(s.slug)}" class="sidebar-post-link">
+            <img src="${s.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&q=60'}" alt="${s.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&q=60'">
+            <div>
+              <div class="sp-title">${s.title}</div>
+              <div class="sp-date">${new Date(s.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>
+            </div>
+          </a>`).join('')
+        : '<p style="font-size:13px;color:var(--text-muted);">No other posts yet.</p>';
+    }
+
+    loadPost();
   </script>
+
 </body>
 </html>
