@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MediHelp | AI Bill Audit — Free Medical Bill Checker</title>
-  <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- PDF.js for 100% Local PDF Extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 
@@ -23,7 +25,7 @@
         <a href="blog.html">Dispatch</a>
       </div>
       <div class="nav-actions">
-        <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
       </div>
     </div>
   </nav>
@@ -31,58 +33,53 @@
   <section class="hero container">
     <div class="hero-eyebrow">HIPAA-Safe · Local Processing</div>
     <h1>Smart Bill Audit.<br><span class="grad">Catch Overcharges.</span></h1>
-    <p>Paste your medical bill text or enter line items below. Our engine checks for duplicate charges, unbundling errors, and inflated coding — instantly.</p>
+    <p>Upload a PDF, paste your medical bill text, or enter line items. Our engine checks for duplicate charges, unbundling errors, and inflated coding — 100% privately in your browser.</p>
   </section>
 
-  <div class="container" style="margin-bottom: 80px;">
+  <div class="container" style="margin-bottom: 80px; max-width: 800px;">
     <div class="audit-area">
 
       <!-- Audit Mode Tabs -->
       <div class="audit-tabs">
-        <button class="audit-tab active" onclick="switchAuditTab('paste', this)">📋 Paste Bill Text</button>
-        <button class="audit-tab" onclick="switchAuditTab('lines', this)">📝 Enter Line Items</button>
+        <button class="audit-tab active" onclick="switchAuditTab('pdf', this)">📄 Upload PDF</button>
+        <button class="audit-tab" onclick="switchAuditTab('paste', this)">📋 Paste Text</button>
+        <button class="audit-tab" onclick="switchAuditTab('lines', this)">📝 Line Items</button>
+      </div>
+
+      <!-- PDF UPLOAD PANEL -->
+      <div id="audit-pdf" class="audit-panel">
+        <div class="drop-zone" id="pdf-drop-zone">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          <p>Drag & Drop Medical Bill PDF here</p>
+          <div class="hint">or click to browse files</div>
+          <input type="file" id="pdf-input" accept="application/pdf" style="display:none;">
+        </div>
+        <div id="pdf-status" style="font-size:12px; margin-top:-10px; margin-bottom:20px; color:var(--accent);"></div>
       </div>
 
       <!-- PASTE TEXT PANEL -->
-      <div id="audit-paste" class="audit-panel">
-        <label style="font-size:13px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:10px; letter-spacing:0.06em; text-transform:uppercase;">Paste bill text, EOB, or any medical statement:</label>
+      <div id="audit-paste" class="audit-panel" style="display:none;">
+        <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; letter-spacing:0.06em; text-transform:uppercase;">Paste bill text or EOB:</label>
         <textarea
           id="bill-text"
           class="bill-textarea"
-          placeholder="Paste your medical bill here...
-
-Example:
-Patient: John Doe  Date: 03/15/2026
-Service: Office Visit - 99213        $150.00
-Service: ECG Interpretation - 93010  $85.00
-Service: Office Visit - 99213        $150.00   ← Duplicate?
-...
-
-All processing happens locally. Nothing is sent to our servers."></textarea>
+          placeholder="Paste your medical bill here..."></textarea>
         <div class="audit-btn-row">
-          <button class="btn btn-primary" onclick="runAudit()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Analyze Bill
-          </button>
+          <button class="btn btn-primary" onclick="runAudit()">Analyze Text</button>
           <button class="btn btn-ghost" onclick="clearAudit()">Clear</button>
         </div>
       </div>
 
       <!-- MANUAL LINE ITEMS PANEL -->
       <div id="audit-lines" class="audit-panel" style="display:none;">
-        <label style="font-size:13px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:10px; letter-spacing:0.06em; text-transform:uppercase;">Enter CPT Code + Amount per line (Format: 99213 $150.00):</label>
+        <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; letter-spacing:0.06em; text-transform:uppercase;">Format: Code $Amount (e.g. 99213 $150.00)</label>
         <textarea
           id="line-items-text"
           class="bill-textarea"
           placeholder="99213  $150.00
-93010  $85.00
-99213  $150.00
-71046  $320.00"></textarea>
+93010  $85.00"></textarea>
         <div class="audit-btn-row">
-          <button class="btn btn-primary" onclick="runAuditLines()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Analyze Line Items
-          </button>
+          <button class="btn btn-primary" onclick="runAuditLines()">Analyze Items</button>
           <button class="btn btn-ghost" onclick="document.getElementById('line-items-text').value=''">Clear</button>
         </div>
       </div>
@@ -94,22 +91,25 @@ All processing happens locally. Nothing is sent to our servers."></textarea>
   </div>
 
   <!-- ── FAQ ── -->
-  <section class="faq-section">
+  <section class="section-faq" style="text-align: center; border-top: 1px solid var(--border);">
     <div class="container">
-      <div class="section-label">Bill Audit FAQ</div>
-      <h2 class="section-title">How does the Audit work?</h2>
-      <div class="faq-grid" id="faq-audit"></div>
+      <div class="section-header" style="margin: 60px auto 48px;">
+        <div class="section-label" style="margin: 0 auto 12px;">Bill Audit FAQ</div>
+        <h2 style="text-align: center;">How does the Audit work?</h2>
+        <p style="margin: 0 auto;">Everything you need to know about professional medical billing and coding.</p>
+      </div>
+      <div class="faq-grid" id="faq-audit" style="text-align: left; max-width: 900px; margin: 0 auto 100px;"></div>
     </div>
   </section>
 
-  <footer class="site-footer">
+  <footer class="site-footer" style="text-align: center;">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-brand">
-          <h3>MediHelp</h3>
-          <p>Your free, global partner in medical billing accuracy and claim transparency.</p>
+        <div class="footer-brand" style="text-align: center;">
+          <h3 style="font-size: 24px; margin-bottom: 12px;">MediHelp</h3>
+          <p style="margin: 0 auto;">Your free, global partner in medical billing accuracy and claim transparency.</p>
         </div>
-        <div class="footer-col">
+        <div class="footer-col" style="text-align: center;">
           <h4>Tools</h4>
           <ul>
             <li><a href="index.html">Code Lookup</a></li>
@@ -117,7 +117,7 @@ All processing happens locally. Nothing is sent to our servers."></textarea>
             <li><a href="blog.html">Dispatch Blog</a></li>
           </ul>
         </div>
-        <div class="footer-col">
+        <div class="footer-col" style="text-align: center;">
           <h4>Legal</h4>
           <ul>
             <li><a href="privacy.html">Privacy Policy</a></li>
@@ -125,9 +125,9 @@ All processing happens locally. Nothing is sent to our servers."></textarea>
           </ul>
         </div>
       </div>
-      <div class="footer-bottom">
+      <div class="footer-bottom" style="justify-content: center; border-top: 1px solid var(--border); padding-top: 40px;">
         <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
-        <span>Not affiliated with CMS or any government agency.</span>
+        <span style="display:block; margin-top: 8px;">Not affiliated with CMS or any government agency.</span>
       </div>
     </div>
   </footer>
@@ -139,7 +139,7 @@ All processing happens locally. Nothing is sent to our servers."></textarea>
       { q: 'Is my medical data safe?', a: 'Absolutely. All bill analysis runs entirely in your browser using JavaScript. No text is sent to any server. We never see your patient data.' },
       { q: 'What does the audit check for?', a: 'The audit scans for: duplicate charges (same CPT code billed twice), upcoded charges (description doesn\'t match CPT cost norms), and common unbundling errors where procedures should be billed together.' },
       { q: 'What is an EOB?', a: 'An Explanation of Benefits (EOB) is a statement from your insurance company showing what was billed, what was allowed, what was paid, and what you owe.' },
-      { q: 'Does this tool replace a medical billing attorney?', a: 'No. This is a screening tool to help you identify potential issues. Always consult a certified medical billing specialist or attorney for legal matters.' },
+      { q: 'Can it read any PDF?', a: 'It is optimized for standard PDF bills and EOBs. If your PDF is purely scanning an image, text extraction may be less accurate. Our tool extracts raw text layers locally.' },
     ];
     renderFAQ('faq-audit', auditFaqs);
 
