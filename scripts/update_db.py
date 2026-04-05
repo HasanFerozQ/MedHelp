@@ -2,21 +2,27 @@ import os
 import time
 import json
 import requests
+from concurrent.futures import ThreadPoolExecutor
 
 # ─── Supabase REST API Config ────────────────────────────────────────────────
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 
 if not SUPABASE_URL or not SUPABASE_KEY:
-    print("ERROR: Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in GitHub Secrets.")
+    print("ERROR: Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in environment.")
     exit(1)
 
 HEADERS = {
     "apikey": SUPABASE_KEY,
     "Authorization": f"Bearer {SUPABASE_KEY}",
     "Content-Type": "application/json",
-    "Prefer": "resolution=merge-duplicates"  # upsert behaviour
+    "Prefer": "resolution=merge-duplicates"
 }
+
+# ─── Data Paths ─────────────────────────────────────────────────────────────
+DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
+ICD10_FILE = os.path.join(DATA_DIR, "icd10", "icd10cm-codes-2026.txt")
+HCPCS_FILE = os.path.join(DATA_DIR, "hcpcs", "HCPC2026_APR_ANWEB.txt")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CARC codes – CMS Claim Adjustment Reason Codes
@@ -153,9 +159,6 @@ CARC_CODES = [
     ("OA-18","Exact duplicate claim/service"),("OA-23","The impact of prior payer(s) adjudication"),
 ]
 
-# ─────────────────────────────────────────────────────────────────────────────
-# RARC codes – CMS Remittance Advice Remark Codes
-# ─────────────────────────────────────────────────────────────────────────────
 RARC_CODES = [
     ("M1","X-ray not taken within the past 12 months or near enough to the start of treatment."),
     ("M2","Not covered unless a more conservative treatment is tried first."),
@@ -243,110 +246,135 @@ RARC_CODES = [
     ("N570","Missing/incomplete/invalid credentialing data."),
 ]
 
-
 # ─────────────────────────────────────────────────────────────────────────────
-# INTERNATIONAL DATASETS (UK / ME)
+# INTERNATIONAL SAMPLES
 # ─────────────────────────────────────────────────────────────────────────────
 UK_CODES = [
-    {"code": "G30.9", "description": "Alzheimer disease, unspecified", "country": "UK"},
-    {"code": "I10", "description": "Essential (primary) hypertension", "country": "UK"},
-    {"code": "E11.9", "description": "Type 2 diabetes mellitus without complications", "country": "UK"},
-    {"code": "Z00.0", "description": "General medical examination", "country": "UK"},
-    {"code": "W51.0", "description": "PROCEDURE: Appendicectomy (OPCS-4 Sample)", "country": "UK"},
+    {"code": "G30.9", "short_description": "Alzheimer disease, unspecified", "country": "UK", "code_type": "ICD10"},
+    {"code": "I10", "short_description": "Essential (primary) hypertension", "country": "UK", "code_type": "ICD10"},
 ]
-
 ME_CODES = [
-    {"code": "H52.1", "description": "Myopia (UAE Standard)", "country": "ME"},
-    {"code": "J45.909", "description": "Asthma, unspecified, uncomplicated", "country": "ME"},
-    {"code": "R51", "description": "Headache (Saudi Standard)", "country": "ME"},
+    {"code": "H52.1", "short_description": "Myopia (UAE Standard)", "country": "ME", "code_type": "ICD10"},
 ]
 
-US_SAMPLES = [
-    {"code": "J45.909", "description": "Asthma, unspecified, uncomplicated (ICD-10-CM)", "country": "US"},
-    {"code": "R07.9", "description": "Chest pain, unspecified", "country": "US"},
-    {"code": "I10", "description": "Essential (primary) hypertension", "country": "US"},
-    {"code": "E11.9", "description": "Type 2 diabetes mellitus without complications", "country": "US"},
-]
-
-def rest_upsert(table: str, rows: list):
-    """Upsert rows directly via Supabase REST API — no SDK needed."""
+def rest_upsert_chunk(table: str, chunk: list):
     url = f"{SUPABASE_URL}/rest/v1/{table}"
-    chunk_size = 500
-    done = 0
-    for i in range(0, len(rows), chunk_size):
-        chunk = rows[i:i + chunk_size]
-        r = requests.post(url, headers=HEADERS, data=json.dumps(chunk), timeout=30)
+    try:
+        r = requests.post(url, headers=HEADERS, data=json.dumps(chunk), timeout=60)
         if r.status_code in (200, 201):
-            done += len(chunk)
-            print(f"  {table}: {done}/{len(rows)} rows uploaded.")
+            return len(chunk)
         else:
-            print(f"  ERROR at chunk {i}: {r.status_code} – {r.text[:200]}")
+            print(f"  [ERROR] {table}: {r.status_code} – {r.text[:100]}")
+            return 0
+    except Exception as e:
+        print(f"  [FAILED] {table}: {e}")
+        return 0
 
+def rest_upsert_parallel(table: str, rows: list):
+    """Upsert rows in parallel batches."""
+    if not rows: return
+    chunk_size = 500
+    chunks = [rows[i:i + chunk_size] for i in range(0, len(rows), chunk_size)]
+    
+    print(f"  Syncing {len(rows)} rows to {table} in {len(chunks)} parallel batches...")
+    
+    total_done = 0
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures = [executor.submit(rest_upsert_chunk, table, c) for c in chunks]
+        for f in futures:
+            total_done += f.result()
+    
+    print(f"  [DONE] {table}: {total_done}/{len(rows)} successful.")
 
-def fetch_and_sync_icd10():
-    print("Fetching and Syncing ICD-10-CM codes (Streaming)...")
-    base_url = "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&cf=code,name&terms=&df=code,name&maxList=500&offset={}"
-    offset = 0
-    total_synced = 0
-    while True:
-        try:
-            print(f"  ICD-10 offset {offset}...")
-            r = requests.get(base_url.format(offset), timeout=15)
-            data = r.json()
-            total = data[0]
-            records = data[3]
-            if not records:
-                break
-            
-            chunk = []
-            for rec in records:
-                desc = rec[1][:950] if len(rec[1]) > 950 else rec[1]
-                chunk.append({
-                    "code": rec[0], "code_type": "ICD10",
-                    "short_description": desc, "long_description": desc,
+def sync_local_icd10():
+    if not os.path.exists(ICD10_FILE):
+        print(f"ERROR: ICD10 file not found at {ICD10_FILE}")
+        return
+    
+    print(f"\nParsing ICD-10-CM bulk file: {ICD10_FILE}")
+    rows = []
+    with open(ICD10_FILE, "r", encoding="utf-8") as f:
+        for line in f:
+            parts = line.strip().split(None, 1)
+            if len(parts) == 2:
+                code, desc = parts[0], parts[1]
+                rows.append({
+                    "code": code,
+                    "code_type": "ICD10",
+                    "short_description": desc[:950],
+                    "long_description": desc,
                     "country": "US"
                 })
-            
-            # Immediate Upsert for this chunk (Optimized for 500 records)
-            print(f"  Upserting chunk {offset} to {offset+len(records)}...")
-            rest_upsert("medical_codes", chunk)
-            total_synced += len(records)
-            
-            offset += len(records)
-            time.sleep(0.5) # Increased delay to prevent server-side disconnects
-            if offset >= total:
-                break
-        except Exception as e:
-            print(f"  Error: {e}")
-            time.sleep(5) # Wait and retry if server is busy
-            continue 
-    print(f"  Finished streaming {total_synced} ICD-10 codes.")
+    
+    rest_upsert_parallel("medical_codes", rows)
 
+def sync_local_hcpcs():
+    if not os.path.exists(HCPCS_FILE):
+        print(f"ERROR: HCPCS file not found at {HCPCS_FILE}")
+        return
+    
+    print(f"\nParsing HCPCS Level II fixed-width file: {HCPCS_FILE}")
+    rows = []
+    current_code = None
+    current_desc = []
+
+    with open(HCPCS_FILE, "r", encoding="utf-8") as f:
+        for line in f:
+            if len(line) < 12: continue
+            
+            code = line[0:5].strip()
+            id_code = line[10:11] # Record Identification Code
+            long_desc = line[11:91].strip()
+            short_desc = line[91:119].strip()
+
+            if id_code == '3': # New code start
+                if current_code:
+                    rows.append({
+                        "code": current_code,
+                        "code_type": "HCPCS",
+                        "short_description": " ".join(current_desc)[:950],
+                        "long_description": " ".join(current_desc),
+                        "country": "US"
+                    })
+                current_code = code
+                current_desc = [long_desc]
+            elif id_code == '4' and current_code == code: # Continuation line
+                current_desc.append(long_desc)
+        
+        # Add last one
+        if current_code:
+            rows.append({
+                "code": current_code,
+                "code_type": "HCPCS",
+                "short_description": " ".join(current_desc)[:950],
+                "long_description": " ".join(current_desc),
+                "country": "US"
+            })
+
+    rest_upsert_parallel("medical_codes", rows)
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("  MediHelp Now — Global CMS Streaming Pipeline")
+    print("  MediHelp Now — Official Bulk Dataset Pipeline")
     print("=" * 60)
 
-    # 1. International & Common Samples FIRST for immediate UI wins
-    intl = [
-        {"code": c["code"], "short_description": c["description"], "country": c["country"], "code_type": "ICD10"} 
-        for c in (US_SAMPLES + UK_CODES + ME_CODES)
-    ]
-    print(f"Uploading {len(intl)} International/Common codes...")
-    rest_upsert("medical_codes", intl)
+    # 1. International
+    intl = UK_CODES + ME_CODES
+    print(f"Uploading {len(intl)} International samples...")
+    rest_upsert_parallel("medical_codes", intl)
 
-    # 2. ICD-10 US (Full Streaming Sync)
-    fetch_and_sync_icd10()
+    # 2. Bulk ICD-10 (74K)
+    sync_local_icd10()
 
-    # 3. CARC/RARC codes
+    # 3. Bulk HCPCS (8.7K)
+    sync_local_hcpcs()
+
+    # 4. CARC/RARC
     carc = [{"code": c[0], "description": c[1]} for c in CARC_CODES]
-    print(f"Uploading {len(carc)} CARC codes...")
-    rest_upsert("carc_codes", carc)
+    rest_upsert_parallel("carc_codes", carc)
 
     rarc = [{"code": c[0], "description": c[1]} for c in RARC_CODES]
-    print(f"Uploading {len(rarc)} RARC codes...")
-    rest_upsert("rarc_codes", rarc)
+    rest_upsert_parallel("rarc_codes", rarc)
 
     print("=" * 60)
     print("  Pipeline complete!")

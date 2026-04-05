@@ -1,0 +1,13 @@
+# Node.js
+node_modules/
+dist/
+.env
+
+# Raw Datasets
+scripts/data/
+scripts/*.zip
+scripts/*.txt
+
+# Local Dev
+.DS_Store
+*.log

@@ -193,7 +193,7 @@ async function searchCodes(q, container) {
   try {
     let query = db
       .from('medical_codes')
-      .select('code, short_description, country')
+      .select('code, short_description, country, code_type')
       .or(`code.ilike.%${qUpper}%,short_description.ilike.%${q}%`)
       .limit(200);
 
@@ -209,9 +209,12 @@ async function searchCodes(q, container) {
 
     container.innerHTML = data.map(r => `
       <div class="result-card" style="text-align:left;">
-        <span class="result-code">${r.code}</span>
+        <span class="status-badge" style="background:var(--bg-elevated); color:var(--text-muted); font-size:10px; padding:2px 6px; border-radius:4px; margin-bottom:4px; display:inline-block;">${r.code_type || 'ICD10'}</span>
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <span class="result-code">${r.code}</span>
+          <span class="result-badge ${r.country?.toLowerCase() || 'icd'}">${r.country || 'US'}</span>
+        </div>
         <span class="result-desc">${r.short_description || '—'}</span>
-        <span class="result-badge ${r.country?.toLowerCase() || 'icd'}">${r.country || 'US'}</span>
       </div>`).join('');
   } catch (e) {
     if (MediHelp.logError) MediHelp.logError('searchCodes: ' + e.message);
