@@ -169,10 +169,62 @@
 
       <!-- SIDEBAR -->
       <aside class="post-sidebar">
-        <!-- ... existing content ... -->
+        <div class="sidebar-card">
+          <h4>Suggested Reading</h4>
+          <div id="sidebar-suggested">
+            <div class="skeleton" style="height:60px; margin-bottom:12px; border-radius:8px;"></div>
+            <div class="skeleton" style="height:60px; margin-bottom:12px; border-radius:8px;"></div>
+            <div class="skeleton" style="height:60px; border-radius:8px;"></div>
+          </div>
+        </div>
+        <div class="sidebar-card" style="background:var(--accent-glow); border-color:var(--border-accent);">
+          <h4 style="color:var(--accent-light);">Audit Your Bill</h4>
+          <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px; line-height:1.6;">Found a suspicious charge? Run a free audit right now.</p>
+          <a href="audit.html" class="btn btn-primary" style="width:100%; justify-content:center;">Start Audit →</a>
+        </div>
       </aside>
     </div>
   </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Your free, global partner in medical billing accuracy, claim transparency, and code intelligence.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="audit.html">AI Bill Audit</a></li>
+            <li><a href="providers.html">National Provider Search</a></li>
+            <li><a href="index.html#suite">Code Lookup</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Global</h4>
+          <ul>
+            <li><a href="#">US (ICD-10-CM)</a></li>
+            <li><a href="#">UK (NHS / OPCS-4)</a></li>
+            <li><a href="#">Middle East (WHO)</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content: center; border-top: 1px solid var(--border); padding-top: 40px; flex-direction: column; gap: 10px; align-items: center;">
+        <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size: 11px; opacity: 0.7;">Informational only. Not medical/legal advice. <a href="terms.html" style="color: var(--accent); text-decoration: none; font-weight: 700;">Terms & Disclaimer</a></span>
+        <span style="display:block; font-size: 10px; opacity: 0.5;">Not affiliated with CMS or any government agency.</span>
+      </div>
+    </div>
+  </footer>
 
   <div id="toast" class="toast-msg">Link copied to clipboard!</div>
 
