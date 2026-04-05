@@ -449,9 +449,8 @@ body {
   padding: 16px 20px;
   margin-bottom: 10px;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
+  flex-direction: column; /* Stack header and desc for better alignment */
+  gap: 12px;
   transition: var(--transition);
 }
 
@@ -460,34 +459,66 @@ body {
   background: var(--bg-card-hover);
 }
 
-.result-code {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--accent);
-  flex-shrink: 0;
+.result-code-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-.result-desc { font-size: 14px; color: var(--text-body); flex: 1; }
+.result-code {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-light);
+}
+
+.result-desc { 
+  font-size: 14px; 
+  color: var(--text-body); 
+  line-height: 1.5;
+  padding-left: 2px; /* Slight offset for better visual alignment */
+}
+
+.region-badges {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.status-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--bg-card);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
 
 .result-badge {
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-radius: 4px;
   background: var(--accent-glow);
   color: var(--accent-light);
   border: 1px solid var(--border-accent);
-  flex-shrink: 0;
+  transition: var(--transition);
 }
 
-.result-badge.carc { background: rgba(239,68,68,0.1); color: #fca5a5; border-color: rgba(239,68,68,0.3); }
-.result-badge.rarc { background: rgba(245,158,11,0.1); color: #fcd34d; border-color: rgba(245,158,11,0.3); }
-.result-badge.icd  { background: var(--accent-glow); color: var(--accent-light); border-color: var(--border-accent); }
-.result-badge.uk   { background: rgba(63,131,248,0.1); color: #93c5fd; border-color: rgba(63,131,248,0.3); }
-.result-badge.me   { background: rgba(167,139,250,0.1); color: #c4b5fd; border-color: rgba(167,139,250,0.3); }
+.result-badge.inactive {
+  background: rgba(255,255,255,0.03);
+  color: var(--text-muted);
+  border-color: var(--border);
+  opacity: 0.5;
+}
+
+.result-badge.us { border-color: rgba(6, 182, 212, 0.4); }
+.result-badge.uk { border-color: rgba(16, 185, 129, 0.4); }
+.result-badge.me { border-color: rgba(167, 139, 250, 0.4); }
 
 /* Rx Cards */
 .rx-vertical-stack {

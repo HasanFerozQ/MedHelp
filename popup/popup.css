@@ -138,109 +138,110 @@ main {
   z-index: 10;
 }
 
-#code-search-input,
-#rx-search-input,
-#denial-search-input,
-#npi-search-input {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  font-size: 14px;
-  font-family: inherit;
-  box-sizing: border-box;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-#code-search-input:focus,
-#rx-search-input:focus,
-#denial-search-input:focus,
-#npi-search-input:focus {
-  outline: none;
-  border-color: var(--tint-teal);
-  box-shadow: 0 0 0 3px var(--tint-teal-light);
-}
-
-.filters {
+/* Region Filters */
+.region-filters {
   display: flex;
+  align-items: center;
   gap: 8px;
+  margin-top: 4px;
 }
 
-.filter-btn {
+.region-filters label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.region-pill {
   background: var(--bg-secondary);
   border: 1px solid var(--border-light);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
   color: var(--text-muted);
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.filter-btn.active {
-  background: var(--text-main);
-  color: white;
-  border-color: var(--text-main);
+.region-pill:hover,
+.region-pill.active {
+  border-color: var(--tint-teal);
+  color: var(--tint-teal);
+  background: var(--tint-teal-light);
 }
 
-/* Code Search Results */
-.results-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
+/* Code Search Results Redesign */
 .result-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-light);
   border-radius: 12px;
-  padding: 14px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-
-.result-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-}
-
-.result-code-area {
-  flex-shrink: 0;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-top: 2px;
-  width: 70px;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.result-main-area {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .code-val {
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 15px;
   font-family: monospace;
+  color: var(--text-dark);
 }
 
 .code-tag {
   font-size: 10px;
   padding: 2px 6px;
   border-radius: 4px;
-  font-weight: 600;
-  text-align: center;
-  display: inline-block;
+  font-weight: 700;
+  background: var(--bg-primary);
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
 }
 
-.tag-ICD10 { background: var(--tag-icd); color: var(--tag-icd-text); }
-.tag-CPT { background: var(--tag-cpt); color: var(--tag-cpt-text); }
-.tag-MODIFIER { background: var(--tag-mod); color: var(--tag-mod-text); }
+.region-badges {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex: 1; /* Pushes copy btn to the right */
+}
+
+.reg-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: var(--tint-teal-light);
+  color: var(--tint-teal);
+  border: 1px solid rgba(15, 118, 110, 0.2);
+}
+
+.reg-badge.inactive {
+  background: #f1f5f9;
+  color: #94a3b8;
+  border-color: #e2e8f0;
+  opacity: 0.6;
+}
 
 .result-desc {
   font-size: 13px;
-  line-height: 1.4;
-  color: var(--text-main);
-  flex: 1;
+  line-height: 1.5;
+  color: var(--text-normal);
+  padding: 0 2px;
 }
 
 .copy-btn {
@@ -249,17 +250,16 @@ main {
   color: var(--text-muted);
   cursor: pointer;
   padding: 4px;
-  border-radius: 4px;
-  opacity: 0.5;
+  border-radius: 6px;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.result-card:hover .copy-btn {
-  opacity: 1;
-}
 .copy-btn:hover {
-  background: var(--border-light);
-  color: var(--text-main);
+  background: var(--bg-primary);
+  color: var(--tint-teal);
 }
 
 /* Audit Tab placeholders */

@@ -52,12 +52,19 @@
     <section id="tab-codesearch" class="tab-panel active">
       <div class="search-container">
         <input type="text" id="code-search-input" placeholder="Search code, condition, or symptom..." autofocus>
+        <div class="region-filters">
+          <label>Region:</label>
+          <button class="region-pill active" data-region="US">US</button>
+          <button class="region-pill" data-region="UK">UK</button>
+          <button class="region-pill" data-region="ME">ME</button>
+          <button class="region-pill" data-region="ALL">All</button>
+        </div>
         <div class="filters">
-          <button class="filter-btn active" data-filter="ALL">All</button>
+          <button class="filter-btn active" data-filter="ALL">All Types</button>
           <button class="filter-btn" data-filter="ICD10">ICD-10</button>
           <button class="filter-btn" data-filter="CPT">CPT</button>
           <button class="filter-btn" data-filter="HCPCS">HCPCS</button>
-          <button class="filter-btn" data-filter="NCCI">NCCI Edits</button>
+          <button class="filter-btn" data-filter="NCCI">NCCI</button>
         </div>
       </div>
       <div id="search-results-list" class="results-list">

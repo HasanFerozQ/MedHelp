@@ -189,33 +189,67 @@ async function searchCodes(q, container) {
 
   const qUpper = q.toUpperCase();
   const cleanQ = q.replace(/\./g, '').toUpperCase();
-  container.innerHTML = `<p class="status-msg"><span class="spinner"></span>Searching ${activeRegion} data...</p>`;
+  container.innerHTML = `<p class="status-msg"><span class="spinner"></span>Querying Global Database...</p>`;
 
   try {
+    // 1. Fetch data for ALL regions regardless of activeRegion
+    // This allows us to see if a US code is also available in UK/ME
     let query = db
       .from('medical_codes')
       .select('code, short_description, country, code_type')
       .or(`code.ilike.%${cleanQ}%,short_description.ilike.%${q}%`)
-      .limit(200);
-
-    if (activeRegion !== 'ALL') query = query.eq('country', activeRegion);
+      .limit(300);
 
     const { data, error } = await query;
     if (error) throw error;
 
     if (!data || data.length === 0) {
-      container.innerHTML = `<p class="status-msg" style="text-align:center;">No results for "<strong>${q}</strong>" in ${activeRegion}. Try switching regions.</p>`;
+      container.innerHTML = `<p class="status-msg" style="text-align:center;">No results for "<strong>${q}</strong>". Try a different search.</p>`;
       return;
     }
 
-    container.innerHTML = data.map(r => `
-      <div class="result-card" style="text-align:left;">
-        <span class="status-badge" style="background:var(--bg-elevated); color:var(--text-muted); font-size:10px; padding:2px 6px; border-radius:4px; margin-bottom:4px; display:inline-block;">${r.code_type || 'ICD10'}</span>
-        <div style="display:flex; align-items:center; justify-content:space-between;">
-          <span class="result-code">${r.code}</span>
-          <span class="result-badge ${r.country?.toLowerCase() || 'icd'}">${r.country || 'US'}</span>
+    // 2. Group findings by Code & Type
+    const grouped = {};
+    data.forEach(r => {
+      const key = `${r.code}_${r.code_type || 'ICD10'}`;
+      if (!grouped[key]) {
+        grouped[key] = {
+          code: r.code,
+          type: r.code_type || 'ICD10',
+          desc: r.short_description || '—',
+          regions: new Set([r.country])
+        };
+      } else {
+        grouped[key].regions.add(r.country);
+      }
+    });
+
+    // 3. Filter by activeRegion for the MAIN list, but show badges for others
+    let filteredResults = Object.values(grouped);
+    if (activeRegion !== 'ALL') {
+      filteredResults = filteredResults.filter(r => r.regions.has(activeRegion));
+    }
+
+    if (filteredResults.length === 0) {
+      container.innerHTML = `<p class="status-msg" style="text-align:center;">No results found for region: <strong>${activeRegion}</strong>.</p>`;
+      return;
+    }
+
+    // 4. Render with multi-region badges
+    const regions = ['US', 'UK', 'ME'];
+    container.innerHTML = filteredResults.map(r => `
+      <div class="result-card">
+        <div class="result-code-group">
+          <span class="status-badge" style="width:50px; text-align:center;">${r.type}</span>
+          <span class="result-code" style="margin: 0 12px; min-width: 60px;">${r.code}</span>
+          <div class="region-badges">
+            ${regions.map(reg => {
+              const active = r.regions.has(reg);
+              return `<span class="result-badge ${reg.toLowerCase()} ${active ? '' : 'inactive'}">${reg}${active ? '' : ': N/A'}</span>`;
+            }).join('')}
+          </div>
         </div>
-        <span class="result-desc">${r.short_description || '—'}</span>
+        <span class="result-desc">${r.desc}</span>
       </div>`).join('');
   } catch (e) {
     if (MediHelp.logError) MediHelp.logError('searchCodes: ' + e.message);
