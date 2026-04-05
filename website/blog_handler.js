@@ -46,12 +46,20 @@ window.MediHelp = {
       });
 
       if (!res.ok) {
-        this.logError(`GitHub API ${res.status}: ${res.statusText}`);
+        let errorMsg = `GitHub API ${res.status}: ${res.statusText}`;
+        if (res.status === 404) errorMsg += ' (Is your repository Private? The Blog API only works with Public repos)';
+        if (res.status === 403) errorMsg += ' (Rate limit exceeded or forbidden)';
+        
+        console.error('MediHelp Blog Error:', errorMsg);
+        this.logError(errorMsg);
         return [];
       }
 
       const files = await res.json();
-      if (!Array.isArray(files)) { this.logError('GitHub API did not return array'); return []; }
+      if (!Array.isArray(files)) { 
+        console.error('MediHelp Blog Error: GitHub did not return a valid list of files.');
+        return []; 
+      }
 
       const mdFiles = files.filter(f => f.name.endsWith('.md') && f.type === 'file');
 

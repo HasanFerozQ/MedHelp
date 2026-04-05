@@ -818,8 +818,8 @@ body {
   margin-bottom: 16px;
   transition: transform 0.2s, border-color 0.2s;
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  flex-direction: column;
+  gap: 16px;
   text-align: left;
 }
 
@@ -866,7 +866,9 @@ body {
   font-size: 13px;
   color: var(--text-body);
   text-align: left;
-  max-width: 280px;
+  width: 100%;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
 }
 
 /* ============================================================
