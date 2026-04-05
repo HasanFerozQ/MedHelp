@@ -280,7 +280,13 @@
       initSharing(post);
     }
 
-    loadPost();
+    // Robust initialization
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', loadPost);
+    } else {
+      loadPost();
+    }
+    console.log('MediHelp Blog Reader: Script connected');
   </script>
 
 </body>
