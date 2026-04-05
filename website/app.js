@@ -391,8 +391,11 @@ async function searchNPI() {
             <div class="provider-taxonomy">Taxonomy: <span>${taxo}</span></div>
           </div>
           <div class="provider-address">
-            📍 ${addr.split(',')[0]}<br>
-            ${addr.split(',').slice(1).join(', ').trim()}
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" target="_blank" style="color: inherit; text-decoration: none;">
+              📍 ${addr.split(',')[0]}<br>
+              ${addr.split(',').slice(1).join(', ').trim()}
+              <span style="display:block; margin-top:6px; color:var(--accent); font-size:11px; font-weight:600;">View on Google Maps ↗</span>
+            </a>
           </div>
         </div>`;
     }).join('');
