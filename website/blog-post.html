@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediHelp Dispatch | Article</title>
-  <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
+  <title>MediHelp Blog | Article</title>
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -89,14 +89,14 @@
   <nav class="navbar">
     <div class="container nav-content">
       <a href="index.html" class="nav-brand">
-        <img src="icons/logo.png" alt="MediHelp">
+        <img src="../icons/logo.png" alt="MediHelp">
         MediHelp
       </a>
       <div class="nav-links">
         <a href="index.html">Tools</a>
         <a href="audit.html">Bill Audit</a>
         <a href="providers.html">Provider Search</a>
-        <a href="blog.html" class="active">Dispatch</a>
+        <a href="blog.html" class="active">Blog</a>
       </div>
       <div class="nav-actions">
         <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
@@ -108,7 +108,7 @@
 
     <!-- Breadcrumb -->
     <div style="font-size:13px; color:var(--text-muted); margin-bottom:36px;">
-      <a href="blog.html" style="color:var(--accent); text-decoration:none;">← The Dispatch</a>
+      <a href="blog.html" style="color:var(--accent); text-decoration:none;">← The Blog</a>
     </div>
 
     <div class="post-layout">
@@ -163,7 +163,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <h3>MediHelp Dispatch</h3>
+          <h3>MediHelp Blog</h3>
           <p>Insightful, evidence-based medical content from around the world.</p>
         </div>
         <div class="footer-col">
@@ -209,12 +209,12 @@
       const post = posts.find(p => p.slug === decodeURIComponent(slug));
 
       if (!post) {
-        document.getElementById('post-body').innerHTML = '<p style="color:var(--text-muted);">Post not found. <a href="blog.html" style="color:var(--accent);">Return to Dispatch →</a></p>';
+        document.getElementById('post-body').innerHTML = '<p style="color:var(--text-muted);">Post not found. <a href="blog.html" style="color:var(--accent);">Return to Blog →</a></p>';
         return;
       }
 
       // Update page title
-      document.title = `${post.title} | MediHelp Dispatch`;
+      document.title = `${post.title} | MediHelp Blog`;
 
       // Header
       document.getElementById('post-header').innerHTML = `

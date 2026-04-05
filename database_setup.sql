@@ -22,7 +22,8 @@ CREATE TABLE public.medical_codes (
     code_type VARCHAR(10) NOT NULL, -- 'ICD10', 'CPT', 'HCPCS'
     short_description TEXT,
     long_description TEXT,
-    PRIMARY KEY (code, code_type)
+    country TEXT NOT NULL DEFAULT 'US',
+    PRIMARY KEY (code, code_type, country)
 );
 
 -- 4. NCCI Edits (National Correct Coding Initiative)
