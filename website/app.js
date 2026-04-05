@@ -426,21 +426,8 @@ function clearAudit() {
   const r = document.getElementById('audit-results'); if(r) { r.className = 'audit-results'; r.innerHTML = ''; }
 }
 
-// ── Theme & Utilities ─────────────────────────────────────────────────────
-function initTheme() {
-  const toggle = document.getElementById('theme-toggle');
-  if(!toggle) return;
-  const current = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', current);
-  toggle.innerHTML = current === 'dark' ? '🌙' : '☀️';
-  
-  toggle.onclick = () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    toggle.innerHTML = next === 'dark' ? '🌙' : '☀️';
-  };
-}
+// Theme & Utilities ─────────────────────────────────────────────────────
+// Theme is now managed GLOBALLY by blog_handler.js to prevent conflicts.
 
 const MediHelp = {
   logError: async (msg) => {

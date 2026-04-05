@@ -255,6 +255,7 @@ UK_CODES = [
     {"code": "M545", "short_description": "Low back pain", "country": "UK", "code_type": "ICD10"},
     {"code": "J069", "short_description": "Acute upper respiratory infection, unspecified", "country": "UK", "code_type": "ICD10"},
     {"code": "R05", "short_description": "Cough", "country": "UK", "code_type": "ICD10"},
+    {"code": "E119", "short_description": "Type 2 diabetes mellitus without complications", "country": "UK", "code_type": "ICD10"},
 ]
 ME_CODES = [
     {"code": "H521", "short_description": "Myopia (UAE Standard)", "country": "ME", "code_type": "ICD10"},
