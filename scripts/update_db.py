@@ -2,6 +2,7 @@ import os
 import time
 import json
 import requests
+import csv
 from concurrent.futures import ThreadPoolExecutor
 
 # ─── Supabase REST API Config ────────────────────────────────────────────────
@@ -18,6 +19,12 @@ HEADERS = {
     "Content-Type": "application/json",
     "Prefer": "resolution=merge-duplicates"
 }
+
+# ─── Remote Dataset URLs (Real Data) ──────────────────────────────────────────
+# WHO International (approx. 15k codes)
+WHO_ICD10_URL = "https://raw.githubusercontent.com/prkskrs/icd-10-Version/master/icd_10_2019_final.csv"
+# UK NHS Reference (approx. 20k codes)
+NHS_ICD10_URL = "https://raw.githubusercontent.com/asadqureshi12/clinical-risk-analysis-v2/main/data/reference/uk_icd10_reference.csv"
 
 # ─── Data Paths ─────────────────────────────────────────────────────────────
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
@@ -146,7 +153,7 @@ CARC_CODES = [
     ("CO-187","Consumer Spending Account payments (FSA, HSA, HRA, etc.)"),
     ("CO-189","Not eligible due to specific plan exclusions."),
     ("CO-190","Payment is included in the allowance for a Skilled Nursing Facility (SNF) stay."),
-    ("CO-193","Original payment decision is being maintained."),
+    ("CO-193","Original_payment decision is being maintained."),
     ("CO-197","Precertification/authorization/notification absent."),
     ("CO-198","Precertification/authorization exceeded."),
     ("CO-199","Revenue code and Procedure code do not match."),
@@ -156,7 +163,7 @@ CARC_CODES = [
     ("CO-203","Discontinued or reduced service."),
     ("CO-204","This service/equipment/drug is not covered under the patient's current benefit plan."),
     ("PR-1","Deductible Amount"),("PR-2","Coinsurance Amount"),("PR-3","Co-payment Amount"),
-    ("OA-18","Exact duplicate claim/service"),("OA-23","The impact of prior payer(s) adjudication"),
+    ("OA-18","Exact_duplicate claim/service"),("OA-23","The impact of prior payer(s) adjudication"),
 ]
 
 RARC_CODES = [
@@ -246,23 +253,6 @@ RARC_CODES = [
     ("N570","Missing/incomplete/invalid credentialing data."),
 ]
 
-# ─────────────────────────────────────────────────────────────────────────────
-# INTERNATIONAL SAMPLES
-# ─────────────────────────────────────────────────────────────────────────────
-UK_CODES = [
-    {"code": "G309", "short_description": "Alzheimer disease, unspecified", "country": "UK", "code_type": "ICD10"},
-    {"code": "I10", "short_description": "Essential (primary) hypertension", "country": "UK", "code_type": "ICD10"},
-    {"code": "M545", "short_description": "Low back pain", "country": "UK", "code_type": "ICD10"},
-    {"code": "J069", "short_description": "Acute upper respiratory infection, unspecified", "country": "UK", "code_type": "ICD10"},
-    {"code": "R05", "short_description": "Cough", "country": "UK", "code_type": "ICD10"},
-    {"code": "E119", "short_description": "Type 2 diabetes mellitus without complications", "country": "UK", "code_type": "ICD10"},
-]
-ME_CODES = [
-    {"code": "H521", "short_description": "Myopia (UAE Standard)", "country": "ME", "code_type": "ICD10"},
-    {"code": "E119", "short_description": "Type 2 diabetes mellitus without complications", "country": "ME", "code_type": "ICD10"},
-    {"code": "Z010", "short_description": "Encounter for examination of eyes and vision", "country": "ME", "code_type": "ICD10"},
-]
-
 def rest_upsert_chunk(table: str, chunk: list):
     url = f"{SUPABASE_URL}/rest/v1/{table}"
     try:
@@ -292,6 +282,35 @@ def rest_upsert_parallel(table: str, rows: list):
     
     print(f"  [DONE] {table}: {total_done}/{len(rows)} successful.")
 
+def fetch_and_parse_remote_icd(url, country_code):
+    """Download and parse a remote ICD-10 CSV file for Real Data integration."""
+    print(f"\n[REMOTE] Fetching {country_code} dataset from: {url}")
+    try:
+        r = requests.get(url, timeout=30)
+        r.raise_for_status()
+        lines = r.text.splitlines()
+        
+        rows = []
+        reader = csv.reader(lines)
+        header = next(reader) # Skip header
+        
+        for row in reader:
+            if not row or len(row) < 2: continue
+            code = row[0].strip().replace(".", "")
+            desc = row[1].strip()
+            
+            rows.append({
+                "code": code,
+                "code_type": "ICD10",
+                "short_description": desc[:950],
+                "long_description": desc,
+                "country": country_code
+            })
+        return rows
+    except Exception as e:
+        print(f"  [ERROR] Failed to fetch {country_code} data: {e}")
+        return []
+
 def sync_local_icd10():
     if not os.path.exists(ICD10_FILE):
         print(f"ERROR: ICD10 file not found at {ICD10_FILE}")
@@ -311,7 +330,6 @@ def sync_local_icd10():
                     "long_description": desc,
                     "country": "US"
                 })
-    
     rest_upsert_parallel("medical_codes", rows)
 
 def sync_local_hcpcs():
@@ -356,7 +374,6 @@ def sync_local_hcpcs():
                 "long_description": " ".join(current_desc),
                 "country": "US"
             })
-
     rest_upsert_parallel("medical_codes", rows)
 
 if __name__ == "__main__":
@@ -364,18 +381,23 @@ if __name__ == "__main__":
     print("  MediHelp Now — Official Bulk Dataset Pipeline")
     print("=" * 60)
 
-    # 1. International
-    intl = UK_CODES + ME_CODES
-    print(f"Uploading {len(intl)} International samples...")
-    rest_upsert_parallel("medical_codes", intl)
+    # 1. International Real Data (WHO & NHS)
+    print("\n[STEP 1] Syncing International Real Data...")
+    who_rows = fetch_and_parse_remote_icd(WHO_ICD10_URL, "ME")
+    if who_rows: rest_upsert_parallel("medical_codes", who_rows)
 
-    # 2. Bulk ICD-10 (74K)
+    uk_rows = fetch_and_parse_remote_icd(NHS_ICD10_URL, "UK")
+    if uk_rows: rest_upsert_parallel("medical_codes", uk_rows)
+
+    # 2. Bulk US ICD-10 (74K) 
+    print("\n[STEP 2] Syncing US Healthcare Datasets...")
     sync_local_icd10()
 
-    # 3. Bulk HCPCS (8.7K)
+    # 3. Bulk US HCPCS (8.7K)
     sync_local_hcpcs()
 
     # 4. CARC/RARC
+    print("\n[STEP 3] Syncing Denial Codes...")
     carc = [{"code": c[0], "description": c[1]} for c in CARC_CODES]
     rest_upsert_parallel("carc_codes", carc)
 

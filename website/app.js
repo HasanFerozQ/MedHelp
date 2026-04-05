@@ -258,24 +258,89 @@ async function searchCodes(q, container) {
 }
 
 // ── Denial Codes ────────────────────────────────────────────────────────
+const denialsInput = document.getElementById('denials-input');
+const denialSuggest = document.getElementById('denial-suggestions');
+if (denialsInput) {
+  denialsInput.addEventListener('input', (e) => {
+    const q = e.target.value.trim();
+    if (q.length < 1) { 
+      if (denialSuggest) denialSuggest.innerHTML = ''; 
+      return; 
+    }
+    searchDenialSuggestions(q);
+  });
+}
+
+async function searchDenialSuggestions(q) {
+  if (!db) return;
+  const qUpper = q.toUpperCase();
+  // Normalize dash for suggestions: CO45 -> CO-45
+  const normQ = qUpper.match(/^([A-Z]{2})(\d+)$/) ? qUpper.replace(/^([A-Z]{2})(\d+)$/, '$1-$2') : qUpper;
+  
+  try {
+    const { data, error } = await db.from('carc_codes')
+      .select('code, description')
+      .or(`code.ilike.%${normQ}%,description.ilike.%${q}%`)
+      .limit(5);
+    
+    if (error || !data || data.length === 0) {
+      if (denialSuggest) denialSuggest.innerHTML = '';
+      return;
+    }
+
+    if (denialSuggest) {
+      denialSuggest.innerHTML = data.map(item => `
+        <div class="suggestion-item" onclick="selectDenial('${item.code}')">
+          <strong>${item.code}</strong> — ${item.description.substring(0, 50)}...
+        </div>
+      `).join('');
+    }
+  } catch (e) {
+    if (denialSuggest) denialSuggest.innerHTML = '';
+  }
+}
+
+function selectDenial(code) {
+  if (denialsInput) denialsInput.value = code;
+  if (denialSuggest) denialSuggest.innerHTML = '';
+  searchDenials(code, document.getElementById('denials-results'));
+}
+
 async function searchDenials(q, container) {
   if (!db) return;
   const qUpper = q.toUpperCase();
-  container.innerHTML = `<p class="status-msg"><span class="spinner"></span>Decoding...</p>`;
+  // Normalize dash for db query: CO45 -> CO-45
+  const normQ = qUpper.match(/^([A-Z]{2})(\d+)$/) ? qUpper.replace(/^([A-Z]{2})(\d+)$/, '$1-$2') : qUpper;
+  
+  container.innerHTML = `<p class="status-msg"><span class="spinner"></span>Decoding Claim Data...</p>`;
   try {
     const [carc, rarc] = await Promise.all([
-      db.from('carc_codes').select('code, description').or(`code.ilike.%${qUpper}%,description.ilike.%${q}%`).limit(8),
-      db.from('rarc_codes').select('code, description').or(`code.ilike.%${qUpper}%,description.ilike.%${q}%`).limit(8)
+      db.from('carc_codes').select('code, description').or(`code.ilike.%${normQ}%,description.ilike.%${q}%`).limit(15),
+      db.from('rarc_codes').select('code, description').or(`code.ilike.%${normQ}%,description.ilike.%${q}%`).limit(15)
     ]);
-    const results = [...(carc.data || []).map(d => ({ ...d, type: 'CARC' })), ...(rarc.data || []).map(d => ({ ...d, type: 'RARC' }))];
-    if (results.length === 0) { container.innerHTML = `<p class="status-msg">No denial codes found.</p>`; return; }
+
+    const results = [
+      ...(carc.data || []).map(item => ({ ...item, type: 'CARC' })),
+      ...(rarc.data || []).map(item => ({ ...item, type: 'RARC' }))
+    ];
+
+    if (results.length === 0) {
+      container.innerHTML = `<p class="status-msg">No results for "<strong>${q}</strong>". Try adding or removing a dash (e.g. CO-45).</p>`;
+      return;
+    }
+
     container.innerHTML = results.map(r => `
       <div class="result-card" style="text-align:left;">
-        <span class="result-code">${r.code}</span>
-        <span class="result-desc">${r.description || '—'}</span>
-        <span class="result-badge ${r.type.toLowerCase()}">${r.type}</span>
+        <div class="result-code-group">
+          <span class="status-badge" style="background:${r.type === 'CARC' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(6, 182, 212, 0.1)'}; color:${r.type === 'CARC' ? '#ef4444' : '#06b6d4'}; border: 1px solid ${r.type === 'CARC' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(6, 182, 212, 0.3)'};">${r.type}</span>
+          <span class="result-code" style="color:var(--text-h);">${r.code}</span>
+        </div>
+        <span class="result-desc" style="margin-top: 8px; display: block;">${r.description}</span>
       </div>`).join('');
-  } catch (e) { if(MediHelp.logError) MediHelp.logError('searchDenials: '+e.message); }
+  } catch (e) {
+    if (MediHelp.logError) MediHelp.logError('searchDenials: ' + e.message);
+    container.innerHTML = `<p class="status-msg" style="color:var(--danger);">Decoding failed.</p>`;
+  }
 }
 
 // ── NPI Search (With Advanced CORS Fallback) ───────────────────────────
