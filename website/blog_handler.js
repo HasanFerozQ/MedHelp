@@ -57,10 +57,13 @@ window.MediHelp = {
 
       const posts = await Promise.all(mdFiles.map(async file => {
         try {
-          const rawRes = await fetch(file.download_url + `?_=${Date.now()}`);
+          const rawUrl = file.download_url + (file.download_url.includes('?') ? '&' : '?') + `_=${Date.now()}`;
+          const rawRes = await fetch(rawUrl);
+          if (!rawRes.ok) throw new Error(`Fetch ${file.name} failed: ${rawRes.status}`);
           const text = await rawRes.text();
           return this._parseFrontmatter(text, file.name);
         } catch (e) {
+          console.error(`MediHelp Blog Error: ${file.name}`, e);
           this.logError(`Failed to fetch post ${file.name}: ${e.message}`);
           return null;
         }

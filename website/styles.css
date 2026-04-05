@@ -865,8 +865,8 @@ body {
 .provider-address {
   font-size: 13px;
   color: var(--text-body);
-  text-align: right;
-  max-width: 250px;
+  text-align: left;
+  max-width: 280px;
 }
 
 /* ============================================================

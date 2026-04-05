@@ -78,7 +78,7 @@ function displayNPI(results) {
           <span style="line-height: 1.4;">${provider.taxonomies[0]?.desc || 'Primary Taxonomy N/A'}</span>
         </div>
 
-        <div style="font-size: 12px; color: #475569; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font-size: 12px; color: #475569; display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
           <div style="display: flex; align-items: start; gap: 6px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.6; margin-top: 2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
             <span style="line-height: 1.4;">${provider.addresses[0]?.address_1}, ${provider.addresses[0]?.city}, ${provider.addresses[0]?.state} ${provider.addresses[0]?.postal_code?.substring(0, 5)}</span>
