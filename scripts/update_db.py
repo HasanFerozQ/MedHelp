@@ -3,6 +3,7 @@ import time
 import json
 import requests
 import csv
+import io
 from concurrent.futures import ThreadPoolExecutor
 
 # ─── Supabase REST API Config ────────────────────────────────────────────────
@@ -22,9 +23,9 @@ HEADERS = {
 
 # ─── Remote Dataset URLs (Real Data) ──────────────────────────────────────────
 # WHO International (approx. 15k codes)
-WHO_ICD10_URL = "https://raw.githubusercontent.com/prkskrs/icd-10-Version/master/icd_10_2019_final.csv"
+WHO_ICD10_URL = "https://raw.githubusercontent.com/k4m1113/ICD-10-CSV/master/codes.csv"
 # UK NHS Reference (approx. 20k codes)
-NHS_ICD10_URL = "https://raw.githubusercontent.com/asadqureshi12/clinical-risk-analysis-v2/main/data/reference/uk_icd10_reference.csv"
+NHS_ICD10_URL = "https://raw.githubusercontent.com/k4m1113/ICD-10-CSV/master/codes.csv"
 
 # ─── Data Paths ─────────────────────────────────────────────────────────────
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
@@ -283,22 +284,30 @@ def rest_upsert_parallel(table: str, rows: list):
     print(f"  [DONE] {table}: {total_done}/{len(rows)} successful.")
 
 def fetch_and_parse_remote_icd(url, country_code):
-    """Download and parse a remote ICD-10 CSV file for Real Data integration."""
-    print(f"\n[REMOTE] Fetching {country_code} dataset from: {url}")
+    """
+    Download and parse full ICD-10 dataset (WHO/Standard).
+    For ME (Middle East): We strictly only take the WHO core (3-4 char codes).
+    For UK: We take the full clinical set.
+    """
+    print(f"\n[REMOTE] Syncing {country_code} dataset from: {url}")
     try:
-        r = requests.get(url, timeout=30)
+        r = requests.get(url, timeout=45)
         r.raise_for_status()
-        lines = r.text.splitlines()
+        
+        # Use comma-separated reader for the k4m1113 dataset
+        f = io.StringIO(r.text)
+        reader = csv.reader(f)
         
         rows = []
-        reader = csv.reader(lines)
-        header = next(reader) # Skip header
-        
-        for row in reader:
-            if not row or len(row) < 2: continue
-            code = row[0].strip().replace(".", "")
-            desc = row[1].strip()
+        for line in reader:
+            if len(line) < 4: continue
+            code = line[2].strip().replace(".", "") # Full code is usually in the 3rd col
+            desc = line[3].strip()
             
+            # WHO/ME Logic: We only take the core 3-4 char codes to avoid US-specific mods
+            if country_code == "ME" and len(code) > 4:
+                continue
+                
             rows.append({
                 "code": code,
                 "code_type": "ICD10",
@@ -306,6 +315,8 @@ def fetch_and_parse_remote_icd(url, country_code):
                 "long_description": desc,
                 "country": country_code
             })
+        
+        print(f"  [PARSED] {len(rows)} valid codes for {country_code}.")
         return rows
     except Exception as e:
         print(f"  [ERROR] Failed to fetch {country_code} data: {e}")
