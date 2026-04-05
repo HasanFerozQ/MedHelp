@@ -188,13 +188,14 @@ async function searchCodes(q, container) {
   if (!db) { container.innerHTML = '<p class="status-msg">Database unavailable.</p>'; return; }
 
   const qUpper = q.toUpperCase();
+  const cleanQ = q.replace(/\./g, '').toUpperCase();
   container.innerHTML = `<p class="status-msg"><span class="spinner"></span>Searching ${activeRegion} data...</p>`;
 
   try {
     let query = db
       .from('medical_codes')
       .select('code, short_description, country, code_type')
-      .or(`code.ilike.%${qUpper}%,short_description.ilike.%${q}%`)
+      .or(`code.ilike.%${cleanQ}%,short_description.ilike.%${q}%`)
       .limit(200);
 
     if (activeRegion !== 'ALL') query = query.eq('country', activeRegion);

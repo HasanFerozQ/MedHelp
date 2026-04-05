@@ -65,5 +65,6 @@ ON public.ncci_edits FOR SELECT USING (true);
 -- Enable Search Optimization (Indexes)
 -- ==========================================
 CREATE INDEX idx_medical_codes_type ON public.medical_codes(code_type);
+CREATE INDEX idx_medical_codes_code ON public.medical_codes(code);
 CREATE INDEX idx_carc_description ON public.carc_codes USING GIN (to_tsvector('english', description));
 CREATE INDEX idx_medical_description ON public.medical_codes USING GIN (to_tsvector('english', short_description));
