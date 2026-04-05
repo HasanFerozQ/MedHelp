@@ -31,58 +31,48 @@ window.MediHelp = {
     } catch (e) { /* silent */ }
   },
 
-  // ── Blog Fetcher (GitHub API) ─────────────────────────────────────────────
+  // ── Local Blog Fetcher (Private-Repo Friendly) ───────────────────────────
   fetchBlogs: async function() {
-    const owner = 'HasanFerozQ';
-    const repo  = 'MedHelp';
-    const path  = 'blog';
-
-    // Use raw GitHub API — add cache-busting to avoid stale 304s
-    const api = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=main&_=${Date.now()}`;
-
+    console.log('MediHelp Blog: Starting fetchBlogs...');
     try {
-      const res = await fetch(api, {
-        headers: { 'Accept': 'application/vnd.github.v3+json' }
-      });
+      const manifestRes = await fetch(`./blog/manifest.json?_=${Date.now()}`);
+      if (!manifestRes.ok) {
+        console.error('MediHelp Blog: Manifest not found at ./blog/manifest.json');
+        return [];
+      }
+      
+      const json = await manifestRes.json();
+      const filenames = json.posts;
+      console.log('MediHelp Blog: Manifest loaded, found', filenames.length, 'posts.');
 
-      if (!res.ok) {
-        let errorMsg = `GitHub API ${res.status}: ${res.statusText}`;
-        if (res.status === 404) errorMsg += ' (Is your repository Private? The Blog API only works with Public repos)';
-        if (res.status === 403) errorMsg += ' (Rate limit exceeded or forbidden)';
-        
-        console.error('MediHelp Blog Error:', errorMsg);
-        this.logError(errorMsg);
+      if (!Array.isArray(filenames)) {
+        console.error('MediHelp Blog: Manifest "posts" is not an array.');
         return [];
       }
 
-      const files = await res.json();
-      if (!Array.isArray(files)) { 
-        console.error('MediHelp Blog Error: GitHub did not return a valid list of files.');
-        return []; 
-      }
-
-      const mdFiles = files.filter(f => f.name.endsWith('.md') && f.type === 'file');
-
-      const posts = await Promise.all(mdFiles.map(async file => {
+      const posts = await Promise.all(filenames.map(async name => {
         try {
-          const rawUrl = file.download_url + (file.download_url.includes('?') ? '&' : '?') + `_=${Date.now()}`;
-          const rawRes = await fetch(rawUrl);
-          if (!rawRes.ok) throw new Error(`Fetch ${file.name} failed: ${rawRes.status}`);
-          const text = await rawRes.text();
-          return this._parseFrontmatter(text, file.name);
+          const res = await fetch(`./blog/${name}?_=${Date.now()}`);
+          if (!res.ok) throw new Error(`Fetch ${name} failed with status ${res.status}`);
+          const text = await res.text();
+          console.log('MediHelp Blog: Loaded post file:', name);
+          return this._parseFrontmatter(text, name);
         } catch (e) {
-          console.error(`MediHelp Blog Error: ${file.name}`, e);
-          this.logError(`Failed to fetch post ${file.name}: ${e.message}`);
+          console.error(`MediHelp Blog Error rendering ${name}:`, e.message);
           return null;
         }
       }));
 
-      return posts
+      const finalPosts = posts
         .filter(Boolean)
         .sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      console.log('MediHelp Blog: Successfully parsed', finalPosts.length, 'posts.');
+      return finalPosts;
 
     } catch (e) {
-      this.logError('fetchBlogs failed: ' + e.message);
+      console.error('MediHelp Blog: Global fetch error:', e);
+      if (this.logError) this.logError('fetchBlogs failed: ' + e.message);
       return [];
     }
   },
@@ -92,8 +82,9 @@ window.MediHelp = {
     const slug = filename.replace('.md', '');
     const fm = {};
 
-    // Extract YAML front matter block between ---
-    const fmMatch = text.match(/^---\s*\n([\s\S]*?)\n---/);
+    // Clean text and extract YAML front matter block between ---
+    const trimmedText = text.trim();
+    const fmMatch = trimmedText.match(/^---\s*\n([\s\S]*?)\n---/);
     if (fmMatch) {
       const lines = fmMatch[1].split('\n');
       lines.forEach(line => {

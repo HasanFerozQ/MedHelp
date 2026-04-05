@@ -868,7 +868,45 @@ body {
   text-align: left;
   width: 100%;
   border-top: 1px solid var(--border);
-  padding-top: 16px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* CRITICAL: Force left alignment of children */
+  gap: 16px;
+}
+
+.addr-text {
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.btn-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--accent-light);
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: var(--transition);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.btn-location:hover {
+  background: var(--accent-glow);
+  border-color: var(--accent);
+  color: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.btn-location svg {
+  color: var(--accent);
+  flex-shrink: 0;
 }
 
 /* ============================================================
@@ -1118,4 +1156,85 @@ body {
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .audit-area { padding: 24px; }
   .nav-links a { font-size: 13px; padding: 6px 10px; }
+}
+
+/* ============================================================
+   SOCIAL SHARE COMPONENT
+   ============================================================ */
+.share-section {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.share-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.share-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: var(--transition);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.share-btn:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.share-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Specific Brand Colors on Hover */
+.share-btn.x:hover { background: #000; color: #fff; border-color: #333; }
+.share-btn.fb:hover { background: #1877f2; color: #fff; border-color: #1877f2; }
+.share-btn.li:hover { background: #0077b5; color: #fff; border-color: #0077b5; }
+.share-btn.wa:hover { background: #25d366; color: #fff; border-color: #25d366; }
+.share-btn.ig:hover { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); color: #fff; border-color: transparent; }
+.share-btn.tt:hover { background: #000; color: #fff; border-color: #ff0050; box-shadow: 2px 2px #00f2ea, -2px -2px #ff0050; }
+.share-btn.copy:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+
+/* Toast Notification (Simple) */
+.toast-msg {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--accent);
+  color: #000;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 14px;
+  z-index: 10000;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.toast-msg.visible {
+  transform: translateX(-50%) translateY(0);
 }

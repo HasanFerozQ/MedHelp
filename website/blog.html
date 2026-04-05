@@ -44,7 +44,7 @@
   <nav class="navbar">
     <div class="container nav-content">
       <a href="index.html" class="nav-brand">
-        <img src="icons/logo.png" alt="MediHelp">
+        <img src="icons/logo.png?v=1.1" alt="MediHelp">
         MediHelp
       </a>
       <div class="nav-links">
@@ -119,59 +119,85 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
 
     async function loadBlog() {
-      const posts = await MediHelp.fetchBlogs();
-      document.getElementById('blog-loading').style.display = 'none';
+      console.log('MediHelp Blog: Initializing loadBlog...');
+      
+      const loader = document.getElementById('blog-loading');
+      const heroContainer = document.getElementById('blog-hero-container');
+      const gridContainer = document.getElementById('blog-grid-container');
+      const grid = document.getElementById('blog-grid');
 
-      if (posts.length === 0) {
-        document.getElementById('blog-hero-container').style.display = 'block';
-        document.getElementById('blog-hero-container').innerHTML = `
-          <div style="text-align:center; padding:80px 0;">
-            <div style="font-size:48px; margin-bottom:20px;">📰</div>
-            <h2 style="color:var(--text-h); margin-bottom:12px;">No Posts Yet</h2>
-            <p style="color:var(--text-muted);">Upload a <code>.md</code> file to the <code>/blog</code> folder in GitHub to publish your first article.</p>
-          </div>`;
+      if (!loader || !heroContainer || !gridContainer || !grid) {
+        console.error('MediHelp Blog: One or more DOM containers are missing!');
         return;
       }
 
-      // Recent hero post
-      const recent = posts[0];
-      const heroContainer = document.getElementById('blog-hero-container');
-      heroContainer.style.display = 'block';
-      heroContainer.innerHTML = `
-        <a href="blog-post.html?slug=${encodeURIComponent(recent.slug)}" class="blog-hero-post">
-          <img class="blog-hero-img" src="${recent.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80'}" alt="${recent.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80'">
-          <div class="blog-hero-body">
-            <span class="blog-tag">Most Recent · ${recent.category}</span>
-            <h2>${recent.title}</h2>
-            <p>${recent.summary}</p>
-            <div class="blog-meta">
-              <span>📅 ${new Date(recent.date).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'})}</span>
-            </div>
-            <span class="blog-cta">Read Article →</span>
-          </div>
-        </a>`;
+      try {
+        const posts = await MediHelp.fetchBlogs();
+        console.log('MediHelp Blog: fetchBlogs returned', posts.length, 'posts');
+        
+        // Hide loader
+        loader.style.display = 'none';
 
-      // Previous posts
-      const prev = posts.slice(1, 10);
-      if (prev.length > 0) {
-        const gridContainer = document.getElementById('blog-grid-container');
-        gridContainer.style.display = 'block';
-        document.getElementById('blog-grid').innerHTML = prev.map(p => `
-          <a href="blog-post.html?slug=${encodeURIComponent(p.slug)}" class="blog-card">
-            <img class="blog-card-img" src="${p.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'}" alt="${p.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
-            <div class="blog-card-body">
-              <span class="blog-tag">${p.category}</span>
-              <h3>${p.title}</h3>
-              <p>${p.summary.substring(0, 120)}...</p>
+        if (!posts || posts.length === 0) {
+          heroContainer.style.display = 'block';
+          heroContainer.innerHTML = `
+            <div style="text-align:center; padding:80px 0;">
+              <div style="font-size:48px; margin-bottom:20px;">📰</div>
+              <h2 style="color:#f8fafc; margin-bottom:12px;">No Posts Yet</h2>
+              <p style="color:#cbd5e1;">Check back later for new insights.</p>
+            </div>`;
+          return;
+        }
+
+        // Render Hero
+        const recent = posts[0];
+        console.log('MediHelp Blog: Casting hero:', recent.title);
+        heroContainer.style.display = 'block';
+        heroContainer.innerHTML = `
+          <a href="blog-post.html?slug=${encodeURIComponent(recent.slug)}" class="blog-hero-post">
+            <img class="blog-hero-img" src="${recent.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80'}" alt="${recent.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80'">
+            <div class="blog-hero-body">
+              <span class="blog-tag">Most Recent · ${recent.category}</span>
+              <h2 style="color:#f8fafc; display:block !important;">${recent.title}</h2>
+              <p style="color:#cbd5e1; display:block !important;">${recent.summary}</p>
               <div class="blog-meta">
-                <span>📅 ${new Date(p.date).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})}</span>
+                <span>📅 ${new Date(recent.date).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'})}</span>
               </div>
+              <span class="blog-cta">Read Article →</span>
             </div>
-          </a>`).join('');
+          </a>`;
+
+        // Render Grid
+        const prev = posts.slice(1, 10);
+        if (prev.length > 0) {
+          console.log('MediHelp Blog: Casting grid:', prev.length, 'posts');
+          gridContainer.style.display = 'block';
+          grid.innerHTML = prev.map(p => `
+            <a href="blog-post.html?slug=${encodeURIComponent(p.slug)}" class="blog-card">
+              <img class="blog-card-img" src="${p.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'}" alt="${p.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
+              <div class="blog-card-body">
+                <span class="blog-tag">${p.category}</span>
+                <h3 style="color:#f8fafc; display:block !important;">${p.title}</h3>
+                <p style="color:#cbd5e1; display:block !important;">${(p.summary || '').substring(0, 120)}...</p>
+                <div class="blog-meta">
+                  <span>📅 ${new Date(p.date).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})}</span>
+                </div>
+              </div>
+            </a>`).join('');
+        } else {
+          gridContainer.style.display = 'none';
+        }
+
+      } catch (err) {
+        console.error('MediHelp Blog: Fatal rendering error:', err);
+        loader.style.display = 'none';
+        heroContainer.style.display = 'block';
+        heroContainer.innerHTML = `<p style="text-align:center; padding:40px; color:#ff4d4d;">Failed to render blog content.</p>`;
       }
     }
 
-    loadBlog();
+    // Wait for everything to load
+    window.addEventListener('DOMContentLoaded', loadBlog);
   </script>
 
 </body>

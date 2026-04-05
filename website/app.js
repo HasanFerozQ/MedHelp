@@ -91,8 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Global Theme Handling
-  initTheme();
+  // Global Theme Handling is managed by blog_handler.js
 });
 
 // ── PDF Audit Logic (pdf.js) ──────────────────────────────────────────────
@@ -390,13 +389,13 @@ async function searchNPI() {
             <div class="provider-npi">NPI: <strong>${npi}</strong> | ${p.type === 'ORG' ? 'Facility' : 'Provider'}</div>
             <div class="provider-taxonomy">Taxonomy: <span>${taxo}</span></div>
           </div>
-          <div class="provider-address" style="position: relative;">
-            <div style="margin-bottom: 12px;">
+          <div class="provider-address">
+            <div class="addr-text">
               📍 ${addr.split(',')[0]}<br>
               ${addr.split(',').slice(1).join(', ').trim()}
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" target="_blank" class="btn btn-ghost" style="padding: 8px 16px; font-size: 12px; border-radius: 100px; width: fit-content; display: flex; gap: 6px; align-items: center; border-color: var(--accent-dim); color: var(--accent-light);">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" target="_blank" class="btn-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
               View Location
             </a>
           </div>
@@ -534,13 +533,19 @@ function clearAudit() {
 // Theme & Utilities ─────────────────────────────────────────────────────
 // Theme is now managed GLOBALLY by blog_handler.js to prevent conflicts.
 
-const MediHelp = {
-  logError: async (msg) => {
-    if (!db) return;
-    try { 
-      await db.from('site_logs').insert([{ source: 'website', error_message: msg, page: window.location.pathname, user_agent: navigator.userAgent }]); 
-    } catch(e) {}
-  }
+// ── Global error catcher ──────────────────────────────────────────────────
+// Merge with existing MediHelp from blog_handler.js if available
+window.MediHelp = window.MediHelp || {};
+window.MediHelp.logError = async (msg) => {
+  if (!db) return;
+  try { 
+    await db.from('site_logs').insert([{ 
+      source: 'website', 
+      error_message: msg, 
+      page: window.location.pathname, 
+      user_agent: navigator.userAgent 
+    }]); 
+  } catch(e) {}
 };
 
 function debounce(fn, ms) {
