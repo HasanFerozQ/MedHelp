@@ -390,11 +390,14 @@ async function searchNPI() {
             <div class="provider-npi">NPI: <strong>${npi}</strong> | ${p.type === 'ORG' ? 'Facility' : 'Provider'}</div>
             <div class="provider-taxonomy">Taxonomy: <span>${taxo}</span></div>
           </div>
-          <div class="provider-address">
-            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" target="_blank" style="color: inherit; text-decoration: none;">
+          <div class="provider-address" style="position: relative;">
+            <div style="margin-bottom: 12px;">
               📍 ${addr.split(',')[0]}<br>
               ${addr.split(',').slice(1).join(', ').trim()}
-              <span style="display:block; margin-top:6px; color:var(--accent); font-size:11px; font-weight:600;">View on Google Maps ↗</span>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" target="_blank" class="btn btn-ghost" style="padding: 8px 16px; font-size: 12px; border-radius: 100px; width: fit-content; display: flex; gap: 6px; align-items: center; border-color: var(--accent-dim); color: var(--accent-light);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              View Location
             </a>
           </div>
         </div>`;

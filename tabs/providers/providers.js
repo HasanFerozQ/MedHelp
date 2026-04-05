@@ -78,11 +78,14 @@ function displayNPI(results) {
           <span style="line-height: 1.4;">${provider.taxonomies[0]?.desc || 'Primary Taxonomy N/A'}</span>
         </div>
 
-        <div style="font-size: 12px; color: #475569; display: flex; align-items: start; gap: 6px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.6; margin-top: 2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${provider.addresses[0]?.address_1}, ${provider.addresses[0]?.city}, ${provider.addresses[0]?.state} ${provider.addresses[0]?.postal_code?.substring(0, 5)}`)}" target="_blank" style="color: inherit; text-decoration: none; line-height: 1.4;">
-            ${provider.addresses[0]?.address_1}, ${provider.addresses[0]?.city}, ${provider.addresses[0]?.state} ${provider.addresses[0]?.postal_code?.substring(0, 5)}
-            <span style="display:block; font-size:10px; color:#06b6d4; font-weight:600; margin-top:2px;">View on Google Maps ↗</span>
+        <div style="font-size: 12px; color: #475569; display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: start; gap: 6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.6; margin-top: 2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span style="line-height: 1.4;">${provider.addresses[0]?.address_1}, ${provider.addresses[0]?.city}, ${provider.addresses[0]?.state} ${provider.addresses[0]?.postal_code?.substring(0, 5)}</span>
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${provider.addresses[0]?.address_1}, ${provider.addresses[0]?.city}, ${provider.addresses[0]?.state} ${provider.addresses[0]?.postal_code?.substring(0, 5)}`)}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: #06b6d4; border: 1px solid #06b6d4; border-radius: 6px; text-decoration: none; width: fit-content; transition: background 0.2s;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            View on Map
           </a>
         </div>
       </div>
