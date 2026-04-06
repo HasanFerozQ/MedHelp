@@ -78,8 +78,16 @@ async function handlePDF(file) {
       renderAuditJSON(data.result);
       if (status) status.innerHTML = `✅ AI Analysis Complete for ${file.name}`;
     } else {
-      // Offline Fallback
-      if (status) status.innerHTML = `ℹ️ AI Offline. Running Deep Local Auditor...`;
+      // V2.5: Transparent Error Reporting
+      const errStatus = response.status;
+      let reason = "AI Offline";
+      if (errStatus === 504) reason = "AI Timeout (Vercel 10s limit)";
+      else if (errStatus === 500) reason = "AI Config Error (Check Keys)";
+      else if (errStatus === 429) reason = "AI Rate Limit Exceeded";
+      else if (errStatus === 404) reason = "AI Route Not Found (Deploying...)";
+
+      if (status) status.innerHTML = `<span style="color:var(--warn); font-size:11px;">ℹ️ ${reason}. Running Deep Local Auditor...</span>`;
+      
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
       let fullText = '';
