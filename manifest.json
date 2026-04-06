@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "description": "Audit medical bills, search codes, compare drug prices - locally and privately.",
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "icons/logo.png",
+    "48": "icons/logo.png",
+    "128": "icons/logo.png"
   },
   "permissions": [
     "storage",
@@ -21,9 +21,9 @@
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "16": "website/icons/icon16.png",
-      "48": "website/icons/icon48.png",
-      "128": "website/icons/icon128.png"
+      "16": "icons/logo.png",
+      "48": "icons/logo.png",
+      "128": "icons/logo.png"
     }
   },
   "background": {
