@@ -647,7 +647,174 @@ function renderAuditJSON(result) {
       container.appendChild(card);
     });
   }
+
+  // 4. Action Buttons (Phase 1)
+  const actionRow = document.createElement('div');
+  actionRow.className = 'audit-btn-row';
+  actionRow.style = 'margin-top: 32px; justify-content: center; display: flex; gap: 12px;';
+  actionRow.innerHTML = `
+    <button class="btn btn-primary" onclick="openPatientModal()">📄 Download Professional PDF</button>
+    <button class="btn btn-ghost" onclick="copyNegotiationScript()">⚖️ Copy Negotiation Script</button>
+  `;
+  container.appendChild(actionRow);
+
+  // Store result globally for PDF generator (Non-Persistent)
+  window.lastAuditResult = result;
 }
+
+// PHASE 1: PROFESSIONAL REPORTING LOGIC
+function openPatientModal() {
+  const modal = document.getElementById('patient-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    // Set default date to today
+    const dateInput = document.getElementById('p-date');
+    if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
+  }
+}
+
+function closePatientModal() {
+  const modal = document.getElementById('patient-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+// HIPAA-SAFE PDF GENERATOR (0 Persistence)
+async function generateProfessionalPDF() {
+  const { jsPDF } = window.jspdf;
+  const result = window.lastAuditResult;
+  if (!result) return;
+
+  const data = {
+    first: document.getElementById('p-first').value.trim() || "Patient",
+    last: document.getElementById('p-last').value.trim() || "",
+    hospital: document.getElementById('p-hospital').value.trim() || "Medical Facility",
+    account: document.getElementById('p-account').value.trim() || "N/A",
+    insurance: document.getElementById('p-insurance').value.trim() || "N/A",
+    date: document.getElementById('p-date').value || new Date().toLocaleDateString()
+  };
+
+  const doc = new jsPDF();
+  const pageHeight = doc.internal.pageSize.height;
+
+  // 1. Formal Letter Header (Clean Design, No Branding)
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.text(`Date: ${data.date}`, 14, 20);
+  doc.text(`Patient: ${data.first} ${data.last}`, 14, 25);
+  doc.text(`Account/Invoice: ${data.account}`, 14, 30);
+  doc.text(`Insurance ID: ${data.insurance}`, 14, 35);
+  
+  doc.text(`TO: Billing Department`, 140, 20);
+  doc.text(`${data.hospital}`, 140, 25);
+
+  // 2. Subject Line
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(12);
+  doc.text("SUBJECT: OFFICIAL VERIFICATION OF BILLING ACCURACY & CLINICAL AUDIT", 105, 50, { align: "center" });
+
+  // 3. Opening
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.text(`Reference is made to the medical bill/claim associated with the above account. A clinical audit has been performed`, 14, 60);
+  doc.text(`comparing the submitted line items against CMS Medicare Pricing and NCCI Unbundling standards.`, 14, 65);
+
+  // 4. Clinical Itemization Table
+  const tableHeaders = [["Date", "Code", "Description", "Billed Amount", "Status"]];
+  const tableRows = result.normalized_bill.map(item => [
+    item.Date || "N/A",
+    item.CPT || "N/A",
+    item.Description || "Medical Service",
+    `$${item.Billed_Amount.toFixed(2)}`,
+    "Clinical Review Done"
+  ]);
+
+  doc.autoTable({
+    startY: 75,
+    head: tableHeaders,
+    body: tableRows,
+    theme: 'grid',
+    styles: { fontSize: 9, cellPadding: 3, font: "helvetica" },
+    headStyles: { fillColor: [40, 40, 40], textColor: [255, 255, 255] }
+  });
+
+  // 5. Findings Section
+  let currentY = doc.lastAutoTable.finalY + 15;
+  doc.setFont("helvetica", "bold");
+  doc.text("AUDIT FINDINGS & CLINICAL JUSTIFICATION:", 14, currentY);
+  currentY += 7;
+
+  doc.setFont("helvetica", "normal");
+  result.findings.forEach((finding, idx) => {
+    if (currentY > pageHeight - 30) {
+      doc.addPage();
+      currentY = 20;
+    }
+    const text = `${idx + 1}. [${finding.type.toUpperCase()}] ${finding.title}: ${finding.reason || finding.detail}`;
+    const splitText = doc.splitTextToSize(text, 180);
+    doc.text(splitText, 14, currentY);
+    currentY += (splitText.length * 5) + 2;
+  });
+
+  // 6. Savings Opportunity Summary
+  currentY += 10;
+  if (currentY > pageHeight - 40) { doc.addPage(); currentY = 20; }
+  doc.setDrawColor(200, 200, 200);
+  doc.line(14, currentY, 196, currentY);
+  currentY += 10;
+  doc.setFont("helvetica", "bold");
+  doc.text(`ESTIMATED SAVINGS OPPORTUNITY: $${result.potential_savings.toFixed(2)}`, 14, currentY);
+  currentY += 7;
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(9);
+  doc.text("Calculation based on 150% Medicare Benchmark and removal of non-billable clinical overlaps.", 14, currentY);
+
+  // 7. Closing
+  currentY += 20;
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.text("Respectfully submitted,", 14, currentY);
+  currentY += 15;
+  doc.line(14, currentY, 70, currentY); // Signature Line
+  currentY += 5;
+  doc.text(`${data.first} ${data.last}`, 14, currentY);
+
+  // Final Disclaimer
+  doc.setFontSize(7);
+  doc.setTextColor(150, 150, 150);
+  doc.text("This report is generated for informational/negotiation purposes only. It does not constitute legal or medical advice.", 105, 285, { align: "center" });
+
+  doc.save(`Medical_Audit_${data.last}_${data.account}.pdf`);
+  closePatientModal();
+}
+
+function copyNegotiationScript() {
+  const result = window.lastAuditResult;
+  if (!result) return;
+  
+  let letter = `Subject: Formal Dispute of Medical Charges - Billing Accuracy Audit\n\n`;
+  letter += `To Whom It May Concern,\n\n`;
+  letter += `I am writing to formally dispute the charges on my recent bill. A clinical audit based on CMS and NCCI standards has identified ${result.findings.length} anomalies including pricing variances and bundling errors.\n\n`;
+  
+  letter += `Findings Summary:\n`;
+  result.findings.forEach((f, idx) => {
+    letter += `${idx + 1}. ${f.title}: ${f.reason || f.detail} (Code: ${f.code})\n`;
+  });
+  
+  letter += `\nBased on these clinical guidelines, the estimated fair-market value for these services significantly differs from the amount billed. I am requesting an adjustment of approximately $${result.potential_savings.toFixed(2)}.\n\n`;
+  letter += `Please provide an updated invoice reflecting these adjustments or a written explanation for why these national clinical standards were not followed.\n\n`;
+  letter += `Sincerely,\n[Your Name]`;
+
+  navigator.clipboard.writeText(letter).then(() => {
+    alert("Professional Negotiation Script copied to clipboard!");
+  });
+}
+
+// Event entry point
+document.addEventListener('DOMContentLoaded', () => {
+    const genBtn = document.getElementById('btn-generate-final');
+    if (genBtn) genBtn.onclick = generateProfessionalPDF;
+});
+
 
 function renderCategorizedFindings(findings, container, rowCount) {
   if (rowCount === 0) return;
@@ -717,11 +884,50 @@ function debounce(fn, ms) {
 // ── Shared Utils & Code Search ──
 async function searchCodes(q, container) {
   if (!db) return;
-  const { data } = await db.from('medical_codes').select('code, short_description').ilike('code', `%${q}%`).limit(10);
-  container.innerHTML = data.map(r => `
-    <div class="result-card" style="display:flex; justify-content:space-between; align-items:center;">
-      <div><strong>${r.code}</strong>: ${r.short_description}</div>
-      <button class="btn btn-ghost" style="padding:4px 8px; font-size:11px;" onclick="addCodeToAudit('${r.code}', '${r.short_description}')">⊕ Add to Audit</button>
+  
+  // Parallel search in main codes and drug fees
+  const [codesRes, drugRes] = await Promise.all([
+    db.from('medical_codes').select('code, short_description').ilike('code', `%${q}%`).limit(10),
+    db.from('hcpcs_drug_fees').select('hcpcs_code, payment_limit, short_description').ilike('hcpcs_code', `%${q}%`).limit(10)
+  ]);
+
+  const results = [];
+  
+  // Combine results, prioritizing drug fees with price info
+  (drugRes.data || []).forEach(r => {
+    results.push({
+      code: r.hcpcs_code,
+      desc: r.short_description,
+      price: r.payment_limit,
+      type: 'DRUG'
+    });
+  });
+
+  (codesRes.data || []).forEach(r => {
+    if (!results.find(res => res.code === r.code)) {
+      results.push({
+        code: r.code,
+        desc: r.short_description,
+        type: 'CPT'
+      });
+    }
+  });
+
+  if (results.length === 0) {
+    container.innerHTML = '<div class="status-msg">No codes found.</div>';
+    return;
+  }
+
+  container.innerHTML = results.map(r => `
+    <div class="result-card" style="display:flex; justify-content:space-between; align-items:center; padding: 12px 16px; margin-bottom: 8px;">
+      <div style="flex:1;">
+        <div style="display:flex; align-items:center; gap:8px;">
+           <strong style="color:var(--text-h);">${r.code}</strong>
+           ${r.price ? `<span style="font-size:10px; padding:2px 6px; background:var(--accent-glow); color:var(--accent); border-radius:4px; font-weight:800;">$${r.price.toFixed(2)}/unit</span>` : ''}
+        </div>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${r.desc}</div>
+      </div>
+      <button class="btn btn-ghost" style="padding:6px 10px; font-size:11px;" onclick="addCodeToAudit('${r.code}', '${r.desc}')">⊕ Add to Audit</button>
     </div>`).join('');
 }
 

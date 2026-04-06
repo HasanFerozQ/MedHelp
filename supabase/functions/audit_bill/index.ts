@@ -217,30 +217,44 @@ async function runClinicalEngine(items: any[]) {
   let totalBenchmark = 0;
   let savingsOpportunity = 0;
 
-  const distinctCodes = [...new Set(items.map(i => i.CPT).filter(c => c && c.length >= 5))];
+  // 1. UNIQUE CODES for Bulk Pricing Lookup
+  const allCodes = [...new Set(items.map(i => (i.CPT || "").trim().toUpperCase()).filter(c => c && c.length >= 2))];
+  const cptCodes = allCodes.filter(c => /^[0-9]{5}$/.test(c));
+  const drugCodes = allCodes.filter(c => /^[A-Z][0-9]{4}$/.test(c)); // J, Q, P, V codes
   
-  const { data: fees } = await supabaseAdmin
-    .from('cpt_medicare_fees')
-    .select('cpt_code, base_price')
-    .in('cpt_code', distinctCodes);
+  // Parallel Fetch from both tables
+  const [cptRes, drugRes] = await Promise.all([
+    supabaseAdmin.from('cpt_medicare_fees').select('cpt_code, base_price, description').in('cpt_code', cptCodes),
+    supabaseAdmin.from('hcpcs_drug_fees').select('hcpcs_code, payment_limit, short_description').in('hcpcs_code', drugCodes)
+  ]);
 
-  const feeMap: Record<string, number> = (fees || []).reduce((acc: any, f: any) => {
-    acc[f.cpt_code] = f.base_price;
-    return acc;
-  }, {});
+  const feeMap: Record<string, { price: number, type: string, desc?: string }> = {};
+  (cptRes.data || []).forEach((f: any) => { feeMap[f.cpt_code] = { price: f.base_price, type: 'CPT', desc: f.description }; });
+  (drugRes.data || []).forEach((f: any) => { feeMap[f.hcpcs_code] = { price: f.payment_limit, type: 'DRUG', desc: f.short_description }; });
 
+  // 2. PRICING VALIDATION
   items.forEach(item => {
-    const benchmark = feeMap[item.CPT];
-    if (benchmark) {
-      totalBenchmark += (benchmark * item.Qty);
-      if (item.Billed_Amount > (benchmark * item.Qty * 2.0)) {
+    const code = (item.CPT || "").trim().toUpperCase();
+    const feeData = feeMap[code];
+    if (feeData) {
+      const benchmark = feeData.price;
+      const totalBenchmarkValue = benchmark * item.Qty;
+      totalBenchmark += totalBenchmarkValue;
+      
+      // RULE: Flag if charge is > 200% of Medicare
+      if (item.Billed_Amount > (totalBenchmarkValue * 2.0)) {
+        const typeLabel = feeData.type === 'DRUG' ? 'Drug Pricing Variance' : 'High Pricing Variance';
+        const unitDetail = feeData.type === 'DRUG' ? `per unit (${feeData.desc})` : '';
+        
         clinicalFindings.push({
           type: "Warning",
-          code: item.CPT,
-          title: "High Pricing Variance",
-          reason: `Medicare benchmark is ~$${benchmark.toFixed(2)}, but you billed $${item.Billed_Amount.toFixed(2)} (${((item.Billed_Amount / (benchmark * item.Qty)) * 100).toFixed(0)}% of Medicare).`
+          code: code,
+          title: typeLabel,
+          reason: `Medicare benchmark is ~$${benchmark.toFixed(2)} ${unitDetail}, total fair market ~$${totalBenchmarkValue.toFixed(2)}. But you billed $${item.Billed_Amount.toFixed(2)} (${((item.Billed_Amount / totalBenchmarkValue) * 100).toFixed(0)}% of Medicare).`
         });
-        savingsOpportunity += (item.Billed_Amount - (benchmark * item.Qty * 1.5));
+        
+        // Accumulate potential savings vs 150% benchmark
+        savingsOpportunity += (item.Billed_Amount - (totalBenchmarkValue * 1.5));
       }
     }
   });
