@@ -170,14 +170,14 @@ function addWorkspaceRow(data = {}) {
   if (!body) return;
   const row = document.createElement('tr');
   row.innerHTML = `
-    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border);">${data.date || ''}</td>
-    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); font-family: monospace; font-weight: bold;">${data.code || ''}</td>
-    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border);">${data.desc || ''}</td>
-    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: center;">${data.qty || 1}</td>
-    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right;">${data.price ? data.price.toFixed(2) : '0.00'}</td>
-    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; font-weight: bold;">${data.total ? data.total.toFixed(2) : '0.00'}</td>
-    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; color: #22c55e;">${data.paid ? data.paid.toFixed(2) : '0.00'}</td>
-    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; color: #ef4444;">${data.owed ? data.owed.toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border);">${data.date || ''}</td>
+    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); font-family: monospace; font-weight: bold;">${data.code || ''}</td>
+    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border);">${data.desc || ''}</td>
+    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: center;">${data.qty || 1}</td>
+    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right;">${data.price ? (Math.round(data.price * 100) / 100).toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; font-weight: bold;">${data.total ? (Math.round(data.total * 100) / 100).toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; color: #22c55e;">${data.paid ? (Math.round(data.paid * 100) / 100).toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; color: #ef4444;">${data.owed ? (Math.round(data.owed * 100) / 100).toFixed(2) : '0.00'}</td>
     <td style="padding: 10px; border-bottom: 1px solid var(--border); text-align: center;">
       <button onclick="this.parentElement.parentElement.remove(); reRunWorkspaceAudit();" style="background:none; border:none; color:var(--danger); cursor:pointer;">✕</button>
     </td>
@@ -281,7 +281,7 @@ function renderCategorizedFindings(findings, container, rowCount) {
   if (rowCount === 0) return;
   container.className = 'audit-results visible';
   if (findings.length === 0) {
-    container.innerHTML = `<div class="audit-finding" style="text-align:left;"><strong style="color:var(--success);">Pass</strong> - No anomalies found.</div>`;
+    container.innerHTML = `<div class="audit-finding" style="text-align:left;"><strong style="color:var(--success);">Audit Passed</strong> - No automated anomalies found.</div>`;
     return;
   }
   const html = findings.map(f => `
@@ -293,12 +293,28 @@ function renderCategorizedFindings(findings, container, rowCount) {
       </div>
     </div>
   `).join('');
-  container.innerHTML = `<div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">Deep Offline Audit (V2.3)</div>` + html;
+  container.innerHTML = `<div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">Smart Internal Audit (V2.4)</div>` + html;
 }
 
 function runAuditLines() {
   const text = document.getElementById('line-items-text')?.value || '';
-  if (text) runAudit(text);
+  if (!text) return;
+  
+  // Quick shorthand for manual entries
+  runAudit(text);
+}
+
+function switchTab(id, btn) {
+  // Handles both top-level and audit-specific tabs
+  const prefix = id.includes('audit-') ? '' : 'audit-';
+  const targetId = id.startsWith('audit-') ? id : 'audit-' + id;
+  
+  document.querySelectorAll('.audit-panel').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.audit-tab').forEach(b => b.classList.remove('active'));
+  
+  const target = document.getElementById(targetId);
+  if (target) target.style.display = 'block';
+  if (btn) btn.classList.add('active');
 }
 
 function clearAudit() {

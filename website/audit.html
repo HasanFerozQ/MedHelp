@@ -40,9 +40,9 @@
     <div class="audit-area">
 
       <div class="audit-tabs">
-        <button class="audit-tab active" onclick="switchAuditTab('pdf', this)">📄 Upload PDF</button>
-        <button class="audit-tab" onclick="switchAuditTab('paste', this)">📋 Paste Text</button>
-        <button class="audit-tab" onclick="switchAuditTab('lines', this)">📝 Line Items</button>
+        <button class="audit-tab active" onclick="switchTab('pdf', this)">📄 Upload PDF</button>
+        <button class="audit-tab" onclick="switchTab('paste', this)">📋 Paste Text</button>
+        <button class="audit-tab" onclick="switchTab('lines', this)">📝 Line Items</button>
       </div>
 
       <div id="audit-pdf" class="audit-panel">
@@ -173,13 +173,14 @@
       { q: 'What is an EOB?', a: 'Explanation of Benefits showing what was billed and paid.' },
       { q: 'Can it read any PDF?', a: 'Optimized for standard bills and EOBs.' }
     ];
-    renderFAQ('faq-audit', auditFaqs);
-
-    function switchAuditTab(id, btn) {
-      document.querySelectorAll('.audit-panel').forEach(p => p.style.display = 'none');
-      document.querySelectorAll('.audit-tab').forEach(b => b.classList.remove('active'));
-      document.getElementById('audit-' + id).style.display = 'block';
-      btn.classList.add('active');
+    
+    // V2.4: Safe Initialization Guard
+    if (typeof renderFAQ === 'function') {
+      renderFAQ('faq-audit', auditFaqs);
+    } else {
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof renderFAQ === 'function') renderFAQ('faq-audit', auditFaqs);
+      });
     }
   </script>
 </body>

@@ -109,17 +109,25 @@ module.exports = async (req, res) => {
     const response = await result.response;
     let text = response.text();
 
-    // Clean up markdown if Gemini adds it
-    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    // V2.4: Robust Regex JSON Extraction
+    // Finds everything between the FIRST { and LAST }
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error("No JSON found in AI response:", text);
+      return res.status(500).json({ 
+        error: "AI failed to return structured JSON data.",
+        raw: text 
+      });
+    }
 
     let parsed;
     try {
-      parsed = JSON.parse(text);
+      parsed = JSON.parse(jsonMatch[0]);
     } catch (e) {
-      console.error("Gemini JSON Parse Error:", text);
+      console.error("Gemini JSON Parse Error:", jsonMatch[0]);
       return res.status(500).json({ 
-        error: "Failed to parse AI response as JSON",
-        raw: text 
+        error: "Failed to parse extracted AI response as JSON.",
+        raw: jsonMatch[0] 
       });
     }
 
