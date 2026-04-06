@@ -16,3 +16,10 @@ CREATE TABLE IF NOT EXISTS ndc_hcpcs_crosswalk (
     hcpcs_code TEXT REFERENCES hcpcs_drug_fees(hcpcs_code),
     drug_name TEXT
 );
+
+-- Security: Enable Public Read Access for the Frontend
+ALTER TABLE hcpcs_drug_fees ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public Read Access" ON hcpcs_drug_fees FOR SELECT USING (true);
+
+ALTER TABLE ndc_hcpcs_crosswalk ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public Read Access Crosswalk" ON ndc_hcpcs_crosswalk FOR SELECT USING (true);
