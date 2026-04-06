@@ -121,8 +121,8 @@ function runAudit(text) {
 function extractRowsFromText(text) {
   const lines = text.split('\n').filter(l => l.trim().length > 5);
   const rows = [];
-  const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/;
-  const codeRegex = /\b(\d{5}|[A-Z]\d{4})\b/;
+  const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
+  const codeRegex = /\b(\d{5}|[A-Z]\d{4})\b/g;
   const moneyRegex = /\$?\d{1,7}\.\d{2}/g;
 
   lines.forEach(line => {
@@ -134,28 +134,27 @@ function extractRowsFromText(text) {
       const amounts = money.map(m => parseFloat(m.replace(/[^0-9.]/g, '')));
       let price = 0, qty = 1, total = 0, paid = 0, owed = 0;
       
-      // Smart Inference for EOBs (V2.3)
-      if (amounts.length === 1) {
-        total = amounts[0];
-      } else if (amounts.length === 2) {
-        price = amounts[0]; total = amounts[1];
-      } else if (amounts.length === 3) {
-        // [Qty, Price, Total] or [Total, Paid, Owed]
+      if (amounts.length === 1) total = amounts[0];
+      else if (amounts.length === 2) { price = amounts[0]; total = amounts[1]; }
+      else if (amounts.length === 3) {
         if (amounts[0] < 10) { qty = amounts[0]; price = amounts[1]; total = amounts[2]; }
         else { total = amounts[0]; paid = amounts[1]; owed = amounts[2]; }
       } else if (amounts.length >= 4) {
-        // High density (EOB style): Billed, Allowed, Paid, Owed
         total = amounts[0];
         paid = amounts[amounts.length - 2];
         owed = amounts[amounts.length - 1];
       }
 
+      // Cleanup description by scrubbing all codes/dates/prices out
+      let desc = line.replace(dateRegex, '').replace(codeRegex, '').replace(moneyRegex, '').replace(/\s+/g, ' ').trim();
+      if (desc.length > 50) desc = desc.substring(0, 50) + '...';
+
       rows.push({
         date: dates ? dates[0] : '',
         code: codes ? codes[0] : '',
-        desc: line.substring(0, 50).replace(dateRegex, '').replace(codeRegex, '').replace(moneyRegex, '').trim(),
+        desc: desc || 'Medical Service',
         qty: qty,
-        price: price || (total / qty),
+        price: price || (qty > 0 ? (total / qty) : 0),
         total: total,
         paid: paid,
         owed: owed
@@ -165,24 +164,53 @@ function extractRowsFromText(text) {
   return rows;
 }
 
+// Performance Guard: 250ms Debounced Auditor
+const debouncedAudit = debounce(() => reRunWorkspaceAudit(), 250);
+
 function addWorkspaceRow(data = {}) {
   const body = document.getElementById('workspace-body');
   if (!body) return;
   const row = document.createElement('tr');
   row.innerHTML = `
-    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border);">${data.date || ''}</td>
-    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); font-family: monospace; font-weight: bold;">${data.code || ''}</td>
-    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border);">${data.desc || ''}</td>
-    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: center;">${data.qty || 1}</td>
-    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right;">${data.price ? (Math.round(data.price * 100) / 100).toFixed(2) : '0.00'}</td>
-    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; font-weight: bold;">${data.total ? (Math.round(data.total * 100) / 100).toFixed(2) : '0.00'}</td>
-    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; color: #22c55e;">${data.paid ? (Math.round(data.paid * 100) / 100).toFixed(2) : '0.00'}</td>
-    <td contenteditable="true" oninput="reRunWorkspaceAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; color: #ef4444;">${data.owed ? (Math.round(data.owed * 100) / 100).toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="padding: 10px; border-bottom: 1px solid var(--border);">${data.date || ''}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); font-family: monospace; font-weight: bold;">${data.code || ''}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="padding: 10px; border-bottom: 1px solid var(--border);">${data.desc || ''}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: center;">${data.qty || 1}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right;">${data.price ? (Math.round(data.price * 100) / 100).toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; font-weight: bold;">${data.total ? (Math.round(data.total * 100) / 100).toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; color: #22c55e;">${data.paid ? (Math.round(data.paid * 100) / 100).toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; color: #ef4444;">${data.owed ? (Math.round(data.owed * 100) / 100).toFixed(2) : '0.00'}</td>
     <td style="padding: 10px; border-bottom: 1px solid var(--border); text-align: center;">
-      <button onclick="this.parentElement.parentElement.remove(); reRunWorkspaceAudit();" style="background:none; border:none; color:var(--danger); cursor:pointer;">✕</button>
+      <button onclick="this.parentElement.parentElement.remove(); debouncedAudit();" style="background:none; border:none; color:var(--danger); cursor:pointer;">✕</button>
     </td>
   `;
   body.appendChild(row);
+}
+
+function addCodeToAudit(code, desc) {
+  const workspace = document.getElementById('audit-workspace-container');
+  if (workspace) workspace.style.display = 'block';
+  
+  addWorkspaceRow({
+    date: new Date().toLocaleDateString(),
+    code: code,
+    desc: desc,
+    qty: 1,
+    total: 0
+  });
+
+  // Switch to Audit Tab
+  const btn = document.querySelector('.audit-tab') || document.querySelector('[onclick*="switchTab(\'pdf\'"]');
+  switchTab('pdf', btn);
+  
+  // Highlight for feedback
+  const trs = document.querySelectorAll('#workspace-body tr');
+  const last = trs[trs.length - 1];
+  if (last) {
+    last.style.transition = 'background 0.5s';
+    last.style.background = 'rgba(6, 182, 212, 0.15)';
+    setTimeout(() => last.style.background = 'transparent', 2000);
+  }
 }
 
 function reRunWorkspaceAudit() {
@@ -330,13 +358,21 @@ function debounce(fn, ms) {
 async function searchCodes(q, container) {
   if (!db) return;
   const { data } = await db.from('medical_codes').select('code, short_description').ilike('code', `%${q}%`).limit(10);
-  container.innerHTML = data.map(r => `<div class="result-card"><strong>${r.code}</strong>: ${r.short_description}</div>`).join('');
+  container.innerHTML = data.map(r => `
+    <div class="result-card" style="display:flex; justify-content:space-between; align-items:center;">
+      <div><strong>${r.code}</strong>: ${r.short_description}</div>
+      <button class="btn btn-ghost" style="padding:4px 8px; font-size:11px;" onclick="addCodeToAudit('${r.code}', '${r.short_description}')">⊕ Add to Audit</button>
+    </div>`).join('');
 }
 
 async function searchDenials(q, container) {
   if (!db) return;
   const { data } = await db.from('carc_codes').select('code, description').ilike('code', `%${q}%`).limit(10);
-  container.innerHTML = data.map(r => `<div class="result-card"><strong>${r.code}</strong>: ${r.description}</div>`).join('');
+  container.innerHTML = data.map(r => `
+    <div class="result-card" style="display:flex; justify-content:space-between; align-items:center;">
+      <div><strong>${r.code}</strong>: ${r.description}</div>
+      <button class="btn btn-ghost" style="padding:4px 8px; font-size:11px;" onclick="addCodeToAudit('${r.code}', '${r.description}')">⊕ Add to Audit</button>
+    </div>`).join('');
 }
 
 function bindSearch(inputId, resultId, handler) {
