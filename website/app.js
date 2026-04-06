@@ -117,35 +117,98 @@ function setupPDFAudit() {
 
 async function handlePDF(file) {
   const status = document.getElementById('pdf-status');
-  if (status) status.innerHTML = `<span class="spinner"></span> Extracting text from ${file.name}...`;
+  const overlay = document.getElementById('ai-loading-overlay');
+  const loadText = document.getElementById('ai-loading-text');
+  const results = document.getElementById('audit-results');
+  
+  if (status) status.innerHTML = '';
+  if (results) { results.innerHTML = ''; results.className = 'audit-results'; }
+
+  // 1. FILE SIZE CHECK (5MB limit)
+  if (file.size > 5 * 1024 * 1024) {
+    if (status) status.innerHTML = `<span style="color:var(--danger)">❌ File exceeds 5MB limit. Please compress or upload a smaller PDF.</span>`;
+    return;
+  }
+
+  if (overlay) overlay.style.display = 'block';
 
   try {
-    const arrayBuffer = await file.arrayBuffer();
-    // Load PDF.js worker from CDN if not already loaded
-    if (!window.pdfjsLib) {
-      throw new Error('PDF library not loaded. Check connection.');
-    }
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-    let fullText = '';
+    // 2. READ PDF AS BASE64 for Gate 1
+    const reader = new FileReader();
+    const base64Promise = new Promise((resolve) => {
+      reader.onload = () => resolve(reader.result.split(',')[1]); // remove data:application/pdf;base64,
+      reader.readAsDataURL(file);
+    });
+    const base64Data = await base64Promise;
 
-    for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const textContent = await page.getTextContent();
-        fullText += textContent.items.map(item => item.str).join(' ') + '\n';
+    // 3. EXPONENTIAL BACKOFF FOR SUPABASE EDGE FUNCTION
+    const maxRetries = 3;
+    let attempt = 0;
+    let apiSuccess = false;
+    let jsonResult = [];
+
+    while (attempt < maxRetries && !apiSuccess) {
+      try {
+        if (attempt > 0 && loadText) {
+          loadText.innerText = `Busy servers. Retrying in ${attempt * 5} seconds...`;
+          await new Promise(r => setTimeout(r, attempt * 5000));
+        } else if (loadText) {
+          loadText.innerText = `This may take up to 15 seconds.`;
+        }
+        
+        const response = await fetch(`${SUPA_URL}/functions/v1/audit_bill`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pdfBase64: base64Data, mimeType: file.type || 'application/pdf' })
+        });
+
+        if (response.status === 429) {
+           throw new Error("RateLimit");
+        } else if (!response.ok) {
+           throw new Error("APIError");
+        }
+
+        const data = await response.json();
+        jsonResult = data.anomalies || [];
+        apiSuccess = true;
+
+      } catch (err) {
+        attempt++;
+        if (attempt >= maxRetries) {
+          console.warn("API failed after max retries. Dropping to Gate 2 local fallback.");
+          break;
+        }
+      }
     }
 
-    if (status) status.innerHTML = `✅ ${file.name} loaded. Analyze below:`;
-    
-    const textarea = document.getElementById('bill-text');
-    if (textarea) {
-      textarea.value = fullText;
-      // Auto-switch tab if needed
-      runAudit(fullText);
+    if (overlay) overlay.style.display = 'none';
+
+    // 4. PROCESS GATE 1 RESULTS OR LOCALLY FALLBACK
+    if (apiSuccess) {
+       // Success! Map anomalies via Gate 2
+       renderAuditJSON(jsonResult);
+       if (status) status.innerHTML = `✅ ${file.name} AI Analysis Complete:`;
+    } else {
+       // Fallback: Local V2 Text Extraction
+       if (loadText) loadText.innerText = `Using offline local auditor...`;
+       const arrayBuffer = await file.arrayBuffer();
+       if (!window.pdfjsLib) throw new Error('PDF library not loaded for fallback.');
+       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+       let fullText = '';
+       for (let i = 1; i <= pdf.numPages; i++) {
+           const page = await pdf.getPage(i);
+           const textContent = await page.getTextContent();
+           fullText += textContent.items.map(item => item.str).join(' ') + '\n';
+       }
+       document.getElementById('bill-text').value = fullText;
+       runAudit(fullText); // Runs local regex auditing
+       if (status) status.innerHTML = `⚠️ ${file.name} (Using Offline Local Analyzer):`;
     }
+
   } catch (err) {
+    if (overlay) overlay.style.display = 'none';
     console.error(err);
     if (status) status.innerHTML = `<span style="color:var(--danger)">❌ Error: ${err.message}</span>`;
-    if (MediHelp.logError) MediHelp.logError('handlePDF: ' + err.message);
   }
 }
 
@@ -474,6 +537,36 @@ function selectRx(name) {
 }
 
 // ── Bill Audit Engine ─────────────────────────────────────────────────────
+function renderAuditJSON(anomalies) {
+  const results = document.getElementById('audit-results');
+  if (!results) return;
+
+  let findingsHtml = '';
+  if (!anomalies || anomalies.length === 0) {
+    findingsHtml = `
+      <div class="audit-finding" style="text-align:left;">
+        <div class="finding-icon ok">●</div>
+        <div style="flex:1;">
+          <strong style="color:var(--text-h);">No Major Anomalies Detected</strong>
+          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">Our AI scan did not flag obvious errors or anomalies. Always review your EOB (Explanation of Benefits) carefully.</p>
+        </div>
+      </div>`;
+  } else {
+    findingsHtml = anomalies.map(f => `
+      <div class="audit-finding" style="text-align:left;">
+        <div class="finding-icon danger">●</div>
+        <div style="flex:1;">
+          <strong style="color:var(--text-h);">Flagged Code: ${f.code}</strong>
+          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">${f.reason}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  results.className = 'audit-results visible';
+  results.innerHTML = `<div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">AI Audit Results</div>` + findingsHtml;
+}
+
 function runAudit(manualText) {
   const text = manualText || document.getElementById('bill-text')?.value || '';
   const results = document.getElementById('audit-results');
@@ -503,12 +596,12 @@ function runAudit(manualText) {
   }
 
   if (findings.length === 0) {
-    findings.push({ title: 'No Major Anomalies Detected', detail: 'Our initial scan did not flag obvious duplicates or round-dollar issues. However, always review your EOB (Explanation of Benefits) carefully.', type: 'ok' });
+    findings.push({ title: 'No Major Anomalies Detected', detail: 'Our offline scan did not flag obvious duplicates or round-dollar issues.', type: 'ok' });
   }
 
   results.className = 'audit-results visible';
   results.innerHTML = `
-    <div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">Audit Results</div>
+    <div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">Offline Parsing Results</div>
     ` + findings.map(f => `
     <div class="audit-finding" style="text-align:left;">
       <div class="finding-icon ${f.type}">●</div>
@@ -527,6 +620,7 @@ function runAuditLines() {
 function clearAudit() {
   const t = document.getElementById('bill-text'); if(t) t.value = '';
   const s = document.getElementById('pdf-status'); if(s) s.innerHTML = '';
+  const o = document.getElementById('ai-loading-overlay'); if(o) o.style.display = 'none';
   const r = document.getElementById('audit-results'); if(r) { r.className = 'audit-results'; r.innerHTML = ''; }
 }
 
