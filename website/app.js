@@ -91,6 +91,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ── Denial Codes ────────────────────────────────────────────────────────
+  const denialsInput = document.getElementById('denials-input');
+  const denialSuggest = document.getElementById('denial-suggestions');
+  if (denialsInput) {
+    denialsInput.addEventListener('input', (e) => {
+      const q = e.target.value.trim();
+      if (q.length < 1) { 
+        if (denialSuggest) denialSuggest.innerHTML = ''; 
+        return; 
+      }
+      searchDenialSuggestions(q);
+    });
+  }
+
   // Global Theme Handling is managed by blog_handler.js
 });
 
@@ -156,13 +170,35 @@ async function handlePDF(file) {
           loadText.innerText = `This may take up to 15 seconds.`;
         }
         
-        const response = await fetch(`${SUPA_URL}/functions/v1/audit_bill`, {
+        const GEMINI_KEYS = [
+          'AIzaSyCewed_H2okDY6ZDxrh_KPMXDV0Tmo1Yzw',
+          'AIzaSyCwPpYO-1zOUat1TjyAhTk-RwqDucLtcjw',
+          'AIzaSyAvg73x8ykO2N2Y_VvVxTWDbwewkHYqX6o',
+          'AIzaSyACJOj5gAZVCISsa2b7IErJh5VncIfE1iM'
+        ];
+        const apiKey = GEMINI_KEYS[Math.floor(Math.random() * GEMINI_KEYS.length)];
+        const promptText = `You are an expert Medical Auditor looking for billing anomalies. 
+Analyze the provided medical bill (whether EOB, hospital statement, or CMS-1500).
+Identify any coding anomalies such as duplicate charges, unbundling errors, medically unnecessary services, dx-procedure mismatches, arithmetic errors, or missing modifiers.
+Return ONLY a valid JSON array of objects, where each object has exactly two keys: "code" (the problematic CPT, HCPCS, or ICD-10 code) and "reason" (a short 1-sentence explanation of why it is an anomaly).
+If no anomalies are found, return an empty array [].
+Do not include markdown blocks like \`\`\`json. Return raw JSON.`;
+
+        const requestBody = {
+          contents: [{
+            role: "user",
+            parts: [
+              { text: promptText },
+              { inlineData: { mimeType: file.type || "application/pdf", data: base64Data } }
+            ]
+          }],
+          generationConfig: { responseMimeType: "application/json" }
+        };
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${SUPA_KEY}`
-          },
-          body: JSON.stringify({ pdfBase64: base64Data, mimeType: file.type || 'application/pdf' })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestBody)
         });
 
         if (response.status === 429) {
@@ -172,7 +208,15 @@ async function handlePDF(file) {
         }
 
         const data = await response.json();
-        jsonResult = data.anomalies || [];
+        let extractedText = "[]";
+        if (data.candidates && data.candidates.length > 0) {
+           extractedText = data.candidates[0].content.parts[0].text;
+        }
+        try {
+            jsonResult = JSON.parse(extractedText);
+        } catch(e) {
+            jsonResult = [];
+        }
         apiSuccess = true;
 
       } catch (err) {
@@ -201,9 +245,28 @@ async function handlePDF(file) {
        for (let i = 1; i <= pdf.numPages; i++) {
            const page = await pdf.getPage(i);
            const textContent = await page.getTextContent();
-           fullText += textContent.items.map(item => item.str).join(' ') + '\n';
+           
+           // Grid-Aware Logic: grouping Y-axis to correctly form rows
+           let lineMap = [];
+           textContent.items.forEach(item => {
+               // Group items within a 4px vertical tolerance to form a reliable baseline
+               const y = Math.round(item.transform[5] / 4) * 4; 
+               let line = lineMap.find(l => l.y === y);
+               if (!line) {
+                   line = { y: y, text: [] };
+                   lineMap.push(line);
+               }
+               line.text.push({ x: item.transform[4], str: item.str });
+           });
+           
+           // Sort lines top-to-bottom (PDF y goes up)
+           lineMap.sort((a, b) => b.y - a.y);
+           
+           fullText += lineMap.map(line => {
+               // Sort items within line left-to-right
+               return line.text.sort((a, b) => a.x - b.x).map(i => i.str).join('  ');
+           }).join('\n') + '\n';
        }
-       document.getElementById('bill-text').value = fullText;
        runAudit(fullText); // Runs local regex auditing
        if (status) status.innerHTML = `⚠️ ${file.name} (Using Offline Local Analyzer):`;
     }
@@ -322,19 +385,7 @@ async function searchCodes(q, container) {
   }
 }
 
-// ── Denial Codes ────────────────────────────────────────────────────────
-const denialsInput = document.getElementById('denials-input');
-const denialSuggest = document.getElementById('denial-suggestions');
-if (denialsInput) {
-  denialsInput.addEventListener('input', (e) => {
-    const q = e.target.value.trim();
-    if (q.length < 1) { 
-      if (denialSuggest) denialSuggest.innerHTML = ''; 
-      return; 
-    }
-    searchDenialSuggestions(q);
-  });
-}
+// Variables are handled dynamically inside searchDenials where needed.
 
 async function searchDenialSuggestions(q) {
   if (!db) return;
@@ -366,6 +417,8 @@ async function searchDenialSuggestions(q) {
 }
 
 function selectDenial(code) {
+  const denialsInput = document.getElementById('denials-input');
+  const denialSuggest = document.getElementById('denial-suggestions');
   if (denialsInput) denialsInput.value = code;
   if (denialSuggest) denialSuggest.innerHTML = '';
   searchDenials(code, document.getElementById('denials-results'));
@@ -616,8 +669,49 @@ function runAudit(manualText) {
 }
 
 function runAuditLines() {
-  const t = document.getElementById('line-items-text')?.value || '';
-  runAudit(t);
+  const text = document.getElementById('line-items-text')?.value || '';
+  const results = document.getElementById('audit-results');
+  if (!results) return;
+
+  const lines = text.split('\n').filter(l => l.trim().length > 3);
+  if (lines.length === 0) {
+    results.className = 'audit-results visible';
+    results.innerHTML = `<div class="audit-finding" style="text-align:center;"><p>Please provide valid line items (e.g. "99213 $150.00").</p></div>`;
+    return;
+  }
+
+  const findings = [];
+  const codeCostPattern = /\b([0-9]{5}|[A-Z][0-9]{4})\b.*?\$?([0-9,]+\.[0-9]{2})/i;
+  
+  lines.forEach(line => {
+    const match = line.match(codeCostPattern);
+    if (!match) return;
+    
+    // Simplistic line-item auditor rules
+    const cost = parseFloat(match[2].replace(/,/g, ''));
+    if (cost > 1000) {
+      findings.push({ title: `High-Cost Code: ${match[1]}`, detail: `This item is billed at $${cost.toFixed(2)}, which is unusually high for a single outpatient line item without modifiers.`, type: 'warn' });
+    }
+    if (cost === 0) {
+     findings.push({ title: `Zero-Dollar Charge: ${match[1]}`, detail: `This code has no cost assigned. It may be bundled or denied.`, type: 'ok' });
+    }
+  });
+
+  if (findings.length === 0) {
+    findings.push({ title: 'Line Items Appear Valid', detail: 'Our initial scan did not flag any egregious outliers or zero-dollar charges.', type: 'ok' });
+  }
+
+  results.className = 'audit-results visible';
+  results.innerHTML = `
+    <div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">Line Item Analysis</div>
+    ` + findings.map(f => `
+    <div class="audit-finding" style="text-align:left;">
+      <div class="finding-icon ${f.type}">●</div>
+      <div style="flex:1;">
+        <strong style="color:var(--text-h);">${f.title}</strong>
+        <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">${f.detail}</p>
+      </div>
+    </div>`).join('');
 }
 
 function clearAudit() {
