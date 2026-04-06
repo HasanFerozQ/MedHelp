@@ -5,9 +5,7 @@ const multer = require("multer");
 const runMiddleware = (req, res, fn) => {
   return new Promise((resolve, reject) => {
     fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
+      if (result instanceof Error) return reject(result);
       return resolve(result);
     });
   });
@@ -15,139 +13,62 @@ const runMiddleware = (req, res, fn) => {
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 }, // Vercel Free tier limit 4.5MB, setting 5MB to be safe
+  limits: { fileSize: 4 * 1024 * 1024 }, // Keep under 4MB for Vercel
 });
 
 const AUDIT_PROMPT = `
-You are a medical billing auditor.
-Analyze this medical bill and return STRICT JSON only.
-
-### FAST MODE: STRICT 8S RESPONSE LIMIT ###
-Prioritize the 5 most egregious anomalies only to stay under Vercel's 10s request timeout. 
-Ignore minor spelling errors. Focus on duplicates, arithmetic, and unbundling.
-
-Detect:
-- duplicate charges
-- unbundling
-- CPT / ICD mismatch
-- modifier issues
-- arithmetic errors
-- inflated pricing
-
-Return JSON in this format:
-{
-  "document_type": "string",
-  "summary": "string",
-  "findings": [
-    {
-      "type": "duplicate_charge | unbundling | dx_proc_mismatch | modifier_issue | arithmetic_error | pricing_outlier | other",
-      "code": "string",
-      "title": "string",
-      "reason": "string",
-      "confidence": "low | medium | high"
-    }
-  ]
-}
+ACT AS MEDICAL AUDITOR. ANALYZE BILL. RETURN ONLY JSON.
+DETECT: Duplicates, Math errors, Unbundling, Extreme Prices.
+FORMAT: { "summary": "...", "findings": [{ "type": "...", "code": "...", "title": "...", "reason": "..." }] }
+BE FAST. MAX 5 FINDINGS.
 `;
 
 module.exports = async (req, res) => {
-  // Add CORS headers
-  res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  );
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: "Method not allowed" });
 
   try {
-    // 1. Run Multer
     await runMiddleware(req, res, upload.single('bill'));
+    if (!req.file) return res.status(400).json({ error: "Missing PDF" });
 
-    if (!req.file) {
-      return res.status(400).json({ error: "Missing PDF file" });
-    }
-
-    // 2. Select API Key (Rotation)
-    const keys = [
-      process.env.Key1,
-      process.env.Key2,
-      process.env.Key3,
-      process.env.Key4
-    ].filter(k => !!k);
-
+    // Key Health Check (V2.6)
+    const keys = [process.env.Key1, process.env.Key2, process.env.Key3, process.env.Key4].filter(k => !!k);
     if (keys.length === 0) {
-       return res.status(500).json({ error: "API Keys not configured on server" });
+      console.error("Vercel Env Warning: Keys are missing from runtime.");
+      return res.status(500).json({ error: "AI Keys not synced. Please re-deploy the project on Vercel." });
     }
     
     const apiKey = keys[Math.floor(Math.random() * keys.length)];
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-1.5-flash",
+      generationConfig: { maxOutputTokens: 500, temperature: 0.1 } // Optimized for Speed
+    });
 
-    // 3. Prepare Gemini Request
     const base64Data = req.file.buffer.toString("base64");
     
+    // Set a client-side timeout hint
     const result = await model.generateContent([
       { text: AUDIT_PROMPT },
-      {
-        inlineData: {
-          mimeType: "application/pdf",
-          data: base64Data
-        }
-      }
+      { inlineData: { mimeType: "application/pdf", data: base64Data } }
     ]);
 
     const response = await result.response;
-    let text = response.text();
-
-    // V2.4: Robust Regex JSON Extraction
-    // Finds everything between the FIRST { and LAST }
+    const text = response.text();
     const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      console.error("No JSON found in AI response:", text);
-      return res.status(500).json({ 
-        error: "AI failed to return structured JSON data.",
-        raw: text 
-      });
-    }
+    
+    if (!jsonMatch) throw new Error("AI returned no structured data.");
 
-    let parsed;
-    try {
-      parsed = JSON.parse(jsonMatch[0]);
-    } catch (e) {
-      console.error("Gemini JSON Parse Error:", jsonMatch[0]);
-      return res.status(500).json({ 
-        error: "Failed to parse extracted AI response as JSON.",
-        raw: jsonMatch[0] 
-      });
-    }
-
-    res.status(200).json({
-      ok: true,
-      result: parsed
-    });
+    res.status(200).json({ ok: true, result: JSON.parse(jsonMatch[0]) });
 
   } catch (err) {
-    console.error("Vercel Function Error:", err);
-    res.status(500).json({ 
-      ok: false, 
-      error: err.message 
-    });
+    console.error("V2.6 API Error:", err.message);
+    res.status(500).json({ ok: false, error: err.message });
   }
 };
 
-// Disable Vercel's body parser to allow Multer to handle multipart
-module.exports.config = {
-  api: {
-    bodyParser: false,
-  },
-};
+module.exports.config = { api: { bodyParser: false } };
