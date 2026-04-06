@@ -1063,6 +1063,12 @@ function renderNPIResults(results, container) {
     const name = isOrg
       ? (p.basic.organization_name || 'Organization')
       : `${p.basic.first_name || ''} ${p.basic.middle_name ? p.basic.middle_name + ' ' : ''}${p.basic.last_name || ''}`.trim();
+    
+    // For organizations, often the "Doctor" is listed as the Authorized Official
+    const official = isOrg && p.basic.authorized_official_last_name 
+      ? `${p.basic.authorized_official_prefix || ''} ${p.basic.authorized_official_first_name || ''} ${p.basic.authorized_official_last_name || ''} ${p.basic.authorized_official_credential || ''}`.trim()
+      : null;
+
     const credential = p.basic.credential || '';
     const taxonomy = p.taxonomies?.[0]?.desc || 'Provider';
     const addr = p.addresses?.[0];
@@ -1078,6 +1084,7 @@ function renderNPIResults(results, container) {
             <div style="font-size:15px; font-weight:700; color:var(--text-h); margin-bottom:4px;">
               ${name}${credential ? ` <span style="font-size:11px; color:var(--accent); background:var(--accent-glow); padding:2px 6px; border-radius:4px; font-weight:800; margin-left:4px;">${credential}</span>` : ''}
             </div>
+            ${official ? `<div style="font-size:13px; color:var(--accent); font-weight:600; margin-bottom:4px;">👨‍⚕️ Official: ${official}</div>` : ''}
             <div style="font-size:12px; color:var(--text-muted);">${taxonomy}</div>
           </div>
           <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
