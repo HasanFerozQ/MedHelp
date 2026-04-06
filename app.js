@@ -61,58 +61,45 @@ async function handlePDF(file) {
   const status = document.getElementById('pdf-status');
   const overlay = document.getElementById('ai-loading-overlay');
   const results = document.getElementById('audit-results');
-  
+
+  // Update loading text to reflect local-only processing
+  const loadingText = document.getElementById('ai-loading-text');
+  if (loadingText) loadingText.textContent = 'Extracting and analyzing bill data locally...';
+
   if (overlay) overlay.style.display = 'block';
   if (results) results.innerHTML = '';
+  if (status) status.innerHTML = '';
 
   try {
-    const formData = new FormData();
-    formData.append('bill', file);
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let pageData = [];
 
-    const response = await fetch('/api/audit-bill', { method: 'POST', body: formData });
-    
-    if (overlay) overlay.style.display = 'none';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const textContent = await page.getTextContent();
 
-    if (response.ok) {
-      const data = await response.json();
-      renderAuditJSON(data.result);
-      if (status) status.innerHTML = `✅ AI Analysis Complete for ${file.name}`;
-    } else {
-      // V2.5: Transparent Error Reporting
-      const errStatus = response.status;
-      let reason = "AI Offline";
-      if (errStatus === 504) reason = "AI Timeout (Vercel 10s limit)";
-      else if (errStatus === 500) reason = "AI Config Error (Check Keys)";
-      else if (errStatus === 429) reason = "AI Rate Limit Exceeded";
-      else if (errStatus === 404) reason = "AI Route Not Found (Deploying...)";
-
-      if (status) status.innerHTML = `<span style="color:var(--warn); font-size:11px;">ℹ️ ${reason}. Running Deep Local Auditor...</span>`;
-      
-      const arrayBuffer = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-      let pageData = [];
-      
-      for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const textContent = await page.getTextContent();
-        
-        // V2.5: Layout-Aware Capture (Extracting x, y, and string)
-        const items = textContent.items.map(item => ({
-          str: item.str,
-          x: item.transform[4],
-          y: item.transform[5],
-          width: item.width,
-          height: item.height
-        }));
-        pageData.push(items);
-      }
-      
-      const structuredRows = reconstructRowsFromLayout(pageData);
-      runAudit(structuredRows);
+      // Layout-Aware Capture (extract x, y, and string for grid reconstruction)
+      const items = textContent.items.map(item => ({
+        str: item.str,
+        x: item.transform[4],
+        y: item.transform[5],
+        width: item.width,
+        height: item.height
+      }));
+      pageData.push(items);
     }
+
+    if (overlay) overlay.style.display = 'none';
+    if (status) status.innerHTML = `✅ Extracted ${pdf.numPages} page(s) from <strong>${file.name}</strong>`;
+
+    const structuredRows = reconstructRowsFromLayout(pageData);
+    runAudit(structuredRows);
+
   } catch (err) {
     if (overlay) overlay.style.display = 'none';
-    console.error(err);
+    if (status) status.innerHTML = `<span style="color:var(--danger); font-size:12px;">⚠️ Could not read PDF: ${err.message}</span>`;
+    console.error('PDF extraction error:', err);
   }
 }
 
@@ -367,7 +354,7 @@ async function reRunWorkspaceAudit() {
   // V2.5 Asynchronous DB Check (Supabase Mapping)
   await engine.runDatabaseCheck();
 
-  renderCategorizedFindings(engine.findings, results, rows.length);
+  renderCategorizedFindings(engine.findings, results, rows.length, rows);
 }
 
 class BucketAuditor {
@@ -816,8 +803,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function renderCategorizedFindings(findings, container, rowCount) {
+function renderCategorizedFindings(findings, container, rowCount, rows) {
   if (rowCount === 0) return;
+
+  // Store a local-format lastAuditResult so PDF & negotiation script work
+  window.lastAuditResult = {
+    summary: `Local audit complete. ${findings.length} finding(s) identified.`,
+    findings: findings.map(f => ({ title: f.title, reason: f.detail, detail: f.detail, type: f.type, code: f.category })),
+    potential_savings: 0,
+    medicare_benchmark_total: 0,
+    normalized_bill: (rows || []).map(r => ({
+      Date: r.date || 'N/A',
+      CPT: r.code || 'N/A',
+      Description: r.desc || 'Medical Service',
+      Billed_Amount: r.total || 0
+    }))
+  };
+
   container.className = 'audit-results visible';
   
   const header = `
@@ -848,7 +850,15 @@ function renderCategorizedFindings(findings, container, rowCount) {
     </div>
   `).join('');
 
-  container.innerHTML = header + html;
+  // ── Action Buttons (always shown after local audit) ──
+  const actionRow = `
+    <div class="audit-btn-row" style="margin-top: 32px; justify-content: center; display: flex; gap: 12px; flex-wrap: wrap;">
+      <button class="btn btn-primary" onclick="openPatientModal()">📄 Download Professional PDF</button>
+      <button class="btn btn-ghost" onclick="copyNegotiationScript()">⚖️ Copy Negotiation Script</button>
+    </div>
+  `;
+
+  container.innerHTML = header + html + actionRow;
 }
 
 function runAuditLines() {
@@ -945,3 +955,133 @@ function bindSearch(inputId, resultId, handler) {
   const input = document.getElementById(inputId);
   if (input) input.addEventListener('input', debounce(() => handler(input.value.trim(), document.getElementById(resultId)), 350));
 }
+
+// ── National Provider Search (NPS) ─────────────────────────────────────────
+async function searchNPI() {
+  const nameInput = document.getElementById('npi-name');
+  const stateInput = document.getElementById('npi-state');
+  const resultsEl  = document.getElementById('npi-results');
+  const btn        = document.getElementById('npi-search-btn');
+  if (!nameInput || !resultsEl) return;
+
+  const query = nameInput.value.trim();
+  const state = stateInput ? stateInput.value.trim() : '';
+
+  if (query.length < 2) {
+    resultsEl.innerHTML = '<p class="status-msg">Please enter at least 2 characters.</p>';
+    return;
+  }
+
+  // Show loading state
+  resultsEl.innerHTML = `
+    <div style="text-align:center; padding: 40px 0;">
+      <div class="spinner" style="margin: 0 auto 16px; width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation: spin 1s linear infinite;"></div>
+      <p style="color:var(--text-muted); font-size:14px;">Searching CMS NPPES Registry...</p>
+    </div>`;
+  if (btn) btn.disabled = true;
+
+  try {
+    // Build CMS NPPES API URL
+    let url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15&pretty=true';
+
+    if (/^\d{10}$/.test(query)) {
+      // Direct NPI number lookup
+      url += `&number=${query}`;
+    } else {
+      // Name-based search — split first/last if space present
+      const parts = query.split(/\s+/);
+      if (parts.length >= 2) {
+        url += `&first_name=${encodeURIComponent(parts[0])}*`;
+        url += `&last_name=${encodeURIComponent(parts.slice(1).join(' '))}*`;
+      } else {
+        // Could be org name or single last name — try both paths
+        url += `&last_name=${encodeURIComponent(query)}*`;
+      }
+    }
+
+    if (state) url += `&state=${encodeURIComponent(state)}`;
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`CMS API returned ${res.status}`);
+    const data = await res.json();
+
+    if (!data.results || data.results.length === 0) {
+      // Try org name fallback if individual search returned nothing
+      let fallbackUrl = `https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15&organization_name=${encodeURIComponent(query)}*`;
+      if (state) fallbackUrl += `&state=${encodeURIComponent(state)}`;
+      const fallback = await fetch(fallbackUrl);
+      const fallbackData = await fallback.json();
+
+      if (!fallbackData.results || fallbackData.results.length === 0) {
+        resultsEl.innerHTML = `<p class="status-msg">No providers found for "${query}"${state ? ' in ' + state : ''}. Try a different spelling or remove the state filter.</p>`;
+        return;
+      }
+      renderNPIResults(fallbackData.results, resultsEl);
+    } else {
+      renderNPIResults(data.results, resultsEl);
+    }
+  } catch (err) {
+    console.error('NPI Search Error:', err);
+    resultsEl.innerHTML = `
+      <div class="audit-finding" style="border-left: 3px solid var(--danger);">
+        <div class="finding-icon danger">●</div>
+        <div>
+          <strong style="color:var(--text-h);">Registry Unavailable</strong>
+          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">Could not reach the CMS NPPES API. This can happen due to CORS restrictions when running locally. The search will work correctly when deployed to production (Vercel). Try searching on <a href="https://npiregistry.cms.hhs.gov/" target="_blank" style="color:var(--accent);">npiregistry.cms.hhs.gov</a>.</p>
+        </div>
+      </div>`;
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+function renderNPIResults(results, container) {
+  container.innerHTML = results.map(p => {
+    const isOrg = p.enumeration_type === 'NPI-2';
+    const name = isOrg
+      ? (p.basic.organization_name || 'Organization')
+      : `${p.basic.first_name || ''} ${p.basic.middle_name ? p.basic.middle_name + ' ' : ''}${p.basic.last_name || ''}`.trim();
+    const credential = p.basic.credential || '';
+    const taxonomy = p.taxonomies?.[0]?.desc || 'Provider';
+    const addr = p.addresses?.[0];
+    const addressLine = addr ? `${addr.address_1 || ''}, ${addr.city || ''}, ${addr.state || ''} ${(addr.postal_code || '').substring(0, 5)}` : 'Address not available';
+    const mapsUrl = addr ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}` : '#';
+    const status = p.basic.status === 'A' ? '✓ Active' : '⚠ Inactive';
+    const statusColor = p.basic.status === 'A' ? '#22c55e' : '#f59e0b';
+
+    return `
+      <div class="result-card" style="padding: 20px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; border-left: 3px solid var(--accent);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;">
+          <div>
+            <div style="font-size:15px; font-weight:700; color:var(--text-h); margin-bottom:4px;">
+              ${name}${credential ? ` <span style="font-size:11px; color:var(--accent); background:var(--accent-glow); padding:2px 6px; border-radius:4px; font-weight:800; margin-left:4px;">${credential}</span>` : ''}
+            </div>
+            <div style="font-size:12px; color:var(--text-muted);">${taxonomy}</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+            <span style="font-size:11px; font-weight:700; color:${statusColor};">${status}</span>
+            <code style="font-size:12px; font-family:monospace; background:rgba(255,255,255,0.06); padding:2px 8px; border-radius:4px;">NPI: ${p.number}</code>
+          </div>
+        </div>
+        <div style="font-size:12px; color:var(--text-muted); display:flex; align-items:start; gap:6px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.6; margin-top:1px; flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>${addressLine}</span>
+        </div>
+        ${mapsUrl !== '#' ? `<a href="${mapsUrl}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; padding:7px 14px; font-size:11px; font-weight:700; color:var(--accent); border:1px solid var(--accent); border-radius:8px; text-decoration:none; width:fit-content; transition:background 0.2s;" onmouseover="this.style.background='rgba(6,182,212,0.08)'" onmouseout="this.style.background='transparent'">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          View Location
+        </a>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// Allow pressing Enter in NPI name field to trigger search
+document.addEventListener('DOMContentLoaded', () => {
+  const npiInput = document.getElementById('npi-name');
+  if (npiInput) {
+    npiInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') searchNPI();
+    });
+  }
+});
