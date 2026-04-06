@@ -138,28 +138,20 @@ async function handlePDF(file) {
   if (status) status.innerHTML = '';
   if (results) { results.innerHTML = ''; results.className = 'audit-results'; }
 
-  // 1. FILE SIZE CHECK (5MB limit)
+  // 1. FILE SIZE CHECK (Vercel Limit is ~4.5MB, setting 5MB threshold)
   if (file.size > 5 * 1024 * 1024) {
-    if (status) status.innerHTML = `<span style="color:var(--danger)">❌ File exceeds 5MB limit. Please compress or upload a smaller PDF.</span>`;
+    if (status) status.innerHTML = `<span style="color:var(--danger)">❌ File exceeds 5MB limit. Please upload a smaller PDF for AI analysis.</span>`;
     return;
   }
 
   if (overlay) overlay.style.display = 'block';
 
   try {
-    // 2. READ PDF AS BASE64 for Gate 1
-    const reader = new FileReader();
-    const base64Promise = new Promise((resolve) => {
-      reader.onload = () => resolve(reader.result.split(',')[1]); // remove data:application/pdf;base64,
-      reader.readAsDataURL(file);
-    });
-    const base64Data = await base64Promise;
-
-    // 3. EXPONENTIAL BACKOFF FOR SUPABASE EDGE FUNCTION
+    // 2. SECURE VERCEL API CALL (Multi-part FormData)
     const maxRetries = 3;
     let attempt = 0;
     let apiSuccess = false;
-    let jsonResult = [];
+    let jsonResult = null;
 
     while (attempt < maxRetries && !apiSuccess) {
       try {
@@ -167,62 +159,32 @@ async function handlePDF(file) {
           loadText.innerText = `Busy servers. Retrying in ${attempt * 5} seconds...`;
           await new Promise(r => setTimeout(r, attempt * 5000));
         } else if (loadText) {
-          loadText.innerText = `This may take up to 15 seconds.`;
+          loadText.innerText = `AI is auditing your bill...`;
         }
         
-        const GEMINI_KEYS = [
-          'AIzaSyCewed_H2okDY6ZDxrh_KPMXDV0Tmo1Yzw',
-          'AIzaSyCwPpYO-1zOUat1TjyAhTk-RwqDucLtcjw',
-          'AIzaSyAvg73x8ykO2N2Y_VvVxTWDbwewkHYqX6o',
-          'AIzaSyACJOj5gAZVCISsa2b7IErJh5VncIfE1iM'
-        ];
-        const apiKey = GEMINI_KEYS[Math.floor(Math.random() * GEMINI_KEYS.length)];
-        const promptText = `You are an expert Medical Auditor looking for billing anomalies. 
-Analyze the provided medical bill (whether EOB, hospital statement, or CMS-1500).
-Identify any coding anomalies such as duplicate charges, unbundling errors, medically unnecessary services, dx-procedure mismatches, arithmetic errors, or missing modifiers.
-Return ONLY a valid JSON array of objects, where each object has exactly two keys: "code" (the problematic CPT, HCPCS, or ICD-10 code) and "reason" (a short 1-sentence explanation of why it is an anomaly).
-If no anomalies are found, return an empty array [].
-Do not include markdown blocks like \`\`\`json. Return raw JSON.`;
+        const formData = new FormData();
+        formData.append('bill', file);
 
-        const requestBody = {
-          contents: [{
-            role: "user",
-            parts: [
-              { text: promptText },
-              { inlineData: { mimeType: file.type || "application/pdf", data: base64Data } }
-            ]
-          }],
-          generationConfig: { responseMimeType: "application/json" }
-        };
-
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        const response = await fetch('/api/audit-bill', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(requestBody)
+          body: formData
         });
 
         if (response.status === 429) {
            throw new Error("RateLimit");
         } else if (!response.ok) {
-           throw new Error("APIError");
+           const errData = await response.json().catch(() => ({}));
+           throw new Error(errData.error || "APIError");
         }
 
         const data = await response.json();
-        let extractedText = "[]";
-        if (data.candidates && data.candidates.length > 0) {
-           extractedText = data.candidates[0].content.parts[0].text;
-        }
-        try {
-            jsonResult = JSON.parse(extractedText);
-        } catch(e) {
-            jsonResult = [];
-        }
+        jsonResult = data.result; // Expected: { document_type, summary, findings: [] }
         apiSuccess = true;
 
       } catch (err) {
         attempt++;
         if (attempt >= maxRetries) {
-          console.warn("API failed after max retries. Dropping to Gate 2 local fallback.");
+          console.warn("API failed after max retries. Dropping to Gate 2 local fallback.", err);
           break;
         }
       }
@@ -230,13 +192,12 @@ Do not include markdown blocks like \`\`\`json. Return raw JSON.`;
 
     if (overlay) overlay.style.display = 'none';
 
-    // 4. PROCESS GATE 1 RESULTS OR LOCALLY FALLBACK
-    if (apiSuccess) {
-       // Success! Map anomalies via Gate 2
+    // 3. PROCESS RESULTS OR FALLBACK
+    if (apiSuccess && jsonResult) {
        renderAuditJSON(jsonResult);
        if (status) status.innerHTML = `✅ ${file.name} AI Analysis Complete:`;
     } else {
-       // Fallback: Local V2 Text Extraction
+       // Fallback: Local Grid-Aware Text Extraction
        if (loadText) loadText.innerText = `Using offline local auditor...`;
        const arrayBuffer = await file.arrayBuffer();
        if (!window.pdfjsLib) throw new Error('PDF library not loaded for fallback.');
@@ -249,7 +210,6 @@ Do not include markdown blocks like \`\`\`json. Return raw JSON.`;
            // Grid-Aware Logic: grouping Y-axis to correctly form rows
            let lineMap = [];
            textContent.items.forEach(item => {
-               // Group items within a 4px vertical tolerance to form a reliable baseline
                const y = Math.round(item.transform[5] / 4) * 4; 
                let line = lineMap.find(l => l.y === y);
                if (!line) {
@@ -259,15 +219,12 @@ Do not include markdown blocks like \`\`\`json. Return raw JSON.`;
                line.text.push({ x: item.transform[4], str: item.str });
            });
            
-           // Sort lines top-to-bottom (PDF y goes up)
-           lineMap.sort((a, b) => b.y - a.y);
-           
+           lineMap.sort((a, b) => b.y - a.y); // Top to bottom
            fullText += lineMap.map(line => {
-               // Sort items within line left-to-right
                return line.text.sort((a, b) => a.x - b.x).map(i => i.str).join('  ');
            }).join('\n') + '\n';
        }
-       runAudit(fullText); // Runs local regex auditing
+       runAudit(fullText); 
        if (status) status.innerHTML = `⚠️ ${file.name} (Using Offline Local Analyzer):`;
     }
 
@@ -593,30 +550,51 @@ function selectRx(name) {
 }
 
 // ── Bill Audit Engine ─────────────────────────────────────────────────────
-function renderAuditJSON(anomalies) {
+function renderAuditJSON(result) {
   const results = document.getElementById('audit-results');
   if (!results) return;
 
+  const findings = result.findings || [];
+  const summary = result.summary || '';
+  const docType = result.document_type || 'Medical Document';
+
   let findingsHtml = '';
-  if (!anomalies || anomalies.length === 0) {
-    findingsHtml = `
+  
+  if (summary) {
+    findingsHtml += `
+      <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border);">
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 4px;">Auditor Summary</div>
+        <p style="margin: 0; font-size: 14px; line-height: 1.5;">${summary}</p>
+      </div>`;
+  }
+
+  if (findings.length === 0) {
+    findingsHtml += `
       <div class="audit-finding" style="text-align:left;">
         <div class="finding-icon ok">●</div>
         <div style="flex:1;">
           <strong style="color:var(--text-h);">No Major Anomalies Detected</strong>
-          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">Our AI scan did not flag obvious errors or anomalies. Always review your EOB (Explanation of Benefits) carefully.</p>
+          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">Our AI scan did not flag obvious errors for this ${docType}. Always review your EOB (Explanation of Benefits) carefully.</p>
         </div>
       </div>`;
   } else {
-    findingsHtml = anomalies.map(f => `
+    findingsHtml += findings.map(f => {
+      const severity = (f.confidence === 'high') ? 'danger' : (f.confidence === 'medium' ? 'warn' : 'ok');
+      return `
       <div class="audit-finding" style="text-align:left;">
-        <div class="finding-icon danger">●</div>
+        <div class="finding-icon ${severity}">●</div>
         <div style="flex:1;">
-          <strong style="color:var(--text-h);">Flagged Code: ${f.code}</strong>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color:var(--text-h);">${f.title || 'Flagged Issue'}</strong>
+            <span style="font-size: 10px; padding: 2px 6px; background: rgba(0,0,0,0.2); border-radius: 4px; color: var(--text-muted);">${f.code || 'N/A'}</span>
+          </div>
           <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">${f.reason}</p>
+          <div style="margin-top: 6px; font-size: 11px; opacity: 0.6;">
+            Category: ${f.type.replace(/_/g, ' ')} | Confidence: ${f.confidence}
+          </div>
         </div>
       </div>
-    `).join('');
+    `}).join('');
   }
 
   results.className = 'audit-results visible';
