@@ -90,13 +90,25 @@ async function handlePDF(file) {
       
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-      let fullText = '';
+      let pageData = [];
+      
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
-        fullText += textContent.items.map(s => s.str).join(' ') + '\n';
+        
+        // V2.5: Layout-Aware Capture (Extracting x, y, and string)
+        const items = textContent.items.map(item => ({
+          str: item.str,
+          x: item.transform[4],
+          y: item.transform[5],
+          width: item.width,
+          height: item.height
+        }));
+        pageData.push(items);
       }
-      runAudit(fullText);
+      
+      const structuredRows = reconstructRowsFromLayout(pageData);
+      runAudit(structuredRows);
     }
   } catch (err) {
     if (overlay) overlay.style.display = 'none';
@@ -105,7 +117,7 @@ async function handlePDF(file) {
 }
 
 // ── Interactive Audit Workspace (V2.3) ────────────────────────────────────
-function runAudit(text) {
+function runAudit(input) {
   const workspace = document.getElementById('audit-workspace-container');
   const results = document.getElementById('audit-results');
   if (!workspace || !results) return;
@@ -114,7 +126,13 @@ function runAudit(text) {
   body.innerHTML = '';
   results.innerHTML = '';
 
-  const rows = extractRowsFromText(text || '');
+  let rows = [];
+  if (Array.isArray(input)) {
+    rows = input; // Structured rows from layout engine
+  } else {
+    rows = extractRowsFromText(input || ''); // Fallback to regex
+  }
+
   workspace.style.display = 'block';
   
   if (rows.length === 0) {
@@ -126,43 +144,139 @@ function runAudit(text) {
   }
 }
 
+// ── V2.5 Layout-Aware Reconstruction Engine ──────────────────────────────
+function reconstructRowsFromLayout(pages) {
+  const allRows = [];
+  
+  pages.forEach(items => {
+    // 1. Group items by Y coordinate (with 5px tolerance for shaky alignment)
+    const yGroups = {};
+    items.forEach(item => {
+      if (item.str.trim() === '') return;
+      const y = Math.round(item.y / 5) * 5;
+      if (!yGroups[y]) yGroups[y] = [];
+      yGroups[y].push(item);
+    });
+
+    // 2. Sort Y groups (top to bottom)
+    const sortedY = Object.keys(yGroups).sort((a, b) => b - a);
+    
+    // 3. Process groups into rows
+    sortedY.forEach(y => {
+      const lineItems = yGroups[y].sort((a, b) => a.x - b.x);
+      const lineText = lineItems.map(i => i.str).join(' ');
+      
+      // Use existing regex logic on the reconstructed line
+      const extracted = extractRowsFromRawLine(lineText);
+      if (extracted) allRows.push(extracted);
+    });
+  });
+  
+  return allRows;
+}
+
+function extractRowsFromRawLine(line) {
+  const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/;
+  const codeRegex = /\b([0-9]{5}|[A-Z]{1}[0-9]{4}|[0-9]{4}[A-Z]{1})\b/;
+  const moneyRegex = /(?:^|\s)\$?\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2}))(?=\s|$)/g;
+
+  const dates = line.match(dateRegex);
+  const codes = line.match(codeRegex);
+  const moneyMatches = [...line.matchAll(moneyRegex)];
+  
+  if (dates || codes || moneyMatches.length > 0) {
+    const amounts = moneyMatches.map(m => parseFloat(m[1].replace(/,/g, '')));
+    let price = 0, qty = 1, total = 0, paid = 0, owed = 0;
+    
+    if (amounts.length === 1) total = amounts[0];
+    else if (amounts.length === 2) {
+      if (amounts[0] < amounts[1]) { price = amounts[0]; total = amounts[1]; }
+      else { total = amounts[0]; owed = amounts[1]; }
+    } else if (amounts.length >= 3) {
+      if (amounts[1] < 10 && amounts[0] * amounts[1] <= amounts[2] + 1) {
+        price = amounts[0]; qty = amounts[1]; total = amounts[2];
+      } else {
+        total = amounts[0]; paid = amounts[1]; owed = amounts[2];
+      }
+    }
+
+    let desc = line
+      .replace(dateRegex, '')
+      .replace(codeRegex, '')
+      .replace(moneyRegex, '')
+      .replace(/[|:,\-]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (desc.length > 60) desc = desc.substring(0, 57) + '...';
+    if (!desc || desc.length < 2) desc = 'Medical Service';
+
+    return {
+      date: dates ? dates[0] : '',
+      code: codes ? codes[0] : '',
+      desc: desc,
+      qty: qty || 1,
+      price: price || (total / (qty || 1)),
+      total: total,
+      paid: paid,
+      owed: owed
+    };
+  }
+  return null;
+}
+
 function extractRowsFromText(text) {
-  const lines = text.split('\n').filter(l => l.trim().length > 5);
+  const lines = text.split('\n').filter(l => l.trim().length > 3);
   const rows = [];
-  const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
-  const codeRegex = /\b(\d{5}|[A-Z]\d{4})\b/g;
-  const moneyRegex = /\$?\d{1,7}\.\d{2}/g;
+  
+  // High-fidelity Regex Patterns (V2.5)
+  const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/;
+  const codeRegex = /\b([0-9]{5}|[A-Z]{1}[0-9]{4}|[0-9]{4}[A-Z]{1})\b/; // CPT, HCPCS, etc.
+  const moneyRegex = /(?:^|\s)\$?\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2}))(?=\s|$)/g;
 
   lines.forEach(line => {
     const dates = line.match(dateRegex);
     const codes = line.match(codeRegex);
-    const money = line.match(moneyRegex) || [];
+    const moneyMatches = [...line.matchAll(moneyRegex)];
     
-    if (dates || codes || money.length > 0) {
-      const amounts = money.map(m => parseFloat(m.replace(/[^0-9.]/g, '')));
+    if (dates || codes || moneyMatches.length > 0) {
+      const amounts = moneyMatches.map(m => parseFloat(m[1].replace(/,/g, '')));
       let price = 0, qty = 1, total = 0, paid = 0, owed = 0;
       
-      if (amounts.length === 1) total = amounts[0];
-      else if (amounts.length === 2) { price = amounts[0]; total = amounts[1]; }
-      else if (amounts.length === 3) {
-        if (amounts[0] < 10) { qty = amounts[0]; price = amounts[1]; total = amounts[2]; }
-        else { total = amounts[0]; paid = amounts[1]; owed = amounts[2]; }
-      } else if (amounts.length >= 4) {
+      // Smart Heuristics for Amount Assignment
+      if (amounts.length === 1) {
         total = amounts[0];
-        paid = amounts[amounts.length - 2];
-        owed = amounts[amounts.length - 1];
+      } else if (amounts.length === 2) {
+        // [Price, Total] or [Total, Paid] or [Paid, Owed]
+        if (amounts[0] < amounts[1]) { price = amounts[0]; total = amounts[1]; }
+        else { total = amounts[0]; owed = amounts[1]; }
+      } else if (amounts.length >= 3) {
+        // [Price, Qty, Total] or [Total, Paid, Owed]
+        if (amounts[1] < 10 && amounts[0] * amounts[1] <= amounts[2] + 1) {
+          price = amounts[0]; qty = amounts[1]; total = amounts[2];
+        } else {
+          total = amounts[0]; paid = amounts[1]; owed = amounts[2];
+        }
       }
 
-      // Cleanup description by scrubbing all codes/dates/prices out
-      let desc = line.replace(dateRegex, '').replace(codeRegex, '').replace(moneyRegex, '').replace(/\s+/g, ' ').trim();
-      if (desc.length > 50) desc = desc.substring(0, 50) + '...';
+      // Semantic Scrubbing for Description
+      let desc = line
+        .replace(dateRegex, '')
+        .replace(codeRegex, '')
+        .replace(moneyRegex, '')
+        .replace(/[|:,\-]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      if (desc.length > 60) desc = desc.substring(0, 57) + '...';
+      if (!desc || desc.length < 2) desc = 'Medical Service';
 
       rows.push({
         date: dates ? dates[0] : '',
         code: codes ? codes[0] : '',
-        desc: desc || 'Medical Service',
-        qty: qty,
-        price: price || (qty > 0 ? (total / qty) : 0),
+        desc: desc,
+        qty: qty || 1,
+        price: price || (total / (qty || 1)),
         total: total,
         paid: paid,
         owed: owed
@@ -171,6 +285,7 @@ function extractRowsFromText(text) {
   });
   return rows;
 }
+
 
 // Performance Guard: 250ms Debounced Auditor
 const debouncedAudit = debounce(() => reRunWorkspaceAudit(), 250);
@@ -221,9 +336,11 @@ function addCodeToAudit(code, desc) {
   }
 }
 
-function reRunWorkspaceAudit() {
+async function reRunWorkspaceAudit() {
   const trs = document.querySelectorAll('#workspace-body tr');
   const results = document.getElementById('audit-results');
+  if (!results) return;
+
   const rows = Array.from(trs).map(tr => {
     const tds = tr.querySelectorAll('td');
     return {
@@ -239,14 +356,176 @@ function reRunWorkspaceAudit() {
     };
   });
 
-  const findings = [];
-  runArithmeticRules(rows, findings);
-  runDuplicateRules(rows, findings);
-  runConsistencyRules(rows, findings);
-  runCompletenessRules(rows, findings);
-  runSemanticRules(rows, findings);
+  // Use BucketAuditor (V2.5 Modular Architecture)
+  const engine = new BucketAuditor(rows);
+  engine.runArithmetic();
+  engine.runDuplicates();
+  engine.runConsistency();
+  engine.runSemantic();
+  engine.runCompleteness();
+  
+  // V2.5 Asynchronous DB Check (Supabase Mapping)
+  await engine.runDatabaseCheck();
 
-  renderCategorizedFindings(findings, results, rows.length);
+  renderCategorizedFindings(engine.findings, results, rows.length);
+}
+
+class BucketAuditor {
+  constructor(rows) {
+    this.rows = rows;
+    this.findings = [];
+  }
+
+  addFinding(category, title, detail, type = 'warn') {
+    this.findings.push({ category, title, detail, type });
+  }
+
+  runArithmetic() {
+    let lineSum = 0; let statedTotal = 0;
+    this.rows.forEach(r => {
+      r.raw.classList.remove('audit-row-error', 'audit-row-warn');
+      
+      // 1. Line Math
+      const expected = Math.round(r.qty * r.price * 100) / 100;
+      if (r.total > 0 && Math.abs(expected - r.total) > 0.05 && r.price > 0) {
+        this.addFinding('arithmetic_error', 'Math Mismatch', `Row ${r.code || r.desc}: Unit Price × Qty ($${r.price.toFixed(2)} × ${r.qty}) isn't $${r.total.toFixed(2)}.`, 'danger');
+        r.raw.classList.add('audit-row-error');
+      }
+      
+      // 2. Patient Resp Sanity
+      if (r.paid + r.owed > r.total + 0.1) {
+        this.addFinding('arithmetic_error', 'Over-Responsibility', `Code ${r.code}: Paid+Owed ($${(r.paid+r.owed).toFixed(2)}) exceeds billed total ($${r.total}).`, 'danger');
+        r.raw.classList.add('audit-row-error');
+      }
+
+      if (/total|subtotal|due|amount/i.test(r.desc)) statedTotal = Math.max(statedTotal, r.total);
+      else lineSum += r.total;
+    });
+
+    if (statedTotal > 0 && Math.abs(lineSum - statedTotal) > 0.5) {
+      this.addFinding('arithmetic_error', 'Invoice Sum Error', `Sum of items ($${lineSum.toFixed(2)}) doesn't match stated total ($${statedTotal.toFixed(2)}).`, 'danger');
+    }
+  }
+
+  runDuplicates() {
+    const registry = {};
+    this.rows.forEach(r => {
+      if (!r.code || /total/i.test(r.desc)) return;
+      const key = `${r.date}|${r.code}|${r.total}`;
+      if (!registry[key]) registry[key] = [];
+      registry[key].push(r.raw);
+    });
+    Object.entries(registry).forEach(([key, trs]) => {
+      if (trs.length > 1) {
+        const parts = key.split('|');
+        this.addFinding('duplicate_charge', 'Duplicate Found', `Code ${parts[1]} billed ${trs.length} times on ${parts[0]}.`, 'danger');
+        trs.forEach(tr => tr.classList.add('audit-row-error'));
+      }
+    });
+  }
+
+  runConsistency() {
+    const codeMap = {};
+    this.rows.forEach(r => {
+      if (!r.code || /total/i.test(r.desc)) return;
+      if (!codeMap[r.code]) codeMap[r.code] = [];
+      codeMap[r.code].push(r);
+    });
+    Object.entries(codeMap).forEach(([code, instances]) => {
+      if (instances.length > 1) {
+        const prices = instances.map(i => i.price);
+        const max = Math.max(...prices);
+        const min = Math.min(...prices);
+        if (max > min * 1.5) {
+          this.addFinding('pricing_outlier', 'Price Variance', `Code ${code} prices vary significantly across the bill ($${min} vs $${max}).`, 'warn');
+          instances.forEach(i => i.raw.classList.add('audit-row-warn'));
+        }
+      }
+    });
+  }
+
+  runSemantic() {
+    this.rows.forEach(r => {
+      const d = r.desc.toLowerCase();
+      if ((d.includes('denied') || d.includes('rejected')) && r.owed > 0) {
+        this.addFinding('consistency_warning', 'Patient responsibility on Denied Claim', `Service is marked denied but you are still being charged $${r.owed}.`, 'warn');
+      }
+      if (d.includes('duplicate') && r.total > 0) {
+        this.addFinding('consistency_warning', 'Charged for Duplicate', `Item marked as duplicate has an active charge.`, 'danger');
+      }
+    });
+  }
+
+  runCompleteness() {
+    this.rows.forEach(r => {
+      if (r.total > 50 && !r.code && !/total/i.test(r.desc)) {
+        this.addFinding('missing_data', 'Missing Code', `Significant charge of $${r.total} has no associated medical code.`, 'warn');
+      }
+    });
+  }
+
+  async runDatabaseCheck() {
+    if (!db) return;
+    
+    // Batch unique codes for efficiency
+    const codes = [...new Set(this.rows.map(r => r.code).filter(c => !!c))];
+    if (codes.length === 0) return;
+
+    try {
+      // 1. Validate Code Existence
+      const { data: codeData, error: codeErr } = await db
+        .from('medical_codes')
+        .select('code, short_description')
+        .in('code', codes);
+
+      if (codeErr) throw codeErr;
+
+      const validCodes = new Set(codeData.map(d => d.code));
+      
+      this.rows.forEach(r => {
+        if (!r.code || /total/i.test(r.desc)) return;
+        
+        if (!validCodes.has(r.code)) {
+          this.addFinding('validation_error', 'Invalid Code', `Code ${r.code} not found in official CPT/HCPCS database.`, 'danger');
+          r.raw.classList.add('audit-row-error');
+        } else {
+          const info = codeData.find(d => d.code === r.code);
+          if (info && r.desc === 'Medical Service') {
+             r.raw.querySelectorAll('td')[2].innerText = info.short_description;
+          }
+        }
+      });
+
+      // 2. NCCI Bundling Check (V2.5)
+      if (codes.length > 1) {
+        const { data: ncciData, error: ncciErr } = await db
+          .from('ncci_edits')
+          .select('primary_code, secondary_code, modifier_allowed')
+          .in('primary_code', codes)
+          .in('secondary_code', codes);
+
+        if (ncciErr) throw ncciErr;
+
+        ncciData.forEach(edit => {
+          this.addFinding(
+            'bundling_audit', 
+            'Potential Unbundling', 
+            `Codes ${edit.primary_code} and ${edit.secondary_code} are typically bundled. Separating them may inflate the bill.`, 
+            'warn'
+          );
+          
+          // Highlight both rows
+          this.rows.forEach(r => {
+            if (r.code === edit.primary_code || r.code === edit.secondary_code) {
+              r.raw.classList.add('audit-row-warn');
+            }
+          });
+        });
+      }
+    } catch (err) {
+      console.error("Supabase Audit Error:", err);
+    }
+  }
 }
 
 function runArithmeticRules(rows, findings) {
@@ -284,52 +563,41 @@ function runDuplicateRules(rows, findings) {
   });
 }
 
-function runConsistencyRules(rows, findings) {
-  const codePrices = {};
-  rows.forEach(r => {
-    if (!r.code || /total/i.test(r.desc)) return;
-    if (!codePrices[r.code]) codePrices[r.code] = [];
-    codePrices[r.code].push(r.price);
-  });
-  Object.entries(codePrices).forEach(([code, prices]) => {
-    if (Math.max(...prices) > Math.min(...prices) * 2) {
-      findings.push({ category: 'pricing_outlier', title: 'Price Variance', detail: `Code ${code} has inconsistent base prices.`, type: 'warn' });
-    }
-  });
-}
 
-function runCompletenessRules(rows, findings) {
-  rows.forEach(r => {
-    if (r.total > 0 && !r.code && !/total/i.test(r.desc)) {
-      findings.push({ category: 'missing_data', title: 'Missing Code', detail: `Charge of $${r.total} has no CPT code.`, type: 'warn' });
-    }
-  });
-}
-
-function runSemanticRules(rows, findings) {
-  rows.forEach(r => {
-    const d = r.desc.toLowerCase();
-    if (d.includes('denied') && r.total > 0) findings.push({ category: 'consistency_warning', title: 'Denied but Charged', detail: `Service is marked denied but carries a cost.`, type: 'warn' });
-  });
-}
 
 function renderCategorizedFindings(findings, container, rowCount) {
   if (rowCount === 0) return;
   container.className = 'audit-results visible';
+  
+  const header = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+      <div class="audit-status-badge">
+        <div class="dot"></div>
+        Deep Local Auditor (V2.4 Fallback)
+      </div>
+      <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">${findings.length} Findings</div>
+    </div>
+  `;
+
   if (findings.length === 0) {
-    container.innerHTML = `<div class="audit-finding" style="text-align:left;"><strong style="color:var(--success);">Audit Passed</strong> - No automated anomalies found.</div>`;
+    container.innerHTML = header + `<div class="audit-finding" style="text-align:left; border-left: 3px solid var(--success); background: rgba(16, 185, 129, 0.05);"><strong style="color:var(--success);">Audit Passed</strong> — No structured anomalies detected in the provided billing data.</div>`;
     return;
   }
+
   const html = findings.map(f => `
-    <div class="audit-finding" style="text-align:left; border-left: 3px solid var(--border);">
+    <div class="audit-finding" style="text-align:left; border-left: 3px solid ${f.type === 'danger' ? 'var(--danger)' : 'var(--warning)'};">
       <div class="finding-icon ${f.type}">●</div>
       <div style="flex:1;">
-        <strong style="color:var(--text-h);">${f.title}</strong>
-        <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">${f.detail}</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong style="color:var(--text-h);">${f.title}</strong>
+          <span style="font-size:10px; font-weight:800; padding:2px 6px; border-radius:4px; background:rgba(255,255,255,0.05); color:var(${f.type === 'danger' ? '--danger' : '--warning'}); text-transform:uppercase;">${f.category.replace('_',' ')}</span>
+        </div>
+        <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted); opacity:0.9;">${f.detail}</p>
       </div>
     </div>
   `).join('');
-  container.innerHTML = `<div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">Smart Internal Audit (V2.4)</div>` + html;
+
+  container.innerHTML = header + html;
 }
 
 function runAuditLines() {

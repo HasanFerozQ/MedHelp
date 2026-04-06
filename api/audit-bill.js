@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const multer = require("multer");
 
@@ -35,11 +36,19 @@ module.exports = async (req, res) => {
     await runMiddleware(req, res, upload.single('bill'));
     if (!req.file) return res.status(400).json({ error: "Missing PDF" });
 
-    // Key Health Check (V2.6)
-    const keys = [process.env.Key1, process.env.Key2, process.env.Key3, process.env.Key4].filter(k => !!k);
+    // Key Health Check (V2.6) - Robust Filter for Placeholders
+    const keys = [
+      process.env.Key1, 
+      process.env.Key2, 
+      process.env.Key3, 
+      process.env.Key4
+    ].filter(k => !!k && !k.includes("YOUR_GEMINI_API_KEY"));
+
     if (keys.length === 0) {
-      console.error("Vercel Env Warning: Keys are missing from runtime.");
-      return res.status(500).json({ error: "AI Keys not synced. Please re-deploy the project on Vercel." });
+      console.error("Vercel/Local Env Warning: Valid GEMINI Keys are missing.");
+      return res.status(500).json({ 
+        error: "AI Config Error: GEMINI API keys not found or still set to placeholders. Please check your .env file." 
+      });
     }
     
     const apiKey = keys[Math.floor(Math.random() * keys.length)];
