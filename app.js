@@ -1017,66 +1017,39 @@ async function searchNPI() {
   if (btn) btn.disabled = true;
 
   try {
-    // CMS NPPES API — v2.1 (supports CORS in production)
-    // Strategy: search by name (first+last split) OR org name, then NPI number
-    let url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15';
+    // CMS NPPES API via Vercel Proxy (fixes CORS)
+    let url = '/api/npi?';
 
     if (/^\d{10}$/.test(query)) {
-      // Exact NPI number lookup
-      url += `&number=${query}`;
+      url += `number=${query}`;
     } else {
-      // For all text queries: search organization_name first (works for both
-      // org names AND individual provider last names per NPPES API docs)
-      url += `&organization_name=${encodeURIComponent(query)}*`;
-      if (state) url += `&state=${encodeURIComponent(state)}`;
-
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`CMS API error ${res.status}`);
-      const data = await res.json();
-
-      // If org search fails or returns nothing, try individual name split
-      if (!data.results || data.results.length === 0) {
-        const parts = query.trim().split(/\s+/);
-        let nameUrl = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15';
-        if (parts.length >= 2) {
-          nameUrl += `&first_name=${encodeURIComponent(parts[0])}*&last_name=${encodeURIComponent(parts.slice(1).join(' '))}*`;
-        } else {
-          nameUrl += `&last_name=${encodeURIComponent(query)}*`;
-        }
-        if (state) nameUrl += `&state=${encodeURIComponent(state)}`;
-
-        const nameRes = await fetch(nameUrl);
-        const nameData = await nameRes.json();
-
-        if (!nameData.results || nameData.results.length === 0) {
-          resultsEl.innerHTML = `<p class="status-msg">No providers found for "${query}"${state ? ' in ' + state : ''}. Try a different name, NPI number, or remove the state filter.</p>`;
-        } else {
-          renderNPIResults(nameData.results, resultsEl);
-        }
+      const parts = query.trim().split(/\s+/);
+      if (parts.length >= 2) {
+        url += `first_name=${encodeURIComponent(parts[0])}*&last_name=${encodeURIComponent(parts.slice(1).join(' '))}*`;
       } else {
-        renderNPIResults(data.results, resultsEl);
+        url += `organization_name=${encodeURIComponent(query)}*`;
       }
-      return; // Early return — already handled
     }
 
     if (state) url += `&state=${encodeURIComponent(state)}`;
+
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`CMS API error ${res.status}`);
+    if (!res.ok) throw new Error(`API error ${res.status}`);
     const data = await res.json();
 
     if (!data.results || data.results.length === 0) {
-      resultsEl.innerHTML = `<p class="status-msg">No provider found with NPI "${query}".</p>`;
+      resultsEl.innerHTML = `<p class="status-msg">No providers found for "${query}"${state ? ' in ' + state : ''}. Try a different name, NPI number, or remove the state filter.</p>`;
     } else {
       renderNPIResults(data.results, resultsEl);
     }
   } catch (err) {
-    console.error('NPI Search Error:', err);
+    console.error('NPI Proxy Error:', err);
     resultsEl.innerHTML = `
       <div class="audit-finding" style="border-left: 3px solid var(--danger);">
         <div class="finding-icon danger">●</div>
         <div>
-          <strong style="color:var(--text-h);">Registry Unavailable</strong>
-          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">Could not reach the CMS NPPES API. This can happen due to CORS restrictions when running locally. The search will work correctly when deployed to production (Vercel). Try searching on <a href="https://npiregistry.cms.hhs.gov/" target="_blank" style="color:var(--accent);">npiregistry.cms.hhs.gov</a>.</p>
+          <strong style="color:var(--text-h);">NPS Search Failed</strong>
+          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">The search requested failed. This might be due to a temporary network issue or an API rate limit. Please try again or visit <a href="https://npiregistry.cms.hhs.gov/" target="_blank" style="color:var(--accent);">npiregistry.cms.hhs.gov</a> directly.</p>
         </div>
       </div>`;
   } finally {
