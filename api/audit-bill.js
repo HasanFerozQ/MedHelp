@@ -21,6 +21,11 @@ const upload = multer({
 const AUDIT_PROMPT = `
 You are a medical billing auditor.
 Analyze this medical bill and return STRICT JSON only.
+
+### FAST MODE: STRICT 8S RESPONSE LIMIT ###
+Prioritize the 5 most egregious anomalies only to stay under Vercel's 10s request timeout. 
+Ignore minor spelling errors. Focus on duplicates, arithmetic, and unbundling.
+
 Detect:
 - duplicate charges
 - unbundling

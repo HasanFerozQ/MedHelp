@@ -171,20 +171,23 @@ async function handlePDF(file) {
         });
 
         if (response.status === 429) {
-           throw new Error("RateLimit");
+           throw new Error("RateLimit (429): You are auditing too many bills too quickly.");
+        } else if (response.status === 504) {
+           throw new Error("Gateway Timeout (504): Vercel limit exceeded (10s). The bill might be too complex for the current cloud tier.");
         } else if (!response.ok) {
            const errData = await response.json().catch(() => ({}));
-           throw new Error(errData.error || "APIError");
+           throw new Error(errData.error || `Server Error (${response.status})`);
         }
 
         const data = await response.json();
-        jsonResult = data.result; // Expected: { document_type, summary, findings: [] }
+        jsonResult = data.result; 
         apiSuccess = true;
 
       } catch (err) {
         attempt++;
         if (attempt >= maxRetries) {
-          console.warn("API failed after max retries. Dropping to Gate 2 local fallback.", err);
+          console.warn("API Error:", err);
+          if (status) status.innerHTML = `<span style="color:var(--warn); font-size:12px;">ℹ️ AI Error: ${err.message}</span>`;
           break;
         }
       }
@@ -197,8 +200,11 @@ async function handlePDF(file) {
        renderAuditJSON(jsonResult);
        if (status) status.innerHTML = `✅ ${file.name} AI Analysis Complete:`;
     } else {
-       // Fallback: Local Grid-Aware Text Extraction
-       if (loadText) loadText.innerText = `Using offline local auditor...`;
+       // Fallback: Smart V2.1 Grid-Aware Auditor
+       if (status && !status.innerHTML.includes('AI Error')) {
+         status.innerHTML = `<span style="color:var(--warn); font-size:12px;">ℹ️ AI Analysis unavailable (dropping to local mode).</span>`;
+       }
+       if (loadText) loadText.innerText = `Running Smart Offline Auditor...`;
        const arrayBuffer = await file.arrayBuffer();
        if (!window.pdfjsLib) throw new Error('PDF library not loaded for fallback.');
        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -207,7 +213,6 @@ async function handlePDF(file) {
            const page = await pdf.getPage(i);
            const textContent = await page.getTextContent();
            
-           // Grid-Aware Logic: grouping Y-axis to correctly form rows
            let lineMap = [];
            textContent.items.forEach(item => {
                const y = Math.round(item.transform[5] / 4) * 4; 
@@ -218,14 +223,16 @@ async function handlePDF(file) {
                }
                line.text.push({ x: item.transform[4], str: item.str });
            });
-           
-           lineMap.sort((a, b) => b.y - a.y); // Top to bottom
+           lineMap.sort((a, b) => b.y - a.y); 
            fullText += lineMap.map(line => {
                return line.text.sort((a, b) => a.x - b.x).map(i => i.str).join('  ');
            }).join('\n') + '\n';
        }
        runAudit(fullText); 
-       if (status) status.innerHTML = `⚠️ ${file.name} (Using Offline Local Analyzer):`;
+       if (status) {
+         const existing = status.innerHTML;
+         status.innerHTML = `${existing}<br>⚠️ ${file.name} (Using Smart Offline Auditor):`;
+       }
     }
 
   } catch (err) {
@@ -601,8 +608,7 @@ function renderAuditJSON(result) {
   results.innerHTML = `<div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">AI Audit Results</div>` + findingsHtml;
 }
 
-function runAudit(manualText) {
-  const text = manualText || document.getElementById('bill-text')?.value || '';
+function runAudit(text) {
   const results = document.getElementById('audit-results');
   if (!results) return;
 
@@ -615,35 +621,122 @@ function runAudit(manualText) {
   const findings = [];
   const lines = text.split('\n').filter(l => l.trim());
 
-  // Duplicate Check
-  const codePattern = /\b(\d{5}|[A-Z]\d{2,4})\b/g;
-  const counts = {};
-  lines.forEach(l => { (l.match(codePattern) || []).forEach(c => counts[c] = (counts[c] || 0) + 1); });
-  Object.entries(counts).filter(([_, v]) => v > 1).forEach(([c, v]) => {
-    findings.push({ title: `Duplicate Charge Identified: ${c}`, detail: `This medical code appears ${v} times on this statement. Hospitals often bill for the same service twice by mistake.`, type: 'danger' });
+  // 1. RECONSTRUCT ROWS
+  const rows = [];
+  const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/;
+  const codeRegex = /\b(\d{5}|[A-Z]\d{4})\b/;
+  const currencyRegex = /\$?\d{1,5}\.\d{2}/g;
+
+  lines.forEach(line => {
+    const dates = line.match(dateRegex);
+    const codes = line.match(codeRegex);
+    const amounts = line.match(currencyRegex) || [];
+    
+    if (dates || codes || amounts.length > 0) {
+      rows.push({
+        raw: line,
+        date: dates ? dates[0] : null,
+        code: codes ? codes[0] : null,
+        amounts: amounts.map(a => parseFloat(a.replace(/[^0-9.]/g, ''))),
+        signature: line.replace(/\s+/g, ' ').trim()
+      });
+    }
   });
 
-  // Round Dollar Check
-  const roundMatch = text.match(/\$\d+00\.00|\$\d+0\.00/g);
-  if (roundMatch && roundMatch.length > 2) {
-    findings.push({ title: 'Multiple Flat-Rate Charges', detail: 'Found several charges in even hundreds (e.g., $500, $1000). This can indicate "unbundled" or estimated pricing rather than actual service costs.', type: 'warn' });
-  }
+  // 2. ARITHMETIC VALIDATION & UNIT PRICE CHECK
+  rows.forEach(row => {
+    // If row has 3 amounts, likely: [Price, Units?, Total]
+    if (row.amounts.length >= 2) {
+      const sorted = [...row.amounts].sort((a, b) => a - b);
+      const total = sorted[sorted.length - 1]; // assume largest is total
+      const components = sorted.slice(0, sorted.length - 1);
+      
+      if (components.length === 2) {
+        const product = components[0] * components[1];
+        if (Math.abs(product - total) > 0.05 && product > 0) {
+          findings.push({ 
+            title: `Arithmetic Error Identified`, 
+            detail: `Row: "${row.raw.substring(0, 30)}..." - The calculated total ($${product.toFixed(2)}) does not match the billed total ($${total.toFixed(2)}).`, 
+            type: 'danger',
+            dos: row.date
+          });
+        }
+      }
+      
+      if (total > 5000) {
+        findings.push({ 
+          title: `Extreme Cost Outlier`, 
+          detail: `Line item total of $${total.toFixed(2)} identified. High-cost items should be verified against CPT pricing averages.`, 
+          type: 'warn',
+          dos: row.date
+        });
+      }
+    }
+  });
+
+  // 3. SECURE SIGNATURE DUPLICATION
+  const rowCounts = {};
+  rows.forEach(r => {
+    if (r.code && r.date) {
+      const sig = `${r.date}_${r.code}`;
+      rowCounts[sig] = (rowCounts[sig] || 0) + 1;
+    }
+  });
+  
+  Object.entries(rowCounts).filter(([_, v]) => v > 1).forEach(([sig, v]) => {
+    const [d, c] = sig.split('_');
+    findings.push({ 
+      title: `Duplicate Billing Signature: ${c}`, 
+      detail: `This code was billed ${v} times on ${d}. Legitimate multi-service sessions often require specific modifiers (-50, -51).`, 
+      type: 'danger',
+      dos: d
+    });
+  });
+
+  // 4. PATTERN CHECKS (CPT-Modifier)
+  const modifierRegex = /\b(\d{5})[\s\-]?(\d{1,2})\b/;
+  lines.forEach(l => {
+    const modMatch = l.match(modifierRegex);
+    if (modMatch && modMatch[2] === '59') {
+      findings.push({ 
+        title: 'Distinct Procedural Service (Mod -59)', 
+        detail: `Found modifier -59 on code ${modMatch[1]}. This bypasses many unbundling edits; ensure the documentation supports a separate session or site.`, 
+        type: 'warn' 
+      });
+    }
+  });
 
   if (findings.length === 0) {
-    findings.push({ title: 'No Major Anomalies Detected', detail: 'Our offline scan did not flag obvious duplicates or round-dollar issues.', type: 'ok' });
+    findings.push({ title: 'No Major Anomalies Detected', detail: 'Our smart offline scan (V2.1) did not flag obvious duplicates, arithmetic errors, or outlier signatures.', type: 'ok' });
   }
 
+  // 5. RENDER CHRONOLOGICALLY
   results.className = 'audit-results visible';
-  results.innerHTML = `
-    <div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">Offline Parsing Results</div>
-    ` + findings.map(f => `
-    <div class="audit-finding" style="text-align:left;">
+  
+  // Group findings by DOS
+  const grouped = findings.reduce((acc, f) => {
+    const key = f.dos || 'General Findings';
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(f);
+    return acc;
+  }, {});
+
+  results.innerHTML = `<div style="text-align:center; padding-bottom: 10px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">Smart Offline Analysis (V2.1)</div>`;
+  
+  Object.entries(grouped).forEach(([dos, list]) => {
+    results.innerHTML += `
+      <div style="margin: 15px 0 5px; font-size: 10px; font-weight: 800; color: var(--accent); opacity: 0.8; text-transform: uppercase;">
+        📅 ${dos}
+      </div>
+    ` + list.map(f => `
+    <div class="audit-finding" style="text-align:left; border-left: 2px solid var(--border);">
       <div class="finding-icon ${f.type}">●</div>
       <div style="flex:1;">
         <strong style="color:var(--text-h);">${f.title}</strong>
         <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">${f.detail}</p>
       </div>
     </div>`).join('');
+  });
 }
 
 function runAuditLines() {
