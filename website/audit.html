@@ -65,6 +65,73 @@
         <p style="color:var(--text-muted); font-size:14px;" id="ai-loading-text">This may take up to 15 seconds.</p>
         <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
       </div>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediHelp | AI Bill Audit — Free Medical Bill Checker</title>
+  <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- PDF.js for 100% Local PDF Extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="nav-brand">
+        <img src="icons/logo.png?v=1.1" alt="MediHelp">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="audit.html" class="active">Bill Audit</a>
+        <a href="providers.html">National Provider Search</a>
+        <a href="blog.html">Blog</a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero container">
+    <div class="hero-eyebrow">HIPAA-Safe · Local Processing</div>
+    <h1>Smart Bill Audit.<br><span class="grad">Catch Overcharges.</span></h1>
+    <p>Upload a PDF, paste your medical bill text, or enter line items. Our engine checks for duplicate charges, unbundling errors, and inflated coding — 100% privately in your browser.</p>
+  </section>
+
+  <div class="container" style="margin-bottom: 80px; max-width: 800px;">
+    <div class="audit-area">
+
+      <!-- Audit Mode Tabs -->
+      <div class="audit-tabs">
+        <button class="audit-tab active" onclick="switchAuditTab('pdf', this)">📄 Upload PDF</button>
+        <button class="audit-tab" onclick="switchAuditTab('paste', this)">📋 Paste Text</button>
+        <button class="audit-tab" onclick="switchAuditTab('lines', this)">📝 Line Items</button>
+      </div>
+
+      <!-- PDF UPLOAD PANEL -->
+      <div id="audit-pdf" class="audit-panel">
+        <div class="drop-zone" id="pdf-drop-zone">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          <p>Drag & Drop Medical Bill PDF here</p>
+          <div class="hint">or click to browse files</div>
+          <input type="file" id="pdf-input" accept="application/pdf" style="display:none;">
+        </div>
+        <div id="pdf-status" style="font-size:12px; margin-top:-10px; margin-bottom:20px; color:var(--accent);"></div>
+      </div>
+      
+      <!-- AI PROCESSING OVERLAY -->
+      <div id="ai-loading-overlay" style="display:none; text-align:center; padding: 40px;">
+        <div class="spinner" style="margin: 0 auto 20px; width:40px; height:40px; border:4px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation: spin 1s linear infinite;"></div>
+        <h3 style="margin-bottom:8px;">AI is analyzing your bill...</h3>
+        <p style="color:var(--text-muted); font-size:14px;" id="ai-loading-text">This may take up to 15 seconds.</p>
+        <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+      </div>
 
       <!-- PASTE TEXT PANEL -->
       <div id="audit-paste" class="audit-panel" style="display:none;">
@@ -91,6 +158,32 @@
           <button class="btn btn-primary" onclick="runAuditLines()">Analyze Items</button>
           <button class="btn btn-ghost" onclick="document.getElementById('line-items-text').value=''">Clear</button>
         </div>
+      </div>
+
+      <!-- INTERACTIVE AUDIT WORKSPACE (V2.2) -->
+      <div id="audit-workspace-container" style="display:none; margin-bottom: 30px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h3 style="font-size: 16px; margin: 0;">🛠️ Bill Data Workspace</h3>
+          <button class="btn btn-primary" onclick="reRunWorkspaceAudit()" style="padding: 8px 16px; font-size: 12px;">Re-run Audit</button>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Verify the extracted data below. <strong>Double-click any cell to edit</strong>, then click "Re-run Audit".</p>
+        <div class="workspace-table-wrapper" style="overflow-x: auto; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border);">
+          <table id="audit-workspace-table" style="width: 100%; border-collapse: collapse; font-size: 13px; min-width: 650px;">
+            <thead>
+              <tr style="background: rgba(255,255,255,0.05); text-align: left;">
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Date</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Code</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Description</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Qty</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Unit Price</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Total</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border); width: 40px;"></th>
+              </tr>
+            </thead>
+            <tbody id="workspace-body"></tbody>
+          </table>
+        </div>
+        <button onclick="addWorkspaceRow()" style="background: none; border: 1px dashed var(--border); color: var(--text-muted); width: 100%; padding: 10px; margin-top: 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">+ Add Custom Row</button>
       </div>
 
       <!-- AUDIT RESULTS -->

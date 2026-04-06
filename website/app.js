@@ -608,135 +608,166 @@ function renderAuditJSON(result) {
   results.innerHTML = `<div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">AI Audit Results</div>` + findingsHtml;
 }
 
+// ── Interactive Audit Workspace (V2.2) ────────────────────────────────────
 function runAudit(text) {
+  const workspace = document.getElementById('audit-workspace-container');
   const results = document.getElementById('audit-results');
-  if (!results) return;
+  if (!workspace || !results) return;
 
-  if (text.trim().length < 15) {
-    results.className = 'audit-results visible';
-    results.innerHTML = `<div class="audit-finding" style="text-align:center;"><p>Please provide more descriptive bill text or valid line items.</p></div>`;
+  // 1. CLEAR PREVIOUS
+  const body = document.getElementById('workspace-body');
+  body.innerHTML = '';
+  results.innerHTML = '';
+
+  // 2. EXTRACT ROWS
+  const rows = extractRowsFromText(text || '');
+  
+  if (rows.length === 0) {
+    workspace.style.display = 'block';
+    addWorkspaceRow(); // Add one empty row to start
     return;
   }
 
-  const findings = [];
-  const lines = text.split('\n').filter(l => l.trim());
+  // 3. RENDER WORKSPACE
+  workspace.style.display = 'block';
+  rows.forEach(r => addWorkspaceRow(r));
 
-  // 1. RECONSTRUCT ROWS
+  // 4. TRIGGER INITIAL AUDIT
+  reRunWorkspaceAudit();
+}
+
+function extractRowsFromText(text) {
+  const lines = text.split('\n').filter(l => l.trim().length > 5);
   const rows = [];
+  
   const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/;
   const codeRegex = /\b(\d{5}|[A-Z]\d{4})\b/;
-  const currencyRegex = /\$?\d{1,5}\.\d{2}/g;
+  const moneyRegex = /\$?\d{1,7}\.\d{2}/g;
 
   lines.forEach(line => {
     const dates = line.match(dateRegex);
     const codes = line.match(codeRegex);
-    const amounts = line.match(currencyRegex) || [];
+    const money = line.match(moneyRegex) || [];
     
-    if (dates || codes || amounts.length > 0) {
+    if (dates || codes || money.length > 0) {
+      const amounts = money.map(m => parseFloat(m.replace(/[^0-9.]/g, '')));
+      let price = 0, qty = 1, total = 0;
+      
+      if (amounts.length === 1) total = amounts[0];
+      else if (amounts.length === 2) { price = amounts[0]; total = amounts[1]; }
+      else if (amounts.length >= 3) { qty = amounts[0]; price = amounts[1]; total = amounts[2]; }
+
       rows.push({
-        raw: line,
-        date: dates ? dates[0] : null,
-        code: codes ? codes[0] : null,
-        amounts: amounts.map(a => parseFloat(a.replace(/[^0-9.]/g, ''))),
-        signature: line.replace(/\s+/g, ' ').trim()
+        date: dates ? dates[0] : '',
+        code: codes ? codes[0] : '',
+        desc: line.replace(dateRegex, '').replace(codeRegex, '').replace(moneyRegex, '').replace(/\s+/g, ' ').trim().substring(0, 50),
+        qty: qty,
+        price: price || (total / qty),
+        total: total
       });
     }
   });
+  return rows;
+}
 
-  // 2. ARITHMETIC VALIDATION & UNIT PRICE CHECK
-  rows.forEach(row => {
-    // If row has 3 amounts, likely: [Price, Units?, Total]
-    if (row.amounts.length >= 2) {
-      const sorted = [...row.amounts].sort((a, b) => a - b);
-      const total = sorted[sorted.length - 1]; // assume largest is total
-      const components = sorted.slice(0, sorted.length - 1);
-      
-      if (components.length === 2) {
-        const product = components[0] * components[1];
-        if (Math.abs(product - total) > 0.05 && product > 0) {
-          findings.push({ 
-            title: `Arithmetic Error Identified`, 
-            detail: `Row: "${row.raw.substring(0, 30)}..." - The calculated total ($${product.toFixed(2)}) does not match the billed total ($${total.toFixed(2)}).`, 
-            type: 'danger',
-            dos: row.date
-          });
-        }
-      }
-      
-      if (total > 5000) {
-        findings.push({ 
-          title: `Extreme Cost Outlier`, 
-          detail: `Line item total of $${total.toFixed(2)} identified. High-cost items should be verified against CPT pricing averages.`, 
-          type: 'warn',
-          dos: row.date
-        });
-      }
-    }
-  });
+function addWorkspaceRow(data = {}) {
+  const body = document.getElementById('workspace-body');
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border);">${data.date || ''}</td>
+    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); font-family: monospace; font-weight: bold;">${data.code || ''}</td>
+    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); color: var(--text-muted);">${data.desc || ''}</td>
+    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: center;">${data.qty || 1}</td>
+    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right;">${data.price ? data.price.toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; font-weight: bold;">${data.total ? data.total.toFixed(2) : '0.00'}</td>
+    <td style="padding: 10px; border-bottom: 1px solid var(--border); text-align: center;">
+      <button onclick="this.parentElement.parentElement.remove(); reRunWorkspaceAudit();" style="background:none; border:none; color:var(--danger); cursor:pointer; opacity:0.5;">✕</button>
+    </td>
+  `;
+  body.appendChild(row);
+}
 
-  // 3. SECURE SIGNATURE DUPLICATION
-  const rowCounts = {};
-  rows.forEach(r => {
-    if (r.code && r.date) {
-      const sig = `${r.date}_${r.code}`;
-      rowCounts[sig] = (rowCounts[sig] || 0) + 1;
-    }
-  });
-  
-  Object.entries(rowCounts).filter(([_, v]) => v > 1).forEach(([sig, v]) => {
-    const [d, c] = sig.split('_');
-    findings.push({ 
-      title: `Duplicate Billing Signature: ${c}`, 
-      detail: `This code was billed ${v} times on ${d}. Legitimate multi-service sessions often require specific modifiers (-50, -51).`, 
-      type: 'danger',
-      dos: d
+function reRunWorkspaceAudit() {
+  const rows = [];
+  const trs = document.querySelectorAll('#workspace-body tr');
+  const results = document.getElementById('audit-results');
+  if (!results) return;
+
+  trs.forEach(tr => {
+    const tds = tr.querySelectorAll('td');
+    rows.push({
+      date: tds[0].innerText.trim(),
+      code: tds[1].innerText.trim(),
+      desc: tds[2].innerText.trim(),
+      qty: parseFloat(tds[3].innerText) || 0,
+      price: parseFloat(tds[4].innerText) || 0,
+      total: parseFloat(tds[5].innerText) || 0,
+      raw: tr
     });
   });
 
-  // 4. PATTERN CHECKS (CPT-Modifier)
-  const modifierRegex = /\b(\d{5})[\s\-]?(\d{1,2})\b/;
-  lines.forEach(l => {
-    const modMatch = l.match(modifierRegex);
-    if (modMatch && modMatch[2] === '59') {
-      findings.push({ 
-        title: 'Distinct Procedural Service (Mod -59)', 
-        detail: `Found modifier -59 on code ${modMatch[1]}. This bypasses many unbundling edits; ensure the documentation supports a separate session or site.`, 
-        type: 'warn' 
-      });
+  const findings = [];
+  
+  // Rule 1: Arithmetic Check
+  rows.forEach(r => {
+    const expected = Math.round(r.qty * r.price * 100) / 100;
+    if (Math.abs(expected - r.total) > 0.05 && r.total > 0) {
+      findings.push({ title: 'Arithmetic Mismatch', detail: `Code ${r.code}: Quantity (${r.qty}) × Price (${r.price}) should be $${expected.toFixed(2)}, but $${r.total.toFixed(2)} was billed.`, type: 'danger', icon: '≠' });
+      r.raw.style.background = 'rgba(239, 68, 68, 0.05)';
+    } else {
+      r.raw.style.background = 'transparent';
     }
   });
 
-  if (findings.length === 0) {
-    findings.push({ title: 'No Major Anomalies Detected', detail: 'Our smart offline scan (V2.1) did not flag obvious duplicates, arithmetic errors, or outlier signatures.', type: 'ok' });
+  // Rule 2: Duplicate Signatures
+  const signatures = {};
+  rows.forEach(r => {
+    if (!r.code) return;
+    const sig = `${r.date}|${r.code}|${r.total}`;
+    signatures[sig] = (signatures[sig] || 0) + 1;
+  });
+  Object.entries(signatures).forEach(([sig, count]) => {
+    if (count > 1) {
+      const [d, c, t] = sig.split('|');
+      findings.push({ title: 'Duplicate Billing Detected', detail: `The code ${c} for $${t} appears ${count} times on ${d || 'the same date'}. This is a frequent source of hospital overbilling.`, type: 'danger', icon: '2x' });
+    }
+  });
+
+  // Rule 3: Round Number Patterns
+  const roundCounts = rows.filter(r => r.total > 0 && r.total % 100 === 0).length;
+  if (roundCounts >= 3) {
+    findings.push({ title: 'Estimated/Round Billing', detail: `Warning: ${roundCounts} line items are billed in even increments (e.g. $500, $1000). This often indicates "unbundled" flat-fees rather than actual itemized costs.`, type: 'warn', icon: '$' });
   }
 
-  // 5. RENDER CHRONOLOGICALLY
-  results.className = 'audit-results visible';
-  
-  // Group findings by DOS
-  const grouped = findings.reduce((acc, f) => {
-    const key = f.dos || 'General Findings';
-    if (!acc[key]) acc[key] = [];
-    acc[key].push(f);
-    return acc;
-  }, {});
-
-  results.innerHTML = `<div style="text-align:center; padding-bottom: 10px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">Smart Offline Analysis (V2.1)</div>`;
-  
-  Object.entries(grouped).forEach(([dos, list]) => {
-    results.innerHTML += `
-      <div style="margin: 15px 0 5px; font-size: 10px; font-weight: 800; color: var(--accent); opacity: 0.8; text-transform: uppercase;">
-        📅 ${dos}
-      </div>
-    ` + list.map(f => `
-    <div class="audit-finding" style="text-align:left; border-left: 2px solid var(--border);">
-      <div class="finding-icon ${f.type}">●</div>
-      <div style="flex:1;">
-        <strong style="color:var(--text-h);">${f.title}</strong>
-        <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">${f.detail}</p>
-      </div>
-    </div>`).join('');
+  // Rule 4: Invalid CPT Format
+  rows.forEach(r => {
+    if (r.code && !/^[0-9]{5}$|^[A-Z][0-9]{4}$/.test(r.code)) {
+      findings.push({ title: 'Invalid Code Format', detail: `"${r.code}" does not match standard 5-digit CPT or HCPCS patterns. Check for typos.`, type: 'warn', icon: '?' });
+    }
   });
+
+  // Rule 5: Missing Modifiers for High Intensity
+  rows.forEach(r => {
+    if (r.total > 2000 && !r.desc.includes('-')) {
+      findings.push({ title: 'Missing Modifier Check', detail: `High-value procedure (${r.code} - $${r.total}) found without visible modifiers. High-cost items often require specific billing modifiers.`, type: 'warn', icon: '!' });
+    }
+  });
+
+  // Final Render
+  results.className = 'audit-results visible';
+  if (findings.length === 0 && rows.length > 0) {
+    results.innerHTML = `<div class="audit-finding"><div class="finding-icon ok">●</div><div style="flex:1;"><strong style="color:var(--text-h);">No Professional Anomalies Found (Local V2.2)</strong><p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">Your entries passed all local integrity checks (Arithmetic, Duplicates, Round-patterns, etc.).</p></div></div>`;
+  } else if (rows.length > 0) {
+    results.innerHTML = `<div style="text-align:center; padding-bottom: 20px; font-weight: 700; color:var(--text-muted); text-transform:uppercase; font-size:11px; letter-spacing:0.1em;">Advanced Offline Findings</div>` + 
+      findings.map(f => `
+      <div class="audit-finding" style="text-align:left;">
+        <div class="finding-icon ${f.type}">${f.icon || '●'}</div>
+        <div style="flex:1;">
+          <strong style="color:var(--text-h);">${f.title}</strong>
+          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">${f.detail}</p>
+        </div>
+      </div>`).join('');
+  }
 }
 
 function runAuditLines() {
