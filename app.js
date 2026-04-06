@@ -6,7 +6,7 @@
  */
 
 const SUPA_URL  = 'https://bisqgousuvljttesjkkm.supabase.co';
-const SUPA_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdWxnanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
+const SUPA_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
 
 let db = null;
 let activeRegion = 'US';
@@ -29,12 +29,26 @@ document.addEventListener('DOMContentLoaded', () => {
   bindSearch('denials-input', 'denials-results', searchDenials);
 
   const rxInput = document.getElementById('rx-input');
-  if (rxInput) {
-    rxInput.addEventListener('input', debounce(async () => {
+  const rxResults = document.getElementById('rx-results');
+  if (rxInput && rxResults) {
+    rxInput.addEventListener('input', debounce(() => {
       const q = rxInput.value.trim().toLowerCase();
-      if (q.length < 3) return;
+      if (q.length < 3) { rxResults.innerHTML = ''; return; }
       const match = Object.entries(RX_INSIGHTS).find(([k]) => q.includes(k) || k.includes(q));
-      renderRxResults(q, match);
+      if (!match) {
+        rxResults.innerHTML = `<div class="status-msg">No pricing data for "${q}". Try: metformin, lisinopril, atorvastatin.</div>`;
+        return;
+      }
+      const [, info] = match;
+      rxResults.innerHTML = `
+        <div class="result-card" style="gap:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="color:var(--text-h);font-size:15px;">${info.generic}</strong>
+            <span style="font-size:11px;font-weight:800;color:var(--accent);background:var(--accent-glow);padding:2px 8px;border-radius:4px;">${info.price_hint}</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);">${info.class} &nbsp;·&nbsp; Est. Cost: <strong style="color:var(--text-h);">${info.cost}</strong> &nbsp;·&nbsp; ${info.stock}</div>
+          <div style="font-size:12px;color:var(--success);margin-top:4px;">💡 ${info.tip}</div>
+        </div>`;
     }, 300));
   }
 
@@ -48,8 +62,11 @@ function setupPDFAudit() {
   if (!zone || !input) return;
 
   zone.onclick = () => input.click();
+  zone.ondragover = (e) => { e.preventDefault(); zone.classList.add('dragover'); };
+  zone.ondragleave = () => zone.classList.remove('dragover');
   zone.ondrop = (e) => {
     e.preventDefault();
+    zone.classList.remove('dragover');
     if (e.dataTransfer.files.length) handlePDF(e.dataTransfer.files[0]);
   };
   input.onchange = (e) => {
@@ -298,6 +315,12 @@ function addWorkspaceRow(data = {}) {
 }
 
 function addCodeToAudit(code, desc) {
+  // If we're not on audit.html, redirect there with params
+  if (!document.getElementById('audit-workspace-container')) {
+    window.location.href = `audit.html?code=${encodeURIComponent(code)}&desc=${encodeURIComponent(desc)}`;
+    return;
+  }
+
   const workspace = document.getElementById('audit-workspace-container');
   if (workspace) workspace.style.display = 'block';
   
@@ -309,11 +332,11 @@ function addCodeToAudit(code, desc) {
     total: 0
   });
 
-  // Switch to Audit Tab
-  const btn = document.querySelector('.audit-tab') || document.querySelector('[onclick*="switchTab(\'pdf\'"]');
+  // Switch to PDF tab view
+  const btn = document.querySelector('.audit-tab.active') || document.querySelector('.audit-tab');
   switchTab('pdf', btn);
   
-  // Highlight for feedback
+  // Highlight new row
   const trs = document.querySelectorAll('#workspace-body tr');
   const last = trs[trs.length - 1];
   if (last) {
@@ -707,11 +730,11 @@ async function generateProfessionalPDF() {
 
   // 4. Clinical Itemization Table
   const tableHeaders = [["Date", "Code", "Description", "Billed Amount", "Status"]];
-  const tableRows = result.normalized_bill.map(item => [
+  const tableRows = (result.normalized_bill || []).map(item => [
     item.Date || "N/A",
     item.CPT || "N/A",
     item.Description || "Medical Service",
-    `$${item.Billed_Amount.toFixed(2)}`,
+    `$${(item.Billed_Amount || 0).toFixed(2)}`,
     "Clinical Review Done"
   ]);
 
@@ -783,8 +806,15 @@ function copyNegotiationScript() {
   letter += `I am writing to formally dispute the charges on my recent bill. A clinical audit based on CMS and NCCI standards has identified ${result.findings.length} anomalies including pricing variances and bundling errors.\n\n`;
   
   letter += `Findings Summary:\n`;
+  const categoryLabels = {
+    arithmetic_error: 'Arithmetic Error', duplicate_charge: 'Duplicate Charge',
+    pricing_outlier: 'Pricing Variance', consistency_warning: 'Consistency Issue',
+    missing_data: 'Missing Data', validation_error: 'Validation Error',
+    pricing_audit: 'Pricing Audit', bundling_audit: 'Bundling Violation'
+  };
   result.findings.forEach((f, idx) => {
-    letter += `${idx + 1}. ${f.title}: ${f.reason || f.detail} (Code: ${f.code})\n`;
+    const label = categoryLabels[f.code] || f.code || 'Audit Finding';
+    letter += `${idx + 1}. [${label}] ${f.title}: ${f.reason || f.detail}\n`;
   });
   
   letter += `\nBased on these clinical guidelines, the estimated fair-market value for these services significantly differs from the amount billed. I am requesting an adjustment of approximately $${result.potential_savings.toFixed(2)}.\n\n`;
@@ -825,10 +855,10 @@ function renderCategorizedFindings(findings, container, rowCount, rows) {
   const header = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
       <div class="audit-status-badge">
-        <div class="dot"></div>
-        Deep Local Auditor (V2.4 Fallback)
+        <div class="dot" style="background:var(--accent);"></div>
+        Clinical Auditor — Local Engine
       </div>
-      <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">${findings.length} Findings</div>
+      <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">${findings.length} Finding${findings.length !== 1 ? 's' : ''}</div>
     </div>
   `;
 
@@ -883,8 +913,10 @@ function switchTab(id, btn) {
 }
 
 function clearAudit() {
-  document.getElementById('bill-text').value = '';
-  document.getElementById('audit-results').innerHTML = '';
+  const bt = document.getElementById('bill-text');
+  const ar = document.getElementById('audit-results');
+  if (bt) bt.value = '';
+  if (ar) ar.innerHTML = '';
 }
 
 function debounce(fn, ms) {
@@ -943,7 +975,11 @@ async function searchCodes(q, container) {
 
 async function searchDenials(q, container) {
   if (!db) return;
-  const { data } = await db.from('carc_codes').select('code, description').ilike('code', `%${q}%`).limit(10);
+  const { data, error } = await db.from('carc_codes').select('code, description').ilike('code', `%${q}%`).limit(10);
+  if (error || !data || data.length === 0) {
+    container.innerHTML = '<div class="status-msg">No denial codes found.</div>';
+    return;
+  }
   container.innerHTML = data.map(r => `
     <div class="result-card" style="display:flex; justify-content:space-between; align-items:center;">
       <div><strong>${r.code}</strong>: ${r.description}</div>
@@ -981,42 +1017,55 @@ async function searchNPI() {
   if (btn) btn.disabled = true;
 
   try {
-    // Build CMS NPPES API URL
-    let url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15&pretty=true';
+    // CMS NPPES API — v2.1 (supports CORS in production)
+    // Strategy: search by name (first+last split) OR org name, then NPI number
+    let url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15';
 
     if (/^\d{10}$/.test(query)) {
-      // Direct NPI number lookup
+      // Exact NPI number lookup
       url += `&number=${query}`;
     } else {
-      // Name-based search — split first/last if space present
-      const parts = query.split(/\s+/);
-      if (parts.length >= 2) {
-        url += `&first_name=${encodeURIComponent(parts[0])}*`;
-        url += `&last_name=${encodeURIComponent(parts.slice(1).join(' '))}*`;
+      // For all text queries: search organization_name first (works for both
+      // org names AND individual provider last names per NPPES API docs)
+      url += `&organization_name=${encodeURIComponent(query)}*`;
+      if (state) url += `&state=${encodeURIComponent(state)}`;
+
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`CMS API error ${res.status}`);
+      const data = await res.json();
+
+      // If org search fails or returns nothing, try individual name split
+      if (!data.results || data.results.length === 0) {
+        const parts = query.trim().split(/\s+/);
+        let nameUrl = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15';
+        if (parts.length >= 2) {
+          nameUrl += `&first_name=${encodeURIComponent(parts[0])}*&last_name=${encodeURIComponent(parts.slice(1).join(' '))}*`;
+        } else {
+          nameUrl += `&last_name=${encodeURIComponent(query)}*`;
+        }
+        if (state) nameUrl += `&state=${encodeURIComponent(state)}`;
+
+        const nameRes = await fetch(nameUrl);
+        const nameData = await nameRes.json();
+
+        if (!nameData.results || nameData.results.length === 0) {
+          resultsEl.innerHTML = `<p class="status-msg">No providers found for "${query}"${state ? ' in ' + state : ''}. Try a different name, NPI number, or remove the state filter.</p>`;
+        } else {
+          renderNPIResults(nameData.results, resultsEl);
+        }
       } else {
-        // Could be org name or single last name — try both paths
-        url += `&last_name=${encodeURIComponent(query)}*`;
+        renderNPIResults(data.results, resultsEl);
       }
+      return; // Early return — already handled
     }
 
     if (state) url += `&state=${encodeURIComponent(state)}`;
-
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`CMS API returned ${res.status}`);
+    if (!res.ok) throw new Error(`CMS API error ${res.status}`);
     const data = await res.json();
 
     if (!data.results || data.results.length === 0) {
-      // Try org name fallback if individual search returned nothing
-      let fallbackUrl = `https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15&organization_name=${encodeURIComponent(query)}*`;
-      if (state) fallbackUrl += `&state=${encodeURIComponent(state)}`;
-      const fallback = await fetch(fallbackUrl);
-      const fallbackData = await fallback.json();
-
-      if (!fallbackData.results || fallbackData.results.length === 0) {
-        resultsEl.innerHTML = `<p class="status-msg">No providers found for "${query}"${state ? ' in ' + state : ''}. Try a different spelling or remove the state filter.</p>`;
-        return;
-      }
-      renderNPIResults(fallbackData.results, resultsEl);
+      resultsEl.innerHTML = `<p class="status-msg">No provider found with NPI "${query}".</p>`;
     } else {
       renderNPIResults(data.results, resultsEl);
     }
