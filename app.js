@@ -472,55 +472,74 @@ class BucketAuditor {
     if (codes.length === 0) return;
 
     try {
-      // 1. Validate Code Existence
-      const { data: codeData, error: codeErr } = await db
-        .from('medical_codes')
-        .select('code, short_description')
-        .in('code', codes);
+      // 1. Pricing & Description Lookup
+      const { data: feeData, error: feeErr } = await db
+        .from('cpt_medicare_fees')
+        .select('cpt_code, base_price, description')
+        .in('cpt_code', codes);
 
-      if (codeErr) throw codeErr;
+      if (feeErr) throw feeErr;
 
-      const validCodes = new Set(codeData.map(d => d.code));
+      const feeMap = (feeData || []).reduce((acc, f) => {
+        acc[f.cpt_code] = f;
+        return acc;
+      }, {});
       
       this.rows.forEach(r => {
         if (!r.code || /total/i.test(r.desc)) return;
         
-        if (!validCodes.has(r.code)) {
-          this.addFinding('validation_error', 'Invalid Code', `Code ${r.code} not found in official CPT/HCPCS database.`, 'danger');
-          r.raw.classList.add('audit-row-error');
+        const info = feeMap[r.code];
+        if (!info) {
+          this.addFinding('validation_error', 'Benchmark Missing', `Code ${r.code} not found in public Medicare datasets. Verify code accuracy.`, 'warn');
         } else {
-          const info = codeData.find(d => d.code === r.code);
-          if (info && r.desc === 'Medical Service') {
-             r.raw.querySelectorAll('td')[2].innerText = info.short_description;
+          // Update description if it's generic
+          if (r.desc === 'Medical Service' || r.desc.length < 5) {
+             r.raw.querySelectorAll('td')[2].innerText = info.description;
+          }
+
+          // Pricing Variance Check
+          if (r.total > (info.base_price * r.qty * 2.0)) {
+            this.addFinding('pricing_audit', 'High Charge Variance', `Benchmark is ~$${info.base_price.toFixed(2)}, but you billed $${r.total.toFixed(2)}. This is ${((r.total / (info.base_price * r.qty)) * 100).toFixed(0)}% of Medicare.`, 'warn');
+            r.raw.classList.add('audit-row-warn');
           }
         }
       });
 
-      // 2. NCCI Bundling Check (V2.5)
-      if (codes.length > 1) {
-        const { data: ncciData, error: ncciErr } = await db
-          .from('ncci_edits')
-          .select('primary_code, secondary_code, modifier_allowed')
-          .in('primary_code', codes)
-          .in('secondary_code', codes);
+      // 2. NCCI Bundling Check (V2.5) — Same-Date Logic
+      const rowsByDate = this.rows.reduce((acc, r) => {
+        if (!acc[r.date]) acc[r.date] = [];
+        acc[r.date].push(r);
+        return acc;
+      }, {});
 
-        if (ncciErr) throw ncciErr;
+      for (const date in rowsByDate) {
+        const dateRows = rowsByDate[date].filter(r => r.code && r.code.length >= 5);
+        if (dateRows.length < 2) continue;
 
-        ncciData.forEach(edit => {
-          this.addFinding(
-            'bundling_audit', 
-            'Potential Unbundling', 
-            `Codes ${edit.primary_code} and ${edit.secondary_code} are typically bundled. Separating them may inflate the bill.`, 
-            'warn'
-          );
-          
-          // Highlight both rows
-          this.rows.forEach(r => {
-            if (r.code === edit.primary_code || r.code === edit.secondary_code) {
-              r.raw.classList.add('audit-row-warn');
-            }
+        const dateCodes = dateRows.map(r => r.code);
+        const { data: ncciData } = await db
+          .from('ncci_ptp_edits')
+          .select('column1_code, column2_code, modifier_allowed')
+          .in('column1_code', dateCodes)
+          .in('column2_code', dateCodes);
+
+        if (ncciData && ncciData.length > 0) {
+          ncciData.forEach(edit => {
+            this.addFinding(
+              'bundling_audit', 
+              'Clinical Bundle Violation', 
+              `Codes ${edit.column1_code} and ${edit.column2_code} are typically bundled on the same date per CMS clinical rules.`, 
+              'danger'
+            );
+            
+            // Highlight both rows
+            this.rows.forEach(r => {
+              if (r.code === edit.column1_code || r.code === edit.column2_code) {
+                r.raw.classList.add('audit-row-error');
+              }
+            });
           });
-        });
+        }
       }
     } catch (err) {
       console.error("Supabase Audit Error:", err);
@@ -564,6 +583,71 @@ function runDuplicateRules(rows, findings) {
 }
 
 
+
+function renderAuditJSON(result) {
+  const container = document.getElementById('audit-results');
+  if (!container) return;
+  container.className = 'audit-results visible';
+  container.innerHTML = '';
+
+  // 1. Savings Summary Card
+  if (result.potential_savings > 0) {
+    const savingsCard = document.createElement('div');
+    savingsCard.className = 'savings-summary-card';
+    savingsCard.style = 'background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.02) 100%); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 12px; padding: 24px; margin-bottom: 24px; text-align: center;';
+    savingsCard.innerHTML = `
+      <div style="font-size: 11px; font-weight: 700; color: #22c55e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Audit Insight</div>
+      <div style="font-size: 32px; font-weight: 800; color: var(--text-h); margin-bottom: 4px;">$${result.potential_savings.toFixed(2)}</div>
+      <div style="font-size: 14px; color: var(--text-muted);">Estimated Potential Savings</div>
+      <div style="margin-top: 16px; font-size: 12px; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 20px; display: inline-block;">
+        Medicare Benchmark Total: $${result.medicare_benchmark_total?.toFixed(2) || '0.00'}
+      </div>
+    `;
+    container.appendChild(savingsCard);
+  }
+
+  // 2. Summary Text
+  const summaryHeader = document.createElement('div');
+  summaryHeader.style = 'margin-bottom: 20px; padding: 0 4px;';
+  summaryHeader.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+      <div class="audit-status-badge">
+        <div class="dot" style="background:#22c55e;"></div>
+        AI Clinical Engine Active
+      </div>
+      <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">${result.findings.length} Anomalies</div>
+    </div>
+    <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">${result.summary}</p>
+  `;
+  container.appendChild(summaryHeader);
+
+  // 3. Render Findings
+  if (result.findings.length === 0) {
+    const successFinding = document.createElement('div');
+    successFinding.className = 'audit-finding';
+    successFinding.style = 'border-left: 3px solid var(--success); background: rgba(16, 185, 129, 0.05);';
+    successFinding.innerHTML = `<strong style="color:var(--success);">Clinical Audit Passed</strong> — All line items match national clinical benchmarks.`;
+    container.appendChild(successFinding);
+  } else {
+    result.findings.forEach(f => {
+      const card = document.createElement('div');
+      card.className = 'audit-finding';
+      card.style = `text-align:left; border-left: 3px solid ${f.type === 'Danger' ? 'var(--danger)' : 'var(--warning)'};`;
+      const typeClass = f.type.toLowerCase();
+      card.innerHTML = `
+        <div class="finding-icon ${typeClass}">●</div>
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="color:var(--text-h);">${f.title}</strong>
+            <span style="font-size:10px; font-weight:800; padding:2px 6px; border-radius:4px; background:rgba(255,255,255,0.05); color:var(${typeClass === 'danger' ? '--danger' : '--warning'}); text-transform:uppercase;">${f.code || 'AUDIT'}</span>
+          </div>
+          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted); opacity:0.9;">${f.reason || f.detail}</p>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+}
 
 function renderCategorizedFindings(findings, container, rowCount) {
   if (rowCount === 0) return;
