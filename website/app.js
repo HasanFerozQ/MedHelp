@@ -132,18 +132,33 @@ function extractRowsFromText(text) {
     
     if (dates || codes || money.length > 0) {
       const amounts = money.map(m => parseFloat(m.replace(/[^0-9.]/g, '')));
-      let price = 0, qty = 1, total = 0;
-      if (amounts.length === 1) total = amounts[0];
-      else if (amounts.length === 2) { price = amounts[0]; total = amounts[1]; }
-      else if (amounts.length >= 3) { qty = amounts[0]; price = amounts[1]; total = amounts[2]; }
+      let price = 0, qty = 1, total = 0, paid = 0, owed = 0;
+      
+      // Smart Inference for EOBs (V2.3)
+      if (amounts.length === 1) {
+        total = amounts[0];
+      } else if (amounts.length === 2) {
+        price = amounts[0]; total = amounts[1];
+      } else if (amounts.length === 3) {
+        // [Qty, Price, Total] or [Total, Paid, Owed]
+        if (amounts[0] < 10) { qty = amounts[0]; price = amounts[1]; total = amounts[2]; }
+        else { total = amounts[0]; paid = amounts[1]; owed = amounts[2]; }
+      } else if (amounts.length >= 4) {
+        // High density (EOB style): Billed, Allowed, Paid, Owed
+        total = amounts[0];
+        paid = amounts[amounts.length - 2];
+        owed = amounts[amounts.length - 1];
+      }
 
       rows.push({
         date: dates ? dates[0] : '',
         code: codes ? codes[0] : '',
-        desc: line.substring(0, 50).trim(),
+        desc: line.substring(0, 50).replace(dateRegex, '').replace(codeRegex, '').replace(moneyRegex, '').trim(),
         qty: qty,
         price: price || (total / qty),
-        total: total
+        total: total,
+        paid: paid,
+        owed: owed
       });
     }
   });
@@ -161,6 +176,8 @@ function addWorkspaceRow(data = {}) {
     <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: center;">${data.qty || 1}</td>
     <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right;">${data.price ? data.price.toFixed(2) : '0.00'}</td>
     <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; font-weight: bold;">${data.total ? data.total.toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; color: #22c55e;">${data.paid ? data.paid.toFixed(2) : '0.00'}</td>
+    <td contenteditable="true" style="padding: 10px; border-bottom: 1px solid var(--border); text-align: right; color: #ef4444;">${data.owed ? data.owed.toFixed(2) : '0.00'}</td>
     <td style="padding: 10px; border-bottom: 1px solid var(--border); text-align: center;">
       <button onclick="this.parentElement.parentElement.remove(); reRunWorkspaceAudit();" style="background:none; border:none; color:var(--danger); cursor:pointer;">✕</button>
     </td>
@@ -180,6 +197,8 @@ function reRunWorkspaceAudit() {
       qty: parseFloat(tds[3].innerText) || 0,
       price: parseFloat(tds[4].innerText) || 0,
       total: parseFloat(tds[5].innerText) || 0,
+      paid: parseFloat(tds[6].innerText) || 0,
+      owed: parseFloat(tds[7].innerText) || 0,
       raw: tr
     };
   });
@@ -197,12 +216,18 @@ function reRunWorkspaceAudit() {
 function runArithmeticRules(rows, findings) {
   let lineSum = 0; let statedTotal = 0;
   rows.forEach(r => {
+    // 1. Math check
     const expected = Math.round(r.qty * r.price * 100) / 100;
     if (Math.abs(expected - r.total) > 0.05 && r.total !== 0) {
       findings.push({ category: 'arithmetic_error', title: 'Math Mismatch', detail: `Row ${r.code}: $${r.price} × ${r.qty} isn't $${r.total}.`, type: 'danger' });
       r.raw.style.backgroundColor = 'rgba(239, 68, 68, 0.05)';
     } else { r.raw.style.backgroundColor = 'transparent'; }
     
+    // 2. Patient Responsibility Sanity (V2.3)
+    if (r.paid + r.owed > r.total + 0.1) {
+      findings.push({ category: 'arithmetic_error', title: 'Over-Responsibility', detail: `Code ${r.code}: Paid+Owed ($${(r.paid+r.owed).toFixed(2)}) is more than the total billed ($${r.total}).`, type: 'danger' });
+    }
+
     if (/total|subtotal|due/i.test(r.desc)) statedTotal = Math.max(statedTotal, r.total);
     else lineSum += r.total;
   });
