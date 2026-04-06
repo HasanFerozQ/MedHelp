@@ -1,3 +1,5 @@
+const https = require('https');
+
 module.exports = async (req, res) => {
   const { number, first_name, last_name, organization_name, state } = req.query;
 
@@ -10,16 +12,18 @@ module.exports = async (req, res) => {
   if (organization_name) url += `&organization_name=${encodeURIComponent(organization_name)}`;
   if (state) url += `&state=${encodeURIComponent(state)}`;
 
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      const errorText = await response.text();
-      return res.status(response.status).json({ error: `CMS API error: ${response.status}`, details: errorText });
-    }
-    const data = await response.json();
-    res.status(200).json(data);
-  } catch (error) {
-    console.error('Npi Proxy Error:', error);
-    res.status(500).json({ error: 'Internal Server Error while proxying NPI search', details: error.message });
-  }
+  https.get(url, (cmsRes) => {
+    let data = '';
+    cmsRes.on('data', (chunk) => { data += chunk; });
+    cmsRes.on('end', () => {
+      try {
+        const jsonData = JSON.parse(data);
+        res.status(200).json(jsonData);
+      } catch (e) {
+        res.status(500).json({ error: 'Failed to parse CMS response', details: e.message });
+      }
+    });
+  }).on('error', (err) => {
+    res.status(500).json({ error: 'CMS API request failed', details: err.message });
+  });
 };
