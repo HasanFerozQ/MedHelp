@@ -4,7 +4,12 @@
       "maxDuration": 10
     }
   },
+  "cleanUrls": true,
   "rewrites": [
+    {
+      "source": "/api/audit-bill",
+      "destination": "/api/audit-bill.js"
+    },
     {
       "source": "/api/:path*",
       "destination": "/api/:path*"
