@@ -8,7 +8,6 @@
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- PDF.js for 100% Local PDF Extraction -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
@@ -40,14 +39,12 @@
   <div class="container" style="margin-bottom: 80px; max-width: 800px;">
     <div class="audit-area">
 
-      <!-- Audit Mode Tabs -->
       <div class="audit-tabs">
         <button class="audit-tab active" onclick="switchAuditTab('pdf', this)">📄 Upload PDF</button>
         <button class="audit-tab" onclick="switchAuditTab('paste', this)">📋 Paste Text</button>
         <button class="audit-tab" onclick="switchAuditTab('lines', this)">📝 Line Items</button>
       </div>
 
-      <!-- PDF UPLOAD PANEL -->
       <div id="audit-pdf" class="audit-panel">
         <div class="drop-zone" id="pdf-drop-zone">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
@@ -58,74 +55,6 @@
         <div id="pdf-status" style="font-size:12px; margin-top:-10px; margin-bottom:20px; color:var(--accent);"></div>
       </div>
       
-      <!-- AI PROCESSING OVERLAY -->
-      <div id="ai-loading-overlay" style="display:none; text-align:center; padding: 40px;">
-        <div class="spinner" style="margin: 0 auto 20px; width:40px; height:40px; border:4px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation: spin 1s linear infinite;"></div>
-        <h3 style="margin-bottom:8px;">AI is analyzing your bill...</h3>
-        <p style="color:var(--text-muted); font-size:14px;" id="ai-loading-text">This may take up to 15 seconds.</p>
-        <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
-      </div>
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediHelp | AI Bill Audit — Free Medical Bill Checker</title>
-  <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
-  <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- PDF.js for 100% Local PDF Extraction -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-</head>
-<body>
-
-  <nav class="navbar">
-    <div class="container nav-content">
-      <a href="index.html" class="nav-brand">
-        <img src="icons/logo.png?v=1.1" alt="MediHelp">
-        MediHelp
-      </a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="audit.html" class="active">Bill Audit</a>
-        <a href="providers.html">National Provider Search</a>
-        <a href="blog.html">Blog</a>
-      </div>
-      <div class="nav-actions">
-        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
-      </div>
-    </div>
-  </nav>
-
-  <section class="hero container">
-    <div class="hero-eyebrow">HIPAA-Safe · Local Processing</div>
-    <h1>Smart Bill Audit.<br><span class="grad">Catch Overcharges.</span></h1>
-    <p>Upload a PDF, paste your medical bill text, or enter line items. Our engine checks for duplicate charges, unbundling errors, and inflated coding — 100% privately in your browser.</p>
-  </section>
-
-  <div class="container" style="margin-bottom: 80px; max-width: 800px;">
-    <div class="audit-area">
-
-      <!-- Audit Mode Tabs -->
-      <div class="audit-tabs">
-        <button class="audit-tab active" onclick="switchAuditTab('pdf', this)">📄 Upload PDF</button>
-        <button class="audit-tab" onclick="switchAuditTab('paste', this)">📋 Paste Text</button>
-        <button class="audit-tab" onclick="switchAuditTab('lines', this)">📝 Line Items</button>
-      </div>
-
-      <!-- PDF UPLOAD PANEL -->
-      <div id="audit-pdf" class="audit-panel">
-        <div class="drop-zone" id="pdf-drop-zone">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-          <p>Drag & Drop Medical Bill PDF here</p>
-          <div class="hint">or click to browse files</div>
-          <input type="file" id="pdf-input" accept="application/pdf" style="display:none;">
-        </div>
-        <div id="pdf-status" style="font-size:12px; margin-top:-10px; margin-bottom:20px; color:var(--accent);"></div>
-      </div>
-      
-      <!-- AI PROCESSING OVERLAY -->
       <div id="ai-loading-overlay" style="display:none; text-align:center; padding: 40px;">
         <div class="spinner" style="margin: 0 auto 20px; width:40px; height:40px; border:4px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation: spin 1s linear infinite;"></div>
         <h3 style="margin-bottom:8px;">AI is analyzing your bill...</h3>
@@ -133,34 +62,24 @@
         <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
       </div>
 
-      <!-- PASTE TEXT PANEL -->
       <div id="audit-paste" class="audit-panel" style="display:none;">
         <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; letter-spacing:0.06em; text-transform:uppercase;">Paste bill text or EOB:</label>
-        <textarea
-          id="bill-text"
-          class="bill-textarea"
-          placeholder="Paste your medical bill here..."></textarea>
+        <textarea id="bill-text" class="bill-textarea" placeholder="Paste your medical bill here..."></textarea>
         <div class="audit-btn-row">
           <button class="btn btn-primary" onclick="runAudit()">Analyze Text</button>
           <button class="btn btn-ghost" onclick="clearAudit()">Clear</button>
         </div>
       </div>
 
-      <!-- MANUAL LINE ITEMS PANEL -->
       <div id="audit-lines" class="audit-panel" style="display:none;">
         <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; letter-spacing:0.06em; text-transform:uppercase;">Format: Code $Amount (e.g. 99213 $150.00)</label>
-        <textarea
-          id="line-items-text"
-          class="bill-textarea"
-          placeholder="99213  $150.00
-93010  $85.00"></textarea>
+        <textarea id="line-items-text" class="bill-textarea" placeholder="99213  $150.00&#10;93010  $85.00"></textarea>
         <div class="audit-btn-row">
           <button class="btn btn-primary" onclick="runAuditLines()">Analyze Items</button>
           <button class="btn btn-ghost" onclick="document.getElementById('line-items-text').value=''">Clear</button>
         </div>
       </div>
 
-      <!-- INTERACTIVE AUDIT WORKSPACE (V2.2) -->
       <div id="audit-workspace-container" style="display:none; margin-bottom: 30px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
           <h3 style="font-size: 16px; margin: 0;">🛠️ Bill Data Workspace</h3>
@@ -186,13 +105,11 @@
         <button onclick="addWorkspaceRow()" style="background: none; border: 1px dashed var(--border); color: var(--text-muted); width: 100%; padding: 10px; margin-top: 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">+ Add Custom Row</button>
       </div>
 
-      <!-- AUDIT RESULTS -->
       <div id="audit-results" class="audit-results"></div>
 
     </div>
   </div>
 
-  <!-- ── FAQ ── -->
   <section class="section-faq" style="text-align: center; border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header" style="margin: 60px auto 48px;">
@@ -239,10 +156,8 @@
           </ul>
         </div>
       </div>
-      <div class="footer-bottom" style="justify-content: center; border-top: 1px solid var(--border); padding-top: 40px; flex-direction: column; gap: 10px; align-items: center;">
+      <div class="footer-bottom" style="text-align: center; border-top: 1px solid var(--border); padding-top: 40px;">
         <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
-        <span style="font-size: 11px; opacity: 0.7;">Informational only. Not medical/legal advice. <a href="terms.html" style="color: var(--accent); text-decoration: none; font-weight: 700;">Terms & Disclaimer</a></span>
-        <span style="display:block; font-size: 10px; opacity: 0.5;">Not affiliated with CMS or any government agency.</span>
       </div>
     </div>
   </footer>
@@ -251,10 +166,10 @@
   <script src="app.js"></script>
   <script>
     const auditFaqs = [
-      { q: 'Is my medical data safe?', a: 'Absolutely. All bill analysis runs entirely in your browser using JavaScript. No text is sent to any server. We never see your patient data.' },
-      { q: 'What does the audit check for?', a: 'The audit scans for: duplicate charges (same CPT code billed twice), upcoded charges (description doesn\'t match CPT cost norms), and common unbundling errors where procedures should be billed together.' },
-      { q: 'What is an EOB?', a: 'An Explanation of Benefits (EOB) is a statement from your insurance company showing what was billed, what was allowed, what was paid, and what you owe.' },
-      { q: 'Can it read any PDF?', a: 'It is optimized for standard PDF bills and EOBs. If your PDF is purely scanning an image, text extraction may be less accurate. Our tool extracts raw text layers locally.' },
+      { q: 'Is my medical data safe?', a: 'Absolutely. All bill analysis runs entirely in your browser. No text is sent to any server.' },
+      { q: 'What does the audit check for?', a: 'The audit scans for duplicates, unbundling, and coding errors.' },
+      { q: 'What is an EOB?', a: 'Explanation of Benefits showing what was billed and paid.' },
+      { q: 'Can it read any PDF?', a: 'Optimized for standard bills and EOBs.' }
     ];
     renderFAQ('faq-audit', auditFaqs);
 
@@ -265,6 +180,5 @@
       btn.classList.add('active');
     }
   </script>
-
 </body>
 </html>
