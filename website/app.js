@@ -158,7 +158,10 @@ async function handlePDF(file) {
         
         const response = await fetch(`${SUPA_URL}/functions/v1/audit_bill`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${SUPA_KEY}`
+          },
           body: JSON.stringify({ pdfBase64: base64Data, mimeType: file.type || 'application/pdf' })
         });
 
