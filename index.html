@@ -10,6 +10,12 @@
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Initialize standard database connection globally for standalone search components
+    const SUPABASE_URL  = 'https://bisqgousuvljttesjkkm.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
+    if(window.supabase) window.dbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  </script>
 </head>
 <body>
 
@@ -76,16 +82,16 @@
         <div class="region-bar">
           <label>Region:</label>
           <div class="region-pills">
-            <button class="region-pill active" data-region="US" onclick="setRegion('US', this)">US (ICD-10-CM)</button>
-            <button class="region-pill" data-region="UK" onclick="setRegion('UK', this)">UK (ICD-10 WHO)</button>
-            <button class="region-pill" data-region="ME" onclick="setRegion('ME', this)">Middle East (WHO)</button>
+            <button class="region-pill active" data-region="US">US (ICD-10-CM)</button>
+            <button class="region-pill" data-region="UK">UK (ICD-10 WHO)</button>
+            <button class="region-pill" data-region="ME">Middle East (WHO)</button>
           </div>
         </div>
         <div class="search-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="codes-input" class="search-input" placeholder="e.g. J45.50 or 'Asthma' or 'Chest Pain'...">
+          <input type="text" id="code-search-input" class="search-input" placeholder="e.g. J45.50 or 'Asthma' or 'Chest Pain'...">
         </div>
-        <div id="codes-results" class="results-area">
+        <div id="search-results-list" class="results-area">
           <p class="status-msg">Start typing to search 74,000+ medical codes.</p>
         </div>
       </div>
@@ -94,10 +100,10 @@
       <div id="denials" class="tab-panel">
         <div class="search-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="denials-input" class="search-input" placeholder="e.g. CO-45, N362, or 'timely filing'..." autocomplete="off">
+          <input type="text" id="denial-search-input" class="search-input" placeholder="e.g. CO-45, N362, or 'timely filing'..." autocomplete="off">
           <div id="denial-suggestions" class="suggestions-list"></div>
         </div>
-        <div id="denials-results" class="results-area">
+        <div id="denial-results" class="results-area">
           <p class="status-msg">Search CARC and RARC denial codes.</p>
         </div>
       </div>
@@ -107,7 +113,7 @@
         <div class="rx-search">
           <div class="search-box" style="flex:1; margin-bottom:0;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="rx-input" class="search-input" placeholder="Search a drug name (e.g. Amoxicillin, Lisinopril)..." autocomplete="off">
+            <input type="text" id="rx-search-input" class="search-input" placeholder="Search a drug name (e.g. Amoxicillin, Lisinopril)..." autocomplete="off">
             <div id="rx-suggestions" class="suggestions-list"></div>
           </div>
         </div>
@@ -190,6 +196,9 @@
   </footer>
 
   <script src="blog_handler.js"></script>
+  <script src="tabs/codesearch/codesearch.js"></script>
+  <script src="tabs/denials/denials.js"></script>
+  <script src="tabs/rxscout/rxscout.js"></script>
   <script src="app.js"></script>
   <script>
     // Render Home FAQs
