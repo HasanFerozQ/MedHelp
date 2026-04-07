@@ -18,10 +18,42 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { codes, npis } = await req.json();
+    const { codes, npis, q, type } = await req.json();
 
-    // 1. CODING DATA (Medicare Fees & NCCI)
+    // 1. SEARCH MODE (New for Phase 4)
+    if (q && q.trim().length >= 2) {
+      const query = `%${q}%`;
+      let searchData = [];
+
+      if (type === 'denials') {
+        const { data } = await supabaseAdmin
+          .from('denial_codes')
+          .select('code, description')
+          .or(`code.ilike.${query},description.ilike.${query}`)
+          .limit(15);
+        searchData = data || [];
+      } else {
+        // CPT / HCPCS Code Search
+        const [cptRes, drugRes] = await Promise.all([
+          supabaseAdmin.from('cpt_medicare_fees').select('cpt_code, base_price, description').or(`cpt_code.ilike.${query},description.ilike.${query}`).limit(10),
+          supabaseAdmin.from('hcpcs_drug_fees').select('hcpcs_code, payment_limit, short_description').or(`hcpcs_code.ilike.${query},short_description.ilike.${query}`).limit(10)
+        ]);
+        
+        searchData = [
+          ...(cptRes.data || []).map(r => ({ code: r.cpt_code, desc: r.description, price: r.base_price, type: 'CPT' })),
+          ...(drugRes.data || []).map(r => ({ code: r.hcpcs_code, desc: r.short_description, price: r.payment_limit, type: 'DRUG' }))
+        ];
+      }
+
+      return new Response(JSON.stringify({ ok: true, results: searchData }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200
+      });
+    }
+
+    // 2. CODING DATA LOOKUP (Direct list of codes)
     const allCodes = Array.isArray(codes) ? [...new Set(codes.map(c => (c || "").trim().toUpperCase()).filter(c => c && c.length >= 2))] : [];
+
     const cptCodes = allCodes.filter(c => /^[0-9]{5}$/.test(c));
     const drugCodes = allCodes.filter(c => /^[A-Z][0-9]{4}$/.test(c));
     

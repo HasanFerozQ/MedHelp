@@ -1078,64 +1078,105 @@ function debounce(fn, ms) {
 
 // ── Shared Utils & Code Search ──
 async function searchCodes(q, container) {
-  // Search logic will eventually move to edge proxy for security.
-  // For now, this is restricted to public reference search.
-  container.innerHTML = '<div class="status-msg">Searching...</div>';
-
-
-  const results = [];
-  
-  // Combine results, prioritizing drug fees with price info
-  (drugRes.data || []).forEach(r => {
-    results.push({
-      code: r.hcpcs_code,
-      desc: r.short_description,
-      price: r.payment_limit,
-      type: 'DRUG'
-    });
-  });
-
-  (codesRes.data || []).forEach(r => {
-    if (!results.find(res => res.code === r.code)) {
-      results.push({
-        code: r.code,
-        desc: r.short_description,
-        type: 'CPT'
-      });
-    }
-  });
-
-  if (results.length === 0) {
-    container.innerHTML = '<div class="status-msg">No codes found.</div>';
+  if (!q) {
+    container.innerHTML = '<p class="status-msg">Start typing to search 74,000+ medical codes.</p>';
     return;
   }
+  container.innerHTML = '<div class="status-msg">Searching...</div>';
 
-  container.innerHTML = results.map(r => `
-    <div class="result-card" style="display:flex; justify-content:space-between; align-items:center; padding: 12px 16px; margin-bottom: 8px;">
-      <div style="flex:1;">
-        <div style="display:flex; align-items:center; gap:8px;">
-           <strong style="color:var(--text-h);">${r.code}</strong>
-           ${r.price ? `<span style="font-size:10px; padding:2px 6px; background:var(--accent-glow); color:var(--accent); border-radius:4px; font-weight:800;">$${r.price.toFixed(2)}/unit</span>` : ''}
+  try {
+    const res = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/lookup_codes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ q, type: 'codes' })
+    });
+
+    if (!res.ok) throw new Error("Search Failed");
+    const { results } = await res.json();
+    
+    if (!results || results.length === 0) {
+      container.innerHTML = '<div class="status-msg">No codes found.</div>';
+      return;
+    }
+
+    container.innerHTML = results.map(r => `
+      <div class="result-card" style="display:flex; justify-content:space-between; align-items:center; padding: 12px 16px; margin-bottom: 8px;">
+        <div style="flex:1;">
+          <div style="display:flex; align-items:center; gap:8px;">
+             <strong style="color:var(--text-h);">${r.code}</strong>
+             ${r.price ? `<span style="font-size:10px; padding:2px 6px; background:var(--accent-glow); color:var(--accent); border-radius:4px; font-weight:800;">$${r.price.toFixed(2)}/unit</span>` : ''}
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${r.desc}</div>
         </div>
-        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${r.desc}</div>
-      </div>
-      <button class="btn btn-ghost" style="padding:6px 10px; font-size:11px;" onclick="addCodeToAudit('${r.code}', '${r.desc}')">⊕ Add to Audit</button>
-    </div>`).join('');
+        <button class="btn btn-ghost" style="padding:6px 10px; font-size:11px;" onclick="addCodeToAudit('${r.code}', '${r.desc}')">⊕ Add to Audit</button>
+      </div>`).join('');
+
+  } catch (err) {
+    console.error("Search error:", err);
+    container.innerHTML = '<div class="status-msg">Search unavailable at the moment.</div>';
+  }
 }
 
 async function searchDenials(q, container) {
-  container.innerHTML = '<div class="status-msg">Searching...</div>';
-
-  if (error || !data || data.length === 0) {
-    container.innerHTML = '<div class="status-msg">No denial codes found.</div>';
+  if (!q) {
+    container.innerHTML = '<p class="status-msg">Search CARC and RARC denial codes.</p>';
     return;
   }
-  container.innerHTML = data.map(r => `
-    <div class="result-card" style="display:flex; justify-content:space-between; align-items:center;">
-      <div><strong>${r.code}</strong>: ${r.description}</div>
-      <button class="btn btn-ghost" style="padding:4px 8px; font-size:11px;" onclick="addCodeToAudit('${r.code}', '${r.description}')">⊕ Add to Audit</button>
-    </div>`).join('');
+  container.innerHTML = '<div class="status-msg">Searching...</div>';
+
+  try {
+    const res = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/lookup_codes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ q, type: 'denials' })
+    });
+
+    if (!res.ok) throw new Error("Search Failed");
+    const { results } = await res.json();
+
+    if (!results || results.length === 0) {
+      container.innerHTML = '<div class="status-msg">No denial codes found.</div>';
+      return;
+    }
+
+    container.innerHTML = results.map(r => `
+      <div class="result-card" style="display:flex; justify-content:space-between; align-items:center;">
+        <div><strong>${r.code}</strong>: ${r.description}</div>
+        <button class="btn btn-ghost" style="padding:4px 8px; font-size:11px;" onclick="addCodeToAudit('${r.code}', '${r.description}')">⊕ Add to Audit</button>
+      </div>`).join('');
+  } catch (err) {
+    console.error("Search error:", err);
+    container.innerHTML = '<div class="status-msg">Search unavailable.</div>';
+  }
 }
+
+function switchTab(tabId, btn) {
+  // Find relative panels (works for both Home dashboard and Audit page)
+  const wrapper = btn.closest('.suite-wrapper') || btn.closest('.audit-area') || document;
+  const panels = wrapper.querySelectorAll('.tab-panel, .audit-panel');
+  const buttons = wrapper.querySelectorAll('.tab-btn, .audit-tab');
+
+  panels.forEach(p => p.style.display = 'none');
+  buttons.forEach(b => b.classList.remove('active'));
+
+  // The tabId might be 'pdf' but the element ID is 'audit-pdf' in audit.html
+  let target = document.getElementById(tabId) || document.getElementById('audit-' + tabId);
+  
+  if (target) target.style.display = 'block';
+  btn.classList.add('active');
+}
+
+
+function setRegion(region, btn) {
+  activeRegion = region;
+  const section = btn.closest('.region-bar');
+  if (section) {
+    section.querySelectorAll('.region-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  console.log("Region set to:", region);
+}
+
 
 function bindSearch(inputId, resultId, handler) {
   const input = document.getElementById(inputId);
