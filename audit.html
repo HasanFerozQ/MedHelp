@@ -83,11 +83,24 @@
       </div>
 
       <div id="audit-workspace-container" style="display:none; margin-bottom: 30px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-          <h3 style="font-size: 16px; margin: 0;">🛠️ Bill Data Workspace</h3>
-          <button class="btn btn-primary" onclick="reRunWorkspaceAudit()" style="padding: 8px 16px; font-size: 12px;">Re-run Audit</button>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 15px;">
+          <div>
+            <h3 style="font-size: 16px; margin: 0; color: var(--text-h);">🛠️ Bill Data Workspace</h3>
+            <p style="margin:4px 0 0; font-size: 12px; color: var(--text-muted);">Verify and edit extracted data before final report.</p>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <div style="text-align: right;">
+              <label style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Payer Type</label>
+              <select id="payer-type" onchange="reRunWorkspaceAudit()" style="background: var(--bg-card); color: var(--text-h); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; font-size: 12px; cursor: pointer; outline: none; transition: border-color 0.2s;">
+                <option value="1.5">Self-Pay (150% Medicare)</option>
+                <option value="2.5" selected>Commercial (250% Medicare)</option>
+                <option value="3.0">Worker's Comp (300% Medicare)</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="reRunWorkspaceAudit()" style="padding: 8px 16px; font-size: 12px;">Re-run Audit</button>
+          </div>
         </div>
-        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Verify the extracted data below. <strong>Double-click any cell to edit</strong>, then click "Re-run Audit".</p>
+
         <div class="workspace-table-wrapper" style="overflow-x: auto; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border);">
           <table id="audit-workspace-table" style="width: 100%; border-collapse: collapse; font-size: 13px; min-width: 650px;">
             <thead>

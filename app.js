@@ -75,10 +75,7 @@ async function handlePDF(file) {
   const status = document.getElementById('pdf-status');
   const overlay = document.getElementById('ai-loading-overlay');
   const results = document.getElementById('audit-results');
-
-  // Update loading text to reflect local-only processing
   const loadingText = document.getElementById('ai-loading-text');
-  if (loadingText) loadingText.textContent = 'Extracting and analyzing bill data locally...';
 
   if (overlay) overlay.style.display = 'block';
   if (results) results.innerHTML = '';
@@ -88,27 +85,73 @@ async function handlePDF(file) {
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     let pageData = [];
+    let detectedNPIs = [];
+    const npiRegex = /\b[1-9][0-9]{9}\b/g;
 
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
       const textContent = await page.getTextContent();
-
-      // Layout-Aware Capture (extract x, y, and string for grid reconstruction)
-      const items = textContent.items.map(item => ({
-        str: item.str,
-        x: item.transform[4],
-        y: item.transform[5],
-        width: item.width,
-        height: item.height
-      }));
+      
+      const items = textContent.items.map(item => {
+        const npiMatches = item.str.match(npiRegex);
+        if (npiMatches) detectedNPIs.push(...npiMatches);
+        return {
+          str: item.str,
+          x: item.transform[4],
+          y: item.transform[5],
+          width: item.width,
+          height: item.height
+        };
+      });
       pageData.push(items);
     }
 
+    // Hybrid OCR Fallback (V2.7)
+    const totalWords = pageData.flat().reduce((acc, item) => acc + item.str.split(/\s+/).length, 0);
+    if (totalWords < 20) {
+      if (loadingText) loadingText.textContent = 'PDF contains no text layer. Initializing OCR Fallback (Tesseract.js)...';
+      
+      // Load Tesseract dynamically
+      if (!window.Tesseract) {
+        await new Promise((resolve) => {
+          const script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+          script.onload = resolve;
+          document.head.appendChild(script);
+        });
+      }
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      pageData = []; // Clear and rebuild via OCR
+
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 2.0 });
+        canvas.width = viewport.width; canvas.height = viewport.height;
+        await page.render({ canvasContext: ctx, viewport }).promise;
+        
+        const { data: { blocks } } = await Tesseract.recognize(canvas, 'eng');
+        const ocrItems = blocks.flatMap(b => b.paragraphs.flatMap(p => p.lines.flatMap(l => l.words.map(w => {
+           const npiMatches = w.text.match(npiRegex);
+           if (npiMatches) detectedNPIs.push(...npiMatches);
+           return {
+             str: w.text,
+             x: w.bbox.x0 / 2, 
+             y: (viewport.height - w.bbox.y0) / 2,
+             width: (w.bbox.x1 - w.bbox.x0) / 2,
+             height: (w.bbox.y1 - w.bbox.y0) / 2
+           };
+        }))));
+        pageData.push(ocrItems);
+      }
+    }
+
     if (overlay) overlay.style.display = 'none';
-    if (status) status.innerHTML = `✅ Extracted ${pdf.numPages} page(s) from <strong>${file.name}</strong>`;
+    if (status) status.innerHTML = `✅ Analyzed ${pdf.numPages} page(s) from <strong>${file.name}</strong>`;
 
     const structuredRows = reconstructRowsFromLayout(pageData);
-    runAudit(structuredRows);
+    runAudit(structuredRows, detectedNPIs);
 
   } catch (err) {
     if (overlay) overlay.style.display = 'none';
@@ -117,8 +160,9 @@ async function handlePDF(file) {
   }
 }
 
+
 // ── Interactive Audit Workspace (V2.3) ────────────────────────────────────
-function runAudit(input) {
+function runAudit(input, detectedNPIs = []) {
   const workspace = document.getElementById('audit-workspace-container');
   const results = document.getElementById('audit-results');
   if (!workspace || !results) return;
@@ -129,9 +173,9 @@ function runAudit(input) {
 
   let rows = [];
   if (Array.isArray(input)) {
-    rows = input; // Structured rows from layout engine
+    rows = input; 
   } else {
-    rows = extractRowsFromText(input || ''); // Fallback to regex
+    rows = extractRowsFromText(input || ''); 
   }
 
   workspace.style.display = 'block';
@@ -141,9 +185,12 @@ function runAudit(input) {
     results.innerHTML = `<div class="audit-finding" style="text-align:center;"><p>No structured patterns found. Use the editor below to add line items.</p></div>`;
   } else {
     rows.forEach(r => addWorkspaceRow(r));
+    // Store NPIs in workspace state for the audit engine
+    workspace.dataset.npis = JSON.stringify(detectedNPIs);
     reRunWorkspaceAudit();
   }
 }
+
 
 // ── V2.5 Layout-Aware Reconstruction Engine ──────────────────────────────
 function filterNormalRows(rows) {
@@ -377,28 +424,36 @@ async function reRunWorkspaceAudit() {
 
   });
 
-  // Use BucketAuditor (V2.5 Modular Architecture)
-  const engine = new BucketAuditor(rows);
+  // Use BucketAuditor (V2.7 Advanced Architecture)
+  const multiplier = parseFloat(document.getElementById('payer-type')?.value) || 1.5;
+  const npiData = document.getElementById('audit-workspace-container')?.dataset.npis;
+  const npis = npiData ? JSON.parse(npiData) : [];
+  
+  const engine = new BucketAuditor(rows, multiplier, npis);
   engine.runArithmetic();
   engine.runDuplicates();
   engine.runConsistency();
   engine.runSemantic();
   engine.runCompleteness();
   
-  // V2.5 Asynchronous DB Check (Supabase Mapping)
+  // V2.6 Asynchronous DB Check (Secure Edge Lookups)
   await engine.runDatabaseCheck();
+
 
   renderCategorizedFindings(engine.findings, results, rows.length, rows, engine.potentialSavings, engine.totalBenchmark);
 }
 
 
 class BucketAuditor {
-  constructor(rows) {
+  constructor(rows, multiplier = 1.5, npis = []) {
     this.rows = rows;
+    this.multiplier = multiplier;
+    this.npis = npis;
     this.findings = [];
     this.potentialSavings = 0;
     this.totalBenchmark = 0;
   }
+
 
 
   addFinding(category, title, detail, type = 'warn') {
@@ -528,21 +583,30 @@ class BucketAuditor {
   }
 
   async runDatabaseCheck() {
-    // Phase 2: Call secure edge function instead of direct db query
     const codes = [...new Set(this.rows.map(r => r.code).filter(c => !!c))];
-    if (codes.length === 0) return;
+    if (codes.length === 0 && this.npis.length === 0) return;
 
     try {
-      // Use the new secure edge function
       const res = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/lookup_codes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ codes })
+        body: JSON.stringify({ codes, npis: this.npis })
       });
 
       if (!res.ok) throw new Error("Secure Lookup Failed");
-      const { fees: feeMap, ncci: ncciData } = await res.json();
+      const { fees: feeMap, ncci: ncciData, providers: providerMap } = await res.json();
       
+      // 0. Provider Sanity (V2.7)
+      if (providerMap) {
+        Object.values(providerMap).forEach(p => {
+          if (p.status !== 'Active') {
+            this.addFinding('clinical_alert', 'Provider Status Warning', `Provider NPI ${p.npi} (${p.name}) is listed as INACTIVE. Charging against inactive licenses is a high fraud marker.`, 'danger');
+          } else {
+            this.addFinding('validation_error', 'Verified Provider', `Credential match: ${p.name} (${p.specialty}). License is Active.`, 'info');
+          }
+        });
+      }
+
       // 1. Pricing Variance & Descriptions
       this.rows.forEach(r => {
         if (!r.code || /total/i.test(r.desc)) return;
@@ -556,16 +620,19 @@ class BucketAuditor {
           }
 
           const actualTotalBenchmark = info.price * r.qty;
+          const cappedMarketRate = actualTotalBenchmark * this.multiplier;
           this.totalBenchmark += actualTotalBenchmark;
 
-          if (r.total > (actualTotalBenchmark * 1.5)) {
+          if (r.total > cappedMarketRate) {
             const variancePct = actualTotalBenchmark > 0 ? ((r.total / actualTotalBenchmark) * 100).toFixed(0) : "∞";
-            this.addFinding('pricing_audit', 'High Charge Variance', `Benchmark is ~$${info.price.toFixed(2)}, but you billed $${r.total.toFixed(2)} (${variancePct}% of Medicare).`, 'warn');
+            const payerLabel = this.multiplier === 1.5 ? 'Self-Pay Market-Rate' : 'Payer Fair-Market-Rate';
+            this.addFinding('pricing_audit', 'High Charge Variance', `${payerLabel} is ~$${cappedMarketRate.toFixed(2)} (Medicare x${this.multiplier}), but you billed $${r.total.toFixed(2)} (${variancePct}% of Medicare).`, 'warn');
             r.raw.classList.add('audit-row-warn');
-            this.potentialSavings += Math.max(0, r.total - (actualTotalBenchmark * 1.5));
+            this.potentialSavings += Math.max(0, r.total - cappedMarketRate);
           }
         }
       });
+
 
       // 2. NCCI Bundling Check (V2.6)
       if (ncciData && ncciData.length > 0) {
