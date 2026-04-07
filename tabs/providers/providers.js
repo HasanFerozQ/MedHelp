@@ -1,95 +1,128 @@
-const npiInput = document.getElementById('npi-search-input');
-const npiResults = document.getElementById('npi-results');
+/**
+ * MediHelp — providers.js
+ * Handles: National Provider Search (NPPES API)
+ */
 
-let npiTimeout = null;
+async function searchNPI() {
+  const nameInput = document.getElementById('npi-name');
+  const stateInput = document.getElementById('npi-state');
+  const resultsEl  = document.getElementById('npi-results');
+  const btn        = document.getElementById('npi-search-btn');
+  if (!nameInput || !resultsEl) return;
 
-npiInput.addEventListener('input', (e) => {
-  const query = e.target.value.trim();
-  clearTimeout(npiTimeout);
-  
-  if (query.length < 3) {
-    npiResults.innerHTML = '';
+  const query = nameInput.value.trim();
+  const state = stateInput ? stateInput.value.trim() : '';
+
+  if (query.length < 2) {
+    resultsEl.innerHTML = '<p class="status-msg">Please enter at least 2 characters.</p>';
     return;
   }
 
-  npiResults.innerHTML = '<div class="empty-state">Searching NPI Registry...</div>';
+  // Show loading state
+  resultsEl.innerHTML = `
+    <div style="text-align:center; padding: 40px 0;">
+      <div class="spinner" style="margin: 0 auto 16px; width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation: spin 1s linear infinite;"></div>
+      <p style="color:var(--text-muted); font-size:14px;">Searching CMS NPPES Registry...</p>
+    </div>`;
+  if (btn) btn.disabled = true;
 
-  npiTimeout = setTimeout(() => {
-    searchNPI(query);
-  }, 500);
-});
-
-async function searchNPI(query) {
   try {
-    let url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=10';
-    
-    // If it's a 10 digit number, search by NPI
+    // CMS NPPES API via Vercel Proxy (fixes CORS)
+    let url = '/api/npi?';
+
     if (/^\d{10}$/.test(query)) {
-      url += `&number=${query}`;
-    } 
-    // Otherwise try to search by organization name or last name
-    else {
-      url += `&organization_name=${encodeURIComponent(query)}*`;
+      url += `number=${query}`;
+    } else {
+      const parts = query.trim().split(/\s+/);
+      if (parts.length >= 2) {
+        url += `first_name=${encodeURIComponent(parts[0])}*&last_name=${encodeURIComponent(parts.slice(1).join(' '))}*`;
+      } else {
+        url += `organization_name=${encodeURIComponent(query)}*`;
+      }
     }
 
+    if (state) url += `&state=${encodeURIComponent(state)}`;
+
     const res = await fetch(url);
+    if (!res.ok) throw new Error(`API error ${res.status}`);
     const data = await res.json();
 
     if (!data.results || data.results.length === 0) {
-      npiResults.innerHTML = '<div class="empty-state">No providers found.</div>';
-      return;
+      resultsEl.innerHTML = `<p class="status-msg">No providers found for "${query}"${state ? ' in ' + state : ''}. Try: John Smith, Mayo Clinic, etc.</p>`;
+    } else {
+      renderNPIResults(data.results, resultsEl);
     }
-
-    displayNPI(data.results);
   } catch (err) {
-    console.error(err);
-    npiResults.innerHTML = '<div class="empty-state">Error fetching provider data.</div>';
+    console.error('NPI Proxy Error:', err);
+    resultsEl.innerHTML = `
+      <div class="audit-finding" style="border-left: 3px solid var(--danger);">
+        <div class="finding-icon danger">●</div>
+        <div>
+          <strong style="color:var(--text-h);">NPS Search Failed</strong>
+          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">The search requested failed. This might be due to a temporary network issue or an API rate limit.</p>
+        </div>
+      </div>`;
+  } finally {
+    if (btn) btn.disabled = false;
   }
 }
 
-function displayNPI(results) {
-  npiResults.innerHTML = '';
-  
-  results.forEach(provider => {
-    const isOrg = provider.enumeration_type === 'NPI-2';
-    const name = isOrg 
-      ? provider.basic.organization_name 
-      : `${provider.basic.first_name} ${provider.basic.last_name}`;
+function renderNPIResults(results, container) {
+  container.innerHTML = results.map(p => {
+    const isOrg = p.enumeration_type === 'NPI-2';
+    const name = isOrg
+      ? (p.basic.organization_name || 'Organization')
+      : `${p.basic.first_name || ''} ${p.basic.middle_name ? p.basic.middle_name + ' ' : ''}${p.basic.last_name || ''}`.trim();
     
-    const div = document.createElement('div');
-    div.className = 'result-card provider-card';
-    div.style.cssText = "display: flex; flex-direction: column; gap: 8px; padding: 16px; border-left: 4px solid var(--tint-teal); margin-bottom: 12px; background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);";
+    const official = isOrg && p.basic.authorized_official_last_name 
+      ? `${p.basic.authorized_official_prefix || ''} ${p.basic.authorized_official_first_name || ''} ${p.basic.authorized_official_last_name || ''} ${p.basic.authorized_official_credential || ''}`.trim()
+      : null;
 
-    div.innerHTML = `
-      <div style="display: flex; align-items: start; justify-content: space-between; gap: 12px;">
-        <div style="font-weight: 700; font-size: 14px; color: #0f172a; line-height: 1.3;">
-          ${name} <span style="font-weight: 500; font-size: 11px; color: var(--tint-teal); background: var(--tint-teal-light); padding: 2px 6px; border-radius: 12px; margin-left: 4px;">${provider.basic.credential || 'PRO'}</span>
-        </div>
-      </div>
-      
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <div style="font-size: 12px; color: #475569; display: flex; align-items: center; gap: 6px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.6"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          <strong>NPI:</strong> <span style="font-family: monospace; font-size: 13px; background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">${provider.number}</span>
-        </div>
-        
-        <div style="font-size: 12px; color: #475569; display: flex; align-items: start; gap: 6px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.6; margin-top: 2px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-          <span style="line-height: 1.4;">${provider.taxonomies[0]?.desc || 'Primary Taxonomy N/A'}</span>
-        </div>
+    const credential = p.basic.credential || '';
+    const taxonomy = p.taxonomies?.[0]?.desc || 'Provider';
+    const addr = p.addresses?.[0];
+    const addressLine = addr ? `${addr.address_1 || ''}, ${addr.city || ''}, ${addr.state || ''} ${(addr.postal_code || '').substring(0, 5)}` : 'Address not available';
+    const mapsUrl = addr ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}` : '#';
+    const status = p.basic.status === 'A' ? '✓ Active' : '⚠ Inactive';
+    const statusColor = p.basic.status === 'A' ? '#22c55e' : '#f59e0b';
 
-        <div style="font-size: 12px; color: #475569; display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
-          <div style="display: flex; align-items: start; gap: 6px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.6; margin-top: 2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span style="line-height: 1.4;">${provider.addresses[0]?.address_1}, ${provider.addresses[0]?.city}, ${provider.addresses[0]?.state} ${provider.addresses[0]?.postal_code?.substring(0, 5)}</span>
+    return `
+      <div class="result-card" style="padding: 20px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; border-left: 3px solid var(--accent);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;">
+          <div>
+            <div style="font-size:15px; font-weight:700; color:var(--text-h); margin-bottom:4px;">
+              ${name}${credential ? ` <span style="font-size:11px; color:var(--accent); background:var(--accent-glow); padding:2px 6px; border-radius:4px; font-weight:800; margin-left:4px;">${credential}</span>` : ''}
+            </div>
+            ${official ? `<div style="font-size:13px; color:var(--accent); font-weight:600; margin-bottom:4px;">Official: ${official}</div>` : ''}
+            <div style="font-size:12px; color:var(--text-muted);">${taxonomy}</div>
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${provider.addresses[0]?.address_1}, ${provider.addresses[0]?.city}, ${provider.addresses[0]?.state} ${provider.addresses[0]?.postal_code?.substring(0, 5)}`)}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: #06b6d4; border: 1px solid #06b6d4; border-radius: 6px; text-decoration: none; width: fit-content; transition: background 0.2s;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            View on Map
-          </a>
+          <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+            <span style="font-size:11px; font-weight:700; color:${statusColor};">${status}</span>
+            <code style="font-size:12px; font-family:monospace; background:rgba(255,255,255,0.06); padding:2px 8px; border-radius:4px;">NPI: ${p.number}</code>
+          </div>
         </div>
+        <div style="font-size:12px; color:var(--text-muted); display:flex; align-items:start; gap:6px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.6; margin-top:1px; flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>${addressLine}</span>
+        </div>
+        ${mapsUrl !== '#' ? `<a href="${mapsUrl}" target="_blank" rel="noopener" class="btn-location" style="margin-top:4px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          View Location
+        </a>` : ''}
       </div>
     `;
-    npiResults.appendChild(div);
-  });
+  }).join('');
 }
+
+// Global hook for Search Button
+window.searchNPI = searchNPI;
+
+// Allow pressing Enter in NPI name field to trigger search
+document.addEventListener('DOMContentLoaded', () => {
+  const npiInput = document.getElementById('npi-name');
+  if (npiInput) {
+    npiInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') searchNPI();
+    });
+  }
+});

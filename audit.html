@@ -8,6 +8,7 @@
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
@@ -221,8 +222,7 @@
     </div>
   </div>
 
-  <script src="blog_handler.js"></script>
-  <script src="app.js"></script>
+  <script src="tabs/medbill/audit.js"></script>
   <script>
     const auditFaqs = [
       { q: 'Is my medical data safe?', a: 'Absolutely. All bill analysis runs entirely in your browser. No text is sent to any server.' },
@@ -231,13 +231,8 @@
       { q: 'Can it read any PDF?', a: 'Optimized for standard bills and EOBs.' }
     ];
     
-    // V2.4: Safe Initialization Guard
-    if (typeof renderFAQ === 'function') {
+    if (window.renderFAQ) {
       renderFAQ('faq-audit', auditFaqs);
-    } else {
-      document.addEventListener('DOMContentLoaded', () => {
-        if (typeof renderFAQ === 'function') renderFAQ('faq-audit', auditFaqs);
-      });
     }
   </script>
 </body>

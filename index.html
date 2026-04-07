@@ -10,12 +10,7 @@
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    // Initialize standard database connection globally for standalone search components
-    const SUPABASE_URL  = 'https://bisqgousuvljttesjkkm.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
-    if(window.supabase) window.dbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  </script>
+  <script src="core.js"></script>
 </head>
 <body>
 
@@ -195,22 +190,18 @@
     </div>
   </footer>
 
-  <script src="blog_handler.js"></script>
   <script src="tabs/codesearch/codesearch.js"></script>
   <script src="tabs/denials/denials.js"></script>
   <script src="tabs/rxscout/rxscout.js"></script>
-  <script src="app.js"></script>
   <script>
     // Render Home FAQs
     const homeFaqs = [
       { q: 'Is MediHelp completely free?', a: 'Yes. Code Lookup, Claim Denials, Rx Savings and the Bill Audit tool are 100% free. We are ad-supported.' },
       { q: 'What medical codes are supported?', a: 'We support ICD-10-CM (US), ICD-10 WHO (UK & Middle East), CARC, and RARC codes — totaling over 74,000 active entries.' },
-      { q: 'How does the global region toggle work?', a: 'Switching the region filter in Code Lookup changes the dataset used for results. UK mode queries WHO ICD-10 and OPCS-4 procedure codes.' },
-      { q: 'Is my patient data stored?', a: 'Never. All bill auditing runs locally in your browser. We do not transmit any personal health information (PHI).' },
-      { q: 'What is CARC vs. RARC?', a: 'CARC (Claim Adjustment Reason Code) explains why a payment differs from the billed amount. RARC (Remittance Advice Remark Code) provides supplemental detail about that adjustment.' },
+      { q: 'How does the global region toggle work?', a: 'Switching the region filter in Code Lookup changes the dataset used for results.' },
+      { q: 'Is my patient data stored?', a: 'Never. All bill auditing runs locally in your browser.' },
     ];
-    renderFAQ('faq-home', homeFaqs);
+    if (window.renderFAQ) renderFAQ('faq-home', homeFaqs);
   </script>
-
 </body>
 </html>

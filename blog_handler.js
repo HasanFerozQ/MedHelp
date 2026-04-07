@@ -1,16 +1,16 @@
 /**
  * MediHelp — blog_handler.js
  * Handles: Blog fetching from GitHub, Error Logging to Supabase,
- * Read Count tracking, and theme + FAQ rendering
+ * and Read Count tracking. (Theme and FAQ handled by core.js)
  */
-
-const SUPABASE_URL  = 'https://bisqgousuvljttesjkkm.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
 
 let _supabase = null;
 function getClient() {
+  if (window.dbClient) return window.dbClient;
   if (!_supabase && window.supabase) {
-    _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const URL  = 'https://bisqgousuvljttesjkkm.supabase.co';
+    const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
+    _supabase = window.supabase.createClient(URL, KEY);
   }
   return _supabase;
 }
@@ -31,47 +31,33 @@ window.MediHelp = {
     } catch (e) { /* silent */ }
   },
 
-  // ── Local Blog Fetcher (Private-Repo Friendly) ───────────────────────────
+  // ── Local Blog Fetcher ───────────────────────────────────────────────────
   fetchBlogs: async function() {
-    console.log('MediHelp Blog: Starting fetchBlogs...');
     try {
       const manifestRes = await fetch(`./blog/manifest.json?_=${Date.now()}`);
-      if (!manifestRes.ok) {
-        console.error('MediHelp Blog: Manifest not found at ./blog/manifest.json');
-        return [];
-      }
+      if (!manifestRes.ok) return [];
       
       const json = await manifestRes.json();
       const filenames = json.posts;
-      console.log('MediHelp Blog: Manifest loaded, found', filenames.length, 'posts.');
 
-      if (!Array.isArray(filenames)) {
-        console.error('MediHelp Blog: Manifest "posts" is not an array.');
-        return [];
-      }
+      if (!Array.isArray(filenames)) return [];
 
       const posts = await Promise.all(filenames.map(async name => {
         try {
           const res = await fetch(`./blog/${name}?_=${Date.now()}`);
-          if (!res.ok) throw new Error(`Fetch ${name} failed with status ${res.status}`);
+          if (!res.ok) throw new Error(`Fetch ${name} failed`);
           const text = await res.text();
-          console.log('MediHelp Blog: Loaded post file:', name);
           return this._parseFrontmatter(text, name);
         } catch (e) {
-          console.error(`MediHelp Blog Error rendering ${name}:`, e.message);
           return null;
         }
       }));
 
-      const finalPosts = posts
+      return posts
         .filter(Boolean)
         .sort((a, b) => new Date(b.date) - new Date(a.date));
-      
-      console.log('MediHelp Blog: Successfully parsed', finalPosts.length, 'posts.');
-      return finalPosts;
 
     } catch (e) {
-      console.error('MediHelp Blog: Global fetch error:', e);
       if (this.logError) this.logError('fetchBlogs failed: ' + e.message);
       return [];
     }
@@ -81,8 +67,6 @@ window.MediHelp = {
   _parseFrontmatter: function(text, filename) {
     const slug = filename.replace('.md', '');
     const fm = {};
-
-    // Clean text and extract YAML front matter block between ---
     const trimmedText = text.trim();
     const fmMatch = trimmedText.match(/^---\s*\n([\s\S]*?)\n---/);
     if (fmMatch) {
@@ -107,12 +91,11 @@ window.MediHelp = {
     };
   },
 
-  // ── Read Count (Supabase blog_stats) ─────────────────────────────────────
+  // ── Read Count ──────────────────────────────────────────────────────────
   incrementReadCount: async function(slug) {
     const db = getClient();
     if (!db) return 0;
     try {
-      // Try to fetch existing count
       const { data } = await db
         .from('blog_stats')
         .select('read_count')
@@ -133,50 +116,10 @@ window.MediHelp = {
   }
 };
 
-// ── Global error catcher ──────────────────────────────────────────────────
+// Global error catcher
 window.addEventListener('error', (e) => {
-  MediHelp.logError(`${e.message} at ${e.filename}:${e.lineno}`);
+  if (window.MediHelp) MediHelp.logError(`${e.message} at ${e.filename}:${e.lineno}`);
 });
 window.addEventListener('unhandledrejection', (e) => {
-  MediHelp.logError('Unhandled Promise: ' + (e.reason?.message || e.reason));
+  if (window.MediHelp) MediHelp.logError('Unhandled Promise: ' + (e.reason?.message || e.reason));
 });
-
-// ── Dark / Light Theme ────────────────────────────────────────────────────
-(function initTheme() {
-  const saved = localStorage.getItem('mh-theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('theme-toggle');
-    if (!btn) return;
-    btn.textContent = saved === 'dark' ? '☀️' : '🌙';
-    btn.addEventListener('click', () => {
-      const cur = document.documentElement.getAttribute('data-theme');
-      const next = cur === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('mh-theme', next);
-      btn.textContent = next === 'dark' ? '☀️' : '🌙';
-    });
-  });
-})();
-
-// ── FAQ Renderer ──────────────────────────────────────────────────────────
-function renderFAQ(containerId, items) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const el = document.getElementById(containerId);
-    if (!el) return;
-    el.innerHTML = items.map((item, i) => `
-      <div class="faq-item" id="faq-item-${containerId}-${i}">
-        <button class="faq-q" onclick="toggleFAQ('faq-item-${containerId}-${i}')">
-          ${item.q}
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <div class="faq-a">${item.a}</div>
-      </div>`).join('');
-  });
-}
-
-function toggleFAQ(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle('open');
-}

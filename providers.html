@@ -7,6 +7,8 @@
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
 </head>
 <body>
 
@@ -129,17 +131,13 @@
     </div>
   </footer>
 
-  <script src="blog_handler.js"></script>
-  <script src="app.js"></script>
+  <script src="tabs/providers/providers.js"></script>
   <script>
     const providerFaqs = [
-      { q: 'What is an NPI number?', a: 'A National Provider Identifier (NPI) is a unique 10-digit identification number issued by CMS to all healthcare providers in the United States. It is used in all HIPAA-covered transactions.' },
-      { q: 'Is this data official?', a: 'Yes. All provider data comes directly from the CMS NPPES (National Plan & Provider Enumeration System) public registry, updated regularly.' },
-      { q: 'Can I search by specialty?', a: 'Currently you can search by name and state. Specialty filtering is coming soon. You can type a specialty keyword (e.g. "cardiologist") in the name field as a workaround.' },
-      { q: 'Why is a provider missing?', a: 'Providers must apply for an NPI and be enrolled in the NPPES system. If a provider is omitted, they may not yet have enrolled or may have a deactivated NPI.' },
+      { q: 'What is an NPI number?', a: 'A National Provider Identifier (NPI) is a unique 10-digit identification number issued by CMS.' },
+      { q: 'Is this data official?', a: 'Yes. All provider data comes directly from the CMS NPPES public registry.' }
     ];
-    renderFAQ('faq-providers', providerFaqs);
+    if (window.renderFAQ) renderFAQ('faq-providers', providerFaqs);
   </script>
-
 </body>
 </html>
