@@ -1,52 +1,54 @@
-// CPT code regex (5-digits optionally followed by a dashed 2-char modifier)
-const CPT_REGEX = /\b(\d{5})(?:-([A-Z0-9]{2}))?\b/g;
-// Regex to catch dollar amounts optionally nearby
-const DOLLAR_REGEX = /\$\s*(\d+(?:\.\d{2})?)/g;
-
 let cptData = null;
 
 async function loadCPTData() {
   try {
-    const response = await fetch('../../data/cpt_medicare_prices.json');
-    cptData = await response.json();
-  } catch (error) {
-    console.error("Failed to load CPT prices:", error);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+
+    const res = await fetch('../../data/cpt_medicare_prices.json', { signal: controller.signal });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    cptData = await res.json();
+    console.log("CPT Benchmarks loaded locally.");
+  } catch (err) {
+    console.warn("Failed to load local CPT data:", err.message);
   }
 }
+
 
 function extractCodesWithCharges(text) {
   const lines = text.split('\n');
   const results = [];
   
+  // Scoped regex to avoid global flag issues and lastIndex pollution
+  const cptRegex = /\b(\d{5})(?:-([A-Z0-9]{2}))?\b/g;
+  const dollarRegex = /\$\s*(\d+(?:\.\d{2})?)/g;
+
   lines.forEach(line => {
-    // Reset regex index
-    CPT_REGEX.lastIndex = 0;
-    DOLLAR_REGEX.lastIndex = 0;
-    
-    let match;
-    while ((match = CPT_REGEX.exec(line)) !== null) {
-      const code = match[1];
-      const modifier = match[2] || null;
-      // Push the discovered code without a charge initially
-      results.push({ code, modifier, charge: null, rawLine: line.trim() });
-    }
-    
-    // Look for a dollar amount on this line
-    const dMatch = DOLLAR_REGEX.exec(line);
-    if (dMatch) {
-      const charge = parseFloat(dMatch[1]);
-      // Assign the dollar amount to the latest CPT code that doesn't have a charge yet
-      for (let i = results.length - 1; i >= 0; i--) {
-        if (results[i].charge === null) {
-          results[i].charge = charge;
-          break;
-        }
+    // 1. Find all CPT codes on this line
+    const cptsOnLine = [...line.matchAll(cptRegex)].map(m => ({
+      code: m[1],
+      modifier: m[2] || null,
+      charge: null,
+      rawLine: line.trim()
+    }));
+
+    // 2. Find all dollar amounts on this line
+    const dollarsOnLine = [...line.matchAll(dollarRegex)].map(m => parseFloat(m[1]));
+
+    // 3. Map amounts to codes (1-to-1 if possible, otherwise first-available)
+    cptsOnLine.forEach((item, idx) => {
+      if (dollarsOnLine[idx] !== undefined) {
+        item.charge = dollarsOnLine[idx];
       }
-    }
+      results.push(item);
+    });
   });
   
   return results;
 }
+
 
 function flagOvercharge(charged, medicare) {
   if (!charged || !medicare) return { flag: 'UNKNOWN', color: '#64748b' };

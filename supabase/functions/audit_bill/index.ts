@@ -44,6 +44,22 @@ function getText(block: any, blockMap: any) {
   return text.trim();
 }
 
+function filterNormalItems(items: any[]) {
+  const testKeywords = ["TEST", "FAKE", "ANOMALY", "SAMPLE", "VOID", "DRAFT"];
+  return items.filter(item => {
+    const desc = (item.Description || "").toUpperCase();
+    const cpt = (item.CPT || "").toUpperCase();
+    
+    const isTest = testKeywords.some(key => desc.includes(key) || cpt.includes(key));
+    if (isTest) return false;
+
+    // Filter out obviously non-medical lines (e.g., "PAGE 1")
+    if (cpt === "" && item.Billed_Amount === 0) return false;
+    
+    return true;
+  });
+}
+
 function normalizeTextractOutput(blocks: any[]) {
   const blockMap: any = {};
   blocks.forEach(b => blockMap[b.Id] = b);
@@ -116,6 +132,7 @@ function normalizeTextractOutput(blocks: any[]) {
         else if (text.includes("price") || text.includes("rate") || text.includes("fee")) headers.unit_price = c;
         else if (text.includes("mod")) headers.modifier = c;
         else if (text.includes("charge") || text.includes("amount") || text.includes("billed") || text.includes("total")) headers.billed_amount = c;
+        else if (text.includes("desc") || text.includes("service")) headers.description = c;
       }
 
       if (headers.cpt || headers.billed_amount) {
@@ -134,6 +151,7 @@ function normalizeTextractOutput(blocks: any[]) {
             normalizedItems.push({
               Date: headers.date ? (rowData[headers.date] || "").trim() : "",
               CPT: cptVal.trim(),
+              Description: headers.description ? (rowData[headers.description] || "").trim() : "",
               Qty: parseFloat(finalQty) || 1,
               Unit_Price: finalUnitPriceStr && finalUnitPriceStr !== "" ? parseFloat(finalUnitPriceStr) : null,
               Modifier: headers.modifier ? (rowData[headers.modifier] || "").trim() : "",
@@ -148,9 +166,11 @@ function normalizeTextractOutput(blocks: any[]) {
   return { items: normalizedItems, grandTotal };
 }
 
+
 function runArithmeticEngine(items: any[], grandTotal: number | null) {
   let findings: any[] = [];
   let calculatedSum = 0;
+  let arithmeticSavings = 0;
   let seenCodes = new Set<string>();
   
   const distinctModifiers = ["59", "76", "91", "RT", "LT", "XE", "XS", "XP", "XU"];
@@ -162,13 +182,17 @@ function runArithmeticEngine(items: any[], grandTotal: number | null) {
       const expectedTotal = item.Qty * item.Unit_Price;
       const difference = Math.abs(expectedTotal - item.Billed_Amount);
       
-      if (difference > 0.001) {
+      if (difference > 0.01) { // 1 cent buffer
         findings.push({
           type: "Warning",
           code: item.CPT,
           title: "Math Mismatch",
           reason: `Line item Math Error. Expected $${expectedTotal.toFixed(2)} (${item.Qty} x $${item.Unit_Price.toFixed(2)}) but billed $${item.Billed_Amount.toFixed(2)}.`
         });
+        // If they overbilled based on their own unit price, that's savings
+        if (item.Billed_Amount > expectedTotal) {
+           arithmeticSavings += (item.Billed_Amount - expectedTotal);
+        }
       }
     }
 
@@ -189,6 +213,7 @@ function runArithmeticEngine(items: any[], grandTotal: number | null) {
             title: "Potential Duplicate",
             reason: `Duplicate charge for code ${item.CPT} on same date. No distinct unbundling modifier detected.`
           });
+          arithmeticSavings += item.Billed_Amount; // 100% savings for duplicate
         }
       } else {
         seenCodes.add(codeKey);
@@ -198,7 +223,7 @@ function runArithmeticEngine(items: any[], grandTotal: number | null) {
 
   if (grandTotal !== null) {
       const difference = Math.abs(calculatedSum - grandTotal);
-      if (difference > 0.001) {
+      if (difference > 0.01) {
          findings.push({
             type: "Warning",
             code: "DOCUMENT",
@@ -208,7 +233,7 @@ function runArithmeticEngine(items: any[], grandTotal: number | null) {
       }
   }
 
-  return { findings, calculatedSum, grandTotal };
+  return { findings, calculatedSum, grandTotal, arithmeticSavings };
 }
 
 // CLINICAL ENGINE: Uses Supabase database for Pricing & NCCI unbundling checks
@@ -236,26 +261,38 @@ async function runClinicalEngine(items: any[]) {
   items.forEach(item => {
     const code = (item.CPT || "").trim().toUpperCase();
     const feeData = feeMap[code];
+    
     if (feeData) {
       const benchmark = feeData.price;
       const totalBenchmarkValue = benchmark * item.Qty;
       totalBenchmark += totalBenchmarkValue;
       
-      // RULE: Flag if charge is > 200% of Medicare
-      if (item.Billed_Amount > (totalBenchmarkValue * 2.0)) {
+      // RULE: Flag if charge is > 150% of Medicare
+      if (item.Billed_Amount > (totalBenchmarkValue * 1.5)) {
         const typeLabel = feeData.type === 'DRUG' ? 'Drug Pricing Variance' : 'High Pricing Variance';
         const unitDetail = feeData.type === 'DRUG' ? `per unit (${feeData.desc})` : '';
         
+        // Handle potential Infinity or Zero
+        const variancePct = totalBenchmarkValue > 0 ? ((item.Billed_Amount / totalBenchmarkValue) * 100).toFixed(0) : "∞";
+
         clinicalFindings.push({
           type: "Warning",
           code: code,
           title: typeLabel,
-          reason: `Medicare benchmark is ~$${benchmark.toFixed(2)} ${unitDetail}, total fair market ~$${totalBenchmarkValue.toFixed(2)}. But you billed $${item.Billed_Amount.toFixed(2)} (${((item.Billed_Amount / totalBenchmarkValue) * 100).toFixed(0)}% of Medicare).`
+          reason: `Medicare benchmark is ~$${benchmark.toFixed(2)} ${unitDetail}, total fair market ~$${totalBenchmarkValue.toFixed(2)}. But you billed $${item.Billed_Amount.toFixed(2)} (${variancePct}% of Medicare).`
         });
         
-        // Accumulate potential savings vs 150% benchmark
-        savingsOpportunity += (item.Billed_Amount - (totalBenchmarkValue * 1.5));
+        // Accumulate potential savings vs 140% benchmark (standard buffer)
+        savingsOpportunity += (item.Billed_Amount - (totalBenchmarkValue * 1.4));
       }
+    } else if (code !== "" && /^[0-9A-Z]{5}$/.test(code)) {
+      // Flag missing benchmarks so user knows why it wasn't audited for price
+      clinicalFindings.push({
+        type: "Info",
+        code: code,
+        title: "Benchmark Unavailable",
+        reason: `Code ${code} not found in our 2024 Medicare dataset. Pricing audit skipped for this line.`
+      });
     }
   });
 
@@ -301,6 +338,8 @@ async function runClinicalEngine(items: any[]) {
                   title: "Missing Modifier",
                   reason: `Code ${edit.column2_code} overlaps with ${edit.column1_code}. It requires a distinct modifier (e.g. -59) to be allowed.`
                });
+               // Potential savings if they remove the component
+               savingsOpportunity += (componentItem.Billed_Amount * 0.5); // Estimate 50% risk for missing modifier
             }
           }
       });
@@ -349,20 +388,21 @@ Deno.serve(async (req) => {
     let grandTotal = null;
     try {
         const result = normalizeTextractOutput(data.Blocks || []);
-        normalizedItems = result.items;
+        // Step 2.5: De-noising (V2.5)
+        normalizedItems = filterNormalItems(result.items);
         grandTotal = result.grandTotal;
     } catch (err: any) {
         throw new Error(`Normalization Layer Error: Failed to parse bill. ${err.message}`);
     }
 
-    let engineResults = { findings: [] };
+    let engineResults: any = { findings: [], arithmeticSavings: 0 };
     try {
         engineResults = runArithmeticEngine(normalizedItems, grandTotal);
     } catch (err: any) {
          throw new Error(`Arithmetic Engine Error: Mathematical validation loop crashed. ${err.message}`);
     }
 
-    // Step 4: Clinical Engine (New for Step 5)
+    // Step 4: Clinical Engine
     let clinicalResults = { clinicalFindings: [], savingsOpportunity: 0, totalBenchmark: 0 };
     try {
         clinicalResults = await runClinicalEngine(normalizedItems);
@@ -371,11 +411,15 @@ Deno.serve(async (req) => {
     }
 
     const allFindings = [...engineResults.findings, ...clinicalResults.clinicalFindings];
+    const totalSavings = (engineResults.arithmeticSavings || 0) + (clinicalResults.savingsOpportunity || 0);
     const numAnomalies = allFindings.length;
     
-    let summaryText = `Found ${normalizedItems.length} billing items. Clinical datasets detect $${clinicalResults.savingsOpportunity.toFixed(2)} in potential savings.`;
-    if (numAnomalies > 5) {
-        summaryText = `High Risk: ${numAnomalies} critical billing anomalies isolated. Potential savings estimated at $${clinicalResults.savingsOpportunity.toFixed(2)}.`;
+    let summaryText = `Found ${normalizedItems.length} billing items. Audit logic identifies $${totalSavings.toFixed(2)} in total potential savings.`;
+    
+    // Severity-based summary
+    const criticalCount = allFindings.filter((f: any) => f.type === "Danger").length;
+    if (criticalCount > 0) {
+        summaryText = `High Risk: ${criticalCount} critical billing errors detected. Total potential savings: $${totalSavings.toFixed(2)}.`;
     }
 
     return new Response(
@@ -385,7 +429,7 @@ Deno.serve(async (req) => {
         result: {
             summary: summaryText,
             findings: allFindings,
-            potential_savings: clinicalResults.savingsOpportunity,
+            potential_savings: totalSavings,
             medicare_benchmark_total: clinicalResults.totalBenchmark
         }
       }),

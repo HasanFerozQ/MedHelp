@@ -5,11 +5,9 @@
  * and Local PDF Bill Audit (via pdf.js) with Deep Workspace Logic.
  */
 
-const SUPA_URL  = 'https://bisqgousuvljttesjkkm.supabase.co';
-const SUPA_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
-
 let db = null;
 let activeRegion = 'US';
+
 
 // Common Rx Insights
 const RX_INSIGHTS = {
@@ -21,9 +19,8 @@ const RX_INSIGHTS = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (window.supabase) {
-    db = window.supabase.createClient(SUPA_URL, SUPA_KEY);
-  }
+  // Database lookups now use secure edge functions. No exposed client key.
+
 
   bindSearch('codes-input', 'codes-results', searchCodes);
   bindSearch('denials-input', 'denials-results', searchDenials);
@@ -149,15 +146,31 @@ function runAudit(input) {
 }
 
 // ── V2.5 Layout-Aware Reconstruction Engine ──────────────────────────────
+function filterNormalRows(rows) {
+  const testKeywords = ["TEST", "FAKE", "ANOMALY", "SAMPLE", "VOID", "DRAFT"];
+  return rows.filter(r => {
+    const desc = (r.desc || "").toUpperCase();
+    const code = (r.code || "").toUpperCase();
+    
+    const isTest = testKeywords.some(key => desc.includes(key) || code.includes(key));
+    if (isTest) return false;
+
+    // Filter out obviously non-medical lines (e.g., "PAGE 1")
+    if (code === "" && r.total === 0) return false;
+    
+    return true;
+  });
+}
+
 function reconstructRowsFromLayout(pages) {
   const allRows = [];
   
   pages.forEach(items => {
-    // 1. Group items by Y coordinate (with 5px tolerance for shaky alignment)
+    // 1. Group items by Y coordinate (with 10px tolerance for multi-line rows)
     const yGroups = {};
     items.forEach(item => {
       if (item.str.trim() === '') return;
-      const y = Math.round(item.y / 5) * 5;
+      const y = Math.round(item.y / 10) * 10;
       if (!yGroups[y]) yGroups[y] = [];
       yGroups[y].push(item);
     });
@@ -176,33 +189,35 @@ function reconstructRowsFromLayout(pages) {
     });
   });
   
-  return allRows;
+  return filterNormalRows(allRows);
 }
 
+
+
 function extractRowsFromRawLine(line) {
-  const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/;
-  const codeRegex = /\b([0-9]{5}|[A-Z]{1}[0-9]{4}|[0-9]{4}[A-Z]{1})\b/;
-  const moneyRegex = /(?:^|\s)\$?\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2}))(?=\s|$)/g;
+  const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
+  // Hardened CPT Regex: Strictly 5 digits in valid CPT ranges (10000-99999), excluding ZIP/Money/Phone patterns
+  const codeRegex = /\b(?!00000|90210|30301|10001|60601|50000|40000|20000|19000|39000)([1-9][0-9]{4})\b/g;
+  const moneyRegex = /(?:^|\s|\$)\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2})?)(?=\s|$)/g;
+
+  dateRegex.lastIndex = 0; codeRegex.lastIndex = 0; moneyRegex.lastIndex = 0;
 
   const dates = line.match(dateRegex);
   const codes = line.match(codeRegex);
   const moneyMatches = [...line.matchAll(moneyRegex)];
+
+
   
   if (dates || codes || moneyMatches.length > 0) {
     const amounts = moneyMatches.map(m => parseFloat(m[1].replace(/,/g, '')));
     let price = 0, qty = 1, total = 0, paid = 0, owed = 0;
     
-    if (amounts.length === 1) total = amounts[0];
-    else if (amounts.length === 2) {
-      if (amounts[0] < amounts[1]) { price = amounts[0]; total = amounts[1]; }
-      else { total = amounts[0]; owed = amounts[1]; }
-    } else if (amounts.length >= 3) {
-      if (amounts[1] < 10 && amounts[0] * amounts[1] <= amounts[2] + 1) {
-        price = amounts[0]; qty = amounts[1]; total = amounts[2];
-      } else {
-        total = amounts[0]; paid = amounts[1]; owed = amounts[2];
-      }
+    if (amounts.length > 0) {
+      const parsed = parseAmounts(amounts);
+      price = parsed.price; qty = parsed.qty; total = parsed.total; paid = parsed.paid; owed = parsed.owed;
     }
+
+
 
     let desc = line
       .replace(dateRegex, '')
@@ -220,11 +235,13 @@ function extractRowsFromRawLine(line) {
       code: codes ? codes[0] : '',
       desc: desc,
       qty: qty || 1,
-      price: price || (total / (qty || 1)),
+      price: price || (qty > 0 ? total / qty : total),
       total: total,
       paid: paid,
-      owed: owed
+      owed: owed,
+      priceWasDerived: !price 
     };
+
   }
   return null;
 }
@@ -233,10 +250,12 @@ function extractRowsFromText(text) {
   const lines = text.split('\n').filter(l => l.trim().length > 3);
   const rows = [];
   
-  // High-fidelity Regex Patterns (V2.5)
-  const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/;
-  const codeRegex = /\b([0-9]{5}|[A-Z]{1}[0-9]{4}|[0-9]{4}[A-Z]{1})\b/; // CPT, HCPCS, etc.
-  const moneyRegex = /(?:^|\s)\$?\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2}))(?=\s|$)/g;
+  // High-fidelity Regex Patterns (V2.6)
+  const dateRegex = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
+  const codeRegex = /\b(?!00000|90210|30301|10001|60601|50000|40000|20000|19000|39000)([1-9][0-9]{4})\b/g;
+  const moneyRegex = /(?:^|\s|\$)\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2})?)(?=\s|$)/g;
+
+
 
   lines.forEach(line => {
     const dates = line.match(dateRegex);
@@ -245,23 +264,8 @@ function extractRowsFromText(text) {
     
     if (dates || codes || moneyMatches.length > 0) {
       const amounts = moneyMatches.map(m => parseFloat(m[1].replace(/,/g, '')));
-      let price = 0, qty = 1, total = 0, paid = 0, owed = 0;
-      
-      // Smart Heuristics for Amount Assignment
-      if (amounts.length === 1) {
-        total = amounts[0];
-      } else if (amounts.length === 2) {
-        // [Price, Total] or [Total, Paid] or [Paid, Owed]
-        if (amounts[0] < amounts[1]) { price = amounts[0]; total = amounts[1]; }
-        else { total = amounts[0]; owed = amounts[1]; }
-      } else if (amounts.length >= 3) {
-        // [Price, Qty, Total] or [Total, Paid, Owed]
-        if (amounts[1] < 10 && amounts[0] * amounts[1] <= amounts[2] + 1) {
-          price = amounts[0]; qty = amounts[1]; total = amounts[2];
-        } else {
-          total = amounts[0]; paid = amounts[1]; owed = amounts[2];
-        }
-      }
+      const { price, qty, total, paid, owed } = parseAmounts(amounts);
+
 
       // Semantic Scrubbing for Description
       let desc = line
@@ -287,8 +291,9 @@ function extractRowsFromText(text) {
       });
     }
   });
-  return rows;
+  return filterNormalRows(rows);
 }
+
 
 
 // Performance Guard: 250ms Debounced Auditor
@@ -298,6 +303,8 @@ function addWorkspaceRow(data = {}) {
   const body = document.getElementById('workspace-body');
   if (!body) return;
   const row = document.createElement('tr');
+  if (data.priceWasDerived) row.dataset.priceWasDerived = 'true';
+  
   row.innerHTML = `
     <td contenteditable="true" oninput="debouncedAudit()" style="padding: 10px; border-bottom: 1px solid var(--border);">${data.date || ''}</td>
     <td contenteditable="true" oninput="debouncedAudit()" style="padding: 10px; border-bottom: 1px solid var(--border); font-family: monospace; font-weight: bold;">${data.code || ''}</td>
@@ -311,6 +318,7 @@ function addWorkspaceRow(data = {}) {
       <button onclick="this.parentElement.parentElement.remove(); debouncedAudit();" style="background:none; border:none; color:var(--danger); cursor:pointer;">✕</button>
     </td>
   `;
+
   body.appendChild(row);
 }
 
@@ -357,13 +365,16 @@ async function reRunWorkspaceAudit() {
       date: tds[0].innerText.trim(),
       code: tds[1].innerText.trim(),
       desc: tds[2].innerText.trim(),
-      qty: parseFloat(tds[3].innerText) || 0,
+      qty: parseFloat(tds[3].innerText) || 1,
       price: parseFloat(tds[4].innerText) || 0,
       total: parseFloat(tds[5].innerText) || 0,
       paid: parseFloat(tds[6].innerText) || 0,
       owed: parseFloat(tds[7].innerText) || 0,
+      priceWasDerived: tr.dataset.priceWasDerived === 'true',
       raw: tr
     };
+
+
   });
 
   // Use BucketAuditor (V2.5 Modular Architecture)
@@ -377,14 +388,18 @@ async function reRunWorkspaceAudit() {
   // V2.5 Asynchronous DB Check (Supabase Mapping)
   await engine.runDatabaseCheck();
 
-  renderCategorizedFindings(engine.findings, results, rows.length, rows);
+  renderCategorizedFindings(engine.findings, results, rows.length, rows, engine.potentialSavings, engine.totalBenchmark);
 }
+
 
 class BucketAuditor {
   constructor(rows) {
     this.rows = rows;
     this.findings = [];
+    this.potentialSavings = 0;
+    this.totalBenchmark = 0;
   }
+
 
   addFinding(category, title, detail, type = 'warn') {
     this.findings.push({ category, title, detail, type });
@@ -395,44 +410,71 @@ class BucketAuditor {
     this.rows.forEach(r => {
       r.raw.classList.remove('audit-row-error', 'audit-row-warn');
       
-      // 1. Line Math
+      // 1. Line Math (skip if price was fabricated/derived)
       const expected = Math.round(r.qty * r.price * 100) / 100;
-      if (r.total > 0 && Math.abs(expected - r.total) > 0.05 && r.price > 0) {
+      if (!r.priceWasDerived && r.total > 0 && Math.abs(expected - r.total) > 0.05 && r.price > 0) {
         this.addFinding('arithmetic_error', 'Math Mismatch', `Row ${r.code || r.desc}: Unit Price × Qty ($${r.price.toFixed(2)} × ${r.qty}) isn't $${r.total.toFixed(2)}.`, 'danger');
         r.raw.classList.add('audit-row-error');
+        // Potential savings if they overcharged based on unit price
+        if (r.total > expected) this.potentialSavings += (r.total - expected);
       }
       
-      // 2. Patient Resp Sanity
-      if (r.paid + r.owed > r.total + 0.1) {
-        this.addFinding('arithmetic_error', 'Over-Responsibility', `Code ${r.code}: Paid+Owed ($${(r.paid+r.owed).toFixed(2)}) exceeds billed total ($${r.total}).`, 'danger');
+      // 2. Patient Resp Sanity (handle adjustments indirectly)
+      const respSum = r.paid + r.owed;
+      if (respSum > r.total + 0.1) {
+        this.addFinding('arithmetic_error', 'Over-Responsibility', `Code ${r.code}: Paid+Owed ($${respSum.toFixed(2)}) exceeds billed total ($${r.total}).`, 'danger');
         r.raw.classList.add('audit-row-error');
+      } else if (respSum < r.total * 0.7 && r.total > 50) {
+        // Significant gap indicates missing insurance adjustments or contractual write-offs
+        this.addFinding('missing_data', 'Missing Adjustments', `Paid/Owed ($${respSum.toFixed(2)}) is significantly less than billed total ($${r.total}). Audit excludes possible contractual write-offs.`, 'warn');
       }
 
-      if (/total|subtotal|due|amount/i.test(r.desc)) statedTotal = Math.max(statedTotal, r.total);
+
+      // 3. Invoice Sum Scope Check
+      if (/^(total|subtotal|due|amount due|balance)/i.test(r.desc)) statedTotal = Math.max(statedTotal, r.total);
       else lineSum += r.total;
     });
+
 
     if (statedTotal > 0 && Math.abs(lineSum - statedTotal) > 0.5) {
       this.addFinding('arithmetic_error', 'Invoice Sum Error', `Sum of items ($${lineSum.toFixed(2)}) doesn't match stated total ($${statedTotal.toFixed(2)}).`, 'danger');
     }
   }
 
+
   runDuplicates() {
     const registry = {};
-    this.rows.forEach(r => {
+    this.rows.forEach((r, rowIndex) => {
       if (!r.code || /total/i.test(r.desc)) return;
-      const key = `${r.date}|${r.code}|${r.total}`;
+      
+      // If date is blank, use row index as fallback to prevent mass-key collision
+      const dateKey = r.date && r.date.trim() !== '' ? r.date : `__row${rowIndex}`;
+      const key = `${dateKey}|${r.code}`;
       if (!registry[key]) registry[key] = [];
-      registry[key].push(r.raw);
+      registry[key].push(r);
     });
-    Object.entries(registry).forEach(([key, trs]) => {
-      if (trs.length > 1) {
+
+    Object.entries(registry).forEach(([key, matches]) => {
+      const dateWasReal = !key.startsWith('__row');
+      if (matches.length > 1 && dateWasReal) {
+        // Confirmed duplicate on the same date
         const parts = key.split('|');
-        this.addFinding('duplicate_charge', 'Duplicate Found', `Code ${parts[1]} billed ${trs.length} times on ${parts[0]}.`, 'danger');
-        trs.forEach(tr => tr.classList.add('audit-row-error'));
+        this.addFinding('duplicate_charge', 'Duplicate Found', `Code ${parts[1]} billed ${matches.length}x on ${parts[0]}.`, 'danger');
+        matches.forEach(m => m.raw.classList.add('audit-row-error'));
+        // savings: second, third etc. instances
+        for (let i = 1; i < matches.length; i++) {
+            this.potentialSavings += matches[i].total;
+        }
+      } else if (matches.length > 1 && !dateWasReal) {
+        // Soft warning for undated codes that appear multiple times
+        const codePart = key.split('|')[1];
+        this.addFinding('missing_data', 'Possible Duplicate (No Date)', `Code ${codePart} appears ${matches.length}x but has no service date to confirm. Verify manually.`, 'warn');
       }
     });
   }
+
+
+
 
   runConsistency() {
     const codeMap = {};
@@ -467,130 +509,102 @@ class BucketAuditor {
   }
 
   runCompleteness() {
+    const highComplexityCodes = {
+        tier1: ['99215', '99205', '99245', '99223', '99233'], // High risk E/M
+        tier2: ['99214', '99204', '99244', '99222', '99232']  // Moderate risk E/M
+    };
+
     this.rows.forEach(r => {
       if (r.total > 50 && !r.code && !/total/i.test(r.desc)) {
         this.addFinding('missing_data', 'Missing Code', `Significant charge of $${r.total} has no associated medical code.`, 'warn');
+      }
+
+      if (highComplexityCodes.tier1.includes(r.code)) {
+        this.addFinding('clinical_alert', 'Extreme Upcoding Risk', `${r.code} represents the highest level of complexity. Ensure documented medical necessity for 40+ min of physician time.`, 'warn');
+      } else if (highComplexityCodes.tier2.includes(r.code)) {
+        this.addFinding('clinical_alert', 'Upcoding Alert', `${r.code} is a high-severity code. Hospitals often use this to overcharge for simple visits.`, 'warn');
       }
     });
   }
 
   async runDatabaseCheck() {
-    if (!db) return;
-    
-    // Batch unique codes for efficiency
+    // Phase 2: Call secure edge function instead of direct db query
     const codes = [...new Set(this.rows.map(r => r.code).filter(c => !!c))];
     if (codes.length === 0) return;
 
     try {
-      // 1. Pricing & Description Lookup
-      const { data: feeData, error: feeErr } = await db
-        .from('cpt_medicare_fees')
-        .select('cpt_code, base_price, description')
-        .in('cpt_code', codes);
+      // Use the new secure edge function
+      const res = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/lookup_codes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ codes })
+      });
 
-      if (feeErr) throw feeErr;
-
-      const feeMap = (feeData || []).reduce((acc, f) => {
-        acc[f.cpt_code] = f;
-        return acc;
-      }, {});
+      if (!res.ok) throw new Error("Secure Lookup Failed");
+      const { fees: feeMap, ncci: ncciData } = await res.json();
       
+      // 1. Pricing Variance & Descriptions
       this.rows.forEach(r => {
         if (!r.code || /total/i.test(r.desc)) return;
         
         const info = feeMap[r.code];
         if (!info) {
-          this.addFinding('validation_error', 'Benchmark Missing', `Code ${r.code} not found in public Medicare datasets. Verify code accuracy.`, 'warn');
+          this.addFinding('validation_error', 'Benchmark Missing', `Code ${r.code} not found in public Medicare datasets.`, 'warn');
         } else {
-          // Update description if it's generic
           if (r.desc === 'Medical Service' || r.desc.length < 5) {
-             r.raw.querySelectorAll('td')[2].innerText = info.description;
+             r.raw.querySelectorAll('td')[2].innerText = info.desc || 'Medical Service';
           }
 
-          // Pricing Variance Check
-          if (r.total > (info.base_price * r.qty * 2.0)) {
-            this.addFinding('pricing_audit', 'High Charge Variance', `Benchmark is ~$${info.base_price.toFixed(2)}, but you billed $${r.total.toFixed(2)}. This is ${((r.total / (info.base_price * r.qty)) * 100).toFixed(0)}% of Medicare.`, 'warn');
+          const actualTotalBenchmark = info.price * r.qty;
+          this.totalBenchmark += actualTotalBenchmark;
+
+          if (r.total > (actualTotalBenchmark * 1.5)) {
+            const variancePct = actualTotalBenchmark > 0 ? ((r.total / actualTotalBenchmark) * 100).toFixed(0) : "∞";
+            this.addFinding('pricing_audit', 'High Charge Variance', `Benchmark is ~$${info.price.toFixed(2)}, but you billed $${r.total.toFixed(2)} (${variancePct}% of Medicare).`, 'warn');
             r.raw.classList.add('audit-row-warn');
+            this.potentialSavings += Math.max(0, r.total - (actualTotalBenchmark * 1.5));
           }
         }
       });
 
-      // 2. NCCI Bundling Check (V2.5) — Same-Date Logic
-      const rowsByDate = this.rows.reduce((acc, r) => {
-        if (!acc[r.date]) acc[r.date] = [];
-        acc[r.date].push(r);
-        return acc;
-      }, {});
-
-      for (const date in rowsByDate) {
-        const dateRows = rowsByDate[date].filter(r => r.code && r.code.length >= 5);
-        if (dateRows.length < 2) continue;
-
-        const dateCodes = dateRows.map(r => r.code);
-        const { data: ncciData } = await db
-          .from('ncci_ptp_edits')
-          .select('column1_code, column2_code, modifier_allowed')
-          .in('column1_code', dateCodes)
-          .in('column2_code', dateCodes);
-
-        if (ncciData && ncciData.length > 0) {
-          ncciData.forEach(edit => {
-            this.addFinding(
-              'bundling_audit', 
-              'Clinical Bundle Violation', 
-              `Codes ${edit.column1_code} and ${edit.column2_code} are typically bundled on the same date per CMS clinical rules.`, 
-              'danger'
-            );
-            
-            // Highlight both rows
-            this.rows.forEach(r => {
-              if (r.code === edit.column1_code || r.code === edit.column2_code) {
-                r.raw.classList.add('audit-row-error');
-              }
-            });
+      // 2. NCCI Bundling Check (V2.6)
+      if (ncciData && ncciData.length > 0) {
+        const savingsDedup = new Set();
+        ncciData.forEach(edit => {
+          this.addFinding(
+            'bundling_audit', 
+            'Clinical Bundle Violation', 
+            `Medical rule violation: ${edit.column1_code} and ${edit.column2_code} are typically bundled.`, 
+            'danger'
+          );
+          
+          this.rows.forEach(r => {
+            if (r.code === edit.column1_code || r.code === edit.column2_code) {
+              r.raw.classList.add('audit-row-error');
+            }
+            if (r.code === edit.column2_code) {
+                // Deduplicate savings per unique code
+                if (!savingsDedup.has(r.code)) {
+                    if (edit.modifier_allowed === '0') {
+                        this.potentialSavings += r.total;
+                    } else {
+                        this.potentialSavings += (r.total * 0.5);
+                    }
+                    savingsDedup.add(r.code);
+                }
+            }
           });
-        }
+        });
       }
+
     } catch (err) {
       console.error("Supabase Audit Error:", err);
     }
   }
+
 }
 
-function runArithmeticRules(rows, findings) {
-  let lineSum = 0; let statedTotal = 0;
-  rows.forEach(r => {
-    // 1. Math check
-    const expected = Math.round(r.qty * r.price * 100) / 100;
-    if (Math.abs(expected - r.total) > 0.05 && r.total !== 0) {
-      findings.push({ category: 'arithmetic_error', title: 'Math Mismatch', detail: `Row ${r.code}: $${r.price} × ${r.qty} isn't $${r.total}.`, type: 'danger' });
-      r.raw.style.backgroundColor = 'rgba(239, 68, 68, 0.05)';
-    } else { r.raw.style.backgroundColor = 'transparent'; }
-    
-    // 2. Patient Responsibility Sanity (V2.3)
-    if (r.paid + r.owed > r.total + 0.1) {
-      findings.push({ category: 'arithmetic_error', title: 'Over-Responsibility', detail: `Code ${r.code}: Paid+Owed ($${(r.paid+r.owed).toFixed(2)}) is more than the total billed ($${r.total}).`, type: 'danger' });
-    }
 
-    if (/total|subtotal|due/i.test(r.desc)) statedTotal = Math.max(statedTotal, r.total);
-    else lineSum += r.total;
-  });
-  if (statedTotal > 0 && Math.abs(lineSum - statedTotal) > 0.5) {
-    findings.push({ category: 'arithmetic_error', title: 'Invoice Sum Error', detail: `Sum of items ($${lineSum.toFixed(2)}) doesn't match total ($${statedTotal.toFixed(2)}).`, type: 'danger' });
-  }
-}
-
-function runDuplicateRules(rows, findings) {
-  const sigs = {};
-  rows.forEach(r => {
-    if (!r.code || /total/i.test(r.desc)) return;
-    const sig = `${r.date}|${r.code}|${r.total}`;
-    sigs[sig] = (sigs[sig] || 0) + 1;
-  });
-  Object.entries(sigs).forEach(([sig, count]) => {
-    if (count > 1) findings.push({ category: 'duplicate_charge', title: 'Duplicate Found', detail: `Item ${sig.split('|')[1]} billed ${count} times on ${sig.split('|')[0]}.`, type: 'danger' });
-  });
-}
 
 
 
@@ -642,7 +656,7 @@ function renderAuditJSON(result) {
     result.findings.forEach(f => {
       const card = document.createElement('div');
       card.className = 'audit-finding';
-      card.style = `text-align:left; border-left: 3px solid ${f.type === 'Danger' ? 'var(--danger)' : 'var(--warning)'};`;
+      card.style = `text-align:left; border-left: 3px solid ${f.type.toLowerCase() === 'danger' ? 'var(--danger)' : 'var(--warning)'};`;
       const typeClass = f.type.toLowerCase();
       card.innerHTML = `
         <div class="finding-icon ${typeClass}">●</div>
@@ -657,6 +671,7 @@ function renderAuditJSON(result) {
       container.appendChild(card);
     });
   }
+
 
   // 4. Action Buttons (Phase 1)
   const actionRow = document.createElement('div');
@@ -810,12 +825,14 @@ function copyNegotiationScript() {
     arithmetic_error: 'Arithmetic Error', duplicate_charge: 'Duplicate Charge',
     pricing_outlier: 'Pricing Variance', consistency_warning: 'Consistency Issue',
     missing_data: 'Missing Data', validation_error: 'Validation Error',
-    pricing_audit: 'Pricing Audit', bundling_audit: 'Bundling Violation'
+    pricing_audit: 'Pricing Audit', bundling_audit: 'Bundling Violation',
+    clinical_alert: 'Clinical Rule'
   };
   result.findings.forEach((f, idx) => {
     const label = categoryLabels[f.code] || f.code || 'Audit Finding';
     letter += `${idx + 1}. [${label}] ${f.title}: ${f.reason || f.detail}\n`;
   });
+
   
   letter += `\nBased on these clinical guidelines, the estimated fair-market value for these services significantly differs from the amount billed. I am requesting an adjustment of approximately $${result.potential_savings.toFixed(2)}.\n\n`;
   letter += `Please provide an updated invoice reflecting these adjustments or a written explanation for why these national clinical standards were not followed.\n\n`;
@@ -833,15 +850,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function renderCategorizedFindings(findings, container, rowCount, rows) {
+function renderCategorizedFindings(findings, container, rowCount, rows, savings = 0, benchmarkTotal = 0) {
   if (rowCount === 0) return;
 
   // Store a local-format lastAuditResult so PDF & negotiation script work
   window.lastAuditResult = {
-    summary: `Local audit complete. ${findings.length} finding(s) identified.`,
+    summary: `Local audit complete. ${findings.length} finding(s) identified. Total potential savings: $${savings.toFixed(2)}.`,
     findings: findings.map(f => ({ title: f.title, reason: f.detail, detail: f.detail, type: f.type, code: f.category })),
-    potential_savings: 0,
-    medicare_benchmark_total: 0,
+    potential_savings: savings,
+    medicare_benchmark_total: benchmarkTotal,
     normalized_bill: (rows || []).map(r => ({
       Date: r.date || 'N/A',
       CPT: r.code || 'N/A',
@@ -851,8 +868,26 @@ function renderCategorizedFindings(findings, container, rowCount, rows) {
   };
 
   container.className = 'audit-results visible';
+  container.innerHTML = ''; // Clear previous results
   
-  const header = `
+  // 1. Savings Summary Card (V2.5)
+  if (savings > 0) {
+    const savingsCard = document.createElement('div');
+    savingsCard.className = 'savings-summary-card';
+    savingsCard.style = 'background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.02) 100%); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 12px; padding: 24px; margin-bottom: 24px; text-align: center;';
+    savingsCard.innerHTML = `
+      <div style="font-size: 11px; font-weight: 700; color: #22c55e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Potential Savings Identified</div>
+      <div style="font-size: 32px; font-weight: 800; color: var(--text-h); margin-bottom: 4px;">$${savings.toFixed(2)}</div>
+      <div style="font-size: 14px; color: var(--text-muted);">Based on clinical and arithmetic audit</div>
+      <div style="margin-top: 16px; font-size: 12px; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 20px; display: inline-block;">
+        Medicare Benchmark Total: $${benchmarkTotal.toFixed(2)}
+      </div>
+    `;
+    container.appendChild(savingsCard);
+  }
+
+  const header = document.createElement('div');
+  header.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
       <div class="audit-status-badge">
         <div class="dot" style="background:var(--accent);"></div>
@@ -861,35 +896,44 @@ function renderCategorizedFindings(findings, container, rowCount, rows) {
       <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">${findings.length} Finding${findings.length !== 1 ? 's' : ''}</div>
     </div>
   `;
+  container.appendChild(header);
 
   if (findings.length === 0) {
-    container.innerHTML = header + `<div class="audit-finding" style="text-align:left; border-left: 3px solid var(--success); background: rgba(16, 185, 129, 0.05);"><strong style="color:var(--success);">Audit Passed</strong> — No structured anomalies detected in the provided billing data.</div>`;
-    return;
+    const passFinding = document.createElement('div');
+    passFinding.className = 'audit-finding';
+    passFinding.style = 'text-align:left; border-left: 3px solid var(--success); background: rgba(16, 185, 129, 0.05);';
+    passFinding.innerHTML = `<strong style="color:var(--success);">Audit Passed</strong> — No structured anomalies detected in the provided billing data.`;
+    container.appendChild(passFinding);
+  } else {
+    findings.forEach(f => {
+      const card = document.createElement('div');
+      card.className = 'audit-finding';
+      card.style = `text-align:left; border-left: 3px solid ${f.type === 'danger' ? 'var(--danger)' : 'var(--warning)'};`;
+      card.innerHTML = `
+        <div class="finding-icon ${f.type}">●</div>
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="color:var(--text-h);">${f.title}</strong>
+            <span style="font-size:10px; font-weight:800; padding:2px 6px; border-radius:4px; background:rgba(255,255,255,0.05); color:var(${f.type === 'danger' ? '--danger' : '--warning'}); text-transform:uppercase;">${f.category.replace('_',' ')}</span>
+          </div>
+          <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted); opacity:0.9;">${f.detail}</p>
+        </div>
+      `;
+      container.appendChild(card);
+    });
   }
 
-  const html = findings.map(f => `
-    <div class="audit-finding" style="text-align:left; border-left: 3px solid ${f.type === 'danger' ? 'var(--danger)' : 'var(--warning)'};">
-      <div class="finding-icon ${f.type}">●</div>
-      <div style="flex:1;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <strong style="color:var(--text-h);">${f.title}</strong>
-          <span style="font-size:10px; font-weight:800; padding:2px 6px; border-radius:4px; background:rgba(255,255,255,0.05); color:var(${f.type === 'danger' ? '--danger' : '--warning'}); text-transform:uppercase;">${f.category.replace('_',' ')}</span>
-        </div>
-        <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted); opacity:0.9;">${f.detail}</p>
-      </div>
-    </div>
-  `).join('');
-
   // ── Action Buttons (always shown after local audit) ──
-  const actionRow = `
-    <div class="audit-btn-row" style="margin-top: 32px; justify-content: center; display: flex; gap: 12px; flex-wrap: wrap;">
-      <button class="btn btn-primary" onclick="openPatientModal()">📄 Download Professional PDF</button>
-      <button class="btn btn-ghost" onclick="copyNegotiationScript()">⚖️ Copy Negotiation Script</button>
-    </div>
+  const actionRow = document.createElement('div');
+  actionRow.className = 'audit-btn-row';
+  actionRow.style = 'margin-top: 32px; justify-content: center; display: flex; gap: 12px; flex-wrap: wrap;';
+  actionRow.innerHTML = `
+    <button class="btn btn-primary" onclick="openPatientModal()">📄 Download Professional PDF</button>
+    <button class="btn btn-ghost" onclick="copyNegotiationScript()">⚖️ Copy Negotiation Script</button>
   `;
-
-  container.innerHTML = header + html + actionRow;
+  container.appendChild(actionRow);
 }
+
 
 function runAuditLines() {
   const text = document.getElementById('line-items-text')?.value || '';
@@ -919,19 +963,58 @@ function clearAudit() {
   if (ar) ar.innerHTML = '';
 }
 
+function parseAmounts(amounts) {
+  let price = 0, qty = 1, total = 0, paid = 0, owed = 0;
+
+  if (amounts.length === 1) {
+    total = amounts[0];
+  } else if (amounts.length === 2) {
+    const [a, b] = amounts;
+    if (a > b * 3) {
+      // EOB pattern: large billed total, small patient owed ($600 billed, $45 owes)
+      total = a; owed = b;
+    } else if (b > a * 3) {
+      // Reversed EOB: unit price + inflated total ($50 unit, $200 total)
+      price = a; total = b;
+    } else if (a < b) {
+      // Standard line item: unit price + total
+      price = a; total = b;
+    } else {
+      // Default EOB: total billed + amount paid ($200 billed, $190 insurance paid)
+      total = a; paid = b;
+    }
+  } else if (amounts.length >= 3) {
+    const [a, b, c] = amounts;
+    // Detect [price, qty, total] — qty must be a small whole number
+    // and price × qty must be close to total (within $2)
+    const isLineItem = b < 10 && Number.isInteger(b) && Math.abs(a * b - c) < 2;
+    if (isLineItem) {
+      price = a; qty = b; total = c;
+    } else {
+      // EOB pattern: [total billed, insurance paid, patient owed]
+      total = a; paid = b; owed = c;
+    }
+
+    // Sanity: if paid + owed > total, it's probably [price, total, paid]
+    if (paid + owed > total + 0.5) {
+      price = a; total = b; paid = c; owed = 0;
+    }
+  }
+
+  return { price, qty, total, paid, owed };
+}
+
 function debounce(fn, ms) {
+
   let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
 }
 
 // ── Shared Utils & Code Search ──
 async function searchCodes(q, container) {
-  if (!db) return;
-  
-  // Parallel search in main codes and drug fees
-  const [codesRes, drugRes] = await Promise.all([
-    db.from('medical_codes').select('code, short_description').ilike('code', `%${q}%`).limit(10),
-    db.from('hcpcs_drug_fees').select('hcpcs_code, payment_limit, short_description').ilike('hcpcs_code', `%${q}%`).limit(10)
-  ]);
+  // Search logic will eventually move to edge proxy for security.
+  // For now, this is restricted to public reference search.
+  container.innerHTML = '<div class="status-msg">Searching...</div>';
+
 
   const results = [];
   
@@ -974,8 +1057,8 @@ async function searchCodes(q, container) {
 }
 
 async function searchDenials(q, container) {
-  if (!db) return;
-  const { data, error } = await db.from('carc_codes').select('code, description').ilike('code', `%${q}%`).limit(10);
+  container.innerHTML = '<div class="status-msg">Searching...</div>';
+
   if (error || !data || data.length === 0) {
     container.innerHTML = '<div class="status-msg">No denial codes found.</div>';
     return;
