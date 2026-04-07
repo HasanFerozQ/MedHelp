@@ -1009,21 +1009,8 @@ function runAuditLines() {
   // Quick shorthand for manual entries
   runAudit(text);
 }
-
-function switchTab(id, btn) {
-  // Handles both top-level and audit-specific tabs
-  const prefix = id.includes('audit-') ? '' : 'audit-';
-  const targetId = id.startsWith('audit-') ? id : 'audit-' + id;
-  
-  document.querySelectorAll('.audit-panel').forEach(p => p.style.display = 'none');
-  document.querySelectorAll('.audit-tab').forEach(b => b.classList.remove('active'));
-  
-  const target = document.getElementById(targetId);
-  if (target) target.style.display = 'block';
-  if (btn) btn.classList.add('active');
-}
-
 function clearAudit() {
+
   const bt = document.getElementById('bill-text');
   const ar = document.getElementById('audit-results');
   if (bt) bt.value = '';
@@ -1166,7 +1153,6 @@ function switchTab(tabId, btn) {
   btn.classList.add('active');
 }
 
-
 function setRegion(region, btn) {
   activeRegion = region;
   const section = btn.closest('.region-bar');
@@ -1176,7 +1162,6 @@ function setRegion(region, btn) {
   }
   console.log("Region set to:", region);
 }
-
 
 function bindSearch(inputId, resultId, handler) {
   const input = document.getElementById(inputId);
@@ -1255,7 +1240,6 @@ function renderNPIResults(results, container) {
       ? (p.basic.organization_name || 'Organization')
       : `${p.basic.first_name || ''} ${p.basic.middle_name ? p.basic.middle_name + ' ' : ''}${p.basic.last_name || ''}`.trim();
     
-    // For organizations, often the "Doctor" is listed as the Authorized Official
     const official = isOrg && p.basic.authorized_official_last_name 
       ? `${p.basic.authorized_official_prefix || ''} ${p.basic.authorized_official_first_name || ''} ${p.basic.authorized_official_last_name || ''} ${p.basic.authorized_official_credential || ''}`.trim()
       : null;
@@ -1305,3 +1289,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
