@@ -1,10 +1,11 @@
 const RXNAV_BASE = 'https://rxnav.nlm.nih.gov/REST';
 
+const rxCache = {};
+
 async function searchDrug(name) {
   try {
     const cacheKey = `rx_${name.toLowerCase()}`;
-    const cached = await new Promise(resolve => chrome.storage.local.get(cacheKey, resolve));
-    if (cached[cacheKey]) return cached[cacheKey];
+    if (rxCache[cacheKey]) return rxCache[cacheKey];
 
     // 1. Get RxNorm concept ID
     const approxRes = await fetch(`${RXNAV_BASE}/approximateTerm.json?term=${encodeURIComponent(name)}&maxEntries=5`);
@@ -30,7 +31,7 @@ async function searchDrug(name) {
     };
 
     // Save to cache
-    chrome.storage.local.set({ [cacheKey]: result });
+    rxCache[cacheKey] = result;
     return result;
   } catch (error) {
     console.error("RxNav API Error:", error);
