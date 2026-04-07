@@ -95,22 +95,50 @@ async function searchDenials(query) {
 }
 
 function displayDenials(results) {
-  denialResults.innerHTML = '';
-  
-  results.forEach(item => {
+  denialResults.innerHTML = results.map(item => {
     const isCarc = item.type === 'CARC';
-    const tagBg = isCarc ? 'var(--tint-red)' : 'var(--tint-blue)';
+    const tagClass = item.type; // "CARC" or "RARC"
     
-    const div = document.createElement('div');
-    div.className = 'result-card';
-    div.style.marginBottom = '10px';
-    div.innerHTML = `
-      <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
-        <span style="font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; background: ${tagBg}15; color: ${tagBg}; border: 1px solid ${tagBg}40;">${item.type}</span>
-        <span style="font-weight: 700; font-family: monospace; font-size: 14px; color: var(--text-dark);">${item.code}</span>
+    return `
+      <div class="result-card">
+        <div class="result-header">
+          <span class="code-val">${item.code}</span>
+          <span class="code-tag tag-${tagClass}">${item.type}</span>
+          
+          <div class="region-badges">
+             <span class="reg-badge" style="background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); color: #10b981;">
+               ● ACTIVE
+             </span>
+             ${item.effective_date ? `<span class="reg-badge" style="border:none; opacity:0.7;">Since ${new Date(item.effective_date).getFullYear()}</span>` : ''}
+          </div>
+
+          <button class="copy-btn" data-code="${item.code}" title="Copy to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+        </div>
+        
+        <div class="result-desc" style="display:flex; gap:12px; align-items:flex-start; margin-top:8px;">
+           <div style="flex-shrink:0; margin-top:2px;">
+             ${isCarc 
+               ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+               : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`
+             }
+           </div>
+           <div style="font-size: 14.5px; line-height: 1.5; color: var(--text-body);">
+             ${item.description}
+           </div>
+        </div>
       </div>
-      <div style="font-size: 12.5px; color: var(--text-normal); line-height: 1.5;">${item.description}</div>
     `;
-    denialResults.appendChild(div);
+  }).join('');
+  
+  // Bind copy buttons natively just like Codesearch does
+  denialResults.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(btn.dataset.code);
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+      setTimeout(() => btn.innerHTML = originalHtml, 1500);
+    });
   });
 }
