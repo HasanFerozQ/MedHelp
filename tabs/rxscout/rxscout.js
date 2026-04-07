@@ -10,10 +10,31 @@ async function fetchSuggestions(query) {
     const res = await fetch(`${RXNAV_BASE}/approximateTerm.json?term=${encodeURIComponent(query)}&maxEntries=12`);
     const approx = await res.json();
     const candidates = approx.approximateGroup?.candidate || [];
+    // Extract clean proper names and filter out highly technical RXNORM noise
+    const rawNames = candidates.map(c => c.name).filter(Boolean);
+    const cleanedNames = rawNames.map(name => {
+      let n = name;
+      n = n.replace(/\bOral Tablet\b.*/i, '');
+      n = n.replace(/\bOral Product\b.*/i, '');
+      n = n.replace(/\bOral Suspension\b.*/i, '');
+      n = n.replace(/\[.*?\]/g, ''); // Remove Bracketed brand data
+      n = n.replace(/\bInjection\b.*/i, ''); // Clean injection strings
+      return n.trim();
+    });
+
+    // Deduplicate elegantly (ignoring case differences)
+    const uniqueMap = new Map();
+    cleanedNames.forEach(name => {
+      const lower = name.toLowerCase();
+      // Keep the shortest version of the same root
+      if (!uniqueMap.has(lower) || name.length < uniqueMap.get(lower).length) {
+        uniqueMap.set(lower, name);
+      }
+    });
     
-    // Extract unique proper names instead of raw approximate strings
-    const names = [...new Set(candidates.map(c => c.name).filter(Boolean))];
-    const topChoices = names.slice(0, 6);
+    // Sort so simpler names (like Amoxicillin) pop up before complex formulas
+    const finalNames = Array.from(uniqueMap.values()).sort((a,b) => a.length - b.length);
+    const topChoices = finalNames.slice(0, 6);
     
     rxCache[cacheKey] = topChoices;
     return topChoices;
