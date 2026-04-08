@@ -243,49 +243,67 @@ function parseAmounts(amounts, lineCtx = '') {
   const hasPaidLabel = /insurance paid|plan paid|\bpaid\b|\bbenefit\b/i.test(ctx);
   const hasOwedLabel = /patient|you owe|amount due|balance|responsibility/i.test(ctx);
 
-  switch (amounts.length) {
-    case 0:
-      break;
-    case 1:
-      total = amounts[0];
-      break;
-    case 2:
-      if (amounts[0] > amounts[1] * 2) { total = amounts[0]; owed = amounts[1]; }
-      else { price = amounts[0]; total = amounts[1]; }
-      break;
-    case 3:
-      // Check for qty×price=total pattern (qty must be small integer)
-      if (amounts[0] < 20 && Number.isInteger(amounts[0]) &&
-          Math.abs(amounts[0] * amounts[1] - amounts[2]) < 1.50) {
-        qty = amounts[0]; price = amounts[1]; total = amounts[2];
-      } else if (hasAdjLabel || hasPaidLabel) {
-        // EOB: billed / paid / patient-owed
-        total = amounts[0]; paid = amounts[1]; owed = amounts[2];
-      } else {
-        // Default 3-column: treat largest as total
-        const sorted = [...amounts].sort((a, b) => b - a);
-        total = sorted[0];
-        paid  = amounts.find(a => a !== total) || 0;
-        owed  = amounts[amounts.length - 1] !== total ? amounts[amounts.length - 1] : 0;
-      }
-      break;
-    default: {
-      // 4+ amounts: EOB format — billed | allowed | paid | patient-owed
-      total = amounts[0];
-      // Search for best paid+owed pair that sums close to total
-      let bestDiff = Infinity;
-      for (let i = 1; i < amounts.length - 1; i++) {
-        for (let j = i + 1; j < amounts.length; j++) {
-          const diff = Math.abs(amounts[i] + amounts[j] - total);
-          if (diff < bestDiff) { bestDiff = diff; paid = amounts[i]; owed = amounts[j]; }
+  // ── Manual Label Overrides (Prioritized) ──
+  const qtyMatch   = ctx.match(/qty|quantity|units?[:\s]+(\d+)/i);
+  const priceMatch = ctx.match(/price|rate|unit price[:\s]+\$?(\d+(?:\.\d+)?)/i);
+  const totalMatch = ctx.match(/total|billed|charge[:\s]+\$?(\d+(?:\.\d+)?)/i);
+  const paidMatch  = ctx.match(/paid|ins paid[:\s]+\$?(\d+(?:\.\d+)?)/i);
+  const owedMatch  = ctx.match(/owed|patient owed|pt owed[:\s]+\$?(\d+(?:\.\d+)?)/i);
+
+  if (qtyMatch)   qty   = parseFloat(qtyMatch[1]);
+  if (priceMatch) price = parseFloat(priceMatch[1]);
+  if (totalMatch) total = parseFloat(totalMatch[1]);
+  if (paidMatch)  paid  = parseFloat(paidMatch[1]);
+  if (owedMatch)  owed  = parseFloat(owedMatch[1]);
+
+  // If we found specific labels, skip most heuristics
+  const hasStrongLabels = (totalMatch || priceMatch || paidMatch);
+
+  if (!hasStrongLabels) {
+    switch (amounts.length) {
+      case 0:
+        break;
+      case 1:
+        total = amounts[0];
+        break;
+      case 2:
+        if (amounts[0] > amounts[1] * 2) { total = amounts[0]; owed = amounts[1]; }
+        else { price = amounts[0]; total = amounts[1]; }
+        break;
+      case 3:
+        // Check for qty×price=total pattern (qty must be small integer)
+        if (amounts[0] < 20 && Number.isInteger(amounts[0]) &&
+            Math.abs(amounts[0] * amounts[1] - amounts[2]) < 1.50) {
+          qty = amounts[0]; price = amounts[1]; total = amounts[2];
+        } else if (hasAdjLabel || hasPaidLabel) {
+          // EOB: billed / paid / patient-owed
+          total = amounts[0]; paid = amounts[1]; owed = amounts[2];
+        } else {
+          // Default 3-column: treat largest as total
+          const sorted = [...amounts].sort((a, b) => b - a);
+          total = sorted[0];
+          paid  = amounts.find(a => a !== total) || 0;
+          owed  = amounts[amounts.length - 1] !== total ? amounts[amounts.length - 1] : 0;
         }
+        break;
+      default: {
+        // 4+ amounts: EOB format — billed | allowed | paid | patient-owed
+        total = amounts[0];
+        // Search for best paid+owed pair that sums close to total
+        let bestDiff = Infinity;
+        for (let i = 1; i < amounts.length - 1; i++) {
+          for (let j = i + 1; j < amounts.length; j++) {
+            const diff = Math.abs(amounts[i] + amounts[j] - total);
+            if (diff < bestDiff) { bestDiff = diff; paid = amounts[i]; owed = amounts[j]; }
+          }
+        }
+        // If nothing fits within 30%, fall back to last two
+        if (bestDiff > total * 0.30) {
+          paid = amounts[amounts.length - 2];
+          owed = amounts[amounts.length - 1];
+        }
+        break;
       }
-      // If nothing fits within 30%, fall back to last two
-      if (bestDiff > total * 0.30) {
-        paid = amounts[amounts.length - 2];
-        owed = amounts[amounts.length - 1];
-      }
-      break;
     }
   }
 
@@ -302,26 +320,30 @@ const TOTAL_ROW_RE = /\b(grand total|total due|amount due|balance due|total char
 
 function extractRowsFromRawLine(line) {
   const dateRegex  = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
-  // CPT with optional modifier (e.g. 99213, 99213-25, 99213-59)
   const codeRegex  = /\b([1-9]\d{4})(?:-([A-Z0-9]{1,2}))?\b/g;
   const moneyRegex = /(?:^|\s|\$)\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2})?)(?=\s|$)/g;
 
+  // 1. Extract Date and Code early
   const dates = line.match(dateRegex);
+  const rawCodes   = [...line.matchAll(codeRegex)];
+  const validCodes = rawCodes.filter(m => isValidCPT(m[1]));
+  const code       = validCodes.length > 0 ? validCodes[0][1] : '';
+  const modifier   = validCodes.length > 0 && validCodes[0][2] ? validCodes[0][2] : '';
 
-  // Validate CPT codes against range table
-  const rawCodes    = [...line.matchAll(codeRegex)];
-  const validCodes  = rawCodes.filter(m => isValidCPT(m[1]));
-  const code        = validCodes.length > 0 ? validCodes[0][1] : '';
-  const modifier    = validCodes.length > 0 && validCodes[0][2] ? validCodes[0][2] : '';
+  // 2. SCRUB: Remove dates and codes from a work copy before finding money
+  // This prevents CPT Collision (5-digit code matched as a huge amount)
+  let scrubberLine = line;
+  if (dates) dates.forEach(d => scrubberLine = scrubberLine.replace(d, ' '));
+  rawCodes.forEach(c => scrubberLine = scrubberLine.replace(c[0], ' '));
 
-  const moneyMatches = [...line.matchAll(moneyRegex)];
+  const moneyMatches = [...scrubberLine.matchAll(moneyRegex)];
   if (!dates && !code && moneyMatches.length === 0) return null;
 
   const amounts = moneyMatches.map(m => parseFloat(m[1].replace(/,/g, '')));
   const parsed  = parseAmounts(amounts, line);
 
   let desc = line
-    .replace(dateRegex, '').replace(codeRegex, '').replace(moneyRegex, '')
+    .replace(dateRegex, ' ').replace(codeRegex, ' ').replace(moneyRegex, ' ')
     .replace(/[|:,\-]/g, ' ').replace(/\s+/g, ' ').trim();
   if (desc.length > 60) desc = desc.substring(0, 57) + '…';
 
@@ -506,11 +528,12 @@ class BucketAuditor {
         }
       }
 
-      // 1b. paid + owed ≈ total (allow 20% gap for contractual adjustments)
+      // 1b. paid + owed ≈ total (allow epsilon for rounding/adjustments)
       if (r.total > 0 && (r.paid > 0 || r.owed > 0)) {
         const sumPO = Math.round((r.paid + r.owed) * 100) / 100;
         const diff  = Math.abs(sumPO - r.total);
-        if (diff > 1.00 && diff > r.total * 0.20) {
+        // $1.00 tolerance (epsilon) to prevent false positives on rounding/contractual matches
+        if (diff > 1.00 && diff > r.total * 0.05) {
           this.addFinding('arithmetic', 'Responsibility Gap',
             `${r.code || r.desc}: Ins. paid ($${r.paid.toFixed(2)}) + Patient owed ($${r.owed.toFixed(2)}) = $${sumPO.toFixed(2)}, doesn't match billed $${r.total.toFixed(2)}. Check for missing contractual adjustment.`,
             'warn', r.code);
