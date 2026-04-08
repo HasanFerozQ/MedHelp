@@ -1478,6 +1478,19 @@ async function generatePDF(forcedType = null) {
   closePatientModal();
 }
 
+// ── v4.3 Professional Citations ──────────────────────────────────────────────
+const CITATION_MAP = {
+  bundling:   "This code pair constitutes a 'Column 1/Column 2' edit under NCCI (National Correct Coding Initiative) Version 30.1. Standard practice requires these codes to be bundled into the primary procedure.",
+  frequency:  "The units billed for this service exceed the CMS-established Medically Unlikely Edits (MUE) frequency limit for a single date of service.",
+  compatibility: "This procedure lacks the required companion clinical context (e.g., related diagnoses or procedures) to support medical necessity under established clinical pathways.",
+  benchmark:  "This charge significantly exceeds the 80th percentile Medicare benchmark for the specified locality (GPCI), suggesting a 'chargemaster' discrepancy.",
+  duplicate:  "This appears to be a redundant entry for the same service on the same date, violating the 'one-service-per-encounter' billing standard.",
+  modifier:   "This surgical procedure lacks the required modifier (e.g., -51 or -59) to prevent artificial revenue padding on multiple procedures.",
+  arithmetic: "The itemized subtotal does not reconcile with the listed quantity and unit price, indicating a financial calculation error.",
+  POS:        "The Place of Service (POS) code is inconsistent with the billable status of this specific CPT code.",
+  NPI:        "Provider Taxonomy Cross-Check: The rendering provider's registered specialty in the NPPES registry does not align with the billed surgical/specialized service."
+};
+
 /** Formal Letter addressed to Payer/Provider */
 function renderDisputeLetter(doc, p, findings, savings) {
   doc.setFontSize(10);
@@ -1505,12 +1518,46 @@ function renderDisputeLetter(doc, p, findings, savings) {
   y += 8;
   doc.setFont("helvetica", "normal");
 
+  // Group findings by category (v4.3)
+  const groups = {};
   findings.forEach(f => {
-    if (y > 270) { doc.addPage(); y = 20; }
-    const line = `• [${f.category.toUpperCase()}] ${f.title}: ${f.detail}`;
-    const splitLine = doc.splitTextToSize(line, 160);
-    doc.text(splitLine, 25, y);
-    y += (splitLine.length * 5) + 4;
+    (groups[f.category] = groups[f.category] || []).push(f);
+  });
+
+  Object.entries(groups).forEach(([cat, items]) => {
+    if (y > 250) { doc.addPage(); y = 20; }
+    
+    // Category Heading
+    const meta = CATEGORY_META[cat] || { label: cat.toUpperCase() };
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10);
+    doc.setTextColor(51, 65, 85); // Slate 700
+    doc.text(`${meta.label.toUpperCase()}`, 20, y);
+    y += 5;
+    
+    // Citation text if available
+    if (CITATION_MAP[cat]) {
+      doc.setFont("helvetica", "italic");
+      doc.setFontSize(9);
+      doc.setTextColor(100);
+      const cite = CITATION_MAP[cat];
+      const splitCite = doc.splitTextToSize(cite, 160);
+      doc.text(splitCite, 25, y);
+      y += (splitCite.length * 4) + 4;
+    }
+
+    // Individual Findings
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    items.forEach(f => {
+      if (y > 270) { doc.addPage(); y = 20; }
+      const line = `• ${f.title}: ${f.detail}`;
+      const splitLine = doc.splitTextToSize(line, 165);
+      doc.text(splitLine, 25, y);
+      y += (splitLine.length * 5) + 3;
+    });
+    y += 6;
   });
 
   y += 10;

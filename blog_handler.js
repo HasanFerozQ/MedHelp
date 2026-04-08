@@ -35,6 +35,17 @@ const BLOG_SAMPLES = {
     billText: `04/10/2024  12001  WOUND REPAIR  $350.00
 NPI: 1093781222`, // Assuming this is a Psych NPI
     description: 'Specialty Mismatch Case (Psychiatrist billing Surgery)'
+  },
+  'pathology_bundle': {
+    billText: `05/20/2024  80053  COMPREHENSIVE METABOLIC PANEL  $185.00
+05/20/2024  85025  CBC WITH DIFFERENTIAL  $75.00
+05/20/2024  84443  TSH TEST  $65.00`,
+    description: 'Pathology Unbundling Case (CBC usually redundant in specific panels)'
+  },
+  'gpci_arbitrage': {
+    billText: `06/15/2024  99204  NEW PATIENT VISIT  $450.00
+GPCI: 1.15`, 
+    description: 'GPCI Arbitrage (Provider using high-cost city locality for rural services)'
   }
 };
 
