@@ -11,6 +11,34 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Is MediHelp truly free for patient use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. MediHelp is a 100% free tool for patients. We provide professional-grade clinical auditing, CPT code validation, and Rx savings scouts at no cost. Our mission is to democratize medical billing transparency, supported only by non-intrusive advertisements."
+      }
+    }, {
+      "@type": "Question",
+      "name": "How is my medical data and HIPAA privacy protected?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MediHelp uses a 'Zero-Server Architecture.' All bill auditing, CPT analysis, and ICD-10 searches occur locally in your web browser. We never upload, store, or transmit your Protected Health Information (PHI) to our servers, making the tool functionally HIPAA-compliant by design."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Do I need a lawyer for a formal medical bill dispute?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In most cases, no. MediHelp empowers patients with self-advocacy tools. Our engine identifies specific billing errors like MUE frequency limits or NCCI bundling violations, allowing you to generate a professional dispute letter derived from official CMS standards."
+      }
+    }]
+  }
+  </script>
 </head>
 <body>
 
@@ -196,10 +224,10 @@
   <script>
     // Render Home FAQs
     const homeFaqs = [
-      { q: 'Is MediHelp completely free?', a: 'Yes. Code Lookup, Claim Denials, Rx Savings and the Bill Audit tool are 100% free. We are ad-supported.' },
-      { q: 'What medical codes are supported?', a: 'We support ICD-10-CM (US), ICD-10 WHO (UK & Middle East), CARC, and RARC codes — totaling over 74,000 active entries.' },
-      { q: 'How does the global region toggle work?', a: 'Switching the region filter in Code Lookup changes the dataset used for results.' },
-      { q: 'Is my patient data stored?', a: 'Never. All bill auditing runs locally in your browser.' },
+      { q: 'Is MediHelp truly free for patient use?', a: 'Yes. Every tool in our suite—from the Elite Bill Auditor to the National NPI Resolver—is 100% free. We are committed to medical billing transparency at no cost to the consumer.' },
+      { q: 'How is my medical data and privacy protected?', a: 'We utilize a "Zero-Server" architecture. All clinical analysis, CPT/ICD-10 searches, and PDF audits happen locally on your device. We never upload your PHI or personal data to any external server.' },
+      { q: 'Do I need a lawyer for a formal medical bill dispute?', a: 'Not necessarily. MediHelp provides you with the deterministic clinical findings and regulatory citations (like NCCI and MUE) needed to file a professional appeal with your hospital or insurer on your own.' },
+      { q: 'What types of medical bills can I audit?', a: 'Our engine is optimized for ER Itemized Statements, Surgical Invoices, and Outpatient Specialty Bills. We support ICD-10-CM, CPT, HCPCS, and CARC/RARC denial codes.' },
     ];
     if (window.renderFAQ) renderFAQ('faq-home', homeFaqs);
   </script>

@@ -4,6 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MediHelp | AI Bill Audit — Free Medical Bill Checker</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "What is an MUE (Medically Unlikely Edit) in medical billing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Medically Unlikely Edits (MUE) are maximum frequency limits established by CMS for specific healthcare services on a single date of service. If a hospital bills more units than allowed, our engine flags it as a technical overcharge."
+      }
+    }, {
+      "@type": "Question",
+      "name": "How does GPCI Locality affect my medical bill overcharges?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Geographic Practice Cost Index (GPCI) adjusts Medicare pricing based on regional overhead costs. By selecting your specific locality in MediHelp, you ensure the audit uses the exact benchmarks for your jurisdiction, preventing pricing inflation."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Why do hospitals use unbundled CPT codes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Unbundling is the practice of billing for multiple individual steps of a procedure instead of using a single comprehensive CPT code. Our engine uses NCCI standards to detect these violations and calculate the correct bundled price."
+      }
+    }]
+  }
+  </script>
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
@@ -317,10 +345,10 @@
   <script src="tabs/medbill/audit.js"></script>
   <script>
     const auditFaqs = [
-      { q: 'Is my medical data safe?', a: 'Absolutely. All bill analysis runs entirely in your browser. No text is sent to any server.' },
-      { q: 'What does the audit check for?', a: 'The audit scans for duplicates, unbundling, and coding errors.' },
-      { q: 'What is an EOB?', a: 'Explanation of Benefits showing what was billed and paid.' },
-      { q: 'Can it read any PDF?', a: 'Optimized for standard bills and EOBs.' }
+      { q: 'What is an MUE (Medically Unlikely Edit)?', a: 'MUEs are CMS-established frequency limits for healthcare services. If a hospital bills more units of a specific code than the MUE allows for a single day, our engine flags it as a potential "Revenue Padding" error.' },
+      { q: 'How does GPCI Locality affect my medical bill?', a: 'The Geographic Practice Cost Index (GPCI) adjusts Medicare rates based on local costs. We ensure benchmarks reflect your specific jurisdiction (e.g. NYC vs. Rural Texas) to prevent overvaluation.' },
+      { q: 'Why do hospitals use unbundled CPT codes?', a: 'Unbundling occurs when multiple steps (which should be bundled into one procedure) are billed separately to inflate costs. We detect these NCCI (National Correct Coding Initiative) violations instantly.' },
+      { q: 'Can I use this audit for a formal insurance appeal?', a: 'Yes. Our clinical audit provides the deterministic evidence, Medicare benchmarks, and regulatory citations needed for successful formal reconsideration requests and level-one appeals.' },
     ];
     
     if (window.renderFAQ) {

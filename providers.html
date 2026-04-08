@@ -4,6 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MediHelp | National Provider Search (NPI)</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "How often is the CMS NPI registry data updated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MediHelp sources data directly from the CMS NPPES public registry. The registry is updated daily at the federal level, and our searches provide real-time visibility into over 6 million active National Provider Identifiers (NPI)."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Why should I verify a doctor's NPI specialty taxonomy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Verifying a provider's primary taxonomy ensures they are registered for the service they are billing. Many instances of medical identity fraud or upcoding involve billing for advanced specialties outside of a provider's registered credentials."
+      }
+    }]
+  }
+  </script>
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
@@ -134,8 +155,10 @@
   <script src="tabs/providers/providers.js"></script>
   <script>
     const providerFaqs = [
-      { q: 'What is an NPI number?', a: 'A National Provider Identifier (NPI) is a unique 10-digit identification number issued by CMS.' },
-      { q: 'Is this data official?', a: 'Yes. All provider data comes directly from the CMS NPPES public registry.' }
+      { q: 'How often is the CMS NPI registry data updated?', a: 'We source data from the federal NPPES system. The registry is updated daily, ensuring you have the latest information on over 7 million healthcare providers and practice locations.' },
+      { q: 'Why should I verify a doctor’s NPI specialty?', a: 'Billing for a specialized procedure (like Surgery) by a provider registered as a different specialty (like Psychiatry) is a major red flag for medical billing fraud and claim denials.' },
+      { q: 'What is an NPI Taxonomy code?', a: 'A Taxonomy code is a unique identifier that characterizes a provider’s specific specialty and level of expertise. It is the gold standard for cross-referencing valid billing authority.' },
+      { q: 'How do I find a provider’s practice location?', a: 'The NPI registry lists both the "Enumeration Date" and the primary business mailing address for every registered provider, helping you verify the legitimacy of a medical facility.' },
     ];
     if (window.renderFAQ) renderFAQ('faq-providers', providerFaqs);
   </script>
