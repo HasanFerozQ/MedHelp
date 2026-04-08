@@ -94,7 +94,7 @@ function extractCodesWithCharges(text) {
       .map(m => ({
         code: m[1],
         modifier: m[2] || null,
-        qty: (line.match(/(?:qty|units?)[:\s]+(\d+)/i) || [null, 1])[1], // Fixed regex group
+        qty: parseInt((line.match(/(?:qty|units?)[:\s]+(\d+)/i) || [null, '1'])[1], 10), // Forced integer type
         charge: null,
         date: dates ? dates[0] : 'UNDATED',
         isDRG: m[1].length === 3,

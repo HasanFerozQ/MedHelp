@@ -117,19 +117,31 @@ const MUE_LIMITS = {
   'G0439': 1, // Annual Wellness
 };
 
-/** Clinical Compatibility (Keyword-based) */
-const CLINICAL_RED_FLAGS = [
-  { 
-    code: '93000', 
-    keywords: ['Chest', 'Heart', 'EKG', 'Cardiac', 'Palpitations', 'Arrythmia', 'Shortness', 'Distress'],
-    label: 'Cardiac procedure'
-  },
-  {
-    code: '36415',
-    keywords: ['Pathology', 'Lab', 'Blood', 'Venipuncture', 'Ordered'],
-    label: 'Laboratory collection'
-  }
-];
+/** 
+ * Clinical Coherence Engine (v4.0) 
+ * Maps CPT codes to their required companions and incompatible rivals.
+ */
+const CPT_CLINICAL_GROUPS = {
+  // Cardiac: ECG should co-exist with cardiac E&M or high-level context
+  '93000': { requires: new Set(['99221','99222','99223','99283','99284','99285','99291','93010','93306']), label: 'ECG (93000)' },
+  '93010': { requires: new Set(['93000','93306','99221','99222','99223','99283','99284','99285']), label: 'ECG Interpretation (93010)' },
+  // Neurological: Heavy diagnostic imaging should co-exist with neuro visits/exams
+  '70551': { requires: new Set(['99214','99215','99221','99222','99223','95816','95819']), label: 'Brain MRI (70551)' },
+  // Psych: Psychotherapy shouldn't appear with unrelated major surgeries same day
+  '90837': { incompatible: new Set(['27447','27130','29881','45378','43239']), label: 'Psychotherapy (90837)' },
+  // Critical care: shouldn't appear same day as routine outpatient office visits
+  '99291': { incompatible: new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215']), label: 'Critical Care (99291)' },
+  // Colonoscopy: shouldn't appear with upper GI same day (rare standalone billing)
+  '45378': { incompatible: new Set(['43239']), label: 'Colonoscopy (45378)' },
+  // Knee arthroscopy: needs musculoskeletal E&M or imaging same day
+  '29881': { requires: new Set(['99213','99214','99215','73721','73222']), label: 'Knee Arthroscopy (29881)' },
+  // Echocardiogram: needs cardiac context
+  '93306': { requires: new Set(['99221','99222','99223','99291','93000','93010']), label: 'Echocardiogram (93306)' },
+  // Therapeutic injection: shouldn't appear without a corresponding E&M
+  '96372': { requires: new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215']), label: 'Therapeutic Injection (96372)' },
+  // Wound repair: shouldn't appear with routine wellness codes
+  '12001': { incompatible: new Set(['99381','99382','99383','99384','99385','99391','99392','99393','99394','99395']), label: 'Wound Repair (12001)' },
+};
 
 const NCCI_LABELS = {
   '36415': 'Venipuncture (Blood Draw)',
@@ -508,7 +520,7 @@ async function reRunWorkspaceAudit() {
 
   const rows = Array.from(trs).map((tr, idx) => {
     const tds  = tr.querySelectorAll('td');
-    const qty   = parseFloat(tds[4].innerText) || 1;
+    const qty   = parseInt(tds[4].innerText, 10) || 1;
     const price = parseFloat(tds[5].innerText) || 0;
     const total = parseFloat(tds[6].innerText) || 0;
     const paid  = parseFloat(tds[7].innerText) || 0;
@@ -547,6 +559,8 @@ async function reRunWorkspaceAudit() {
   engine.runFrequencyAudit();
   engine.runFinancialSummaryAudit();
   engine.runClinicalCompatibilityAudit();
+  engine.runPOSAudit();
+  engine.runMultipleProcedureAudit();
   engine.runConsistency();
   engine.runSemantic();
   engine.runCompleteness();
@@ -698,20 +712,22 @@ class BucketAuditor {
           `CPT ${code} billed ${totalUnits}× units on ${date}. US Medicare guidelines limit this code to ${limit}/day. Excess units are non-payable.`,
           'danger', code);
         
-        // 1. Handle excess rows
-        for (let i = 1; i < entries.length; i++) {
-           if (i >= limit) this.addRowSavings(entries[i].idx, entries[i].r.total, entries[i].r.total);
-        }
-
-        // 2. Handle single row with high quantity (v3.8)
-        if (entries.length === 1) {
-          const r = entries[0].r;
-          if (r.qty > limit) {
-             const unitPrice = r.total / r.qty;
-             const excess = r.qty - limit;
-             this.addRowSavings(entries[0].idx, excess * unitPrice, r.total);
+        let allowance = limit;
+        entries.forEach(e => {
+          const rowQty = e.r.qty || 1;
+          if (allowance <= 0) {
+            // Entire row is excess
+            this.addRowSavings(e.idx, e.r.total, e.r.total);
+          } else if (rowQty > allowance) {
+            // Partial row is excess (e.g., Qty 2 with 1 unit left in allowance)
+            const unitPrice = e.r.total / rowQty;
+            const excess = rowQty - allowance;
+            this.addRowSavings(e.idx, excess * unitPrice, e.r.total);
+            allowance = 0;
+          } else {
+            allowance -= rowQty;
           }
-        }
+        });
       }
     });
   }
@@ -746,19 +762,92 @@ class BucketAuditor {
          `Billed ($${totalBilled.toFixed(2)}) does not balance with Paid+Owed ($${reconSum.toFixed(2)}). A $${gap.toFixed(2)} discrepancy suggests missing contractual adjustments or unrecorded payments.`,
          'warn');
     }
+
+    // Zero-Pay High Value Signal (v3.9)
+    this.rows.forEach(r => {
+      if (!r.isTotalRow && r.total > 500 && r.paid === 0) {
+        this.addFinding('financial', 'Zero Insurance Payment Alert',
+          `Line item "${r.desc}" billed at $${r.total.toFixed(2)} shows $0.00 insurance payment. This is a red flag for a "Silent Denial" or processing oversight.`,
+          'warn', r.code);
+      }
+    });
+  }
+
+  // ── LAYER 1H — Place of Service (POS) Validation (v3.9) ──────────────────
+  runPOSAudit() {
+    const inpatientCodes = new Set(['99221', '99222', '99223', '99231', '99232', '99233']);
+    if (!this.isFacility) {
+      this.rows.forEach(r => {
+        if (r.code && inpatientCodes.has(r.code)) {
+          this.addFinding('compatibility', 'Institutional Code Mismatch',
+            `Hospital Inpatient CPT ${r.code} detected while in "Office/Clinic" mode. This is a Place-of-Service (POS) mismatch. Verify if service was actually provided in a hospital.`,
+            'danger', r.code);
+        }
+      });
+    }
+  }
+
+  // ── LAYER 1I — Multiple Procedure Audit (-51) (v4.0) ─────────────────────
+  runMultipleProcedureAudit() {
+    const dates = {};
+    this.rows.forEach((r, idx) => {
+      if (!isSurgeryCode(r.code) || r.isTotalRow) return;
+      const d = r.date || 'UNDATED';
+      (dates[d] = dates[d] || []).push({ r, idx });
+    });
+
+    Object.entries(dates).forEach(([date, entries]) => {
+      if (entries.length < 2) return;
+      // Filter for rows missing -51 modifier
+      const missing51 = entries.filter(e => {
+        const mod = (e.r.modifier || '').replace(/^-/, '');
+        return mod !== '51';
+      });
+
+      if (missing51.length >= 2) {
+        this.addFinding('modifier', 'Multiple Procedure Reduction Missing (-51)',
+          `Multiple surgical procedures (${entries.length}) billed on ${date} without a -51 modifier. Primary payers typically discount the second procedure by 50%. Potential overcharge detected.`,
+          'warn');
+      }
+    });
   }
 
   // ── LAYER 1H — Clinical Compatibility ────────────────────────────────────
   runClinicalCompatibilityAudit() {
-    const fullDesc = this.rows.map(r => r.desc).join(' ');
-    CLINICAL_RED_FLAGS.forEach(({ code, keywords, label }) => {
-      const hasCode = this.rows.some(r => r.code === code);
-      if (!hasCode) return;
-      const hasKeyword = keywords.some(kw => new RegExp(kw, 'i').test(fullDesc));
-      if (!hasKeyword && fullDesc.length > 50) {
-        this.addFinding('compatibility', 'Dx–Procedure Compatibility Warning',
-          `CPT ${code} (${label}) was billed but no matching clinical context was found in the bill description. Verify if the diagnosis supports this procedure.`,
-          'warn', code);
+    const codesByDate = {};
+    this.rows.forEach(r => {
+      if (!r.code || r.isTotalRow) return;
+      const d = r.date || 'UNDATED';
+      (codesByDate[d] = codesByDate[d] || new Set()).add(r.code);
+    });
+
+    this.rows.forEach(r => {
+      if (!r.code || r.isTotalRow) return;
+      const rule = CPT_CLINICAL_GROUPS[r.code];
+      if (!rule) return;
+      const sameDayCodes = codesByDate[r.date || 'UNDATED'] || new Set();
+
+      // Check: required companion code missing
+      if (rule.requires) {
+        const hasCompanion = [...rule.requires].some(c => sameDayCodes.has(c));
+        // Only warn if there's actually other stuff going on that day (size > 1) 
+        // to avoid flagging completely isolated bills that might be part of a larger file.
+        if (!hasCompanion && sameDayCodes.size > 1) {
+          this.addFinding('compatibility', 'Isolated Procedure — Missing Clinical Support',
+            `${rule.label} billed without any expected support codes on ${r.date || 'this date'}. US Medicare guidelines suggest this procedure should exist within a high-level diagnostic context.`,
+            'warn', r.code);
+        }
+      }
+
+      // Check: incompatible code present same day
+      if (rule.incompatible) {
+        rule.incompatible.forEach(bad => {
+          if (sameDayCodes.has(bad)) {
+            this.addFinding('compatibility', 'Clinically Incompatible Service Pair',
+              `${rule.label} and CPT ${bad} billed on the same date (${r.date || 'unknown'}). These services are clinically incompatible when performed together — verify encounter documentation.`,
+              'danger', r.code);
+          }
+        });
       }
     });
   }
@@ -1048,8 +1137,13 @@ class BucketAuditor {
 
     // 5. Price integrity — penalize derived rows (0–15)
     const derived    = this.rows.filter(r => r.priceWasDerived && !r.isTotalRow).length;
+    const derivedRatio = derived / total;
     const intScore   = Math.round(((total - derived) / total) * 15);
     score += intScore;
+    if (derivedRatio > 0.5) {
+      score -= 15;
+      reasons.push(`Over 50% of prices were derived (not audited against DB) — manual price entry suggested (-15)`);
+    }
 
     // 6. DB check bonus (0–10)
     if (this.dbCheckRan) { score += 10; reasons.push('Remote clinical verification completed (+10)'); }
