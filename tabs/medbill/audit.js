@@ -235,6 +235,23 @@ function parseDate(str) {
 document.addEventListener('DOMContentLoaded', () => {
   setupPDFAudit();
 
+  // ── v4.2 Interactive Blog Integration ──
+  const pendingDemo = sessionStorage.getItem('MH_PENDING_DEMO');
+  if (pendingDemo) {
+    sessionStorage.removeItem('MH_PENDING_DEMO');
+    const data = JSON.parse(pendingDemo);
+    const textArea = document.getElementById('bill-text');
+    if (textArea) {
+      textArea.value = data.billText;
+      // Switch to the text tab (audit-paste)
+      const pasteTab = document.querySelector('[onclick="switchAuditTab(\'audit-paste\')"]');
+      if (pasteTab) pasteTab.click();
+      
+      // Auto-run if possible
+      setTimeout(() => runAuditPaste(), 500);
+    }
+  }
+
   const lineInput = document.getElementById('line-items-text');
   if (lineInput) {
     lineInput.addEventListener('keydown', e => {
@@ -942,21 +959,41 @@ class BucketAuditor {
       })
     );
 
-    // Update badge with primary (billing) provider
+    // Update rich card (v4.2 Premium Visual)
     if (resolvedProviders.length > 0) {
-      const primary   = resolvedProviders[0];
-      const badge     = document.getElementById('verified-provider-badge');
-      const text      = document.getElementById('provider-name-resolved');
-      if (badge && text) {
-        badge.style.display = 'flex';
-        const extras = resolvedProviders.slice(1)
-          .map(p => `${p.name} (${p.role})`)
-          .join(', ');
-        text.innerHTML = `Verified: <b>${primary.name}</b> (${primary.specialty})` +
-          (extras ? ` · Also found: ${extras}` : '');
+      const primary = resolvedProviders[0];
+      const container = document.getElementById('verified-provider-container');
+      const content = document.getElementById('provider-card-content');
+      
+      if (container && content) {
+        container.style.display = 'block';
+        
+        const otherDocs = resolvedProviders.slice(1);
+        const otherHtml = otherDocs.length > 0 
+          ? `<div style="margin-top:8px; padding-top:8px; border-top:1px solid var(--border); font-size:11px; color:var(--text-muted);">
+               Found other associated NPIs: ${otherDocs.map(o => `<b>${o.name}</b> (${o.role})`).join(', ')}
+             </div>`
+          : '';
+
+        content.innerHTML = `
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <div style="background:var(--accent); color:white; width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+            </div>
+            <div style="flex-grow:1;">
+              <div style="font-size:14px; font-weight:700; color:var(--text-main); line-height:1.2;">${primary.name}</div>
+              <div style="font-size:12px; color:var(--accent); font-weight:600; margin-top:2px;">${primary.specialty}</div>
+              <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;">
+                <span style="font-size:10px; padding:2px 6px; background:rgba(6,182,212,0.1); border:1px solid var(--accent); border-radius:4px; color:var(--accent); font-weight:700;">NPI: ${primary.npi}</span>
+                <span style="font-size:10px; padding:2px 6px; background:rgba(59,130,246,0.1); border:1px solid #3b82f6; border-radius:4px; color:#3b82f6; font-weight:700;">${primary.role} Provider</span>
+              </div>
+            </div>
+          </div>
+          ${otherHtml}
+        `;
       }
       this._verifiedProviders = resolvedProviders;
-      this._verifiedProvider  = primary.name; // Backward-compat
+      this._verifiedProvider  = primary.name;
     }
   }
 
