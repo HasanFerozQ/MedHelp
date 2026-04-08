@@ -1649,7 +1649,6 @@ window.exportAuditCSV = function() {
   URL.revokeObjectURL(url);
 };
 
-window.openLearnModal  = () => { const m = document.getElementById('learn-modal'); if(m) m.style.display='flex'; };
-window.closeLearnModal = () => { const m = document.getElementById('learn-modal'); if(m) m.style.display='none'; };
 
 })(); // END SCOPE ISOLATION
+

@@ -414,6 +414,10 @@
     if (window.renderFAQ) {
       renderFAQ('faq-audit', auditFaqs);
     }
+
+    // Modal Controls (v4.4.1 Fix)
+    window.openLearnModal  = () => { const m = document.getElementById('learn-modal'); if(m) m.style.display='flex'; };
+    window.closeLearnModal = () => { const m = document.getElementById('learn-modal'); if(m) m.style.display='none'; };
   </script>
 </body>
 </html>
