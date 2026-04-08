@@ -364,37 +364,109 @@
           <button class="btn btn-ghost" onclick="closeLearnModal()" style="padding:8px; border-radius:50%; min-width:unset; width:36px; height:36px;">✕</button>
         </div>
       </div>
-      <div class="modal-body" style="padding-top:32px;">
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:40px;">
-          <div>
-            <div style="margin-bottom:32px;">
-              <h4 style="color:var(--accent); font-size:14px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;">Step 1: Get the Itemized Bill</h4>
-              <p style="font-size:14px; line-height:1.6; color:var(--text-main);">By law (CMS rules), you have the right to a detailed, line-item statement. Do not audit from the "Summary Bill." Ask the hospital billing department for the <strong>"Itemized Statement with CPT/HCPCS codes."</strong></p>
-            </div>
-            <div style="margin-bottom:32px;">
-              <h4 style="color:var(--accent); font-size:14px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;">Step 2: Digital Extraction</h4>
-              <p style="font-size:14px; line-height:1.6; color:var(--text-main);">Upload your PDF or paste the text into our workspace. Our engine will "reconstruct" the bill into a clinical grid. <strong>Tip:</strong> Ensure you capture the "Service Dates" and "Quantities" correctly.</p>
-            </div>
-          </div>
-          <div>
-            <div style="margin-bottom:32px;">
-              <h4 style="color:var(--accent); font-size:14px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;">Step 3: Analyze Clinical Red Flags</h4>
-              <p style="font-size:14px; line-height:1.6; color:var(--text-main);">Look for the 🔴 red and 🟡 yellow markers.
-                <br>• <strong>Unbundling:</strong> Billing for parts of a whole (NCCI violations).
-                <br>• <strong>MUE:</strong> Units that exceed what is medically likely for a human in 24 hours.
-              </p>
-            </div>
-            <div style="margin-bottom:32px;">
-              <h4 style="color:var(--accent); font-size:14px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;">Step 4: Formal Dispute Action</h4>
-              <p style="font-size:14px; line-height:1.6; color:var(--text-main);">Generate our <strong>Professional Dispute Letter</strong>. This contains deterministic clinical findings and regulatory citations that force a formal reconsideration by the insurer or hospital ombudsman.</p>
-            </div>
-          </div>
-        </div>
+      <div class="modal-body" style="padding:32px; color:var(--text-main); line-height:1.6;">
         
-        <div style="background:rgba(6,182,212,0.05); border:1px solid rgba(6,182,212,0.2); border-radius:12px; padding:24px; margin-top:16px;">
-          <h4 style="margin:0 0 8px; font-size:15px; display:flex; align-items:center; gap:8px;">🛡️ Pro Tip: The "Request for Notes" strategy</h4>
-          <p style="margin:0; font-size:13px; color:var(--text-muted); line-height:1.5;">When generating your letter, enable the <strong>"Request Clinical Documentation"</strong> option. This forces the hospital to prove that the high-level services billed match what the doctor actually wrote in their progress notes.</p>
+        <!-- SECTION 1: THE PROCESS -->
+        <div style="margin-bottom:48px;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+            <div style="background:var(--accent); color:white; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px;">1</div>
+            <h3 style="margin:0; font-size:18px;">The 4-Step Audit Framework</h3>
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:20px;">
+            <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:12px; border:1px solid var(--border);">
+              <div style="font-weight:700; color:var(--accent); font-size:13px; margin-bottom:8px; text-transform:uppercase;">Procure</div>
+              <p style="font-size:13px; margin:0;">Request your <strong>Itemized Bill (UB-04/HCFA-1500)</strong>. Hospitals are legally required to provide this under CMS guidelines.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:12px; border:1px solid var(--border);">
+              <div style="font-weight:700; color:var(--accent); font-size:13px; margin-bottom:8px; text-transform:uppercase;">Extract</div>
+              <p style="font-size:13px; margin:0;">Upload the PDF. Our engine reconstructs every line item into a searchable clinical grid for integrity checks.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:12px; border:1px solid var(--border);">
+              <div style="font-weight:700; color:var(--accent); font-size:13px; margin-bottom:8px; text-transform:uppercase;">Analyze</div>
+              <p style="font-size:13px; margin:0;">Spot 🔴 Red Flags. If a service violates MUE or NCCI rules, it's a "deterministically invalid" charge.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:12px; border:1px solid var(--border);">
+              <div style="font-weight:700; color:var(--accent); font-size:13px; margin-bottom:8px; text-transform:uppercase;">Dispute</div>
+              <p style="font-size:13px; margin:0;">Generate the <strong>Professional Dispute Letter</strong>. It includes the exact clinical citations needed to win an appeal.</p>
+            </div>
+          </div>
         </div>
+
+        <!-- SECTION 2: DECIPHERING THE DASHBOARD -->
+        <div style="margin-bottom:48px; border-top:1px solid var(--border); padding-top:40px;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+            <div style="background:var(--accent); color:white; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px;">2</div>
+            <h3 style="margin:0; font-size:18px;">How to Read Your Results</h3>
+          </div>
+          
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:32px;">
+            <div>
+              <h4 style="font-size:15px; margin-bottom:12px; display:flex; align-items:center; gap:8px;">📊 The Confidence Score</h4>
+              <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">This overall percentage (0-100%) represents the technical integrity of the audit. A higher score means we had better data to work with.</p>
+              <ul style="font-size:12px; color:var(--text-main); padding-left:20px; margin:0;">
+                <li style="margin-bottom:6px;"><strong>CPT Coverage:</strong> Every line item has a valid medical code.</li>
+                <li style="margin-bottom:6px;"><strong>Benchmark Hits:</strong> We successfully matched pricing against Medicare registries.</li>
+                <li style="margin-bottom:6px;"><strong>Date Integrity:</strong> All services are correctly sequenced in time.</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="font-size:15px; margin-bottom:12px; display:flex; align-items:center; gap:8px;">🩺 Verified Provider Identity</h4>
+              <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">We cross-reference every NPI number against the federal registry (NPPES). This card tells you:</p>
+              <ul style="font-size:12px; color:var(--text-main); padding-left:20px; margin:0;">
+                <li style="margin-bottom:6px;"><strong>Taxonomy Check:</strong> Is a Psychiatrist billing for a Heart Surgery? (Specialty Mismatch).</li>
+                <li style="margin-bottom:6px;"><strong>Location Integrity:</strong> Is the provider practicing outside their registered region?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: THE FINDINGS ENCYCLOPEDIA -->
+        <div style="margin-bottom:48px; border-top:1px solid var(--border); padding-top:40px;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+            <div style="background:var(--accent); color:white; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px;">3</div>
+            <h3 style="margin:0; font-size:18px;">Findings & Flags Dictionary</h3>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
+            <div style="background:rgba(239,68,68,0.05); padding:20px; border-radius:12px; border:1px solid rgba(239,68,68,0.2);">
+              <h5 style="color:#ef4444; margin:0 0 8px; font-size:14px;">🔴 NCCI Bundling Audit</h5>
+              <p style="font-size:12px; margin:0;">Flags "Unbundling"—the illegal practice of billing for the parts of a procedure when a single "comprehensive" code covers the entire service. This is one of the most common overcharges in surgery.</p>
+            </div>
+            <div style="background:rgba(239,68,68,0.05); padding:20px; border-radius:12px; border:1px solid rgba(239,68,68,0.2);">
+              <h5 style="color:#ef4444; margin:0 0 8px; font-size:14px;">🔴 Frequency Audit (MUE)</h5>
+              <p style="font-size:12px; margin:0;">"Medically Unlikely Edits" are federal limits on how many times a service can result in a valid charge for a single patient in 24 hours. (e.g. billing for two Appendix removals).</p>
+            </div>
+            <div style="background:rgba(234,179,8,0.05); padding:20px; border-radius:12px; border:1px solid rgba(234,179,8,0.2);">
+              <h5 style="color:#eab308; margin:0 0 8px; font-size:14px;">🟡 Modifier Accuracy</h5>
+              <p style="font-size:12px; margin:0;">Detects missing surgical discounts. For example, if two procedures are done in one visit, the second should have a -51 modifier (50% discount). Hospitals often "forget" this.</p>
+            </div>
+            <div style="background:rgba(52,211,153,0.05); padding:20px; border-radius:12px; border:1px solid rgba(52,211,153,0.2);">
+              <h5 style="color:#34d399; margin:0 0 8px; font-size:14px;">🟢 Benchmark Pricing</h5>
+              <p style="font-size:12px; margin:0;">Compares your bill to <strong>Transparent Medicare Benchmarks</strong>. If a hospital bills $5,000 for a test that Medicare pays $200 for, we flag the 2,500% markup as unreasonable.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4: BENCHMARK STRATEGY -->
+        <div style="background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3); border-radius:12px; padding:24px;">
+          <h4 style="margin:0 0 12px; font-size:16px;">💎 The Negotiator's Toolkit: Benchmarks</h4>
+          <p style="font-size:13px; color:var(--text-main); margin-bottom:16px;">Use the <strong>Payer Type</strong> dropdown to change your negotiation strategy:</p>
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px;">
+            <div style="font-size:11px; background:rgba(0,0,0,0.2); padding:12px; border-radius:8px;">
+              <strong style="display:block; margin-bottom:4px; color:var(--accent);">Self-Pay (1.5x)</strong>
+              The gold standard for the uninsured. Based on "Fair Health" cost-to-charge ratios.
+            </div>
+            <div style="font-size:11px; background:rgba(0,0,0,0.2); padding:12px; border-radius:8px;">
+              <strong style="display:block; margin-bottom:4px; color:var(--accent);">Commercial (2.5x)</strong>
+              The standard "Market Rate" allowed by most high-quality insurance networks.
+            </div>
+            <div style="font-size:11px; background:rgba(0,0,0,0.2); padding:12px; border-radius:8px;">
+              <strong style="display:block; margin-bottom:4px; color:var(--accent);">Worker's Comp (3.0x)</strong>
+              Legal maximums often found in statutory liability or specialist injury claims.
+            </div>
+          </div>
+        </div>
+
       </div>
       <div class="modal-footer" style="padding-top:32px; border-top:1px solid var(--border); text-align:right;">
         <button class="btn btn-primary" onclick="closeLearnModal()">Got it, let's Audit</button>
