@@ -150,6 +150,19 @@ const NCCI_LABELS = {
   '85025': 'CBC (bundled into primary visit or panel)',
 };
 
+// ── Shared Constants for medbill.js Synchronization (v4.1) ─────────────────
+window.MH_CONSTANTS = {
+  CPT_RANGES,
+  INLINE_BENCHMARK,
+  DRG_BASE_RATE,
+  DRG_BENCHMARKS,
+  MUE_LIMITS,
+  CPT_CLINICAL_GROUPS,
+  NCCI_PAIRS
+};
+
+const MUE_LIMITS_REF = MUE_LIMITS; // Internal reference
+
 /** Facility Professional Adjustment (Physicians in hospitals bill ~75-80% of office rate) */
 const FACILITY_PROF_MULT = 0.78;
 
@@ -169,19 +182,53 @@ const DRG_BENCHMARKS = {
 };
 
 function isSurgeryCode(code) {
-  const n = parseInt(code, 10);
-  return n >= 10000 && n <= 69999;
-}
-function isEMCode(code) {
-  const n = parseInt(code, 10);
-  return (n >= 99202 && n <= 99215) || (n >= 99221 && n <= 99285) || (n >= 99291 && n <= 99292);
+  return classifyCPT(code) === 'Surgery';
 }
 
-// ── Date helpers ──────────────────────────────────────────────────────────────
+function isEMCode(code) {
+  // classifyCPT covers 90000-99999; narrow to true E&M sub-ranges
+  const n = parseInt(code, 10);
+  return (
+    (n >= 99202 && n <= 99215) || // Office visits
+    (n >= 99221 && n <= 99285) || // Hospital / ED visits
+    (n >= 99291 && n <= 99292)    // Critical care
+  );
+}
+
+// ── Date helpers (v4.1 Robust Regex Parser) ─────────────────────────────────
 function parseDate(str) {
   if (!str) return null;
-  const d = new Date(str);
-  return isNaN(d.getTime()) ? null : d;
+
+  // Normalize: replace slashes and dots with dashes
+  const normalized = str.trim().replace(/[\/\.]/g, '-');
+
+  // Try ISO-like: YYYY-MM-DD  (safe in all browsers)
+  const isoMatch = normalized.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (isoMatch) {
+    const d = new Date(
+      parseInt(isoMatch[1], 10),
+      parseInt(isoMatch[2], 10) - 1,
+      parseInt(isoMatch[3], 10)
+    );
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  // Try US format: MM-DD-YYYY or M-D-YY
+  const usMatch = normalized.match(/^(\d{1,2})-(\d{1,2})-(\d{2,4})$/);
+  if (usMatch) {
+    let year = parseInt(usMatch[3], 10);
+    if (year < 100) year += year < 50 ? 2000 : 1900; // 2-digit year heuristic
+    const d = new Date(
+      year,
+      parseInt(usMatch[1], 10) - 1,
+      parseInt(usMatch[2], 10)
+    );
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  // Last resort: native parse (works for verbose formats like "January 15, 2024")
+  const fallback = new Date(str);
+  return isNaN(fallback.getTime()) ? null : fallback;
 }
 
 // ── PDF Audit Setup ───────────────────────────────────────────────────────────
@@ -700,11 +747,11 @@ class BucketAuditor {
     });
     Object.entries(freq).forEach(([key, entries]) => {
       const code = entries[0].r.code;
-      const limit = MUE_LIMITS[code];
+      const limit = window.MH_CONSTANTS.MUE_LIMITS[code];
       if (!limit) return;
       
       // Calculate total units (sum of qty)
-      const totalUnits = entries.reduce((s, e) => s + (e.r.qty || 1), 0);
+      const totalUnits = entries.reduce((s, e) => s + (parseInt(e.r.qty, 10) || 1), 0);
       
       if (totalUnits > limit) {
         const date = entries[0].r.date || 'same date';
@@ -852,29 +899,64 @@ class BucketAuditor {
     });
   }
 
-  // ── LAYER 1I — Provider Identity (NPI Resolution) ────────────────────────
+  // ── LAYER 1I — Multiple Provider NPI Resolution (v4.1) ──────────────────
   async resolveNPIProviders() {
     if (this.npis.length === 0) return;
-    const npi = this.npis[0]; // Resolve primary provider
-    try {
-      const res = await fetch(`${NPPES_API}${npi}`);
-      if (!res.ok) return;
-      const data = await res.json();
-      if (data.results && data.results.length > 0) {
-        const p = data.results[0];
-        const name = p.basic.organization_name || `${p.basic.first_name} ${p.basic.last_name}`;
-        const specialty = p.taxonomies?.[0]?.desc || 'Medical Professional';
-        
-        const badge = document.getElementById('verified-provider-badge');
-        const text = document.getElementById('provider-name-resolved');
-        if (badge && text) {
-          badge.style.display = 'flex';
-          text.innerHTML = `Verified Provider: <b>${name}</b> (${specialty})`;
+
+    // Deduplicate NPIs found in the document
+    const uniqueNPIs = [...new Set(this.npis)].slice(0, 3); // Cap at 3 to avoid rate-limit
+
+    const resolvedProviders = [];
+
+    await Promise.allSettled(
+      uniqueNPIs.map(async (npi, index) => {
+        try {
+          const res = await fetch(`${NPPES_API}${npi}`);
+          if (!res.ok) return;
+          const data = await res.json();
+          if (!data.results?.length) return;
+
+          const p         = data.results[0];
+          const name      = p.basic.organization_name || `${p.basic.first_name} ${p.basic.last_name}`;
+          const specialty = p.taxonomies?.[0]?.desc || 'Medical Professional';
+          const role      = index === 0 ? 'Billing' : 'Rendering';
+
+          resolvedProviders.push({ npi, name, specialty, role });
+
+          // Cross-check: rendering provider specialty vs. billed codes
+          if (role === 'Rendering') {
+            const isPsychBilling = this.rows.some(r => r.code === '90837' || r.code === '90834');
+            const isSurgeryBilling = this.rows.some(r => isSurgeryCode(r.code));
+            const isPsychSpec = /psych|mental|behav/i.test(specialty);
+            const isSurgSpec  = /surg/i.test(specialty);
+
+            if (isPsychBilling && isSurgeryBilling && !isPsychSpec && !isSurgSpec) {
+              this.addFinding('compatibility', 'Provider Specialty Mismatch',
+                `Rendering provider ${name} (${specialty}) is billing codes from clinically incompatible specialties (Psychotherapy + Surgery) in the same encounter. Verify correct NPI was used.`,
+                'warn');
+            }
+          }
+        } catch (e) {
+          console.warn(`NPI resolution error for ${npi}:`, e);
         }
-        this._verifiedProvider = name;
+      })
+    );
+
+    // Update badge with primary (billing) provider
+    if (resolvedProviders.length > 0) {
+      const primary   = resolvedProviders[0];
+      const badge     = document.getElementById('verified-provider-badge');
+      const text      = document.getElementById('provider-name-resolved');
+      if (badge && text) {
+        badge.style.display = 'flex';
+        const extras = resolvedProviders.slice(1)
+          .map(p => `${p.name} (${p.role})`)
+          .join(', ');
+        text.innerHTML = `Verified: <b>${primary.name}</b> (${primary.specialty})` +
+          (extras ? ` · Also found: ${extras}` : '');
       }
-    } catch (e) {
-      console.warn("NPI resolution error:", e);
+      this._verifiedProviders = resolvedProviders;
+      this._verifiedProvider  = primary.name; // Backward-compat
     }
   }
 
@@ -937,11 +1019,11 @@ class BucketAuditor {
   // ── LAYER 2C — Semantic Flags ─────────────────────────────────────────────
   runSemantic() {
     const KEYWORDS = [
-      { re: /not medically necessary/i,              title: 'Not Medically Necessary',   detail: 'Insurer may refuse payment — document clinical justification.' },
-      { re: /non.?covered/i,                         title: 'Non-Covered Service',        detail: 'This service may not be covered by your plan.' },
-      { re: /benefit maximum/i,                      title: 'Benefit Limit Reached',      detail: 'Annual benefit cap may have been exceeded.' },
-      { re: /coordination of benefits/i,             title: 'COB Detected',               detail: 'Multiple-insurer coordination — verify primary payer.' },
-      { re: /experimental|investigational/i,         title: 'Experimental Service',       detail: 'Experimental treatments are routinely excluded.' },
+      { re: /not medically necessary/i,          title: 'Not Medically Necessary',   detail: 'Insurer may refuse payment — document clinical justification.' },
+      { re: /non.?covered/i,                     title: 'Non-Covered Service',        detail: 'This service may not be covered by your plan.' },
+      { re: /benefit maximum/i,                  title: 'Benefit Limit Reached',      detail: 'Annual benefit cap may have been exceeded.' },
+      { re: /coordination of benefits/i,         title: 'COB Detected',               detail: 'Multiple-insurer coordination — verify primary payer.' },
+      { re: /experimental|investigational/i,     title: 'Experimental Service',       detail: 'Experimental treatments are routinely excluded.' },
       { re: /pre.?existing/i,                        title: 'Pre-Existing Condition',     detail: 'Verify this exclusion is still enforceable under ACA.' },
       { re: /out.?of.?network/i,                     title: 'Out-of-Network Charge',      detail: 'Out-of-network rates can be 2–4× in-network. Dispute balance billing.' },
       { re: /prior auth|pre.?auth/i,                 title: 'Prior Authorization Issue',  detail: 'Services without prior auth are commonly denied.' },
@@ -952,9 +1034,28 @@ class BucketAuditor {
       { re: /medical necessity/i,                    title: 'Medical Necessity Note',     detail: 'Requires documentation of clinical need to be payable.' },
       { re: /patient responsibility waived/i,        title: 'Waived Responsibility',      detail: 'Waiving co-pays can violate insurance contracts — verify.' },
     ];
-    const fullText = this.rows.map(r => `${r.desc} ${r.code}`).join(' ');
-    KEYWORDS.forEach(({ re, title, detail }) => {
-      if (re.test(fullText)) this.addFinding('semantic', title, detail, 'warn');
+
+    // ── FIX: scan per-row, not full-text concat (v4.1 Traceability) ──
+    const fired = new Set();
+
+    this.rows.forEach(r => {
+      const haystack = `${r.desc || ''} ${r.code || ''}`.toLowerCase();
+      KEYWORDS.forEach(({ re, title, detail }) => {
+        if (!re.test(haystack)) return;
+
+        // Deduplicate: same keyword firing on multiple rows → one finding with all codes listed
+        if (fired.has(title)) {
+          const existing = this.findings.find(f => f.title === title && f.category === 'semantic');
+          if (existing && r.code && !existing.codeRef.includes(r.code)) {
+            existing.codeRef += `, ${r.code}`;
+            existing.detail  += ` (also: ${r.code})`;
+          }
+          return;
+        }
+
+        fired.add(title);
+        this.addFinding('semantic', title, detail, 'warn', r.code || '');
+      });
     });
   }
 

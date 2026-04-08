@@ -42,13 +42,27 @@ const MUE_LIMITS = {
   '93000': 1, // EKG
 };
 
-const DRG_BASE_RATE = 10000;
+const DRG_BASE_RATE = 10400; // corrected to CMS FY2024 average
 const DRG_BENCHMARKS = {
-  '470': { weight: 1.5,  desc: 'Major Joint Replacement' },
-  '193': { weight: 0.9,  desc: 'Simple Pneumonia' },
-  '392': { weight: 0.7,  desc: 'Esophagitis / Digestive Disorders' },
-  '291': { weight: 1.1,  desc: 'Heart Failure' },
+  '470': { weight: 1.7712, desc: 'Major Joint Replacement (Lower Limb)' },
+  '193': { weight: 0.8920, desc: 'Simple Pneumonia & Pleurisy' },
+  '392': { weight: 0.7241, desc: 'Esophagitis / Digestive Disorders' },
+  '291': { weight: 1.3105, desc: 'Heart Failure & Shock' },
+  '871': { weight: 1.9542, desc: 'Septicemia without MV >96 hours' },
 };
+
+/**
+ * ARCHITECTURAL SYNC (v4.1):
+ * Link to the advanced editor's shared brain if available.
+ */
+if (window.MH_CONSTANTS) {
+   Object.assign(this, {
+     INLINE_BENCHMARK: window.MH_CONSTANTS.INLINE_BENCHMARK,
+     DRG_BASE_RATE:    window.MH_CONSTANTS.DRG_BASE_RATE,
+     DRG_BENCHMARKS:   window.MH_CONSTANTS.DRG_BENCHMARKS,
+     MUE_LIMITS:       window.MH_CONSTANTS.MUE_LIMITS,
+   });
+}
 
 async function loadCPTData() {
   try {
