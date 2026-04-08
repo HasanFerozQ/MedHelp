@@ -89,16 +89,53 @@ const HIGH_COMPLEXITY_EM = {
 const GLOBAL_PERIOD_OK_MODS = new Set(['24', '25', '57']);
 
 /**
- * NCCI Bundling Rules (v3.2)
- * Maps 'Secondary Code' -> {primaryCategory, label}
- * If secondary is billed with any code in primaryCategory on same day, it is bundled.
+ * NCCI Bundling Rules (v3.3)
+ * Maps 'Secondary Code' -> Set of 'Primary Codes'
+ * If secondary is billed with any primary in the set on same day, it is bundled.
  */
-const NCCI_BUNDLES = {
-  '36415': { primary: 'E&M / Medicine', label: 'Venipuncture (Blood Draw)' },
-  '94760': { primary: 'E&M / Medicine', label: 'Pulse Oximetry' },
-  '99070': { primary: 'Surgery',         label: 'Medical Supplies' },
-  '69210': { primary: 'E&M / Medicine', label: 'Earwax Removal' },
-  '85025': { primary: 'Pathology/Lab',   label: 'CBC (if CMP/BMP also billed)' },
+const NCCI_PAIRS = {
+  // Venipuncture (Blood Draw) bundles into E&M visits
+  '36415': new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215','99221','99222','99223','99281','99282','99283','99284','99285']),
+  // Pulse Oximetry bundles into visits
+  '94760': new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215']),
+  // CBC (85025) bundles into metabolic panels OR E&M visits
+  '85025': new Set(['80048', '80053', '99202','99203','99204','99205','99211','99212','99213','99214','99215']),
+  // Medical Supplies usually bundled into Surgery
+  '99070': new Set(['10000','12001','27447','27130','43239','45378','69210']),
+};
+
+/** MUE - Medically Unlikely Edits (Frequency Limits) */
+const MUE_LIMITS = {
+  '90837': 1, // Psychotherapy 60m
+  '99214': 1, // Office Visit
+  '99215': 1,
+  '36415': 1, // Blood draw
+  '94760': 1, // Pulse Ox
+  '93000': 1, // EKG
+  '71045': 1, // X-ray
+  '71046': 1,
+  'G0439': 1, // Annual Wellness
+};
+
+/** Clinical Compatibility (Keyword-based) */
+const CLINICAL_RED_FLAGS = [
+  { 
+    code: '93000', 
+    keywords: ['Chest', 'Heart', 'EKG', 'Cardiac', 'Palpitations', 'Arrythmia', 'Shortness', 'Distress'],
+    label: 'Cardiac procedure'
+  },
+  {
+    code: '36415',
+    keywords: ['Pathology', 'Lab', 'Blood', 'Venipuncture', 'Ordered'],
+    label: 'Laboratory collection'
+  }
+];
+
+const NCCI_LABELS = {
+  '36415': 'Venipuncture (Blood Draw)',
+  '94760': 'Pulse Oximetry',
+  '99070': 'Medical Supplies',
+  '85025': 'CBC (duplicated by CMP/BMP)',
 };
 
 /**
@@ -235,7 +272,7 @@ function reconstructRowsFromLayout(pages) {
     const yGroups = {};
     items.forEach(item => {
       if (!item.str.trim()) return;
-      const y = Math.round(item.y / 10) * 10;
+      const y = Math.round(item.y / 6) * 6; // Refined tolerance from 10 to 6 for tighter row reconstruction to prevent line merging
       (yGroups[y] = yGroups[y] || []).push(item);
     });
     Object.keys(yGroups).sort((a, b) => b - a).forEach(y => {
@@ -498,6 +535,9 @@ async function reRunWorkspaceAudit() {
   engine.runBundling();
   engine.runDRGAudit();
   engine.runDuplicates();
+  engine.runFrequencyAudit();
+  engine.runFinancialSummaryAudit();
+  engine.runClinicalCompatibilityAudit();
   engine.runConsistency();
   engine.runSemantic();
   engine.runCompleteness();
@@ -593,18 +633,23 @@ class BucketAuditor {
   runBundling() {
     this.rows.forEach((r, idx) => {
       if (!r.code || r.isDRG || r.isTotalRow) return;
-      const rule = NCCI_BUNDLES[r.code];
-      if (!rule) return;
+      const primarySet = NCCI_PAIRS[r.code];
+      if (!primarySet) return;
 
-      // Look for primary category match on same date
+      const dateKey = r.date || 'UNDATED';
+
+      // Look for specific primary code match on same date
       const hasPrimary = this.rows.some(other => {
-        if (other.idx === r.idx || other.date !== r.date) return false;
-        return classifyCPT(other.code) === rule.primary;
+        if (other === r) return false; // Identity check fix
+        const oDateKey = other.date || 'UNDATED';
+        if (oDateKey !== dateKey) return false;
+        return primarySet.has(other.code);
       });
 
       if (hasPrimary) {
+        const label = NCCI_LABELS[r.code] || `Service ${r.code}`;
         this.addFinding('bundling', 'Bundled Service Detected',
-          `${rule.label} (CPT ${r.code}) is typically bundled into the primary ${rule.primary} service on the same date. It should not be billed separately.`,
+          `${label} is typically bundled into the primary code on the same date. It should not be billed separately.`,
           'danger', r.code);
         if (r.raw) r.raw.classList.add('audit-row-error');
         this.addRowSavings(idx, r.total, r.total);
@@ -654,7 +699,7 @@ class BucketAuditor {
       if (!r.code || r.isTotalRow) return;
       // Use "UNDATED" for missing dates so they don't incorrectly collapse across all empty-date rows
       const dKey = r.date || 'UNDATED';
-      const key = `${dKey}|${r.code}|${r.modifier}|${Math.round(r.total * 100)}`;
+      const key = `${dKey}|${r.code}|${r.modifier || ''}`; // Dropping amount from key to catch same-day duplicate billing with variable pricing
       (registry[key] = registry[key] || []).push({ r, idx });
     });
     Object.values(registry).forEach(entries => {
@@ -894,10 +939,20 @@ class BucketAuditor {
     const derived    = this.rows.filter(r => r.priceWasDerived && !r.isTotalRow).length;
     const intScore   = Math.round(((total - derived) / total) * 15);
     score += intScore;
-    if (derived > 0) reasons.push(`${derived} row(s) have back-calculated prices — arithmetic check skipped`);
 
     // 6. DB check bonus (0–10)
-    if (this.dbCheckRan) { score += 10; reasons.push('Remote code validation completed (+10)'); }
+    if (this.dbCheckRan) { score += 10; reasons.push('Remote clinical verification completed (+10)'); }
+
+    // 7. Integrity Penalties (Custom Elite penalties)
+    if (this._hasReconError) {
+      score -= 20;
+      reasons.push('Significant financial reconciliation gap detected (-20)');
+    }
+    const hardFails = this.findings.filter(f => f.type === 'danger').length;
+    if (hardFails > 2) {
+      score -= 15;
+      reasons.push('Multiple critical clinical anomalies found (-15)');
+    }
 
     return { score: Math.min(100, Math.max(0, score)), reasons };
   }
@@ -1002,10 +1057,10 @@ function renderCategorizedFindings(findings, container, count, rows, savings, be
   // Export button
   // Advanced Action Bar
   html += `
-    <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:20px;">
-      <button onclick="exportAuditCSV()" class="btn btn-ghost" style="font-size:12px;flex:1;min-width:120px;">📥 Export CSV</button>
-      <button onclick="openPatientModal('summary')" class="btn btn-secondary" style="font-size:12px;flex:1;min-width:160px;background:var(--bg-primary);color:var(--text-main);border:1px solid var(--border);">📊 Summary Report</button>
-      <button onclick="openPatientModal('dispute')" class="btn btn-primary" style="font-size:12px;flex:1;min-width:200px;">📝 Auto-Draft Dispute Letter</button>
+    <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:20px;">
+      <button onclick="exportAuditCSV()" class="btn btn-ghost" style="font-size:12px;flex:1;min-width:120px;letter-spacing:0.02em;">Export CSV</button>
+      <button onclick="handleAuditExport('summary')" class="btn btn-secondary" style="font-size:12px;flex:1;min-width:160px;background:var(--bg-card);color:var(--text-main);border:1px solid var(--border);font-weight:600;letter-spacing:0.02em;">Download Summary Report</button>
+      <button onclick="handleAuditExport('dispute')" class="btn btn-primary" style="font-size:12px;flex:2;min-width:240px;font-weight:700;letter-spacing:0.03em;box-shadow:0 4px 12px rgba(0,0,0,0.1);">Generate Dispute Letter</button>
     </div>`;
 
   container.innerHTML = html;
@@ -1022,30 +1077,37 @@ function clearAudit() {
 window.clearAudit = clearAudit;
 window.reRunWorkspaceAudit = reRunWorkspaceAudit;
 
-window.openPatientModal  = (type) => {
-  const m = document.getElementById('patient-modal');
-  if (m) {
-    m.style.display = 'flex';
-    m.dataset.reportType = type; // 'summary' or 'dispute'
-    const btn = document.getElementById('btn-generate-final');
-    if (btn) btn.innerText = type === 'summary' ? 'Generate Summary Report' : 'Generate Dispute Letter';
+window.handleAuditExport = (type) => {
+  if (type === 'summary') {
+    // Immediate generation for summary
+    generatePDF('summary');
+  } else {
+    // Open modal for dispute
+    const m = document.getElementById('patient-modal');
+    if (m) {
+      m.style.display = 'flex';
+      m.dataset.reportType = 'dispute';
+      const btn = document.getElementById('btn-generate-final');
+      if (btn) btn.innerText = 'Finalize Dispute Letter';
+    }
   }
 };
+
 window.closePatientModal = () => { const m = document.getElementById('patient-modal'); if(m) m.style.display='none'; };
 
-// ── PDF Generator Engine (v3.2) ──────────────────────────────────────────────
-async function generatePDF() {
+// ── PDF Generator Engine (v3.3) ──────────────────────────────────────────────
+async function generatePDF(forcedType = null) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-  const type = document.getElementById('patient-modal').dataset.reportType;
+  const type = forcedType || document.getElementById('patient-modal').dataset.reportType;
   
   const pInfo = {
-    first:    document.getElementById('p-first').value || 'N/A',
-    last:     document.getElementById('p-last').value || 'N/A',
-    hospital: document.getElementById('p-hospital').value || 'Facility',
-    account:  document.getElementById('p-account').value || 'N/A',
-    ins:      document.getElementById('p-insurance').value || 'N/A',
-    date:     document.getElementById('p-date').value || new Date().toLocaleDateString()
+    first:    document.getElementById('p-first')?.value || 'N/A',
+    last:     document.getElementById('p-last')?.value || 'N/A',
+    hospital: document.getElementById('p-hospital')?.value || 'Facility',
+    account:  document.getElementById('p-account')?.value || 'N/A',
+    ins:      document.getElementById('p-insurance')?.value || 'N/A',
+    date:     document.getElementById('p-date')?.value || new Date().toLocaleDateString()
   };
 
   // Shared Data

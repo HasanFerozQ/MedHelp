@@ -24,6 +24,27 @@ const INLINE_BENCHMARK = {
   '36415': { price: 3.09,    desc: 'Venipuncture (blood draw)' },
 };
 
+/** Precise NCCI Pairs for Simple Tab parity */
+const NCCI_PAIRS = {
+  '36415': new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215','99221','99222','99223','99281','99282','99283','99284','99285']),
+  '94760': new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215']),
+  '85025': new Set(['80048', '80053','99202','99203','99204','99205','99211','99212','99213','99214','99215']),
+  '99070': new Set(['10000','12001','27447','27130','43239','45378','69210']),
+};
+
+/** Frequency Rules (MUE) for Simple Tab */
+const MUE_LIMITS = {
+  '90837': 1, '99214': 1, '99215': 1, '36415': 1, '94760': 1, '93000': 1,
+};
+
+const DRG_BASE_RATE = 10000;
+const DRG_BENCHMARKS = {
+  '470': { weight: 1.5,  desc: 'Major Joint Replacement' },
+  '193': { weight: 0.9,  desc: 'Simple Pneumonia' },
+  '392': { weight: 0.7,  desc: 'Esophagitis / Digestive Disorders' },
+  '291': { weight: 1.1,  desc: 'Heart Failure' },
+};
+
 async function loadCPTData() {
   try {
     const res = await fetch('../../data/cpt_medicare_prices.json');
@@ -39,29 +60,36 @@ function getBenchmark(code) {
   return INLINE_BENCHMARK[code] || null;
 }
 
+function isValidCPT(code) {
+  const n = parseInt(code, 10);
+  return n >= 10000 && n <= 99999;
+}
 
 function extractCodesWithCharges(text) {
   const lines = text.split('\n');
   const results = [];
   
-  // Scoped regex to avoid global flag issues and lastIndex pollution
-  const cptRegex = /\b(\d{5})(?:-([A-Z0-9]{2}))?\b/g;
-  const dollarRegex = /\$\s*(\d+(?:\.\d{2})?)/g;
+  const codeRegex    = /\b([1-9]\d{4}|[1-9]\d{2})(?:-([A-Z0-9]{2}))?\b/g;
+  const dollarRegex  = /\$\s*(\d+(?:\.\d{2})?)/g;
+  const dateRegex    = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
 
   lines.forEach(line => {
-    // 1. Find all CPT codes on this line
-    const cptsOnLine = [...line.matchAll(cptRegex)].map(m => ({
-      code: m[1],
-      modifier: m[2] || null,
-      charge: null,
-      rawLine: line.trim()
-    }));
+    const dates = line.match(dateRegex);
+    const codesOnLine = [...line.matchAll(codeRegex)]
+      .map(m => ({
+        code: m[1],
+        modifier: m[2] || null,
+        charge: null,
+        date: dates ? dates[0] : 'UNDATED',
+        isDRG: m[1].length === 3,
+        rawLine: line.trim()
+      }))
+      // Elite Fix: Filter 5-digit codes that aren't in CPT range (ZIPs/Phone noise)
+      .filter(it => it.isDRG || isValidCPT(it.code));
 
-    // 2. Find all dollar amounts on this line
     const dollarsOnLine = [...line.matchAll(dollarRegex)].map(m => parseFloat(m[1]));
 
-    // 3. Map amounts to codes (1-to-1 if possible, otherwise first-available)
-    cptsOnLine.forEach((item, idx) => {
+    codesOnLine.forEach((item, idx) => {
       if (dollarsOnLine[idx] !== undefined) {
         item.charge = dollarsOnLine[idx];
       }
@@ -72,15 +100,13 @@ function extractCodesWithCharges(text) {
   return results;
 }
 
-
 function flagOvercharge(charged, medicare) {
   if (!charged || !medicare) return { flag: 'UNKNOWN', color: '#64748b' };
-  
   const ratio = charged / medicare;
-  if (ratio > 3.0) return { flag: 'EXTREME', color: '#dc2626' }; // Red
-  if (ratio > 2.0) return { flag: 'HIGH', color: '#ea580c' }; // Orange
-  if (ratio > 1.5) return { flag: 'MODERATE', color: '#ca8a04' }; // Yellow
-  return { flag: 'FAIR', color: '#16a34a' }; // Green
+  if (ratio > 3.0) return { flag: 'EXTREME', color: '#dc2626' };
+  if (ratio > 2.0) return { flag: 'HIGH', color: '#ea580c' };
+  if (ratio > 1.5) return { flag: 'MODERATE', color: '#ca8a04' };
+  return { flag: 'FAIR', color: '#16a34a' };
 }
 
 let latestFindings = [];
@@ -91,26 +117,42 @@ function renderAuditResults(findings) {
   container.classList.remove('hidden');
   
   if (findings.length === 0) {
-    container.innerHTML = '<div class="empty-state">No CPT medical codes found in your text.</div>';
+    container.innerHTML = '<div class="empty-state">No CPT/DRG medical codes found in your text.</div>';
     return;
   }
   
-  // Basic Rule Engine for Simple Tab
+  // Rule Registry
   const dupMap = {};
-  findings.forEach(f => { if (f.code) dupMap[f.code] = (dupMap[f.code] || 0) + 1; });
+  const freqMap = {};
+  findings.forEach(f => {
+    const key = `${f.date}|${f.code}`;
+    if (f.code && !f.isDRG) {
+      dupMap[key] = (dupMap[key] || 0) + 1;
+      freqMap[key] = (freqMap[key] || 0) + 1;
+    }
+  });
 
   let totalCharged = 0;
   let totalMedicare = 0;
   let html = '<div class="results-list">';
   
   findings.forEach((item, index) => {
-    const priceInfo = getBenchmark(item.code);
+    let priceInfo = null;
+    let medicarePrice = 0;
+    
+    if (item.isDRG) {
+      const db = DRG_BENCHMARKS[item.code] || { weight:1, desc: 'Hospital Service' };
+      priceInfo = { desc: db.desc, price: DRG_BASE_RATE * db.weight };
+    } else {
+      priceInfo = getBenchmark(item.code);
+    }
+
     let medicarePriceDisplay = 'N/A';
     let flagBadge = '';
     let chargeDisplay = '';
     
     if (priceInfo) {
-      const medicarePrice = priceInfo.price;
+      medicarePrice = priceInfo.price;
       medicarePriceDisplay = `$${medicarePrice.toFixed(2)}`;
       
       if (item.charge !== null) {
@@ -126,16 +168,33 @@ function renderAuditResults(findings) {
       chargeDisplay = '---';
     }
 
-    // Rules
+    // Advanced Rule Logic (Sync with audit.js v3.4)
     let warningsHtml = '';
-    if (item.modifier === '59') {
-      warningsHtml += `<div class="upcode-warning"><strong>Modifier -59:</strong> High unbundling risk. Ensure this service was truly separate.</div>`;
+    
+    // 1. Duplicates (Date-aware)
+    const dKey = `${item.date}|${item.code}`;
+    if (!item.isDRG && dupMap[dKey] > 1) {
+      warningsHtml += `<div class="upcode-warning" style="background:#fee2e2; border-color:#fecaca;"><strong>Duplicate Alert:</strong> Multiple entries for ${item.code} on ${item.date}.</div>`;
     }
-    if (item.code && dupMap[item.code] > 1) {
-      warningsHtml += `<div class="upcode-warning" style="background:#fee2e2; border-color:#fecaca;"><strong>Duplicate:</strong> This code appears multiple times in your text.</div>`;
+
+    // 2. NCCI Bundling
+    if (!item.isDRG && NCCI_PAIRS[item.code]) {
+      const pSet = NCCI_PAIRS[item.code];
+      const hasPrimary = findings.some(other => other !== item && other.date === item.date && pSet.has(other.code));
+      if (hasPrimary) {
+        warningsHtml += `<div class="upcode-warning" style="background:#ffedd5; border-color:#fed7aa;"><strong>Bundling Alert:</strong> This service is typically included in the primary visit.</div>`;
+      }
     }
-    if (item.code === '99214' || item.code === '99215') {
-      warningsHtml += `<div class="upcode-warning"><strong>Upcoding Risk:</strong> ${item.code} is frequently overbilled for short visits.</div>`;
+
+    // 3. Frequency Limits (MUE)
+    const limit = MUE_LIMITS[item.code];
+    if (limit && freqMap[dKey] > limit) {
+      warningsHtml += `<div class="upcode-warning" style="background:#fee2e2; border-color:#fecaca;"><strong>Frequency Error:</strong> Billed ${freqMap[dKey]}×. US guidelines limit CPT ${item.code} to ${limit}/day.</div>`;
+    }
+
+    // 4. E&M Upcoding
+    if (item.code === '99214' || item.code === '99215' || item.code === '99285') {
+       warningsHtml += `<div class="upcode-warning"><strong>Upcoding Risk:</strong> High-complexity visit level. Verify documentation supports duration.</div>`;
     }
     
     html += `
@@ -147,8 +206,8 @@ function renderAuditResults(findings) {
         <div class="result-desc">${priceInfo ? priceInfo.desc : 'Unknown medical code'}</div>
         ${warningsHtml}
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 12px; border-top: 1px solid var(--border-light); padding-top: 8px; width: 100%;">
-          <span><b>Charged:</b> ${chargeDisplay}</span>
-          <span><b>Medicare:</b> ${medicarePriceDisplay}</span>
+          <span><b>Billed:</b> ${chargeDisplay}</span>
+          <span><b>Benchmark:</b> ${medicarePriceDisplay}</span>
         </div>
       </div>
     `;
@@ -156,23 +215,22 @@ function renderAuditResults(findings) {
   
   html += '</div>';
   
-  // Add Gamified Header
   if (totalCharged > 0 && totalMedicare > 0) {
     const overcharge = totalCharged - totalMedicare;
     const isOver = overcharge > 0;
     const headerHtml = `
       <div style="background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Estimated Discrepancy</div>
+        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">System Audit Result</div>
         <div style="font-size: 28px; font-weight: 700; color: ${isOver ? '#dc2626' : '#16a34a'}; margin: 4px 0;">
           ${isOver ? '+' : ''}$${overcharge.toFixed(2)}
         </div>
         <div style="font-size: 13px; color: var(--text-muted);">
-          Billed: $${totalCharged.toFixed(2)} vs Medicare: $${totalMedicare.toFixed(2)}
+          Billed: $${totalCharged.toFixed(2)} | Benchmark: $${totalMedicare.toFixed(2)}
         </div>
       </div>
-      <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-        <button class="primary-btn" id="export-csv-btn" style="flex: 1; background-color: var(--bg-primary); color: var(--tint-teal); border: 1px solid var(--tint-teal);">Export to CSV</button>
-        <button class="primary-btn" id="mock-dispute-btn" style="flex: 1; background-color: var(--text-main);">Dispute Letter ($9)</button>
+      <div style="display: flex; gap: 8px; margin-bottom: 24px; padding: 0 4px;">
+        <button class="primary-btn" id="export-csv-btn" style="flex: 1; height: 42px; border-radius: 8px; background-color: var(--bg-primary); color: var(--text-main); border: 1px solid var(--border); font-size: 13px; font-weight: 600;">Download CSV</button>
+        <button class="primary-btn" id="full-audit-link" style="flex: 2; height: 42px; border-radius: 8px; background-color: var(--text-main); color: #fff; border: none; font-size: 13px; font-weight: 700;">Start Advanced Audit</button>
       </div>
     `;
     html = headerHtml + html;
@@ -180,66 +238,47 @@ function renderAuditResults(findings) {
   
   container.innerHTML = html;
 
-  // Listeners for inline inputs
   document.querySelectorAll('.inline-price-input').forEach(input => {
     input.addEventListener('blur', handleInlinePrice);
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') handleInlinePrice(e);
-    });
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleInlinePrice(e); });
   });
 
-  const exportBtn = document.getElementById('export-csv-btn');
-  if (exportBtn) {
-    exportBtn.addEventListener('click', () => {
-      const csvLines = ['Code,Modifier,Description,Charged,Medicare_Price'];
+  document.getElementById('export-csv-btn')?.addEventListener('click', () => {
+      const csvLines = ['Code,Modifier,Description,Billed,Benchmark'];
       latestFindings.forEach(item => {
-        const priceInfo = item.code && cptData ? cptData[item.code] : null;
-        let p = priceInfo ? priceInfo.non_facility_price : 0;
-        let desc = priceInfo ? `"${priceInfo.description.replace(/"/g, '""')}"` : '"Unknown"';
-        csvLines.push(`${item.code},${item.modifier || ''},${desc},${item.charge || 0},${p}`);
+        const pInfo = item.isDRG ? { desc: 'Hospital', price: DRG_BASE_RATE } : getBenchmark(item.code);
+        csvLines.push(`${item.code},${item.modifier || ''},"${(pInfo?.desc||'').replace(/"/g,'')}",${item.charge || 0},${pInfo?.price || 0}`);
       });
-      const csvStr = csvLines.join('\n');
-      const blob = new Blob([csvStr], { type: 'text/csv' });
+      const blob = new Blob([csvLines.join('\n')], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'MediHelp_Now_Audit.csv';
+      const a = Object.assign(document.createElement('a'), { href: url, download: 'MediHelp_Basic_Audit.csv' });
       a.click();
-      URL.revokeObjectURL(url);
-    });
-  }
+  });
 
-  const mockBtn = document.getElementById('mock-dispute-btn');
-  if (mockBtn) {
-    mockBtn.addEventListener('click', () => {
-      alert("Mock Premium Feature: This would launch the jsPDF dispute letter generator and payment gateway.");
-    });
-  }
+  document.getElementById('full-audit-link')?.addEventListener('click', () => {
+    const text = document.getElementById('paste-area').value;
+    localStorage.setItem('mh_pending_audit', text);
+    window.location.href = 'audit.html?action=advanced';
+  });
 }
 
 function handleInlinePrice(e) {
   const val = parseFloat(e.target.value);
   if (!isNaN(val)) {
-    const idx = e.target.dataset.index;
-    latestFindings[idx].charge = val;
+    latestFindings[e.target.dataset.index].charge = val;
     renderAuditResults(latestFindings);
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   loadCPTData();
-  
   const pasteArea = document.getElementById('paste-area');
   const auditBtn = document.getElementById('audit-btn');
-  
-  auditBtn.addEventListener('click', () => {
-    const text = pasteArea.value;
-    if (!text.trim()) return;
-    
-    // Switch UI view
-    document.querySelector('.audit-mode').style.display = 'none';
-    
-    const findings = extractCodesWithCharges(text);
-    renderAuditResults(findings);
-  });
+  if (auditBtn) {
+    auditBtn.addEventListener('click', () => {
+      if (!pasteArea.value.trim()) return;
+      document.querySelector('.audit-mode').style.display = 'none';
+      renderAuditResults(extractCodesWithCharges(pasteArea.value));
+    });
+  }
 });
