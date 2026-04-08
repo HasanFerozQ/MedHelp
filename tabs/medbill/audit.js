@@ -39,16 +39,16 @@ const INLINE_BENCHMARK = {
   '99213': { price: 92.81,   desc: 'Office visit, established, low-moderate' },
   '99214': { price: 134.39,  desc: 'Office visit, established, moderate complexity' },
   '99215': { price: 185.87,  desc: 'Office visit, established, high complexity' },
-  '99221': { price: 109.19,  desc: 'Initial hospital care, low complexity' },
-  '99222': { price: 152.52,  desc: 'Initial hospital care, moderate complexity' },
-  '99223': { price: 220.16,  desc: 'Initial hospital care, high complexity' },
-  '99231': { price: 60.27,   desc: 'Subsequent hospital care, low complexity' },
-  '99232': { price: 90.61,   desc: 'Subsequent hospital care, moderate complexity' },
-  '99233': { price: 119.12,  desc: 'Subsequent hospital care, high complexity' },
-  '99283': { price: 86.07,   desc: 'ED visit, moderate severity' },
-  '99284': { price: 143.54,  desc: 'ED visit, high severity' },
-  '99285': { price: 213.47,  desc: 'ED visit, high severity/high risk' },
-  '99291': { price: 233.82,  desc: 'Critical care, first 30-74 min' },
+  '99221': { price: 74.82,   desc: 'Initial hospital care, low complexity (Facility)' },
+  '99222': { price: 104.91,  desc: 'Initial hospital care, moderate complexity (Facility)' },
+  '99223': { price: 154.63,  desc: 'Initial hospital care, high complexity (Facility)' },
+  '99231': { price: 40.12,   desc: 'Subsequent hospital care, low complexity (Facility)' },
+  '99232': { price: 62.18,   desc: 'Subsequent hospital care, moderate complexity (Facility)' },
+  '99233': { price: 84.55,   desc: 'Subsequent hospital care, high complexity (Facility)' },
+  '99283': { price: 65.40,   desc: 'ED visit, moderate severity (Facility)' },
+  '99284': { price: 112.15,  desc: 'ED visit, high severity (Facility)' },
+  '99285': { price: 178.42,  desc: 'ED visit, high severity/high risk (Facility)' },
+  '99291': { price: 184.20,  desc: 'Critical care, first 30-74 min (Facility)' },
   '93000': { price: 16.58,   desc: 'Electrocardiogram with report (ECG)' },
   '93010': { price: 11.21,   desc: 'ECG interpretation and report' },
   '93306': { price: 232.20,  desc: 'Echocardiography with Doppler' },
@@ -419,6 +419,7 @@ function addWorkspaceRow(data = {}) {
     <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;color:#ef4444;">${(data.owed || 0).toFixed(2)}</td>
     <td><button onclick="this.closest('tr').remove();debouncedAudit();" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:16px;">✕</button></td>
   `;
+  if (data.priceWasDerived) row.dataset.derived = 'true';
   body.appendChild(row);
 }
 
@@ -437,8 +438,12 @@ async function reRunWorkspaceAudit() {
     const total = parseFloat(tds[6].innerText) || 0;
     const paid  = parseFloat(tds[7].innerText) || 0;
     const owed  = parseFloat(tds[8].innerText) || 0;
-    // If price ≈ total/qty we assume it was derived, skip arithmetic check
-    const priceWasDerived = price === 0 || (total > 0 && Math.abs(price - total / qty) < 0.02);
+    // CRITICAL: We only skip arithmetic if the row was originally auto-calculated by the parser.
+    // Manual edits in the workspace should ALWAYS be validated.
+    let priceWasDerived = false;
+    if (tr.dataset.derived === 'true') {
+      priceWasDerived = (price === 0 || (total > 0 && Math.abs(price - total / qty) < 0.02));
+    }
     return {
       idx,
       date:            tds[0].innerText.trim(),
@@ -512,7 +517,7 @@ class BucketAuditor {
   runArithmetic() {
     let lineSum = 0;
     this.rows.forEach((r, idx) => {
-      r.raw.classList.remove('audit-row-error', 'audit-row-warn');
+      if (r.raw) r.raw.classList.remove('audit-row-error', 'audit-row-warn', 'audit-row-info');
       if (r.isTotalRow) return;
       lineSum += r.total;
 
@@ -523,7 +528,7 @@ class BucketAuditor {
           this.addFinding('arithmetic', 'Math Mismatch',
             `${r.code || r.desc}: ${r.qty} × $${r.price.toFixed(2)} = $${expected.toFixed(2)}, but billed $${r.total.toFixed(2)}.`,
             'danger', r.code);
-          r.raw.classList.add('audit-row-error');
+          if (r.raw) r.raw.classList.add('audit-row-error');
           if (r.total > expected) this.addRowSavings(idx, r.total - expected, r.total);
         }
       }
@@ -557,7 +562,7 @@ class BucketAuditor {
       this.addFinding('arithmetic', 'Invoice Total Mismatch',
         `Line items sum to $${this._lineItemSum.toFixed(2)} but invoice total shows $${totalRow.total.toFixed(2)} — a $${diff.toFixed(2)} discrepancy.`,
         'danger');
-      this.addRowSavings(-1, diff, totalRow.total);
+      this.addRowSavings('invoice-total', diff, totalRow.total);
     }
   }
 
@@ -566,8 +571,9 @@ class BucketAuditor {
     const registry = {};
     this.rows.forEach((r, idx) => {
       if (!r.code || r.isTotalRow) return;
-      // Include modifier so -59 bypass attempts are grouped separately
-      const key = `${r.date}|${r.code}|${r.modifier}|${Math.round(r.total * 100)}`;
+      // Use "UNDATED" for missing dates so they don't incorrectly collapse across all empty-date rows
+      const dKey = r.date || 'UNDATED';
+      const key = `${dKey}|${r.code}|${r.modifier}|${Math.round(r.total * 100)}`;
       (registry[key] = registry[key] || []).push({ r, idx });
     });
     Object.values(registry).forEach(entries => {
@@ -577,7 +583,7 @@ class BucketAuditor {
       this.addFinding('duplicate', 'Duplicate Charge',
         `CPT ${label} appears ${entries.length}× on ${r.date || 'same date'} for $${r.total.toFixed(2)} each. Only one is typically payable.`,
         'danger', r.code);
-      entries.forEach(({ r: er }) => er.raw.classList.add('audit-row-error'));
+      entries.forEach(({ r: er }) => { if (er.raw) er.raw.classList.add('audit-row-error'); });
       for (let i = 1; i < entries.length; i++) {
         this.addRowSavings(entries[i].idx, entries[i].r.total, entries[i].r.total);
       }

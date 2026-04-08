@@ -1,19 +1,42 @@
-let cptData = null;
+const INLINE_BENCHMARK = {
+  '99202': { price: 93.15,   desc: 'Office visit, new, low complexity' },
+  '99203': { price: 134.24,  desc: 'Office visit, new, moderate complexity' },
+  '99204': { price: 192.61,  desc: 'Office visit, new, moderate-high complexity' },
+  '99205': { price: 244.01,  desc: 'Office visit, new, high complexity' },
+  '99211': { price: 22.68,   desc: 'Office visit, established, minimal' },
+  '99212': { price: 54.59,   desc: 'Office visit, established, low complexity' },
+  '99213': { price: 92.81,   desc: 'Office visit, established, low-moderate' },
+  '99214': { price: 134.39,  desc: 'Office visit, established, moderate complexity' },
+  '99215': { price: 185.87,  desc: 'Office visit, established, high complexity' },
+  '99221': { price: 74.82,   desc: 'Initial hospital care, low complexity (Facility)' },
+  '99222': { price: 104.91,  desc: 'Initial hospital care, moderate complexity (Facility)' },
+  '99223': { price: 154.63,  desc: 'Initial hospital care, high complexity (Facility)' },
+  '99231': { price: 40.12,   desc: 'Subsequent hospital care, low complexity (Facility)' },
+  '99232': { price: 62.18,   desc: 'Subsequent hospital care, moderate complexity (Facility)' },
+  '99233': { price: 84.55,   desc: 'Subsequent hospital care, high complexity (Facility)' },
+  '99283': { price: 65.40,   desc: 'ED visit, moderate severity (Facility)' },
+  '99284': { price: 112.15,  desc: 'ED visit, high severity (Facility)' },
+  '99285': { price: 178.42,  desc: 'ED visit, high severity/high risk (Facility)' },
+  '99291': { price: 184.20,  desc: 'Critical care, first 30-74 min (Facility)' },
+  '93000': { price: 16.58,   desc: 'Electrocardiogram with report (ECG)' },
+  '93010': { price: 11.21,   desc: 'ECG interpretation and report' },
+  '85025': { price: 7.27,    desc: 'Complete blood count (CBC) with auto diff' },
+  '36415': { price: 3.09,    desc: 'Venipuncture (blood draw)' },
+};
 
 async function loadCPTData() {
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
-
-    const res = await fetch('../../data/cpt_medicare_prices.json', { signal: controller.signal });
-    clearTimeout(timeoutId);
-
+    const res = await fetch('../../data/cpt_medicare_prices.json');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     cptData = await res.json();
-    console.log("CPT Benchmarks loaded locally.");
   } catch (err) {
-    console.warn("Failed to load local CPT data:", err.message);
+    console.warn("Using inline benchmarks (offline fallback).");
   }
+}
+
+function getBenchmark(code) {
+  if (cptData && cptData[code]) return { price: cptData[code].non_facility_price, desc: cptData[code].description };
+  return INLINE_BENCHMARK[code] || null;
 }
 
 
@@ -63,7 +86,7 @@ function flagOvercharge(charged, medicare) {
 let latestFindings = [];
 
 function renderAuditResults(findings) {
-  latestFindings = findings; // Store for inline updates
+  latestFindings = findings; 
   const container = document.getElementById('audit-results');
   container.classList.remove('hidden');
   
@@ -72,45 +95,47 @@ function renderAuditResults(findings) {
     return;
   }
   
+  // Basic Rule Engine for Simple Tab
+  const dupMap = {};
+  findings.forEach(f => { if (f.code) dupMap[f.code] = (dupMap[f.code] || 0) + 1; });
+
   let totalCharged = 0;
   let totalMedicare = 0;
-  
   let html = '<div class="results-list">';
   
   findings.forEach((item, index) => {
-    const priceInfo = item.code && cptData ? cptData[item.code] : null;
-    
+    const priceInfo = getBenchmark(item.code);
     let medicarePriceDisplay = 'N/A';
     let flagBadge = '';
     let chargeDisplay = '';
     
     if (priceInfo) {
-      const medicarePrice = priceInfo.non_facility_price;
+      const medicarePrice = priceInfo.price;
       medicarePriceDisplay = `$${medicarePrice.toFixed(2)}`;
       
       if (item.charge !== null) {
         totalCharged += item.charge;
         totalMedicare += medicarePrice;
-        
         const flag = flagOvercharge(item.charge, medicarePrice);
         flagBadge = `<span class="code-tag" style="background-color: ${flag.color}20; color: ${flag.color}; margin-left: auto;">${flag.flag}</span>`;
         chargeDisplay = `$${item.charge.toFixed(2)}`;
       } else {
-        // Fallback inline input for missing prices
         chargeDisplay = `<input type="number" class="inline-price-input" data-index="${index}" placeholder="Price $" step="0.01">`;
       }
     } else {
       chargeDisplay = '---';
     }
 
-    // Upcoding warning
-    let upcodeWarningHtml = '';
+    // Rules
+    let warningsHtml = '';
+    if (item.modifier === '59') {
+      warningsHtml += `<div class="upcode-warning"><strong>Modifier -59:</strong> High unbundling risk. Ensure this service was truly separate.</div>`;
+    }
+    if (item.code && dupMap[item.code] > 1) {
+      warningsHtml += `<div class="upcode-warning" style="background:#fee2e2; border-color:#fecaca;"><strong>Duplicate:</strong> This code appears multiple times in your text.</div>`;
+    }
     if (item.code === '99214' || item.code === '99215') {
-      upcodeWarningHtml = `
-        <div class="upcode-warning">
-          <strong>Upcoding Alert:</strong> ${item.code} is a high-severity code. Hospitals often use this to overcharge for simple 10-minute visits. Ensure your visit actually required complex medical decision making.
-        </div>
-      `;
+      warningsHtml += `<div class="upcode-warning"><strong>Upcoding Risk:</strong> ${item.code} is frequently overbilled for short visits.</div>`;
     }
     
     html += `
@@ -119,8 +144,8 @@ function renderAuditResults(findings) {
           <span class="code-val">${item.code}${item.modifier ? '-' + item.modifier : ''}</span>
           ${flagBadge}
         </div>
-        <div class="result-desc">${priceInfo ? priceInfo.description : 'Unknown medical code'}</div>
-        ${upcodeWarningHtml}
+        <div class="result-desc">${priceInfo ? priceInfo.desc : 'Unknown medical code'}</div>
+        ${warningsHtml}
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 12px; border-top: 1px solid var(--border-light); padding-top: 8px; width: 100%;">
           <span><b>Charged:</b> ${chargeDisplay}</span>
           <span><b>Medicare:</b> ${medicarePriceDisplay}</span>
