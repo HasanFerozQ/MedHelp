@@ -88,6 +88,32 @@ const HIGH_COMPLEXITY_EM = {
 // Modifiers that legitimize E&M billing during global surgical period
 const GLOBAL_PERIOD_OK_MODS = new Set(['24', '25', '57']);
 
+/**
+ * NCCI Bundling Rules (v3.2)
+ * Maps 'Secondary Code' -> {primaryCategory, label}
+ * If secondary is billed with any code in primaryCategory on same day, it is bundled.
+ */
+const NCCI_BUNDLES = {
+  '36415': { primary: 'E&M / Medicine', label: 'Venipuncture (Blood Draw)' },
+  '94760': { primary: 'E&M / Medicine', label: 'Pulse Oximetry' },
+  '99070': { primary: 'Surgery',         label: 'Medical Supplies' },
+  '69210': { primary: 'E&M / Medicine', label: 'Earwax Removal' },
+  '85025': { primary: 'Pathology/Lab',   label: 'CBC (if CMP/BMP also billed)' },
+};
+
+/**
+ * DRG (Institutional) Benchmarks (v3.2)
+ * Base Rate: $10,000 (US National Commercial Average)
+ */
+const DRG_BASE_RATE = 10000;
+const DRG_BENCHMARKS = {
+  '470': { weight: 1.5,  desc: 'Major Joint Replacement (Lower Limb)' },
+  '193': { weight: 0.9,  desc: 'Simple Pneumonia & Pleurisy' },
+  '392': { weight: 0.7,  desc: 'Esophagitis / Digestive Disorders' },
+  '291': { weight: 1.1,  desc: 'Heart Failure & Shock' },
+  '871': { weight: 1.8,  desc: 'Septicemia without MV >96 hours' },
+};
+
 function isSurgeryCode(code) {
   const n = parseInt(code, 10);
   return n >= 10000 && n <= 69999;
@@ -320,18 +346,22 @@ const TOTAL_ROW_RE = /\b(grand total|total due|amount due|balance due|total char
 
 function extractRowsFromRawLine(line) {
   const dateRegex  = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
-  const codeRegex  = /\b([1-9]\d{4})(?:-([A-Z0-9]{1,2}))?\b/g;
+  const codeRegex  = /\b([1-9]\d{4}|[1-9]\d{2})(?:-([A-Z0-9]{1,2}))?\b/g;
   const moneyRegex = /(?:^|\s|\$)\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2})?)(?=\s|$)/g;
 
   // 1. Extract Date and Code early
   const dates = line.match(dateRegex);
   const rawCodes   = [...line.matchAll(codeRegex)];
-  const validCodes = rawCodes.filter(m => isValidCPT(m[1]));
-  const code       = validCodes.length > 0 ? validCodes[0][1] : '';
-  const modifier   = validCodes.length > 0 && validCodes[0][2] ? validCodes[0][2] : '';
+  
+  // Distinguish CPT (5-digit) vs DRG (3-digit)
+  const validCPTs = rawCodes.filter(m => m[1].length === 5 && isValidCPT(m[1]));
+  const validDRGs = rawCodes.filter(m => m[1].length === 3);
+
+  const code       = (validCPTs.length > 0) ? validCPTs[0][1] : (validDRGs.length > 0 ? validDRGs[0][1] : '');
+  const modifier   = (validCPTs.length > 0 && validCPTs[0][2]) ? validCPTs[0][2] : '';
+  const isDRG      = code.length === 3;
 
   // 2. SCRUB: Remove dates and codes from a work copy before finding money
-  // This prevents CPT Collision (5-digit code matched as a huge amount)
   let scrubberLine = line;
   if (dates) dates.forEach(d => scrubberLine = scrubberLine.replace(d, ' '));
   rawCodes.forEach(c => scrubberLine = scrubberLine.replace(c[0], ' '));
@@ -351,7 +381,8 @@ function extractRowsFromRawLine(line) {
     date:            dates ? dates[0] : '',
     code,
     modifier,
-    desc:            desc || 'Medical Service',
+    isDRG,
+    desc:            desc || (isDRG ? 'Hospital Stay' : 'Medical Service'),
     qty:             parsed.qty || 1,
     price:           parsed.price,
     total:           parsed.total,
@@ -464,6 +495,8 @@ async function reRunWorkspaceAudit() {
   const engine = new BucketAuditor(rows, multiplier, npis);
   engine.runArithmetic();
   engine.runInvoiceSumCheck();
+  engine.runBundling();
+  engine.runDRGAudit();
   engine.runDuplicates();
   engine.runConsistency();
   engine.runSemantic();
@@ -474,6 +507,8 @@ async function reRunWorkspaceAudit() {
   engine.finalizeDeduplication();
 
   const confidence = engine.computeConfidence();
+  currentEngineFindings = engine.findings; // Save for PDF
+  currentEngineSavings  = engine.potentialSavings;
   renderCategorizedFindings(engine.findings, results, rows.length, rows, engine.potentialSavings, engine.totalBenchmark, confidence);
 }
 
@@ -552,6 +587,52 @@ class BucketAuditor {
       }
     });
     this._lineItemSum = lineSum;
+  }
+
+  // ── LAYER 1D — Clinical Bundling (NCCI) ──────────────────────────────────
+  runBundling() {
+    this.rows.forEach((r, idx) => {
+      if (!r.code || r.isDRG || r.isTotalRow) return;
+      const rule = NCCI_BUNDLES[r.code];
+      if (!rule) return;
+
+      // Look for primary category match on same date
+      const hasPrimary = this.rows.some(other => {
+        if (other.idx === r.idx || other.date !== r.date) return false;
+        return classifyCPT(other.code) === rule.primary;
+      });
+
+      if (hasPrimary) {
+        this.addFinding('bundling', 'Bundled Service Detected',
+          `${rule.label} (CPT ${r.code}) is typically bundled into the primary ${rule.primary} service on the same date. It should not be billed separately.`,
+          'danger', r.code);
+        if (r.raw) r.raw.classList.add('audit-row-error');
+        this.addRowSavings(idx, r.total, r.total);
+      }
+    });
+  }
+
+  // ── LAYER 1E — Institutional DRG Audit ───────────────────────────────────
+  runDRGAudit() {
+    this.rows.forEach((r, idx) => {
+      if (!r.isDRG || r.total <= 0) return;
+      
+      const bench = DRG_BENCHMARKS[r.code];
+      const weight = bench ? bench.weight : 1.0;
+      const expected = DRG_BASE_RATE * weight;
+      
+      if (r.total > expected * 2.0) {
+        this.addFinding('benchmark', 'Excessive Hospital Charge (DRG)',
+          `Institutional DRG ${r.code}${bench ? ` (${bench.desc})` : ''} billed at $${r.total.toFixed(2)} is extreme relative to the US Base Rate of $${expected.toFixed(2)}. Possible "revenue code" padding or severity-level upcoding.`,
+          'danger', r.code);
+        if (r.raw) r.raw.classList.add('audit-row-error');
+        this.addRowSavings(idx, r.total - expected, r.total);
+      } else if (r.total > expected * 1.5) {
+        this.addFinding('benchmark', 'High DRG Variance',
+          `Institutional DRG ${r.code} exceeds national benchmark. Verify if this hospital is in a high-cost outlier category.`,
+          'warn', r.code);
+      }
+    });
   }
 
   runInvoiceSumCheck() {
@@ -832,6 +913,7 @@ const CATEGORY_META = {
   modifier:     { label: '🔖 Modifier Audit',      color: '#fb923c' },
   benchmark:    { label: '💰 Benchmark Pricing',   color: '#34d399' },
   date_sanity:  { label: '📅 Date Validation',     color: '#f43f5e' },
+  bundling:     { label: '🔗 Bundling Audit',      color: '#ec4899' },
 };
 
 function renderCategorizedFindings(findings, container, count, rows, savings, benchmark, confidence) {
@@ -918,10 +1000,12 @@ function renderCategorizedFindings(findings, container, count, rows, savings, be
   }
 
   // Export button
+  // Advanced Action Bar
   html += `
-    <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-      <button onclick="exportAuditCSV()" class="btn btn-ghost" style="font-size:12px;">📥 Export CSV</button>
-      <button onclick="openPatientModal()" class="btn btn-primary" style="font-size:12px;">📄 Generate Report</button>
+    <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:20px;">
+      <button onclick="exportAuditCSV()" class="btn btn-ghost" style="font-size:12px;flex:1;min-width:120px;">📥 Export CSV</button>
+      <button onclick="openPatientModal('summary')" class="btn btn-secondary" style="font-size:12px;flex:1;min-width:160px;background:var(--bg-primary);color:var(--text-main);border:1px solid var(--border);">📊 Summary Report</button>
+      <button onclick="openPatientModal('dispute')" class="btn btn-primary" style="font-size:12px;flex:1;min-width:200px;">📝 Auto-Draft Dispute Letter</button>
     </div>`;
 
   container.innerHTML = html;
@@ -938,8 +1022,132 @@ function clearAudit() {
 window.clearAudit = clearAudit;
 window.reRunWorkspaceAudit = reRunWorkspaceAudit;
 
-window.openPatientModal  = () => { const m = document.getElementById('patient-modal'); if(m) m.style.display='flex'; };
+window.openPatientModal  = (type) => {
+  const m = document.getElementById('patient-modal');
+  if (m) {
+    m.style.display = 'flex';
+    m.dataset.reportType = type; // 'summary' or 'dispute'
+    const btn = document.getElementById('btn-generate-final');
+    if (btn) btn.innerText = type === 'summary' ? 'Generate Summary Report' : 'Generate Dispute Letter';
+  }
+};
 window.closePatientModal = () => { const m = document.getElementById('patient-modal'); if(m) m.style.display='none'; };
+
+// ── PDF Generator Engine (v3.2) ──────────────────────────────────────────────
+async function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const type = document.getElementById('patient-modal').dataset.reportType;
+  
+  const pInfo = {
+    first:    document.getElementById('p-first').value || 'N/A',
+    last:     document.getElementById('p-last').value || 'N/A',
+    hospital: document.getElementById('p-hospital').value || 'Facility',
+    account:  document.getElementById('p-account').value || 'N/A',
+    ins:      document.getElementById('p-insurance').value || 'N/A',
+    date:     document.getElementById('p-date').value || new Date().toLocaleDateString()
+  };
+
+  // Shared Data
+  const findings = currentEngineFindings; // We'll need to store this globally or pass it
+  const savings  = currentEngineSavings;
+
+  if (type === 'dispute') {
+    renderDisputeLetter(doc, pInfo, findings, savings);
+  } else {
+    renderSummaryReport(doc, pInfo, findings, savings);
+  }
+
+  doc.save(`MediHelp_${type === 'dispute'?'Dispute':'Audit'}_${pInfo.last}.pdf`);
+  closePatientModal();
+}
+
+/** Formal Letter addressed to Payer/Provider */
+function renderDisputeLetter(doc, p, findings, savings) {
+  doc.setFontSize(10);
+  doc.text(new Date().toLocaleDateString(), 20, 20);
+  doc.setFont("helvetica", "bold");
+  doc.text(`TO: Billing Department / Claims Administrator`, 20, 35);
+  doc.text(`${p.hospital}`, 20, 40);
+  
+  doc.setFontSize(12);
+  doc.text(`RE: FORMAL BILLING DISPUTE & REQUEST FOR RECONSIDERATION`, 20, 55);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Patient Name: ${p.first} ${p.last}`, 20, 65);
+  doc.text(`Account/Invoice: ${p.account} | Insurance ID: ${p.ins}`, 20, 70);
+  doc.text(`Statement Date: ${p.date}`, 20, 75);
+
+  let y = 90;
+  const body = `I am writing to formally dispute the charges on the above-referenced invoice. Based on a clinical audit of the itemized statement, I have identified several billing irregularities and potential coding errors that require immediate correction.`;
+  const splitBody = doc.splitTextToSize(body, 170);
+  doc.text(splitBody, 20, y);
+  y += (splitBody.length * 6) + 10;
+
+  doc.setFont("helvetica", "bold");
+  doc.text(`SPECIFIC REASONS FOR DISPUTE:`, 20, y);
+  y += 8;
+  doc.setFont("helvetica", "normal");
+
+  findings.forEach(f => {
+    if (y > 270) { doc.addPage(); y = 20; }
+    const line = `• [${f.category.toUpperCase()}] ${f.title}: ${f.detail}`;
+    const splitLine = doc.splitTextToSize(line, 160);
+    doc.text(splitLine, 25, y);
+    y += (splitLine.length * 5) + 4;
+  });
+
+  y += 10;
+  const demand = `Please review these findings and provide an adjusted statement reflecting the corrected amounts within 30 days. I request that no further collection activity occur while this bill is under active dispute.`;
+  const splitDemand = doc.splitTextToSize(demand, 170);
+  doc.text(splitDemand, 20, y);
+  
+  y += 30;
+  doc.text(`Sincerely,`, 20, y);
+  doc.text(`___________________________`, 20, y + 10);
+  doc.text(`${p.first} ${p.last}`, 20, y + 15);
+}
+
+/** Technical Audit Summary */
+function renderSummaryReport(doc, p, findings, savings) {
+  doc.setFontSize(18);
+  doc.setTextColor(34, 197, 94); // Green
+  doc.text("MediHelp Clinical Audit Summary", 20, 25);
+  
+  doc.setFontSize(10);
+  doc.setTextColor(100);
+  doc.text(`Patient: ${p.first} ${p.last} | Facility: ${p.hospital}`, 20, 35);
+  doc.line(20, 40, 190, 40);
+
+  doc.setFontSize(12);
+  doc.setTextColor(0);
+  doc.text(`Summary of Clinical Findings`, 20, 50);
+  
+  const tableData = findings.map(f => [
+    f.category,
+    f.title,
+    f.detail.substring(0, 100) + (f.detail.length > 100 ? '...' : '')
+  ]);
+
+  doc.autoTable({
+    startY: 55,
+    head: [['Category', 'Issue', 'Description']],
+    body: tableData,
+    theme: 'striped',
+    headStyles: { fillStyle: [34, 197, 94] }
+  });
+
+  const finalY = doc.lastAutoTable.finalY + 20;
+  doc.setFontSize(14);
+  doc.setFont("helvetica", "bold");
+  doc.text(`Potential Recovery: $${savings.toFixed(2)}`, 20, finalY);
+}
+
+// Global store for PDF generators
+let currentEngineFindings = [];
+let currentEngineSavings  = 0;
+
+document.getElementById('btn-generate-final')?.addEventListener('click', generatePDF);
 
 window.exportAuditCSV = function() {
   const trs  = document.querySelectorAll('#workspace-body tr');
