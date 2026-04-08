@@ -87,21 +87,51 @@ function switchTab(tabId, btn) {
 // 6. MediHelp Global Namespace & Advanced Fetch (v4.6)
 const MediHelp = {
   fetchBlogs: async function() {
-    console.log('MediHelp: Fetching authoritative blog content...');
-    if (!window.dbClient) {
-      console.warn('MediHelp: dbClient not initialized. Returning fallback.');
-      return [];
-    }
+    console.log('MediHelp: Fetching authoritative blog content from local storage...');
     try {
-      const { data, error } = await window.dbClient
-        .from('blogs')
-        .select('*')
-        .order('date', { ascending: false });
+      // 1. Fetch manifest
+      const mRes = await fetch('blog/manifest.json');
+      if (!mRes.ok) throw new Error('Manifest not found');
+      const manifest = await mRes.json();
       
-      if (error) throw error;
-      return data || [];
+      // 2. Fetch all posts in parallel
+      const postPromises = manifest.posts.map(async (filename) => {
+        try {
+          const pRes = await fetch(`blog/${filename}`);
+          if (!pRes.ok) return null;
+          const raw = await pRes.text();
+          
+          // 3. Parse YAML Frontmatter (Regex)
+          const fmMatch = raw.match(/^---\n([\s\S]+?)\n---/);
+          if (!fmMatch) return null;
+          
+          const meta = {};
+          fmMatch[1].split('\n').forEach(line => {
+            const [key, ...valParts] = line.split(':');
+            if (key && valParts.length > 0) {
+              meta[key.trim()] = valParts.join(':').trim().replace(/^["']|["']$/g, '');
+            }
+          });
+
+          return {
+            ...meta,
+            slug: filename.replace('.md', ''),
+            raw: raw,
+            date: meta.date ? new Date(meta.date) : new Date(0)
+          };
+        } catch (e) {
+          console.error(`MediHelp: Failed to load ${filename}`, e);
+          return null;
+        }
+      });
+
+      const posts = (await Promise.all(postPromises))
+        .filter(p => p !== null)
+        .sort((a, b) => b.date - a.date);
+
+      return posts;
     } catch (err) {
-      console.error('MediHelp: Blog fetch failed:', err);
+      console.error('MediHelp: Blog restoration failed:', err);
       return [];
     }
   },
