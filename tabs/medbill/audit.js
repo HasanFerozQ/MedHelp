@@ -135,8 +135,13 @@ const NCCI_LABELS = {
   '36415': 'Venipuncture (Blood Draw)',
   '94760': 'Pulse Oximetry',
   '99070': 'Medical Supplies',
-  '85025': 'CBC (duplicated by CMP/BMP)',
+  '85025': 'CBC (bundled into primary visit or panel)',
 };
+
+/** Facility Professional Adjustment (Physicians in hospitals bill ~75-80% of office rate) */
+const FACILITY_PROF_MULT = 0.78;
+
+const NPPES_API = 'https://npiregistry.cms.hhs.gov/api/v2.0/?number=';
 
 /**
  * DRG (Institutional) Benchmarks (v3.2)
@@ -446,6 +451,8 @@ function runAudit(input, detectedNPIs = []) {
 
   const rows = Array.isArray(input) ? input : extractRowsFromText(input || '');
   workspace.style.display = 'block';
+  const sidebar = document.getElementById('billing-context-sidebar');
+  if (sidebar) sidebar.style.display = 'block';
 
   if (rows.length === 0) {
     addWorkspaceRow();
@@ -528,8 +535,10 @@ async function reRunWorkspaceAudit() {
   const multiplier = parseFloat(document.getElementById('payer-type')?.value) || 2.5;
   const npiData    = document.getElementById('audit-workspace-container')?.dataset.npis;
   const npis       = npiData ? JSON.parse(npiData) : [];
+  const gpci       = parseFloat(document.getElementById('gpci-region')?.value || '1.0');
+  const isFacility = document.getElementById('facility-type')?.value === 'hospital';
 
-  const engine = new BucketAuditor(rows, multiplier, npis);
+  const engine = new BucketAuditor(rows, multiplier, npis, gpci, isFacility);
   engine.runArithmetic();
   engine.runInvoiceSumCheck();
   engine.runBundling();
@@ -544,6 +553,7 @@ async function reRunWorkspaceAudit() {
   engine.runModifiers();
   engine.runDateSanity();
   await engine.runDatabaseCheck();
+  await engine.resolveNPIProviders();
   engine.finalizeDeduplication();
 
   const confidence = engine.computeConfidence();
@@ -556,10 +566,12 @@ async function reRunWorkspaceAudit() {
 // BucketAuditor — 3-Layer Validation Engine (v3.0)
 // ══════════════════════════════════════════════════════════════════════════════
 class BucketAuditor {
-  constructor(rows, multiplier = 2.5, npis = []) {
+  constructor(rows, multiplier = 2.5, npis = [], gpci = 1.0, isFacility = false) {
     this.rows             = rows;
     this.multiplier       = multiplier;
     this.npis             = npis;
+    this.gpci             = gpci;
+    this.isFacility       = isFacility;
     this.findings         = [];
     this.potentialSavings = 0;
     this.totalBenchmark   = 0;
@@ -567,6 +579,7 @@ class BucketAuditor {
     this._rowSavings      = {}; // per-row savings tracker for deduplication cap
     this._lineItemSum     = 0;
     this._benchmarkHits   = 0;
+    this._hasReconError   = false;
   }
 
   addFinding(category, title, detail, type = 'warn', codeRef = '') {
@@ -585,7 +598,18 @@ class BucketAuditor {
   }
 
   finalizeDeduplication() {
-    this.potentialSavings = Math.round(this.potentialSavings * 100) / 100;
+    this._benchmarkHits   = 0;
+    this._hasReconError   = false;
+  }
+
+  getBenchmark(code) {
+    let base = INLINE_BENCHMARK[code] || null;
+    if (!base) return null;
+
+    let price = base.price * parseFloat(this.gpci || 1.0);
+    if (this.isFacility) price *= FACILITY_PROF_MULT;
+
+    return { price, desc: base.desc };
   }
 
   // ── LAYER 1 — Arithmetic Accuracy ────────────────────────────────────────
@@ -629,32 +653,134 @@ class BucketAuditor {
     this._lineItemSum = lineSum;
   }
 
-  // ── LAYER 1D — Clinical Bundling (NCCI) ──────────────────────────────────
-  runBundling() {
+  // ── LAYER 1E — Duplicate Detection ───────────────────────────────────────
+  runDuplicates() {
+    const registry = {};
     this.rows.forEach((r, idx) => {
-      if (!r.code || r.isDRG || r.isTotalRow) return;
-      const primarySet = NCCI_PAIRS[r.code];
-      if (!primarySet) return;
-
-      const dateKey = r.date || 'UNDATED';
-
-      // Look for specific primary code match on same date
-      const hasPrimary = this.rows.some(other => {
-        if (other === r) return false; // Identity check fix
-        const oDateKey = other.date || 'UNDATED';
-        if (oDateKey !== dateKey) return false;
-        return primarySet.has(other.code);
-      });
-
-      if (hasPrimary) {
-        const label = NCCI_LABELS[r.code] || `Service ${r.code}`;
-        this.addFinding('bundling', 'Bundled Service Detected',
-          `${label} is typically bundled into the primary code on the same date. It should not be billed separately.`,
-          'danger', r.code);
-        if (r.raw) r.raw.classList.add('audit-row-error');
-        this.addRowSavings(idx, r.total, r.total);
+      if (!r.code || r.isTotalRow) return;
+      const dKey = r.date || 'UNDATED';
+      const key = `${dKey}|${r.code}|${r.modifier || ''}`;
+      (registry[key] = registry[key] || []).push({ r, idx });
+    });
+    Object.values(registry).forEach(entries => {
+      if (entries.length < 2) return;
+      const { r } = entries[0];
+      const label = r.code + (r.modifier ? '-' + r.modifier : '');
+      this.addFinding('duplicate', 'Duplicate Charge',
+        `CPT ${label} appears ${entries.length}× on ${r.date || 'same date'}. Only one is typically payable.`,
+        'danger', r.code);
+      entries.forEach(({ r: er }) => { if (er.raw) er.raw.classList.add('audit-row-error'); });
+      for (let i = 1; i < entries.length; i++) {
+        this.addRowSavings(entries[i].idx, entries[i].r.total, entries[i].r.total);
       }
     });
+  }
+
+  // ── LAYER 1F — Frequency (MUE) ───────────────────────────────────────────
+  runFrequencyAudit() {
+    const freq = {};
+    this.rows.forEach((r, idx) => {
+      if (!r.code || r.isTotalRow) return;
+      const key = `${r.date || 'UNDATED'}|${r.code}`;
+      freq[key] = (freq[key] || []);
+      freq[key].push({ r, idx });
+    });
+    Object.entries(freq).forEach(([key, entries]) => {
+      const code = entries[0].r.code;
+      const limit = MUE_LIMITS[code];
+      if (!limit) return;
+      
+      // Calculate total units (sum of qty)
+      const totalUnits = entries.reduce((s, e) => s + (e.r.qty || 1), 0);
+      
+      if (totalUnits > limit) {
+        const date = entries[0].r.date || 'same date';
+        this.addFinding('frequency', 'Frequency Limit Exceeded (MUE)',
+          `CPT ${code} billed ${totalUnits}× units on ${date}. US Medicare guidelines limit this code to ${limit}/day. Excess units are non-payable.`,
+          'danger', code);
+        
+        // Potential savings logic: 
+        // If it's multiple rows, save the excess rows. 
+        // If it's one row with high qty, we'd need a different savings approach, 
+        // but typically rows are duplicated in text bills.
+        for (let i = 1; i < entries.length; i++) {
+           if (i >= limit) this.addRowSavings(entries[i].idx, entries[i].r.total, entries[i].r.total);
+        }
+      }
+    });
+  }
+
+  // ── LAYER 1G — Financial Reconciliation ──────────────────────────────────
+  runFinancialSummaryAudit() {
+    const totalBilled = this.rows.filter(r => !r.isTotalRow).reduce((s, r) => s + r.total, 0);
+    const totalPaid   = this.rows.filter(r => !r.isTotalRow).reduce((s, r) => s + r.paid, 0);
+    const totalOwed   = this.rows.filter(r => !r.isTotalRow).reduce((s, r) => s + r.owed, 0);
+    
+    // Gap check
+    const reconSum = Math.round((totalPaid + totalOwed) * 100) / 100;
+    const gap = Math.abs(totalBilled - reconSum);
+    
+    if (totalPaid > totalBilled * 1.05 && totalPaid > 100) {
+      this._hasReconError = true;
+      this.addFinding('financial', 'Insurance Overpayment Detected',
+        `Total insurance paid ($${totalPaid.toFixed(2)}) exceeds total billed ($${totalBilled.toFixed(2)}). This signals a critical audit error or billing fraud.`,
+        'danger');
+    }
+    
+    if (totalOwed < -0.01) {
+      this._hasReconError = true;
+      this.addFinding('financial', 'Negative Patient Balance',
+        `Patient total responsibility is negative ($${totalOwed.toFixed(2)}). This indicates you are owed a refund for previous overpayments.`,
+        'danger');
+    }
+    
+    if (gap > 100 && gap > totalBilled * 0.10) {
+       this._hasReconError = true;
+       this.addFinding('financial', 'Responsibility Reconciliation Gap',
+         `Billed ($${totalBilled.toFixed(2)}) does not balance with Paid+Owed ($${reconSum.toFixed(2)}). A $${gap.toFixed(2)} discrepancy suggests missing contractual adjustments or unrecorded payments.`,
+         'warn');
+    }
+  }
+
+  // ── LAYER 1H — Clinical Compatibility ────────────────────────────────────
+  runClinicalCompatibilityAudit() {
+    const fullDesc = this.rows.map(r => r.desc).join(' ');
+    CLINICAL_RED_FLAGS.forEach(({ code, keywords, label }) => {
+      const hasCode = this.rows.some(r => r.code === code);
+      if (!hasCode) return;
+      const hasKeyword = keywords.some(kw => new RegExp(kw, 'i').test(fullDesc));
+      if (!hasKeyword && fullDesc.length > 50) {
+        this.addFinding('compatibility', 'Dx–Procedure Compatibility Warning',
+          `CPT ${code} (${label}) was billed but no matching clinical context was found in the bill description. Verify if the diagnosis supports this procedure.`,
+          'warn', code);
+      }
+    });
+  }
+
+  // ── LAYER 1I — Provider Identity (NPI Resolution) ────────────────────────
+  async resolveNPIProviders() {
+    if (this.npis.length === 0) return;
+    const npi = this.npis[0]; // Resolve primary provider
+    try {
+      const res = await fetch(`${NPPES_API}${npi}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.results && data.results.length > 0) {
+        const p = data.results[0];
+        const name = p.basic.organization_name || `${p.basic.first_name} ${p.basic.last_name}`;
+        const specialty = p.taxonomies?.[0]?.desc || 'Medical Professional';
+        
+        const badge = document.getElementById('verified-provider-badge');
+        const text = document.getElementById('provider-name-resolved');
+        if (badge && text) {
+          badge.style.display = 'flex';
+          text.innerHTML = `Verified Provider: <b>${name}</b> (${specialty})`;
+        }
+        this._verifiedProvider = name;
+      }
+    } catch (e) {
+      console.warn("NPI resolution error:", e);
+    }
   }
 
   // ── LAYER 1E — Institutional DRG Audit ───────────────────────────────────
@@ -913,7 +1039,7 @@ class BucketAuditor {
     const withCode = this.rows.filter(r => r.code && !r.isTotalRow).length;
     const codeScore = Math.round((withCode / total) * 25);
     score += codeScore;
-    if (withCode === total)      reasons.push(`All ${total} charges have CPT codes (+${codeScore}`);
+    if (withCode === total)      reasons.push(`All ${total} charges have CPT codes (+${codeScore})`);
     else if (withCode > 0)       reasons.push(`${withCode}/${total} charges have CPT codes (+${codeScore})`);
     else                         reasons.push(`No CPT codes found — very low confidence`);
 
@@ -969,6 +1095,9 @@ const CATEGORY_META = {
   benchmark:    { label: '💰 Benchmark Pricing',   color: '#34d399' },
   date_sanity:  { label: '📅 Date Validation',     color: '#f43f5e' },
   bundling:     { label: '🔗 Bundling Audit',      color: '#ec4899' },
+  frequency:    { label: '📊 Frequency (MUE)',    color: '#f43f5e' },
+  financial:    { label: '⚖️ Financial Integrity', color: '#10b981' },
+  compatibility:{ label: '🩺 Clinical Context',   color: '#06b6d4' },
 };
 
 function renderCategorizedFindings(findings, container, count, rows, savings, benchmark, confidence) {

@@ -95,6 +95,46 @@
         <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
       </div>
 
+      <!-- New: Billing Context Sidebar -->
+      <div id="billing-context-sidebar" style="display:none; margin-bottom: 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
+          <div>
+            <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;">Billing Locality (GPCI)</label>
+            <select id="gpci-region" class="btn btn-ghost" style="width:100%; border:1px solid var(--border); text-align:left; font-size:13px;" onchange="debouncedAudit()">
+              <option value="1.00">National Base Rate (1.00x)</option>
+              <optgroup label="Higher Cost Regions">
+                <option value="1.15">California (SF / Bay Area)</option>
+                <option value="1.12">New York (Manhattan / NYC)</option>
+                <option value="1.08">Washington DC / Baltimore</option>
+                <option value="1.06">Massachusetts (Boston)</option>
+                <option value="1.04">Illinois (Chicago)</option>
+              </optgroup>
+              <optgroup label="Standarize Regions">
+                <option value="1.02">Texas (Houston/Dallas)</option>
+                <option value="1.01">Florida (Miami/Orlando)</option>
+                <option value="1.00">Georgia (Atlanta)</option>
+              </optgroup>
+              <optgroup label="Lower Cost Regions">
+                <option value="0.95">Ohio / Michigan</option>
+                <option value="0.92">Alabama / Mississippi</option>
+                <option value="0.88">Puerto Rico</option>
+              </optgroup>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;">Facility Setting</label>
+            <select id="facility-type" class="btn btn-ghost" style="width:100%; border:1px solid var(--border); text-align:left; font-size:13px;" onchange="debouncedAudit()">
+              <option value="office">Private Office / Clinic</option>
+              <option value="hospital">Hospital / Surgical Facility</option>
+            </select>
+          </div>
+          <div id="verified-provider-badge" style="display:none; align-items:center; gap:8px; background:var(--bg-secondary); border-radius:8px; padding:8px 12px; border:1px dashed var(--accent);">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+             <div style="font-size:12px; font-weight:600; color:var(--text-main);" id="provider-name-resolved">Resolving Provider...</div>
+          </div>
+        </div>
+      </div>
+
       <div id="audit-paste" class="audit-panel">
         <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; letter-spacing:0.06em; text-transform:uppercase;">Paste bill text or EOB:</label>
         <textarea id="bill-text" class="bill-textarea" placeholder="Paste your medical bill, EOB, or itemized statement here..."></textarea>

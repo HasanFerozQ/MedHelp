@@ -34,7 +34,12 @@ const NCCI_PAIRS = {
 
 /** Frequency Rules (MUE) for Simple Tab */
 const MUE_LIMITS = {
-  '90837': 1, '99214': 1, '99215': 1, '36415': 1, '94760': 1, '93000': 1,
+  '90837': 1, // Psychotherapy 60m
+  '99214': 1, // Office Visit
+  '99215': 1,
+  '36415': 1, // Blood draw
+  '94760': 1, // Pulse Ox
+  '93000': 1, // EKG
 };
 
 const DRG_BASE_RATE = 10000;
@@ -60,9 +65,19 @@ function getBenchmark(code) {
   return INLINE_BENCHMARK[code] || null;
 }
 
-function isValidCPT(code) {
+// ── Strict CPT Validation Logic (v3.5) ──
+function classifyCPT(code) {
   const n = parseInt(code, 10);
-  return n >= 10000 && n <= 99999;
+  if (isNaN(n)) return null;
+  if (n >= 10000 && n <= 69999) return 'Surgery';
+  if (n >= 70000 && n <= 79999) return 'Radiology';
+  if (n >= 80000 && n <= 89999) return 'Pathology/Lab';
+  if (n >= 90000 && n <= 99999) return 'E&M / Medicine';
+  return null;
+}
+
+function isValidCPT(code) {
+  return classifyCPT(code) !== null;
 }
 
 function extractCodesWithCharges(text) {
@@ -79,12 +94,13 @@ function extractCodesWithCharges(text) {
       .map(m => ({
         code: m[1],
         modifier: m[2] || null,
+        qty: (line.match(/qty|units?[:\s]+(\d+)/i) || [null, 1])[1], // Basic qty extraction
         charge: null,
         date: dates ? dates[0] : 'UNDATED',
         isDRG: m[1].length === 3,
         rawLine: line.trim()
       }))
-      // Elite Fix: Filter 5-digit codes that aren't in CPT range (ZIPs/Phone noise)
+      // Elite Fix: Use category-aware filter rather than just range
       .filter(it => it.isDRG || isValidCPT(it.code));
 
     const dollarsOnLine = [...line.matchAll(dollarRegex)].map(m => parseFloat(m[1]));
@@ -117,7 +133,7 @@ function renderAuditResults(findings) {
   container.classList.remove('hidden');
   
   if (findings.length === 0) {
-    container.innerHTML = '<div class="empty-state">No CPT/DRG medical codes found in your text.</div>';
+    container.innerHTML = '<div class="empty-state">No valid medical codes found in your text.</div>';
     return;
   }
   
@@ -125,11 +141,12 @@ function renderAuditResults(findings) {
   const dupMap = {};
   const freqMap = {};
   findings.forEach(f => {
-    const key = `${f.date}|${f.code}`;
-    if (f.code && !f.isDRG) {
-      dupMap[key] = (dupMap[key] || 0) + 1;
-      freqMap[key] = (freqMap[key] || 0) + 1;
-    }
+    if (!f.code) return;
+    const dKey = `${f.date}|${f.code}`;
+    const key = `${f.date}|${f.code}|${f.modifier || ''}`;
+    
+    dupMap[key] = (dupMap[key] || 0) + 1;
+    freqMap[dKey] = (freqMap[dKey] || 0) + (parseInt(f.qty) || 1);
   });
 
   let totalCharged = 0;
@@ -168,13 +185,13 @@ function renderAuditResults(findings) {
       chargeDisplay = '---';
     }
 
-    // Advanced Rule Logic (Sync with audit.js v3.4)
     let warningsHtml = '';
     
-    // 1. Duplicates (Date-aware)
+    // 1. Duplicates (Date + Code + Modifier aware)
     const dKey = `${item.date}|${item.code}`;
-    if (!item.isDRG && dupMap[dKey] > 1) {
-      warningsHtml += `<div class="upcode-warning" style="background:#fee2e2; border-color:#fecaca;"><strong>Duplicate Alert:</strong> Multiple entries for ${item.code} on ${item.date}.</div>`;
+    const key = `${item.date}|${item.code}|${item.modifier || ''}`;
+    if (!item.isDRG && dupMap[key] > 1) {
+      warningsHtml += `<div class="upcode-warning" style="background:#fee2e2; border-color:#fecaca;"><strong>Duplicate Alert:</strong> Multiple entries for ${item.code} detected on ${item.date}.</div>`;
     }
 
     // 2. NCCI Bundling
@@ -182,19 +199,19 @@ function renderAuditResults(findings) {
       const pSet = NCCI_PAIRS[item.code];
       const hasPrimary = findings.some(other => other !== item && other.date === item.date && pSet.has(other.code));
       if (hasPrimary) {
-        warningsHtml += `<div class="upcode-warning" style="background:#ffedd5; border-color:#fed7aa;"><strong>Bundling Alert:</strong> This service is typically included in the primary visit.</div>`;
+        warningsHtml += `<div class="upcode-warning" style="background:#ffedd5; border-color:#fed7aa;"><strong>Bundling Alert:</strong> This service is typically included in the primary visit or metabolic panel.</div>`;
       }
     }
 
     // 3. Frequency Limits (MUE)
     const limit = MUE_LIMITS[item.code];
     if (limit && freqMap[dKey] > limit) {
-      warningsHtml += `<div class="upcode-warning" style="background:#fee2e2; border-color:#fecaca;"><strong>Frequency Error:</strong> Billed ${freqMap[dKey]}×. US guidelines limit CPT ${item.code} to ${limit}/day.</div>`;
+      warningsHtml += `<div class="upcode-warning" style="background:#fee2e2; border-color:#fecaca;"><strong>Frequency Limit:</strong> Billed ${freqMap[dKey]}× units. Medicare typically limits ${item.code} to ${limit}/day.</div>`;
     }
 
     // 4. E&M Upcoding
     if (item.code === '99214' || item.code === '99215' || item.code === '99285') {
-       warningsHtml += `<div class="upcode-warning"><strong>Upcoding Risk:</strong> High-complexity visit level. Verify documentation supports duration.</div>`;
+       warningsHtml += `<div class="upcode-warning"><strong>Review Required:</strong> High-complexity level. Verify documentation supports duration.</div>`;
     }
     
     html += `
