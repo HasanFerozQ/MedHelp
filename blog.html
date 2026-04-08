@@ -176,8 +176,8 @@
             <img class="blog-hero-img" src="${recent.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80'}" alt="${recent.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80'">
             <div class="blog-hero-body">
               <span class="blog-tag">Most Recent · ${recent.category}</span>
-              <h2 style="color:#f8fafc; display:block !important;">${recent.title}</h2>
-              <p style="color:#cbd5e1; display:block !important;">${recent.summary}</p>
+              <h2 style="color:var(--text-h); display:block !important;">${recent.title}</h2>
+              <p style="color:var(--text-body); display:block !important;">${recent.summary}</p>
               <div class="blog-meta">
                 <span>📅 ${new Date(recent.date).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'})}</span>
               </div>
@@ -195,8 +195,8 @@
               <img class="blog-card-img" src="${p.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'}" alt="${p.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
               <div class="blog-card-body">
                 <span class="blog-tag">${p.category}</span>
-                <h3 style="color:#f8fafc; display:block !important;">${p.title}</h3>
-                <p style="color:#cbd5e1; display:block !important;">${(p.summary || '').substring(0, 120)}...</p>
+                <h3 style="color:var(--text-h); display:block !important;">${p.title}</h3>
+                <p style="color:var(--text-body); display:block !important;">${(p.summary || '').substring(0, 120)}...</p>
                 <div class="blog-meta">
                   <span>📅 ${new Date(p.date).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})}</span>
                 </div>
