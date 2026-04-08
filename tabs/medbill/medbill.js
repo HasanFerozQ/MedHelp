@@ -94,13 +94,13 @@ function extractCodesWithCharges(text) {
       .map(m => ({
         code: m[1],
         modifier: m[2] || null,
-        qty: (line.match(/qty|units?[:\s]+(\d+)/i) || [null, 1])[1], // Basic qty extraction
+        qty: (line.match(/(?:qty|units?)[:\s]+(\d+)/i) || [null, 1])[1], // Fixed regex group
         charge: null,
         date: dates ? dates[0] : 'UNDATED',
         isDRG: m[1].length === 3,
         rawLine: line.trim()
       }))
-      // Elite Fix: Use category-aware filter rather than just range
+      // Elite Fix: Use category-aware filter from BucketAuditor standard
       .filter(it => it.isDRG || isValidCPT(it.code));
 
     const dollarsOnLine = [...line.matchAll(dollarRegex)].map(m => parseFloat(m[1]));

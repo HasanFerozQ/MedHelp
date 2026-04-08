@@ -598,8 +598,7 @@ class BucketAuditor {
   }
 
   finalizeDeduplication() {
-    this._benchmarkHits   = 0;
-    this._hasReconError   = false;
+    this.potentialSavings = Math.round(this.potentialSavings * 100) / 100;
   }
 
   getBenchmark(code) {
@@ -699,12 +698,19 @@ class BucketAuditor {
           `CPT ${code} billed ${totalUnits}× units on ${date}. US Medicare guidelines limit this code to ${limit}/day. Excess units are non-payable.`,
           'danger', code);
         
-        // Potential savings logic: 
-        // If it's multiple rows, save the excess rows. 
-        // If it's one row with high qty, we'd need a different savings approach, 
-        // but typically rows are duplicated in text bills.
+        // 1. Handle excess rows
         for (let i = 1; i < entries.length; i++) {
            if (i >= limit) this.addRowSavings(entries[i].idx, entries[i].r.total, entries[i].r.total);
+        }
+
+        // 2. Handle single row with high quantity (v3.8)
+        if (entries.length === 1) {
+          const r = entries[0].r;
+          if (r.qty > limit) {
+             const unitPrice = r.total / r.qty;
+             const excess = r.qty - limit;
+             this.addRowSavings(entries[0].idx, excess * unitPrice, r.total);
+          }
         }
       }
     });
@@ -818,29 +824,7 @@ class BucketAuditor {
     }
   }
 
-  // ── LAYER 2A — Duplicate Detection ───────────────────────────────────────
-  runDuplicates() {
-    const registry = {};
-    this.rows.forEach((r, idx) => {
-      if (!r.code || r.isTotalRow) return;
-      // Use "UNDATED" for missing dates so they don't incorrectly collapse across all empty-date rows
-      const dKey = r.date || 'UNDATED';
-      const key = `${dKey}|${r.code}|${r.modifier || ''}`; // Dropping amount from key to catch same-day duplicate billing with variable pricing
-      (registry[key] = registry[key] || []).push({ r, idx });
-    });
-    Object.values(registry).forEach(entries => {
-      if (entries.length < 2) return;
-      const { r } = entries[0];
-      const label = r.code + (r.modifier ? '-' + r.modifier : '');
-      this.addFinding('duplicate', 'Duplicate Charge',
-        `CPT ${label} appears ${entries.length}× on ${r.date || 'same date'} for $${r.total.toFixed(2)} each. Only one is typically payable.`,
-        'danger', r.code);
-      entries.forEach(({ r: er }) => { if (er.raw) er.raw.classList.add('audit-row-error'); });
-      for (let i = 1; i < entries.length; i++) {
-        this.addRowSavings(entries[i].idx, entries[i].r.total, entries[i].r.total);
-      }
-    });
-  }
+
 
   // ── LAYER 2B — Pricing Consistency ───────────────────────────────────────
   runConsistency() {
@@ -1005,8 +989,9 @@ class BucketAuditor {
 
     // Second: overlay inline benchmark for any code not in Supabase result
     codes.forEach(code => {
-      if (!feeMap[code] && INLINE_BENCHMARK[code]) {
-        feeMap[code] = { price: INLINE_BENCHMARK[code].price };
+      if (!feeMap[code]) {
+        const b = this.getBenchmark(code);
+        if (b) feeMap[code] = { price: b.price };
       }
     });
 
@@ -1074,6 +1059,13 @@ class BucketAuditor {
       score -= 20;
       reasons.push('Significant financial reconciliation gap detected (-20)');
     }
+
+    const missingQty = this.rows.filter(r => !r.qty && !r.isTotalRow).length;
+    if (missingQty > 0) {
+      score -= Math.min(10, missingQty * 2);
+      reasons.push(`Missing quantity data on ${missingQty} lines (-${Math.min(10, missingQty * 2)})`);
+    }
+
     const hardFails = this.findings.filter(f => f.type === 'danger').length;
     if (hardFails > 2) {
       score -= 15;
