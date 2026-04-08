@@ -698,10 +698,7 @@ body {
   transition: var(--transition);
 }
 
-.audit-tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
+/* Audit panel visibility now isolated in audit.html head for zero-bleed */
 
 .bill-textarea {
   width: 100%;

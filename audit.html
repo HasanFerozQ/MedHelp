@@ -7,6 +7,36 @@
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Isolated Bill Audit Styles ── */
+    .audit-panel { display: none !important; }
+    .audit-panel.active { display: block !important; }
+    .audit-tab.active { color: var(--accent) !important; border-bottom-color: var(--accent) !important; }
+  </style>
+  <script>
+    /**
+     * Isolated Tab Switcher for Bill Audit module.
+     * Guaranteed to be available even if external scripts fail to load.
+     */
+    function switchAuditTab(tabId, btn) {
+      if (!btn) return;
+      const area = btn.closest('.audit-area');
+      if (!area) return;
+
+      // 1. Deactivate all buttons in this bar
+      const buttons = area.querySelectorAll('.audit-tab');
+      buttons.forEach(b => b.classList.remove('active'));
+
+      // 2. Deactivate all panels in this container
+      const panels = area.querySelectorAll('.audit-panel');
+      panels.forEach(p => p.classList.remove('active'));
+
+      // 3. Activate selected
+      btn.classList.add('active');
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+    }
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -43,12 +73,12 @@
     <div class="audit-area">
 
       <div class="audit-tabs">
-        <button class="audit-tab active" onclick="switchTab('pdf', this)">📄 Upload PDF</button>
-        <button class="audit-tab" onclick="switchTab('paste', this)">📋 Paste Text</button>
-        <button class="audit-tab" onclick="switchTab('lines', this)">📝 Line Items</button>
+        <button class="audit-tab active" onclick="switchAuditTab('audit-pdf', this)">📄 Upload PDF</button>
+        <button class="audit-tab" onclick="switchAuditTab('audit-paste', this)">📋 Paste Text</button>
+        <button class="audit-tab" onclick="switchAuditTab('audit-lines', this)">📝 Line Items</button>
       </div>
 
-      <div id="audit-pdf" class="audit-panel">
+      <div id="audit-pdf" class="audit-panel active">
         <div class="drop-zone" id="pdf-drop-zone">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
           <p>Drag & Drop Medical Bill PDF here</p>
@@ -65,18 +95,18 @@
         <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
       </div>
 
-      <div id="audit-paste" class="audit-panel" style="display:none;">
+      <div id="audit-paste" class="audit-panel">
         <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; letter-spacing:0.06em; text-transform:uppercase;">Paste bill text or EOB:</label>
-        <textarea id="bill-text" class="bill-textarea" placeholder="Paste your medical bill here..."></textarea>
+        <textarea id="bill-text" class="bill-textarea" placeholder="Paste your medical bill, EOB, or itemized statement here..."></textarea>
         <div class="audit-btn-row">
-          <button class="btn btn-primary" onclick="runAudit()">Analyze Text</button>
-          <button class="btn btn-ghost" onclick="clearAudit()">Clear</button>
+          <button class="btn btn-primary" onclick="runAuditPaste()">Analyze Text</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('bill-text').value='';document.getElementById('audit-results').innerHTML='';">Clear</button>
         </div>
       </div>
 
-      <div id="audit-lines" class="audit-panel" style="display:none;">
-        <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; letter-spacing:0.06em; text-transform:uppercase;">Format: Code $Amount (e.g. 99213 $150.00)</label>
-        <textarea id="line-items-text" class="bill-textarea" placeholder="99213  $150.00&#10;93010  $85.00"></textarea>
+      <div id="audit-lines" class="audit-panel">
+        <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; letter-spacing:0.06em; text-transform:uppercase;">Format: Code[-Modifier] $Amount &nbsp;·&nbsp; One entry per line</label>
+        <textarea id="line-items-text" class="bill-textarea" placeholder="99213  $150.00&#10;93010-59  $85.00&#10;36415  $12.00"></textarea>
         <div class="audit-btn-row">
           <button class="btn btn-primary" onclick="runAuditLines()">Analyze Items</button>
           <button class="btn btn-ghost" onclick="document.getElementById('line-items-text').value=''">Clear</button>
@@ -108,6 +138,7 @@
               <tr style="background: rgba(255,255,255,0.05); text-align: left;">
                 <th style="padding: 12px; border-bottom: 1px solid var(--border);">Date</th>
                 <th style="padding: 12px; border-bottom: 1px solid var(--border);">Code</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border); color: var(--accent);">Mod</th>
                 <th style="padding: 12px; border-bottom: 1px solid var(--border);">Description</th>
                 <th style="padding: 12px; border-bottom: 1px solid var(--border);">Qty</th>
                 <th style="padding: 12px; border-bottom: 1px solid var(--border);">Unit Price</th>
