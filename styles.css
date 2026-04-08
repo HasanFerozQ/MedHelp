@@ -1181,20 +1181,75 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ============================================================
-   RESPONSIVE
+   RESPONSIVE & HAMBURGER (v4.6)
    ============================================================ */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text-h);
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
 @media (max-width: 900px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .blog-hero-post { grid-template-columns: 1fr; }
   .blog-hero-img { height: 240px; }
+  .nav-toggle { display: flex; }
+  
+  .nav-links {
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: var(--bg-body);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    overflow: hidden;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    border-bottom: 0px solid var(--border);
+  }
+
+  .nav-links.active {
+    height: calc(100vh - var(--nav-h));
+    padding-bottom: 80px;
+    border-bottom-width: 1px;
+  }
+
+  .nav-links a {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .nav-toggle.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2) { opacity: 0; }
+  .nav-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 }
 
 @media (max-width: 600px) {
   .tab-panel { padding: 24px 20px 32px; }
   .hero { padding: 40px 0 28px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-  .audit-area { padding: 24px; }
-  .nav-links a { font-size: 13px; padding: 6px 10px; }
+  .audit-area { padding: 16px; border-radius: 0; margin-left: -20px; width: calc(100% + 40px); }
+  .workspace-controls { flex-direction: column; align-items: stretch; }
+}
+
+body {
+  overflow-x: hidden;
 }
 
 /* ============================================================
@@ -1376,21 +1431,77 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ============================================================
-   RESPONSIVE
+   RESPONSIVE & HAMBURGER (v4.6)
    ============================================================ */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text-h);
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
 @media (max-width: 900px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .blog-hero-post { grid-template-columns: 1fr; }
   .blog-hero-img { height: 240px; }
+  .nav-toggle { display: flex; }
+  
+  .nav-links {
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: var(--bg-body);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    overflow: hidden;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    border-bottom: 0px solid var(--border);
+  }
+
+  .nav-links.active {
+    height: calc(100vh - var(--nav-h));
+    padding-bottom: 80px;
+    border-bottom-width: 1px;
+  }
+
+  .nav-links a {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .nav-toggle.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2) { opacity: 0; }
+  .nav-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 }
 
 @media (max-width: 600px) {
   .tab-panel { padding: 24px 20px 32px; }
   .hero { padding: 40px 0 28px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-  .audit-area { padding: 24px; }
-  .nav-links a { font-size: 13px; padding: 6px 10px; }
+  .audit-area { padding: 16px; border-radius: 0; margin-left: -20px; width: calc(100% + 40px); }
+  .workspace-controls { flex-direction: column; align-items: stretch; }
 }
+
+body {
+  overflow-x: hidden;
+}
+
 
 /* ============================================================
    SOCIAL SHARE COMPONENT

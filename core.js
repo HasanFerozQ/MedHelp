@@ -84,7 +84,38 @@ function switchTab(tabId, btn) {
   if (target) target.classList.add('active');
 }
 
-// Export common helpers to window for legacy support if needed
+// 6. MediHelp Global Namespace & Advanced Fetch (v4.6)
+const MediHelp = {
+  fetchBlogs: async function() {
+    console.log('MediHelp: Fetching authoritative blog content...');
+    if (!window.dbClient) {
+      console.warn('MediHelp: dbClient not initialized. Returning fallback.');
+      return [];
+    }
+    try {
+      const { data, error } = await window.dbClient
+        .from('blogs')
+        .select('*')
+        .order('date', { ascending: false });
+      
+      if (error) throw error;
+      return data || [];
+    } catch (err) {
+      console.error('MediHelp: Blog fetch failed:', err);
+      return [];
+    }
+  },
+
+  toggleMobileMenu: function() {
+    const nav = document.querySelector('.nav-links');
+    const toggle = document.querySelector('.nav-toggle');
+    if (nav) nav.classList.toggle('active');
+    if (toggle) toggle.classList.toggle('active');
+  }
+};
+
+// Export to window
+window.MediHelp = MediHelp;
 window.debounce = debounce;
 window.renderFAQ = renderFAQ;
 window.toggleFAQ = toggleFAQ;
