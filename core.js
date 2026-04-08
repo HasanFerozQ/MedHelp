@@ -136,6 +136,12 @@ const MediHelp = {
     }
   },
 
+  incrementReadCount: async function(slug) {
+    // Mock for now to prevent crashes. In v5.0 this will hit Supabase RPC
+    console.log(`MediHelp: Read count incremented for ${slug}`);
+    return Math.floor(Math.random() * 500) + 100; 
+  },
+
   toggleMobileMenu: function() {
     const nav = document.querySelector('.nav-links');
     const toggle = document.querySelector('.nav-toggle');
