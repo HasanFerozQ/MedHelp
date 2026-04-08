@@ -144,16 +144,16 @@ const FACILITY_PROF_MULT = 0.78;
 const NPPES_API = 'https://npiregistry.cms.hhs.gov/api/v2.0/?number=';
 
 /**
- * DRG (Institutional) Benchmarks (v3.2)
- * Base Rate: $10,000 (US National Commercial Average)
+ * DRG (Institutional) Benchmarks (v3.7 - CMS FY2024 Standards)
+ * Base Rate: $10,400 (US National Average)
  */
-const DRG_BASE_RATE = 10000;
+const DRG_BASE_RATE = 10400;
 const DRG_BENCHMARKS = {
-  '470': { weight: 1.5,  desc: 'Major Joint Replacement (Lower Limb)' },
-  '193': { weight: 0.9,  desc: 'Simple Pneumonia & Pleurisy' },
-  '392': { weight: 0.7,  desc: 'Esophagitis / Digestive Disorders' },
-  '291': { weight: 1.1,  desc: 'Heart Failure & Shock' },
-  '871': { weight: 1.8,  desc: 'Septicemia without MV >96 hours' },
+  '470': { weight: 1.7712, desc: 'Major Joint Replacement (Lower Limb)' },
+  '193': { weight: 0.8920, desc: 'Simple Pneumonia & Pleurisy' },
+  '392': { weight: 0.7241, desc: 'Esophagitis / Digestive Disorders' },
+  '291': { weight: 1.3105, desc: 'Heart Failure & Shock' },
+  '871': { weight: 1.9542, desc: 'Septicemia without MV >96 hours' },
 };
 
 function isSurgeryCode(code) {
@@ -1236,7 +1236,8 @@ async function generatePDF(forcedType = null) {
     hospital: document.getElementById('p-hospital')?.value || 'Facility',
     account:  document.getElementById('p-account')?.value || 'N/A',
     ins:      document.getElementById('p-insurance')?.value || 'N/A',
-    date:     document.getElementById('p-date')?.value || new Date().toLocaleDateString()
+    date:     document.getElementById('p-date')?.value || new Date().toLocaleDateString(),
+    requestNotes: document.getElementById('p-req-notes')?.checked || false
   };
 
   // Shared Data
@@ -1292,6 +1293,22 @@ function renderDisputeLetter(doc, p, findings, savings) {
   const demand = `Please review these findings and provide an adjusted statement reflecting the corrected amounts within 30 days. I request that no further collection activity occur while this bill is under active dispute.`;
   const splitDemand = doc.splitTextToSize(demand, 170);
   doc.text(splitDemand, 20, y);
+  y += (splitDemand.length * 6) + 12;
+
+  // Strategic Option: Request Notes
+  if (p.requestNotes) {
+    if (y > 240) { doc.addPage(); y = 20; }
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(220, 38, 38); // Red
+    doc.text(`FORMAL REQUEST FOR SUPPORTING CLINICAL DOCUMENTATION:`, 20, y);
+    y += 8;
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0);
+    const clinicalReq = `In accordance with medical billing compliance standards and the right to verify service levels, I hereby request copies of the following records pertaining to these charges: (1) Physician Progress Notes, (2) Operative/Procedure Reports for all surgical codes, and (3) Nursing Assessment Logs. Failure to provide supporting documentation for high-complexity codes may be grounds for a referral to the State Insurance Commissioner.`;
+    const splitReq = doc.splitTextToSize(clinicalReq, 170);
+    doc.text(splitReq, 20, y);
+    y += (splitReq.length * 6) + 10;
+  }
   
   y += 30;
   doc.text(`Sincerely,`, 20, y);

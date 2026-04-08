@@ -285,6 +285,16 @@
             <input type="date" id="p-date">
           </div>
         </div>
+
+        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px dashed var(--border);">
+            <div style="display: flex; align-items: flex-start; gap: 12px; background: var(--bg-secondary); padding: 12px; border-radius: 8px;">
+                <input type="checkbox" id="p-req-notes" style="width: 18px; height: 18px; margin-top: 2px; cursor: pointer;">
+                <div>
+                   <label for="p-req-notes" style="font-weight: 700; font-size: 13px; color: var(--text-main); display: block; cursor: pointer;">Enforce Clinical Documentation Request</label>
+                   <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">Check this to include a formal demand for Progress Notes and Operative Reports in your dispute letter. Highly effective for high-value surgery and inpatient charges.</p>
+                </div>
+            </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-ghost" onclick="closePatientModal()">Cancel</button>
