@@ -78,7 +78,7 @@ class BucketAuditor {
     if (!base) return null;
 
     let price = base.price * parseFloat(this.gpci || 1.0);
-    if (this.isFacility) price *= FACILITY_PROF_MULT;
+    if (this.isFacility) price *= (window.FACILITY_PROF_MULT || 0.78);
 
     return { price, desc: base.desc };
   }
@@ -336,7 +336,7 @@ class BucketAuditor {
         try {
           const ctrl = new AbortController();
           const timer = setTimeout(() => ctrl.abort(), 4000);
-          const res = await fetch(`${NPPES_API}${npi}`, { signal: ctrl.signal });
+          const res = await fetch(`${window.NPPES_API || 'https://npiregistry.cms.hhs.gov/api/?version=2.1&number='}${npi}`, { signal: ctrl.signal });
           clearTimeout(timer);
           if (!res.ok) return;
           const data = await res.json();

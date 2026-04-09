@@ -239,6 +239,9 @@ const NCCI_PAIRS = {
 // ── Stage 0: Final Window Exports ─────────────────────────────────────────────
 // Ensure all dependencies (NCCI_PAIRS, profiles) are declared before this block.
 
+window.NPPES_API = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&number=';
+window.FACILITY_PROF_MULT = FACILITY_PROF_MULT;
+window.DRG_BASE_RATE = DRG_BASE_RATE;
 window.DOCUMENT_PROFILES = DOCUMENT_PROFILES;
 window.MUE_LIMITS = MUE_LIMITS;
 window.CPT_CLINICAL_GROUPS = CPT_CLINICAL_GROUPS;
@@ -252,7 +255,9 @@ window.MH_CONSTANTS = {
   DRG_BENCHMARKS,
   MUE_LIMITS,
   CPT_CLINICAL_GROUPS,
-  NCCI_PAIRS
+  NCCI_PAIRS,
+  NPPES_API: window.NPPES_API,
+  FACILITY_PROF_MULT: window.FACILITY_PROF_MULT
 };
 
 window.HIGH_COMPLEXITY_EM = HIGH_COMPLEXITY_EM;

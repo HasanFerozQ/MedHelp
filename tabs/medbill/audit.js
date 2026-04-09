@@ -9,7 +9,7 @@ console.log('MediHelp: audit.js file source has been reached.');
  */
 
 // ── Global Configuration ──
-const NPPES_API = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&number=';
+// NPPES_API moved to constants.js global scope
 
 // ── PDF Audit Setup ───────────────────────────────────────────────────────────
 function initAudit() {
