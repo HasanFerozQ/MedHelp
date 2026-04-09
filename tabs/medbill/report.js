@@ -26,6 +26,10 @@ function renderCategorizedFindings(findings, container, count, rows, savings, be
           </div>
         </div>
         <div style="flex:1;min-width:180px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;">Document Fingerprint</div>
+          <div style="display:inline-block;padding:4px 10px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text-main);font-weight:700;margin-bottom:12px;">
+            🆔 ${window.currentDocumentProfile?.label || 'Generic Medical Document'}
+          </div>
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;">Why this score?</div>
           ${confidence.reasons.map(r => `<div style="font-size:12px;color:var(--text-muted);margin-bottom:3px;">• ${r}</div>`).join('')}
         </div>

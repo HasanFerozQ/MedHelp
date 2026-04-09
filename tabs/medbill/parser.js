@@ -144,9 +144,35 @@ function extractRowsFromText(text) {
   return filterNormalRows(rawProcessedRows);
 }
 
+/**
+ * Profile Classifier (v4.6)
+ * Detects document type based on keyword frequency to route the ingestion engine.
+ */
+function classifyDocument(items) {
+  const fullText = items.map(i => i.str).join(' ').toLowerCase();
+  const profiles = window.DOCUMENT_PROFILES || {};
+  
+  let bestProfile = profiles.GENERIC;
+  let maxHits = 0;
+
+  Object.values(profiles).forEach(p => {
+    if (p.id === 'GENERIC') return;
+    const hits = p.keywords.filter(k => fullText.includes(k.toLowerCase())).length;
+    if (hits > maxHits) {
+      maxHits = hits;
+      bestProfile = p;
+    }
+  });
+
+  return bestProfile;
+}
+
 function reconstructRowsFromLayout(pages) {
   const flatItems = pages.flat();
+  const profile = classifyDocument(flatItems);
   const dMap = detectColumns(flatItems);
+  
+  console.log('MediHelp: Detected Profile:', profile.label);
   console.log('MediHelp: Dynamic Column Capture:', dMap);
 
   const allRows = [];
@@ -176,11 +202,16 @@ function reconstructRowsFromLayout(pages) {
       if (!inTable && !TOTAL_ROW_RE.test(lineText)) return;
 
       const row = extractRowsFromSpatialLine(lineItems, lineText, dMap);
-      if (row) allRows.push(row);
+      if (row) {
+        row.profile = profile.id;
+        allRows.push(row);
+      }
     });
   });
 
-  return filterNormalRows(allRows);
+  const result = filterNormalRows(allRows);
+  result.profile = profile;
+  return result;
 }
 
 function filterNormalRows(rows) {
@@ -206,6 +237,7 @@ function filterNormalRows(rows) {
   return { rows: clean_rows, suspect_rows };
 }
 
+window.classifyDocument = classifyDocument;
 window.detectColumns = detectColumns;
 window.extractRowsFromSpatialLine = extractRowsFromSpatialLine;
 window.extractRowsFromText = extractRowsFromText;

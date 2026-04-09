@@ -196,8 +196,39 @@ const NCCI_PAIRS = {
   '99070': new Set(['10000','12001','27447','27130','43239','45378','69210']),
 };
 
-/** MUE - Medically Unlikely Edits (Frequency Limits) */
+// ── Document Classification Heuristics (v4.5) ──
+const DOCUMENT_PROFILES = {
+  EOB: {
+    id: 'EOB',
+    label: 'Explanation of Benefits (EOB)',
+    keywords: ['explanation of benefits', 'plan paid', 'contractual adjustment', 'reason code', 'patient responsibility'],
+    auditFocus: ['financial', 'semantic', 'arithmetic'],
+    facilityMode: false
+  },
+  PROFESSIONAL: {
+    id: 'PROFESSIONAL',
+    label: 'Professional Bill (CMS-1500)',
+    keywords: ['cms-1500', 'hcfa', 'npi', 'cpt/hcpcs', 'modifier', 'place of service', 'physician'],
+    auditFocus: ['benchmark', 'bundling', 'frequency', 'modifier'],
+    facilityMode: false
+  },
+  INSTITUTIONAL: {
+    id: 'INSTITUTIONAL',
+    label: 'Institutional Bill (UB-04)',
+    keywords: ['ub-04', 'revenue code', 'admission date', 'discharge date', 'drg/', 'type of bill', 'hospital'],
+    auditFocus: ['benchmark', 'drg', 'pos', 'financial'],
+    facilityMode: true
+  },
+  GENERIC: {
+    id: 'GENERIC',
+    label: 'Generic Medical Invoice',
+    keywords: [],
+    auditFocus: ['arithmetic', 'completeness', 'duplicate'],
+    facilityMode: false
+  }
+};
 
+window.DOCUMENT_PROFILES = DOCUMENT_PROFILES;
 window.MUE_LIMITS = MUE_LIMITS;
 window.CPT_CLINICAL_GROUPS = CPT_CLINICAL_GROUPS;
 window.INLINE_BENCHMARK = INLINE_BENCHMARK;

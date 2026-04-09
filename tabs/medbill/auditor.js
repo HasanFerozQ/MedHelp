@@ -1,12 +1,13 @@
 // ── Stage 3: Validation / Audit Engine Module ──
 
 class BucketAuditor {
-  constructor(rows, multiplier = 2.5, npis = [], gpci = 1.0, isFacility = false) {
+  constructor(rows, multiplier = 2.5, npis = [], gpci = 1.0, isFacility = false, profile = null) {
     this.rows             = rows;
     this.multiplier       = multiplier;
     this.npis             = npis;
     this.gpci             = gpci;
-    this.isFacility       = isFacility;
+    this.isFacility       = isFacility || (profile?.facilityMode || false);
+    this.profile          = profile;
     this.findings         = [];
     this.potentialSavings = 0;
     this.totalBenchmark   = 0;

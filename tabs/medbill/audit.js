@@ -204,10 +204,12 @@ function runAudit(input, detectedNPIs = []) {
   } else if (input && typeof input === 'object' && input.rows) {
     rows = input.rows;
     suspect_rows = input.suspect_rows || [];
+    window.currentDocumentProfile = input.profile || window.DOCUMENT_PROFILES.GENERIC;
   } else {
     const extracted = extractRowsFromText(input || '');
     rows = extracted.rows || [];
     suspect_rows = extracted.suspect_rows || [];
+    window.currentDocumentProfile = extracted.profile || window.DOCUMENT_PROFILES.GENERIC;
   }
 
   currentSuspectRows = suspect_rows;
@@ -305,9 +307,10 @@ async function reRunWorkspaceAudit() {
   try { npis = npiData ? JSON.parse(npiData) : []; } catch(_) { npis = []; }
   const gpci       = parseFloat(document.getElementById('gpci-region')?.value || '1.0');
   const isFacility = document.getElementById('facility-type')?.value === 'hospital';
+  const profile = window.currentDocumentProfile || null;
 
   // Call Stage 3 Auditor
-  const engine = new BucketAuditor(rows, multiplier, npis, gpci, isFacility);
+  const engine = new BucketAuditor(rows, multiplier, npis, gpci, isFacility, profile);
   
   engine.runArithmetic();
   engine.runInvoiceSumCheck();

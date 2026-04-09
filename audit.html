@@ -166,6 +166,15 @@
             </select>
           </div>
           <div>
+            <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;">Audit Profile</label>
+            <select id="doc-profile" class="btn btn-ghost" style="width:100%; border:1px solid var(--border); text-align:left; font-size:13px;" onchange="window.currentDocumentProfile = window.DOCUMENT_PROFILES[this.value]; debouncedAudit();">
+              <option value="GENERIC">⚖️ Automated / Generic</option>
+              <option value="PROFESSIONAL">🩺 Professional Bill (CMS-1500)</option>
+              <option value="INSTITUTIONAL">🏥 Institutional Bill (UB-04)</option>
+              <option value="EOB">📄 Explanation of Benefits (EOB)</option>
+            </select>
+          </div>
+          <div>
             <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;">Facility Setting</label>
             <select id="facility-type" class="btn btn-ghost" style="width:100%; border:1px solid var(--border); text-align:left; font-size:13px;" onchange="debouncedAudit()">
               <option value="office">Private Office / Clinic</option>
