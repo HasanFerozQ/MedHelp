@@ -677,7 +677,8 @@ async function reRunWorkspaceAudit() {
 
   const multiplier = parseFloat(document.getElementById('payer-type')?.value) || 2.5;
   const npiData    = document.getElementById('audit-workspace-container')?.dataset.npis;
-  const npis       = npiData ? JSON.parse(npiData) : [];
+  let npis = [];
+  try { npis = npiData ? JSON.parse(npiData) : []; } catch(_) { npis = []; }
   const gpci       = parseFloat(document.getElementById('gpci-region')?.value || '1.0');
   const isFacility = document.getElementById('facility-type')?.value === 'hospital';
 
@@ -750,6 +751,42 @@ class BucketAuditor {
 
   finalizeDeduplication() {
     this.potentialSavings = Math.round(this.potentialSavings * 100) / 100;
+  }
+
+  // ── LAYER 1B — NCCI Bundling ─────────────────────────────────────────────
+  runBundling() {
+    // Group codes by date
+    const codesByDate = {};
+    this.rows.forEach((r, idx) => {
+      if (!r.code || r.isTotalRow) return;
+      const d = r.date || 'UNDATED';
+      if (!codesByDate[d]) codesByDate[d] = [];
+      codesByDate[d].push({ r, idx });
+    });
+
+    // For each date, check each secondary code against all primary codes present
+    Object.entries(codesByDate).forEach(([date, entries]) => {
+      const presentCodes = new Set(entries.map(e => e.r.code));
+
+      entries.forEach(({ r, idx }) => {
+        const primarySet = NCCI_PAIRS[r.code];
+        if (!primarySet) return;
+
+        // Check if any primary code from the bundle rule is also present on this date
+        const conflictingPrimary = [...primarySet].find(p => presentCodes.has(p));
+        if (!conflictingPrimary) return;
+
+        // Check for -59 modifier that would legitimise unbundling
+        const mod = (r.modifier || '').replace(/^-/, '');
+        if (['59', 'XE', 'XS', 'XP', 'XU'].includes(mod)) return;
+
+        this.addFinding('bundling', 'NCCI Bundle Violation',
+          `CPT ${r.code} is a component service of ${conflictingPrimary} per CMS NCCI edits and should not be billed separately on ${date}. Add a -59 modifier only if service was truly distinct.`,
+          'danger', r.code);
+        if (r.raw) r.raw.classList.add('audit-row-error');
+        this.addRowSavings(idx, r.total, r.total);
+      });
+    });
   }
 
   getBenchmark(code) {
@@ -1497,10 +1534,13 @@ function renderCategorizedFindings(findings, container, count, rows, savings, be
 window.runAuditLines = runAuditLines;
 
 function clearAudit() {
-  const area = document.getElementById('line-items-text');
-  const res  = document.getElementById('audit-results');
-  if (area) area.value = '';
-  if (res)  res.innerHTML = '';
+  // Clear both paste-text inputs so either tab's content is wiped
+  const pasteArea = document.getElementById('bill-text');
+  const lineArea  = document.getElementById('line-items-text');
+  const res       = document.getElementById('audit-results');
+  if (pasteArea) pasteArea.value = '';
+  if (lineArea)  lineArea.value  = '';
+  if (res)       res.innerHTML   = '';
 }
 window.clearAudit = clearAudit;
 window.reRunWorkspaceAudit = reRunWorkspaceAudit;
@@ -1525,9 +1565,14 @@ window.closePatientModal = () => { const m = document.getElementById('patient-mo
 
 // ── PDF Generator Engine (v3.3) ──────────────────────────────────────────────
 async function generatePDF(forcedType = null) {
+  if (!window.jspdf) {
+    alert('PDF library not loaded. Please check your internet connection and refresh.');
+    return;
+  }
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-  const type = forcedType || document.getElementById('patient-modal').dataset.reportType;
+  const modal = document.getElementById('patient-modal');
+  const type = forcedType || (modal ? modal.dataset.reportType : 'summary');
   
   const pInfo = {
     first:    document.getElementById('p-first')?.value || 'N/A',
