@@ -147,8 +147,82 @@ const MediHelp = {
     const toggle = document.querySelector('.nav-toggle');
     if (nav) nav.classList.toggle('active');
     if (toggle) toggle.classList.toggle('active');
+  },
+
+  initFeedbackWidget: function() {
+    // 1. Create Floating Button
+    const fab = document.createElement('button');
+    fab.className = 'feedback-fab';
+    fab.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>`;
+    fab.title = "Send Feedback";
+    document.body.appendChild(fab);
+
+    // 2. Create Modal
+    const modal = document.createElement('div');
+    modal.className = 'feedback-modal';
+    modal.innerHTML = `
+      <div class="feedback-content">
+        <button class="close-feedback">&times;</button>
+        <div class="feedback-header">
+          <h3>Share Feedback</h3>
+          <p>Encountered a bug or have a suggestion? Let us know below.</p>
+        </div>
+        <form class="feedback-form" id="global-feedback-form">
+          <div class="form-group">
+            <label>Type of Feedback</label>
+            <select id="fb-type" required>
+              <option value="General">General Inquiry</option>
+              <option value="Bug">Bug Report</option>
+              <option value="Feature">Feature Request</option>
+              <option value="Complaint">Complaint</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" id="fb-email" placeholder="email@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="fb-message" placeholder="Describe your feedback here..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Feedback</button>
+        </form>
+      </div>`;
+    document.body.appendChild(modal);
+
+    // 3. Event Listeners
+    const closeBtn = modal.querySelector('.close-feedback');
+    fab.onclick = () => modal.classList.add('active');
+    closeBtn.onclick = () => modal.classList.remove('active');
+    window.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+
+    // 4. Form Handling (mailto fallback)
+    const form = modal.querySelector('#global-feedback-form');
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const type = document.getElementById('fb-type').value;
+      const email = document.getElementById('fb-email').value;
+      const msg = document.getElementById('fb-message').value;
+
+      const subject = encodeURIComponent(`[MediHelp Feedback] ${type}`);
+      const body = encodeURIComponent(`From: ${email}\n\nMessage:\n${msg}`);
+      
+      // Professional mailto bridge
+      window.location.href = `mailto:supportdesk@medihelp.live?subject=${subject}&body=${body}`;
+      
+      modal.classList.remove('active');
+      form.reset();
+    };
   }
 };
+
+// 7. Auto-init on Load
+document.addEventListener('DOMContentLoaded', () => {
+  MediHelp.initFeedbackWidget();
+});
 
 // Export to window
 window.MediHelp = MediHelp;

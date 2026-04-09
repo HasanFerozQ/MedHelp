@@ -273,31 +273,71 @@ function initAudit() {
 
 // Robust Listener (Handles cases where DOMContentLoaded already fired)
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initAudit);
+  document.addEventListener('DOMContentLoaded', () => {
+    try { initAudit(); } catch(e) { console.error('MediHelp: Core Init Failed', e); }
+  });
 } else {
-  initAudit();
+  try { initAudit(); } catch(e) { console.error('MediHelp: Late Init Failed', e); }
 }
-
-// switchAuditTab is now handled inline in audit.html for maximum isolation.
 
 function setupPDFAudit() {
   const zone  = document.getElementById('pdf-drop-zone');
   const input = document.getElementById('pdf-input');
-  if (!zone || !input) return;
-  zone.onclick    = () => input.click();
-  zone.ondragover = e => { e.preventDefault(); zone.classList.add('dragover'); };
+  const status = document.getElementById('pdf-status');
+
+  if (!zone || !input) {
+    console.warn('MediHelp: Audit UI elements missing.');
+    return;
+  }
+
+  zone.onclick = () => {
+    console.log('MediHelp: Triggering file input click...');
+    input.click();
+  };
+
+  zone.ondragover = e => { 
+    e.preventDefault(); 
+    zone.classList.add('dragover'); 
+  };
+  
   zone.ondragleave = () => zone.classList.remove('dragover');
+  
   zone.ondrop = e => {
     e.preventDefault();
     zone.classList.remove('dragover');
-    if (e.dataTransfer.files.length) handlePDF(e.dataTransfer.files[0]);
+    if (e.dataTransfer.files.length) {
+      console.log('MediHelp: PDF Dropped:', e.dataTransfer.files[0].name);
+      handlePDF(e.dataTransfer.files[0]);
+    }
   };
-  input.onchange = e => { if (e.target.files.length) handlePDF(e.target.files[0]); };
+
+  input.onchange = e => { 
+    if (e.target.files.length) {
+      console.log('MediHelp: PDF Selected:', e.target.files[0].name);
+      handlePDF(e.target.files[0]);
+    }
+  };
 }
 
 async function handlePDF(file) {
   const status     = document.getElementById('pdf-status');
   const overlay    = document.getElementById('ai-loading-overlay');
+
+  if (!file || file.type !== 'application/pdf') {
+    if (status) status.innerText = 'Error: Please upload a valid PDF file.';
+    return;
+  }
+
+  if (typeof pdfjsLib === 'undefined') {
+    console.error('MediHelp: pdf.js library not loaded.');
+    if (status) status.innerHTML = '<span style="color:#ef4444;">Error: PDF Library failed to load. Please check your internet or refresh.</span>';
+    return;
+  }
+
+  try {
+    if (overlay) overlay.style.display = 'block';
+    if (status) status.innerText = `Processing: ${file.name}...`;
+
   const results    = document.getElementById('audit-results');
   const loadingTxt = document.getElementById('ai-loading-text');
 

@@ -1830,3 +1830,235 @@ body {
   color: var(--accent);
   background: var(--accent-glow);
 }
+
+/* ============================================================
+   FEEDBACK WIDGET (FAB)
+   ============================================================ */
+.feedback-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background: var(--accent);
+  color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(6, 182, 212, 0.4);
+  cursor: pointer;
+  z-index: 9999;
+  transition: var(--transition);
+  border: none;
+}
+
+.feedback-fab:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 40px rgba(6, 182, 212, 0.5);
+  background: var(--accent-light);
+}
+
+.feedback-fab svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* --- Feedback Modal --- */
+.feedback-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(8, 12, 20, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.feedback-modal.active {
+  display: flex;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+.feedback-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 440px;
+  padding: 32px;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.feedback-header {
+  margin-bottom: 24px;
+}
+
+.feedback-header h3 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-h);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.feedback-header p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.feedback-form .form-group {
+  margin-bottom: 20px;
+}
+
+.feedback-form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.feedback-form input,
+.feedback-form select,
+.feedback-form textarea {
+  width: 100%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  color: var(--text-h);
+  font-family: var(--font-main);
+  font-size: 14px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.feedback-form input:focus,
+.feedback-form select:focus,
+.feedback-form textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.feedback-form textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.feedback-form .btn-submit {
+  width: 100%;
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.feedback-form .btn-submit:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+}
+
+.close-feedback {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.close-feedback:hover {
+  color: var(--text-h);
+  background: rgba(255,255,255,0.05);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ============================================================
+   CONTACT PAGE SPECIFICS
+   ============================================================ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 60px;
+  margin: 60px 0 100px;
+}
+
+.contact-info h2 {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--text-h);
+  margin-bottom: 24px;
+  letter-spacing: -1.5px;
+}
+
+.contact-info p {
+  font-size: 18px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+.contact-method {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.contact-method .icon {
+  width: 48px;
+  height: 48px;
+  background: var(--accent-glow);
+  color: var(--accent-light);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-method h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin-bottom: 4px;
+}
+
+.contact-method a, .contact-method span {
+  font-size: 15px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.contact-method a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
