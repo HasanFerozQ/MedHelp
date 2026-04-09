@@ -413,9 +413,6 @@ async function handlePDF(file) {
 }
 
 // ── OLD reconstruction code removed, see new Spatial Extraction below ──
-  return filterNormalRows(allRows);
-}
-
 function filterNormalRows(rows) {
   return rows.filter(r => {
     const d = (r.desc || '').toUpperCase();
