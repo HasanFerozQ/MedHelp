@@ -1,50 +1,6 @@
-const INLINE_BENCHMARK = {
-  '99202': { price: 93.15,   desc: 'Office visit, new, low complexity' },
-  '99203': { price: 134.24,  desc: 'Office visit, new, moderate complexity' },
-  '99204': { price: 192.61,  desc: 'Office visit, new, moderate-high complexity' },
-  '99205': { price: 244.01,  desc: 'Office visit, new, high complexity' },
-  '99211': { price: 22.68,   desc: 'Office visit, established, minimal' },
-  '99212': { price: 54.59,   desc: 'Office visit, established, low complexity' },
-  '99213': { price: 92.81,   desc: 'Office visit, established, low-moderate' },
-  '99214': { price: 134.39,  desc: 'Office visit, established, moderate complexity' },
-  '99215': { price: 185.87,  desc: 'Office visit, established, high complexity' },
-  '99221': { price: 74.82,   desc: 'Initial hospital care, low complexity (Facility)' },
-  '99222': { price: 104.91,  desc: 'Initial hospital care, moderate complexity (Facility)' },
-  '99223': { price: 154.63,  desc: 'Initial hospital care, high complexity (Facility)' },
-  '99231': { price: 40.12,   desc: 'Subsequent hospital care, low complexity (Facility)' },
-  '99232': { price: 62.18,   desc: 'Subsequent hospital care, moderate complexity (Facility)' },
-  '99233': { price: 84.55,   desc: 'Subsequent hospital care, high complexity (Facility)' },
-  '99283': { price: 65.40,   desc: 'ED visit, moderate severity (Facility)' },
-  '99284': { price: 112.15,  desc: 'ED visit, high severity (Facility)' },
-  '99285': { price: 178.42,  desc: 'ED visit, high severity/high risk (Facility)' },
-  '99291': { price: 184.20,  desc: 'Critical care, first 30-74 min (Facility)' },
-  '93000': { price: 16.58,   desc: 'Electrocardiogram with report (ECG)' },
-  '93010': { price: 11.21,   desc: 'ECG interpretation and report' },
-  '93306': { price: 232.20,  desc: 'Echocardiography with Doppler' },
-  '85025': { price: 7.27,    desc: 'Complete blood count (CBC) with auto diff' },
-  '80053': { price: 11.19,   desc: 'Comprehensive metabolic panel' },
-  '80048': { price: 8.68,    desc: 'Basic metabolic panel' },
-  '81001': { price: 3.25,    desc: 'Urinalysis with microscopy' },
-  '36415': { price: 3.09,    desc: 'Venipuncture (blood draw)' },
-  '71046': { price: 41.08,   desc: 'Chest X-ray, 2 views' },
-  '72148': { price: 198.82,  desc: 'MRI lumbar spine without contrast' },
-  '70553': { price: 273.69,  desc: 'MRI brain with/without contrast' },
-  '73610': { price: 34.09,   desc: 'Ankle X-ray, 3+ views' },
-  '45378': { price: 173.59,  desc: 'Colonoscopy, diagnostic' },
-  '43239': { price: 249.55,  desc: 'Upper GI endoscopy with biopsy' },
-  '27447': { price: 1175.74, desc: 'Total knee replacement' },
-  '27130': { price: 1300.15, desc: 'Total hip replacement' },
-  '29881': { price: 493.18,  desc: 'Knee arthroscopy with meniscectomy' },
-  '12001': { price: 120.14,  desc: 'Simple wound repair, ≤2.5 cm' },
-  '96372': { price: 24.72,   desc: 'Therapeutic injection' },
-  '90837': { price: 122.43,  desc: 'Psychotherapy, 60 min' },
-  '90834': { price: 88.59,   desc: 'Psychotherapy, 45 min' },
-  '87804': { price: 18.35,   desc: 'Influenza rapid test' },
-  '87420': { price: 15.79,   desc: 'RSV antigen test' },
-  '87086': { price: 9.42,    desc: 'Urine culture' },
-};
 
-/** Precise NCCI Pairs for Simple Tab parity */
+// Extracted INLINE_BENCHMARK to constants.js
+
 const NCCI_PAIRS = {
   '36415': new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215','99221','99222','99223','99281','99282','99283','99284','99285']),
   '94760': new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215']),
@@ -53,17 +9,8 @@ const NCCI_PAIRS = {
 };
 
 /** Frequency Rules (MUE) for Simple Tab */
-const MUE_LIMITS = {
-  '90837': 1, // Psychotherapy 60m
-  '99214': 1, // Office Visit
-  '99215': 1,
-  '36415': 1, // Blood draw
-  '94760': 1, // Pulse Ox
-  '93000': 1, // EKG
-  '71045': 1, // X-ray
-  '71046': 1,
-  'G0439': 1, // Annual Wellness
-};
+
+// Extracted MUE_LIMITS to constants.js
 
 const DRG_BASE_RATE = 10400; // corrected to CMS FY2024 average
 const DRG_BENCHMARKS = {
