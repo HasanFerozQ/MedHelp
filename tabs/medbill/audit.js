@@ -168,6 +168,12 @@ window.MH_CONSTANTS = {
   NCCI_PAIRS
 };
 
+/** Facility Professional Adjustment (Physicians in hospitals bill ~78% of office rate) */
+const FACILITY_PROF_MULT = 0.78;
+
+/** NPI Registry API base URL */
+const NPPES_API = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&number=';
+
 function isSurgeryCode(code) {
   return classifyCPT(code) === 'Surgery';
 }
@@ -312,6 +318,7 @@ function setupPDFAudit() {
 async function handlePDF(file) {
   const status     = document.getElementById('pdf-status');
   const overlay    = document.getElementById('ai-loading-overlay');
+  const auditResults = document.getElementById('audit-results');
 
   if (!file || file.type !== 'application/pdf') {
     if (status) status.innerText = 'Error: Please upload a valid PDF file.';
@@ -328,6 +335,7 @@ async function handlePDF(file) {
   const loadingTxt = document.getElementById('ai-loading-text');
 
   if (overlay) overlay.style.display = 'block';
+  if (auditResults) auditResults.innerHTML = '';
   if (status)  status.innerHTML  = `<span style="color:var(--accent);">Initializing Engine...</span>`;
 
   try {
@@ -378,15 +386,15 @@ async function handlePDF(file) {
         canvas.width = viewport.width; canvas.height = viewport.height;
         await page.render({ canvasContext: ctx, viewport }).promise;
         
-        const { data: { blocks } } = await tesseract.recognize(canvas, 'eng', {
+        const { data: { words } } = await tesseract.recognize(canvas, 'eng', {
            logger: m => console.log('MediHelp OCR:', m.status, Math.round(m.progress * 100) + '%')
         });
         
-        const ocrItems = blocks.flatMap(b => b.paragraphs.flatMap(p => p.lines.flatMap(l => l.words.map(w => {
+        const ocrItems = (words || []).map(w => {
           const m = w.text.match(npiRegex);
           if (m) detectedNPIs.push(...m);
           return { str: w.text, x: w.bbox.x0 / 2, y: (viewport.height - w.bbox.y0) / 2, width: (w.bbox.x1 - w.bbox.x0) / 2, height: (w.bbox.y1 - w.bbox.y0) / 2 };
-        }))));
+        });
         pageData.push(ocrItems);
       }
     }
@@ -829,7 +837,7 @@ class BucketAuditor {
     });
     Object.entries(freq).forEach(([key, entries]) => {
       const code = entries[0].r.code;
-      const limit = window.MH_CONSTANTS.MUE_LIMITS[code];
+      const limit = MUE_LIMITS[code];
       if (!limit) return;
       
       // Calculate total units (sum of qty)
@@ -908,7 +916,7 @@ class BucketAuditor {
     if (!this.isFacility) {
       this.rows.forEach(r => {
         if (r.code && inpatientCodes.has(r.code)) {
-          this.addFinding('compatibility', 'Institutional Code Mismatch',
+          this.addFinding('POS', 'Institutional Code Mismatch',
             `Hospital Inpatient CPT ${r.code} detected while in "Office/Clinic" mode. This is a Place-of-Service (POS) mismatch. Verify if service was actually provided in a hospital.`,
             'danger', r.code);
         }
@@ -1096,7 +1104,7 @@ class BucketAuditor {
       this.addFinding('arithmetic', 'Invoice Total Mismatch',
         `Line items sum to $${this._lineItemSum.toFixed(2)} but invoice total shows $${totalRow.total.toFixed(2)} — a $${diff.toFixed(2)} discrepancy.`,
         'danger');
-      this.addRowSavings('invoice-total', diff, totalRow.total);
+      this.addRowSavings(this.rows.indexOf(totalRow), diff, totalRow.total);
     }
   }
 
@@ -1388,6 +1396,7 @@ const CATEGORY_META = {
   frequency:    { label: '📊 Frequency (MUE)',    color: '#f43f5e' },
   financial:    { label: '⚖️ Financial Integrity', color: '#10b981' },
   compatibility:{ label: '🩺 Clinical Context',   color: '#06b6d4' },
+  POS:          { label: '📍 Place of Service',    color: '#8b5cf6' },
 };
 
 function renderCategorizedFindings(findings, container, count, rows, savings, benchmark, confidence) {

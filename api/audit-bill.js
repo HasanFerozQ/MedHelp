@@ -18,10 +18,14 @@ const upload = multer({
   limits: { fileSize: 4 * 1024 * 1024 }, // Keep under 4MB for Vercel
 });
 
-// Hardcoded for now per user instruction, move to .env later
-const accessKeyId = process.env.AWS_ACCESS_KEY_ID || "AKIAW2FKXVUMBQW32WQD";
-const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || "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";
+// Credentials must be set via environment variables — no fallback for security
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const region = process.env.AWS_REGION || "us-east-1";
+
+if (!accessKeyId || !secretAccessKey) {
+  console.error('FATAL: AWS credentials not set. Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars.');
+}
 
 const textractClient = new TextractClient({
   region,
@@ -212,9 +216,9 @@ function runArithmeticEngine(items, grandTotal) {
             reason: `Duplicate charge for code ${item.CPT} on same date. No distinct unbundling modifier detected.`
           });
         }
-      } else {
-        seenCodes.add(codeKey);
       }
+      // Always register the code — MUST be outside the else branch
+      seenCodes.add(codeKey);
     }
   });
 
@@ -308,6 +312,8 @@ async function runClinicalEngine(items) {
           const componentItem = dateItems.find(i => i.CPT === edit.column2_code);
           const primaryItem = dateItems.find(i => i.CPT === edit.column1_code);
 
+          if (!componentItem) return; // Guard: skip if component code not found on this date
+
           if (edit.modifier_allowed === '0') {
             clinicalFindings.push({
               type: "Danger",
@@ -318,7 +324,7 @@ async function runClinicalEngine(items) {
             savingsOpportunity += componentItem.Billed_Amount;
           } else if (edit.modifier_allowed === '1') {
             const hasModifier = (componentItem.Modifier && componentItem.Modifier !== "") || 
-                                (primaryItem.Modifier && primaryItem.Modifier !== "");
+                                (primaryItem && primaryItem.Modifier && primaryItem.Modifier !== "");
             
             if (!hasModifier) {
                clinicalFindings.push({

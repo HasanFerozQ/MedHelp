@@ -51,18 +51,9 @@ const DRG_BENCHMARKS = {
   '871': { weight: 1.9542, desc: 'Septicemia without MV >96 hours' },
 };
 
-/**
- * ARCHITECTURAL SYNC (v4.1):
- * Link to the advanced editor's shared brain if available.
- */
-if (window.MH_CONSTANTS) {
-   Object.assign(this, {
-     INLINE_BENCHMARK: window.MH_CONSTANTS.INLINE_BENCHMARK,
-     DRG_BASE_RATE:    window.MH_CONSTANTS.DRG_BASE_RATE,
-     DRG_BENCHMARKS:   window.MH_CONSTANTS.DRG_BENCHMARKS,
-     MUE_LIMITS:       window.MH_CONSTANTS.MUE_LIMITS,
-   });
-}
+// NOTE: Constants above (INLINE_BENCHMARK, DRG_BASE_RATE, etc.) are the canonical
+// values for the Simple Tab. The Advanced engine (audit.js) publishes window.MH_CONSTANTS
+// which is a superset — no runtime sync needed here since both define matching values.
 
 async function loadCPTData() {
   try {
