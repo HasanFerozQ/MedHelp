@@ -81,7 +81,31 @@ function buildServiceBlocks(sortedYs, yGroups) {
   return blocks;
 }
 
-function extractRowsFromSpatialLine(lineItems, lineText, detectedMap = null) {
+function getNumericTokens(items) {
+  const CARC_RE = window.CARC_RE || /([A-Z]{2}-\d{1,4})/g;
+  const ANOMALY_MARKER_RE = window.ANOMALY_MARKER_RE || /[■□✅⚠️🚨]/g;
+
+  return items
+    .filter(i => {
+      const s = (i.str || '').trim();
+      // Skip labels and markers
+      return s && !CARC_RE.test(s) && !ANOMALY_MARKER_RE.test(s) && !/[a-z]{3,}/i.test(s);
+    })
+    .map(i => {
+      // Extract numeric-like strings: signs, decimals, commas
+      const matches = i.str.match(/-?\$?\d{1,3}(?:,\d{3})*(?:\.\d{2,})?|\b\d+\b/g) || [];
+      return matches.map(m => ({
+        val: parseFloat(m.replace(/[$,]/g, '')),
+        x: i.x,
+        raw: m
+      }));
+    })
+    .flat()
+    .filter(t => !isNaN(t.val))
+    .sort((a, b) => a.x - b.x); // Spatial Sort: Left-to-Right
+}
+
+function extractRowsFromSpatialLine(lineItems, lineText, detectedMap = null, currentCode = '') {
   const lineUpper = lineText.toUpperCase();
   const isTotalRow = TOTAL_ROW_RE.test(lineText) || lineUpper.includes('TOTAL');
 
@@ -96,46 +120,59 @@ function extractRowsFromSpatialLine(lineItems, lineText, detectedMap = null) {
 
   if (!code && !isTotalRow) return null;
 
-  const MAP = detectedMap || { cpt: [0, 80], desc: [80, 350], qty: [350, 420], unit: [420, 520], total: [520, 750] };
+  // ── TOKEN-LEVEL EXTRACTION (v6.1 Tuned) ──
+  // Filter out the identified code to prevent collisions with Qty/Price
+  const filteredItems = lineItems.filter(i => {
+    const s = (i.str || '').trim();
+    return s !== code && s !== code.replace('-', '');
+  });
+  
+  const tokens = getNumericTokens(filteredItems);
+  
+  let qty = 1, price = 0, total = 0;
 
-  const extractCol = (range) => {
-    return lineItems.filter(i => i.x >= range[0] && i.x <= range[1]).map(i => i.str).join('');
-  };
+  if (tokens.length >= 3) {
+    // Standard [Qty, Unit, Total]
+    qty   = tokens[0].val;
+    price = tokens[1].val;
+    total = tokens[2].val;
+  } else if (tokens.length === 2) {
+    // [Unit, Total]
+    price = tokens[0].val;
+    total = tokens[1].val;
+  } else if (tokens.length === 1) {
+    // [Total]
+    total = tokens[0].val;
+    price = total; 
+  }
 
-  const clean = (str) => {
-    return str.replace(window.CARC_RE || '', '')
-              .replace(window.ANOMALY_MARKER_RE || '', '');
-  };
-
-  const parseSafeQty = (str) => {
-    const s = clean(str).replace(/[^0-9]/g, '');
-    const val = parseInt(s, 10) || 1;
-    return val > 999 ? 1 : val;
-  };
-
-  const parseSafePrice = (str) => {
-    let s = clean(str).replace(/[^0-9.\-()]/g, '');
-    if (s.includes('(') && s.includes(')')) s = '-' + s.replace(/[()]/g, '');
-    const val = parseFloat(s) || 0;
-    return val;
-  };
-
-  const totalRaw = extractCol(MAP.total);
-  const priceRaw = extractCol(MAP.unit);
-  const qtyRaw   = extractCol(MAP.qty);
-
-  const total = parseSafePrice(totalRaw);
-  const price = parseSafePrice(priceRaw);
-  const qty   = parseSafeQty(qtyRaw);
+  // Sanity Clamps
+  if (qty > 100 || qty < 0) qty = 1;
+  if (Math.abs(total) > 1000000) return null; // Protective cap
 
   const dates = lineText.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/);
   const dateStr = dates ? dates[0] : '';
 
   let modifier = '';
-  const modMatch = lineText.match(new RegExp(`${code}-([A-Z0-9]{2})\\b`));
-  if (modMatch) modifier = modMatch[1];
+  if (code) {
+    const modMatch = lineText.match(new RegExp(`${code}-([A-Z0-9]{2})\\b`));
+    if (modMatch) modifier = modMatch[1];
+  }
 
-  let desc = extractCol(MAP.desc).trim();
+  // Description extraction avoids long numbers and pure codes
+  let desc = lineItems
+    .filter(i => {
+       const s = i.str.trim();
+       if (s === code) return false;
+       if (/^\d{5,}/.test(s)) return false; // Filter out 5+ digit nums (NPI/Acct)
+       if (/\$\d+/.test(s)) return false;   // Filter out prices
+       return true;
+    })
+    .map(i => i.str)
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+    
   if (!desc) {
     desc = lineText.replace(new RegExp(`\\b${code}\\b`, 'g'), ' ').replace(/\s+/g, ' ').trim();
   }
@@ -145,7 +182,7 @@ function extractRowsFromSpatialLine(lineItems, lineText, detectedMap = null) {
     date: dateStr, code, modifier, isDRG,
     desc: desc || (isDRG ? 'Hospital Stay' : 'Medical Service'),
     qty, price: price || total, total, paid: 0, owed: 0,
-    priceWasDerived: (price === 0),
+    priceWasDerived: (price === 0 || price === total),
     isTotalRow
   };
 }

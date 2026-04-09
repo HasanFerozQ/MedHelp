@@ -312,7 +312,8 @@ class BucketAuditor {
 
       // Check: incompatible code present same day
       if (rule.incompatible) {
-        rule.incompatible.forEach(bad => {
+        const incompatibleList = rule.incompatible instanceof Set ? [...rule.incompatible] : rule.incompatible;
+        incompatibleList.forEach(bad => {
           if (sameDayCodes.has(bad)) {
             this.addFinding('compatibility', 'Clinically Incompatible Service Pair',
               `${rule.label} and CPT ${bad} billed on the same date (${r.date || 'unknown'}). These services are clinically incompatible when performed together — verify encounter documentation.`,
@@ -320,6 +321,17 @@ class BucketAuditor {
           }
         });
       }
+    });
+
+    // Integrated POS Tunning: Prof vs Instit codes
+    this.rows.forEach(r => {
+        if (!r.code || r.isTotalRow || r.isDRG) return;
+        const isHospCode = (r.code >= '99221' && r.code <= '99233') || (r.code >= '99281' && r.code <= '99285');
+        if (!this.isFacility && isHospCode) {
+            this.addFinding('POS', 'Institutional Code Mismatch',
+              `Inpatient code ${r.code} detected on a Professional/Outpatient claim. Verify if the Place of Service (POS) should be Hospital (21/22) instead of Office (11).`,
+              'warning', r.code);
+        }
     });
   }
 
@@ -438,7 +450,8 @@ class BucketAuditor {
       this.addFinding('arithmetic', 'Invoice Total Mismatch',
         `Line items sum to $${this._lineItemSum.toFixed(2)} but invoice total shows $${totalRow.total.toFixed(2)} — a $${diff.toFixed(2)} discrepancy.`,
         'danger');
-      // Do not add savings to the total row to avoid inflation; the individual line items are already audited.
+      // Fix: Only add savings if it doesn't overlap with existing line item findings
+      // For now, we report the mismatch without duplicate savings inflation.
     }
   }
 
