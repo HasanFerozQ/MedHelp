@@ -15,9 +15,35 @@ const _CODE_RE  = /\b(\d{5}|[A-Z]\d{4})\b/;
  * centroid guessing because a 1-pixel OCR shift no longer cascades.
  *
  * Returns dMap = { cpt, desc, qty, unit, total }
- * Each zone is [minX, maxX].
- */
-function detectColumns(items) {
+ * Each zone is [minfunction detectTableBoundaries(sortedYs, yGroups) {
+  let topY = Infinity;
+  let bottomY = -Infinity;
+
+  for (let i = 0; i < sortedYs.length; i++) {
+    const y = sortedYs[i];
+    const items = yGroups[y];
+    const lineText = items.map(u => u.str).join(' ').toUpperCase();
+    
+    if (
+      (lineText.includes('CPT') || lineText.includes('CODE') || lineText.includes('HCPCS') || lineText.includes('SERVICE') || lineText.includes('DESCRIPTION')) &&
+      (lineText.includes('CHARGE') || lineText.includes('TOTAL') || lineText.includes('AMOUNT') || lineText.includes('BILLED'))
+    ) {
+      if (topY === Infinity) topY = y; // Start of billing grid
+    }
+
+    if (TOTAL_ROW_RE.test(lineText)) {
+      if (y < topY && bottomY === -Infinity) bottomY = y; // End of billing grid
+    }
+  }
+
+  // Degrade gracefully if no headers found
+  if (topY === Infinity) topY = Infinity; 
+  if (bottomY === -Infinity) bottomY = -Infinity;
+
+  return { topY, bottomY };
+}
+
+function detectColumns(items, topY = Infinity) {
   const codeXs  = [];
   const priceXs = [];
   const qtyXs   = [];
@@ -25,16 +51,16 @@ function detectColumns(items) {
   const priceRegex = /\$?(\d{1,3}(?:,\d{3})*(?:\.\d{2}))\b/;
   const qtyRegex   = /^\s*(\d{1,3})\s*$/;
 
-  // ── Pass 1: collect x-positions of known token types ──
+  // ── Pass 1: collect x-positions of known token types (ONLY inside table logic) ──
   items.forEach(item => {
+    if (item.y > topY) return; // Ignore legends/headers for column clustering!
+
     const s = (item.str || '').trim();
     if (!s) return;
 
     if (_CODE_RE.test(s)) {
       const codeCandidate = s.match(_CODE_RE)[0];
-      if (isValidCPT(codeCandidate)) {
-        codeXs.push(item.x);
-      }
+      if (isValidCPT(codeCandidate)) codeXs.push(item.x);
     } else if (priceRegex.test(s)) {
       priceXs.push(item.x);
     } else if (qtyRegex.test(s) && !s.includes('-') && !s.includes('/')) {
@@ -47,34 +73,28 @@ function detectColumns(items) {
   const sortedCodeXs  = [...new Set(codeXs)].sort((a, b) => a - b);
   const sortedQtyXs   = [...new Set(qtyXs)].sort((a, b) => a - b);
 
-  // Code column: leftmost cluster of code x-values
-  const leftCode  = sortedCodeXs.length ? sortedCodeXs[0]  : 10;
-
-  // Total (rightmost price column)
+  const leftCode   = sortedCodeXs.length ? sortedCodeXs[0] : 10;
   const rightTotal = sortedPriceXs.length ? sortedPriceXs[sortedPriceXs.length - 1] : 700;
 
-  // Unit-price (second rightmost price cluster, at least 40px left of total)
-  const midPriceCandidates = sortedPriceXs.filter(x => x < rightTotal - 40);
+  const midPriceCandidates = sortedPriceXs.filter(x => x < rightTotal - 20);
   const midPrice = midPriceCandidates.length
     ? midPriceCandidates[midPriceCandidates.length - 1]
-    : rightTotal - 100;
+    : Math.max(leftCode + 150, rightTotal - 100);
 
-  // Qty (leftmost qty x that sits between code and unit-price)
-  const qtyFiltered = sortedQtyXs.filter(x => x > leftCode + 40 && x < midPrice - 20);
+  const qtyFiltered = sortedQtyXs.filter(x => x > leftCode + 30 && x < midPrice - 10);
   const qtyX = qtyFiltered.length
     ? qtyFiltered[0]
     : Math.round((leftCode + midPrice) / 2);
 
-  // Widths: give each zone a generous ±50px band around its centroid
-  // These are used as GATES — tokens outside all zones are discarded
-  const HALF = 55; // half-width per zone in px
-
+  // V7: STRICT DYNAMIC CONTIGUOUS ZONES (PREVENTS TOKEN BLEED)
   return {
-    cpt:   [leftCode  - 20,      leftCode  + 70     ], // narrow — only actual codes
-    desc:  [leftCode  + 70,      qtyX      - HALF   ], // wide middle
-    qty:   [qtyX      - HALF,    qtyX      + HALF   ],
-    unit:  [midPrice  - HALF,    midPrice  + HALF   ],
-    total: [rightTotal - HALF,   rightTotal + HALF  ],
+    cpt:   [leftCode - 50,  leftCode + 70],
+    desc:  [leftCode + 71,  qtyX - 15],
+    qty:   [qtyX - 14,      midPrice - 15],
+    unit:  [midPrice - 14,  rightTotal - 15],
+    total: [rightTotal - 14, rightTotal + 150],
+  };
+}ALF,   rightTotal + HALF  ],
   };
 }
 
@@ -380,11 +400,9 @@ function classifyDocument(items) {
 function reconstructRowsFromLayout(pages) {
   const flatItems = pages.flat();
   const profile   = classifyDocument(flatItems);
-  const dMap      = detectColumns(flatItems);
 
   const allRows = [];
   pages.forEach((items) => {
-    let inTable = (profile.id === 'GENERIC'); // GENERIC skips strict header sniffing
     const yGroups = {};
     items.forEach(item => {
       const y = Math.round(item.y / 6) * 6;
@@ -392,32 +410,32 @@ function reconstructRowsFromLayout(pages) {
     });
 
     const sortedYs = Object.keys(yGroups).sort((a, b) => b - a);
+    
+    // v7: Detect rigid grid boundaries to lock out test legends
+    const bounds = detectTableBoundaries(sortedYs, yGroups);
+    const dMap   = detectColumns(items, bounds.topY);
+
+    // v7: Extract global date from the header
+    const headerText = items.filter(i => i.y >= bounds.topY).map(i => i.str).join(' ');
+    const headerDates = headerText.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/g) || [];
+    const globalDate = headerDates.length ? headerDates[headerDates.length - 1] : '';
+
     const blocks   = buildServiceBlocks(sortedYs, yGroups);
 
     blocks.forEach(block => {
-      const lineUpper = block.text.toUpperCase();
-
-      // Sniff for table headers (broad match)
-      if (
-        (lineUpper.includes('CPT') || lineUpper.includes('CODE') ||
-         lineUpper.includes('HCPCS') || lineUpper.includes('SERVICE') ||
-         lineUpper.includes('PROCEDURE')) &&
-        (lineUpper.includes('CHARGE') || lineUpper.includes('TOTAL') ||
-         lineUpper.includes('AMOUNT') || lineUpper.includes('BILLED'))
-      ) {
-        inTable = true;
-        return; // skip header row itself
+      // v7: Guard boundaries for service lines
+      if (!block.isTotal) {
+        if (bounds.topY !== Infinity && block.yStart > bounds.topY) return; // Skip legends ABOVE grid
+        if (bounds.bottomY !== -Infinity && block.yStart <= bounds.bottomY) return; // Skip footnotes BELOW grid
+      } else {
+        if (bounds.topY !== Infinity && block.yStart > bounds.topY) return; // Skip generic 'totals' in legend
       }
 
-      if (TOTAL_ROW_RE.test(block.text)) inTable = false;
-
-      if (inTable || block.isTotal) {
-        // Pass the dMap for zone-gated extraction
-        const row = extractRowsFromSpatialLine(block.items, block.text, dMap);
-        if (row) {
-          row.profile = profile.id;
-          allRows.push(row);
-        }
+      const row = extractRowsFromSpatialLine(block.items, block.text, dMap);
+      if (row) {
+        if (!row.date && globalDate) row.date = globalDate; // v7 date inheritance
+        row.profile = profile.id;
+        allRows.push(row);
       }
     });
   });

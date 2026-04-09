@@ -66,11 +66,20 @@ function normalizeTextractOutput(blocks: any[]) {
   
   const tables = blocks.filter(b => b.BlockType === "TABLE");
   const keyValues = blocks.filter(b => b.BlockType === "KEY_VALUE_SET");
+  const lines = blocks.filter(b => b.BlockType === "LINE");
 
   let normalizedItems: any[] = [];
   let grandTotal: number | null = null;
+  let globalDate = "";
 
-  // 1. Extract Grand Total
+  // 1. Extract Global Statement Date
+  const fullText = lines.map(b => b.Text).join(' ');
+  const dates = fullText.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/g) || [];
+  if (dates.length > 0) {
+    globalDate = dates[dates.length - 1]; // Pick latest found date in header context
+  }
+
+  // 1.5 Extract Grand Total
   keyValues.forEach(kv => {
     if (kv.EntityTypes && kv.EntityTypes.includes("KEY")) {
       const keyText = getText(kv, blockMap).toLowerCase();
@@ -170,9 +179,10 @@ function normalizeTextractOutput(blocks: any[]) {
 
             const billedAmount = parseFloat(finalAmtStr) || 0.00;
             const paidAmount = adjValue < 0 ? Math.max(0, billedAmount + adjValue) : 0;
+            const rowDate = headers.date ? (rowData[headers.date] || "").trim() : "";
 
             normalizedItems.push({
-              Date: headers.date ? (rowData[headers.date] || "").trim() : "",
+              Date: rowDate !== "" ? rowDate : globalDate,
               CPT: cptVal,
               IsValidCode: isValidCode,
               Description: headers.description ? (rowData[headers.description] || "").trim() : "",
