@@ -235,12 +235,15 @@ function parseDate(str) {
 function initAudit() {
   console.log('MediHelp: Initializing Bill Audit Module...');
   
-  // 1. Configure PDF.js Worker (v3.x+ Requirement)
+  // 1. Initialize UI Listeners (Priority)
+  setupPDFAudit();
+
+  // 2. Configure PDF.js Worker (v3.x+ Requirement)
   if (typeof pdfjsLib !== 'undefined') {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  } else {
+    console.warn('MediHelp: pdf.js library not detected.');
   }
-
-  setupPDFAudit();
 
   // ── v4.2 Interactive Blog Integration ──
   try {
