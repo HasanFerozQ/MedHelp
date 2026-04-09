@@ -204,12 +204,12 @@ function runAudit(input, detectedNPIs = []) {
   } else if (input && typeof input === 'object' && input.rows) {
     rows = input.rows;
     suspect_rows = input.suspect_rows || [];
-    window.currentDocumentProfile = input.profile || window.DOCUMENT_PROFILES.GENERIC;
+    window.currentDocumentProfile = input.profile || (window.DOCUMENT_PROFILES && window.DOCUMENT_PROFILES.GENERIC) || { id: 'GENERIC', label: 'Generic Medical Document' };
   } else {
     const extracted = extractRowsFromText(input || '');
     rows = extracted.rows || [];
     suspect_rows = extracted.suspect_rows || [];
-    window.currentDocumentProfile = extracted.profile || window.DOCUMENT_PROFILES.GENERIC;
+    window.currentDocumentProfile = extracted.profile || (window.DOCUMENT_PROFILES && window.DOCUMENT_PROFILES.GENERIC) || { id: 'GENERIC', label: 'Generic Medical Document' };
   }
 
   currentSuspectRows = suspect_rows;

@@ -149,15 +149,16 @@ function extractRowsFromText(text) {
  * Detects document type based on keyword frequency to route the ingestion engine.
  */
 function classifyDocument(items) {
-  const fullText = items.map(i => i.str).join(' ').toLowerCase();
+  const fullText = (items || []).map(i => i.str).join(' ').toLowerCase();
   const profiles = window.DOCUMENT_PROFILES || {};
   
-  let bestProfile = profiles.GENERIC;
+  // Hard fallback if constants not loaded yet
+  let bestProfile = profiles.GENERIC || { id: 'GENERIC', label: 'Generic Medical Document' };
   let maxHits = 0;
 
   Object.values(profiles).forEach(p => {
-    if (p.id === 'GENERIC') return;
-    const hits = p.keywords.filter(k => fullText.includes(k.toLowerCase())).length;
+    if (!p || p.id === 'GENERIC') return;
+    const hits = (p.keywords || []).filter(k => fullText.includes(k.toLowerCase())).length;
     if (hits > maxHits) {
       maxHits = hits;
       bestProfile = p;
@@ -172,7 +173,7 @@ function reconstructRowsFromLayout(pages) {
   const profile = classifyDocument(flatItems);
   const dMap = detectColumns(flatItems);
   
-  console.log('MediHelp: Detected Profile:', profile.label);
+  console.log('MediHelp: Detected Profile:', profile?.label || 'Generic');
   console.log('MediHelp: Dynamic Column Capture:', dMap);
 
   const allRows = [];
