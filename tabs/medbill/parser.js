@@ -96,10 +96,7 @@ function detectColumns(items, topY = Infinity) {
     unit:  [midPrice - 14,  rightTotal - 15],
     total: [rightTotal - 14, rightTotal + 150],
   };
-}ALF,   rightTotal + HALF  ],
-  };
 }
-
 /**
  * Assign a column zone role to a token based on its x position.
  * Returns 'qty' | 'unit' | 'total' | 'unknown'
