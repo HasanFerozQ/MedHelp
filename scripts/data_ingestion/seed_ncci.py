@@ -2,14 +2,15 @@ import os
 import csv
 import requests
 
-# Manually load .env file to avoid dependency issues
+# Manually load .env file — path relative to this script, not CWD
 def manual_load_dotenv():
-    if os.path.exists(".env"):
-        with open(".env", "r") as f:
+    env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '.env')
+    if os.path.exists(env_path):
+        with open(env_path, "r") as f:
             for line in f:
                 if "=" in line and not line.startswith("#"):
                     key, value = line.strip().split("=", 1)
-                    os.environ[key] = value
+                    os.environ.setdefault(key.strip(), value.strip())
 
 manual_load_dotenv()
 
@@ -20,7 +21,7 @@ if not SUPABASE_URL or not SUPABASE_KEY:
     print("Error: NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not found in .env")
     exit(1)
 
-FILE_PATH = "data/ncci_ptp.csv"
+FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "ncci_ptp.csv")
 BATCH_SIZE = 5000
 API_URL = f"{SUPABASE_URL}/rest/v1/ncci_ptp_edits"
 

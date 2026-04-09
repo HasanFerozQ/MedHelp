@@ -2,14 +2,15 @@ import os
 import csv
 import requests
 
-# Manually load .env file to avoid dependency issues
+# Manually load .env file — path relative to this script, not CWD
 def manual_load_dotenv():
-    if os.path.exists(".env"):
-        with open(".env", "r") as f:
+    env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '.env')
+    if os.path.exists(env_path):
+        with open(env_path, "r") as f:
             for line in f:
                 if "=" in line and not line.startswith("#"):
                     key, value = line.strip().split("=", 1)
-                    os.environ[key] = value
+                    os.environ.setdefault(key.strip(), value.strip())
 
 manual_load_dotenv()
 
@@ -20,7 +21,7 @@ if not SUPABASE_URL or not SUPABASE_KEY:
     print("Error: NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not found in .env")
     exit(1)
 
-FILE_PATH = "data/mpfs.csv"
+FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "mpfs.csv")
 BATCH_SIZE = 1000
 API_URL = f"{SUPABASE_URL}/rest/v1/cpt_medicare_fees"
 
@@ -71,7 +72,8 @@ def run_ingestion():
                 work_rvu = float(next((v for k, v in clean_row.items() if 'Work' in k and 'RVU' in k), 0) or 0)
                 pe_rvu = float(next((v for k, v in clean_row.items() if 'PE' in k and 'RVU' in k), 0) or 0)
                 mp_rvu = float(next((v for k, v in clean_row.items() if 'Mal' in k and 'RVU' in k), 0) or 0)
-                base_price = (work_rvu + pe_rvu + mp_rvu) * 32.74
+                # CY2024 Conversion Factor = $33.8872 (CMS final rule)
+                base_price = round((work_rvu + pe_rvu + mp_rvu) * 33.8872, 2)
             except (ValueError, StopIteration, TypeError):
                 base_price = 0
 

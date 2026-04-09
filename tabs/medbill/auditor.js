@@ -608,27 +608,63 @@ class BucketAuditor {
     }
   }
 
-  // ── LAYER 3 — Benchmark Validation ───────────────────────────────────────
+  // ── LAYER 3 — Benchmark + MUE + NCCI from Database ──────────────────────
   async runDatabaseCheck() {
     // Accept both CPT and HCPCS L2 codes
     const codes = [...new Set(this.rows.map(r => r.code).filter(c => !!c && isValidCPT(c)))];
     if (codes.length === 0) return;
 
-    let feeMap = {};
+    let feeMap  = {};
+    let mueMap  = {}; // { [code]: { limit, mai, desc } }
+    let ncciDB  = []; // [{ column1_code, column2_code, modifier_allowed }]
+
     try {
       const res = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/lookup_codes', {
-        method: 'POST',
+        method : 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ codes, npis: this.npis }),
+        body   : JSON.stringify({ codes, npis: this.npis }),
       });
       if (res.ok) {
         const data = await res.json();
-        feeMap = data.fees || {};
+        feeMap  = data.fees  || {};
+        mueMap  = data.mue   || {};  // ← full MUE table from DB
+        ncciDB  = data.ncci  || [];  // ← full NCCI pairs from DB
         this.dbCheckRan = true;
       }
     } catch (_) {}
 
-    // Overlay inline benchmark for any code not in Supabase
+    // ── Merge DB MUE limits into the runtime window.MUE_LIMITS ──────────────
+    // This means runFrequencyAudit() gains full ~8,000 code coverage automatically
+    // without needing to be called again — it reads window.MUE_LIMITS at call time.
+    if (Object.keys(mueMap).length > 0) {
+      const liveMUE = window.MUE_LIMITS || {};
+      Object.entries(mueMap).forEach(([code, m]) => {
+        // DB value wins over inline (more up to date)
+        liveMUE[code] = m.limit;
+      });
+      window.MUE_LIMITS = liveMUE;
+      // Re-run frequency audit with enriched MUE table
+      this.runFrequencyAudit();
+    }
+
+    // ── Merge DB NCCI pairs into runtime window.NCCI_PAIRS ───────────────────
+    // Supplements the small inline table with the full ~230k pair dataset.
+    if (ncciDB.length > 0) {
+      const livePairs = window.NCCI_PAIRS || {};
+      ncciDB.forEach((edit) => {
+        const col1 = edit.column1_code;
+        const col2 = edit.column2_code;
+        if (!col1 || !col2) return;
+        if (!livePairs[col1]) livePairs[col1] = new Set();
+        // Set.add is safe even if already present
+        livePairs[col1].add(col2);
+      });
+      window.NCCI_PAIRS = livePairs;
+      // Re-run bundling with enriched NCCI table
+      this.runBundling();
+    }
+
+    // ── Overlay inline benchmark for any code not in Supabase ────────────────
     codes.forEach(code => {
       if (!feeMap[code]) {
         const b = this.getBenchmark(code);
@@ -636,6 +672,7 @@ class BucketAuditor {
       }
     });
 
+    // ── Benchmark pricing check ───────────────────────────────────────────────
     this.rows.forEach((r, idx) => {
       if (!r.code || r.isTotalRow || this._voidedRows.has(idx)) return;
       const bench = feeMap[r.code];
