@@ -19,17 +19,12 @@ function initAudit() {
   const savedData = localStorage.getItem('medihelp_grid_data');
   if (savedData) {
     try {
-      const rows = JSON.parse(savedData);
-      if (rows && rows.length > 0) {
-        rows.forEach(r => addGridRow(r));
-      } else {
-        addGridRow(); // Initialize empty row
-      }
+      window.appGridRows = JSON.parse(savedData) || [];
     } catch(e) {
-      addGridRow();
+      window.appGridRows = [];
     }
   } else {
-    addGridRow();
+    window.appGridRows = [];
   }
   
   // Give the UI a moment to render before firing the first audit
@@ -42,52 +37,70 @@ if (document.readyState === 'loading') {
   initAudit();
 }
 
-function saveToCache() {
-  const rows = buildRowDataFromUI();
-  localStorage.setItem('medihelp_grid_data', JSON.stringify(rows));
-}
+function submitAuditForm() {
+  const dateInput = document.getElementById('entry-date');
+  const codeInput = document.getElementById('entry-code');
+  const modInput  = document.getElementById('entry-mod');
+  const dxInput   = document.getElementById('entry-dx');
+  const qtyInput  = document.getElementById('entry-qty');
+  const totInput  = document.getElementById('entry-total');
 
-function buildRowDataFromUI() {
-  const trs = document.querySelectorAll('#grid-body tr');
-  return Array.from(trs).map((tr, idx) => {
-    const inputs = tr.querySelectorAll('input');
-    return {
-      idx,
-      date:      inputs[0].value.trim(),
-      code:      inputs[1].value.trim().toUpperCase(),
-      modifier:  inputs[2].value.trim().toUpperCase(),
-      dx:        [inputs[3].value.trim().toUpperCase()].filter(Boolean), // convert straight to array format
-      qty:       parseFloat(inputs[4].value) || 1,
-      price:     0,  // We don't have unit price in the simple manual grid
-      total:     parseFloat(inputs[5].value) || 0,
-      paid:      0,
-      owed:      0,
-      desc:      'Manual Entry',
-      raw:       tr
-    };
-  }).filter(r => r.code !== '' || r.total > 0);
-}
+  const code = codeInput.value.trim().toUpperCase();
+  const total = parseFloat(totInput.value) || 0;
 
-function addGridRow(data = {}) {
-  const body = document.getElementById('grid-body');
-  if (!body) return;
-  const row = document.createElement('tr');
-  
+  if (!code && total <= 0) {
+    alert("Please enter a CPT Code or Total Billed Amount.");
+    return;
+  }
+
   const s = (v) => window.sanitizeText(String(v || ''));
-  const dxStr = Array.isArray(data.dx) ? data.dx.join(', ') : s(data.dx);
+
+  const newRow = {
+    idx: window.appGridRows.length,
+    date: dateInput.value.trim(),
+    code: code,
+    modifier: modInput.value.trim().toUpperCase(),
+    dx: [dxInput.value.trim().toUpperCase()].filter(Boolean),
+    qty: parseFloat(qtyInput.value) || 1,
+    price: 0,
+    total: total,
+    paid: 0,
+    owed: 0,
+    desc: 'Manual Entry'
+  };
+
+  window.appGridRows.push(newRow);
   
-  row.innerHTML = `
-    <td><input type="text" value="${s(data.date)}" style="width:100%; border:none; background:transparent; color:var(--text-h); outline:none;" placeholder="MM/DD/YY" oninput="saveToCache(); debouncedAudit()"></td>
-    <td><input type="text" value="${s(data.code)}" style="width:100%; border:none; background:transparent; color:var(--text-h); font-weight:bold; outline:none;" placeholder="99214" oninput="saveToCache(); debouncedAudit()"></td>
-    <td><input type="text" value="${s(data.modifier)}" style="width:100%; border:none; background:transparent; color:var(--accent); font-weight:bold; outline:none;" placeholder="25" oninput="saveToCache(); debouncedAudit()"></td>
-    <td><input type="text" value="${dxStr}" style="width:100%; border:none; background:transparent; color:var(--text-h); outline:none;" placeholder="Z00.00" oninput="saveToCache(); debouncedAudit()"></td>
-    <td><input type="number" value="${s(data.qty) || 1}" style="width:100%; border:none; background:transparent; color:var(--text-h); outline:none;" oninput="saveToCache(); debouncedAudit()"></td>
-    <td><input type="number" step="0.01" value="${data.total !== undefined ? data.total : ''}" style="width:100%; border:none; background:transparent; color:var(--text-h); font-weight:bold; outline:none;" placeholder="$0.00" oninput="saveToCache(); debouncedAudit()"></td>
-    <td><button onclick="this.closest('tr').remove(); saveToCache(); triggerAudit();" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:16px;">✕</button></td>
-  `;
-  body.appendChild(row);
+  // Clear inputs
+  codeInput.value = '';
+  modInput.value = '';
+  dxInput.value = '';
+  qtyInput.value = '1';
+  totInput.value = '';
+  dateInput.value = '';
+  
+  codeInput.focus();
+
+  saveToCache();
+  triggerAudit();
 }
-window.addGridRow = addGridRow;
+window.submitAuditForm = submitAuditForm;
+
+function removeAuditRow(idx) {
+  if (idx < 0 || idx >= window.appGridRows.length) return;
+  window.appGridRows.splice(idx, 1);
+  
+  // Re-index
+  window.appGridRows.forEach((r, i) => r.idx = i);
+  
+  saveToCache();
+  triggerAudit();
+}
+window.removeAuditRow = removeAuditRow;
+
+function saveToCache() {
+  localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
+}
 
 const debouncedAudit = window.debounce(async () => {
   try {
@@ -99,7 +112,7 @@ const debouncedAudit = window.debounce(async () => {
 window.debouncedAudit = debouncedAudit;
 
 async function triggerAudit() {
-  const rows = buildRowDataFromUI();
+  const rows = window.appGridRows || [];
 
   const multiplier = parseFloat(document.getElementById('payer-type')?.value) || 2.5;
   const npis       = [];

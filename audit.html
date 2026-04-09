@@ -104,12 +104,12 @@
   </section>
 
   <div class="container" style="margin-bottom: 80px; max-width: 1280px;">
-    <div class="      <!-- Manual Data Grid -->
+      <!-- Manual Data Entry Form -->
       <div id="interactive-grid-container" style="margin-bottom: 30px;">
         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 15px;">
           <div>
-            <h3 style="font-size: 16px; margin: 0; color: var(--text-h);">🛠️ Bill Data Entry</h3>
-            <p style="margin:4px 0 0; font-size: 12px; color: var(--text-muted);">Enter medical charges below. Data auto-saves and validates instantly.</p>
+            <h3 style="font-size: 16px; margin: 0; color: var(--text-h);">🛠️ Add Medical Charge</h3>
+            <p style="margin:4px 0 0; font-size: 12px; color: var(--text-muted);">Submit line items individually. Responses will generate below.</p>
           </div>
           <div style="display: flex; gap: 12px; align-items: center;">
             <div style="text-align: right;">
@@ -120,29 +120,43 @@
                 <option value="3.0">Worker's Comp (300% Medicare)</option>
               </select>
             </div>
-            <button class="btn btn-primary" onclick="triggerAudit()" style="padding: 8px 16px; font-size: 12px;">Re-Calculate</button>
+            <button class="btn btn-ghost" onclick="triggerAudit()" style="padding: 8px 16px; font-size: 12px;">Refresh</button>
           </div>
         </div>
 
-        <div class="workspace-table-wrapper" style="overflow-x: auto; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border);">
-          <table id="manual-audit-grid" style="width: 100%; border-collapse: collapse; font-size: 13px; min-width: 650px;">
-            <thead>
-              <tr style="background: rgba(255,255,255,0.05); text-align: left;">
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Date (Opt)</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">CPT / HCPCS</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Mod</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">ICD-10 (Opt)</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Qty</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Total Billed ($)</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border); width: 40px;"></th>
-              </tr>
-            </thead>
-            <tbody id="grid-body">
-              <!-- JS Injected Editable Rows -->
-            </tbody>
-          </table>
+        <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);">
+           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-bottom: 24px;">
+              <div>
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Date <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
+                <input type="text" id="entry-date" placeholder="MM/DD/YY" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px; font-size:14px; outline:none; transition:border-color 0.2s, box-shadow 0.2s;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+              </div>
+              <div style="grid-column: span 1.5;">
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">CPT/HCPCS Code <span style="color:var(--danger);">*</span></label>
+                <input type="text" id="entry-code" placeholder="e.g. 99214" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px; font-size:14px; outline:none; transition:border-color 0.2s; font-weight:bold; letter-spacing:0.5px;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+              </div>
+              <div>
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Modifier <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
+                <input type="text" id="entry-mod" placeholder="e.g. 25" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px; font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+              </div>
+              <div>
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">ICD-10 Dx <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
+                <input type="text" id="entry-dx" placeholder="Z00.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px; font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+              </div>
+              <div>
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Units</label>
+                <input type="number" id="entry-qty" value="1" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px; font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+              </div>
+              <div>
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Total Billed <span style="color:var(--danger);">*</span></label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px; font-weight:bold;">$</span>
+                  <input type="number" id="entry-total" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px 12px 28px; font-size:14px; outline:none; transition:border-color 0.2s; font-weight:bold;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+                </div>
+              </div>
+           </div>
+           
+           <button onclick="submitAuditForm()" class="btn btn-primary" style="width:100%; padding:14px; font-size:15px; font-weight:800; letter-spacing:0.5px; border-radius:8px; transition: transform 0.15s, box-shadow 0.15s; cursor:pointer;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(6,182,212,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">Analyze Charge ➔</button>
         </div>
-        <button onclick="addGridRow()" style="background: none; border: 1px dashed var(--border); color: var(--text-muted); width: 100%; padding: 10px; margin-top: 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">+ Add Line Item</button>
       </div>
 
       <!-- Live Result Section -->
@@ -401,6 +415,8 @@
 
   <script>
     const auditFaqs = [
+      { q: 'Where do I find the codes (CPT, Modifiers, ICD-10) to enter on this page?', a: 'You need to request an "Itemized Statement" or "Detailed Bill" from your hospital or provider. Do not use the summary bill. On the itemized statement, look for a 5-digit number (usually under columns like "Rev Code", "CPT", or "HCPCS")—this is your main procedure code. ICD-10 diagnosis codes (e.g., Z00.00) are usually listed at the top under "Patient Diagnosis".' },
+      { q: 'What is a "Modifier" in medical billing?', a: 'A modifier is a 2-character code (like "25", "59", "LT", or "RT") that doctors append to a main CPT code to explain a special circumstance. For instance, modifier 25 tells the insurance company that a significant, separately identifiable evaluation occurred on the same day as another procedure. Modifiers can dramatically impact whether a charge gets bundled or paid separately.' },
       { q: 'What is an MUE (Medically Unlikely Edit)?', a: 'MUEs are CMS-established frequency limits for healthcare services. If a hospital bills more units of a specific code than the MUE allows for a single day, our engine flags it as a potential "Revenue Padding" error.' },
       { q: 'How does GPCI Locality affect my medical bill?', a: 'The Geographic Practice Cost Index (GPCI) adjusts Medicare rates based on local costs. We ensure benchmarks reflect your specific jurisdiction (e.g. NYC vs. Rural Texas) to prevent overvaluation.' },
       { q: 'Why do hospitals use unbundled CPT codes?', a: 'Unbundling occurs when multiple steps (which should be bundled into one procedure) are billed separately to inflate costs. We detect these NCCI (National Correct Coding Initiative) violations instantly.' },

@@ -27,18 +27,21 @@ function renderResultCardsPerLineItem(rows, findings, container) {
     }
 
     const s = (v) => window.sanitizeText(String(v || ''));
-
     html += `
       <div style="border-left: 4px solid ${border}; background: ${bg}; border-radius: 8px; padding: 14px 16px; display:flex; flex-direction:column; gap:8px;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div style="font-weight:800; color:var(--text-h); font-size:14px; font-family:monospace;">
+          <div style="font-weight:800; color:var(--text-h); font-size:14px; font-family:monospace; display:flex; align-items:center;">
             ${s(r.code) || 'Uncoded'}
             ${r.modifier ? `<span style="color:var(--accent); margin-left:4px;">-${s(r.modifier)}</span>` : ''}
             <span style="font-family:sans-serif; font-size:12px; font-weight:500; color:var(--text-muted); margin-left:12px;">
               Qty: ${r.qty} | Billed: $${parseFloat(r.total).toFixed(2)}
             </span>
+            ${r.dx && r.dx.length > 0 ? `<span style="font-family:sans-serif; font-size:11px; padding:2px 6px; border:1px solid var(--border); border-radius:12px; margin-left:12px; color:var(--text-muted);">Dx: ${r.dx.join(', ')}</span>` : ''}
           </div>
-          <div style="font-size:10px; font-weight:800; color:${color}; text-transform:uppercase; letter-spacing:0.5px; border:1px solid ${border}44; padding:2px 8px; border-radius:12px;">${statusText}</div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="font-size:10px; font-weight:800; color:${color}; text-transform:uppercase; letter-spacing:0.5px; border:1px solid ${border}44; padding:2px 8px; border-radius:12px;">${statusText}</div>
+            <button onclick="removeAuditRow(${idx})" style="background:rgba(239, 68, 68, 0.1); border:none; color:var(--danger); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; transition:background 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)';" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)';">✕</button>
+          </div>
         </div>
         
         <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
@@ -295,17 +298,15 @@ function renderSummaryReport(doc, p, findings, savings) {
 }
 
 window.exportAuditCSV = function() {
-  const trs   = document.querySelectorAll('#grid-body tr');
+  const rows = window.appGridRows || [];
   const lines = ['Date,Code,Modifier,ICD-10,Qty,Total Billed'];
-  trs.forEach(tr => {
-    const inputs = tr.querySelectorAll('input');
-    if (inputs.length >= 6) {
-      lines.push([
-        inputs[0].value, inputs[1].value, inputs[2].value,
-        `\"${inputs[3].value.replace(/\"/g,'\"\"')}\"`,
-        inputs[4].value, inputs[5].value
-      ].join(','));
-    }
+  rows.forEach(r => {
+    const dxStr = Array.isArray(r.dx) ? r.dx.join(' ') : (r.dx || '');
+    lines.push([
+      r.date || '', r.code || '', r.modifier || '',
+      `\"${dxStr.replace(/\"/g,'\"\"')}\"`,
+      r.qty, r.total
+    ].join(','));
   });
   const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
   const url  = URL.createObjectURL(blob);
