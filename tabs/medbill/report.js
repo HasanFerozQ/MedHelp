@@ -65,6 +65,9 @@ function renderResultCardsPerLineItem(rows, findings, container) {
 window.renderResultCardsPerLineItem = renderResultCardsPerLineItem;
 
 function renderFinalSummary(savings, benchmark, container) {
+  // Ensure the container is visible (override display: none from CSS)
+  if (container) container.classList.add('visible');
+  
   let html = `
     <!-- Savings Summary -->
     <div style="background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.04));border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:24px;text-align:center;margin-top:20px;">

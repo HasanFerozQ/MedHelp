@@ -154,7 +154,11 @@ async function triggerAudit() {
   
   if (rows.length === 0) {
     container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 13px;">Add elements above to see live findings here.</div>';
-    document.getElementById('audit-results').innerHTML = '';
+    const auditRes = document.getElementById('audit-results');
+    if (auditRes) {
+      auditRes.innerHTML = '';
+      auditRes.classList.remove('visible');
+    }
     return;
   }
 
