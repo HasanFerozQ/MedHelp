@@ -339,6 +339,7 @@ async function handlePDF(file) {
     const npiRegex = /\b[1-9][0-9]{9}\b/g;
 
     for (let i = 1; i <= pdf.numPages; i++) {
+      if (status) status.innerHTML = `<span style="color:var(--accent);">Extracting Text: Page ${i} of ${pdf.numPages}...</span>`;
       const page = await pdf.getPage(i);
       const tc   = await page.getTextContent();
       const items = tc.items.map(item => {
@@ -352,24 +353,36 @@ async function handlePDF(file) {
     // OCR fallback for image-only PDFs
     const totalWords = pageData.flat().reduce((a, it) => a + it.str.split(/\s+/).length, 0);
     if (totalWords < 20) {
-      if (loadingTxt) loadingTxt.textContent = 'No text layer — running OCR fallback (may take ~30s)…';
+      console.log('MediHelp: No text layer detected. Switching to OCR...');
+      if (status) status.innerHTML = `<span style="color:var(--accent);">No text detected. Loading OCR Engine...</span>`;
+      
       if (!window.Tesseract) {
-        await new Promise(res => {
+        await new Promise((res, rej) => {
           const s = document.createElement('script');
           s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
           s.onload = res;
+          s.onerror = () => rej(new Error('Failed to load OCR library.'));
           document.head.appendChild(s);
         });
       }
+      
       const canvas = document.createElement('canvas');
       const ctx    = canvas.getContext('2d');
       pageData = [];
+      
+      const tesseract = window.Tesseract || Tesseract;
+
       for (let i = 1; i <= pdf.numPages; i++) {
+        if (status) status.innerHTML = `<span style="color:var(--accent);">OCR Analysis: Page ${i} of ${pdf.numPages} (Slow Process)...</span>`;
         const page     = await pdf.getPage(i);
         const viewport = page.getViewport({ scale: 2.0 });
         canvas.width = viewport.width; canvas.height = viewport.height;
         await page.render({ canvasContext: ctx, viewport }).promise;
-        const { data: { blocks } } = await Tesseract.recognize(canvas, 'eng');
+        
+        const { data: { blocks } } = await tesseract.recognize(canvas, 'eng', {
+           logger: m => console.log('MediHelp OCR:', m.status, Math.round(m.progress * 100) + '%')
+        });
+        
         const ocrItems = blocks.flatMap(b => b.paragraphs.flatMap(p => p.lines.flatMap(l => l.words.map(w => {
           const m = w.text.match(npiRegex);
           if (m) detectedNPIs.push(...m);
@@ -378,6 +391,8 @@ async function handlePDF(file) {
         pageData.push(ocrItems);
       }
     }
+
+    if (status) status.innerHTML = `<span style="color:var(--accent);">Reconstructing Layout...</span>`;
 
     if (overlay) overlay.style.display = 'none';
     if (status)  status.innerHTML = `✅ Analyzed ${pdf.numPages} page(s) from <strong>${file.name}</strong>`;
