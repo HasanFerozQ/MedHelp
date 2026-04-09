@@ -528,35 +528,28 @@ function extractRowsFromSpatialLine(lineItems, lineText) {
   // STEP 2: Hard Filter - Skip lines entirely that aren't structurally row-like
   if (!code && !isTotalRow) return null;
 
-  // STEP 4: Kill Heuristics -> Rightmost Number Targeting
-  // Filter spatial items to those containing digits and optional money symbols
-  const moneyItems = lineItems.filter(i => {
-    const s = i.str.trim();
-    if (!/\d/.test(s)) return false; // not a number
-    if (/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/.test(s)) return false; // is a date
-    if (s === code) return false; // is the code
-    return true;
-  });
+  // STEP 4: Exact Geometric Column Mapping (Stop Heuristic Bleed)
+  const COLUMN_MAP = {
+    cpt: [0, 80],
+    desc: [80, 350],
+    qty: [350, 420],
+    unit: [420, 520],
+    total: [520, 750] // extending to right margin
+  };
 
-  // Sort money blocks from right-to-left across the page
-  moneyItems.sort((a, b) => b.x - a.x);
-
-  let total = 0, owed = 0, paid = 0, price = 0, qty = 1;
-
-  if (moneyItems.length > 0) {
-    // Right-most number is fundamentally the Total or Patient Responsibility
-    let rightStr = moneyItems[0].str.replace(/[^0-9.\-()]/g, '');
-    if (rightStr.includes('(') && rightStr.includes(')')) {
-      rightStr = '-' + rightStr.replace(/[()]/g, '');
-    }
-    total = parseFloat(rightStr) || 0;
-
-    // Grab next number to the left as Unit Price for context if it exists
-    if (moneyItems.length > 1) {
-      const leftStr = moneyItems[1].str.replace(/[^0-9.]/g, '');
-      price = parseFloat(leftStr) || 0;
-    }
+  function extractCol(range) {
+    return lineItems.filter(i => i.x >= range[0] && i.x <= range[1]).map(i => i.str).join('');
   }
+
+  let totalStr = extractCol(COLUMN_MAP.total).replace(/[^0-9.\-()]/g, '');
+  if (totalStr.includes('(') && totalStr.includes(')')) totalStr = '-' + totalStr.replace(/[()]/g, '');
+  let priceStr = extractCol(COLUMN_MAP.unit).replace(/[^0-9.\-()]/g, '');
+  let qtyStr   = extractCol(COLUMN_MAP.qty).replace(/[^0-9]/g, '');
+
+  let total = parseFloat(totalStr) || 0;
+  let price = parseFloat(priceStr) || 0;
+  let qty   = parseInt(qtyStr, 10) || 1;
+  let owed = 0, paid = 0;
 
   // Extract Dates strictly
   const dates = lineText.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/);
@@ -567,13 +560,16 @@ function extractRowsFromSpatialLine(lineItems, lineText) {
   const modMatch = lineText.match(new RegExp(`${code}-([A-Z0-9]{2})\\b`));
   if (modMatch) modifier = modMatch[1];
 
-  // Erase tokens to make description clean
-  let desc = lineText
-    .replace(new RegExp(`\\b${code}\\b`, 'g'), ' ')
-    .replace(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/g, ' ')
-    .replace(/(?:^|\s|\$)\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2})?)/g, ' ') // wipe old money chunks
-    .replace(/[|:,\-]/g, ' ')
-    .replace(/\s+/g, ' ').trim();
+  // For description, rely cleanly on the designated desc column if possible
+  let rawDesc = extractCol(COLUMN_MAP.desc).trim();
+  if (!rawDesc) {
+    rawDesc = lineText
+      .replace(new RegExp(`\\b${code}\\b`, 'g'), ' ')
+      .replace(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/g, ' ')
+      .replace(/[|:,\-]/g, ' ')
+      .replace(/\s+/g, ' ').trim();
+  }
+  let desc = rawDesc;
   if (desc.length > 60) desc = desc.substring(0, 57) + '…';
 
   return {
@@ -596,7 +592,20 @@ function extractRowsFromText(text) {
   // Legacy text paste handler — simulate spatial logic by treating chunks as items
   return text.split('\n').filter(l => l.trim().length > 3)
     .map(lineText => {
-      const chunks = lineText.split(/\s+/).map((str, idx) => ({ str, x: idx * 10 })); // fake coordinates
+      // Map space-separated text to column boundaries approximately for testing
+      const parts = lineText.trim().split(/\s+/);
+      const chunks = parts.map((str, idx) => {
+        let x = idx * 10;
+        if (str.includes('$') || /\d+\.\d+/.test(str)) {
+          // If it looks like money, push it towards the right side columns
+          x = idx === parts.length - 1 ? 550 : 450;
+        } else if (/\b\d{5}\b/.test(str)) {
+          x = 10; // CPT is on the left
+        } else if (idx > 0 && idx < parts.length - 2) {
+           x = 150; // Description in middle
+        }
+        return { str, x };
+      });
       return extractRowsFromSpatialLine(chunks, lineText);
     }).filter(Boolean);
 }
