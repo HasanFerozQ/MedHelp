@@ -689,8 +689,14 @@ async function reRunWorkspaceAudit() {
   engine.runCompleteness();
   engine.runModifiers();
   engine.runDateSanity();
-  await engine.runDatabaseCheck();
-  await engine.resolveNPIProviders();
+  const TIMEOUT_MS = 5000;
+  const withTimeout = (promise) => Promise.race([
+    promise,
+    new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), TIMEOUT_MS))
+  ]);
+
+  try { await withTimeout(engine.runDatabaseCheck()); } catch(e) { console.warn('MediHelp: DB check skipped:', e.message); }
+  try { await withTimeout(engine.resolveNPIProviders()); } catch(e) { console.warn('MediHelp: NPI resolution skipped:', e.message); }
   engine.finalizeDeduplication();
 
   const confidence = engine.computeConfidence();
@@ -987,7 +993,10 @@ class BucketAuditor {
     await Promise.allSettled(
       uniqueNPIs.map(async (npi, index) => {
         try {
-          const res = await fetch(`${NPPES_API}${npi}`);
+          const ctrl = new AbortController();
+          const timer = setTimeout(() => ctrl.abort(), 4000);
+          const res = await fetch(`${NPPES_API}${npi}`, { signal: ctrl.signal });
+          clearTimeout(timer);
           if (!res.ok) return;
           const data = await res.json();
           if (!data.results?.length) return;
