@@ -20,8 +20,28 @@ const INLINE_BENCHMARK = {
   '99291': { price: 184.20,  desc: 'Critical care, first 30-74 min (Facility)' },
   '93000': { price: 16.58,   desc: 'Electrocardiogram with report (ECG)' },
   '93010': { price: 11.21,   desc: 'ECG interpretation and report' },
+  '93306': { price: 232.20,  desc: 'Echocardiography with Doppler' },
   '85025': { price: 7.27,    desc: 'Complete blood count (CBC) with auto diff' },
+  '80053': { price: 11.19,   desc: 'Comprehensive metabolic panel' },
+  '80048': { price: 8.68,    desc: 'Basic metabolic panel' },
+  '81001': { price: 3.25,    desc: 'Urinalysis with microscopy' },
   '36415': { price: 3.09,    desc: 'Venipuncture (blood draw)' },
+  '71046': { price: 41.08,   desc: 'Chest X-ray, 2 views' },
+  '72148': { price: 198.82,  desc: 'MRI lumbar spine without contrast' },
+  '70553': { price: 273.69,  desc: 'MRI brain with/without contrast' },
+  '73610': { price: 34.09,   desc: 'Ankle X-ray, 3+ views' },
+  '45378': { price: 173.59,  desc: 'Colonoscopy, diagnostic' },
+  '43239': { price: 249.55,  desc: 'Upper GI endoscopy with biopsy' },
+  '27447': { price: 1175.74, desc: 'Total knee replacement' },
+  '27130': { price: 1300.15, desc: 'Total hip replacement' },
+  '29881': { price: 493.18,  desc: 'Knee arthroscopy with meniscectomy' },
+  '12001': { price: 120.14,  desc: 'Simple wound repair, ≤2.5 cm' },
+  '96372': { price: 24.72,   desc: 'Therapeutic injection' },
+  '90837': { price: 122.43,  desc: 'Psychotherapy, 60 min' },
+  '90834': { price: 88.59,   desc: 'Psychotherapy, 45 min' },
+  '87804': { price: 18.35,   desc: 'Influenza rapid test' },
+  '87420': { price: 15.79,   desc: 'RSV antigen test' },
+  '87086': { price: 9.42,    desc: 'Urine culture' },
 };
 
 /** Precise NCCI Pairs for Simple Tab parity */
@@ -40,6 +60,9 @@ const MUE_LIMITS = {
   '36415': 1, // Blood draw
   '94760': 1, // Pulse Ox
   '93000': 1, // EKG
+  '71045': 1, // X-ray
+  '71046': 1,
+  'G0439': 1, // Annual Wellness
 };
 
 const DRG_BASE_RATE = 10400; // corrected to CMS FY2024 average
