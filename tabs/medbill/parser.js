@@ -26,11 +26,14 @@ function detectTableBoundaries(sortedYs, yGroups) {
     const items = yGroups[y];
     const lineText = items.map(u => u.str).join(' ').toUpperCase();
     
-    if (
-      (lineText.includes('CPT') || lineText.includes('CODE') || lineText.includes('HCPCS') || lineText.includes('SERVICE') || lineText.includes('DESCRIPTION')) &&
-      (lineText.includes('CHARGE') || lineText.includes('TOTAL') || lineText.includes('AMOUNT') || lineText.includes('BILLED'))
-    ) {
-      if (topY === Infinity) topY = y; // Start of billing grid
+    // V7.1: Super-strict header sniffing to bypass test legends.
+    // A true billing grid header MUST contain at least one element from each of the 3 primary pillars.
+    const hasCode = lineText.includes('CPT') || lineText.includes('CODE') || lineText.includes('HCPCS') || lineText.includes('SERVICE');
+    const hasQty  = lineText.includes('QTY') || lineText.includes('QUANTITY') || lineText.includes('UNIT');
+    const hasCoin = lineText.includes('CHARGE') || lineText.includes('TOTAL') || lineText.includes('AMOUNT') || lineText.includes('PRICE') || lineText.includes('FEE') || lineText.includes('BILLED');
+
+    if (hasCode && hasQty && hasCoin) {
+      if (topY === Infinity) topY = y; // Start of REAL billing grid
     }
 
     if (TOTAL_ROW_RE.test(lineText)) {
