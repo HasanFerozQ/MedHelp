@@ -43,7 +43,7 @@ function detectColumns(items) {
     desc:  [leftCode + 80, qtyX - 40],
     qty:   [qtyX - 40, qtyX + 40],
     unit:  [midPrice - 60, midPrice + 40],
-    total: [rightTotal - 100, 1000]
+    total: [rightTotal - 100, rightTotal + 60]
   };
 }
 
@@ -102,14 +102,31 @@ function extractRowsFromSpatialLine(lineItems, lineText, detectedMap = null) {
     return lineItems.filter(i => i.x >= range[0] && i.x <= range[1]).map(i => i.str).join('');
   };
 
-  let totalStr = extractCol(MAP.total).replace(/[^0-9.\-()]/g, '');
-  if (totalStr.includes('(') && totalStr.includes(')')) totalStr = '-' + totalStr.replace(/[()]/g, '');
-  let priceStr = extractCol(MAP.unit).replace(/[^0-9.\-()]/g, '');
-  let qtyStr   = extractCol(MAP.qty).replace(/[^0-9]/g, '');
+  const clean = (str) => {
+    return str.replace(window.CARC_RE || '', '')
+              .replace(window.ANOMALY_MARKER_RE || '', '');
+  };
 
-  const total = parseFloat(totalStr) || 0;
-  const price = parseFloat(priceStr) || 0;
-  const qty   = parseInt(qtyStr, 10) || 1;
+  const parseSafeQty = (str) => {
+    const s = clean(str).replace(/[^0-9]/g, '');
+    const val = parseInt(s, 10) || 1;
+    return val > 999 ? 1 : val;
+  };
+
+  const parseSafePrice = (str) => {
+    let s = clean(str).replace(/[^0-9.\-()]/g, '');
+    if (s.includes('(') && s.includes(')')) s = '-' + s.replace(/[()]/g, '');
+    const val = parseFloat(s) || 0;
+    return val;
+  };
+
+  const totalRaw = extractCol(MAP.total);
+  const priceRaw = extractCol(MAP.unit);
+  const qtyRaw   = extractCol(MAP.qty);
+
+  const total = parseSafePrice(totalRaw);
+  const price = parseSafePrice(priceRaw);
+  const qty   = parseSafeQty(qtyRaw);
 
   const dates = lineText.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/);
   const dateStr = dates ? dates[0] : '';
@@ -141,7 +158,7 @@ function extractRowsFromText(text) {
     const y = (lines.length - idx) * 20; 
     return parts.map((str, pIdx) => ({
       str,
-      x: pIdx * 60, 
+      x: pIdx * 70, 
       y
     }));
   }).flat();

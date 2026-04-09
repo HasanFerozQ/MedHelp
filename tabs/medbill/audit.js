@@ -27,22 +27,24 @@ function initAudit() {
 
   // ── v4.2 Interactive Blog Integration ──
   try {
-    const pendingDemo = sessionStorage.getItem('MH_PENDING_DEMO');
-    if (pendingDemo) {
-      sessionStorage.removeItem('MH_PENDING_DEMO');
-      const data = JSON.parse(pendingDemo);
+    const pendingAudit = localStorage.getItem('mh_pending_audit');
+    if (pendingAudit) {
+      localStorage.removeItem('mh_pending_audit');
       const textArea = document.getElementById('bill-text');
       if (textArea) {
-        textArea.value = data.billText;
+        textArea.value = pendingAudit;
         const pasteTab = document.querySelector('[onclick*="audit-paste"]');
         if (pasteTab) pasteTab.click();
         
-        // Auto-run if possible
-        setTimeout(() => { if (typeof runAuditPaste === 'function') runAuditPaste(); }, 500);
+        // Auto-run
+        setTimeout(() => { 
+            const analyzeBtn = document.getElementById('analyze-paste-btn');
+            if (analyzeBtn) analyzeBtn.click();
+        }, 500);
       }
     }
   } catch (err) {
-    console.warn('MediHelp: Failed to restore pending demo data.', err);
+    console.warn('MediHelp: Failed to restore pending audit data.', err);
   }
 
   const lineInput = document.getElementById('line-items-text');

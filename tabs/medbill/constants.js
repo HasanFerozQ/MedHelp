@@ -236,6 +236,9 @@ const NCCI_PAIRS = {
   '12001': new Set(['29881', '27447', '27130']),
 };
 
+const CARC_RE = /([A-Z]{2}-\d{1,4})/g;
+const ANOMALY_MARKER_RE = /[■□✅⚠️🚨]/g;
+
 // ── Stage 0: Final Window Exports ─────────────────────────────────────────────
 // Ensure all dependencies (NCCI_PAIRS, profiles) are declared before this block.
 
@@ -267,5 +270,7 @@ window.isValidCPT = isValidCPT;
 window.isSurgeryCode = isSurgeryCode;
 window.isEMCode = isEMCode;
 window.parseDate = parseDate;
+window.CARC_RE = CARC_RE;
+window.ANOMALY_MARKER_RE = ANOMALY_MARKER_RE;
 window.debounce = debounce;
 window.sanitizeText = sanitizeText;

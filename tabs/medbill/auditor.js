@@ -92,8 +92,9 @@ class BucketAuditor {
       this._lineItemSum += r.total;
 
       // 1a. qty × price = total (skip rows where price was back-derived)
+      const q = Math.min(Math.max(parseInt(r.qty, 10) || 1, 1), 999);
       if (!r.priceWasDerived && r.total > 0 && r.price > 0) {
-        const expected = Math.round(r.qty * r.price * 100) / 100;
+        const expected = Math.round(q * r.price * 100) / 100;
         if (Math.abs(expected - r.total) > 0.15) {
           this.addFinding('arithmetic', 'Math Mismatch',
             `${r.code || r.desc}: ${r.qty} × $${r.price.toFixed(2)} = $${expected.toFixed(2)}, but billed $${r.total.toFixed(2)}.`,
@@ -184,7 +185,7 @@ class BucketAuditor {
         
         let allowance = limit;
         entries.forEach(e => {
-          const rowQty = e.r.qty || 1;
+          const rowQty = Math.min(Math.max(parseInt(e.r.qty, 10) || 1, 1), 999);
           if (allowance <= 0) {
             // Entire row is excess
             this.addRowSavings(e.idx, e.r.total, e.r.total);
@@ -437,7 +438,7 @@ class BucketAuditor {
       this.addFinding('arithmetic', 'Invoice Total Mismatch',
         `Line items sum to $${this._lineItemSum.toFixed(2)} but invoice total shows $${totalRow.total.toFixed(2)} — a $${diff.toFixed(2)} discrepancy.`,
         'danger');
-      this.addRowSavings(this.rows.indexOf(totalRow), diff, totalRow.total);
+      // Do not add savings to the total row to avoid inflation; the individual line items are already audited.
     }
   }
 

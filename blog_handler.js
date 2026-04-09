@@ -11,8 +11,8 @@ function setupBlogDemos() {
       const demoData = BLOG_SAMPLES[demoKey];
       
       if (demoData) {
-        // Store in sessionStorage to bridge the page transition
-        sessionStorage.setItem('MH_PENDING_DEMO', JSON.stringify(demoData));
+        // Store in localStorage to bridge the page transition (standardized key)
+        localStorage.setItem('mh_pending_audit', demoData.billText);
         window.location.href = 'audit.html';
       }
     });
