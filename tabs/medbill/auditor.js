@@ -636,7 +636,7 @@ class BucketAuditor {
     // ── Merge DB MUE limits into the runtime window.MUE_LIMITS ──────────────
     if (Object.keys(mueMap).length > 0) {
       const liveMUE = window.MUE_LIMITS || {};
-      Object.entries(mueMap).forEach(([code, m]: [string, any]) => {
+      Object.entries(mueMap).forEach(([code, m]) => {
         liveMUE[code] = m.limit;
       });
       window.MUE_LIMITS = liveMUE;
@@ -648,7 +648,7 @@ class BucketAuditor {
     // ── Merge DB NCCI pairs into runtime window.NCCI_PAIRS ───────────────────
     if (ncciDB.length > 0) {
       const livePairs = window.NCCI_PAIRS || {};
-      ncciDB.forEach((edit: any) => {
+      ncciDB.forEach((edit) => {
         const col1 = edit.column1_code;
         const col2 = edit.column2_code;
         if (!col1 || !col2) return;
