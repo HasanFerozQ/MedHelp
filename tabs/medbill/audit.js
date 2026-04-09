@@ -232,24 +232,35 @@ function parseDate(str) {
 }
 
 // ── PDF Audit Setup ───────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+function initAudit() {
+  console.log('MediHelp: Initializing Bill Audit Module...');
+  
+  // 1. Configure PDF.js Worker (v3.x+ Requirement)
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
   setupPDFAudit();
 
   // ── v4.2 Interactive Blog Integration ──
-  const pendingDemo = sessionStorage.getItem('MH_PENDING_DEMO');
-  if (pendingDemo) {
-    sessionStorage.removeItem('MH_PENDING_DEMO');
-    const data = JSON.parse(pendingDemo);
-    const textArea = document.getElementById('bill-text');
-    if (textArea) {
-      textArea.value = data.billText;
-      // Switch to the text tab (audit-paste)
-      const pasteTab = document.querySelector('[onclick="switchAuditTab(\'audit-paste\')"]');
-      if (pasteTab) pasteTab.click();
-      
-      // Auto-run if possible
-      setTimeout(() => runAuditPaste(), 500);
+  try {
+    const pendingDemo = sessionStorage.getItem('MH_PENDING_DEMO');
+    if (pendingDemo) {
+      sessionStorage.removeItem('MH_PENDING_DEMO');
+      const data = JSON.parse(pendingDemo);
+      const textArea = document.getElementById('bill-text');
+      if (textArea) {
+        textArea.value = data.billText;
+        // Switch to the text tab (audit-paste) using a more fuzzy selector to handle argument variations
+        const pasteTab = document.querySelector('[onclick*="audit-paste"]');
+        if (pasteTab) pasteTab.click();
+        
+        // Auto-run if possible
+        setTimeout(() => { if (typeof runAuditPaste === 'function') runAuditPaste(); }, 500);
+      }
     }
+  } catch (err) {
+    console.warn('MediHelp: Failed to restore pending demo data.', err);
   }
 
   const lineInput = document.getElementById('line-items-text');
@@ -258,7 +269,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Enter' && e.ctrlKey) runAuditLines();
     });
   }
-});
+}
+
+// Robust Listener (Handles cases where DOMContentLoaded already fired)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAudit);
+} else {
+  initAudit();
+}
 
 // switchAuditTab is now handled inline in audit.html for maximum isolation.
 
