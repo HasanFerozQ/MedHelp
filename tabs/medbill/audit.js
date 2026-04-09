@@ -144,31 +144,6 @@ const CPT_CLINICAL_GROUPS = {
   '12001': { incompatible: new Set(['99381','99382','99383','99384','99385','99391','99392','99393','99394','99395']), label: 'Wound Repair (12001)' },
 };
 
-const NCCI_LABELS = {
-  '36415': 'Venipuncture (Blood Draw)',
-  '94760': 'Pulse Oximetry',
-  '99070': 'Medical Supplies',
-  '85025': 'CBC (bundled into primary visit or panel)',
-};
-
-// ── Shared Constants for medbill.js Synchronization (v4.1) ─────────────────
-window.MH_CONSTANTS = {
-  CPT_RANGES,
-  INLINE_BENCHMARK,
-  DRG_BASE_RATE,
-  DRG_BENCHMARKS,
-  MUE_LIMITS,
-  CPT_CLINICAL_GROUPS,
-  NCCI_PAIRS
-};
-
-const MUE_LIMITS_REF = MUE_LIMITS; // Internal reference
-
-/** Facility Professional Adjustment (Physicians in hospitals bill ~75-80% of office rate) */
-const FACILITY_PROF_MULT = 0.78;
-
-const NPPES_API = 'https://npiregistry.cms.hhs.gov/api/v2.0/?number=';
-
 /**
  * DRG (Institutional) Benchmarks (v3.7 - CMS FY2024 Standards)
  * Base Rate: $10,400 (US National Average)
@@ -180,6 +155,17 @@ const DRG_BENCHMARKS = {
   '392': { weight: 0.7241, desc: 'Esophagitis / Digestive Disorders' },
   '291': { weight: 1.3105, desc: 'Heart Failure & Shock' },
   '871': { weight: 1.9542, desc: 'Septicemia without MV >96 hours' },
+};
+
+// ── Shared Constants for medbill.js Synchronization (v4.1) ─────────────────
+window.MH_CONSTANTS = {
+  CPT_RANGES,
+  INLINE_BENCHMARK,
+  DRG_BASE_RATE,
+  DRG_BENCHMARKS,
+  MUE_LIMITS,
+  CPT_CLINICAL_GROUPS,
+  NCCI_PAIRS
 };
 
 function isSurgeryCode(code) {
