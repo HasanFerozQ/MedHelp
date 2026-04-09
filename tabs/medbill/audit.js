@@ -641,7 +641,19 @@ function addWorkspaceRow(data = {}) {
   body.appendChild(row);
 }
 
-const debouncedAudit = window.debounce(() => reRunWorkspaceAudit(), 300);
+const debouncedAudit = window.debounce(async () => {
+  try {
+    await reRunWorkspaceAudit();
+  } catch (err) {
+    console.error('Audit Runner Crashed:', err);
+    const results = document.getElementById('audit-results');
+    if (results) {
+      results.innerHTML = `<div class="audit-finding" style="border-left:3px solid #ef4444;background:rgba(239,68,68,.05);padding:16px;">
+        🔴 <strong>Engine Crash</strong> — The audit encountered an unexpected error processing your bill rows. Check the console or remove unusual lines.
+      </div>`;
+    }
+  }
+}, 300);
 window.debouncedAudit = debouncedAudit;
 
 async function reRunWorkspaceAudit() {
