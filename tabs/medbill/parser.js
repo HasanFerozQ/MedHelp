@@ -15,7 +15,9 @@ const _CODE_RE  = /\b(\d{5}|[A-Z]\d{4})\b/;
  * centroid guessing because a 1-pixel OCR shift no longer cascades.
  *
  * Returns dMap = { cpt, desc, qty, unit, total }
- * Each zone is [minfunction detectTableBoundaries(sortedYs, yGroups) {
+ * Each zone is [minX, maxX].
+ */
+function detectTableBoundaries(sortedYs, yGroups) {
   let topY = Infinity;
   let bottomY = -Infinity;
 
