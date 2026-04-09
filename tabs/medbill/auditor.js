@@ -53,7 +53,7 @@ class BucketAuditor {
       const presentCodes = new Set(entries.map(e => e.r.code));
 
       entries.forEach(({ r, idx }) => {
-        const primarySet = NCCI_PAIRS[r.code];
+        const primarySet = (window.NCCI_PAIRS || {})[r.code];
         if (!primarySet) return;
 
         // Check if any primary code from the bundle rule is also present on this date
@@ -74,7 +74,7 @@ class BucketAuditor {
   }
 
   getBenchmark(code) {
-    let base = INLINE_BENCHMARK[code] || null;
+    let base = (window.INLINE_BENCHMARK || {})[code] || null;
     if (!base) return null;
 
     let price = base.price * parseFloat(this.gpci || 1.0);
@@ -133,8 +133,6 @@ class BucketAuditor {
             `${r.code || r.desc}: Insurance payment ($${r.paid.toFixed(2)}) exceeds the billed total ($${r.total.toFixed(2)}).`, 'warn', r.code);
          if (r.raw) r.raw.classList.add('audit-row-warn');
       }
-    });
-    this._lineItemSum = lineSum;
   }
 
   // ── LAYER 1E — Duplicate Detection ───────────────────────────────────────
@@ -171,7 +169,7 @@ class BucketAuditor {
     });
     Object.entries(freq).forEach(([key, entries]) => {
       const code = entries[0].r.code;
-      const limit = MUE_LIMITS[code];
+      const limit = (window.MUE_LIMITS || {})[code];
       if (!limit) return;
       
       // Calculate total units (sum of qty)
@@ -294,7 +292,7 @@ class BucketAuditor {
 
     this.rows.forEach(r => {
       if (!r.code || r.isTotalRow) return;
-      const rule = CPT_CLINICAL_GROUPS[r.code];
+      const rule = (window.CPT_CLINICAL_GROUPS || {})[r.code];
       if (!rule) return;
       const sameDayCodes = codesByDate[r.date || 'UNDATED'] || new Set();
 
@@ -412,7 +410,7 @@ class BucketAuditor {
     this.rows.forEach((r, idx) => {
       if (!r.isDRG || r.total <= 0) return;
       
-      const bench = DRG_BENCHMARKS[r.code];
+      const bench = (window.DRG_BENCHMARKS || {})[r.code];
       const weight = bench ? bench.weight : 1.0;
       const expected = DRG_BASE_RATE * weight;
       
@@ -519,7 +517,7 @@ class BucketAuditor {
     // High-complexity E&M upcoding risk (v4.5 Focus-Aware)
     const focus = this.profile?.auditFocus || [];
     if (focus.length === 0 || focus.includes('completeness')) {
-      Object.entries(HIGH_COMPLEXITY_EM).forEach(([code, info]) => {
+      Object.entries(window.HIGH_COMPLEXITY_EM || {}).forEach(([code, info]) => {
         if (this.rows.find(r => r.code === code)) {
           this.addFinding('completeness', 'High-Level E&M — Upcoding Risk',
             `CPT ${code} (${info.label}) requires ≥${info.minMin} min of documented physician time. Frequently upcoded for short visits. Request visit notes.`,

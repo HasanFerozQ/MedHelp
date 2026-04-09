@@ -200,6 +200,42 @@ function sanitizeText(str) {
   return str.replace(/[&<>"']/g, m => map[m]);
 }
 
+const DOCUMENT_PROFILES = {
+  GENERIC: {
+    id: 'GENERIC',
+    label: 'Generic Medical Document',
+    auditFocus: ['arithmetic', 'duplicate', 'financial'],
+    facilityMode: false
+  },
+  PROFESSIONAL: {
+    id: 'PROFESSIONAL',
+    label: 'Professional Bill (CMS-1500)',
+    auditFocus: ['modifier', 'frequency', 'consistency', 'POS'],
+    facilityMode: false
+  },
+  INSTITUTIONAL: {
+    id: 'INSTITUTIONAL',
+    label: 'Institutional Bill (UB-04)',
+    auditFocus: ['benchmark', 'completeness', 'arithmetic'],
+    facilityMode: true
+  },
+  EOB: {
+    id: 'EOB',
+    label: 'Explanation of Benefits (EOB)',
+    auditFocus: ['semantic', 'financial', 'duplicate'],
+    facilityMode: false
+  }
+};
+
+const NCCI_PAIRS = {
+  '80053': new Set(['80048', '82947', '84132', '84295', '82310', '82565', '84520', '82040']),
+  '80048': new Set(['82947', '84132', '84295', '82310', '82565', '84520']),
+  '85025': new Set(['85027']),
+  '81001': new Set(['81002', '81003']),
+  '93000': new Set(['93010', '93005']),
+  '12001': new Set(['29881', '27447', '27130']),
+};
+
 // ── Stage 0: Final Window Exports ─────────────────────────────────────────────
 // Ensure all dependencies (NCCI_PAIRS, profiles) are declared before this block.
 
