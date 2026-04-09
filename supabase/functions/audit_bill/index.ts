@@ -133,29 +133,56 @@ function normalizeTextractOutput(blocks: any[]) {
         else if (text.includes("mod")) headers.modifier = c;
         else if (text.includes("charge") || text.includes("amount") || text.includes("billed") || text.includes("total")) headers.billed_amount = c;
         else if (text.includes("desc") || text.includes("service")) headers.description = c;
+        // CARC / adjustment column
+        else if (text.includes("adj") || text.includes("carc") || text.includes("adjustment") || text.includes("contractual")) headers.adjustment = c;
+        // ICD-10 / diagnosis column
+        else if (text.includes("diag") || text.includes("icd") || text.includes("dx")) headers.dx = c;
       }
 
       if (headers.cpt || headers.billed_amount) {
         for (let r = 2; r <= maxRow; r++) {
           const rowData = grid[r] || {};
-          const cptVal = headers.cpt ? (rowData[headers.cpt] || "") : "";
+          const cptVal = headers.cpt ? (rowData[headers.cpt] || "").trim().toUpperCase() : "";
           const amtVal = headers.billed_amount ? (rowData[headers.billed_amount] || "") : "";
-          
-          if (cptVal.trim() !== "" || amtVal.trim() !== "") {
+
+          if (cptVal !== "" || amtVal.trim() !== "") {
             let finalQty = headers.qty ? (rowData[headers.qty] || "1") : "1";
             if (finalQty.trim() === "") finalQty = "1";
-            
-            let finalAmtStr = amtVal.replace(/[^0-9.]/g, '');
+
+            // Allow negative sign for CARC adjustments
+            let finalAmtStr = amtVal.replace(/[^0-9.\-]/g, '');
             let finalUnitPriceStr = headers.unit_price ? (rowData[headers.unit_price] || "").replace(/[^0-9.]/g, '') : null;
+
+            // CARC / contractual adjustment (negative dollar on EOBs)
+            let adjRaw = headers.adjustment ? (rowData[headers.adjustment] || "").replace(/[^0-9.\-]/g, '') : null;
+            let adjValue = adjRaw ? parseFloat(adjRaw) : 0;
+            if (!isNaN(adjValue) && adjValue > 0) adjValue = -adjValue; // normalise to negative
+
+            // ICD-10 diagnosis codes
+            const dxRaw = headers.dx ? (rowData[headers.dx] || "").trim() : "";
+            const ICD10_RE = /\b([A-Z]\d{2}(?:\.\w{1,4})?)\b/g;
+            const dxCodes = dxRaw ? [...dxRaw.matchAll(ICD10_RE)].map((m: any) => m[1]) : [];
+
+            // Accept HCPCS L2 (letter + 4 digits) as well as 5-digit CPT
+            const isValidCode = cptVal !== "" && (
+              /^\d{5}$/.test(cptVal) || /^[A-Z]\d{4}$/.test(cptVal)
+            );
+
+            const billedAmount = parseFloat(finalAmtStr) || 0.00;
+            const paidAmount = adjValue < 0 ? Math.max(0, billedAmount + adjValue) : 0;
 
             normalizedItems.push({
               Date: headers.date ? (rowData[headers.date] || "").trim() : "",
-              CPT: cptVal.trim(),
+              CPT: cptVal,
+              IsValidCode: isValidCode,
               Description: headers.description ? (rowData[headers.description] || "").trim() : "",
               Qty: parseFloat(finalQty) || 1,
               Unit_Price: finalUnitPriceStr && finalUnitPriceStr !== "" ? parseFloat(finalUnitPriceStr) : null,
               Modifier: headers.modifier ? (rowData[headers.modifier] || "").trim() : "",
-              Billed_Amount: parseFloat(finalAmtStr) || 0.00
+              Billed_Amount: billedAmount,
+              Adjustment: adjValue,
+              Paid: paidAmount,
+              DX: dxCodes,
             });
           }
         }
@@ -198,26 +225,25 @@ function runArithmeticEngine(items: any[], grandTotal: number | null) {
 
     if (item.CPT && item.CPT !== "") {
       const codeKey = `${item.Date}-${item.CPT}`;
-      
+
       if (seenCodes.has(codeKey)) {
         let hasDistinctModifier = false;
         if (item.Modifier) {
           const presentModifiers = item.Modifier.split(",").map((m: string) => m.trim().toUpperCase());
           hasDistinctModifier = presentModifiers.some((m: string) => distinctModifiers.includes(m));
         }
-
         if (!hasDistinctModifier) {
           findings.push({
             type: "Danger",
             code: item.CPT,
             title: "Potential Duplicate",
-            reason: `Duplicate charge for code ${item.CPT} on same date. No distinct unbundling modifier detected.`
+            reason: `Duplicate charge for code ${item.CPT} on ${item.Date || 'same date'}. No distinct unbundling modifier detected. (CMS Claims Processing Manual, Chapter 4 §20.4.2)`
           });
-          arithmeticSavings += item.Billed_Amount; // 100% savings for duplicate
+          arithmeticSavings += item.Billed_Amount;
         }
-      } else {
-        seenCodes.add(codeKey);
       }
+      // Always register — MUST be outside the if/else to catch back-to-back duplicates
+      seenCodes.add(codeKey);
     }
   });
 

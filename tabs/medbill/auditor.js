@@ -634,33 +634,30 @@ class BucketAuditor {
     } catch (_) {}
 
     // ── Merge DB MUE limits into the runtime window.MUE_LIMITS ──────────────
-    // This means runFrequencyAudit() gains full ~8,000 code coverage automatically
-    // without needing to be called again — it reads window.MUE_LIMITS at call time.
     if (Object.keys(mueMap).length > 0) {
       const liveMUE = window.MUE_LIMITS || {};
-      Object.entries(mueMap).forEach(([code, m]) => {
-        // DB value wins over inline (more up to date)
+      Object.entries(mueMap).forEach(([code, m]: [string, any]) => {
         liveMUE[code] = m.limit;
       });
       window.MUE_LIMITS = liveMUE;
-      // Re-run frequency audit with enriched MUE table
+      // Remove stale frequency findings before re-run to avoid double-counting
+      this.findings = this.findings.filter(f => f.category !== 'frequency');
       this.runFrequencyAudit();
     }
 
     // ── Merge DB NCCI pairs into runtime window.NCCI_PAIRS ───────────────────
-    // Supplements the small inline table with the full ~230k pair dataset.
     if (ncciDB.length > 0) {
       const livePairs = window.NCCI_PAIRS || {};
-      ncciDB.forEach((edit) => {
+      ncciDB.forEach((edit: any) => {
         const col1 = edit.column1_code;
         const col2 = edit.column2_code;
         if (!col1 || !col2) return;
         if (!livePairs[col1]) livePairs[col1] = new Set();
-        // Set.add is safe even if already present
         livePairs[col1].add(col2);
       });
       window.NCCI_PAIRS = livePairs;
-      // Re-run bundling with enriched NCCI table
+      // Remove stale bundling findings before re-run to avoid double-counting
+      this.findings = this.findings.filter(f => f.category !== 'bundling');
       this.runBundling();
     }
 
