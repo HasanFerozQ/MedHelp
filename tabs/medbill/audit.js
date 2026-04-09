@@ -337,16 +337,12 @@ async function handlePDF(file) {
     return;
   }
 
-  try {
-    if (overlay) overlay.style.display = 'block';
-    if (status) status.innerText = `Processing: ${file.name}...`;
-
-  const results    = document.getElementById('audit-results');
+  // 1. Reset UI State
   const loadingTxt = document.getElementById('ai-loading-text');
 
   if (overlay) overlay.style.display = 'block';
   if (results) results.innerHTML = '';
-  if (status)  status.innerHTML  = '';
+  if (status)  status.innerHTML  = `<span style="color:var(--accent);">Initializing Engine...</span>`;
 
   try {
     const arrayBuffer = await file.arrayBuffer();
