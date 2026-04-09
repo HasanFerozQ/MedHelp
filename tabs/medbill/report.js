@@ -287,6 +287,7 @@ function renderSummaryReport(doc, p, findings, savings) {
     doc.text("Error: Table plugin not loaded. Could not render finding table.", 20, 55);
     return;
   }
+  doc.autoTable({
     startY: 55,
     head: [['Category', 'Issue', 'Description']],
     body: tableData,
