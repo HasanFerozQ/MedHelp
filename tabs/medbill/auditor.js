@@ -133,6 +133,7 @@ class BucketAuditor {
             `${r.code || r.desc}: Insurance payment ($${r.paid.toFixed(2)}) exceeds the billed total ($${r.total.toFixed(2)}).`, 'warn', r.code);
          if (r.raw) r.raw.classList.add('audit-row-warn');
       }
+    });
   }
 
   // ── LAYER 1E — Duplicate Detection ───────────────────────────────────────
