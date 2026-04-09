@@ -1,4 +1,5 @@
-// ── Core Engine Constants ──
+// ── Core Engine Constants (v6.0) ──
+
 const CPT_RANGES = [
   { min: 10000, max: 69999, category: 'Surgery' },
   { min: 70000, max: 79999, category: 'Radiology' },
@@ -9,16 +10,50 @@ const CPT_RANGES = [
 const DRG_BASE_RATE = 10400;
 const FACILITY_PROF_MULT = 0.78;
 
+// ── MUE Limits (Medically Unlikely Edits) — Expanded ──
 const MUE_LIMITS = {
+  // Standard CPT
   '90837': 1, // Psychotherapy 60m
-  '99214': 1, // Office Visit
-  '99215': 1,
+  '99214': 1, // Office Visit moderate
+  '99215': 1, // Office Visit high
   '36415': 1, // Blood draw
   '94760': 1, // Pulse Ox
   '93000': 1, // EKG
-  '71045': 1, // X-ray
-  '71046': 1,
-  'G0439': 1, // Annual Wellness
+  '71045': 1, // X-ray chest 1v
+  '71046': 1, // X-ray chest 2v
+  '85025': 1, // CBC with auto diff
+  '80048': 1, // Basic metabolic panel
+  '80053': 1, // Comprehensive metabolic panel
+  '81001': 1, // Urinalysis
+  '90834': 1, // Psychotherapy 45m
+  '99213': 1, // Office Visit low-mod
+  '99212': 1, // Office Visit low
+  '99221': 1, // Initial hospital low
+  '99222': 1, // Initial hospital mod
+  '99223': 1, // Initial hospital high
+  '12001': 1, // Simple wound repair
+  '45378': 1, // Diagnostic colonoscopy
+  '43239': 1, // Upper GI endoscopy
+  // HCPCS Level II — Wellness & Preventive
+  'G0439': 1, // Annual Wellness Visit subsequent
+  'G0444': 1, // Annual Depression Screening
+  'G0446': 1, // Annual Intensive Behavioral Counseling
+  'G0463': 1, // Hospital Outpatient Clinic Visit
+  'G0008': 1, // Administration of influenza vaccine
+  'G0009': 1, // Administration of pneumococcal vaccine
+  'G0010': 1, // Administration of hepatitis B vaccine
+  'G0101': 1, // Cervical/vaginal cancer screening
+  'G0123': 1, // Cervical/vaginal smear
+  'G0202': 1, // Screening mammography
+  'G0204': 1, // Diagnostic mammography (2D)
+  'G0206': 1, // Diagnostic mammography (digital)
+  'G0297': 1, // Low-dose CT lung cancer screening
+  'G0327': 1, // Colorectal cancer screening
+  // Specialty A-codes (DME/Supplies)
+  'A9590': 1, // Iodine I-131 sodium therapy
+  // Q-codes (Vaccines/Drugs)
+  'Q2041': 2, // Axicabtagene ciloleucel
+  'Q2042': 1, // Tisagenlecleucel
 };
 
 const HIGH_COMPLEXITY_EM = {
@@ -32,7 +67,46 @@ const HIGH_COMPLEXITY_EM = {
 
 const GLOBAL_PERIOD_OK_MODS = new Set(['24', '25', '57']);
 
+// ── ICD-10 Chapter → Allowed CPT Categories (for CO-11 DX–Procedure mismatch) ──
+// Key = first letter of ICD-10 code (chapter designator)
+// Value = array of CPT categories that are clinically coherent with this ICD-10 chapter
+const DX_CPT_COMPAT = {
+  'A': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],            // Infectious
+  'B': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],            // Parasitic
+  'C': ['Surgery', 'E&M / Medicine', 'Radiology', 'Pathology/Lab', 'HCPCS L2'], // Neoplasms
+  'D': ['E&M / Medicine', 'Pathology/Lab', 'Radiology', 'Surgery'], // Blood disorders
+  'E': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],            // Endocrine (Diabetes etc)
+  'F': ['E&M / Medicine'],                                           // Mental/Behavioral → psych only
+  'G': ['E&M / Medicine', 'Radiology', 'Surgery'],                  // Neurological
+  'H': ['E&M / Medicine', 'Surgery', 'Radiology'],                  // Eye/Ear
+  'I': ['E&M / Medicine', 'Radiology', 'Surgery', 'Pathology/Lab', 'HCPCS L2'], // Cardiac/circulatory
+  'J': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],            // Respiratory (NO cardiac procedures)
+  'K': ['E&M / Medicine', 'Surgery', 'Pathology/Lab'],              // Digestive
+  'L': ['E&M / Medicine', 'Surgery'],                               // Skin
+  'M': ['E&M / Medicine', 'Surgery', 'Radiology'],                  // Musculoskeletal
+  'N': ['E&M / Medicine', 'Surgery', 'Pathology/Lab', 'Radiology'], // Genitourinary
+  'O': ['E&M / Medicine', 'Surgery', 'Radiology'],                  // Pregnancy
+  'P': ['E&M / Medicine', 'Pathology/Lab'],                         // Perinatal
+  'Q': ['Surgery', 'E&M / Medicine'],                               // Congenital
+  'R': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],            // Symptoms/Signs (general)
+  'S': ['Surgery', 'E&M / Medicine', 'Radiology'],                  // Injury/Trauma (NO psych-only etc)
+  'T': ['E&M / Medicine', 'Surgery', 'Pathology/Lab'],              // Poisoning/adverse effects
+  'U': ['E&M / Medicine', 'Pathology/Lab'],                         // COVID/new codes
+  'V': ['E&M / Medicine', 'Surgery', 'Radiology'],                  // External causes
+  'W': ['E&M / Medicine', 'Surgery'],                               // External causes (falls etc)
+  'X': ['E&M / Medicine', 'Surgery'],                               // External causes
+  'Y': ['E&M / Medicine', 'Surgery'],                               // External causes
+  'Z': ['E&M / Medicine', 'Pathology/Lab'],                         // Health status / encounters
+};
+
+/**
+ * Classify a CPT or HCPCS code to its clinical category.
+ * v6.0: Accepts numeric CPT (5-digit) and HCPCS Level II (letter + 4 digits).
+ */
 function classifyCPT(code) {
+  if (!code) return null;
+  // HCPCS Level II: single uppercase letter followed by exactly 4 digits (e.g. G0444, A9590)
+  if (/^[A-Z]\d{4}$/.test(code)) return 'HCPCS L2';
   const n = parseInt(code, 10);
   if (isNaN(n)) return null;
   for (const r of CPT_RANGES) {
@@ -72,20 +146,28 @@ function parseDate(str) {
   return null;
 }
 
+/**
+ * isValidCPT — v6.0
+ * Accepts:
+ *   - Standard 5-digit numeric CPT codes in valid ranges (10000–99999)
+ *   - HCPCS Level II alphanumeric codes: /^[A-Z]\d{4}$/  (e.g., G0444, A9590, Q2041)
+ */
 function isValidCPT(code) {
+  if (!code) return false;
   return !!classifyCPT(code);
 }
 
 window.HIGH_COMPLEXITY_EM = HIGH_COMPLEXITY_EM;
 window.GLOBAL_PERIOD_OK_MODS = GLOBAL_PERIOD_OK_MODS;
+window.DX_CPT_COMPAT = DX_CPT_COMPAT;
 window.classifyCPT = classifyCPT;
 window.isValidCPT = isValidCPT;
 window.isSurgeryCode = isSurgeryCode;
 window.isEMCode = isEMCode;
 window.parseDate = parseDate;
 
-/** 
- * Clinical Coherence Engine (v4.0) 
+/**
+ * Clinical Coherence Engine (v4.0)
  * Maps CPT codes to their required companions and incompatible rivals.
  */
 
@@ -160,9 +242,16 @@ const INLINE_BENCHMARK = {
   '87804': { price: 18.35,   desc: 'Influenza rapid test' },
   '87420': { price: 15.79,   desc: 'RSV antigen test' },
   '87086': { price: 9.42,    desc: 'Urine culture' },
+  // HCPCS L2 benchmarks (Medicare allowable)
+  'G0444': { price: 18.00,   desc: 'Annual Depression Screening' },
+  'G0439': { price: 171.00,  desc: 'Annual Wellness Visit (subsequent)' },
+  'G0463': { price: 117.00,  desc: 'Hospital Outpatient Clinic Visit' },
+  'G0008': { price: 25.00,   desc: 'Admin: Influenza vaccine' },
+  'G0009': { price: 25.00,   desc: 'Admin: Pneumococcal vaccine' },
+  'G0101': { price: 59.00,   desc: 'Cervical/vaginal cancer screening' },
+  'G0202': { price: 96.00,   desc: 'Screening mammography (digital 2D)' },
+  'G0297': { price: 225.00,  desc: 'Low-dose CT lung cancer screening' },
 };
-
-// High-complexity E&M codes (upcoding risk)
 
 const DRG_BENCHMARKS = {
   '470': { weight: 1.7712, desc: 'Major Joint Replacement (Lower Limb)' },
@@ -171,8 +260,6 @@ const DRG_BENCHMARKS = {
   '291': { weight: 1.3105, desc: 'Heart Failure & Shock' },
   '871': { weight: 1.9542, desc: 'Septicemia without MV >96 hours' },
 };
-
-/** MUE - Medically Unlikely Edits (Frequency Limits) */
 
 // ── Shared Helper Utilities (v4.5) ──
 
@@ -200,28 +287,48 @@ function sanitizeText(str) {
   return str.replace(/[&<>"']/g, m => map[m]);
 }
 
+/**
+ * DOCUMENT_PROFILES (v6.0)
+ * All profiles now carry `keywords` arrays so classifyDocument() actually fires.
+ */
 const DOCUMENT_PROFILES = {
   GENERIC: {
     id: 'GENERIC',
     label: 'Generic Medical Document',
+    keywords: [],
     auditFocus: ['arithmetic', 'duplicate', 'financial'],
     facilityMode: false
   },
   PROFESSIONAL: {
     id: 'PROFESSIONAL',
     label: 'Professional Bill (CMS-1500)',
+    keywords: [
+      'cms-1500', 'cms 1500', 'pos code', 'place of service',
+      'rendering provider', 'npi', 'tax id', 'group npi',
+      'referring provider', 'supervising provider', 'signature of physician'
+    ],
     auditFocus: ['modifier', 'frequency', 'consistency', 'POS'],
     facilityMode: false
   },
   INSTITUTIONAL: {
     id: 'INSTITUTIONAL',
     label: 'Institutional Bill (UB-04)',
+    keywords: [
+      'ub-04', 'ub04', 'revenue code', 'drg', 'type of bill',
+      'tob', 'condition code', 'value code', 'occurrence code',
+      'principal diagnosis', 'admission date', 'discharge date'
+    ],
     auditFocus: ['benchmark', 'completeness', 'arithmetic'],
     facilityMode: true
   },
   EOB: {
     id: 'EOB',
     label: 'Explanation of Benefits (EOB)',
+    keywords: [
+      'explanation of benefits', 'eob', 'carc', 'your responsibility',
+      'remark code', 'member id', 'claim number', 'allowed amount',
+      'adjustment reason', 'plan paid', 'not covered', 'deductible applied'
+    ],
     auditFocus: ['semantic', 'financial', 'duplicate'],
     facilityMode: false
   }
@@ -236,11 +343,11 @@ const NCCI_PAIRS = {
   '12001': new Set(['29881', '27447', '27130']),
 };
 
-const CARC_RE = /([A-Z]{2}-\d{1,4})/g;
+const CARC_RE = /\b([A-Z]{1,2}-?\d{1,4})\b/g;
 const ANOMALY_MARKER_RE = /[■□✅⚠️🚨]/g;
+const ICD10_RE = /\b([A-Z]\d{2}(?:\.\w{1,4})?)\b/g;
 
 // ── Stage 0: Final Window Exports ─────────────────────────────────────────────
-// Ensure all dependencies (NCCI_PAIRS, profiles) are declared before this block.
 
 window.NPPES_API = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&number=';
 window.FACILITY_PROF_MULT = FACILITY_PROF_MULT;
@@ -251,6 +358,7 @@ window.CPT_CLINICAL_GROUPS = CPT_CLINICAL_GROUPS;
 window.INLINE_BENCHMARK = INLINE_BENCHMARK;
 window.DRG_BENCHMARKS = DRG_BENCHMARKS;
 window.NCCI_PAIRS = NCCI_PAIRS;
+window.ICD10_RE = ICD10_RE;
 window.MH_CONSTANTS = {
   CPT_RANGES,
   INLINE_BENCHMARK,
@@ -265,6 +373,7 @@ window.MH_CONSTANTS = {
 
 window.HIGH_COMPLEXITY_EM = HIGH_COMPLEXITY_EM;
 window.GLOBAL_PERIOD_OK_MODS = GLOBAL_PERIOD_OK_MODS;
+window.DX_CPT_COMPAT = DX_CPT_COMPAT;
 window.classifyCPT = classifyCPT;
 window.isValidCPT = isValidCPT;
 window.isSurgeryCode = isSurgeryCode;

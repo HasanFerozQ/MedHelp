@@ -131,6 +131,10 @@ function normalizeTextractOutput(blocks) {
         else if (text.includes("price") || text.includes("rate") || text.includes("fee")) headers.unit_price = c;
         else if (text.includes("mod")) headers.modifier = c;
         else if (text.includes("charge") || text.includes("amount") || text.includes("billed") || text.includes("total")) headers.billed_amount = c;
+        // CARC / contractual adjustment column (EOB-style bills)
+        else if (text.includes("adj") || text.includes("carc") || text.includes("adjustment") || text.includes("contractual")) headers.adjustment = c;
+        // ICD-10 / diagnosis column
+        else if (text.includes("diag") || text.includes("icd") || text.includes("dx")) headers.dx = c;
       }
 
       // Fallback: If amount/billed header wasn't found but unit_price was, the right-most numeric column might be Line_Total
@@ -144,17 +148,39 @@ function normalizeTextractOutput(blocks) {
           if (cptVal.trim() !== "" || amtVal.trim() !== "") {
             let finalQty = headers.qty ? (rowData[headers.qty] || "1") : "1";
             if (finalQty.trim() === "") finalQty = "1";
-            
-            let finalAmtStr = amtVal.replace(/[^0-9.]/g, '');
+
+            let finalAmtStr = amtVal.replace(/[^0-9.-]/g, '');
             let finalUnitPriceStr = headers.unit_price ? (rowData[headers.unit_price] || "").replace(/[^0-9.]/g, '') : null;
+
+            // CARC / contractual adjustment (typically a negative dollar amount on EOBs)
+            let adjRaw = headers.adjustment ? (rowData[headers.adjustment] || "").replace(/[^0-9.\-]/g, '') : null;
+            let adjValue = adjRaw ? parseFloat(adjRaw) : 0;
+            if (!isNaN(adjValue) && adjValue > 0) adjValue = -adjValue; // normalise: adjustments are negative
+
+            // ICD-10 / diagnosis codes
+            const dxRaw = headers.dx ? (rowData[headers.dx] || "").trim() : "";
+            const ICD10_SERVER_RE = /\b([A-Z]\d{2}(?:\.\w{1,4})?)\b/g;
+            const dxCodes = dxRaw ? [...dxRaw.matchAll(ICD10_SERVER_RE)].map(m => m[1]) : [];
+
+            // Accept HCPCS L2 codes (letter + 4 digits) as valid billing codes
+            const isValidCode = cptVal.trim() !== "" && (
+              /^\d{5}$/.test(cptVal.trim()) || /^[A-Z]\d{4}$/.test(cptVal.trim())
+            );
+
+            const billedAmount = parseFloat(finalAmtStr) || 0.00;
+            const paidAmount   = adjValue < 0 ? Math.max(0, billedAmount + adjValue) : 0;
 
             normalizedItems.push({
               Date: headers.date ? (rowData[headers.date] || "").trim() : "",
               CPT: cptVal.trim(),
+              IsValidCode: isValidCode,
               Qty: parseFloat(finalQty) || 1,
               Unit_Price: finalUnitPriceStr && finalUnitPriceStr !== "" ? parseFloat(finalUnitPriceStr) : null,
               Modifier: headers.modifier ? (rowData[headers.modifier] || "").trim() : "",
-              Billed_Amount: parseFloat(finalAmtStr) || 0.00
+              Billed_Amount: billedAmount,
+              Adjustment: adjValue,
+              Paid: paidAmount,
+              DX: dxCodes,  // ICD-10 diagnosis codes for CO-11 detection
             });
           }
         }
@@ -166,58 +192,84 @@ function normalizeTextractOutput(blocks) {
 }
 
 // ARITHMETIC ENGINE: Runs deterministic validation checks
+// Server-side helper: validates CPT (5-digit) or HCPCS L2 (letter+4-digit)
+function isValidBillingCode(code) {
+  if (!code || typeof code !== 'string') return false;
+  const c = code.trim().toUpperCase();
+  if (/^\d{5}$/.test(c)) {
+    const n = parseInt(c, 10);
+    return n >= 10000 && n <= 99999;
+  }
+  return /^[A-Z]\d{4}$/.test(c); // HCPCS Level II
+}
+
 function runArithmeticEngine(items, grandTotal) {
   let findings = [];
   let calculatedSum = 0;
   let seenCodes = new Set();
-  
+
   // Modifiers that justify distinct procedures/duplicates
-  const distinctModifiers = ["59", "76", "91", "RT", "LT", "XE", "XS", "XP", "XU"];
+  const distinctModifiers = ['59', '76', '91', 'RT', 'LT', 'XE', 'XS', 'XP', 'XU'];
 
   items.forEach((item, index) => {
-    // 1. Accumulate Summation (ignoring null/0 charges gracefully)
+    // Skip rows whose code is not a valid CPT or HCPCS L2 format
+    if (item.CPT && !isValidBillingCode(item.CPT)) {
+      findings.push({
+        type: 'Warning',
+        code: item.CPT,
+        title: 'Invalid Billing Code',
+        reason: `"${item.CPT}" does not match any valid CPT (10000–99999) or HCPCS Level II (Letter + 4 digits) format. Possible ZIP code or data-entry error.`
+      });
+    }
+
+    // 1. Accumulate Summation
     calculatedSum += item.Billed_Amount;
 
     // 2. Line Item Math Check
     if (item.Unit_Price !== null) {
-      // Qty * Unit Pice == Billed Amount
-      // Adding epsilon to handle JS floating point jitter
       const expectedTotal = item.Qty * item.Unit_Price;
-      const difference = Math.abs(expectedTotal - item.Billed_Amount);
-      
-      // Strict 0.00 variance checks (using 0.001 for float math)
+      const difference    = Math.abs(expectedTotal - item.Billed_Amount);
       if (difference > 0.001) {
         findings.push({
-          type: "Warning",
+          type: 'Warning',
           code: item.CPT,
-          title: "Math Mismatch",
-          reason: `Line item Math Error. Expected $${expectedTotal.toFixed(2)} (${item.Qty} x $${item.Unit_Price.toFixed(2)}) but billed $${item.Billed_Amount.toFixed(2)}.`
+          title: 'Math Mismatch',
+          reason: `Line item math error. Expected $${expectedTotal.toFixed(2)} (${item.Qty} × $${item.Unit_Price.toFixed(2)}) but billed $${item.Billed_Amount.toFixed(2)}. (CMS Claims Processing Manual, Chapter 1 §30.2.5)`
         });
       }
     }
 
-    // 3. Duplicate Detection Check
-    if (item.CPT && item.CPT !== "") {
+    // 3. CARC Adjustment consistency check
+    if (item.Adjustment && item.Adjustment < 0) {
+      const expectedPaid = item.Billed_Amount + item.Adjustment;
+      if (expectedPaid < 0) {
+        findings.push({
+          type: 'Danger',
+          code: item.CPT,
+          title: 'Credit Balance Liability (CMS Compliance)',
+          reason: `Adjustment ($${item.Adjustment.toFixed(2)}) exceeds billed amount ($${item.Billed_Amount.toFixed(2)}). The resulting credit balance ($${Math.abs(expectedPaid).toFixed(2)}) must be refunded within 60 days per CMS Chapter 4 §50.`
+        });
+      }
+    }
+
+    // 4. Duplicate Detection Check
+    if (item.CPT && item.CPT !== '') {
       const codeKey = `${item.Date}-${item.CPT}`;
-      
       if (seenCodes.has(codeKey)) {
-        // It's a duplicate entry. Do they have a distinct modifier?
         let hasDistinctModifier = false;
         if (item.Modifier) {
-          const presentModifiers = item.Modifier.split(",").map(m => m.trim().toUpperCase());
+          const presentModifiers = item.Modifier.split(',').map(m => m.trim().toUpperCase());
           hasDistinctModifier = presentModifiers.some(m => distinctModifiers.includes(m));
         }
-
         if (!hasDistinctModifier) {
           findings.push({
-            type: "Danger",
+            type: 'Danger',
             code: item.CPT,
-            title: "Potential Duplicate",
-            reason: `Duplicate charge for code ${item.CPT} on same date. No distinct unbundling modifier detected.`
+            title: 'Potential Duplicate',
+            reason: `Duplicate charge for code ${item.CPT} on ${item.Date || 'same date'}. No distinct unbundling modifier detected. (CMS Claims Processing Manual, Chapter 4 §20.4.2)`
           });
         }
       }
-      // Always register the code — MUST be outside the else branch
       seenCodes.add(codeKey);
     }
   });

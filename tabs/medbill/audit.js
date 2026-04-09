@@ -328,6 +328,7 @@ async function reRunWorkspaceAudit() {
   engine.runFrequencyAudit();
   engine.runFinancialSummaryAudit();
   engine.runClinicalCompatibilityAudit();
+  engine.runDXCompatibilityAudit();
   engine.runPOSAudit();
   engine.runMultipleProcedureAudit();
   engine.runConsistency();

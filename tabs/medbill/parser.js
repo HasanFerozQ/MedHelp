@@ -1,25 +1,40 @@
-// ── Stage 1 & 2: Document Ingestion, Classification & Normalization ──
+// ── Stage 1 & 2: Document Ingestion, Classification & Normalization (v6.0) ──
 
 const TOTAL_ROW_RE = /\b(billed subtotal|grand total|total due|amount due|balance due|total charges|subtotal)\b/i;
 
-/** 
- * Geometric Column Scanner (v5.0 Dynamic)
+// ICD-10 code pattern — letter + 2 digits + optional decimal + subchapter chars
+const _ICD10_RE = /\b([A-Z]\d{2}(?:\.\w{1,4})?)\b/g;
+// HCPCS Level II / CPT anchor regex — matches 5-digit numerics OR letter+4-digit HCPCS
+const _CODE_RE  = /\b(\d{5}|[A-Z]\d{4})\b/;
+
+/**
+ * Geometric Column Scanner (v6.0 — Anchor-Relative)
+ *
+ * Strategy: find the CPT/code column by locating actual code tokens, then place
+ * all other column zones relative to that anchor.  This is far more robust than
+ * centroid guessing because a 1-pixel OCR shift no longer cascades.
+ *
+ * Returns dMap = { cpt, desc, qty, unit, total }
+ * Each zone is [minX, maxX].
  */
 function detectColumns(items) {
-  const codeXs = [];
+  const codeXs  = [];
   const priceXs = [];
-  const qtyXs = [];
+  const qtyXs   = [];
 
-  const cptRegex = /\b\d{5}\b/;
   const priceRegex = /\$?(\d{1,3}(?:,\d{3})*(?:\.\d{2}))\b/;
-  const qtyRegex = /^\s*(\d{1,2})\s*$/;
+  const qtyRegex   = /^\s*(\d{1,3})\s*$/;
 
+  // ── Pass 1: collect x-positions of known token types ──
   items.forEach(item => {
     const s = (item.str || '').trim();
     if (!s) return;
-    
-    if (cptRegex.test(s) && isValidCPT(s.match(cptRegex)[0])) {
-      codeXs.push(item.x);
+
+    if (_CODE_RE.test(s)) {
+      const codeCandidate = s.match(_CODE_RE)[0];
+      if (isValidCPT(codeCandidate)) {
+        codeXs.push(item.x);
+      }
     } else if (priceRegex.test(s)) {
       priceXs.push(item.x);
     } else if (qtyRegex.test(s) && !s.includes('-') && !s.includes('/')) {
@@ -27,29 +42,58 @@ function detectColumns(items) {
     }
   });
 
-  const getCentroid = (arr, side = 'left') => {
-    if (!arr.length) return null;
-    const sorted = [...arr].sort((a, b) => a - b);
-    return side === 'left' ? sorted[0] : sorted[sorted.length - 1];
-  };
+  // ── Pass 2: build sorted arrays ──
+  const sortedPriceXs = [...new Set(priceXs)].sort((a, b) => a - b);
+  const sortedCodeXs  = [...new Set(codeXs)].sort((a, b) => a - b);
+  const sortedQtyXs   = [...new Set(qtyXs)].sort((a, b) => a - b);
 
-  const leftCode = getCentroid(codeXs, 'left') || 10;
-  const rightTotal = getCentroid(priceXs, 'right') || 700;
-  const midPrice = getCentroid(priceXs.filter(x => x < rightTotal - 40), 'right') || rightTotal - 100;
-  const qtyX = getCentroid(qtyXs.filter(x => x > leftCode + 100 && x < midPrice - 20), 'left') || (leftCode + midPrice) / 2 + 50;
+  // Code column: leftmost cluster of code x-values
+  const leftCode  = sortedCodeXs.length ? sortedCodeXs[0]  : 10;
+
+  // Total (rightmost price column)
+  const rightTotal = sortedPriceXs.length ? sortedPriceXs[sortedPriceXs.length - 1] : 700;
+
+  // Unit-price (second rightmost price cluster, at least 40px left of total)
+  const midPriceCandidates = sortedPriceXs.filter(x => x < rightTotal - 40);
+  const midPrice = midPriceCandidates.length
+    ? midPriceCandidates[midPriceCandidates.length - 1]
+    : rightTotal - 100;
+
+  // Qty (leftmost qty x that sits between code and unit-price)
+  const qtyFiltered = sortedQtyXs.filter(x => x > leftCode + 40 && x < midPrice - 20);
+  const qtyX = qtyFiltered.length
+    ? qtyFiltered[0]
+    : Math.round((leftCode + midPrice) / 2);
+
+  // Widths: give each zone a generous ±50px band around its centroid
+  // These are used as GATES — tokens outside all zones are discarded
+  const HALF = 55; // half-width per zone in px
 
   return {
-    cpt:   [leftCode - 20, leftCode + 80],
-    desc:  [leftCode + 80, qtyX - 40],
-    qty:   [qtyX - 40, qtyX + 40],
-    unit:  [midPrice - 60, midPrice + 40],
-    total: [rightTotal - 100, rightTotal + 60]
+    cpt:   [leftCode  - 20,      leftCode  + 70     ], // narrow — only actual codes
+    desc:  [leftCode  + 70,      qtyX      - HALF   ], // wide middle
+    qty:   [qtyX      - HALF,    qtyX      + HALF   ],
+    unit:  [midPrice  - HALF,    midPrice  + HALF   ],
+    total: [rightTotal - HALF,   rightTotal + HALF  ],
   };
 }
 
 /**
- * Service Block Normalizer (v5.1 Multiline)
- * Groups stacked lines into a single logical service entry.
+ * Assign a column zone role to a token based on its x position.
+ * Returns 'qty' | 'unit' | 'total' | 'unknown'
+ */
+function assignZone(x, dMap) {
+  if (!dMap) return 'unknown';
+  if (x >= dMap.qty[0]   && x <= dMap.qty[1])   return 'qty';
+  if (x >= dMap.unit[0]  && x <= dMap.unit[1])  return 'unit';
+  if (x >= dMap.total[0] && x <= dMap.total[1]) return 'total';
+  return 'unknown';
+}
+
+/**
+ * Service Block Normalizer (v6.0 — HCPCS-aware multiline grouping)
+ * Groups stacked PDF lines into a single logical service entry.
+ * An anchor line is one that contains a 5-digit CPT OR a HCPCS L2 code.
  */
 function buildServiceBlocks(sortedYs, yGroups) {
   const blocks = [];
@@ -57,17 +101,18 @@ function buildServiceBlocks(sortedYs, yGroups) {
 
   sortedYs.forEach(y => {
     const lineItems = yGroups[y].sort((a, b) => a.x - b.x);
-    const lineText = lineItems.map(i => i.str).join(' ');
-    
-    // An anchor is a line containing a 5-digit CPT code
-    const hasCPT = /\b\d{5}\b/.test(lineText);
-    const isTotal = TOTAL_ROW_RE.test(lineText);
+    const lineText  = lineItems.map(i => i.str).join(' ');
+
+    // Anchor = line containing a valid CPT or HCPCS L2 code
+    const codeMatch = lineText.match(_CODE_RE);
+    const hasCPT    = codeMatch ? isValidCPT(codeMatch[0]) : false;
+    const isTotal   = TOTAL_ROW_RE.test(lineText);
 
     if (hasCPT) {
       if (currentBlock) blocks.push(currentBlock);
       currentBlock = { items: [...lineItems], text: lineText, yStart: y };
     } else if (currentBlock && !isTotal) {
-      // Append secondary lines (description/diagnosis) to the current active block
+      // Append secondary lines (description/diagnosis) to the active block
       currentBlock.items.push(...lineItems);
       currentBlock.text += ' ' + lineText;
     } else if (isTotal) {
@@ -81,134 +126,243 @@ function buildServiceBlocks(sortedYs, yGroups) {
   return blocks;
 }
 
-function getNumericTokens(items) {
-  const CARC_RE = window.CARC_RE || /([A-Z]{2}-\d{1,4})/g;
-  const ANOMALY_MARKER_RE = window.ANOMALY_MARKER_RE || /[■□✅⚠️🚨]/g;
+/**
+ * getNumericTokens (v6.0 — Zone-Gated)
+ *
+ * Critical fix: every extracted number is now classified against the column-zone
+ * map produced by detectColumns(). Tokens that fall outside all numeric zones
+ * (qty / unit / total) are discarded. This eliminates the column-bleed problem
+ * where numbers from a distant column were being picked up as wrong field values.
+ *
+ * @param {Array}  items  — PDF item objects with .str and .x
+ * @param {Object} dMap   — zone map from detectColumns()
+ * @returns {Array} sorted tokens each with { val, x, raw, zone }
+ */
+function getNumericTokens(items, dMap) {
+  const CARC_LABEL_RE = /^[A-Z]{1,2}-?\d{1,4}$/;  // e.g. CO-4, PR-1, OA-23
+  const ANOMALY_RE    = /[■□✅⚠️🚨]/;
+  const WORD_RE       = /[a-z]{3,}/i;               // labels / description words
+  const DATE_RE       = /\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}/; // dates — skip
 
   return items
     .filter(i => {
       const s = (i.str || '').trim();
-      // Skip labels and markers
-      return s && !CARC_RE.test(s) && !ANOMALY_MARKER_RE.test(s) && !/[a-z]{3,}/i.test(s);
+      if (!s) return false;
+      if (CARC_LABEL_RE.test(s))  return false; // skip CARC adjustment labels
+      if (ANOMALY_RE.test(s))     return false; // skip emoji markers
+      if (WORD_RE.test(s))        return false; // skip text labels
+      if (DATE_RE.test(s))        return false; // skip dates
+      if (_CODE_RE.test(s) && isValidCPT(s.match(_CODE_RE)[0])) return false; // skip the code itself
+      return true;
     })
     .map(i => {
-      // Extract numeric-like strings: signs, decimals, commas
       const matches = i.str.match(/-?\$?\d{1,3}(?:,\d{3})*(?:\.\d{2,})?|\b\d+\b/g) || [];
-      return matches.map(m => ({
-        val: parseFloat(m.replace(/[$,]/g, '')),
-        x: i.x,
-        raw: m
-      }));
+      return matches.map(m => {
+        const val  = parseFloat(m.replace(/[$,]/g, ''));
+        const zone = assignZone(i.x, dMap);
+        return { val, x: i.x, raw: m, zone };
+      });
     })
     .flat()
-    .filter(t => !isNaN(t.val))
-    .sort((a, b) => a.x - b.x); // Spatial Sort: Left-to-Right
+    .filter(t => {
+      if (isNaN(t.val))      return false;
+      // If we have a dMap, discard tokens that don't belong to any numeric zone
+      if (dMap && t.zone === 'unknown') return false;
+      return true;
+    })
+    .sort((a, b) => a.x - b.x);
 }
 
+/**
+ * extractRowsFromSpatialLine (v6.0)
+ *
+ * Key changes vs v5:
+ *  1. Passes dMap into getNumericTokens() for zone-gated extraction
+ *  2. Extracts qty / unit / total by ZONE, not by positional slot [0]/[1]/[2]
+ *  3. Detects CARC adjustment (negative) tokens BEFORE generic extraction;
+ *     derives r.paid = r.total + r.adj   (adj is negative, so paid < total)
+ *  4. Filters ICD-10 codes out of token candidates; stores them in r.dx
+ *  5. Recognises HCPCS L2 codes as valid anchors
+ */
 function extractRowsFromSpatialLine(lineItems, lineText, detectedMap = null, currentCode = '') {
   const lineUpper = lineText.toUpperCase();
   const isTotalRow = TOTAL_ROW_RE.test(lineText) || lineUpper.includes('TOTAL');
 
-  const cptRegex = /\b\d{5}\b/g;
-  const rawCPTs = [...lineText.matchAll(cptRegex)].map(m => m[0]).filter(c => isValidCPT(c));
-  
-  const rawDRGs = [...lineText.matchAll(/\b[1-9]\d{2}\b/g)].map(m => m[0]);
-  const validDRGs = rawDRGs.filter(c => DRG_BENCHMARKS[c]);
+  // ── 1. Extract diagnosis codes (ICD-10) BEFORE anything else ──
+  _ICD10_RE.lastIndex = 0; // reset stateful regex
+  const dxCodes = [];
+  let dxMatch;
+  while ((dxMatch = _ICD10_RE.exec(lineText)) !== null) {
+    // Only capture if it looks like a real ICD-10 (not a CPT in disguise)
+    const candidate = dxMatch[1];
+    if (!isValidCPT(candidate)) {
+      dxCodes.push(candidate);
+    }
+  }
 
-  const code = rawCPTs.length > 0 ? rawCPTs[0] : (validDRGs.length > 0 ? validDRGs[0] : '');
-  const isDRG = !!validDRGs.length && !rawCPTs.length;
+  // ── 2. Extract billing code (CPT or HCPCS L2) ──
+  const cptMatches  = [...lineText.matchAll(/\b(\d{5})\b/g)].map(m => m[1]).filter(c => isValidCPT(c));
+  const hcpcsMatches= [...lineText.matchAll(/\b([A-Z]\d{4})\b/g)].map(m => m[1]).filter(c => isValidCPT(c));
+  const rawDRGs     = [...lineText.matchAll(/\b[1-9]\d{2}\b/g)].map(m => m[0]);
+  const validDRGs   = rawDRGs.filter(c => (window.DRG_BENCHMARKS || {})[c]);
+
+  const code  = cptMatches[0] || hcpcsMatches[0] || (validDRGs.length ? validDRGs[0] : '');
+  const isDRG = !!validDRGs.length && !cptMatches.length && !hcpcsMatches.length;
 
   if (!code && !isTotalRow) return null;
 
-  // ── TOKEN-LEVEL EXTRACTION (v6.1 Tuned) ──
-  // Filter out the identified code to prevent collisions with Qty/Price
+  // ── 3. Filter items: remove the identified code, ICD-10 tokens, and negative adjustments ──
+  const negAdjRE = /^-\$?[\d,]+\.?\d*$/; // strictly negative dollar amounts
+
+  // Separate out CARC adjustment tokens (negative values on EOBs)
+  const adjItems = lineItems.filter(i => negAdjRE.test((i.str || '').trim()));
+  const adjValue = adjItems.reduce((sum, i) => {
+    return sum + parseFloat(i.str.replace(/[$,]/g, ''));
+  }, 0); // will be <= 0
+
+  // Remove adj tokens, the code itself, and ICD-10 strings from candidates
   const filteredItems = lineItems.filter(i => {
     const s = (i.str || '').trim();
-    return s !== code && s !== code.replace('-', '');
+    if (s === code)              return false; // the billing code
+    if (negAdjRE.test(s))       return false; // CARC adjustment (handled separately)
+    // Strip any token that matches an ICD-10 code we already captured
+    if (dxCodes.length && _ICD10_RE.test(s)) {
+      _ICD10_RE.lastIndex = 0;
+      return false;
+    }
+    return true;
   });
-  
-  const tokens = getNumericTokens(filteredItems);
-  
-  let qty = 1, price = 0, total = 0;
 
-  if (tokens.length >= 3) {
-    // Standard [Qty, Unit, Total]
-    qty   = tokens[0].val;
-    price = tokens[1].val;
-    total = tokens[2].val;
-  } else if (tokens.length === 2) {
-    // [Unit, Total]
-    price = tokens[0].val;
-    total = tokens[1].val;
-  } else if (tokens.length === 1) {
-    // [Total]
-    total = tokens[0].val;
-    price = total; 
+  // ── 4. Zone-gated numeric extraction ──
+  const tokens = getNumericTokens(filteredItems, detectedMap);
+
+  // ── 5. Assign values from zones (not positional slots) ──
+  let qty   = 1;
+  let price = 0;
+  let total = 0;
+
+  const qtyTokens   = tokens.filter(t => t.zone === 'qty');
+  const unitTokens  = tokens.filter(t => t.zone === 'unit');
+  const totalTokens = tokens.filter(t => t.zone === 'total');
+
+  if (detectedMap) {
+    // ── Zone-based extraction (preferred path on real PDFs) ──
+    qty   = qtyTokens.length   ? qtyTokens[0].val   : 1;
+    price = unitTokens.length  ? unitTokens[0].val  : 0;
+    total = totalTokens.length ? totalTokens[0].val : 0;
+
+    // If no price or total found via zones, degrade gracefully
+    if (total === 0 && price === 0) {
+      // Fallback: last token is probably the total
+      if (tokens.length) { total = tokens[tokens.length - 1].val; price = total; }
+    } else if (total === 0 && price > 0) {
+      total = price * qty;
+    } else if (price === 0 && total > 0) {
+      price = total;
+    }
+  } else {
+    // ── Legacy fallback (text-paste mode, no position data) ──
+    if (tokens.length >= 3) {
+      qty   = tokens[0].val;
+      price = tokens[1].val;
+      total = tokens[2].val;
+    } else if (tokens.length === 2) {
+      price = tokens[0].val;
+      total = tokens[1].val;
+    } else if (tokens.length === 1) {
+      total = tokens[0].val;
+      price = total;
+    }
   }
 
-  // Sanity Clamps
-  if (qty > 100 || qty < 0) qty = 1;
-  if (Math.abs(total) > 1000000) return null; // Protective cap
+  // ── 6. Derive paid from CARC adjustment ──
+  // adjValue is <= 0 (e.g. -180).  paid = total + adj  (e.g. 195 + (-180) = 15)
+  const paid = adjValue < 0 ? Math.max(0, total + adjValue) : 0;
 
-  const dates = lineText.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/);
+  // ── 7. Sanity clamps ──
+  if (qty > 9999 || qty < 0) qty = 1;
+  if (Math.abs(total) > 1_000_000) return null;
+
+  // ── 8. Date extraction ──
+  const dates  = lineText.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/);
   const dateStr = dates ? dates[0] : '';
 
+  // ── 9. Modifier extraction ──
   let modifier = '';
   if (code) {
-    const modMatch = lineText.match(new RegExp(`${code}-([A-Z0-9]{2})\\b`));
+    const modMatch = lineText.match(new RegExp(`${code}[-\\s]([A-Z0-9]{2})\\b`));
     if (modMatch) modifier = modMatch[1];
   }
 
-  // Description extraction avoids long numbers and pure codes
+  // ── 10. Description (safe) ──
   let desc = lineItems
     .filter(i => {
-       const s = i.str.trim();
-       if (s === code) return false;
-       if (/^\d{5,}/.test(s)) return false; // Filter out 5+ digit nums (NPI/Acct)
-       if (/\$\d+/.test(s)) return false;   // Filter out prices
-       return true;
+      const s = i.str.trim();
+      if (s === code)               return false;
+      if (/^\d{5,}/.test(s))        return false; // 5+ digit nums (NPI/Account)
+      if (/\$\d+/.test(s))          return false; // prices
+      if (dxCodes.some(dx => s.includes(dx))) return false; // ICD-10 fragments
+      return true;
     })
     .map(i => i.str)
     .join(' ')
     .replace(/\s+/g, ' ')
     .trim();
-    
+
+  // Strip any remaining ICD-10 sequences from the description
+  desc = desc.replace(_ICD10_RE, '').replace(/\s+/g, ' ').trim();
+  _ICD10_RE.lastIndex = 0;
+
   if (!desc) {
     desc = lineText.replace(new RegExp(`\\b${code}\\b`, 'g'), ' ').replace(/\s+/g, ' ').trim();
   }
   if (desc.length > 80) desc = desc.substring(0, 77) + '…';
 
   return {
-    date: dateStr, code, modifier, isDRG,
-    desc: desc || (isDRG ? 'Hospital Stay' : 'Medical Service'),
-    qty, price: price || total, total, paid: 0, owed: 0,
+    date:  dateStr,
+    code,
+    modifier,
+    isDRG,
+    dx:    dxCodes,   // ICD-10 diagnosis codes found on this line
+    adj:   adjValue,  // CARC adjustment (≤ 0)
+    desc:  desc || (isDRG ? 'Hospital Stay' : 'Medical Service'),
+    qty,
+    price:           price || total,
+    total,
+    paid,
+    owed:            0,
     priceWasDerived: (price === 0 || price === total),
-    isTotalRow
+    isTotalRow,
   };
 }
 
+/**
+ * extractRowsFromText — text-paste fallback (no positional data)
+ * Builds a synthetic layout with monotone x-positions so the parser degrades
+ * safely to the legacy slot-based extraction.
+ */
 function extractRowsFromText(text) {
   if (!text) return { rows: [], suspect_rows: [] };
-  const lines = text.split('\n').filter(l => l.trim().length > 0);
+  const lines    = text.split('\n').filter(l => l.trim().length > 0);
   const fakePage = lines.map((lineText, idx) => {
     const parts = lineText.trim().split(/\s+/);
-    const y = (lines.length - idx) * 20; 
-    return parts.map((str, pIdx) => ({
-      str,
-      x: pIdx * 70, 
-      y
-    }));
+    const y     = (lines.length - idx) * 20;
+    return parts.map((str, pIdx) => ({ str, x: pIdx * 70, y }));
   }).flat();
-  
-  const result = reconstructRowsFromLayout([fakePage]);
-  return result;
+
+  return reconstructRowsFromLayout([fakePage]);
 }
 
+/**
+ * classifyDocument — uses keyword matching against DOCUMENT_PROFILES.
+ * v6.0: profiles now have keywords arrays so this actually returns non-GENERIC
+ * results for professional/institutional/EOB bills.
+ */
 function classifyDocument(items) {
-  const fullText = (items || []).map(i => i.str).join(' ').toLowerCase();
-  const profiles = window.DOCUMENT_PROFILES || {};
-  let bestProfile = profiles.GENERIC || { id: 'GENERIC', label: 'Generic Medical Document' };
-  let maxHits = 0;
+  const fullText   = (items || []).map(i => i.str).join(' ').toLowerCase();
+  const profiles   = window.DOCUMENT_PROFILES || {};
+  let bestProfile  = profiles.GENERIC || { id: 'GENERIC', label: 'Generic Medical Document' };
+  let maxHits      = 0;
 
   Object.values(profiles).forEach(p => {
     if (!p || p.id === 'GENERIC') return;
@@ -218,14 +372,19 @@ function classifyDocument(items) {
   return bestProfile;
 }
 
+/**
+ * reconstructRowsFromLayout — main entry point after PDF.js extraction.
+ * Passes the computed dMap into extractRowsFromSpatialLine so zone-gated
+ * token extraction can work.
+ */
 function reconstructRowsFromLayout(pages) {
   const flatItems = pages.flat();
-  const profile = classifyDocument(flatItems);
-  const dMap = detectColumns(flatItems);
-  
+  const profile   = classifyDocument(flatItems);
+  const dMap      = detectColumns(flatItems);
+
   const allRows = [];
-  pages.forEach((items, pageIdx) => {
-    let inTable = (profile.id === 'GENERIC'); // GENERIC profile skips strict header sniffing
+  pages.forEach((items) => {
+    let inTable = (profile.id === 'GENERIC'); // GENERIC skips strict header sniffing
     const yGroups = {};
     items.forEach(item => {
       const y = Math.round(item.y / 6) * 6;
@@ -233,21 +392,27 @@ function reconstructRowsFromLayout(pages) {
     });
 
     const sortedYs = Object.keys(yGroups).sort((a, b) => b - a);
-    const blocks = buildServiceBlocks(sortedYs, yGroups);
+    const blocks   = buildServiceBlocks(sortedYs, yGroups);
 
     blocks.forEach(block => {
       const lineUpper = block.text.toUpperCase();
-      
-      // Sniff for table headers (Broadened)
-      if ((lineUpper.includes('CPT') || lineUpper.includes('CODE') || lineUpper.includes('HCPCS') || lineUpper.includes('SERVICE')) && 
-          (lineUpper.includes('CHARGE') || lineUpper.includes('TOTAL') || lineUpper.includes('AMOUNT'))) {
+
+      // Sniff for table headers (broad match)
+      if (
+        (lineUpper.includes('CPT') || lineUpper.includes('CODE') ||
+         lineUpper.includes('HCPCS') || lineUpper.includes('SERVICE') ||
+         lineUpper.includes('PROCEDURE')) &&
+        (lineUpper.includes('CHARGE') || lineUpper.includes('TOTAL') ||
+         lineUpper.includes('AMOUNT') || lineUpper.includes('BILLED'))
+      ) {
         inTable = true;
-        return;
+        return; // skip header row itself
       }
 
-      if (TOTAL_ROW_RE.test(block.text)) inTable = false; // Close table after total row
+      if (TOTAL_ROW_RE.test(block.text)) inTable = false;
 
       if (inTable || block.isTotal) {
+        // Pass the dMap for zone-gated extraction
         const row = extractRowsFromSpatialLine(block.items, block.text, dMap);
         if (row) {
           row.profile = profile.id;
@@ -257,17 +422,23 @@ function reconstructRowsFromLayout(pages) {
     });
   });
 
-  const result = filterNormalRows(allRows);
+  const result   = filterNormalRows(allRows);
   result.profile = profile;
   return result;
 }
 
+/**
+ * filterNormalRows — quarantines rows that have no code AND no financial data.
+ * v6.0: HCPCS L2 codes pass isValidCPT so they won't be falsely quarantined.
+ */
 function filterNormalRows(rows) {
-  const clean_rows = [];
+  const clean_rows   = [];
   const suspect_rows = [];
+
   rows.forEach(r => {
     const d = (r.desc || '').toUpperCase();
-    if (['TEST','FAKE','SAMPLE','VOID'].some(k => d.includes(k))) return;
+    if (['TEST', 'FAKE', 'SAMPLE', 'VOID'].some(k => d.includes(k))) return;
+
     if (!r.code && r.total === 0 && !r.isTotalRow) {
       r.quarantine_reason = 'Missing financial or code anchors';
       suspect_rows.push(r);
@@ -275,12 +446,16 @@ function filterNormalRows(rows) {
       clean_rows.push(r);
     }
   });
+
   return { rows: clean_rows, suspect_rows };
 }
 
-window.TOTAL_ROW_RE = TOTAL_ROW_RE;
-window.classifyDocument = classifyDocument;
-window.detectColumns = detectColumns;
-window.extractRowsFromSpatialLine = extractRowsFromSpatialLine;
+// ── Window exports ──
+window.TOTAL_ROW_RE              = TOTAL_ROW_RE;
+window.classifyDocument          = classifyDocument;
+window.detectColumns             = detectColumns;
+window.extractRowsFromSpatialLine= extractRowsFromSpatialLine;
 window.reconstructRowsFromLayout = reconstructRowsFromLayout;
-window.filterNormalRows = filterNormalRows;
+window.filterNormalRows          = filterNormalRows;
+window.buildServiceBlocks        = buildServiceBlocks;
+window.getNumericTokens          = getNumericTokens;
