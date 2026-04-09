@@ -328,7 +328,6 @@ async function handlePDF(file) {
   const loadingTxt = document.getElementById('ai-loading-text');
 
   if (overlay) overlay.style.display = 'block';
-  if (results) results.innerHTML = '';
   if (status)  status.innerHTML  = `<span style="color:var(--accent);">Initializing Engine...</span>`;
 
   try {
