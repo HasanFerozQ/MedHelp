@@ -11,311 +11,101 @@ console.log('MediHelp: audit.js file source has been reached.');
 // ── Global Configuration ──
 // NPPES_API moved to constants.js global scope
 
-// ── PDF Audit Setup ───────────────────────────────────────────────────────────
+// ── V8.0 Interactive Grid Architecture ──
+
 function initAudit() {
-  console.log('MediHelp: Initializing Bill Audit Module...');
+  console.log('MediHelp: Initializing V8.0 Interactive Grid...');
   
-  // 1. Initialize UI Listeners (Priority)
-  setupPDFAudit();
-
-  // 2. Configure PDF.js Worker
-  if (typeof pdfjsLib !== 'undefined') {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-  } else {
-    console.warn('MediHelp: pdf.js library not detected.');
-  }
-
-  // ── v4.2 Interactive Blog Integration ──
-  try {
-    const pendingAudit = localStorage.getItem('mh_pending_audit');
-    if (pendingAudit) {
-      localStorage.removeItem('mh_pending_audit');
-      const textArea = document.getElementById('bill-text');
-      if (textArea) {
-        textArea.value = pendingAudit;
-        const pasteTab = document.querySelector('[onclick*="audit-paste"]');
-        if (pasteTab) pasteTab.click();
-        
-        // Auto-run
-        setTimeout(() => { 
-            const analyzeBtn = document.getElementById('analyze-paste-btn');
-            if (analyzeBtn) analyzeBtn.click();
-        }, 500);
+  const savedData = localStorage.getItem('medihelp_grid_data');
+  if (savedData) {
+    try {
+      const rows = JSON.parse(savedData);
+      if (rows && rows.length > 0) {
+        rows.forEach(r => addGridRow(r));
+      } else {
+        addGridRow(); // Initialize empty row
       }
+    } catch(e) {
+      addGridRow();
     }
-  } catch (err) {
-    console.warn('MediHelp: Failed to restore pending audit data.', err);
+  } else {
+    addGridRow();
   }
-
-  const lineInput = document.getElementById('line-items-text');
-  if (lineInput) {
-    lineInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && e.ctrlKey) runAuditLines();
-    });
-  }
+  
+  // Give the UI a moment to render before firing the first audit
+  setTimeout(triggerAudit, 100);
 }
 
-// Robust Listener
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    try { initAudit(); } catch(e) { console.error('MediHelp: Core Init Failed', e); }
-  });
+  document.addEventListener('DOMContentLoaded', initAudit);
 } else {
-  try { initAudit(); } catch(e) { console.error('MediHelp: Late Init Failed', e); }
+  initAudit();
 }
 
-function setupPDFAudit() {
-  const zone  = document.getElementById('pdf-drop-zone');
-  const input = document.getElementById('pdf-input');
-  const status = document.getElementById('pdf-status');
-
-  if (!zone || !input) {
-    console.warn('MediHelp: Audit UI elements missing.');
-    return;
-  }
-
-  zone.onclick = () => {
-    input.click();
-  };
-
-  zone.ondragover = e => { 
-    e.preventDefault(); 
-    zone.classList.add('dragover'); 
-  };
-  
-  zone.ondragleave = () => zone.classList.remove('dragover');
-  
-  zone.ondrop = e => {
-    e.preventDefault();
-    zone.classList.remove('dragover');
-    if (e.dataTransfer.files.length) {
-      handlePDF(e.dataTransfer.files[0]);
-    }
-  };
-
-  input.onchange = e => { 
-    if (e.target.files.length) {
-      handlePDF(e.target.files[0]);
-    }
-  };
+function saveToCache() {
+  const rows = buildRowDataFromUI();
+  localStorage.setItem('medihelp_grid_data', JSON.stringify(rows));
 }
 
-async function handlePDF(file) {
-  const status     = document.getElementById('pdf-status');
-  const overlay    = document.getElementById('ai-loading-overlay');
-  const auditResults = document.getElementById('audit-results');
-
-  if (!file || file.type !== 'application/pdf') {
-    if (status) status.innerText = 'Error: Please upload a valid PDF file.';
-    return;
-  }
-
-  if (typeof pdfjsLib === 'undefined') {
-    console.error('MediHelp: pdf.js library not loaded.');
-    if (status) status.innerHTML = '<span style="color:#ef4444;">Error: PDF Library missing.</span>';
-    return;
-  }
-
-  if (overlay) overlay.style.display = 'block';
-  if (auditResults) auditResults.innerHTML = '';
-  if (status)  status.innerHTML  = `<span style="color:var(--accent);">Processing PDF...</span>`;
-
-  try {
-    const arrayBuffer = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-    let pageData = [];
-    let detectedNPIs = [];
-    const npiRegex = /\b[1-9][0-9]{9}\b/g;
-
-    for (let i = 1; i <= pdf.numPages; i++) {
-      if (status) status.innerHTML = `<span style="color:var(--accent);">Extracting Text: Page ${i} of ${pdf.numPages}...</span>`;
-      const page = await pdf.getPage(i);
-      const tc   = await page.getTextContent();
-      const items = tc.items.map(item => {
-        const m = item.str.match(npiRegex);
-        if (m) detectedNPIs.push(...m);
-        return { str: item.str, x: item.transform[4], y: item.transform[5], width: item.width, height: item.height };
-      });
-      pageData.push(items);
-    }
-
-    // OCR fallback for image-only PDFs
-    const totalWords = pageData.flat().reduce((a, it) => a + it.str.split(/\s+/).length, 0);
-    if (totalWords < 20) {
-      if (status) status.innerHTML = `<span style="color:var(--accent);">No text detected. Loading OCR...</span>`;
-      if (!window.Tesseract) {
-        await new Promise((res, rej) => {
-          const s = document.createElement('script');
-          s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
-          s.onload = res;
-          s.onerror = () => rej(new Error('Failed to load OCR library.'));
-          document.head.appendChild(s);
-        });
-      }
-      const canvas = document.createElement('canvas');
-      const ctx    = canvas.getContext('2d');
-      pageData = [];
-      const tesseract = window.Tesseract || Tesseract;
-      for (let i = 1; i <= pdf.numPages; i++) {
-        if (status) status.innerHTML = `<span style="color:var(--accent);">OCR Analysis: Page ${i} of ${pdf.numPages}...</span>`;
-        const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 2.0 });
-        canvas.width = viewport.width; canvas.height = viewport.height;
-        await page.render({ canvasContext: ctx, viewport }).promise;
-        const { data: { words } } = await tesseract.recognize(canvas, 'eng');
-        const ocrItems = (words || []).map(w => {
-          const m = w.text.match(npiRegex);
-          if (m) detectedNPIs.push(...m);
-          return { str: w.text, x: w.bbox.x0 / 2, y: (viewport.height - w.bbox.y0) / 2, width: (w.bbox.x1 - w.bbox.x0) / 2, height: (w.bbox.y1 - w.bbox.y0) / 2 };
-        });
-        pageData.push(ocrItems);
-      }
-    }
-
-    if (overlay) overlay.style.display = 'none';
-    const safeName = window.sanitizeText(file.name);
-    if (status) status.innerHTML = `✅ Analyzed ${pdf.numPages} page(s) from <strong>${safeName}</strong>`;
-    
-    // Call Stage 2 Normalizer
-    const schema = reconstructRowsFromLayout(pageData);
-    runAudit(schema, detectedNPIs);
-
-  } catch (err) {
-    if (overlay) overlay.style.display = 'none';
-    if (status)  status.innerHTML = `<span style="color:var(--danger);">⚠️ ${err.message}</span>`;
-  }
+function buildRowDataFromUI() {
+  const trs = document.querySelectorAll('#grid-body tr');
+  return Array.from(trs).map((tr, idx) => {
+    const inputs = tr.querySelectorAll('input');
+    return {
+      idx,
+      date:      inputs[0].value.trim(),
+      code:      inputs[1].value.trim().toUpperCase(),
+      modifier:  inputs[2].value.trim().toUpperCase(),
+      dx:        [inputs[3].value.trim().toUpperCase()].filter(Boolean), // convert straight to array format
+      qty:       parseFloat(inputs[4].value) || 1,
+      price:     0,  // We don't have unit price in the simple manual grid
+      total:     parseFloat(inputs[5].value) || 0,
+      paid:      0,
+      owed:      0,
+      desc:      'Manual Entry',
+      raw:       tr
+    };
+  }).filter(r => r.code !== '' || r.total > 0);
 }
 
-// ── Workspace UI & Orchestration ──────────────────────────────────────────────
-
-let currentSuspectRows = [];
-
-function runAudit(input, detectedNPIs = []) {
-  const workspace = document.getElementById('audit-workspace-container');
-  const results   = document.getElementById('audit-results');
-  if (!workspace || !results) return;
-
-  const body = document.getElementById('workspace-body');
-  if (body) body.innerHTML = '';
-  results.innerHTML = '';
-
-  let rows = [];
-  let suspect_rows = [];
-  
-  if (Array.isArray(input)) {
-    rows = input;
-  } else if (input && typeof input === 'object' && input.rows) {
-    rows = input.rows;
-    suspect_rows = input.suspect_rows || [];
-    window.currentDocumentProfile = input.profile || (window.DOCUMENT_PROFILES && window.DOCUMENT_PROFILES.GENERIC) || { id: 'GENERIC', label: 'Generic Medical Document' };
-  } else {
-    const extracted = extractRowsFromText(input || '');
-    rows = extracted.rows || [];
-    suspect_rows = extracted.suspect_rows || [];
-    window.currentDocumentProfile = extracted.profile || (window.DOCUMENT_PROFILES && window.DOCUMENT_PROFILES.GENERIC) || { id: 'GENERIC', label: 'Generic Medical Document' };
-  }
-
-  currentSuspectRows = suspect_rows;
-  console.log(`MediHelp Normalization Setup: ${rows.length} valid rows, ${suspect_rows.length} quarantined.`);
-
-  workspace.style.display = 'block';
-  workspace.dataset.npis = JSON.stringify(detectedNPIs || []); // Reset or Set NPIs
-  
-  const sidebar = document.getElementById('billing-context-sidebar');
-  if (sidebar) sidebar.style.display = 'block';
-
-  if (rows.length === 0) {
-    if (suspect_rows.length === 0) addWorkspaceRow();
-    reRunWorkspaceAudit(); 
-  } else {
-    rows.forEach(r => addWorkspaceRow(r));
-    reRunWorkspaceAudit();
-  }
-}
-window.runAudit = runAudit;
-
-function runAuditPaste() {
-  const text = document.getElementById('bill-text')?.value;
-  if (text && text.trim()) runAudit(text);
-}
-window.runAuditPaste = runAuditPaste;
-
-function runAuditLines() {
-  const text = document.getElementById('line-items-text')?.value;
-  if (text && text.trim()) runAudit(text);
-}
-window.runAuditLines = runAuditLines;
-
-function addWorkspaceRow(data = {}) {
-  const body = document.getElementById('workspace-body');
+function addGridRow(data = {}) {
+  const body = document.getElementById('grid-body');
   if (!body) return;
   const row = document.createElement('tr');
   
-  // XSS Hardening: Sanitize all values
   const s = (v) => window.sanitizeText(String(v || ''));
-
+  const dxStr = Array.isArray(data.dx) ? data.dx.join(', ') : s(data.dx);
+  
   row.innerHTML = `
-    <td contenteditable="true" oninput="debouncedAudit()">${s(data.date)}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="font-family:monospace;font-weight:bold;">${s(data.code)}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="font-family:monospace;font-size:11px;color:var(--accent);">${s(data.modifier)}</td>
-    <td contenteditable="true" oninput="debouncedAudit()">${s(data.desc)}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:center;">${s(data.qty) || 1}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;">${parseFloat(data.price || 0).toFixed(2)}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;font-weight:bold;">${parseFloat(data.total || 0).toFixed(2)}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;color:#22c55e;">${parseFloat(data.paid || 0).toFixed(2)}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;color:#ef4444;">${parseFloat(data.owed || 0).toFixed(2)}</td>
-    <td><button onclick="this.closest('tr').remove();debouncedAudit();" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:16px;">✕</button></td>
+    <td><input type="text" value="${s(data.date)}" style="width:100%; border:none; background:transparent; color:var(--text-h); outline:none;" placeholder="MM/DD/YY" oninput="saveToCache(); debouncedAudit()"></td>
+    <td><input type="text" value="${s(data.code)}" style="width:100%; border:none; background:transparent; color:var(--text-h); font-weight:bold; outline:none;" placeholder="99214" oninput="saveToCache(); debouncedAudit()"></td>
+    <td><input type="text" value="${s(data.modifier)}" style="width:100%; border:none; background:transparent; color:var(--accent); font-weight:bold; outline:none;" placeholder="25" oninput="saveToCache(); debouncedAudit()"></td>
+    <td><input type="text" value="${dxStr}" style="width:100%; border:none; background:transparent; color:var(--text-h); outline:none;" placeholder="Z00.00" oninput="saveToCache(); debouncedAudit()"></td>
+    <td><input type="number" value="${s(data.qty) || 1}" style="width:100%; border:none; background:transparent; color:var(--text-h); outline:none;" oninput="saveToCache(); debouncedAudit()"></td>
+    <td><input type="number" step="0.01" value="${data.total !== undefined ? data.total : ''}" style="width:100%; border:none; background:transparent; color:var(--text-h); font-weight:bold; outline:none;" placeholder="$0.00" oninput="saveToCache(); debouncedAudit()"></td>
+    <td><button onclick="this.closest('tr').remove(); saveToCache(); triggerAudit();" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:16px;">✕</button></td>
   `;
-  if (data.priceWasDerived) row.dataset.derived = 'true';
   body.appendChild(row);
 }
+window.addGridRow = addGridRow;
 
 const debouncedAudit = window.debounce(async () => {
   try {
-    await reRunWorkspaceAudit();
+    await triggerAudit();
   } catch (err) {
     console.error('Audit Runner Crashed:', err);
   }
-}, 300);
+}, 400);
 window.debouncedAudit = debouncedAudit;
 
-async function reRunWorkspaceAudit() {
-  const trs     = document.querySelectorAll('#workspace-body tr');
-  const results = document.getElementById('audit-results');
-  if (!results) return;
-
-  const rows = Array.from(trs).map((tr, idx) => {
-    const tds  = tr.querySelectorAll('td');
-    const qty   = parseInt(tds[4].innerText, 10) || 1;
-    const price = parseFloat(tds[5].innerText) || 0;
-    const total = parseFloat(tds[6].innerText) || 0;
-    const paid  = parseFloat(tds[7].innerText) || 0;
-    const owed  = parseFloat(tds[8].innerText) || 0;
-    
-    let priceWasDerived = false;
-    if (tr.dataset.derived === 'true') {
-      priceWasDerived = (price === 0 || (total > 0 && Math.abs(price - total / qty) < 0.02));
-    }
-    return {
-      idx,
-      date:            tds[0].innerText.trim(),
-      code:            tds[1].innerText.trim(),
-      modifier:        tds[2].innerText.trim().replace(/^-/, ''),
-      desc:            tds[3].innerText.trim(),
-      qty, price, total, paid, owed,
-      priceWasDerived,
-      isTotalRow: (window.TOTAL_ROW_RE || /total|summary/i).test(tds[3].innerText),
-      raw: tr,
-    };
-  });
+async function triggerAudit() {
+  const rows = buildRowDataFromUI();
 
   const multiplier = parseFloat(document.getElementById('payer-type')?.value) || 2.5;
-  const npiData    = document.getElementById('audit-workspace-container')?.dataset.npis;
-  let npis = [];
-  try { npis = npiData ? JSON.parse(npiData) : []; } catch(_) { npis = []; }
+  const npis       = [];
   const gpci       = parseFloat(document.getElementById('gpci-region')?.value || '1.0');
   const isFacility = document.getElementById('facility-type')?.value === 'hospital';
-  const profile = window.currentDocumentProfile || null;
+  const profile    = window.currentDocumentProfile || null;
 
   // Call Stage 3 Auditor
   const engine = new BucketAuditor(rows, multiplier, npis, gpci, isFacility, profile);
@@ -344,27 +134,30 @@ async function reRunWorkspaceAudit() {
   ]);
 
   try { await withTimeout(engine.runDatabaseCheck()); } catch(e) { console.warn('MediHelp: DB check skipped:', e.message); }
-  try { await withTimeout(engine.resolveNPIProviders()); } catch(e) { console.warn('MediHelp: NPI resolution skipped:', e.message); }
   engine.finalizeDeduplication();
 
-  // Save state for Stage 4 Reporting
+  const container = document.getElementById('result-cards-container');
+  if (!container) return;
+  
+  if (rows.length === 0) {
+    container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 13px;">Add elements above to see live findings here.</div>';
+    document.getElementById('audit-results').innerHTML = '';
+    return;
+  }
+
+  // Generate Independent Result Cards mapping Input Rows to Findings
   window.currentEngineFindings = engine.findings;
   window.currentEngineSavings  = engine.potentialSavings;
-  const confidence = engine.computeConfidence();
-
-  // Call Stage 4 Reporter
-  renderCategorizedFindings(
-    engine.findings, 
-    results, 
-    rows.length, 
-    rows, 
-    engine.potentialSavings, 
-    engine.totalBenchmark, 
-    confidence, 
-    currentSuspectRows
-  );
+  
+  if (typeof renderResultCardsPerLineItem === 'function') {
+    renderResultCardsPerLineItem(rows, engine.findings, container);
+    // Render the final trailing summary in the usual audit-results section
+    renderFinalSummary(engine.potentialSavings, engine.totalBenchmark, document.getElementById('audit-results'));
+  } else {
+    console.warn("MediHelp: renderResultCardsPerLineItem missing from report.js. Falling back.");
+  }
 }
 
-window.reRunWorkspaceAudit = reRunWorkspaceAudit;
+window.triggerAudit = triggerAudit;
 
 })(); // END SCOPE ISOLATION

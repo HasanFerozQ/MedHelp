@@ -72,11 +72,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-  <script src="/tabs/medbill/constants.js?v=7.0"></script>
-  <script src="/tabs/medbill/parser.js?v=7.0"></script>
-  <script src="/tabs/medbill/auditor.js?v=7.0"></script>
-  <script src="/tabs/medbill/report.js?v=7.0"></script>
-  <script src="/tabs/medbill/audit.js?v=7.0"></script>
+  <script src="/tabs/medbill/constants.js?v=8.0"></script>
+  <script src="/tabs/medbill/auditor.js?v=8.0"></script>
+  <script src="/tabs/medbill/report.js?v=8.0"></script>
+  <script src="/tabs/medbill/audit.js?v=8.0"></script>
 </head>
 <body>
 
@@ -105,148 +104,53 @@
   </section>
 
   <div class="container" style="margin-bottom: 80px; max-width: 1280px;">
-    <div class="audit-area">
-
-      <div class="audit-tabs">
-        <button class="audit-tab active" onclick="switchAuditTab('audit-pdf', this)">📄 Upload PDF</button>
-        <button class="audit-tab" onclick="switchAuditTab('audit-paste', this)">📋 Paste Text</button>
-        <button class="audit-tab" onclick="switchAuditTab('audit-lines', this)">📝 Line Items</button>
-      </div>
-
-      <div id="audit-pdf" class="audit-panel active">
-        <div class="drop-zone" id="pdf-drop-zone">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-          <p>Drag & Drop Medical Bill PDF here</p>
-          <div class="hint">or click to browse files</div>
-          <input type="file" id="pdf-input" accept="application/pdf" style="display:none;">
-        </div>
-        <div id="pdf-status" style="font-size:12px; margin-top:-10px; margin-bottom:20px; color:var(--accent);"></div>
-      </div>
-      
-      <div id="ai-loading-overlay" style="display:none; text-align:center; padding: 40px;">
-        <div class="spinner" style="margin: 0 auto 20px; width:40px; height:40px; border:4px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation: spin 1s linear infinite;"></div>
-        <h3 style="margin-bottom:8px;">Analyzing your bill...</h3>
-        <p style="color:var(--text-muted); font-size:14px;" id="ai-loading-text">Extracting and analyzing bill data locally. This may take a few seconds.</p>
-        <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
-      </div>
-
-      <div class="audit-workspace-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
-        <h2 style="margin:0;">Elite Audit Engine <span style="font-size:12px; color:var(--accent); vertical-align:middle; margin-left:8px; background:rgba(6,182,212,0.1); padding:2px 8px; border-radius:12px; border:1px solid var(--accent);">v4.2</span></h2>
-        <div class="privacy-shield" style="display:flex; align-items:center; gap:8px; background:rgba(34,197,94,0.1); border:1px solid #22c55e; padding:6px 12px; border-radius:20px; cursor:help;" title="Zero-Server Architecture: All medical data stays in your browser.">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          <span style="font-size:11px; font-weight:700; color:#22c55e; text-transform:uppercase; letter-spacing:0.05em;">Privacy Protected • Local Audit</span>
-        </div>
-      </div>
-
-      <!-- New: Billing Context Sidebar -->
-      <div id="billing-context-sidebar" style="display:none; margin-bottom: 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
-        <h3 style="margin-top:0; font-size:14px; margin-bottom:16px;">Billing Context</h3>
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
-          <div>
-            <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;">Billing Locality (GPCI)</label>
-            <select id="gpci-region" class="btn btn-ghost" style="width:100%; border:1px solid var(--border); text-align:left; font-size:13px;" onchange="debouncedAudit()">
-              <option value="1.00">National Base Rate (1.00x)</option>
-              <optgroup label="Higher Cost Regions">
-                <option value="1.15">California (SF / Bay Area)</option>
-                <option value="1.12">New York (Manhattan / NYC)</option>
-                <option value="1.08">Washington DC / Baltimore</option>
-                <option value="1.06">Massachusetts (Boston)</option>
-                <option value="1.04">Illinois (Chicago)</option>
-              </optgroup>
-              <optgroup label="Standarize Regions">
-                <option value="1.02">Texas (Houston/Dallas)</option>
-                <option value="1.01">Florida (Miami/Orlando)</option>
-                <option value="1.00">Georgia (Atlanta)</option>
-              </optgroup>
-              <optgroup label="Lower Cost Regions">
-                <option value="0.95">Ohio / Michigan</option>
-                <option value="0.92">Alabama / Mississippi</option>
-                <option value="0.88">Puerto Rico</option>
-              </optgroup>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;">Audit Profile</label>
-            <select id="doc-profile" class="btn btn-ghost" style="width:100%; border:1px solid var(--border); text-align:left; font-size:13px;" onchange="window.currentDocumentProfile = window.DOCUMENT_PROFILES[this.value]; debouncedAudit();">
-              <option value="GENERIC">⚖️ Automated / Generic</option>
-              <option value="PROFESSIONAL">🩺 Professional Bill (CMS-1500)</option>
-              <option value="INSTITUTIONAL">🏥 Institutional Bill (UB-04)</option>
-              <option value="EOB">📄 Explanation of Benefits (EOB)</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;">Facility Setting</label>
-            <select id="facility-type" class="btn btn-ghost" style="width:100%; border:1px solid var(--border); text-align:left; font-size:13px;" onchange="debouncedAudit()">
-              <option value="office">Private Office / Clinic</option>
-              <option value="hospital">Hospital / Surgical Facility</option>
-            </select>
-          </div>
-          <div id="verified-provider-container" style="display:none; grid-column: 1 / -1; margin-top:8px;">
-            <div id="verified-provider-card" style="background:var(--bg-main); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; position:relative; overflow:hidden;">
-               <div style="position:absolute; top:0; right:0; background:var(--accent); color:white; font-size:9px; font-weight:900; padding:2px 10px; border-bottom-left-radius:8px; text-transform:uppercase; letter-spacing:1px;">Verified Identity</div>
-               <div id="provider-card-content"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="audit-paste" class="audit-panel">
-        <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; letter-spacing:0.06em; text-transform:uppercase;">Paste bill text or EOB:</label>
-        <textarea id="bill-text" class="bill-textarea" placeholder="Paste your medical bill, EOB, or itemized statement here..."></textarea>
-        <div class="audit-btn-row">
-          <button class="btn btn-primary" onclick="runAuditPaste()">Analyze Text</button>
-          <button class="btn btn-ghost" onclick="document.getElementById('bill-text').value='';document.getElementById('audit-results').innerHTML='';">Clear</button>
-        </div>
-      </div>
-
-      <div id="audit-lines" class="audit-panel">
-        <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; letter-spacing:0.06em; text-transform:uppercase;">Format: Code[-Modifier] $Amount &nbsp;·&nbsp; One entry per line</label>
-        <textarea id="line-items-text" class="bill-textarea" placeholder="99213  $150.00&#10;93010-59  $85.00&#10;36415  $12.00"></textarea>
-        <div class="audit-btn-row">
-          <button class="btn btn-primary" onclick="runAuditLines()">Analyze Items</button>
-          <button class="btn btn-ghost" onclick="document.getElementById('line-items-text').value=''">Clear</button>
-        </div>
-      </div>
-
-      <div id="audit-workspace-container" style="display:none; margin-bottom: 30px;">
+    <div class="      <!-- Manual Data Grid -->
+      <div id="interactive-grid-container" style="margin-bottom: 30px;">
         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 15px;">
           <div>
-            <h3 style="font-size: 16px; margin: 0; color: var(--text-h);">🛠️ Bill Data Workspace</h3>
-            <p style="margin:4px 0 0; font-size: 12px; color: var(--text-muted);">Verify and edit extracted data before final report.</p>
+            <h3 style="font-size: 16px; margin: 0; color: var(--text-h);">🛠️ Bill Data Entry</h3>
+            <p style="margin:4px 0 0; font-size: 12px; color: var(--text-muted);">Enter medical charges below. Data auto-saves and validates instantly.</p>
           </div>
           <div style="display: flex; gap: 12px; align-items: center;">
             <div style="text-align: right;">
               <label style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Payer Type</label>
-              <select id="payer-type" onchange="reRunWorkspaceAudit()" style="background: var(--bg-card); color: var(--text-h); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; font-size: 12px; cursor: pointer; outline: none; transition: border-color 0.2s;">
+              <select id="payer-type" onchange="triggerAudit()" style="background: var(--bg-card); color: var(--text-h); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; font-size: 12px; cursor: pointer; outline: none; transition: border-color 0.2s;">
                 <option value="1.5">Self-Pay (150% Medicare)</option>
                 <option value="2.5" selected>Commercial (250% Medicare)</option>
                 <option value="3.0">Worker's Comp (300% Medicare)</option>
               </select>
             </div>
-            <button class="btn btn-primary" onclick="reRunWorkspaceAudit()" style="padding: 8px 16px; font-size: 12px;">Re-run Audit</button>
+            <button class="btn btn-primary" onclick="triggerAudit()" style="padding: 8px 16px; font-size: 12px;">Re-Calculate</button>
           </div>
         </div>
 
         <div class="workspace-table-wrapper" style="overflow-x: auto; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border);">
-          <table id="audit-workspace-table" style="width: 100%; border-collapse: collapse; font-size: 13px; min-width: 650px;">
+          <table id="manual-audit-grid" style="width: 100%; border-collapse: collapse; font-size: 13px; min-width: 650px;">
             <thead>
               <tr style="background: rgba(255,255,255,0.05); text-align: left;">
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Date</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Code</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border); color: var(--accent);">Mod</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Description</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Date (Opt)</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">CPT / HCPCS</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Mod</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">ICD-10 (Opt)</th>
                 <th style="padding: 12px; border-bottom: 1px solid var(--border);">Qty</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Unit Price</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Total</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border); color: #22c55e;">Ins. Paid</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--border); color: #ef4444;">Pt. Owed</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--border);">Total Billed ($)</th>
                 <th style="padding: 12px; border-bottom: 1px solid var(--border); width: 40px;"></th>
               </tr>
             </thead>
-            <tbody id="workspace-body"></tbody>
+            <tbody id="grid-body">
+              <!-- JS Injected Editable Rows -->
+            </tbody>
           </table>
         </div>
-        <button onclick="addWorkspaceRow()" style="background: none; border: 1px dashed var(--border); color: var(--text-muted); width: 100%; padding: 10px; margin-top: 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">+ Add Custom Row</button>
+        <button onclick="addGridRow()" style="background: none; border: 1px dashed var(--border); color: var(--text-muted); width: 100%; padding: 10px; margin-top: 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">+ Add Line Item</button>
+      </div>
+
+      <!-- Live Result Section -->
+      <div id="live-results-section" style="margin-bottom: 30px;">
+        <h3 style="font-size: 16px; margin: 0 0 15px; color: var(--text-h); padding-bottom: 10px; border-bottom: 1px solid var(--border);">📊 Audit Results</h3>
+        <div id="result-cards-container" style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 13px;">Add elements above to see live findings here.</div>
+        </div>
       </div>
 
       <div id="audit-results" class="audit-results"></div>
