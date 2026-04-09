@@ -129,7 +129,7 @@ const CPT_CLINICAL_GROUPS = {
   // Neurological: Heavy diagnostic imaging should co-exist with neuro visits/exams
   '70551': { requires: new Set(['99214','99215','99221','99222','99223','95816','95819']), label: 'Brain MRI (70551)' },
   // Psych: Psychotherapy shouldn't appear with unrelated major surgeries same day
-  '90837': { incompatible: new Set(['27447','27130','29881','45378','43239']), label: 'Psychotherapy (90837)' },
+  '90837': { incompatible: null, label: 'Psychotherapy (90837)' },
   // Critical care: shouldn't appear same day as routine outpatient office visits
   '99291': { incompatible: new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215']), label: 'Critical Care (99291)' },
   // Colonoscopy: shouldn't appear with upper GI same day (rare standalone billing)
@@ -412,22 +412,7 @@ async function handlePDF(file) {
   }
 }
 
-// ── Layout Reconstruction ─────────────────────────────────────────────────────
-function reconstructRowsFromLayout(pages) {
-  const allRows = [];
-  pages.forEach(items => {
-    const yGroups = {};
-    items.forEach(item => {
-      if (!item.str.trim()) return;
-      const y = Math.round(item.y / 6) * 6; // Refined tolerance from 10 to 6 for tighter row reconstruction to prevent line merging
-      (yGroups[y] = yGroups[y] || []).push(item);
-    });
-    Object.keys(yGroups).sort((a, b) => b - a).forEach(y => {
-      const lineText = yGroups[y].sort((a, b) => a.x - b.x).map(i => i.str).join(' ');
-      const row = extractRowsFromRawLine(lineText);
-      if (row) allRows.push(row);
-    });
-  });
+// ── OLD reconstruction code removed, see new Spatial Extraction below ──
   return filterNormalRows(allRows);
 }
 
@@ -525,61 +510,140 @@ function parseAmounts(amounts, lineCtx = '') {
   return { price, qty, total, paid, owed, priceWasDerived };
 }
 
-// ── Row Extraction ─────────────────────────────────────────────────────────────
+// ── Spatial Row Extraction (v4 Geometric Pipeline) ────────────────────────
 const TOTAL_ROW_RE = /\b(grand total|total due|amount due|balance due|total charges|subtotal)\b/i;
 
-function extractRowsFromRawLine(line) {
-  const dateRegex  = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
-  const codeRegex  = /\b([1-9]\d{4}|[1-9]\d{2})(?:-([A-Z0-9]{1,2}))?\b/g;
-  const moneyRegex = /(?:^|\s|\$)\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2})?)(?=\s|$)/g;
+function extractRowsFromSpatialLine(lineItems, lineText) {
+  const lineUpper = lineText.toUpperCase();
+  const isTotalRow = TOTAL_ROW_RE.test(lineText) || lineUpper.includes('TOTAL');
 
-  // 1. Extract Date and Code early
-  const dates = line.match(dateRegex);
-  const rawCodes   = [...line.matchAll(codeRegex)];
+  // STEP 3: Strict CPT Rules
+  const cptRegex = /\b\d{5}\b/g;
+  const rawCPTs = [...lineText.matchAll(cptRegex)].map(m => m[0]).filter(c => isValidCPT(c));
   
-  // Distinguish CPT (5-digit) vs DRG (3-digit)
-  const validCPTs = rawCodes.filter(m => m[1].length === 5 && isValidCPT(m[1]));
-  const validDRGs = rawCodes.filter(m => m[1].length === 3);
+  // Evaluate DRG strictly separately
+  const rawDRGs = [...lineText.matchAll(/\b[1-9]\d{2}\b/g)].map(m => m[0]);
+  const validDRGs = rawDRGs.filter(c => DRG_BENCHMARKS[c]); // Hard dict lookup
 
-  const code       = (validCPTs.length > 0) ? validCPTs[0][1] : (validDRGs.length > 0 ? validDRGs[0][1] : '');
-  const modifier   = (validCPTs.length > 0 && validCPTs[0][2]) ? validCPTs[0][2] : '';
-  const isDRG      = code.length === 3;
+  const code = rawCPTs.length > 0 ? rawCPTs[0] : (validDRGs.length > 0 ? validDRGs[0] : '');
+  const isDRG = !!validDRGs.length && !rawCPTs.length;
 
-  // 2. SCRUB: Remove dates and codes from a work copy before finding money
-  let scrubberLine = line;
-  if (dates) dates.forEach(d => scrubberLine = scrubberLine.replace(d, ' '));
-  rawCodes.forEach(c => scrubberLine = scrubberLine.replace(c[0], ' '));
+  // STEP 2: Hard Filter - Skip lines entirely that aren't structurally row-like
+  if (!code && !isTotalRow) return null;
 
-  const moneyMatches = [...scrubberLine.matchAll(moneyRegex)];
-  if (!dates && !code && moneyMatches.length === 0) return null;
+  // STEP 4: Kill Heuristics -> Rightmost Number Targeting
+  // Filter spatial items to those containing digits and optional money symbols
+  const moneyItems = lineItems.filter(i => {
+    const s = i.str.trim();
+    if (!/\d/.test(s)) return false; // not a number
+    if (/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/.test(s)) return false; // is a date
+    if (s === code) return false; // is the code
+    return true;
+  });
 
-  const amounts = moneyMatches.map(m => parseFloat(m[1].replace(/,/g, '')));
-  const parsed  = parseAmounts(amounts, line);
+  // Sort money blocks from right-to-left across the page
+  moneyItems.sort((a, b) => b.x - a.x);
 
-  let desc = line
-    .replace(dateRegex, ' ').replace(codeRegex, ' ').replace(moneyRegex, ' ')
-    .replace(/[|:,\-]/g, ' ').replace(/\s+/g, ' ').trim();
+  let total = 0, owed = 0, paid = 0, price = 0, qty = 1;
+
+  if (moneyItems.length > 0) {
+    // Right-most number is fundamentally the Total or Patient Responsibility
+    let rightStr = moneyItems[0].str.replace(/[^0-9.\-()]/g, '');
+    if (rightStr.includes('(') && rightStr.includes(')')) {
+      rightStr = '-' + rightStr.replace(/[()]/g, '');
+    }
+    total = parseFloat(rightStr) || 0;
+
+    // Grab next number to the left as Unit Price for context if it exists
+    if (moneyItems.length > 1) {
+      const leftStr = moneyItems[1].str.replace(/[^0-9.]/g, '');
+      price = parseFloat(leftStr) || 0;
+    }
+  }
+
+  // Extract Dates strictly
+  const dates = lineText.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/);
+  const dateStr = dates ? dates[0] : '';
+
+  // Extract Modifier if contiguous with CPT (e.g. 99214-25)
+  let modifier = '';
+  const modMatch = lineText.match(new RegExp(`${code}-([A-Z0-9]{2})\\b`));
+  if (modMatch) modifier = modMatch[1];
+
+  // Erase tokens to make description clean
+  let desc = lineText
+    .replace(new RegExp(`\\b${code}\\b`, 'g'), ' ')
+    .replace(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/g, ' ')
+    .replace(/(?:^|\s|\$)\s?(\d{1,7}(?:,\d{3})*(?:\.\d{2})?)/g, ' ') // wipe old money chunks
+    .replace(/[|:,\-]/g, ' ')
+    .replace(/\s+/g, ' ').trim();
   if (desc.length > 60) desc = desc.substring(0, 57) + '…';
 
   return {
-    date:            dates ? dates[0] : '',
+    date:            dateStr,
     code,
     modifier,
     isDRG,
     desc:            desc || (isDRG ? 'Hospital Stay' : 'Medical Service'),
-    qty:             parsed.qty || 1,
-    price:           parsed.price,
-    total:           parsed.total,
-    paid:            parsed.paid,
-    owed:            parsed.owed,
-    priceWasDerived: parsed.priceWasDerived,
-    isTotalRow:      TOTAL_ROW_RE.test(line),
+    qty,
+    price:           price || total,
+    total,
+    paid,
+    owed,
+    priceWasDerived: (price === 0),
+    isTotalRow
   };
 }
 
 function extractRowsFromText(text) {
+  // Legacy text paste handler — simulate spatial logic by treating chunks as items
   return text.split('\n').filter(l => l.trim().length > 3)
-    .map(l => extractRowsFromRawLine(l)).filter(Boolean);
+    .map(lineText => {
+      const chunks = lineText.split(/\s+/).map((str, idx) => ({ str, x: idx * 10 })); // fake coordinates
+      return extractRowsFromSpatialLine(chunks, lineText);
+    }).filter(Boolean);
+}
+
+// ── Layout Reconstruction ─────────────────────────────────────────────────────
+function reconstructRowsFromLayout(pages) {
+  const allRows = [];
+  let inTable = false;
+
+  pages.forEach(items => {
+    // Cluster PDF text elements by vertical Y bands
+    const yGroups = {};
+    items.forEach(item => {
+      if (!item.str.trim()) return;
+      const y = Math.round(item.y / 6) * 6; // 6pt tolerance band
+      (yGroups[y] = yGroups[y] || []).push(item);
+    });
+
+    const sortedYs = Object.keys(yGroups).sort((a, b) => b - a);
+
+    sortedYs.forEach(y => {
+      const lineItems = yGroups[y].sort((a, b) => a.x - b.x); // Sort left-to-right
+      const lineText = lineItems.map(i => i.str).join(' ');
+      const lineUpper = lineText.toUpperCase();
+
+      // STEP 5: Table Bounding
+      if ((lineUpper.includes('CPT') || lineUpper.includes('CODE')) && 
+          (lineUpper.includes('CHARGE') || lineUpper.includes('TOTAL'))) {
+        inTable = true;
+        return; // Skip the header itself
+      }
+      if (TOTAL_ROW_RE.test(lineText)) {
+        inTable = false; // Close table but process this total row
+      }
+
+      // Enforce bounds (ignore preamble addresses unless explicitly a total row)
+      if (!inTable && !TOTAL_ROW_RE.test(lineText)) return;
+
+      const row = extractRowsFromSpatialLine(lineItems, lineText);
+      if (row) allRows.push(row);
+    });
+  });
+
+  return filterNormalRows(allRows);
 }
 
 // ── Workspace UI ──────────────────────────────────────────────────────────────
@@ -845,8 +909,21 @@ class BucketAuditor {
 
       // 1c. Negative values
       if (r.total < 0 || r.paid < 0 || r.owed < 0) {
-        this.addFinding('arithmetic', 'Negative Amount',
-          `${r.code || r.desc} contains a negative dollar value. Verify it is an authorized credit.`, 'warn', r.code);
+        if (r.total < -0.01) {
+           this.addFinding('financial', 'Negative Balance (Credit)',
+             `${r.code || r.desc} contains a negative billed amount ($${r.total.toFixed(2)}). This is an account credit — the provider owes you a refund for overpayment.`, 'success', r.code);
+           if (r.raw) r.raw.classList.add('audit-row-info');
+        } else {
+           this.addFinding('arithmetic', 'Negative Amount',
+             `${r.code || r.desc} contains a negative dollar value. Verify it is an authorized credit.`, 'warn', r.code);
+        }
+      }
+
+      // 1d. Overpayment logic
+      if (r.paid > r.total && r.total > 0) {
+         this.addFinding('financial', 'Insurance Overpayment Anomaly',
+            `${r.code || r.desc}: Insurance payment ($${r.paid.toFixed(2)}) exceeds the billed total ($${r.total.toFixed(2)}).`, 'warn', r.code);
+         if (r.raw) r.raw.classList.add('audit-row-warn');
       }
     });
     this._lineItemSum = lineSum;
