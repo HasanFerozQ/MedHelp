@@ -581,7 +581,8 @@ function runAudit(input, detectedNPIs = []) {
   const results   = document.getElementById('audit-results');
   if (!workspace || !results) return;
 
-  document.getElementById('workspace-body').innerHTML = '';
+  const body = document.getElementById('workspace-body');
+  if (body) body.innerHTML = '';
   results.innerHTML = '';
 
   const rows = Array.isArray(input) ? input : extractRowsFromText(input || '');
@@ -1267,20 +1268,18 @@ class BucketAuditor {
 
     // First: try remote Supabase lookup
     let feeMap = {};
-    if (window.dbClient) {
-      try {
-        const res = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/lookup_codes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ codes, npis: this.npis }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          feeMap = data.fees || {};
-          this.dbCheckRan = true;
-        }
-      } catch (_) {}
-    }
+    try {
+      const res = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/lookup_codes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ codes, npis: this.npis }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        feeMap = data.fees || {};
+        this.dbCheckRan = true;
+      }
+    } catch (_) {}
 
     // Second: overlay inline benchmark for any code not in Supabase result
     codes.forEach(code => {
@@ -1301,7 +1300,7 @@ class BucketAuditor {
         this.addFinding('benchmark', 'High Pricing Variance',
           `CPT ${r.code}: Billed $${r.total.toFixed(2)} vs ${this.multiplier}× Medicare benchmark $${cap.toFixed(2)}. Potential overcharge of $${(r.total - cap).toFixed(2)}.`,
           'warn', r.code);
-        r.raw.classList.add('audit-row-warn');
+        if (r.raw) r.raw.classList.add('audit-row-warn');
         this.addRowSavings(idx, r.total - cap, r.total);
       }
     });
@@ -1681,7 +1680,7 @@ function renderSummaryReport(doc, p, findings, savings) {
     head: [['Category', 'Issue', 'Description']],
     body: tableData,
     theme: 'striped',
-    headStyles: { fillStyle: [34, 197, 94] }
+    headStyles: { fillColor: [34, 197, 94] }
   });
 
   const finalY = doc.lastAutoTable.finalY + 20;
