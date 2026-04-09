@@ -1,29 +1,10 @@
+/** 
+ * MediHelp — medbill.js (v4.0 Simple Tab)
+ * Lightweight extractor for the landing page quick-audit.
+ * Logic is synced with constants.js for engine parity.
+ */
 
-// Extracted INLINE_BENCHMARK to constants.js
-
-const NCCI_PAIRS = {
-  '36415': new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215','99221','99222','99223','99281','99282','99283','99284','99285']),
-  '94760': new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215']),
-  '85025': new Set(['80048', '80053','99202','99203','99204','99205','99211','99212','99213','99214','99215']),
-  '99070': new Set(['10000','12001','27447','27130','43239','45378','69210']),
-};
-
-/** Frequency Rules (MUE) for Simple Tab */
-
-// Extracted MUE_LIMITS to constants.js
-
-const DRG_BASE_RATE = 10400; // corrected to CMS FY2024 average
-const DRG_BENCHMARKS = {
-  '470': { weight: 1.7712, desc: 'Major Joint Replacement (Lower Limb)' },
-  '193': { weight: 0.8920, desc: 'Simple Pneumonia & Pleurisy' },
-  '392': { weight: 0.7241, desc: 'Esophagitis / Digestive Disorders' },
-  '291': { weight: 1.3105, desc: 'Heart Failure & Shock' },
-  '871': { weight: 1.9542, desc: 'Septicemia without MV >96 hours' },
-};
-
-// NOTE: Constants above (INLINE_BENCHMARK, DRG_BASE_RATE, etc.) are the canonical
-// values for the Simple Tab. The Advanced engine (audit.js) publishes window.MH_CONSTANTS
-// which is a superset — no runtime sync needed here since both define matching values.
+let cptData = null; // Fix: Explicit declaration (Issue #14)
 
 async function loadCPTData() {
   try {
@@ -31,28 +12,15 @@ async function loadCPTData() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     cptData = await res.json();
   } catch (err) {
-    console.warn("Using inline benchmarks (offline fallback).");
+    console.warn("MediHelp: Using inline benchmarks (offline fallback).");
   }
 }
 
 function getBenchmark(code) {
   if (cptData && cptData[code]) return { price: cptData[code].non_facility_price, desc: cptData[code].description };
-  return INLINE_BENCHMARK[code] || null;
-}
-
-// ── Strict CPT Validation Logic (v3.5) ──
-function classifyCPT(code) {
-  const n = parseInt(code, 10);
-  if (isNaN(n)) return null;
-  if (n >= 10000 && n <= 69999) return 'Surgery';
-  if (n >= 70000 && n <= 79999) return 'Radiology';
-  if (n >= 80000 && n <= 89999) return 'Pathology/Lab';
-  if (n >= 90000 && n <= 99999) return 'E&M / Medicine';
-  return null;
-}
-
-function isValidCPT(code) {
-  return classifyCPT(code) !== null;
+  // Access global constants published by constants.js
+  const bench = (window.INLINE_BENCHMARK || {})[code];
+  return bench ? { price: bench.price, desc: bench.desc } : null;
 }
 
 function extractCodesWithCharges(text) {
@@ -69,14 +37,13 @@ function extractCodesWithCharges(text) {
       .map(m => ({
         code: m[1],
         modifier: m[2] || null,
-        qty: parseInt((line.match(/(?:qty|units?)[:\s]+(\d+)/i) || [null, '1'])[1], 10), // Forced integer type
+        qty: parseInt((line.match(/(?:qty|units?)[:\s]+(\d+)/i) || [null, '1'])[1], 10),
         charge: null,
         date: dates ? dates[0] : 'UNDATED',
         isDRG: m[1].length === 3,
         rawLine: line.trim()
       }))
-      // Elite Fix: Use category-aware filter from BucketAuditor standard
-      .filter(it => it.isDRG || isValidCPT(it.code));
+      .filter(it => it.isDRG || window.isValidCPT?.(it.code) || /\d{5}/.test(it.code));
 
     const dollarsOnLine = [...line.matchAll(dollarRegex)].map(m => parseFloat(m[1]));
 
@@ -105,6 +72,7 @@ let latestFindings = [];
 function renderAuditResults(findings) {
   latestFindings = findings; 
   const container = document.getElementById('audit-results');
+  if (!container) return;
   container.classList.remove('hidden');
   
   if (findings.length === 0) {
@@ -112,14 +80,13 @@ function renderAuditResults(findings) {
     return;
   }
   
-  // Rule Registry
+  // Rule Registry - Sync with MH_CONSTANTS
+  const C = window.MH_CONSTANTS || {};
   const dupMap = {};
   const freqMap = {};
   findings.forEach(f => {
-    if (!f.code) return;
     const dKey = `${f.date}|${f.code}`;
     const key = `${f.date}|${f.code}|${f.modifier || ''}`;
-    
     dupMap[key] = (dupMap[key] || 0) + 1;
     freqMap[dKey] = (freqMap[dKey] || 0) + (parseInt(f.qty) || 1);
   });
@@ -133,8 +100,8 @@ function renderAuditResults(findings) {
     let medicarePrice = 0;
     
     if (item.isDRG) {
-      const db = DRG_BENCHMARKS[item.code] || { weight:1, desc: 'Hospital Service' };
-      priceInfo = { desc: db.desc, price: DRG_BASE_RATE * db.weight };
+      const db = (C.DRG_BENCHMARKS || {})[item.code] || { weight:1, desc: 'Hospital Service' };
+      priceInfo = { desc: db.desc, price: (C.DRG_BASE_RATE || 10400) * db.weight };
     } else {
       priceInfo = getBenchmark(item.code);
     }
@@ -146,7 +113,6 @@ function renderAuditResults(findings) {
     if (priceInfo) {
       medicarePrice = priceInfo.price;
       medicarePriceDisplay = `$${medicarePrice.toFixed(2)}`;
-      
       if (item.charge !== null) {
         totalCharged += item.charge;
         totalMedicare += medicarePrice;
@@ -161,31 +127,27 @@ function renderAuditResults(findings) {
     }
 
     let warningsHtml = '';
-    
-    // 1. Duplicates (Date + Code + Modifier aware)
     const dKey = `${item.date}|${item.code}`;
     const key = `${item.date}|${item.code}|${item.modifier || ''}`;
+    
     if (!item.isDRG && dupMap[key] > 1) {
       warningsHtml += `<div class="upcode-warning" style="background:#fee2e2; border-color:#fecaca;"><strong>Duplicate Alert:</strong> Multiple entries for ${item.code} detected on ${item.date}.</div>`;
     }
 
-    // 2. NCCI Bundling
-    if (!item.isDRG && NCCI_PAIRS[item.code]) {
-      const pSet = NCCI_PAIRS[item.code];
+    const pSet = (C.NCCI_PAIRS || {})[item.code];
+    if (!item.isDRG && pSet) {
       const hasPrimary = findings.some(other => other !== item && other.date === item.date && pSet.has(other.code));
       if (hasPrimary) {
         warningsHtml += `<div class="upcode-warning" style="background:#ffedd5; border-color:#fed7aa;"><strong>Bundling Alert:</strong> This service is typically included in the primary visit or metabolic panel.</div>`;
       }
     }
 
-    // 3. Frequency Limits (MUE)
-    const limit = MUE_LIMITS[item.code];
+    const limit = (C.MUE_LIMITS || {})[item.code];
     if (limit && freqMap[dKey] > limit) {
       warningsHtml += `<div class="upcode-warning" style="background:#fee2e2; border-color:#fecaca;"><strong>Frequency Limit:</strong> Billed ${freqMap[dKey]}× units. Medicare typically limits ${item.code} to ${limit}/day.</div>`;
     }
 
-    // 4. E&M Upcoding
-    if (item.code === '99214' || item.code === '99215' || item.code === '99285') {
+    if (window.isEMCode && window.isEMCode(item.code) && (item.code.endsWith('5') || item.code.endsWith('4'))) {
        warningsHtml += `<div class="upcode-warning"><strong>Review Required:</strong> High-complexity level. Verify documentation supports duration.</div>`;
     }
     
@@ -195,7 +157,7 @@ function renderAuditResults(findings) {
           <span class="code-val">${item.code}${item.modifier ? '-' + item.modifier : ''}</span>
           ${flagBadge}
         </div>
-        <div class="result-desc">${priceInfo ? priceInfo.desc : 'Unknown medical code'}</div>
+        <div class="result-desc">${priceInfo ? window.sanitizeText(priceInfo.desc) : 'Unknown medical code'}</div>
         ${warningsHtml}
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 12px; border-top: 1px solid var(--border-light); padding-top: 8px; width: 100%;">
           <span><b>Billed:</b> ${chargeDisplay}</span>
@@ -238,7 +200,7 @@ function renderAuditResults(findings) {
   document.getElementById('export-csv-btn')?.addEventListener('click', () => {
       const csvLines = ['Code,Modifier,Description,Billed,Benchmark'];
       latestFindings.forEach(item => {
-        const pInfo = item.isDRG ? { desc: 'Hospital', price: DRG_BASE_RATE } : getBenchmark(item.code);
+        const pInfo = item.isDRG ? { desc: 'Hospital', price: (C.DRG_BASE_RATE || 10400) } : getBenchmark(item.code);
         csvLines.push(`${item.code},${item.modifier || ''},"${(pInfo?.desc||'').replace(/"/g,'')}",${item.charge || 0},${pInfo?.price || 0}`);
       });
       const blob = new Blob([csvLines.join('\n')], { type: 'text/csv' });
@@ -269,8 +231,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (auditBtn) {
     auditBtn.addEventListener('click', () => {
       if (!pasteArea.value.trim()) return;
-      document.querySelector('.audit-mode').style.display = 'none';
-      renderAuditResults(extractCodesWithCharges(pasteArea.value));
+      const results = extractCodesWithCharges(pasteArea.value);
+      const modeEl = document.querySelector('.audit-mode');
+      if (modeEl) modeEl.style.display = 'none';
+      renderAuditResults(results);
     });
   }
 });

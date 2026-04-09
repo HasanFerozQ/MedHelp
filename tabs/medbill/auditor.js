@@ -83,13 +83,13 @@ class BucketAuditor {
     return { price, desc: base.desc };
   }
 
-  // ── LAYER 1 — Arithmetic Accuracy ────────────────────────────────────────
+  // ── LAYER 1A — Arithmetic Accuracy ───────────────────────────────────────
   runArithmetic() {
-    let lineSum = 0;
+    this._lineItemSum = 0; // Reset before re-calc
     this.rows.forEach((r, idx) => {
       if (r.raw) r.raw.classList.remove('audit-row-error', 'audit-row-warn', 'audit-row-info');
       if (r.isTotalRow) return;
-      lineSum += r.total;
+      this._lineItemSum += r.total;
 
       // 1a. qty × price = total (skip rows where price was back-derived)
       if (!r.priceWasDerived && r.total > 0 && r.price > 0) {
@@ -203,9 +203,9 @@ class BucketAuditor {
     });
   }
 
-  // ── LAYER 1G — Financial Reconciliation ──────────────────────────────────
+  // ── LAYER 1D — Financial Reconciliation ──────────────────────────────────
   runFinancialSummaryAudit() {
-    const totalBilled = this.rows.filter(r => !r.isTotalRow).reduce((s, r) => s + r.total, 0);
+    const totalBilled = this._lineItemSum || 0;
     const totalPaid   = this.rows.filter(r => !r.isTotalRow).reduce((s, r) => s + r.paid, 0);
     const totalOwed   = this.rows.filter(r => !r.isTotalRow).reduce((s, r) => s + r.owed, 0);
     
@@ -283,7 +283,7 @@ class BucketAuditor {
     });
   }
 
-  // ── LAYER 1H — Clinical Compatibility ────────────────────────────────────
+  // ── LAYER 2A — Clinical Compatibility ────────────────────────────────────
   runClinicalCompatibilityAudit() {
     const codesByDate = {};
     this.rows.forEach(r => {
@@ -516,14 +516,17 @@ class BucketAuditor {
       }
     });
 
-    // High-complexity E&M upcoding risk
-    Object.entries(HIGH_COMPLEXITY_EM).forEach(([code, info]) => {
-      if (this.rows.find(r => r.code === code)) {
-        this.addFinding('completeness', 'High-Level E&M — Upcoding Risk',
-          `CPT ${code} (${info.label}) requires ≥${info.minMin} min of documented physician time. Frequently upcoded for short visits. Request visit notes.`,
-          'warn', code);
-      }
-    });
+    // High-complexity E&M upcoding risk (v4.5 Focus-Aware)
+    const focus = this.profile?.auditFocus || [];
+    if (focus.length === 0 || focus.includes('completeness')) {
+      Object.entries(HIGH_COMPLEXITY_EM).forEach(([code, info]) => {
+        if (this.rows.find(r => r.code === code)) {
+          this.addFinding('completeness', 'High-Level E&M — Upcoding Risk',
+            `CPT ${code} (${info.label}) requires ≥${info.minMin} min of documented physician time. Frequently upcoded for short visits. Request visit notes.`,
+            'warn', code);
+        }
+      });
+    }
 
     // Invalid CPT range
     this.rows.forEach(r => {

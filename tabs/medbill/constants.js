@@ -172,7 +172,43 @@ const DRG_BENCHMARKS = {
   '871': { weight: 1.9542, desc: 'Septicemia without MV >96 hours' },
 };
 
-// ── Shared Constants for medbill.js Synchronization (v4.1) ─────────────────
+/** MUE - Medically Unlikely Edits (Frequency Limits) */
+
+// ── Shared Helper Utilities (v4.5) ──
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+function sanitizeText(str) {
+  if (typeof str !== 'string') return '';
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return str.replace(/[&<>"']/g, m => map[m]);
+}
+
+// ── Stage 0: Final Window Exports ─────────────────────────────────────────────
+// Ensure all dependencies (NCCI_PAIRS, profiles) are declared before this block.
+
+window.DOCUMENT_PROFILES = DOCUMENT_PROFILES;
+window.MUE_LIMITS = MUE_LIMITS;
+window.CPT_CLINICAL_GROUPS = CPT_CLINICAL_GROUPS;
+window.INLINE_BENCHMARK = INLINE_BENCHMARK;
+window.DRG_BENCHMARKS = DRG_BENCHMARKS;
+window.NCCI_PAIRS = NCCI_PAIRS;
 window.MH_CONSTANTS = {
   CPT_RANGES,
   INLINE_BENCHMARK,
@@ -183,54 +219,12 @@ window.MH_CONSTANTS = {
   NCCI_PAIRS
 };
 
-/** Facility Professional Adjustment (Physicians in hospitals bill ~78% of office rate) */
-
-const NCCI_PAIRS = {
-  // Venipuncture (Blood Draw) bundles into E&M visits
-  '36415': new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215','99221','99222','99223','99281','99282','99283','99284','99285']),
-  // Pulse Oximetry bundles into visits
-  '94760': new Set(['99202','99203','99204','99205','99211','99212','99213','99214','99215']),
-  // CBC (85025) bundles into metabolic panels OR E&M visits
-  '85025': new Set(['80048', '80053', '99202','99203','99204','99205','99211','99212','99213','99214','99215']),
-  // Medical Supplies usually bundled into Surgery
-  '99070': new Set(['10000','12001','27447','27130','43239','45378','69210']),
-};
-
-// ── Document Classification Heuristics (v4.5) ──
-const DOCUMENT_PROFILES = {
-  EOB: {
-    id: 'EOB',
-    label: 'Explanation of Benefits (EOB)',
-    keywords: ['explanation of benefits', 'plan paid', 'contractual adjustment', 'reason code', 'patient responsibility'],
-    auditFocus: ['financial', 'semantic', 'arithmetic'],
-    facilityMode: false
-  },
-  PROFESSIONAL: {
-    id: 'PROFESSIONAL',
-    label: 'Professional Bill (CMS-1500)',
-    keywords: ['cms-1500', 'hcfa', 'npi', 'cpt/hcpcs', 'modifier', 'place of service', 'physician'],
-    auditFocus: ['benchmark', 'bundling', 'frequency', 'modifier'],
-    facilityMode: false
-  },
-  INSTITUTIONAL: {
-    id: 'INSTITUTIONAL',
-    label: 'Institutional Bill (UB-04)',
-    keywords: ['ub-04', 'revenue code', 'admission date', 'discharge date', 'drg/', 'type of bill', 'hospital'],
-    auditFocus: ['benchmark', 'drg', 'pos', 'financial'],
-    facilityMode: true
-  },
-  GENERIC: {
-    id: 'GENERIC',
-    label: 'Generic Medical Invoice',
-    keywords: [],
-    auditFocus: ['arithmetic', 'completeness', 'duplicate'],
-    facilityMode: false
-  }
-};
-
-window.DOCUMENT_PROFILES = DOCUMENT_PROFILES;
-window.MUE_LIMITS = MUE_LIMITS;
-window.CPT_CLINICAL_GROUPS = CPT_CLINICAL_GROUPS;
-window.INLINE_BENCHMARK = INLINE_BENCHMARK;
-window.DRG_BENCHMARKS = DRG_BENCHMARKS;
-window.NCCI_PAIRS = NCCI_PAIRS;
+window.HIGH_COMPLEXITY_EM = HIGH_COMPLEXITY_EM;
+window.GLOBAL_PERIOD_OK_MODS = GLOBAL_PERIOD_OK_MODS;
+window.classifyCPT = classifyCPT;
+window.isValidCPT = isValidCPT;
+window.isSurgeryCode = isSurgeryCode;
+window.isEMCode = isEMCode;
+window.parseDate = parseDate;
+window.debounce = debounce;
+window.sanitizeText = sanitizeText;

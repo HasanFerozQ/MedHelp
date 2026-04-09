@@ -171,7 +171,8 @@ async function handlePDF(file) {
     }
 
     if (overlay) overlay.style.display = 'none';
-    if (status)  status.innerHTML = `✅ Analyzed ${pdf.numPages} page(s) from <strong>${file.name}</strong>`;
+    const safeName = window.sanitizeText(file.name);
+    if (status) status.innerHTML = `✅ Analyzed ${pdf.numPages} page(s) from <strong>${safeName}</strong>`;
     
     // Call Stage 2 Normalizer
     const schema = reconstructRowsFromLayout(pageData);
@@ -216,6 +217,8 @@ function runAudit(input, detectedNPIs = []) {
   console.log(`MediHelp Normalization Setup: ${rows.length} valid rows, ${suspect_rows.length} quarantined.`);
 
   workspace.style.display = 'block';
+  workspace.dataset.npis = JSON.stringify(detectedNPIs || []); // Reset or Set NPIs
+  
   const sidebar = document.getElementById('billing-context-sidebar');
   if (sidebar) sidebar.style.display = 'block';
 
@@ -224,7 +227,6 @@ function runAudit(input, detectedNPIs = []) {
     reRunWorkspaceAudit(); 
   } else {
     rows.forEach(r => addWorkspaceRow(r));
-    workspace.dataset.npis = JSON.stringify(detectedNPIs);
     reRunWorkspaceAudit();
   }
 }
@@ -246,16 +248,20 @@ function addWorkspaceRow(data = {}) {
   const body = document.getElementById('workspace-body');
   if (!body) return;
   const row = document.createElement('tr');
+  
+  // XSS Hardening: Sanitize all values
+  const s = (v) => window.sanitizeText(String(v || ''));
+
   row.innerHTML = `
-    <td contenteditable="true" oninput="debouncedAudit()">${data.date || ''}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="font-family:monospace;font-weight:bold;">${data.code || ''}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="font-family:monospace;font-size:11px;color:var(--accent);">${data.modifier || ''}</td>
-    <td contenteditable="true" oninput="debouncedAudit()">${data.desc || ''}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:center;">${data.qty || 1}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;">${(data.price || 0).toFixed(2)}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;font-weight:bold;">${(data.total || 0).toFixed(2)}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;color:#22c55e;">${(data.paid || 0).toFixed(2)}</td>
-    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;color:#ef4444;">${(data.owed || 0).toFixed(2)}</td>
+    <td contenteditable="true" oninput="debouncedAudit()">${s(data.date)}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="font-family:monospace;font-weight:bold;">${s(data.code)}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="font-family:monospace;font-size:11px;color:var(--accent);">${s(data.modifier)}</td>
+    <td contenteditable="true" oninput="debouncedAudit()">${s(data.desc)}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:center;">${s(data.qty) || 1}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;">${parseFloat(data.price || 0).toFixed(2)}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;font-weight:bold;">${parseFloat(data.total || 0).toFixed(2)}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;color:#22c55e;">${parseFloat(data.paid || 0).toFixed(2)}</td>
+    <td contenteditable="true" oninput="debouncedAudit()" style="text-align:right;color:#ef4444;">${parseFloat(data.owed || 0).toFixed(2)}</td>
     <td><button onclick="this.closest('tr').remove();debouncedAudit();" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:16px;">✕</button></td>
   `;
   if (data.priceWasDerived) row.dataset.derived = 'true';

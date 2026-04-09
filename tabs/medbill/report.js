@@ -28,7 +28,7 @@ function renderCategorizedFindings(findings, container, count, rows, savings, be
         <div style="flex:1;min-width:180px;">
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;">Document Fingerprint</div>
           <div style="display:inline-block;padding:4px 10px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text-main);font-weight:700;margin-bottom:12px;">
-            🆔 ${window.currentDocumentProfile?.label || 'Generic Medical Document'}
+            🆔 ${window.sanitizeText(window.currentDocumentProfile?.label || 'Generic Medical Document')}
           </div>
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;">Why this score?</div>
           ${confidence.reasons.map(r => `<div style="font-size:12px;color:var(--text-muted);margin-bottom:3px;">• ${r}</div>`).join('')}
@@ -86,13 +86,14 @@ function renderCategorizedFindings(findings, container, count, rows, savings, be
             const borderColor = group.color;
             const bgColor     = group.color + '0a';
             const icon        = f.type === 'danger' ? '🚨' : '⚠️';
+            const s = (v) => window.sanitizeText(String(v || ''));
             return `
               <div class="audit-finding" style="border-left:4px solid ${borderColor};background:${bgColor};border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:10px;">
                 <div style="display:flex;align-items:flex-start;gap:12px;">
                   <span style="font-size:16px;flex-shrink:0;">${icon}</span>
                   <div>
-                    <div style="font-weight:700;font-size:13px;margin-bottom:4px;color:var(--text-h);">${f.title}${f.codeRef ? ` <code style="background:var(--border);padding:1px 6px;border-radius:4px;font-size:10px;margin-left:8px;">${f.codeRef}</code>` : ''}</div>
-                    <div style="font-size:12px;color:var(--text-muted);line-height:1.6;">${f.detail}</div>
+                    <div style="font-weight:700;font-size:13px;margin-bottom:4px;color:var(--text-h);">${s(f.title)}${f.codeRef ? ` <code style="background:var(--border);padding:1px 6px;border-radius:4px;font-size:10px;margin-left:8px;">${s(f.codeRef)}</code>` : ''}</div>
+                    <div style="font-size:12px;color:var(--text-muted);line-height:1.6;">${s(f.detail)}</div>
                   </div>
                 </div>
               </div>`;
@@ -278,10 +279,14 @@ function renderSummaryReport(doc, p, findings, savings) {
   const tableData = findings.map(f => [
     f.category,
     f.title,
-    f.detail.substring(0, 100)
+    f.detail.substring(0, 150)
   ]);
 
-  doc.autoTable({
+  if (typeof doc.autoTable !== 'function') {
+    console.error('MediHelp: autoTable plugin not loaded.');
+    doc.text("Error: Table plugin not loaded. Could not render finding table.", 20, 55);
+    return;
+  }
     startY: 55,
     head: [['Category', 'Issue', 'Description']],
     body: tableData,

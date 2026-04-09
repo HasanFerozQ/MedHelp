@@ -1,10 +1,9 @@
 // ── Stage 1 & 2: Document Ingestion, Classification & Normalization ──
 
-const TOTAL_ROW_RE = /\b(grand total|total due|amount due|balance due|total charges|subtotal)\b/i;
+const TOTAL_ROW_RE = /\b(billed subtotal|grand total|total due|amount due|balance due|total charges|subtotal)\b/i;
 
 /** 
  * Geometric Column Scanner (v5.0 Dynamic)
- * Sniffs out clusters of patterns to identify the document's horizontal anatomy.
  */
 function detectColumns(items) {
   const codeXs = [];
@@ -16,10 +15,9 @@ function detectColumns(items) {
   const qtyRegex = /^\s*(\d{1,2})\s*$/;
 
   items.forEach(item => {
-    const s = item.str.trim();
+    const s = (item.str || '').trim();
     if (!s) return;
     
-    // Scan for semantic markers
     if (cptRegex.test(s) && isValidCPT(s.match(cptRegex)[0])) {
       codeXs.push(item.x);
     } else if (priceRegex.test(s)) {
@@ -29,15 +27,12 @@ function detectColumns(items) {
     }
   });
 
-  // Helper: Find average/median of a cluster or 10th percentile
-  function getCentroid(arr, side = 'left') {
+  const getCentroid = (arr, side = 'left') => {
     if (!arr.length) return null;
     const sorted = [...arr].sort((a, b) => a - b);
     return side === 'left' ? sorted[0] : sorted[sorted.length - 1];
-  }
+  };
 
-  // Dynamic Map Logic
-  // Most bills have Code on left, financials on right.
   const leftCode = getCentroid(codeXs, 'left') || 10;
   const rightTotal = getCentroid(priceXs, 'right') || 700;
   const midPrice = getCentroid(priceXs.filter(x => x < rightTotal - 40), 'right') || rightTotal - 100;
@@ -48,15 +43,48 @@ function detectColumns(items) {
     desc:  [leftCode + 80, qtyX - 40],
     qty:   [qtyX - 40, qtyX + 40],
     unit:  [midPrice - 60, midPrice + 40],
-    total: [rightTotal - 100, 1000] // Open right boundary
+    total: [rightTotal - 100, 1000]
   };
+}
+
+/**
+ * Service Block Normalizer (v5.1 Multiline)
+ * Groups stacked lines into a single logical service entry.
+ */
+function buildServiceBlocks(sortedYs, yGroups) {
+  const blocks = [];
+  let currentBlock = null;
+
+  sortedYs.forEach(y => {
+    const lineItems = yGroups[y].sort((a, b) => a.x - b.x);
+    const lineText = lineItems.map(i => i.str).join(' ');
+    
+    // An anchor is a line containing a 5-digit CPT code
+    const hasCPT = /\b\d{5}\b/.test(lineText);
+    const isTotal = TOTAL_ROW_RE.test(lineText);
+
+    if (hasCPT) {
+      if (currentBlock) blocks.push(currentBlock);
+      currentBlock = { items: [...lineItems], text: lineText, yStart: y };
+    } else if (currentBlock && !isTotal) {
+      // Append secondary lines (description/diagnosis) to the current active block
+      currentBlock.items.push(...lineItems);
+      currentBlock.text += ' ' + lineText;
+    } else if (isTotal) {
+      if (currentBlock) blocks.push(currentBlock);
+      currentBlock = null;
+      blocks.push({ items: lineItems, text: lineText, yStart: y, isTotal: true });
+    }
+  });
+
+  if (currentBlock) blocks.push(currentBlock);
+  return blocks;
 }
 
 function extractRowsFromSpatialLine(lineItems, lineText, detectedMap = null) {
   const lineUpper = lineText.toUpperCase();
   const isTotalRow = TOTAL_ROW_RE.test(lineText) || lineUpper.includes('TOTAL');
 
-  // STEP 3: Strict CPT Rules
   const cptRegex = /\b\d{5}\b/g;
   const rawCPTs = [...lineText.matchAll(cptRegex)].map(m => m[0]).filter(c => isValidCPT(c));
   
@@ -68,28 +96,20 @@ function extractRowsFromSpatialLine(lineItems, lineText, detectedMap = null) {
 
   if (!code && !isTotalRow) return null;
 
-  // Use Dynamic Map if provided, else fallback to classic
-  const MAP = detectedMap || {
-    cpt: [0, 80],
-    desc: [80, 350],
-    qty: [350, 420],
-    unit: [420, 520],
-    total: [520, 750]
-  };
+  const MAP = detectedMap || { cpt: [0, 80], desc: [80, 350], qty: [350, 420], unit: [420, 520], total: [520, 750] };
 
-  function extractCol(range) {
+  const extractCol = (range) => {
     return lineItems.filter(i => i.x >= range[0] && i.x <= range[1]).map(i => i.str).join('');
-  }
+  };
 
   let totalStr = extractCol(MAP.total).replace(/[^0-9.\-()]/g, '');
   if (totalStr.includes('(') && totalStr.includes(')')) totalStr = '-' + totalStr.replace(/[()]/g, '');
   let priceStr = extractCol(MAP.unit).replace(/[^0-9.\-()]/g, '');
   let qtyStr   = extractCol(MAP.qty).replace(/[^0-9]/g, '');
 
-  let total = parseFloat(totalStr) || 0;
-  let price = parseFloat(priceStr) || 0;
-  let qty   = parseInt(qtyStr, 10) || 1;
-  let owed = 0, paid = 0;
+  const total = parseFloat(totalStr) || 0;
+  const price = parseFloat(priceStr) || 0;
+  const qty   = parseInt(qtyStr, 10) || 1;
 
   const dates = lineText.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/);
   const dateStr = dates ? dates[0] : '';
@@ -98,73 +118,49 @@ function extractRowsFromSpatialLine(lineItems, lineText, detectedMap = null) {
   const modMatch = lineText.match(new RegExp(`${code}-([A-Z0-9]{2})\\b`));
   if (modMatch) modifier = modMatch[1];
 
-  let rawDesc = extractCol(MAP.desc).trim();
-  if (!rawDesc) {
-    rawDesc = lineText
-      .replace(new RegExp(`\\b${code}\\b`, 'g'), ' ')
-      .replace(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/g, ' ')
-      .replace(/\s+/g, ' ').trim();
+  let desc = extractCol(MAP.desc).trim();
+  if (!desc) {
+    desc = lineText.replace(new RegExp(`\\b${code}\\b`, 'g'), ' ').replace(/\s+/g, ' ').trim();
   }
-  let desc = rawDesc;
-  if (desc.length > 60) desc = desc.substring(0, 57) + '…';
+  if (desc.length > 80) desc = desc.substring(0, 77) + '…';
 
   return {
-    date:            dateStr,
-    code,
-    modifier,
-    isDRG,
-    desc:            desc || (isDRG ? 'Hospital Stay' : 'Medical Service'),
-    qty,
-    price:           price || total,
-    total,
-    paid,
-    owed,
+    date: dateStr, code, modifier, isDRG,
+    desc: desc || (isDRG ? 'Hospital Stay' : 'Medical Service'),
+    qty, price: price || total, total, paid: 0, owed: 0,
     priceWasDerived: (price === 0),
     isTotalRow
   };
 }
 
 function extractRowsFromText(text) {
-  const rawProcessedRows = text.split('\n').filter(l => l.trim().length > 3)
-    .map(lineText => {
-      const parts = lineText.trim().split(/\s+/);
-      const chunks = parts.map((str, idx) => {
-        let x = idx * 10;
-        if (str.includes('$') || /\d+\.\d+/.test(str)) {
-          x = idx === parts.length - 1 ? 550 : 450;
-        } else if (/\b\d{5}\b/.test(str)) {
-          x = 10;
-        } else if (idx > 0 && idx < parts.length - 2) {
-           x = 150;
-        }
-        return { str, x };
-      });
-      return extractRowsFromSpatialLine(chunks, lineText);
-    }).filter(Boolean);
-  return filterNormalRows(rawProcessedRows);
+  if (!text) return { rows: [], suspect_rows: [] };
+  const lines = text.split('\n').filter(l => l.trim().length > 0);
+  const fakePage = lines.map((lineText, idx) => {
+    const parts = lineText.trim().split(/\s+/);
+    const y = (lines.length - idx) * 20; 
+    return parts.map((str, pIdx) => ({
+      str,
+      x: pIdx * 60, 
+      y
+    }));
+  }).flat();
+  
+  const result = reconstructRowsFromLayout([fakePage]);
+  return result;
 }
 
-/**
- * Profile Classifier (v4.6)
- * Detects document type based on keyword frequency to route the ingestion engine.
- */
 function classifyDocument(items) {
   const fullText = (items || []).map(i => i.str).join(' ').toLowerCase();
   const profiles = window.DOCUMENT_PROFILES || {};
-  
-  // Hard fallback if constants not loaded yet
   let bestProfile = profiles.GENERIC || { id: 'GENERIC', label: 'Generic Medical Document' };
   let maxHits = 0;
 
   Object.values(profiles).forEach(p => {
     if (!p || p.id === 'GENERIC') return;
     const hits = (p.keywords || []).filter(k => fullText.includes(k.toLowerCase())).length;
-    if (hits > maxHits) {
-      maxHits = hits;
-      bestProfile = p;
-    }
+    if (hits > maxHits) { maxHits = hits; bestProfile = p; }
   });
-
   return bestProfile;
 }
 
@@ -173,39 +169,36 @@ function reconstructRowsFromLayout(pages) {
   const profile = classifyDocument(flatItems);
   const dMap = detectColumns(flatItems);
   
-  console.log('MediHelp: Detected Profile:', profile?.label || 'Generic');
-  console.log('MediHelp: Dynamic Column Capture:', dMap);
-
   const allRows = [];
-  let inTable = false;
-
-  pages.forEach(items => {
+  pages.forEach((items, pageIdx) => {
+    let inTable = (profile.id === 'GENERIC'); // GENERIC profile skips strict header sniffing
     const yGroups = {};
     items.forEach(item => {
-      if (!item.str.trim()) return;
       const y = Math.round(item.y / 6) * 6;
       (yGroups[y] = yGroups[y] || []).push(item);
     });
 
     const sortedYs = Object.keys(yGroups).sort((a, b) => b - a);
-    sortedYs.forEach(y => {
-      const lineItems = yGroups[y].sort((a, b) => a.x - b.x);
-      const lineText = lineItems.map(i => i.str).join(' ');
-      const lineUpper = lineText.toUpperCase();
+    const blocks = buildServiceBlocks(sortedYs, yGroups);
 
-      if ((lineUpper.includes('CPT') || lineUpper.includes('CODE')) && 
-          (lineUpper.includes('CHARGE') || lineUpper.includes('TOTAL'))) {
+    blocks.forEach(block => {
+      const lineUpper = block.text.toUpperCase();
+      
+      // Sniff for table headers (Broadened)
+      if ((lineUpper.includes('CPT') || lineUpper.includes('CODE') || lineUpper.includes('HCPCS') || lineUpper.includes('SERVICE')) && 
+          (lineUpper.includes('CHARGE') || lineUpper.includes('TOTAL') || lineUpper.includes('AMOUNT'))) {
         inTable = true;
         return;
       }
-      if (TOTAL_ROW_RE.test(lineText)) inTable = false;
 
-      if (!inTable && !TOTAL_ROW_RE.test(lineText)) return;
+      if (TOTAL_ROW_RE.test(block.text)) inTable = false; // Close table after total row
 
-      const row = extractRowsFromSpatialLine(lineItems, lineText, dMap);
-      if (row) {
-        row.profile = profile.id;
-        allRows.push(row);
+      if (inTable || block.isTotal) {
+        const row = extractRowsFromSpatialLine(block.items, block.text, dMap);
+        if (row) {
+          row.profile = profile.id;
+          allRows.push(row);
+        }
       }
     });
   });
@@ -218,29 +211,22 @@ function reconstructRowsFromLayout(pages) {
 function filterNormalRows(rows) {
   const clean_rows = [];
   const suspect_rows = [];
-
   rows.forEach(r => {
     const d = (r.desc || '').toUpperCase();
     if (['TEST','FAKE','SAMPLE','VOID'].some(k => d.includes(k))) return;
-
     if (!r.code && r.total === 0 && !r.isTotalRow) {
       r.quarantine_reason = 'Missing financial or code anchors';
       suspect_rows.push(r);
-      return;
+    } else {
+      clean_rows.push(r);
     }
-    if (r.code && r.total === 0 && r.price === 0) {
-      r.quarantine_reason = 'Code found but missing financial context';
-      suspect_rows.push(r);
-      return;
-    }
-    clean_rows.push(r);
   });
   return { rows: clean_rows, suspect_rows };
 }
 
+window.TOTAL_ROW_RE = TOTAL_ROW_RE;
 window.classifyDocument = classifyDocument;
 window.detectColumns = detectColumns;
 window.extractRowsFromSpatialLine = extractRowsFromSpatialLine;
-window.extractRowsFromText = extractRowsFromText;
 window.reconstructRowsFromLayout = reconstructRowsFromLayout;
 window.filterNormalRows = filterNormalRows;
