@@ -36,7 +36,9 @@
   </script>
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+  <script src="/tabs/medbill/audit.js?v=2.5" defer></script>
   <style>
     /* ── Isolated Bill Audit Styles ── */
     .audit-panel { display: none !important; }
@@ -271,12 +273,12 @@
         <div class="footer-col">
           <h4>Tools</h4>
           <ul>
-            <li><a href="index.html#suite">Code Search</a></li>
-            <li><a href="index.html#suite">Claim Denials</a></li>
-            <li><a href="index.html#suite">Rx Savings</a></li>
-            <li><a href="providers.html">National Provider Search</a></li>
-            <li><a href="audit.html">Bill Audit</a></li>
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href="/index.html#suite">Code Search</a></li>
+            <li><a href="/index.html#suite">Claim Denials</a></li>
+            <li><a href="/index.html#suite">Rx Savings</a></li>
+            <li><a href="/providers.html">National Provider Search</a></li>
+            <li><a href="/audit.html">Bill Audit</a></li>
+            <li><a href="/blog.html">Blog</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -290,18 +292,19 @@
         <div class="footer-col">
           <h4>Legal</h4>
           <ul>
-            <li><a href="privacy.html">Privacy Policy</a></li>
-            <li><a href="terms.html">Terms of Service</a></li>
-            <li><a href="refund.html">Refund Policy</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="sitemap.xml">Sitemap</a></li>
+            <li><a href="/privacy.html">Privacy Policy</a></li>
+            <li><a href="/terms.html">Terms of Service</a></li>
+            <li><a href="/refund.html">Refund Policy</a></li>
+            <li><a href="/pricing.html">Pricing</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
           </ul>
         </div>
       </div>
-      <div class="footer-bottom" style="text-align: center; border-top: 1px solid var(--border); padding-top: 40px; display: flex; flex-direction: column; gap: 10px; align-items: center;">
+      <div class="footer-bottom" style="justify-content: center; border-top: 1px solid var(--border); padding-top: 40px; flex-direction: column; gap: 10px; align-items: center;">
         <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
-        <span style="font-size: 11px; opacity: 0.7;">Support: supportdesk@medihelp.live</span>
+        <span style="font-size: 11px; opacity: 0.7;">Informational only. Not medical/legal advice. <a href="/terms.html" style="color: var(--accent); text-decoration: none; font-weight: 700;">Terms & Disclaimer</a></span>
+        <span style="display:block; font-size: 10px; opacity: 0.5;">Support: supportdesk@medihelp.live</span>
       </div>
     </div>
   </footer>
@@ -480,8 +483,6 @@
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="tabs/medbill/audit.js?v=2.0"></script>
   <script>
     const auditFaqs = [
       { q: 'What is an MUE (Medically Unlikely Edit)?', a: 'MUEs are CMS-established frequency limits for healthcare services. If a hospital bills more units of a specific code than the MUE allows for a single day, our engine flags it as a potential "Revenue Padding" error.' },

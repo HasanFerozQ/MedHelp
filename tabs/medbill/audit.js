@@ -1,3 +1,4 @@
+console.log('MediHelp: audit.js file source has been reached.');
 (function() {
   'use strict';
 
