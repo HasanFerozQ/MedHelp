@@ -27,7 +27,8 @@ denialInput.addEventListener('input', (e) => {
 
 async function showSuggestions(q) {
   if (!window.dbClient) return;
-  const normQ = q.match(/^([A-Z]{2})(\d+)$/) ? q.replace(/^([A-Z]{2})(\d+)$/, '$1-$2') : q;
+  // If query is alphanumeric like MA01, don't force hyphen unless it's a known group-carc format
+  const normQ = q.match(/^(CO|PR|OA|PI|CR)(\d+)$/i) ? q.replace(/^(CO|PR|OA|PI|CR)(\d+)$/i, '$1-$2') : q;
 
   try {
     const { data } = await window.dbClient
@@ -67,7 +68,7 @@ async function searchDenials(query) {
   }
 
   const qUpper = query.toUpperCase();
-  const normQ = qUpper.match(/^([A-Z]{2})(\d+)$/) ? qUpper.replace(/^([A-Z]{2})(\d+)$/, '$1-$2') : qUpper;
+  const normQ = qUpper.match(/^(CO|PR|OA|PI|CR)(\d+)$/i) ? qUpper.replace(/^(CO|PR|OA|PI|CR)(\d+)$/i, '$1-$2') : qUpper;
 
   denialResults.innerHTML = '<div class="empty-state">Decoding...</div>';
 

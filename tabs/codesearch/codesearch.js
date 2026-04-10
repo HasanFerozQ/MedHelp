@@ -74,14 +74,25 @@ async function performSearch(query) {
     }
 
     // 2. Standard Medical Codes Lookup (ICD-10, CPT, HCPCS)
-    // We fetch cross-region results to detect availability
     let dbQuery = window.dbClient
       .from('medical_codes')
-      .select('code, short_description, country, code_type')
-      .or(`code.ilike.%${cleanQ}%,short_description.ilike.%${query}%`)
-      .limit(150);
+      .select('code, short_description, country, code_type');
 
-    const { data, error } = await dbQuery;
+    if (/^[A-Z0-9.]+$/i.test(cleanQ)) {
+      // If it looks like a code, search by code or description
+      dbQuery = dbQuery.or(`code.ilike.%${cleanQ}%,short_description.ilike.%${query}%`);
+    } else {
+      // If it looks like text, search for each word in description for better coverage
+      const words = query.split(/\s+/).filter(w => w.length > 2);
+      if (words.length > 0) {
+        let filterStr = words.map(w => `short_description.ilike.%${w}%`).join(',');
+        dbQuery = dbQuery.or(filterStr);
+      } else {
+        dbQuery = dbQuery.ilike('short_description', `%${query}%`);
+      }
+    }
+
+    const { data, error } = await dbQuery.limit(150);
     if (error) throw error;
 
     if (!data || data.length === 0) {
@@ -115,6 +126,15 @@ async function performSearch(query) {
     if (currentFilter !== 'ALL') {
       finalResults = finalResults.filter(r => r.type === currentFilter);
     }
+
+    // 6. Sort by relevance (exact match first)
+    finalResults.sort((a, b) => {
+      if (a.code === cleanQ && b.code !== cleanQ) return -1;
+      if (b.code === cleanQ && a.code !== cleanQ) return 1;
+      if (a.code.startsWith(cleanQ) && !b.code.startsWith(cleanQ)) return -1;
+      if (b.code.startsWith(cleanQ) && !a.code.startsWith(cleanQ)) return 1;
+      return 0;
+    });
 
     renderResults(finalResults);
 

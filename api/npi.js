@@ -4,13 +4,20 @@ module.exports = async (req, res) => {
   const { number, first_name, last_name, organization_name, state } = req.query;
 
   // Build CMS NPPES API URL
-  let url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=15';
+  let url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=20';
 
-  if (number) url += `&number=${number}`;
-  if (first_name) url += `&first_name=${encodeURIComponent(first_name)}`;
-  if (last_name) url += `&last_name=${encodeURIComponent(last_name)}`;
-  if (organization_name) url += `&organization_name=${encodeURIComponent(organization_name)}`;
-  if (state) url += `&state=${encodeURIComponent(state)}`;
+  if (number) {
+    url += `&number=${number}`;
+  } else {
+    if (first_name) url += `&first_name=${encodeURIComponent(first_name)}`;
+    if (last_name) url += `&last_name=${encodeURIComponent(last_name)}`;
+    if (organization_name) url += `&organization_name=${encodeURIComponent(organization_name)}`;
+    if (state) url += `&state=${encodeURIComponent(state)}`;
+    
+    // Add logic to guess enumeration type to help CMS filter
+    if (organization_name && !first_name) url += '&enumeration_type=NPI-2';
+    if (first_name || last_name) url += '&enumeration_type=NPI-1';
+  }
 
   https.get(url, (cmsRes) => {
     let data = '';

@@ -622,14 +622,23 @@ class BucketAuditor {
     const carcCodes = new Set();
     const rarcCodes = new Set();
     const adjRegex  = /\b(CO|PR|OA|PI|CR)[-\s]?(\d{1,4})\b/i;
-    const rarcRegex = /\bN(\d{1,4})\b/i;
+    const rarcRegex = /\b([MN][A-Z]?\d{1,4})\b/i;
 
     this.rows.forEach(r => {
       const text = `${r.desc || ''} ${r.code || ''}`;
-      const cMatch = text.match(adjRegex);
-      if (cMatch) carcCodes.add(cMatch[1].toUpperCase() + '-' + cMatch[2]);
-      const rMatch = text.match(rarcRegex);
-      if (rMatch) rarcCodes.add(rMatch[0].toUpperCase());
+      
+      // CARC Matching
+      const cMatches = text.matchAll(new RegExp(adjRegex, 'gi'));
+      for (const match of cMatches) {
+        carcCodes.add(match[1].toUpperCase() + '-' + match[2]);
+        carcCodes.add(match[2]); 
+      }
+
+      // RARC Matching
+      const rMatches = text.matchAll(new RegExp(rarcRegex, 'gi'));
+      for (const match of rMatches) {
+        rarcCodes.add(match[1].toUpperCase());
+      }
     });
 
     try {
