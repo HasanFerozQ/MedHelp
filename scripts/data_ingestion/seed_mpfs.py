@@ -33,69 +33,77 @@ headers = {
 }
 
 def run_ingestion():
-    if not os.path.exists(FILE_PATH):
-        print(f"Error: {FILE_PATH} not found.")
-        return
-
-    print(f"Starting MPFS Ingestion from {FILE_PATH}...")
+    # Prioritize the local vision Addendum B file if it exists, otherwise use the downloaded one
+    local_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "vision", "cms_1832_f_cy_2026_addenda_020426-gpci_floor_", "Addendum B Relative Value Units and Related Information CY 2026 CMS 1832-F_110325_508.txt")
+    source_path = local_path if os.path.exists(local_path) else FILE_PATH
     
-    with open(FILE_PATH, mode='r', encoding='utf-8-sig') as f:
-        # SEARCH for the header row dynamically
-        header_row = None
-        while True:
-            line = f.readline()
-            if not line: break
-            if "CPT" in line or "HCPCS" in line:
-                header_row = line
-                break
+    print(f"Starting MPFS Ingestion from {source_path}...")
+    
+    with open(source_path, mode='r', encoding='latin-1') as f:
+        # PEEK at the first line to determine format
+        first_line = f.readline()
+        f.seek(0)
         
-        if not header_row:
-            print("Error: Could not find a header row containing 'CPT' or 'HCPCS'")
-            return
+        is_addendum_b = "\t" in first_line
+        print(f"  Detected format: {'Addendum B (Tab-Delimited)' if is_addendum_b else 'Fixed-Width/CSV'}")
 
-        # Use the found line as headers
-        reader = csv.DictReader(f, fieldnames=header_row.strip().split(','))
-        batch_dict = {} # Use a dict to deduplicate locally
+        batch_dict = {}
         total_processed = 0
-
-        for row in reader:
-            # Clean up keys (sometimes they have newlines or spaces from the CSV)
-            clean_row = {k.strip().replace('\n', ' '): v for k, v in row.items() if k}
-            
-            cpt_code = next((v for k, v in clean_row.items() if 'CPT' in k or 'HCPCS' in k), None)
-            
-            if not cpt_code or len(cpt_code.strip()) > 5 or 'Addendum' in cpt_code:
+        
+        for line in f:
+            if "\t" in line:
+                # Addendum B Tab-Delimited Parsing
+                cols = line.split("\t")
+                if len(cols) < 8: continue
+                cpt_code = cols[0].strip().replace('"', '')
+                if not cpt_code or not cpt_code[0].isalnum() or len(cpt_code) > 5: continue
+                
+                try:
+                    status = cols[2].strip().replace('"', '')
+                    desc = cols[4].strip().replace('"', '')
+                    work_rvu = float(cols[5].strip().replace('"', '') or 0)
+                    pe_rvu   = float(cols[6].strip().replace('"', '') or 0)
+                    mp_rvu   = float(cols[7].strip().replace('"', '') or 0)
+                    
+                    base_price = round((work_rvu + pe_rvu + mp_rvu) * 33.40, 2)
+                    
+                    if total_processed < 5:
+                        print(f"  Confirming: Code={cpt_code}, Price={base_price}, Status={status}")
+                except (ValueError, IndexError):
+                    continue
+            elif len(line) > 80:
+                # Fallback Fixed-Width Parsing
+                cpt_code = line[0:5].strip()
+                if not cpt_code or not cpt_code[0].isalnum(): continue
+                try:
+                    status = line[56:58].strip()
+                    work_rvu = float(line[61:69].strip() or 0)
+                    pe_rvu   = float(line[70:78].strip() or 0)
+                    mp_rvu   = float(line[79:87].strip() or 0)
+                    base_price = round((work_rvu + pe_rvu + mp_rvu) * 33.40, 2)
+                    desc = line[7:55].strip()
+                except (ValueError, IndexError):
+                    continue
+            else:
                 continue
 
-            # Calculate estimated price
-            try:
-                work_rvu = float(next((v for k, v in clean_row.items() if 'Work' in k and 'RVU' in k), 0) or 0)
-                pe_rvu = float(next((v for k, v in clean_row.items() if 'PE' in k and 'RVU' in k), 0) or 0)
-                mp_rvu = float(next((v for k, v in clean_row.items() if 'Mal' in k and 'RVU' in k), 0) or 0)
-                # CY2024 Conversion Factor = $33.8872 (CMS final rule)
-                base_price = round((work_rvu + pe_rvu + mp_rvu) * 33.8872, 2)
-            except (ValueError, StopIteration, TypeError):
-                base_price = 0
-
-            # Deduplicate by CPT code
-            code_key = cpt_code.strip().upper()
-            batch_dict[code_key] = {
-                "cpt_code": code_key,
-                "description": clean_row.get("DESCRIPTION", "No description")[:500],
-                "base_price": round(base_price, 2),
-                "status_code": clean_row.get("Status", "A")[:5],
+            batch_dict[cpt_code] = {
+                "cpt_code": cpt_code,
+                "description": desc[:500],
+                "base_price": base_price,
+                "status_code": status,
                 "rvu_work": work_rvu,
                 "year": 2026
             }
-
+            
             if len(batch_dict) >= BATCH_SIZE:
                 payload = list(batch_dict.values())
                 response = requests.post(API_URL, headers=headers, json=payload)
-                if response.status_code not in [200, 201]:
-                    print(f"Error in batch: {response.text}")
-                else:
+                if response.status_code in [200, 201]:
                     total_processed += len(payload)
-                    print(f"Processed {total_processed} codes...")
+                    print(f"  Processed {total_processed} codes...")
+                else:
+                    print(f"  Error in batch: {response.text}")
                 batch_dict = {}
 
         # Final batch

@@ -29,33 +29,54 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR   = os.path.join(SCRIPT_DIR, "data")
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# ── CMS Direct Download URLs (updated for CY2024 / Q1 releases) ──────────────
-# These are stable CMS.gov URLs — update the year suffix annually.
+# ── CMS Direct Download URLs (Modernized for FY2025/2026) ─────────────────────
+# CMS URLs are notoriously flaky. We use the most stable patterns available.
 
 CMS_SOURCES = [
     {
-        "name"   : "MPFS (Physician Fee Schedule RVU)",
-        "url"    : "https://www.cms.gov/files/zip/cy2024-january-physician-fee-schedule-pfs-relative-value-files.zip",
+        "name"   : "MPFS (Physician Fee Schedule RVU — CY2026 RVU26A)",
+        "url"    : "https://www.cms.gov/files/zip/rvu26a.zip",
         "zip"    : "mpfs_rvu.zip",
-        "extract": "PPRRVU24_JAN.csv",   # typical filename inside the ZIP
+        "is_zip" : True,
+        "extract": "PPRRVU26_JAN.csv",
         "dest"   : "mpfs.csv",
-        "note"   : "~10,000 CPT/HCPCS codes with Work/PE/MP RVUs"
+        "note"   : "~10,000 CPT/HCPCS codes with Work/PE/MP RVUs (Latest 2026)"
     },
     {
-        "name"   : "NCCI PTP Edits (Physician)",
-        "url"    : "https://www.cms.gov/files/zip/ncci-medicare-physician-medically-unlikely-edits.zip",
+        "name"   : "NCCI PTP Edits (Physician - Q1 2026 Part 1)",
+        "url"    : "https://www.cms.gov/files/zip/medicare-ncci-2026q1-practitioner-ptp-edits-ccipra-v320r0-f1.zip",
         "zip"    : "ncci_ptp.zip",
-        "extract": None,                 # We'll find the CSV inside
+        "is_zip" : True,
+        "extract": None,
         "dest"   : "ncci_ptp.csv",
-        "note"   : "~230,000 Column1/Column2 bundling pairs"
+        "note"   : "~230,000 Column1/Column2 bundling pairs (Part 1)"
     },
     {
-        "name"   : "MUE (Medically Unlikely Edits — Physician)",
-        "url"    : "https://www.cms.gov/files/zip/january-2024-physician-mue.zip",
+        "name"   : "MUE (Medically Unlikely Edits — Physician - Q1 2026)",
+        "url"    : "https://www.cms.gov/files/zip/medicare-ncci-2026-q1-practitioner-services-mue-table.zip",
         "zip"    : "mue.zip",
+        "is_zip" : True,
         "extract": None,
         "dest"   : "mue.csv",
         "note"   : "~8,000 per-code daily unit limits"
+    },
+    {
+        "name"   : "ICD-10-CM (Diagnosis Codes — FY2026 Fallback)",
+        "url"    : "https://raw.githubusercontent.com/k4m1113/ICD-10-CSV/master/codes.csv",
+        "zip"    : "icd10cm.csv",
+        "is_zip" : False,
+        "extract": None,
+        "dest"   : "icd10cm.csv",
+        "note"   : "Standard ICD-10 core (~15k codes) — used for stability."
+    },
+    {
+        "name"   : "ICD-10-PCS (Procedure Codes — FY2026 Final)",
+        "url"    : "https://www.cms.gov/files/zip/2026-icd-10-pcs-order-files.zip",
+        "zip"    : "icd10pcs.zip",
+        "is_zip" : True,
+        "extract": "icd10pcs_order_2026.txt",
+        "dest"   : "icd10pcs.txt",
+        "note"   : "~80,000 Inpatient Hospital Procedure codes"
     },
 ]
 
@@ -69,46 +90,71 @@ def reporthook(block_num, block_size, total_size):
     if downloaded >= total_size:
         print()
 
-def find_csv_in_zip(zf):
-    """Return the first CSV file name inside the ZIP."""
-    for name in zf.namelist():
-        if name.lower().endswith('.csv') and not name.startswith('__'):
-            return name
-    return None
+def find_data_file_in_zip(zf):
+    """Return the LARGEST CSV or TXT file name inside the ZIP (discriminates against readmes)."""
+    candidates = []
+    for info in zf.infolist():
+        name = info.filename
+        if (name.lower().endswith('.csv') or name.lower().endswith('.txt')) and not name.startswith('__'):
+            candidates.append(info)
+    
+    if not candidates:
+        return None
+        
+    # Sort by file size descending
+    candidates.sort(key=lambda x: x.file_size, reverse=True)
+    return candidates[0].filename
 
 def download_source(src):
     zip_path  = os.path.join(DATA_DIR, src["zip"])
     dest_path = os.path.join(DATA_DIR, src["dest"])
 
     if os.path.exists(dest_path):
-        size_mb = os.path.getsize(dest_path) / (1024 * 1024)
-        print(f"  ✅ Already exists ({size_mb:.1f} MB) — skipping download. Delete to re-download.")
-        return True
+        size_bytes = os.path.getsize(dest_path)
+        if size_bytes > 51200: # 50KB Minimum for a real CMS dataset
+            print(f"  ✅ Already exists ({size_bytes/1024/1024:.1f} MB) — skipping download. Delete to re-download.")
+            return True
+        else:
+            print(f"  ⚠️ Existing file is too small ({size_bytes} bytes) — likely a failed previous extraction. Re-downloading...")
 
-    print(f"  Downloading from CMS.gov...")
+    print(f"  Downloading from internal sources...")
     try:
+        # CMS often blocks default Python User-Agents.
+        opener = urllib.request.build_opener()
+        opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')]
+        urllib.request.install_opener(opener)
+        
         urllib.request.urlretrieve(src["url"], zip_path, reporthook)
     except Exception as e:
         print(f"  ❌ Download failed: {e}")
         print(f"     Manual URL: {src['url']}")
         return False
 
+    if not src.get("is_zip", True):
+        # Direct file download (not a ZIP)
+        if zip_path != dest_path:
+            if os.path.exists(dest_path):
+                os.remove(dest_path)
+            os.rename(zip_path, dest_path)
+        print(f"  ✅ Ready: {dest_path}")
+        return True
+
     print(f"  Extracting ZIP...")
     try:
         with zipfile.ZipFile(zip_path, 'r') as zf:
-            csv_name = src["extract"] or find_csv_in_zip(zf)
-            if not csv_name:
-                print(f"  ❌ No CSV found in ZIP. Contents: {zf.namelist()}")
+            data_file_name = src["extract"] or find_data_file_in_zip(zf)
+            if not data_file_name:
+                print(f"  ❌ No CSV or TXT found in ZIP. Contents: {zf.namelist()}")
                 return False
             # Try exact name first, then case-insensitive search
             try:
-                zf.extract(csv_name, DATA_DIR)
-                extracted = os.path.join(DATA_DIR, csv_name)
+                zf.extract(data_file_name, DATA_DIR)
+                extracted = os.path.join(DATA_DIR, data_file_name)
             except KeyError:
                 # Case-insensitive match
-                match = next((n for n in zf.namelist() if n.lower() == csv_name.lower()), None)
+                match = next((n for n in zf.namelist() if n.lower() == data_file_name.lower()), None)
                 if not match:
-                    match = find_csv_in_zip(zf)
+                    match = find_data_file_in_zip(zf)
                 zf.extract(match, DATA_DIR)
                 extracted = os.path.join(DATA_DIR, match)
 

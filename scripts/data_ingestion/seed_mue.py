@@ -1,18 +1,8 @@
 #!/usr/bin/env python3
 """
-MediHelp — MUE Seed Script (v1.0)
+MediHelp — MUE Seed Script (v1.3)
 ===================================
 Loads full CMS Medically Unlikely Edits (MUE) data into Supabase.
-Covers ~8,000 CPT/HCPCS codes vs the current inline table of 28.
-
-Prerequisites:
-  1. Run database_update_v4_mue.sql in Supabase SQL Editor first.
-  2. Run download_cms_data.py to get data/mue.csv.
-  3. pip install requests
-
-Usage:
-  cd c:\\Users\\Hasan-Pc\\Desktop\\MedHelp
-  python scripts/data_ingestion/seed_mue.py
 """
 
 import os
@@ -27,8 +17,10 @@ def manual_load_dotenv():
         with open(env_path, "r") as f:
             for line in f:
                 if "=" in line and not line.startswith("#"):
-                    key, value = line.strip().split("=", 1)
-                    os.environ.setdefault(key.strip(), value.strip())
+                    parts = line.strip().split("=", 1)
+                    if len(parts) == 2:
+                        key, value = parts
+                        os.environ.setdefault(key.strip(), value.strip())
 
 manual_load_dotenv()
 
@@ -36,7 +28,7 @@ SUPABASE_URL = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
 if not SUPABASE_URL or not SUPABASE_KEY:
-    print("❌ Error: NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not found in .env")
+    print("Error: NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not found in .env")
     exit(1)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -51,80 +43,84 @@ HEADERS = {
     "Prefer"        : "resolution=merge-duplicates"
 }
 
-# HCPCS L2 pattern: uppercase letter + 4 digits
-HCPCS_RE = re.compile(r'^[A-Z]\d{4}$')
-# CPT: 5 digits
-CPT_RE   = re.compile(r'^\d{5}$')
+CODE_PATTERN = re.compile(r'^[A-Z0-9]{4,6}$') # Relaxed for odd codes
 
 def is_valid_code(code):
-    return bool(CPT_RE.match(code) or HCPCS_RE.match(code))
+    return bool(CODE_PATTERN.match(code))
 
 def upsert_batch(batch):
     if not batch:
         return 0
     resp = requests.post(API_URL, headers=HEADERS, json=batch, timeout=30)
     if resp.status_code not in (200, 201):
-        print(f"  ⚠️  Batch error {resp.status_code}: {resp.text[:200]}")
+        print(f"  Batch error {resp.status_code}: {resp.text[:200]}")
         return 0
     return len(batch)
 
 def run_ingestion():
     if not os.path.exists(FILE_PATH):
-        print(f"❌ File not found: {FILE_PATH}")
-        print("   Run download_cms_data.py first, or download manually from:")
-        print("   https://www.cms.gov/Medicare/Coding/NationalCorrectCodInitEd/MUE")
+        print(f"File not found: {FILE_PATH}")
         return
 
     print(f"Starting MUE Ingestion from {FILE_PATH}...")
 
-    batch         = {}
     total_ok      = 0
     total_skipped = 0
+    batch         = {}
 
-    with open(FILE_PATH, mode='r', encoding='utf-8-sig') as f:
-        # CMS MUE files have a disclaimer header — skip non-data lines
-        # until we hit a line that looks like a real header (contains "CPT" or "HCPCS" or "Code")
-        header_line = None
-        for line in f:
-            if re.search(r'\b(CPT|HCPCS|Code|MUE)\b', line, re.IGNORECASE):
-                header_line = line
+    with open(FILE_PATH, mode='r', encoding='latin-1', newline='') as f:
+        reader = csv.reader(f)
+        
+        fieldnames = None
+        for row in reader:
+            if not row: continue
+            row_text = " ".join(row).lower()
+            if 'hcpcs' in row_text and ('mue' in row_text or 'limit' in row_text) and len(row) >= 3:
+                fieldnames = [h.strip().replace('\n', ' ') for h in row]
                 break
-
-        if not header_line:
-            print("❌ Could not find header row. Check the CSV format.")
+        
+        if not fieldnames:
+            print("[ERROR] Could not find header row.")
             return
 
-        # Parse remaining lines using the found header
-        reader = csv.DictReader(f, fieldnames=[h.strip() for h in header_line.split(',')])
+    # Re-open or seek is better? Re-opening to be safe with DictReader pointer
+    with open(FILE_PATH, mode='r', encoding='latin-1', newline='') as f:
+        # Skip disclaimer again to get to data
+        tmp_reader = csv.reader(f)
+        for row in tmp_reader:
+            row_text = " ".join(row).lower()
+            if 'hcpcs' in row_text and ('mue' in row_text or 'limit' in row_text) and len(row) >= 3:
+                break
+        
+        dict_reader = csv.DictReader(f, fieldnames=fieldnames)
 
-        for row in reader:
-            # Normalise keys (strip whitespace and BOM artifacts)
-            row = {k.strip().replace('\ufeff', ''): (v or '').strip() for k, v in row.items() if k}
+        for row in dict_reader:
+            row = {k.strip(): (v or '').strip() for k, v in row.items() if k}
 
-            # Find the code column (CMS uses various header names across years)
-            code = (
-                row.get('CPT/HCPCS Code') or
-                row.get('HCPCS Code') or
-                row.get('CPT Code') or
-                row.get('Code') or
-                row.get('HCPCS') or
-                ''
-            ).strip().upper()
-
+            code = ""
+            for k, v in row.items():
+                lk = k.lower()
+                if any(x in lk for x in ['hcpcs', 'cpt', 'code']):
+                    if len(v) >= 4 and len(v) <= 6:
+                        code = v.upper()
+                        break
+            
             if not code or not is_valid_code(code):
                 total_skipped += 1
                 continue
 
-            # MUE value (max units per day)
-            mue_raw = (
-                row.get('Practitioner Services MUE') or
-                row.get('MUE Value') or
-                row.get('MUE') or
-                row.get('Limit') or
-                '0'
-            ).strip()
+            mue_raw = "0"
+            for k, v in row.items():
+                lk = k.lower()
+                # Prioritize 'value' or 'limit' and DISCLUDE 'indicator' or 'rationale'
+                if ('mue' in lk or 'limit' in lk or 'value' in lk) and \
+                   ('indicator' not in lk and 'rationale' not in lk):
+                    mue_raw = v
+                    break
+            
             try:
-                mue_val = int(float(mue_raw))
+                mue_clean = re.sub(r'[^0-9.]', '', mue_raw)
+                mue_val = int(float(mue_clean)) if mue_clean else 0
             except (ValueError, TypeError):
                 mue_val = 0
 
@@ -132,13 +128,18 @@ def run_ingestion():
                 total_skipped += 1
                 continue
 
-            # MAI (MUE Adjudication Indicator): 1=Claim, 2=DOS, 3=Per day
-            mai = (row.get('Practitioner Services MAI') or row.get('MAI') or '').strip()[:5]
+            mai = ""
+            desc = ""
+            for k, v in row.items():
+                lk = k.lower()
+                if 'mai' in lk or 'indicator' in lk: 
+                    # Try to extra the number from MAI if possible (e.g. "2 Date of service...")
+                    mai_match = re.search(r'\d', v)
+                    mai = mai_match.group(0) if mai_match else v[:10]
+                if 'rationale' in lk or 'description' in lk or 'short' in lk:
+                    desc = v[:500]
 
-            # Description (may or may not exist)
-            desc = (row.get('Description') or row.get('Short Description') or '')[:500]
-
-            code_type = 'HCPCS' if HCPCS_RE.match(code) else 'CPT'
+            code_type = 'HCPCS' if any(c.isalpha() for c in code) else 'CPT'
 
             batch[code] = {
                 "cpt_code"  : code,
@@ -146,7 +147,7 @@ def run_ingestion():
                 "mue_mai"   : mai or None,
                 "description": desc or None,
                 "code_type" : code_type,
-                "year"      : 2024
+                "year"      : 2026
             }
 
             if len(batch) >= BATCH_SIZE:
@@ -155,12 +156,11 @@ def run_ingestion():
                 print(f"  Upserted {total_ok} codes so far...")
                 batch = {}
 
-    # Final batch
     if batch:
         ok = upsert_batch(list(batch.values()))
         total_ok += ok
 
-    print(f"\n✅ MUE Ingestion Complete!")
+    print(f"\nMUE Ingestion Complete!")
     print(f"   Loaded : {total_ok} codes")
     print(f"   Skipped: {total_skipped} (invalid code or zero MUE)")
 

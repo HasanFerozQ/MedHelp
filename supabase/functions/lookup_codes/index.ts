@@ -18,7 +18,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { codes, npis, q, type } = await req.json();
+    const { codes, npis, carcs, rarcs, q, type } = await req.json();
 
     // ── 1. SEARCH MODE ──────────────────────────────────────────────────────
     if (q && q.trim().length >= 2) {
@@ -70,7 +70,7 @@ Deno.serve(async (req) => {
     const drugCodes = hcpcsCodes; // hcpcs_drug_fees uses same format
 
     // ── Fire all DB queries in parallel ──────────────────────────────────────
-    const [cptRes, drugRes, ncciRes, mueRes] = await Promise.all([
+    const [cptRes, drugRes, ncciRes, mueRes, carcRes, rarcRes] = await Promise.all([
 
       // Medicare Physician Fee Schedule
       allCodes.length > 0
@@ -89,7 +89,6 @@ Deno.serve(async (req) => {
         : Promise.resolve({ data: [] }),
 
       // NCCI PTP bundling edits
-      // Returns all pairs where BOTH column1 AND column2 are in the code list
       allCodes.length > 0
         ? supabaseAdmin
             .from('ncci_ptp_edits')
@@ -98,36 +97,52 @@ Deno.serve(async (req) => {
             .in('column2_code', allCodes)
         : Promise.resolve({ data: [] }),
 
-      // ── NEW: MUE daily unit limits ──────────────────────────────────────
+      // MUE daily unit limits
       allCodes.length > 0
         ? supabaseAdmin
             .from('mue_limits')
             .select('cpt_code, mue_value, mue_mai, description')
             .in('cpt_code', allCodes)
         : Promise.resolve({ data: [] }),
+
+      // CARC lookups
+      carcs && carcs.length > 0
+        ? supabaseAdmin
+            .from('carc_codes')
+            .select('code, description')
+            .in('code', carcs.map((c: string) => c.toUpperCase()))
+        : Promise.resolve({ data: [] }),
+
+      // RARC lookups
+      rarcs && rarcs.length > 0
+        ? supabaseAdmin
+            .from('rarc_codes')
+            .select('code, description')
+            .in('code', rarcs.map((c: string) => c.toUpperCase()))
+        : Promise.resolve({ data: [] }),
     ]);
 
-    // ── Build fee map (CPT fees take priority, drug fees fill gaps) ──────────
+    // ── Build maps ───────────────────────────────────────────────────────────
     const feeMap: Record<string, { price: number; type: string; desc?: string }> = {};
     (cptRes.data || []).forEach((f: any) => {
       feeMap[f.cpt_code] = { price: f.base_price, type: 'CPT', desc: f.description };
     });
     (drugRes.data || []).forEach((f: any) => {
-      // Only add if not already from cpt_medicare_fees (avoid overwriting with $0 drug price)
       if (!feeMap[f.hcpcs_code]) {
         feeMap[f.hcpcs_code] = { price: f.payment_limit, type: 'DRUG', desc: f.short_description };
       }
     });
 
-    // ── Build MUE map: { [cpt_code]: { limit, mai, desc } } ──────────────────
     const mueMap: Record<string, { limit: number; mai: string; desc: string }> = {};
     (mueRes.data || []).forEach((m: any) => {
-      mueMap[m.cpt_code] = {
-        limit: m.mue_value,
-        mai  : m.mue_mai  || '',
-        desc : m.description || ''
-      };
+      mueMap[m.cpt_code] = { limit: m.mue_value, mai: m.mue_mai || '', desc: m.description || '' };
     });
+
+    const carcMap: Record<string, string> = {};
+    (carcRes.data || []).forEach((c: any) => { carcMap[c.code] = c.description; });
+
+    const rarcMap: Record<string, string> = {};
+    (rarcRes.data || []).forEach((r: any) => { rarcMap[r.code] = r.description; });
 
     // ── 3. PROVIDER DATA (NPPES proxy) ────────────────────────────────────────
     const providerMap: Record<string, any> = {};
@@ -156,10 +171,12 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({
         ok       : true,
-        fees     : feeMap,      // { [code]: { price, type, desc } }
-        ncci     : ncciRes.data || [],  // [{ column1_code, column2_code, modifier_allowed }]
-        mue      : mueMap,      // { [code]: { limit, mai, desc } }  ← NEW
-        providers: providerMap  // { [npi]: { name, specialty, status } }
+        fees     : feeMap,
+        ncci     : ncciRes.data || [],
+        mue      : mueMap,
+        carcs    : carcMap,
+        rarcs    : rarcMap,
+        providers: providerMap
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
     );

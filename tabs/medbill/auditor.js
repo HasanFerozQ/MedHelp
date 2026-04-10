@@ -618,17 +618,41 @@ class BucketAuditor {
     let mueMap  = {}; // { [code]: { limit, mai, desc } }
     let ncciDB  = []; // [{ column1_code, column2_code, modifier_allowed }]
 
+    // ── Extract CARC/RARC codes from bill rows ───────────────────────────────
+    const carcCodes = new Set();
+    const rarcCodes = new Set();
+    const adjRegex  = /\b(CO|PR|OA|PI|CR)[-\s]?(\d{1,4})\b/i;
+    const rarcRegex = /\bN(\d{1,4})\b/i;
+
+    this.rows.forEach(r => {
+      const text = `${r.desc || ''} ${r.code || ''}`;
+      const cMatch = text.match(adjRegex);
+      if (cMatch) carcCodes.add(cMatch[1].toUpperCase() + '-' + cMatch[2]);
+      const rMatch = text.match(rarcRegex);
+      if (rMatch) rarcCodes.add(rMatch[0].toUpperCase());
+    });
+
     try {
       const res = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/lookup_codes', {
         method : 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body   : JSON.stringify({ codes, npis: this.npis }),
+        body   : JSON.stringify({ 
+          codes, 
+          npis: this.npis,
+          carcs: [...carcCodes],
+          rarcs: [...rarcCodes]
+        }),
       });
       if (res.ok) {
         const data = await res.json();
         feeMap  = data.fees  || {};
-        mueMap  = data.mue   || {};  // ← full MUE table from DB
-        ncciDB  = data.ncci  || [];  // ← full NCCI pairs from DB
+        mueMap  = data.mue   || {};
+        ncciDB  = data.ncci  || [];
+        
+        // Save adjustment descriptions
+        window.CARC_DESCRIPTIONS = data.carcs || {};
+        window.RARC_DESCRIPTIONS = data.rarcs || {};
+
         this.dbCheckRan = true;
       }
     } catch (_) {}
@@ -684,6 +708,37 @@ class BucketAuditor {
         if (r.raw) r.raw.classList.add('audit-row-warn');
         this.addRowSavings(idx, r.total - cap, r.total);
       }
+    });
+
+    // ── Final Step: Adjustment Audit ──────────────────────────────────────────
+    this.runAdjustmentAudit();
+  }
+
+  // ── LAYER 3B — Adjustment Code Logic ──────────────────────────────────────
+  runAdjustmentAudit() {
+    const carcs = window.CARC_DESCRIPTIONS || {};
+    const rarcs = window.RARC_DESCRIPTIONS || {};
+    
+    this.rows.forEach(r => {
+      const text = `${r.desc || ''} ${r.code || ''}`;
+      
+      // Match CARC
+      Object.entries(carcs).forEach(([code, desc]) => {
+        if (text.toUpperCase().includes(code)) {
+          this.addFinding('adjustment', `Adjustment: ${code}`,
+            `Standard Denial Code ${code}: ${desc}. This industry-standard code provides the official reason for the insurer's adjustment or denial.`,
+            'info', r.code || code);
+        }
+      });
+
+      // Match RARC
+      Object.entries(rarcs).forEach(([code, desc]) => {
+        if (text.toUpperCase().includes(code)) {
+          this.addFinding('adjustment', `Remittance Note: ${code}`,
+            `Remark Code ${code}: ${desc}. This provides additional clinical or administrative detail regarding your insurer's payment decision.`,
+            'info', r.code || code);
+        }
+      });
     });
   }
 
@@ -761,6 +816,7 @@ const CATEGORY_META = {
   financial:     { label: '⚖️ Financial Integrity',  color: '#10b981' },
   compatibility: { label: '🩺 Clinical Context',     color: '#06b6d4' },
   POS:           { label: '📍 Place of Service',     color: '#8b5cf6' },
+  adjustment:    { label: 'ℹ️ Denial Explanations',  color: '#8b5cf6' },
 };
 
 window.BucketAuditor = BucketAuditor;

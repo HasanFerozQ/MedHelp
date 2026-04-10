@@ -10,6 +10,8 @@ taking the audit engine from ~92% to 100% accuracy.
 | MPFS Physician Fee Schedule | ~10,000 CPT codes + prices | 43 inline | **Full CMS** |
 | NCCI PTP Bundling Edits | ~230,000 code pairs | 6 inline | **Full CMS** |
 | MUE Daily Unit Limits | ~8,000 codes | 28 inline | **Full CMS** |
+| ICD-10-CM Diagnosis Codes | ~95,000 diagnosis codes | 0 | **Full CMS** |
+| ICD-10-PCS Procedure Codes | ~80,000 procedure codes | 0 | **Full CMS** |
 
 ## Prerequisites
 
@@ -63,6 +65,10 @@ python scripts/data_ingestion/seed_ncci.py
 
 # MUE Daily Limits (~8,000 rows, 1-2 min)
 python scripts/data_ingestion/seed_mue.py
+
+# ICD-10 Diagnosis & Procedure Codes (~175,000 rows, 5-10 min)
+# This loads both CM (Diagnosis) and PCS (Procedure) datasets
+python scripts/data_ingestion/seed_icd10.py
 ```
 
 All scripts are **idempotent** — they use `Prefer: resolution=merge-duplicates`
@@ -77,6 +83,8 @@ After seeding, check row counts in the Supabase Table Editor:
 | `cpt_medicare_fees` | ~9,000–11,000 |
 | `ncci_ptp_edits` | ~200,000–250,000 |
 | `mue_limits` | ~7,000–9,000 |
+| `medical_codes` (ICD10) | ~95,000 |
+| `medical_codes` (ICD10PCS) | ~80,000 |
 
 ## How the Audit Engine Uses These
 
