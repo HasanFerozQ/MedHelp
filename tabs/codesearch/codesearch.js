@@ -35,13 +35,10 @@ function setupEventListeners() {
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const clickedBtn = e.currentTarget; // [High] Redundancy removed
-      if (!clickedBtn) return;
-      
       filterBtns.forEach(b => b.classList.remove('active'));
-      clickedBtn.classList.add('active');
+      e.currentTarget.classList.add('active');
       
-      currentFilter = clickedBtn.dataset.filter;
+      currentFilter = e.currentTarget.dataset.filter;
       clearTimeout(searchTimeout); 
       performSearch(searchInput.value.trim());
     });
@@ -49,13 +46,10 @@ function setupEventListeners() {
 
   regionBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const clickedBtn = e.currentTarget; // [High] Redundancy removed
-      if (!clickedBtn) return;
-      
       regionBtns.forEach(b => b.classList.remove('active'));
-      clickedBtn.classList.add('active');
+      e.currentTarget.classList.add('active');
       
-      currentRegion = clickedBtn.dataset.region;
+      currentRegion = e.currentTarget.dataset.region;
       clearTimeout(searchTimeout); 
       performSearch(searchInput.value.trim());
     });
@@ -176,7 +170,7 @@ async function performSearch(query) {
     }
 
     if (!data || data.length === 0) {
-      renderResults([]);
+      renderResults([], 0, fetchLimit);
       return;
     }
 
@@ -197,10 +191,10 @@ async function performSearch(query) {
       }
     });
 
-    // 3. (Converted map to array for sorting and rendering)
+    // 4. (Converted map to array for sorting and rendering)
     let finalResults = Object.values(grouped);
 
-    // 4. Sort by relevance (exact match first)
+    // 5. Sort by relevance (exact match first)
     finalResults.sort((a, b) => {
       const aExact = a.code === cleanQ;
       const bExact = b.code === cleanQ;
@@ -223,7 +217,7 @@ async function performSearch(query) {
   }
 }
 
-function renderResults(results, rawCount, rawFetchLimit) {
+function renderResults(results, rawCount = 0, rawFetchLimit = 150) {
   const listContainer = document.getElementById('search-results-list');
   
   if (!results || results.length === 0) {
