@@ -7,11 +7,23 @@ import io
 from concurrent.futures import ThreadPoolExecutor
 
 # ─── Supabase REST API Config ────────────────────────────────────────────────
+def load_env():
+    env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
+    if os.path.exists(env_path):
+        with open(env_path, "r") as f:
+            for line in f:
+                if "=" in line and not line.startswith("#"):
+                    key, value = line.strip().split("=", 1)
+                    os.environ[key] = value
+
+load_env()
+
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 
 if not SUPABASE_URL or not SUPABASE_KEY:
-    print("ERROR: Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in environment.")
+    print("ERROR: SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not found.")
+    print("Please ensure they are set in your environment or in a .env file in the root directory.")
     exit(1)
 
 HEADERS = {
@@ -28,9 +40,19 @@ WHO_ICD10_URL = "https://raw.githubusercontent.com/k4m1113/ICD-10-CSV/master/cod
 NHS_ICD10_URL = "https://raw.githubusercontent.com/k4m1113/ICD-10-CSV/master/codes.csv"
 
 # ─── Data Paths ─────────────────────────────────────────────────────────────
-DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-ICD10_FILE = os.path.join(DATA_DIR, "icd10", "icd10cm-codes-2026.txt")
-HCPCS_FILE = os.path.join(DATA_DIR, "hcpcs", "HCPC2026_APR_ANWEB.txt")
+# ─── Data Paths ─────────────────────────────────────────────────────────────
+# Search in scripts/data or scripts/data_ingestion/data
+def get_data_dir():
+    # Primary: scripts/data
+    d1 = os.path.join(os.path.dirname(__file__), "data")
+    # Secondary: scripts/data_ingestion/data
+    d2 = os.path.join(os.path.dirname(__file__), "data_ingestion", "data")
+    return d1 if os.path.exists(d1) else d2
+
+DATA_DIR = get_data_dir()
+ICD10_FILE = os.path.join(DATA_DIR, "icd10cm.csv") # Renamed for consistency with downloader
+HCPCS_FILE = os.path.join(DATA_DIR, "mpfs.csv") # MPFS often contains HCPCS
+# Note: Full US HCPCS usually comes from a dedicated file, but downloader currently gets MPFS.
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CARC codes – CMS Claim Adjustment Reason Codes
@@ -165,6 +187,15 @@ CARC_CODES = [
     ("CO-204","This service/equipment/drug is not covered under the patient's current benefit plan."),
     ("PR-1","Deductible Amount"),("PR-2","Coinsurance Amount"),("PR-3","Co-payment Amount"),
     ("OA-18","Exact_duplicate claim/service"),("OA-23","The impact of prior payer(s) adjudication"),
+    ("PI-1","Payer initiated reduction"),("PI-2","Payer initiated adjustment"),
+    ("CR-1","Correction and Reversals"),
+    ("216","Based on the findings of a review organization."),
+    ("222","Non-covered charges because this is a duplicate of a previously submitted claim."),
+    ("223","Adjustment based on the Patient Responsibility Amount."),
+    ("227","Information requested from the patient/beneficiary was not provided or was insufficient/incomplete."),
+    ("252","An attachment is required to adjudicate this claim/service."),
+    ("MA01","Alert: If you do not agree with this determination, you have the right to appeal."),
+    ("MA130","Alert: Your claim contains incomplete and/or invalid information, and no appeal rights are afforded because the claim is unprocessable."),
 ]
 
 RARC_CODES = [
@@ -252,7 +283,23 @@ RARC_CODES = [
     ("N517","Resubmit your claim with the appropriate claim type/form date."),
     ("N522","Duplicate of a claim processed, or to be processed, as a crossover claim."),
     ("N570","Missing/incomplete/invalid credentialing data."),
+    ("N657","This should be billed with the appropriate place of service code."),
+    ("N757","Alert: The physician is currently being audited."),
+    ("N812","The documentation submitted does not support the level of service billed."),
+    ("MA01","Alert: You may appeal this decision."),
+    ("MA13","Alert: You may be responsible for this amount."),
 ]
+
+def deduplicate_rows(rows: list):
+    """Ensure unique (code, code_type, country) in a batch to avoid cardinality violations."""
+    seen = set()
+    unique_rows = []
+    for r in rows:
+        key = (r['code'], r['code_type'], r.get('country', ''))
+        if key not in seen:
+            seen.add(key)
+            unique_rows.append(r)
+    return unique_rows
 
 def rest_upsert_chunk(table: str, chunk: list):
     url = f"{SUPABASE_URL}/rest/v1/{table}"
@@ -270,6 +317,10 @@ def rest_upsert_chunk(table: str, chunk: list):
 def rest_upsert_parallel(table: str, rows: list):
     """Upsert rows in parallel batches."""
     if not rows: return
+    
+    # De-duplicate before chunking to prevent cardinality violations
+    rows = deduplicate_rows(rows)
+    
     chunk_size = 500
     chunks = [rows[i:i + chunk_size] for i in range(0, len(rows), chunk_size)]
     
@@ -317,7 +368,7 @@ def fetch_and_parse_remote_icd(url, country_code):
             })
         
         print(f"  [PARSED] {len(rows)} valid codes for {country_code}.")
-        return rows
+        return deduplicate_rows(rows)
     except Exception as e:
         print(f"  [ERROR] Failed to fetch {country_code} data: {e}")
         return []
@@ -327,64 +378,72 @@ def sync_local_icd10():
         print(f"ERROR: ICD10 file not found at {ICD10_FILE}")
         return
     
-    print(f"\nParsing ICD-10-CM bulk file: {ICD10_FILE}")
+    print(f"\nParsing US ICD-10-CM file: {ICD10_FILE}")
     rows = []
-    with open(ICD10_FILE, "r", encoding="utf-8") as f:
-        for line in f:
-            parts = line.strip().split(None, 1)
-            if len(parts) == 2:
-                code, desc = parts[0], parts[1]
-                rows.append({
-                    "code": code,
-                    "code_type": "ICD10",
-                    "short_description": desc[:950],
-                    "long_description": desc,
-                    "country": "US"
-                })
+    try:
+        with open(ICD10_FILE, "r", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if len(row) >= 4:
+                    code, desc = row[2].strip().replace(".", ""), row[3].strip()
+                    rows.append({
+                        "code": code,
+                        "code_type": "ICD10",
+                        "short_description": desc[:950],
+                        "long_description": desc,
+                        "country": "US"
+                    })
+    except Exception as e:
+        # Fallback to space-split for raw TXT files
+        with open(ICD10_FILE, "r", encoding="utf-8") as f:
+            for line in f:
+                parts = line.strip().split(None, 1)
+                if len(parts) == 2:
+                    rows.append({
+                        "code": parts[0], "code_type": "ICD10",
+                        "short_description": parts[1][:950], "long_description": parts[1],
+                        "country": "US"
+                    })
+
     rest_upsert_parallel("medical_codes", rows)
 
 def sync_local_hcpcs():
     if not os.path.exists(HCPCS_FILE):
-        print(f"ERROR: HCPCS file not found at {HCPCS_FILE}")
+        print(f"ERROR: HCPCS/MPFS file not found at {HCPCS_FILE}")
         return
     
-    print(f"\nParsing HCPCS Level II fixed-width file: {HCPCS_FILE}")
+    print(f"\nParsing US HCPCS/MPFS file: {HCPCS_FILE}")
     rows = []
-    current_code = None
-    current_desc = []
-
-    with open(HCPCS_FILE, "r", encoding="utf-8") as f:
-        for line in f:
-            if len(line) < 12: continue
-            
-            code = line[0:5].strip()
-            id_code = line[10:11] # Record Identification Code
-            long_desc = line[11:91].strip()
-            short_desc = line[91:119].strip()
-
-            if id_code == '3': # New code start
-                if current_code:
+    # If it's the MPFS CSV from the downloader
+    if HCPCS_FILE.endswith(".csv"):
+        with open(HCPCS_FILE, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                code = row.get("HCPCS") or row.get("Procedure Code")
+                desc = row.get("Description") or row.get("Short Description")
+                if code and desc:
                     rows.append({
-                        "code": current_code,
+                        "code": code,
                         "code_type": "HCPCS",
-                        "short_description": " ".join(current_desc)[:950],
-                        "long_description": " ".join(current_desc),
+                        "short_description": desc[:950],
+                        "long_description": desc,
                         "country": "US"
                     })
-                current_code = code
-                current_desc = [long_desc]
-            elif id_code == '4' and current_code == code: # Continuation line
-                current_desc.append(long_desc)
-        
-        # Add last one
-        if current_code:
-            rows.append({
-                "code": current_code,
-                "code_type": "HCPCS",
-                "short_description": " ".join(current_desc)[:950],
-                "long_description": " ".join(current_desc),
-                "country": "US"
-            })
+    else:
+        # Fixed width parser for official CMS files
+        with open(HCPCS_FILE, "r", encoding="utf-8") as f:
+            for line in f:
+                if len(line) < 12: continue
+                code = line[0:5].strip()
+                id_code = line[10:11]
+                desc = line[11:119].strip()
+                if id_code == '3':
+                    rows.append({
+                        "code": code, "code_type": "HCPCS",
+                        "short_description": desc[:950], "long_description": desc,
+                        "country": "US"
+                    })
+    
     rest_upsert_parallel("medical_codes", rows)
 
 if __name__ == "__main__":
