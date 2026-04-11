@@ -82,27 +82,40 @@ async function performSearch(query) {
       return;
     }
 
-    // 2. Standard Medical Codes Lookup (ICD-10, CPT, HCPCS)
+    // Strategy: Determine if we should treat this as a code lookup or a description search
+    const safeQuery = query.replace(/[",]/g, ''); // Basic sanitization for .or() syntax
+    const isCodeLikely = /^[A-Z0-9.]+$/i.test(cleanQ) && cleanQ.length < 10;
+    const isPhrase = query.trim().includes(' ');
+
     let dbQuery = window.dbClient
       .from('medical_codes')
       .select('code, short_description, country, code_type');
 
-    if (/^[A-Z0-9.]+$/i.test(cleanQ)) {
-      // If it looks like a code, search by code or description
-      // For codes, we strip the format to match the DB
-      dbQuery = dbQuery.or(`code.ilike.${cleanQ}%,code.eq.${cleanQ},short_description.ilike.%${query}%`);
+    // Push filters to server-side for accuracy and performance
+    if (currentRegion !== 'ALL') {
+      dbQuery = dbQuery.eq('country', currentRegion);
+    }
+    if (currentFilter !== 'ALL') {
+      dbQuery = dbQuery.eq('code_type', currentFilter);
+    }
+
+    if (isCodeLikely && !isPhrase) {
+      // Direct code search (e.g. "99213" or "J3490")
+      dbQuery = dbQuery.or(`code.ilike."${cleanQ}%",short_description.ilike."%${safeQuery}%"`);
     } else {
-      // If it looks like text, search for each word in description for better coverage
-      const words = query.split(/\s+/).filter(w => w.length > 2);
+      // Phrase search (e.g. "Drugs unclassified") or long alphanumeric
+      // Reduced length to 2 to catch medical abbreviations like CT, IV, MR, PT
+      const words = query.split(/\s+/).filter(w => w.length >= 2);
       if (words.length > 0) {
-        let filterStr = words.map(w => `short_description.ilike.%${w}%`).join(',');
-        dbQuery = dbQuery.or(filterStr);
+        // We match rows that contain any of the words, or the exact phrase
+        let filterStr = words.map(w => `short_description.ilike."%${w}%"`).join(',');
+        dbQuery = dbQuery.or(`${filterStr},short_description.ilike."%${safeQuery}%"`);
       } else {
-        dbQuery = dbQuery.ilike('short_description', `%${query}%`);
+        dbQuery = dbQuery.ilike('short_description', `%${safeQuery}%`);
       }
     }
 
-    const { data, error, status, statusText } = await dbQuery.limit(150);
+    const { data, error, status } = await dbQuery.limit(150);
     
     if (error) {
         console.error('Search error:', error);
@@ -135,16 +148,8 @@ async function performSearch(query) {
       }
     });
 
-    // 4. Apply current region filter (if it's not ALL)
+    // 4. (Deprecated client-side filters, kept as fallback)
     let finalResults = Object.values(grouped);
-    if (currentRegion !== 'ALL') {
-      finalResults = finalResults.filter(r => r.regions.has(currentRegion));
-    }
-
-    // 5. Apply type filter
-    if (currentFilter !== 'ALL') {
-      finalResults = finalResults.filter(r => r.type === currentFilter);
-    }
 
     // 6. Sort by relevance (exact match first)
     finalResults.sort((a, b) => {

@@ -33,6 +33,10 @@ HEADERS = {
     "Prefer": "resolution=merge-duplicates"
 }
 
+# Reuse TCP connections for efficiency
+session = requests.Session()
+
+
 # ─── Remote Dataset URLs (Real Data) ──────────────────────────────────────────
 # WHO International (approx. 15k codes)
 WHO_ICD10_URL = "https://raw.githubusercontent.com/k4m1113/ICD-10-CSV/master/codes.csv"
@@ -52,7 +56,7 @@ def get_data_dir():
 DATA_DIR = get_data_dir()
 ICD10_FILE = os.path.join(DATA_DIR, "icd10cm.csv") # Renamed for consistency with downloader
 HCPCS_FILE = os.path.join(DATA_DIR, "mpfs.csv") # MPFS often contains HCPCS
-# Note: Full US HCPCS usually comes from a dedicated file, but downloader currently gets MPFS.
+NCCI_FILE = os.path.join(DATA_DIR, "ncci_ptp.csv")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CARC codes – CMS Claim Adjustment Reason Codes
@@ -290,48 +294,77 @@ RARC_CODES = [
     ("MA13","Alert: You may be responsible for this amount."),
 ]
 
-def deduplicate_rows(rows: list):
-    """Ensure unique (code, code_type, country) in a batch to avoid cardinality violations."""
+def deduplicate_rows(rows: list, pk: list = None):
+    """
+    Ensure unique combinations in a batch to avoid cardinality violations.
+    pk: List of keys to use for uniqueness. If None, uses all keys.
+    """
     seen = set()
     unique_rows = []
     for r in rows:
-        # Compatibility fix: code_type and country might not exist in all tables (e.g. CARC/RARC)
-        key = (r['code'], r.get('code_type', ''), r.get('country', ''))
+        if pk:
+            key = tuple(r.get(k) for k in pk)
+        else:
+            key = tuple(sorted(r.items()))
+            
         if key not in seen:
             seen.add(key)
             unique_rows.append(r)
     return unique_rows
 
-def rest_upsert_chunk(table: str, chunk: list):
+def rest_upsert_chunk(table: str, chunk: list, retries=3):
     url = f"{SUPABASE_URL}/rest/v1/{table}"
-    try:
-        r = requests.post(url, headers=HEADERS, data=json.dumps(chunk), timeout=60)
-        if r.status_code in (200, 201):
-            return len(chunk)
-        else:
-            print(f"  [ERROR] {table}: {r.status_code} – {r.text[:100]}")
+    for attempt in range(retries):
+        try:
+            # Use global session for connection pooling
+            r = session.post(url, headers=HEADERS, data=json.dumps(chunk), timeout=60)
+            if r.status_code in (200, 201):
+                return len(chunk)
+            elif r.status_code in (429, 502, 503, 504):
+                # Exponential backoff for server-side errors or rate limits
+                wait = 2 ** (attempt + 1)
+                print(f"  [RETRYING] {table} (Attempt {attempt+1}/{retries}) - Server Issue ({r.status_code}). Waiting {wait}s...")
+                time.sleep(wait)
+                continue
+            else:
+                print(f"  [ERROR] {table}: {r.status_code} – {r.text[:100]}")
+                return 0
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+            # Aggressive backoff for actual connection resets
+            wait = 5 * (attempt + 1)
+            print(f"  [RETRYING] {table} (Attempt {attempt+1}/{retries}) - Connection Issue: {e}. Waiting {wait}s...")
+            time.sleep(wait)
+        except Exception as e:
+            print(f"  [FAILED] {table}: {e}")
             return 0
-    except Exception as e:
-        print(f"  [FAILED] {table}: {e}")
-        return 0
+    return 0
 
-def rest_upsert_parallel(table: str, rows: list):
-    """Upsert rows in parallel batches."""
+def rest_upsert_parallel(table: str, rows: list, pk: list = None, workers: int = 3, chunk_size: int = 300, sleep_between: float = 0):
+    """Upsert rows in parallel batches with optional throttling."""
     if not rows: return
     
     # De-duplicate before chunking to prevent cardinality violations
-    rows = deduplicate_rows(rows)
+    rows = deduplicate_rows(rows, pk=pk)
     
-    chunk_size = 300
     chunks = [rows[i:i + chunk_size] for i in range(0, len(rows), chunk_size)]
     
-    print(f"  Syncing {len(rows)} rows to {table} in {len(chunks)} parallel batches...")
+    mode = "parallel" if workers > 1 else "sequential"
+    print(f"  Syncing {len(rows)} rows to {table} in {len(chunks)} {mode} batches...")
     
     total_done = 0
-    with ThreadPoolExecutor(max_workers=3) as executor:
-        futures = [executor.submit(rest_upsert_chunk, table, c) for c in chunks]
-        for f in futures:
-            total_done += f.result()
+    if workers > 1:
+        with ThreadPoolExecutor(max_workers=workers) as executor:
+            futures = [executor.submit(rest_upsert_chunk, table, c) for c in chunks]
+            for f in futures:
+                total_done += f.result()
+                if sleep_between > 0:
+                    time.sleep(sleep_between)
+    else:
+        # Better stability for massive datasets
+        for c in chunks:
+            total_done += rest_upsert_chunk(table, c)
+            if sleep_between > 0:
+                time.sleep(sleep_between)
     
     print(f"  [DONE] {table}: {total_done}/{len(rows)} successful.")
 
@@ -445,37 +478,92 @@ def sync_local_hcpcs():
     
     if rows:
         print(f"Ingesting {len(rows)} HCPCS/CPT codes...")
-        rest_upsert_parallel("medical_codes", rows)
+        # Force duplicate check on (code, country, code_type) specifically
+        rest_upsert_parallel("medical_codes", rows, pk=["code", "country", "code_type"])
     else:
         print("No valid HCPCS codes found to ingest.")
 
+def sync_local_ncci():
+    if not os.path.exists(NCCI_FILE):
+        print(f"ERROR: NCCI file not found at {NCCI_FILE}")
+        return
+    
+    print(f"\nParsing US NCCI PTP Edits file: {NCCI_FILE}")
+    rows = []
+    try:
+        with open(NCCI_FILE, "r", encoding="utf-8") as f:
+            # CMS files often have several header rows
+            for i, line in enumerate(f):
+                if i < 6: continue # Skip first 6 rows as per CMS format
+                
+                parts = line.split('\t')
+                if len(parts) >= 6:
+                    col1 = parts[0].strip()
+                    col2 = parts[1].strip()
+                    modifier = parts[5].strip()
+                    
+                    if col1 and col2:
+                        rows.append({
+                            "column1_code": col1,
+                            "column2_code": col2,
+                            "modifier_allowed": modifier if modifier in ('0', '1', '9') else '0'
+                        })
+    except Exception as e:
+        print(f"Error parsing NCCI file: {e}")
+
+    if rows:
+        print(f"Ingesting {len(rows)} NCCI bundling edits...")
+        # STABILITY OVER SPEED: For 600k rows, we use 1 worker (sequential)
+        # but larger chunk sizes are more efficient for PostgREST.
+        rest_upsert_parallel("ncci_ptp_edits", rows, 
+                             pk=["column1_code", "column2_code"],
+                             workers=1, 
+                             chunk_size=1000,
+                             sleep_between=0.1)
+    else:
+        print("No valid NCCI records found.")
+
 if __name__ == "__main__":
+    import sys
+    args = sys.argv[1:]
+    
     print("=" * 60)
     print("  MediHelp Now — Official Bulk Dataset Pipeline")
+    print("  Usage: python update_db.py [step_number]")
     print("=" * 60)
 
-    # 1. International Real Data (WHO & NHS)
-    print("\n[STEP 1] Syncing International Real Data...")
-    who_rows = fetch_and_parse_remote_icd(WHO_ICD10_URL, "ME")
-    if who_rows: rest_upsert_parallel("medical_codes", who_rows)
+    # Allow running specific steps only
+    run_all = len(args) == 0
+    step = args[0] if not run_all else None
 
-    uk_rows = fetch_and_parse_remote_icd(NHS_ICD10_URL, "UK")
-    if uk_rows: rest_upsert_parallel("medical_codes", uk_rows)
+    # 1. International Real Data (WHO & NHS)
+    if run_all or step == "1":
+        print("\n[STEP 1] Syncing International Real Data...")
+        who_rows = fetch_and_parse_remote_icd(WHO_ICD10_URL, "ME")
+        if who_rows: rest_upsert_parallel("medical_codes", who_rows)
+    
+        uk_rows = fetch_and_parse_remote_icd(NHS_ICD10_URL, "UK")
+        if uk_rows: rest_upsert_parallel("medical_codes", uk_rows)
 
     # 2. Bulk US ICD-10 (74K) 
-    print("\n[STEP 2] Syncing US Healthcare Datasets...")
-    sync_local_icd10()
+    if run_all or step == "2":
+        print("\n[STEP 2] Syncing US Healthcare Datasets...")
+        sync_local_icd10()
 
-    # 3. Bulk US HCPCS (8.7K)
-    sync_local_hcpcs()
+    # 3. Denial Codes
+    if run_all or step == "3":
+        print("\n[STEP 3] Syncing Denial Codes...")
+        carc = [{"code": c[0], "description": c[1]} for c in CARC_CODES]
+        rest_upsert_parallel("carc_codes", carc)
+    
+        rarc = [{"code": c[0], "description": c[1]} for c in RARC_CODES]
+        rest_upsert_parallel("rarc_codes", rarc)
 
-    # 4. CARC/RARC
-    print("\n[STEP 3] Syncing Denial Codes...")
-    carc = [{"code": c[0], "description": c[1]} for c in CARC_CODES]
-    rest_upsert_parallel("carc_codes", carc)
-
-    rarc = [{"code": c[0], "description": c[1]} for c in RARC_CODES]
-    rest_upsert_parallel("rarc_codes", rarc)
+    # 4. NCCI PTP Edits (Massive Dataset)
+    if run_all or step == "4":
+        print("\n[STEP 4] Syncing NCCI PTP Edits...")
+        sync_local_hcpcs() # Actually inside Step 4 in logical flow for this run
+        sync_local_ncci()
 
     print("=" * 60)
     print("  Pipeline complete!")
