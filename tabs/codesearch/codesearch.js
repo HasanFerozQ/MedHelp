@@ -35,28 +35,28 @@ function setupEventListeners() {
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const clickedBtn = e.currentTarget.closest('.filter-btn');
+      const clickedBtn = e.currentTarget; // [High] Redundancy removed
       if (!clickedBtn) return;
       
       filterBtns.forEach(b => b.classList.remove('active'));
       clickedBtn.classList.add('active');
       
       currentFilter = clickedBtn.dataset.filter;
-      clearTimeout(searchTimeout); // Cancel any pending debounced search
+      clearTimeout(searchTimeout); 
       performSearch(searchInput.value.trim());
     });
   });
 
   regionBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const clickedBtn = e.currentTarget.closest('.region-pill');
+      const clickedBtn = e.currentTarget; // [High] Redundancy removed
       if (!clickedBtn) return;
       
       regionBtns.forEach(b => b.classList.remove('active'));
       clickedBtn.classList.add('active');
       
       currentRegion = clickedBtn.dataset.region;
-      clearTimeout(searchTimeout); // Cancel any pending debounced search
+      clearTimeout(searchTimeout); 
       performSearch(searchInput.value.trim());
     });
   });
@@ -124,8 +124,8 @@ async function performSearch(query) {
       return;
     }
 
-    // [Medium] Robust sanitization for safeQuery
-    const safeQuery = query.replace(/[^a-zA-Z0-9\s\-]/g, '').trim();
+    // [Medium] Robust sanitization for safeQuery (dots are allowed for ICD-10)
+    const safeQuery = query.replace(/[^a-zA-Z0-9\s\.\-]/g, '').trim();
     const isCodeLikely = /^[A-Z0-9.]+$/i.test(query.trim()) && query.trim().length < 10;
     const isPhrase = query.trim().includes(' ');
 
@@ -169,7 +169,7 @@ async function performSearch(query) {
     if (error) {
         console.error('Search error:', error, 'Query:', cleanQ);
         listContainer.innerHTML = `<div class="empty-state" style="color:var(--text-danger)">
-            <strong>Database Error [${status}]:</strong> ${error.message || 'Unknown error'}<br>
+            <strong>Database Error [${status}]:</strong> ${escapeHtml(error.message) || 'Unknown error'}<br>
             <span style="font-size:10px; opacity:0.7;">Check console for query details</span>
         </div>`;
         return;
@@ -197,10 +197,10 @@ async function performSearch(query) {
       }
     });
 
-    // 4. (Deprecated client-side filters, kept as fallback)
+    // 3. (Converted map to array for sorting and rendering)
     let finalResults = Object.values(grouped);
 
-    // 6. Sort by relevance (exact match first)
+    // 4. Sort by relevance (exact match first)
     finalResults.sort((a, b) => {
       const aExact = a.code === cleanQ;
       const bExact = b.code === cleanQ;
@@ -215,15 +215,15 @@ async function performSearch(query) {
       return a.code.localeCompare(b.code);
     });
 
-    renderResults(finalResults, fetchLimit);
+    renderResults(finalResults, data.length, fetchLimit);
 
   } catch(err) {
     console.error('Unexpected search failure:', err);
-    listContainer.innerHTML = `<div class="empty-state" style="color:var(--text-danger)">Unexpected Error: ${err.message || 'Check connection'}</div>`;
+    listContainer.innerHTML = `<div class="empty-state" style="color:var(--text-danger)">Unexpected Error: ${escapeHtml(err.message) || 'Check connection'}</div>`;
   }
 }
 
-function renderResults(results, fetchLimit) {
+function renderResults(results, rawCount, rawFetchLimit) {
   const listContainer = document.getElementById('search-results-list');
   
   if (!results || results.length === 0) {
@@ -234,9 +234,9 @@ function renderResults(results, fetchLimit) {
   const regionList = ['US', 'UK', 'ME'];
   let html = '';
 
-  // [Low] Show result count to user
+  // [Low] Show result count based on raw DB record threshold
   const count = results.length;
-  const isCapped = count >= fetchLimit - 10; // Safety margin
+  const isCapped = rawCount >= rawFetchLimit; 
   html += `<div class="results-count">Showing <b>${count}</b> unique codes${isCapped ? ' (Limit reached, narrow query)' : ''}</div>`;
   
   results.forEach(item => {
@@ -275,7 +275,7 @@ function renderNCCIResults(results, queryCode) {
     return;
   }
 
-  let html = `<div style="padding: 10px; font-size: 12px; color: var(--text-muted); border-bottom: 1px solid var(--border); margin-bottom: 12px;">
+  let html = `<div class="ncci-summary-header">
                 NCCI Bundling Policy: Found records where <strong>${escapeHtml(queryCode)}</strong> is restricted.
               </div>`;
               

@@ -2117,6 +2117,14 @@ body {
   font-weight: 700;
 }
 
+.ncci-summary-header {
+  padding: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
 [data-theme="light"] .ncci-code-block {
   background: rgba(0,0,0,0.05);
   color: var(--accent-dim);
