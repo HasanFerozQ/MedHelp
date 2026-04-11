@@ -97,8 +97,11 @@ async function performSearch(query) {
     return;
   }
 
-  const searchId = ++currentSearchId; // [High] Move to top to cover ALL branches
+  const searchId = ++currentSearchId; 
   const cleanQ = query.replace(/[\.\-\s]/g, '').toUpperCase();
+  // [High] Handle leading zeros for numeric CPT codes (e.g. 099213 -> 99213)
+  const cleanQFiltered = (cleanQ.startsWith('0') && cleanQ.length >= 5 && /^\d+$/.test(cleanQ)) ? cleanQ.replace(/^0+/, '') : cleanQ;
+  
   listContainer.innerHTML = '<div class="empty-state">Querying Global Registry...</div>';
 
   try {
@@ -120,7 +123,8 @@ async function performSearch(query) {
 
     // [Medium] Robust sanitization for safeQuery (dots are allowed for ICD-10)
     const safeQuery = query.replace(/[^a-zA-Z0-9\s\.\-]/g, '').trim();
-    const isCodeLikely = /^[A-Z0-9.]+$/i.test(query.trim()) && query.trim().length < 10;
+    // [High] Support hyphens in code-likelihood detection (e.g. I-10)
+    const isCodeLikely = /^[A-Z0-9.\-]+$/i.test(query.trim()) && query.trim().length < 10;
     const isPhrase = query.trim().includes(' ');
 
     let dbQuery = window.dbClient
@@ -135,8 +139,8 @@ async function performSearch(query) {
     }
 
     if (isCodeLikely && !isPhrase) {
-      // [High] Match dotted (safeQuery) AND dotless (cleanQ) formats for perfect ICD-10 matching
-      dbQuery = dbQuery.or(`code.ilike.${safeQuery}%,code.ilike.${cleanQ}%,short_description.ilike.%${safeQuery}%`);
+      // [High] Match dotted (safeQuery) AND dotless (cleanQ/cleanQFiltered) formats for perfect ICD-10 matching
+      dbQuery = dbQuery.or(`code.ilike.${safeQuery}%,code.ilike.${cleanQ}%,code.ilike.${cleanQFiltered}%,short_description.ilike.%${safeQuery}%`);
     } else {
       // Phrase/word search
       const words = query.split(/\s+/).filter(w => w.length >= 2);
@@ -194,17 +198,23 @@ async function performSearch(query) {
     // 4. (Converted map to array for sorting and rendering)
     let finalResults = Object.values(grouped);
 
-    // 5. Sort by relevance (exact match first)
+    // 5. Sort by relevance (Exact matches first, then starts-with phrases)
     finalResults.sort((a, b) => {
-      const aExact = a.code === cleanQ;
-      const bExact = b.code === cleanQ;
+      const aExact = a.code === cleanQ || a.code === cleanQFiltered;
+      const bExact = b.code === cleanQ || b.code === cleanQFiltered;
       if (aExact && !bExact) return -1;
       if (bExact && !aExact) return 1;
       
-      const aStarts = a.code.startsWith(cleanQ);
-      const bStarts = b.code.startsWith(cleanQ);
-      if (aStarts && !bStarts) return -1;
-      if (bStarts && !aStarts) return 1;
+      const aStartsCode = a.code.startsWith(cleanQ) || a.code.startsWith(cleanQFiltered);
+      const bStartsCode = b.code.startsWith(cleanQ) || b.code.startsWith(cleanQFiltered);
+      if (aStartsCode && !bStartsCode) return -1;
+      if (bStartsCode && !aStartsCode) return 1;
+
+      // [Medium] Description phrase ranking (Starts with query gets priority)
+      const aStartsDesc = a.desc.toUpperCase().startsWith(safeQuery.toUpperCase());
+      const bStartsDesc = b.desc.toUpperCase().startsWith(safeQuery.toUpperCase());
+      if (aStartsDesc && !bStartsDesc) return -1;
+      if (bStartsDesc && !aStartsDesc) return 1;
       
       return a.code.localeCompare(b.code);
     });
