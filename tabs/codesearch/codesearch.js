@@ -102,8 +102,16 @@ async function performSearch(query) {
       }
     }
 
-    const { data, error } = await dbQuery.limit(150);
-    if (error) throw error;
+    const { data, error, status, statusText } = await dbQuery.limit(150);
+    
+    if (error) {
+        console.error('Search error:', error);
+        listContainer.innerHTML = `<div class="empty-state" style="color:var(--text-danger)">
+            <strong>Database Error [${status}]:</strong> ${error.message || 'Unknown error'}<br>
+            <span style="font-size:10px; opacity:0.7;">Query: ${cleanQ}</span>
+        </div>`;
+        return;
+    }
 
     if (!data || data.length === 0) {
       renderResults([]);
@@ -113,16 +121,17 @@ async function performSearch(query) {
     // 3. Group by Code & Type
     const grouped = {};
     data.forEach(r => {
-      const key = `${r.code}_${r.code_type || 'HCPCS'}`;
+      const type = r.code_type || 'HCPCS';
+      const key = `${r.code}_${type}`;
       if (!grouped[key]) {
         grouped[key] = {
           code: r.code,
-          type: r.code_type || 'HCPCS',
+          type: type,
           desc: r.short_description || '—',
-          regions: new Set([r.country])
+          regions: new Set([r.country || 'US'])
         };
       } else {
-        grouped[key].regions.add(r.country);
+        grouped[key].regions.add(r.country || 'US');
       }
     });
 
@@ -155,8 +164,8 @@ async function performSearch(query) {
     renderResults(finalResults);
 
   } catch(err) {
-    console.error(err);
-    listContainer.innerHTML = '<div class="empty-state" style="color:var(--text-danger)">Error fetching code data.</div>';
+    console.error('Unexpected search failure:', err);
+    listContainer.innerHTML = `<div class="empty-state" style="color:var(--text-danger)">Unexpected Error: ${err.message || 'Check connection'}</div>`;
   }
 }
 
