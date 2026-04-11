@@ -107,7 +107,7 @@ async function performSearch(query) {
       const { data, error } = await window.dbClient
         .from('ncci_ptp_edits')
         .select('*')
-        .or(`column1_code.eq.${cleanQ},column2_code.eq.${cleanQ}`)
+        .or(`column1_code.eq."${cleanQ}",column2_code.eq."${cleanQ}"`)
         .limit(50);
         
       if (error) throw error;
@@ -135,8 +135,8 @@ async function performSearch(query) {
     }
 
     if (isCodeLikely && !isPhrase) {
-      // Code-style search: match code prefix OR description contains the term
-      dbQuery = dbQuery.or(`code.ilike.${cleanQ}%,short_description.ilike.%${safeQuery}%`);
+      // [High] Match dotted (safeQuery) AND dotless (cleanQ) formats for perfect ICD-10 matching
+      dbQuery = dbQuery.or(`code.ilike.${safeQuery}%,code.ilike.${cleanQ}%,short_description.ilike.%${safeQuery}%`);
     } else {
       // Phrase/word search
       const words = query.split(/\s+/).filter(w => w.length >= 2);
