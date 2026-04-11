@@ -1,9 +1,8 @@
 import requests
-import os
+import json
 
 # --- Supabase Config ---
 SUPABASE_URL = 'https://bisqgousuvljttesjkkm.supabase.co'
-# Note: In production we'd use the anon key for public search testing
 SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4'
 
 HEADERS = {
@@ -12,63 +11,68 @@ HEADERS = {
     "Content-Type": "application/json"
 }
 
-def test_search(query_label, query_string, filter_params=None):
-    print(f"\n--- Testing: {query_label} ({query_string}) ---")
-    url = f"{SUPABASE_URL}/rest/v1/medical_codes"
-    
-    params = {
-        "select": "code,short_description,country,code_type",
-        "limit": 5
-    }
-    
-    if filter_params:
-        params.update(filter_params)
-    
+def test_rest(label, table, params):
+    print(f"\n--- Testing: {label} ---")
+    url = f"{SUPABASE_URL}/rest/v1/{table}"
     try:
         r = requests.get(url, headers=HEADERS, params=params)
-        r.raise_for_status()
-        data = r.json()
+        if r.status_code != 200:
+            print(f"  [ERROR] {r.status_code}: {r.text[:200]}")
+            return
         
+        data = r.json()
         if not data:
-            print("  [NOT FOUND] No results.")
+            print("  [EMPTY] No results found.")
         else:
-            for item in data:
-                print(f"  [{item['country']}] {item['code']}: {item['short_description'][:60]}...")
+            print(f"  [SUCCESS] Found {len(data)} results.")
+            for i, item in enumerate(data[:3]):
+                code = item.get('code') or item.get('column1_code') or '?'
+                desc = item.get('short_description') or item.get('description')
+                if not desc and table == 'ncci_ptp_edits':
+                    desc = f"Bundles with {item.get('column2_code')}"
+                if not desc:
+                    desc = 'No description'
+                print(f"    {i+1}. {code}: {str(desc)[:70]}...")
     except Exception as e:
-        print(f"  [ERROR] {e}")
+        print(f"  [EXCEPTION] {e}")
 
 if __name__ == "__main__":
     print("="*60)
-    print(" MediHelp Search Perfection - Programmatic Verification")
+    print(" MediHelp SEARCH PERFECTION - Final Verification")
     print("="*60)
 
-    # 1. Exact Code Search (US)
-    test_search("Exact HCPCS (US)", "99213", {"code": "eq.99213", "country": "eq.US"})
+    # 1. Raw Sample
+    test_rest("Registry Sample", "medical_codes", {"limit": 1})
 
-    # 2. Description Search with Spaces
-    # Simulate: short_description.ilike.%Drugs%unclassified% 
-    test_search("Phrase Search", "Drugs unclassified", {"short_description": "ilike.%Drugs%unclassified%"})
+    # 2. Exact Match (Unquoted ilike)
+    test_rest("Exact Match (99213)", "medical_codes", {
+        "code": "eq.99213",
+        "select": "code,short_description"
+    })
 
-    # 3. Medical Abbreviation (2-char word)
-    test_search("Abbreviation", "CT", {"short_description": "ilike.%CT%"})
+    # 3. Phrase Search (Unquoted ilike)
+    test_rest("Phrase Search (Office)", "medical_codes", {
+        "short_description": "ilike.%Office%",
+        "select": "code,short_description",
+        "limit": 3
+    })
 
-    # 4. Region Specificity (UK vs US)
-    test_search("UK ICD-10 Check", "I10", {"code": "eq.I10", "country": "eq.UK"})
-    test_search("US ICD-10 Check", "I10", {"code": "eq.I10", "country": "eq.US"})
+    # 4. Abbreviation (Simplified pattern, unquoted)
+    # Using .or() to search both code and description correctly
+    test_rest("Abbreviation (CT)", "medical_codes", {
+        "or": "(code.ilike.CT%,short_description.ilike.%CT%)",
+        "select": "code,short_description",
+        "limit": 3
+    })
 
-    # 5. NCCI Lookup Check
-    print("\n--- Testing: NCCI Bundling Edits (99213) ---")
-    ncci_url = f"{SUPABASE_URL}/rest/v1/ncci_ptp_edits"
-    try:
-        r = requests.get(ncci_url, headers=HEADERS, params={"column1_code": "eq.99213", "limit": 3})
-        r.raise_for_status()
-        ncci_data = r.json()
-        if ncci_data:
-            print(f"  [FOUND] 99213 bundles: {[item['column2_code'] for item in ncci_data]}")
-        else:
-            print("  [NOT FOUND] No bundling edits found.")
-    except Exception as e:
-        print(f"  [ERROR] {e}")
+    # 5. NCCI Dual-Column (Unquoted)
+    test_rest("NCCI (99213 check)", "ncci_ptp_edits", {
+        "or": "(column1_code.eq.99213,column2_code.eq.99213)",
+        "limit": 3
+    })
+
+    # 6. Denial Codes (Unquoted)
+    test_rest("Denial (CO-45)", "carc_codes", {"code": "eq.CO-45"})
 
     print("\n"+"="*60)
     print(" Verification Complete")

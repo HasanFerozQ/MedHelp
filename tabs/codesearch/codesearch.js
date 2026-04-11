@@ -69,29 +69,27 @@ async function performSearch(query) {
   listContainer.innerHTML = '<div class="empty-state">Querying Global Registry...</div>';
 
   try {
-    // 1. Handle NCCI Edits separately (always eq check)
+    // 1. Handle NCCI Edits separately (check both comprehensive and component columns)
     if (currentFilter === 'NCCI') {
       const { data, error } = await window.dbClient
         .from('ncci_ptp_edits')
         .select('*')
-        .eq('column1_code', cleanQ)
-        .limit(30);
+        .or(`column1_code.eq.${cleanQ},column2_code.eq.${cleanQ}`)
+        .limit(50);
         
       if (error) throw error;
-      renderNCCIResults(data);
+      renderNCCIResults(data, cleanQ); // Pass query to highlight the match
       return;
     }
 
-    // Strategy: Determine if we should treat this as a code lookup or a description search
-    const safeQuery = query.replace(/[",]/g, ''); // Basic sanitization for .or() syntax
-    const isCodeLikely = /^[A-Z0-9.]+$/i.test(cleanQ) && cleanQ.length < 10;
+    const safeQuery = query.replace(/[",]/g, '');
+    const isCodeLikely = /^[A-Z0-9.]+$/i.test(query.trim()) && query.trim().length < 10;
     const isPhrase = query.trim().includes(' ');
 
     let dbQuery = window.dbClient
       .from('medical_codes')
       .select('code, short_description, country, code_type');
 
-    // Push filters to server-side for accuracy and performance
     if (currentRegion !== 'ALL') {
       dbQuery = dbQuery.eq('country', currentRegion);
     }
@@ -100,20 +98,22 @@ async function performSearch(query) {
     }
 
     if (isCodeLikely && !isPhrase) {
-      // Direct code search (e.g. "99213" or "J3490")
-      dbQuery = dbQuery.or(`code.ilike."${cleanQ}%",short_description.ilike."%${safeQuery}%"`);
+      // Code-style search: match code prefix OR description contains the term
+      dbQuery = dbQuery.or(`code.ilike.${cleanQ}%,short_description.ilike.%${safeQuery}%`);
     } else {
-      // Phrase search (e.g. "Drugs unclassified") or long alphanumeric
-      // Reduced length to 2 to catch medical abbreviations like CT, IV, MR, PT
+      // Phrase/word search
       const words = query.split(/\s+/).filter(w => w.length >= 2);
       if (words.length > 0) {
-        // We match rows that contain any of the words, or the exact phrase
-        let filterStr = words.map(w => `short_description.ilike."%${w}%"`).join(',');
-        dbQuery = dbQuery.or(`${filterStr},short_description.ilike."%${safeQuery}%"`);
+        // Match any word OR the full phrase — no quotes, no word-boundary tricks
+        const wordFilters = words.map(w => `short_description.ilike.%${w}%`);
+        const fullPhrase = `short_description.ilike.%${safeQuery}%`;
+        dbQuery = dbQuery.or([...wordFilters, fullPhrase].join(','));
       } else {
         dbQuery = dbQuery.ilike('short_description', `%${safeQuery}%`);
       }
     }
+    
+    // NCCI already handled above, so we can skip the duplicate block if it existed
 
     const { data, error, status } = await dbQuery.limit(150);
     
@@ -215,24 +215,32 @@ function renderResults(results) {
   attachCopyListeners();
 }
 
-function renderNCCIResults(results) {
+function renderNCCIResults(results, queryCode) {
   const listContainer = document.getElementById('search-results-list');
   if (!results || results.length === 0) {
-    listContainer.innerHTML = '<div class="empty-state">No NCCI bundling edits found for this code.</div>';
+    listContainer.innerHTML = `<div class="empty-state">No NCCI bundling edits found for "${queryCode}".</div>`;
     return;
   }
 
-  let html = '';
+  let html = `<div style="padding: 10px; font-size: 12px; color: var(--text-muted); border-bottom: 1px solid var(--border); margin-bottom: 12px;">
+                Found labels where <strong>${queryCode}</strong> is either the Comprehensive or Component code.
+              </div>`;
+              
   results.forEach(item => {
+    const isCol1 = item.column1_code === queryCode;
+    const otherCode = isCol1 ? item.column2_code : item.column1_code;
+    const relationship = isCol1 ? 'Bundles component' : 'Is bundled into';
+    
     html += `
-      <div class="result-card" style="border-left: 3px solid var(--tint-teal);">
+      <div class="result-card" style="border-left: 3px solid ${isCol1 ? 'var(--tint-teal)' : 'var(--text-danger)'};">
         <div style="flex:1;">
           <div style="font-weight: 600; font-size: 13px; color: var(--text-dark);">
-            Bundled: <span style="font-family: monospace;">${item.column2_code}</span>
+            <span style="opacity:0.6;">${relationship}:</span> 
+            <span style="font-family: monospace; background: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 4px;">${otherCode}</span>
           </div>
-          <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">
-            Modifier Allowed: <strong>${item.modifier_allowed === '1' ? 'Yes' : 'No'}</strong>
-            &bull; Effective: ${item.effective_date || '—'}
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+            Modifier Allowed: <strong style="color:var(--text-dark)">${item.modifier_allowed === '1' ? 'Yes' : 'No'}</strong>
+            &bull; NCCI Category: PTP
           </div>
         </div>
       </div>
