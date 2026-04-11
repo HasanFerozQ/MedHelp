@@ -295,7 +295,8 @@ def deduplicate_rows(rows: list):
     seen = set()
     unique_rows = []
     for r in rows:
-        key = (r['code'], r['code_type'], r.get('country', ''))
+        # Compatibility fix: code_type and country might not exist in all tables (e.g. CARC/RARC)
+        key = (r['code'], r.get('code_type', ''), r.get('country', ''))
         if key not in seen:
             seen.add(key)
             unique_rows.append(r)
@@ -321,13 +322,13 @@ def rest_upsert_parallel(table: str, rows: list):
     # De-duplicate before chunking to prevent cardinality violations
     rows = deduplicate_rows(rows)
     
-    chunk_size = 500
+    chunk_size = 300
     chunks = [rows[i:i + chunk_size] for i in range(0, len(rows), chunk_size)]
     
     print(f"  Syncing {len(rows)} rows to {table} in {len(chunks)} parallel batches...")
     
     total_done = 0
-    with ThreadPoolExecutor(max_workers=5) as executor:
+    with ThreadPoolExecutor(max_workers=3) as executor:
         futures = [executor.submit(rest_upsert_chunk, table, c) for c in chunks]
         for f in futures:
             total_done += f.result()
@@ -412,15 +413,25 @@ def sync_local_hcpcs():
         print(f"ERROR: HCPCS/MPFS file not found at {HCPCS_FILE}")
         return
     
-    print(f"\nParsing US HCPCS/MPFS file: {HCPCS_FILE}")
+    print(f"\nParsing US HCPCS/MPFS file (Fixed-Width): {HCPCS_FILE}")
     rows = []
-    # If it's the MPFS CSV from the downloader
-    if HCPCS_FILE.endswith(".csv"):
+    
+    try:
         with open(HCPCS_FILE, "r", encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                code = row.get("HCPCS") or row.get("Procedure Code")
-                desc = row.get("Description") or row.get("Short Description")
+            for line in f:
+                # Skip header/metadata lines
+                if line.startswith("HDR") or len(line) < 10:
+                    continue
+                
+                # Check if it starts with a valid code pattern (5 alphanumeric chars)
+                code = line[0:5].strip().upper()
+                if not code or len(code) < 5:
+                    continue
+                
+                # Description usually starts around index 7 in MPFS files
+                # We'll take a safe chunk and strip it
+                desc = line[7:60].strip()
+                
                 if code and desc:
                     rows.append({
                         "code": code,
@@ -429,22 +440,14 @@ def sync_local_hcpcs():
                         "long_description": desc,
                         "country": "US"
                     })
-    else:
-        # Fixed width parser for official CMS files
-        with open(HCPCS_FILE, "r", encoding="utf-8") as f:
-            for line in f:
-                if len(line) < 12: continue
-                code = line[0:5].strip()
-                id_code = line[10:11]
-                desc = line[11:119].strip()
-                if id_code == '3':
-                    rows.append({
-                        "code": code, "code_type": "HCPCS",
-                        "short_description": desc[:950], "long_description": desc,
-                        "country": "US"
-                    })
+    except Exception as e:
+        print(f"Error parsing HCPCS file: {e}")
     
-    rest_upsert_parallel("medical_codes", rows)
+    if rows:
+        print(f"Ingesting {len(rows)} HCPCS/CPT codes...")
+        rest_upsert_parallel("medical_codes", rows)
+    else:
+        print("No valid HCPCS codes found to ingest.")
 
 if __name__ == "__main__":
     print("=" * 60)

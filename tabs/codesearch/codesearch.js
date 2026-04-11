@@ -51,8 +51,17 @@ async function performSearch(query) {
     return;
   }
 
+  // Wait for dbClient if it's currently null (handles slow CDN/init race conditions)
   if (!window.dbClient) {
-    listContainer.innerHTML = '<div class="empty-state" style="color:var(--text-danger)">Database connection error.</div>';
+    console.log('Database client not ready, waiting...');
+    for (let i = 0; i < 10; i++) {
+        await new Promise(r => setTimeout(r, 100)); // Wait 100ms
+        if (window.dbClient) break;
+    }
+  }
+
+  if (!window.dbClient) {
+    listContainer.innerHTML = '<div class="empty-state" style="color:var(--text-danger)">Database connection error. Please refresh.</div>';
     return;
   }
 
@@ -63,9 +72,9 @@ async function performSearch(query) {
     // 1. Handle NCCI Edits separately (always eq check)
     if (currentFilter === 'NCCI') {
       const { data, error } = await window.dbClient
-        .from('ncci_edits')
+        .from('ncci_ptp_edits')
         .select('*')
-        .eq('primary_code', cleanQ)
+        .eq('column1_code', cleanQ)
         .limit(30);
         
       if (error) throw error;
@@ -205,7 +214,7 @@ function renderNCCIResults(results) {
       <div class="result-card" style="border-left: 3px solid var(--tint-teal);">
         <div style="flex:1;">
           <div style="font-weight: 600; font-size: 13px; color: var(--text-dark);">
-            Bundled: <span style="font-family: monospace;">${item.secondary_code}</span>
+            Bundled: <span style="font-family: monospace;">${item.column2_code}</span>
           </div>
           <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">
             Modifier Allowed: <strong>${item.modifier_allowed === '1' ? 'Yes' : 'No'}</strong>
