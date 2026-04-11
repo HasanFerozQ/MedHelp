@@ -514,7 +514,6 @@ def sync_local_ncci():
     if rows:
         print(f"Ingesting {len(rows)} NCCI bundling edits...")
         # STABILITY OVER SPEED: For 600k rows, we use 1 worker (sequential)
-        # but larger chunk sizes are more efficient for PostgREST.
         rest_upsert_parallel("ncci_ptp_edits", rows, 
                              pk=["column1_code", "column2_code"],
                              workers=1, 
@@ -522,6 +521,76 @@ def sync_local_ncci():
                              sleep_between=0.1)
     else:
         print("No valid NCCI records found.")
+
+def sync_local_mue():
+    """Ingests Medically Unlikely Edits (MUE) - Step 5"""
+    mue_file = os.path.join(DATA_DIR, "mue.csv")
+    if not os.path.exists(mue_file):
+        print("MUE file not found.")
+        return
+
+    rows = []
+    try:
+        # Handling potential encoding issues or binary headers common in CMS CSVs
+        with open(mue_file, 'r', encoding='utf-8', errors='ignore') as f:
+            reader = csv.reader(f)
+            for line_idx, parts in enumerate(reader):
+                if not parts or len(parts) < 2: continue
+                # CMS MUE format: [HCPCS Code, MUE Value, indicator, rationale...]
+                code = parts[0].strip()
+                if len(code) > 10 or line_idx == 0: continue # Skip header or invalid
+                
+                try:
+                    mue_val = int(parts[1].strip())
+                    rows.append({
+                        "cpt_code": code,
+                        "mue_value": mue_val,
+                        "description": parts[3].strip() if len(parts) > 3 else None
+                    })
+                except: continue
+    except Exception as e:
+        print(f"Error parsing MUE file: {e}")
+
+    if rows:
+        print(f"Ingesting {len(rows)} MUE limits...")
+        rest_upsert_parallel("mue_limits", rows, pk=["cpt_code"])
+
+def sync_local_mpfs_fees():
+    """Ingests Medicare Physician Fee Schedule (MPFS) pricing - Step 6"""
+    mpfs_file = os.path.join(DATA_DIR, "mpfs.csv")
+    if not os.path.exists(mpfs_file):
+        print("MPFS pricing file not found.")
+        return
+
+    rows = []
+    try:
+        with open(mpfs_file, 'r', errors='ignore') as f:
+            for line in f:
+                if line.startswith('HDR'): continue
+                # We use the same fixed-width logic as HCPCS sync
+                code = line[0:5].strip()
+                if not code: continue
+                
+                # Medicare Fee logic - extracting work RVU as a proxy for pricing 
+                # or finding specific dollar amounts if available.
+                # Standard MPFS fixed width uses specific offsets for Work RVU, PE RVU.
+                try:
+                    work_rvu = line[95:102].strip()
+                    pe_rvu = line[102:109].strip()
+                    if work_rvu:
+                        rows.append({
+                            "cpt_code": code,
+                            "rvu_work": float(work_rvu),
+                            "rvu_facility": float(pe_rvu) if pe_rvu else 0.0,
+                            "base_price": 0.0 # Will be calculated/filled from conversion factor if needed
+                        })
+                except: continue
+    except Exception as e:
+        print(f"Error parsing MPFS pricing: {e}")
+
+    if rows:
+        print(f"Ingesting {len(rows)} MPFS pricing records...")
+        rest_upsert_parallel("cpt_medicare_fees", rows, pk=["cpt_code"])
 
 if __name__ == "__main__":
     import sys
@@ -562,8 +631,18 @@ if __name__ == "__main__":
     # 4. NCCI PTP Edits (Massive Dataset)
     if run_all or step == "4":
         print("\n[STEP 4] Syncing NCCI PTP Edits...")
-        sync_local_hcpcs() # Actually inside Step 4 in logical flow for this run
+        sync_local_hcpcs() 
         sync_local_ncci()
+
+    # 5. MUE Limits
+    if run_all or step == "5":
+        print("\n[STEP 5] Syncing MUE Quantity Limits...")
+        sync_local_mue()
+
+    # 6. Medicare Fee Schedule Pricing
+    if run_all or step == "6":
+        print("\n[STEP 6] Syncing Medicare Pricing...")
+        sync_local_mpfs_fees()
 
     print("=" * 60)
     print("  Pipeline complete!")

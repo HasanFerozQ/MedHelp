@@ -1,6 +1,19 @@
 let currentFilter = 'ALL';
 let currentRegion = 'US'; // Default to US
 let searchTimeout = null;
+let currentSearchId = 0; // Prevent race conditions
+const MAX_WAIT_ATTEMPTS = 20; // 2 seconds max wait for DB init
+
+// Security Helper: Escape dynamic data to prevent XSS
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,24 +35,49 @@ function setupEventListeners() {
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
+      const clickedBtn = e.currentTarget.closest('.filter-btn');
+      if (!clickedBtn) return;
+      
       filterBtns.forEach(b => b.classList.remove('active'));
-      const clickedBtn = e.target;
       clickedBtn.classList.add('active');
       
       currentFilter = clickedBtn.dataset.filter;
+      clearTimeout(searchTimeout); // Cancel any pending debounced search
       performSearch(searchInput.value.trim());
     });
   });
 
   regionBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
+      const clickedBtn = e.currentTarget.closest('.region-pill');
+      if (!clickedBtn) return;
+      
       regionBtns.forEach(b => b.classList.remove('active'));
-      const clickedBtn = e.target;
       clickedBtn.classList.add('active');
       
       currentRegion = clickedBtn.dataset.region;
+      clearTimeout(searchTimeout); // Cancel any pending debounced search
       performSearch(searchInput.value.trim());
     });
+  });
+
+  // Event Delegation for Copy Buttons (Optimized)
+  const listContainer = document.getElementById('search-results-list');
+  listContainer.addEventListener('click', (e) => {
+    const btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+    
+    const code = btn.dataset.code;
+    navigator.clipboard.writeText(code)
+      .then(() => {
+        const originalIcon = btn.innerHTML;
+        btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        setTimeout(() => btn.innerHTML = originalIcon, 1500);
+      })
+      .catch(err => {
+        console.warn('Clipboard failed:', err);
+        // Fallback or user notification could go here
+      });
   });
 }
 
@@ -51,11 +89,11 @@ async function performSearch(query) {
     return;
   }
 
-  // Wait for dbClient if it's currently null (handles slow CDN/init race conditions)
+  // UI Feedback during DB initialization
   if (!window.dbClient) {
-    console.log('Database client not ready, waiting...');
-    for (let i = 0; i < 10; i++) {
-        await new Promise(r => setTimeout(r, 100)); // Wait 100ms
+    listContainer.innerHTML = '<div class="empty-state"><span class="loading-dots">Initializing Secure Connection...</span></div>';
+    for (let i = 0; i < MAX_WAIT_ATTEMPTS; i++) { 
+        await new Promise(r => setTimeout(r, 100));
         if (window.dbClient) break;
     }
   }
@@ -65,6 +103,7 @@ async function performSearch(query) {
     return;
   }
 
+  const searchId = ++currentSearchId; // [High] Move to top to cover ALL branches
   const cleanQ = query.replace(/[\.\-\s]/g, '').toUpperCase();
   listContainer.innerHTML = '<div class="empty-state">Querying Global Registry...</div>';
 
@@ -78,11 +117,15 @@ async function performSearch(query) {
         .limit(50);
         
       if (error) throw error;
+      // [High] Add race guard to NCCI branch
+      if (searchId !== currentSearchId) return;
+
       renderNCCIResults(data, cleanQ); // Pass query to highlight the match
       return;
     }
 
-    const safeQuery = query.replace(/[",]/g, '');
+    // [Medium] Robust sanitization for safeQuery
+    const safeQuery = query.replace(/[^a-zA-Z0-9\s\-]/g, '').trim();
     const isCodeLikely = /^[A-Z0-9.]+$/i.test(query.trim()) && query.trim().length < 10;
     const isPhrase = query.trim().includes(' ');
 
@@ -113,15 +156,21 @@ async function performSearch(query) {
       }
     }
     
-    // NCCI already handled above, so we can skip the duplicate block if it existed
-
-    const { data, error, status } = await dbQuery.limit(150);
+    // [Medium] Increase limit for ALL region searches
+    const fetchLimit = currentRegion === 'ALL' ? 300 : 150;
+    const { data, error, status } = await dbQuery.limit(fetchLimit);
+    
+    // Race Condition Guard: If a newer search has started, discard this result
+    if (searchId !== currentSearchId) {
+        console.log('Stale search result discarded:', query);
+        return;
+    }
     
     if (error) {
-        console.error('Search error:', error);
+        console.error('Search error:', error, 'Query:', cleanQ);
         listContainer.innerHTML = `<div class="empty-state" style="color:var(--text-danger)">
             <strong>Database Error [${status}]:</strong> ${error.message || 'Unknown error'}<br>
-            <span style="font-size:10px; opacity:0.7;">Query: ${cleanQ}</span>
+            <span style="font-size:10px; opacity:0.7;">Check console for query details</span>
         </div>`;
         return;
     }
@@ -166,7 +215,7 @@ async function performSearch(query) {
       return a.code.localeCompare(b.code);
     });
 
-    renderResults(finalResults);
+    renderResults(finalResults, fetchLimit);
 
   } catch(err) {
     console.error('Unexpected search failure:', err);
@@ -174,7 +223,7 @@ async function performSearch(query) {
   }
 }
 
-function renderResults(results) {
+function renderResults(results, fetchLimit) {
   const listContainer = document.getElementById('search-results-list');
   
   if (!results || results.length === 0) {
@@ -184,64 +233,79 @@ function renderResults(results) {
 
   const regionList = ['US', 'UK', 'ME'];
   let html = '';
+
+  // [Low] Show result count to user
+  const count = results.length;
+  const isCapped = count >= fetchLimit - 10; // Safety margin
+  html += `<div class="results-count">Showing <b>${count}</b> unique codes${isCapped ? ' (Limit reached, narrow query)' : ''}</div>`;
   
   results.forEach(item => {
-    let tagClass = `tag-${item.type}`;
+    let tagClass = `tag-${escapeHtml(item.type)}`;
     let displayType = item.type.replace('ICD10', 'ICD-10');
     
     html += `
       <div class="result-card">
         <div class="result-main-area">
           <div class="result-header">
-            <span class="code-val">${item.code}</span>
-            <span class="code-tag ${tagClass}">${displayType}</span>
+            <span class="code-val">${escapeHtml(item.code)}</span>
+            <span class="code-tag ${tagClass}">${escapeHtml(displayType)}</span>
             <div class="region-badges">
               ${regionList.map(reg => {
                 const active = item.regions.has(reg);
                 return `<span class="reg-badge ${reg.toLowerCase()} ${active ? '' : 'inactive'}">${reg}${active ? '' : ': N/A'}</span>`;
               }).join('')}
             </div>
-            <button class="copy-btn" data-code="${item.code}" title="Copy to clipboard">
+            <button class="copy-btn" data-code="${escapeHtml(item.code)}" title="Copy to clipboard">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             </button>
           </div>
-          <div class="result-desc">${item.desc}</div>
+          <div class="result-desc">${escapeHtml(item.desc)}</div>
         </div>
       </div>
     `;
   });
   
   listContainer.innerHTML = html;
-  attachCopyListeners();
 }
 
 function renderNCCIResults(results, queryCode) {
   const listContainer = document.getElementById('search-results-list');
   if (!results || results.length === 0) {
-    listContainer.innerHTML = `<div class="empty-state">No NCCI bundling edits found for "${queryCode}".</div>`;
+    listContainer.innerHTML = `<div class="empty-state">No NCCI bundling edits found for "${escapeHtml(queryCode)}".</div>`;
     return;
   }
 
   let html = `<div style="padding: 10px; font-size: 12px; color: var(--text-muted); border-bottom: 1px solid var(--border); margin-bottom: 12px;">
-                Found labels where <strong>${queryCode}</strong> is either the Comprehensive or Component code.
+                NCCI Bundling Policy: Found records where <strong>${escapeHtml(queryCode)}</strong> is restricted.
               </div>`;
               
   results.forEach(item => {
-    const isCol1 = item.column1_code === queryCode;
+    const isCol1 = item.column1_code === queryCode.toUpperCase();
     const otherCode = isCol1 ? item.column2_code : item.column1_code;
-    const relationship = isCol1 ? 'Bundles component' : 'Is bundled into';
+    const colNum = isCol1 ? "Column 1 (Comprehensive)" : "Column 2 (Component)";
+    const relevanceClass = isCol1 ? "ncci-high-relevance" : "ncci-low-relevance";
+    
+    // Sanitized data for display
+    const safeColNum = escapeHtml(colNum);
+    const safeCol1 = escapeHtml(item.column1_code);
+    const safeCol2 = escapeHtml(item.column2_code);
+    const safeOther = escapeHtml(otherCode);
     
     html += `
-      <div class="result-card" style="border-left: 3px solid ${isCol1 ? 'var(--tint-teal)' : 'var(--text-danger)'};">
-        <div style="flex:1;">
-          <div style="font-weight: 600; font-size: 13px; color: var(--text-dark);">
-            <span style="opacity:0.6;">${relationship}:</span> 
-            <span style="font-family: monospace; background: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 4px;">${otherCode}</span>
-          </div>
-          <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
-            Modifier Allowed: <strong style="color:var(--text-dark)">${item.modifier_allowed === '1' ? 'Yes' : 'No'}</strong>
-            &bull; NCCI Category: PTP
-          </div>
+      <div class="ncci-card ${relevanceClass}">
+        <div class="ncci-header">Bundle Relationship • ${safeColNum}</div>
+        <div class="result-code-group">
+          <span class="ncci-code-block">${safeCol1}</span>
+          <span class="ncci-separator">+</span>
+          <span class="ncci-code-block">${safeCol2}</span>
+          <button class="copy-btn" data-code="${safeOther}" title="Copy Conflict Code">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+          </button>
+          ${item.modifier_allowed ? `<span class="result-badge">Mod Allowed: ${escapeHtml(item.modifier_allowed === '1' ? 'Yes' : 'No')}</span>` : ''}
+        </div>
+        <div class="result-desc">
+          <strong>Clinical Rule:</strong> These codes are clinically bundled. 
+          ${item.modifier_allowed === '1' ? 'A modifier (e.g., -59) may bypass this edit if performed at a separate site/session.' : 'No modifier bypass is permitted for this specific pair.'}
         </div>
       </div>
     `;
@@ -249,15 +313,3 @@ function renderNCCIResults(results, queryCode) {
   listContainer.innerHTML = html;
 }
 
-function attachCopyListeners() {
-  document.querySelectorAll('.copy-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const code = e.currentTarget.dataset.code;
-      navigator.clipboard.writeText(code).then(() => {
-        const originalIcon = e.currentTarget.innerHTML;
-        e.currentTarget.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-        setTimeout(() => e.currentTarget.innerHTML = originalIcon, 1500);
-      });
-    });
-  });
-}

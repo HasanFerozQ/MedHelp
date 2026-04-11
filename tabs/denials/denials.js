@@ -3,6 +3,33 @@ const denialSuggest = document.getElementById('denial-suggestions');
 const denialResults = document.getElementById('denial-results');
 
 let denialTimeout = null;
+let currentDenialSearchId = 0;
+
+// Security Helper: Escape dynamic data to prevent XSS
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// Event Delegation for Copy Buttons
+denialResults.addEventListener('click', (e) => {
+  const btn = e.target.closest('.copy-btn');
+  if (!btn) return;
+  
+  const code = btn.dataset.code;
+  navigator.clipboard.writeText(code)
+    .then(() => {
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+      setTimeout(() => btn.innerHTML = originalHtml, 1500);
+    })
+    .catch(err => console.warn('Clipboard failed:', err));
+});
 
 denialInput.addEventListener('input', (e) => {
   const query = e.target.value.trim().toUpperCase();
@@ -48,9 +75,9 @@ async function showSuggestions(q) {
     }
 
     denialSuggest.innerHTML = data.map(item => `
-      <div class="result-card suggestion-pill" data-code="${item.code}" style="cursor:pointer; border-style:dashed; margin-bottom:4px; padding:8px 12px;">
-        <span style="font-weight:700; color:var(--tint-teal);">${item.code}</span>
-        <span style="font-size:11px; margin-left:8px; opacity:0.8;">${item.description.substring(0, 30)}...</span>
+      <div class="result-card suggestion-pill" data-code="${escapeHtml(item.code)}" style="cursor:pointer; border-style:dashed; margin-bottom:4px; padding:8px 12px;">
+        <span style="font-weight:700; color:var(--tint-teal);">${escapeHtml(item.code)}</span>
+        <span style="font-size:11px; margin-left:8px; opacity:0.8;">${escapeHtml(item.description.substring(0, 30))}...</span>
       </div>
     `).join('');
 
@@ -75,8 +102,7 @@ async function searchDenials(query) {
   const qUpper = query.toUpperCase();
   const cleanQ = qUpper.replace(/[\-\s]/g, '');
   const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
-  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ;
-
+  const searchId = ++currentDenialSearchId; 
   denialResults.innerHTML = '<div class="empty-state">Decoding Registry...</div>';
 
   try {
@@ -84,6 +110,8 @@ async function searchDenials(query) {
       window.dbClient.from('carc_codes').select('*').or(`code.eq.${normQ},code.eq.${cleanQ},description.ilike.%${query}%`).limit(15),
       window.dbClient.from('rarc_codes').select('*').or(`code.eq.${normQ},code.eq.${cleanQ},description.ilike.%${query}%`).limit(15)
     ]);
+
+    if (searchId !== currentDenialSearchId) return; // Race condition guard
 
     const merged = [
       ...(carcRes.data || []).map(d => ({...d, type: 'CARC'})),
@@ -116,20 +144,26 @@ function displayDenials(results) {
     const isCarc = item.type === 'CARC';
     const tagClass = item.type; // "CARC" or "RARC"
     
+    // Escape all data components
+    const safeCode = escapeHtml(item.code);
+    const safeType = escapeHtml(item.type);
+    const safeDesc = escapeHtml(item.description);
+    const safeDate = item.effective_date ? new Date(item.effective_date).getFullYear() : null;
+
     return `
       <div class="result-card">
         <div class="result-header">
-          <span class="code-val">${item.code}</span>
-          <span class="code-tag tag-${tagClass}">${item.type}</span>
+          <span class="code-val">${safeCode}</span>
+          <span class="code-tag tag-${tagClass}">${safeType}</span>
           
           <div class="region-badges">
              <span class="reg-badge" style="background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); color: #10b981;">
                ● ACTIVE
              </span>
-             ${item.effective_date ? `<span class="reg-badge" style="border:none; opacity:0.7;">Since ${new Date(item.effective_date).getFullYear()}</span>` : ''}
+             ${safeDate ? `<span class="reg-badge" style="border:none; opacity:0.7;">Since ${safeDate}</span>` : ''}
           </div>
 
-          <button class="copy-btn" data-code="${item.code}" title="Copy to clipboard">
+          <button class="copy-btn" data-code="${safeCode}" title="Copy to clipboard">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
           </button>
         </div>
@@ -142,20 +176,12 @@ function displayDenials(results) {
              }
            </div>
            <div style="font-size: 14.5px; line-height: 1.5; color: var(--text-body);">
-             ${item.description}
+             ${safeDesc}
            </div>
         </div>
       </div>
     `;
   }).join('');
   
-  // Bind copy buttons natively just like Codesearch does
-  denialResults.querySelectorAll('.copy-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      navigator.clipboard.writeText(btn.dataset.code);
-      const originalHtml = btn.innerHTML;
-      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-      setTimeout(() => btn.innerHTML = originalHtml, 1500);
-    });
-  });
+  // attachCopyListeners(); // DEPRECATED: Using event delegation now
 }
