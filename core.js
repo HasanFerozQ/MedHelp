@@ -42,6 +42,17 @@ function debounce(fn, wait) {
   };
 }
 
+// 4. Shared Utils: Security Helper (Escape HTML)
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // 4. Shared Utils: FAQ Rendering
 function renderFAQ(containerId, items) {
   const el = document.getElementById(containerId);
@@ -230,3 +241,5 @@ window.debounce = debounce;
 window.renderFAQ = renderFAQ;
 window.toggleFAQ = toggleFAQ;
 window.switchTab = switchTab;
+window.escapeHtml = escapeHtml;
+window.sanitizeText = escapeHtml; // Alias for backward compatibility in audit modules

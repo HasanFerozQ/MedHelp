@@ -4,16 +4,7 @@ let searchTimeout = null;
 let currentSearchId = 0; // Prevent race conditions
 const MAX_WAIT_ATTEMPTS = 20; // 2 seconds max wait for DB init
 
-// Security Helper: Escape dynamic data to prevent XSS
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
+const MAX_WAIT_ATTEMPTS = 20; // 2 seconds max wait for DB init
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -259,7 +250,7 @@ function renderResults(results, rawCount = 0, rawFetchLimit = 150) {
                 return `<span class="reg-badge ${reg.toLowerCase()} ${active ? '' : 'inactive'}">${reg}${active ? '' : ': N/A'}</span>`;
               }).join('')}
             </div>
-            <button class="copy-btn" data-code="${escapeHtml(item.code)}" title="Copy to clipboard">
+            <button class="copy-btn" data-code="${item.code}" title="Copy to clipboard">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             </button>
           </div>
@@ -302,7 +293,7 @@ function renderNCCIResults(results, queryCode) {
           <span class="ncci-code-block">${safeCol1}</span>
           <span class="ncci-separator">+</span>
           <span class="ncci-code-block">${safeCol2}</span>
-          <button class="copy-btn" data-code="${safeOther}" title="Copy Conflict Code">
+          <button class="copy-btn" data-code="${otherCode}" title="Copy Conflict Code">
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
           </button>
           ${item.modifier_allowed ? `<span class="result-badge">Mod Allowed: ${escapeHtml(item.modifier_allowed === '1' ? 'Yes' : 'No')}</span>` : ''}

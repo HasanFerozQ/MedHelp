@@ -5,17 +5,6 @@ const denialResults = document.getElementById('denial-results');
 let denialTimeout = null;
 let currentDenialSearchId = 0;
 
-// Security Helper: Escape dynamic data to prevent XSS
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
 // Event Delegation for Copy Buttons
 denialResults.addEventListener('click', (e) => {
   const btn = e.target.closest('.copy-btn');
@@ -60,8 +49,8 @@ async function showSuggestions(q) {
   // 2. Detect common prefixes like CO, MA, M, N, PR, OA, PI, CR
   const cleanQ = q.replace(/[\-\s]/g, '').toUpperCase();
   const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
-  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ;
-
+  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; // [High] Fix: normQ defined here
+  const searchId = ++currentDenialSearchId; 
   try {
     const { data } = await window.dbClient
       .from('carc_codes')
@@ -69,25 +58,30 @@ async function showSuggestions(q) {
       .or(`code.ilike.%${normQ}%,code.ilike.%${cleanQ}%,description.ilike.%${q}%`)
       .limit(3);
 
+    // [High] Race Condition Guard: If a newer search has started, discard this result
+    if (searchId !== currentDenialSearchId) return;
+
     if (!data || data.length === 0) {
       denialSuggest.innerHTML = '';
       return;
     }
 
     denialSuggest.innerHTML = data.map(item => `
-      <div class="result-card suggestion-pill" data-code="${escapeHtml(item.code)}" style="cursor:pointer; border-style:dashed; margin-bottom:4px; padding:8px 12px;">
+      <div class="result-card suggestion-pill" data-code="${item.code}" style="cursor:pointer; border-style:dashed; margin-bottom:4px; padding:8px 12px;">
         <span style="font-weight:700; color:var(--tint-teal);">${escapeHtml(item.code)}</span>
         <span style="font-size:11px; margin-left:8px; opacity:0.8;">${escapeHtml(item.description.substring(0, 30))}...</span>
       </div>
     `).join('');
 
-    document.querySelectorAll('.suggestion-pill').forEach(el => {
-      el.addEventListener('click', () => {
-        denialInput.value = el.dataset.code;
+    // [Low] Suggestion Pill Event Delegation
+    denialSuggest.onclick = (e) => {
+      const pill = e.target.closest('.suggestion-pill');
+      if (pill) {
+        denialInput.value = pill.dataset.code;
         denialSuggest.innerHTML = '';
-        searchDenials(el.dataset.code);
-      });
-    });
+        searchDenials(pill.dataset.code);
+      }
+    };
   } catch (e) {
     denialSuggest.innerHTML = '';
   }
@@ -102,13 +96,14 @@ async function searchDenials(query) {
   const qUpper = query.toUpperCase();
   const cleanQ = qUpper.replace(/[\-\s]/g, '');
   const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
+  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; // [High] Fix: normQ was undefined
   const searchId = ++currentDenialSearchId; 
   denialResults.innerHTML = '<div class="empty-state">Decoding Registry...</div>';
 
   try {
     const [carcRes, rarcRes] = await Promise.all([
-      window.dbClient.from('carc_codes').select('*').or(`code.eq.${normQ},code.eq.${cleanQ},description.ilike.%${query}%`).limit(15),
-      window.dbClient.from('rarc_codes').select('*').or(`code.eq.${normQ},code.eq.${cleanQ},description.ilike.%${query}%`).limit(15)
+      window.dbClient.from('carc_codes').select('*').or(`code.eq."${normQ}",code.eq."${cleanQ}",description.ilike.%${query}%`).limit(50),
+      window.dbClient.from('rarc_codes').select('*').or(`code.eq."${normQ}",code.eq."${cleanQ}",description.ilike.%${query}%`).limit(50)
     ]);
 
     if (searchId !== currentDenialSearchId) return; // Race condition guard
@@ -125,22 +120,28 @@ async function searchDenials(query) {
 
     // Sort: Exact matches first
     merged.sort((a, b) => {
-      const aMatch = a.code === normQ || a.code === cleanQ;
-      const bMatch = b.code === normQ || b.code === cleanQ;
-      if (aMatch && !bMatch) return -1;
-      if (bMatch && !aMatch) return 1;
+      const aExact = a.code === normQ || a.code === cleanQ;
+      const bExact = b.code === normQ || b.code === cleanQ;
+      if (aExact && !bExact) return -1;
+      if (bExact && !aExact) return 1;
       return a.code.localeCompare(b.code);
     });
 
-    displayDenials(merged);
+    displayDenials(merged, normQ, cleanQ);
   } catch (err) {
     console.error(err);
     denialResults.innerHTML = '<div class="empty-state" style="color:var(--text-danger)">Error searching database.</div>';
   }
 }
 
-function displayDenials(results) {
-  denialResults.innerHTML = results.map(item => {
+function displayDenials(results, normQ, cleanQ) {
+  // [Low] Show result count based on raw merged list
+  const count = results.length;
+  let html = `<div class="results-count" style="margin-left:2px; margin-bottom:12px; font-size:13px; color:var(--text-muted); font-weight:500;">
+                Showing <b>${count}</b> matching denial codes
+              </div>`;
+
+  html += results.map(item => {
     const isCarc = item.type === 'CARC';
     const tagClass = item.type; // "CARC" or "RARC"
     
@@ -163,8 +164,8 @@ function displayDenials(results) {
              ${safeDate ? `<span class="reg-badge" style="border:none; opacity:0.7;">Since ${safeDate}</span>` : ''}
           </div>
 
-          <button class="copy-btn" data-code="${safeCode}" title="Copy to clipboard">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <button class="copy-btn" data-code="${item.code}" title="Copy to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
           </button>
         </div>
         
@@ -183,5 +184,5 @@ function displayDenials(results) {
     `;
   }).join('');
   
-  // attachCopyListeners(); // DEPRECATED: Using event delegation now
+  denialResults.innerHTML = html;
 }

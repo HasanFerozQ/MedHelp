@@ -19,16 +19,16 @@ function renderResultCardsPerLineItem(rows, findings, container) {
     let statusText = 'No issues found';
     
     if (relatedFindings.some(f => f.type === 'danger' || ['arithmetic', 'duplicate'].includes(f.category))) {
-       color = '#ef4444'; border = '#ef4444'; bg = 'rgba(239, 68, 68, 0.05)'; statusText = 'Critical Errors Detected';
+       color = '#ef4444'; border = '#ef4444'; bg = 'rgba(239, 68, 68, 0.05)'; statusClass = 'audit-row-error'; statusText = 'Critical Errors Detected';
     } else if (relatedFindings.length > 0) {
-       color = '#eab308'; border = '#eab308'; bg = 'rgba(234, 179, 8, 0.05)'; statusText = 'Warnings Identified';
+       color = '#f59e0b'; border = '#f59e0b'; bg = 'rgba(245, 158, 11, 0.05)'; statusClass = 'audit-row-warn'; statusText = 'Warnings Identified';
     } else {
-       color = '#22c55e'; border = '#22c55e'; bg = 'rgba(34, 197, 94, 0.05)'; statusText = 'Clean Charge';
+       color = '#10b981'; border = '#10b981'; bg = 'rgba(16, 185, 129, 0.05)'; statusClass = 'audit-row-clean'; statusText = 'Clean Charge';
     }
 
     const s = (v) => window.sanitizeText(String(v || ''));
     html += `
-      <div style="border-left: 4px solid ${border}; background: ${bg}; border-radius: 8px; padding: 14px 16px; display:flex; flex-direction:column; gap:8px;">
+      <div class="${statusClass}" style="border-left: 4px solid ${border}; background: ${bg}; border-radius: 8px; padding: 14px 16px; display:flex; flex-direction:column; gap:8px; margin-bottom: 12px; transition: all 0.2s;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div style="font-weight:800; color:var(--text-h); font-size:14px; font-family:monospace; display:flex; align-items:center;">
             ${s(r.code) || 'Uncoded'}
@@ -59,7 +59,35 @@ function renderResultCardsPerLineItem(rows, findings, container) {
     `;
   });
   
-  container.innerHTML = html;
+    container.innerHTML = html;
+    
+    // Update Real-time Summary Header (v8.5)
+    updateAuditSummaryOverlay(findings);
+  } else {
+    container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 13px;">Add elements above to see live findings here.</div>';
+    const overlay = document.getElementById('audit-summary-overlay');
+    if (overlay) overlay.style.display = 'none';
+  }
+}
+
+function updateAuditSummaryOverlay(findings) {
+  const overlay = document.getElementById('audit-summary-overlay');
+  if (!overlay) return;
+
+  const savingsField = document.getElementById('stat-total-savings');
+  const billedField  = document.getElementById('stat-total-billed');
+  
+  const totalSavings = window.currentEngineSavings || 0;
+  // Calculate total billed from current rows
+  const totalBilled = (window.appGridRows || []).reduce((s, r) => s + (parseFloat(r.total) || 0), 0);
+
+  if (totalBilled > 0) {
+    overlay.style.display = 'flex';
+    if (savingsField) savingsField.innerText = `$${totalSavings.toFixed(2)}`;
+    if (billedField)  billedField.innerText  = `$${totalBilled.toFixed(2)}`;
+  } else {
+    overlay.style.display = 'none';
+  }
 }
 
 window.renderResultCardsPerLineItem = renderResultCardsPerLineItem;

@@ -164,6 +164,23 @@
       <div id="live-results-section" style="margin-bottom: 30px;">
         <h3 style="font-size: 16px; margin: 0 0 15px; color: var(--text-h); padding-bottom: 10px; border-bottom: 1px solid var(--border);">📊 Audit Results</h3>
         <div id="result-cards-container" style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- Real-time Summary Header (v8.5) -->
+          <div id="audit-summary-overlay" class="audit-summary-header" style="display: none;">
+            <div class="audit-stat-group">
+              <div class="audit-stat">
+                <span class="audit-stat-label">Total Billed</span>
+                <span id="stat-total-billed" class="audit-stat-value">$0.00</span>
+              </div>
+              <div class="audit-stat">
+                <span class="audit-stat-label">Potential Savings</span>
+                <span id="stat-total-savings" class="audit-stat-value savings">$0.00</span>
+              </div>
+            </div>
+            <button class="generate-case-btn" onclick="handleAuditExport('dispute')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Generate Dispute Letter
+            </button>
+          </div>
           <div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 13px;">Add elements above to see live findings here.</div>
         </div>
       </div>

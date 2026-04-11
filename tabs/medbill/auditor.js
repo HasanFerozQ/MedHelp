@@ -62,21 +62,34 @@ class BucketAuditor {
       const presentCodes = new Set(entries.map(e => e.r.code));
 
       entries.forEach(({ r, idx }) => {
-        const primarySet = (window.NCCI_PAIRS || {})[r.code];
-        if (!primarySet) return;
+        // [High] Respect NCCI modifier_allowed flag (0 = Hard bundle, 1 = Soft bundle)
+        const ruleSet = (window.NCCI_PAIRS || {})[r.code];
+        if (!ruleSet) return;
 
-        const conflictingPrimary = [...primarySet].find(p => presentCodes.has(p));
-        if (!conflictingPrimary) return;
+        // Find if any other present code is a parent/child conflict
+        for (const [otherCode, meta] of Object.entries(ruleSet)) {
+          if (!presentCodes.has(otherCode)) continue;
 
-        const mod = (r.modifier || '').replace(/^-/, '');
-        if (['59', 'XE', 'XS', 'XP', 'XU'].includes(mod)) return;
+          const isHardBundle = meta.modifierAllowed === '0';
+          const mod = (r.modifier || '').replace(/^-/, '');
+          const hasBypassMod = ['59', 'XE', 'XS', 'XP', 'XU'].includes(mod);
 
-        this.addFinding('bundling', 'NCCI Bundle Violation',
-          `CPT ${r.code} is a component service of ${conflictingPrimary} per CMS NCCI edits (CMS Claims Processing Manual, Chapter 23) and should not be billed separately on ${date}. Add -59 modifier only if service was truly distinct.`,
-          'danger', r.code);
-        if (r.raw) r.raw.classList.add('audit-row-error');
-        this.addRowSavings(idx, r.total, r.total);
-        this.voidRow(idx); // voided — no further savings
+          if (isHardBundle || !hasBypassMod) {
+            const severity = isHardBundle ? 'danger' : 'warn';
+            const reason = isHardBundle 
+              ? `Hard Bundle: ${r.code} is a component of ${otherCode} and NO modifier can bypass this edit per CMS.`
+              : `Soft Bundle: ${r.code} is a component of ${otherCode}. Missing bypass modifier (-59, -XE, etc.) detected.`;
+
+            this.addFinding('bundling', 'NCCI Bundle Violation',
+              `${reason} Date: ${date}. (CMS NCCI Edits, Chapter 1)`,
+              severity, r.code);
+            
+            if (r.raw) r.raw.classList.add(isHardBundle ? 'audit-row-error' : 'audit-row-warn');
+            this.addRowSavings(idx, r.total, r.total);
+            this.voidRow(idx); 
+            break; // found one conflict, that's enough to flag the row
+          }
+        }
       });
     });
   }
@@ -176,32 +189,57 @@ class BucketAuditor {
       const key = `${r.date || 'UNDATED'}|${r.code}`;
       (freq[key] = freq[key] || []).push({ r, idx });
     });
+
     Object.entries(freq).forEach(([key, entries]) => {
-      const code  = entries[0].r.code;
-      const limit = (window.MUE_LIMITS || {})[code];
-      if (!limit) return;
-      const totalUnits = entries.reduce((s, e) => s + (parseInt(e.r.qty, 10) || 1), 0);
-      if (totalUnits > limit) {
-        const date = entries[0].r.date || 'same date';
-        this.addFinding('frequency', 'Frequency Limit Exceeded (MUE)',
-          `CPT ${code} billed ${totalUnits}× units on ${date}. CMS Medicare MUE guidelines limit this code to ${limit}/day. Excess units are non-payable.`,
-          'danger', code);
-        let allowance = limit;
+      const code = entries[0].r.code;
+      const mData = (window.MUE_METADATA || {})[code];
+      const limit = mData ? mData.limit : (window.MUE_LIMITS || {})[code];
+      if (limit === undefined) return;
+
+      const mai = mData ? mData.mai : '1'; // Default to MAI 1 (Line Item)
+      const date = entries[0].r.date || 'same date';
+      
+      // [High] MAI-Aware Adjudication
+      // MAI 1: Adjudicated per line item.
+      // MAI 2/3: Adjudicated per Date of Service (DOS).
+      
+      if (mai === '1') {
+        // PER LINE ITEM
         entries.forEach(e => {
-          if (this._voidedRows.has(e.idx)) return;
           const rowQty = Math.min(Math.max(parseInt(e.r.qty, 10) || 1, 1), 999);
-          if (allowance <= 0) {
-            this.addRowSavings(e.idx, e.r.total, e.r.total);
-            this.voidRow(e.idx);
-          } else if (rowQty > allowance) {
+          if (rowQty > limit) {
+            this.addFinding('frequency', 'Line Item Frequency Violation (MUE MAI 1)',
+              `CPT ${code} billed at ${rowQty} units. CMS MUE limit for this line item is ${limit}. (MAI 1: Line Item Adjudication)`,
+              'danger', code);
             const unitPrice = e.r.total / rowQty;
-            const excess    = rowQty - allowance;
-            this.addRowSavings(e.idx, excess * unitPrice, e.r.total);
-            allowance = 0;
-          } else {
-            allowance -= rowQty;
+            this.addRowSavings(e.idx, (rowQty - limit) * unitPrice, e.r.total);
+            if (e.r.raw) e.r.raw.classList.add('audit-row-error');
           }
         });
+      } else {
+        // PER DATE OF SERVICE (MAI 2 or 3)
+        const totalUnits = entries.reduce((s, e) => s + (parseInt(e.r.qty, 10) || 1), 0);
+        if (totalUnits > limit) {
+          const typeLabel = mai === '2' ? 'MAI 2: Absolute Date of Service' : 'MAI 3: Clinical Date of Service';
+          this.addFinding('frequency', `Daily Frequency Violation (MUE ${mai})`,
+            `CPT ${code} sum units (${totalUnits}) on ${date} exceeds CMS limit of ${limit}. (${typeLabel})`,
+            'danger', code);
+          
+          let allowance = limit;
+          entries.forEach(e => {
+            const rowQty = Math.min(Math.max(parseInt(e.r.qty, 10) || 1, 1), 999);
+            if (allowance <= 0) {
+              this.addRowSavings(e.idx, e.r.total, e.r.total);
+              this.voidRow(e.idx);
+            } else if (rowQty > allowance) {
+              const unitPrice = e.r.total / rowQty;
+              this.addRowSavings(e.idx, (rowQty - allowance) * unitPrice, e.r.total);
+              allowance = 0;
+            } else {
+              allowance -= rowQty;
+            }
+          });
+        }
       }
     });
   }
@@ -666,13 +704,12 @@ class BucketAuditor {
       }
     } catch (_) {}
 
-    // ── Merge DB MUE limits into the runtime window.MUE_LIMITS ──────────────
+    // ── Merge DB MUE limits into the runtime window ──────────────────────
     if (Object.keys(mueMap).length > 0) {
-      const liveMUE = window.MUE_LIMITS || {};
+      window.MUE_METADATA = window.MUE_METADATA || {};
       Object.entries(mueMap).forEach(([code, m]) => {
-        liveMUE[code] = m.limit;
+        window.MUE_METADATA[code] = { limit: m.limit, mai: m.mai, desc: m.desc };
       });
-      window.MUE_LIMITS = liveMUE;
       // Remove stale frequency findings before re-run to avoid double-counting
       this.findings = this.findings.filter(f => f.category !== 'frequency');
       this.runFrequencyAudit();
@@ -685,8 +722,8 @@ class BucketAuditor {
         const col1 = edit.column1_code;
         const col2 = edit.column2_code;
         if (!col1 || !col2) return;
-        if (!livePairs[col1]) livePairs[col1] = new Set();
-        livePairs[col1].add(col2);
+        if (!livePairs[col1]) livePairs[col1] = {};
+        livePairs[col1][col2] = { modifierAllowed: edit.modifier_allowed };
       });
       window.NCCI_PAIRS = livePairs;
       // Remove stale bundling findings before re-run to avoid double-counting
