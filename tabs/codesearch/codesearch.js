@@ -56,7 +56,7 @@ async function performSearch(query) {
     return;
   }
 
-  const cleanQ = query.replace(/\./g, '').toUpperCase();
+  const cleanQ = query.replace(/[\.\-\s]/g, '').toUpperCase();
   listContainer.innerHTML = '<div class="empty-state">Querying Global Registry...</div>';
 
   try {
@@ -80,7 +80,8 @@ async function performSearch(query) {
 
     if (/^[A-Z0-9.]+$/i.test(cleanQ)) {
       // If it looks like a code, search by code or description
-      dbQuery = dbQuery.or(`code.ilike.%${cleanQ}%,short_description.ilike.%${query}%`);
+      // For codes, we strip the format to match the DB
+      dbQuery = dbQuery.or(`code.ilike.${cleanQ}%,code.eq.${cleanQ},short_description.ilike.%${query}%`);
     } else {
       // If it looks like text, search for each word in description for better coverage
       const words = query.split(/\s+/).filter(w => w.length > 2);
@@ -129,11 +130,17 @@ async function performSearch(query) {
 
     // 6. Sort by relevance (exact match first)
     finalResults.sort((a, b) => {
-      if (a.code === cleanQ && b.code !== cleanQ) return -1;
-      if (b.code === cleanQ && a.code !== cleanQ) return 1;
-      if (a.code.startsWith(cleanQ) && !b.code.startsWith(cleanQ)) return -1;
-      if (b.code.startsWith(cleanQ) && !a.code.startsWith(cleanQ)) return 1;
-      return 0;
+      const aExact = a.code === cleanQ;
+      const bExact = b.code === cleanQ;
+      if (aExact && !bExact) return -1;
+      if (bExact && !aExact) return 1;
+      
+      const aStarts = a.code.startsWith(cleanQ);
+      const bStarts = b.code.startsWith(cleanQ);
+      if (aStarts && !bStarts) return -1;
+      if (bStarts && !aStarts) return 1;
+      
+      return a.code.localeCompare(b.code);
     });
 
     renderResults(finalResults);

@@ -33,8 +33,15 @@ async function searchNPI() {
     if (/^\d{10}$/.test(query)) {
       url += `number=${query}`;
     } else {
+      const orgKeywords = ['CLINIC', 'HOSPITAL', 'LLC', 'CENTER', 'MEDICAL', 'GROUP', 'CARE', 'UNIVERSITY', 'HEALTH', 'INC', 'SPECIALISTS'];
+      const queryUpper = query.toUpperCase();
+      const isOrgHint = orgKeywords.some(kw => queryUpper.includes(kw));
+      
       const parts = query.trim().split(/\s+/);
-      if (parts.length >= 2) {
+      
+      if (isOrgHint || parts.length === 1) {
+        url += `organization_name=${encodeURIComponent(query)}*`;
+      } else if (parts.length >= 2) {
         url += `first_name=${encodeURIComponent(parts[0])}*&last_name=${encodeURIComponent(parts.slice(1).join(' '))}*`;
       } else {
         url += `organization_name=${encodeURIComponent(query)}*`;

@@ -14,9 +14,12 @@ module.exports = async (req, res) => {
     if (organization_name) url += `&organization_name=${encodeURIComponent(organization_name)}`;
     if (state) url += `&state=${encodeURIComponent(state)}`;
     
-    // Add logic to guess enumeration type to help CMS filter
-    if (organization_name && !first_name) url += '&enumeration_type=NPI-2';
-    if (first_name || last_name) url += '&enumeration_type=NPI-1';
+    // Heuristic for enumeration type
+    if (organization_name && !first_name && !last_name) {
+      url += '&enumeration_type=NPI-2';
+    } else if (first_name || last_name) {
+      url += '&enumeration_type=NPI-1';
+    }
   }
 
   https.get(url, (cmsRes) => {

@@ -27,14 +27,19 @@ denialInput.addEventListener('input', (e) => {
 
 async function showSuggestions(q) {
   if (!window.dbClient) return;
-  // If query is alphanumeric like MA01, don't force hyphen unless it's a known group-carc format
-  const normQ = q.match(/^(CO|PR|OA|PI|CR)(\d+)$/i) ? q.replace(/^(CO|PR|OA|PI|CR)(\d+)$/i, '$1-$2') : q;
+
+  // Modern normalization:
+  // 1. Strip hyphens/spaces for internal matching
+  // 2. Detect common prefixes like CO, MA, M, N, PR, OA, PI, CR
+  const cleanQ = q.replace(/[\-\s]/g, '').toUpperCase();
+  const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
+  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ;
 
   try {
     const { data } = await window.dbClient
       .from('carc_codes')
       .select('code, description')
-      .or(`code.ilike.%${normQ}%,description.ilike.%${q}%`)
+      .or(`code.ilike.%${normQ}%,code.ilike.%${cleanQ}%,description.ilike.%${q}%`)
       .limit(3);
 
     if (!data || data.length === 0) {
@@ -68,14 +73,16 @@ async function searchDenials(query) {
   }
 
   const qUpper = query.toUpperCase();
-  const normQ = qUpper.match(/^(CO|PR|OA|PI|CR)(\d+)$/i) ? qUpper.replace(/^(CO|PR|OA|PI|CR)(\d+)$/i, '$1-$2') : qUpper;
+  const cleanQ = qUpper.replace(/[\-\s]/g, '');
+  const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
+  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ;
 
-  denialResults.innerHTML = '<div class="empty-state">Decoding...</div>';
+  denialResults.innerHTML = '<div class="empty-state">Decoding Registry...</div>';
 
   try {
     const [carcRes, rarcRes] = await Promise.all([
-      window.dbClient.from('carc_codes').select('*').or(`code.ilike.%${normQ}%,description.ilike.%${query}%`).limit(10),
-      window.dbClient.from('rarc_codes').select('*').or(`code.ilike.%${normQ}%,description.ilike.%${query}%`).limit(10)
+      window.dbClient.from('carc_codes').select('*').or(`code.eq.${normQ},code.eq.${cleanQ},description.ilike.%${query}%`).limit(15),
+      window.dbClient.from('rarc_codes').select('*').or(`code.eq.${normQ},code.eq.${cleanQ},description.ilike.%${query}%`).limit(15)
     ]);
 
     const merged = [
@@ -84,9 +91,18 @@ async function searchDenials(query) {
     ];
 
     if (merged.length === 0) {
-      denialResults.innerHTML = `<div class="empty-state">No matching denial codes for "${query}".</div>`;
+      denialResults.innerHTML = `<div class="empty-state">No matching codes for "${query}". <br><small style="opacity:0.6;">Try: CO-45, M15, or keywords like 'duplicate'.</small></div>`;
       return;
     }
+
+    // Sort: Exact matches first
+    merged.sort((a, b) => {
+      const aMatch = a.code === normQ || a.code === cleanQ;
+      const bMatch = b.code === normQ || b.code === cleanQ;
+      if (aMatch && !bMatch) return -1;
+      if (bMatch && !aMatch) return 1;
+      return a.code.localeCompare(b.code);
+    });
 
     displayDenials(merged);
   } catch (err) {
