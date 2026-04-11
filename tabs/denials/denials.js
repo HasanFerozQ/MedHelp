@@ -2,6 +2,16 @@ const denialInput = document.getElementById('denial-search-input');
 const denialSuggest = document.getElementById('denial-suggestions');
 const denialResults = document.getElementById('denial-results');
 
+const escapeHtml = (str) => {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+};
+
 let denialTimeout = null;
 let currentDenialSearchId = 0;
 
@@ -101,9 +111,10 @@ async function searchDenials(query) {
   denialResults.innerHTML = '<div class="empty-state">Decoding Registry...</div>';
 
   try {
+    // [High] Robust matching: Exact Code OR starts with normQ/cleanQ OR keyword in description
     const [carcRes, rarcRes] = await Promise.all([
-      window.dbClient.from('carc_codes').select('*').or(`code.eq."${normQ}",code.eq."${cleanQ}",description.ilike.%${query}%`).limit(50),
-      window.dbClient.from('rarc_codes').select('*').or(`code.eq."${normQ}",code.eq."${cleanQ}",description.ilike.%${query}%`).limit(50)
+      window.dbClient.from('carc_codes').select('*').or(`code.ilike.${normQ}%,code.ilike.${cleanQ}%,description.ilike.%${query}%`).limit(50),
+      window.dbClient.from('rarc_codes').select('*').or(`code.ilike.${normQ}%,code.ilike.${cleanQ}%,description.ilike.%${query}%`).limit(50)
     ]);
 
     if (searchId !== currentDenialSearchId) return; // Race condition guard

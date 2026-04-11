@@ -4,12 +4,20 @@ let searchTimeout = null;
 let currentSearchId = 0; // Prevent race conditions
 const MAX_WAIT_ATTEMPTS = 20; // 2 seconds max wait for DB init
 
-const MAX_WAIT_ATTEMPTS = 20; // 2 seconds max wait for DB init
-
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
 });
+
+const escapeHtml = (str) => {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+};
 
 function setupEventListeners() {
   const searchInput = document.getElementById('code-search-input');
