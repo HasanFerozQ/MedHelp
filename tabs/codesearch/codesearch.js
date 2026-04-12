@@ -97,7 +97,13 @@ async function performSearch(query) {
   }
 
   const searchId = ++currentSearchId; 
-  const cleanQ = query.replace(/[\.\-\s]/g, '').toUpperCase();
+  const cleanQ = query.replace(/[\.\-\s\,]/g, '').toUpperCase();
+  // Create a dotted variant automatically for 4+ char ICD-10 codes missing the dot (Smart Dot Injection)
+  let dottedQ = cleanQ;
+  if (/^[A-Z]\d{2}[A-Z0-9]+$/.test(cleanQ) && !cleanQ.includes('.')) {
+    dottedQ = cleanQ.substring(0, 3) + '.' + cleanQ.substring(3);
+  }
+
   // [High] Handle leading zeros for numeric CPT codes (e.g. 099213 -> 99213)
   const cleanQFiltered = (cleanQ.startsWith('0') && cleanQ.length >= 5 && /^\d+$/.test(cleanQ)) ? cleanQ.replace(/^0+/, '') : cleanQ;
   
@@ -120,10 +126,10 @@ async function performSearch(query) {
       return;
     }
 
-    // [Medium] Robust sanitization for safeQuery (dots are allowed for ICD-10)
-    const safeQuery = query.replace(/[^a-zA-Z0-9\s\.\-]/g, '').trim();
+    // [Medium] Robust sanitization for safeQuery (dots and commas allowed to be parsed/ignored safely)
+    const safeQuery = query.replace(/[^a-zA-Z0-9\s\.\-\,]/g, '').trim();
     // [High] Support hyphens in code-likelihood detection (e.g. I-10)
-    const isCodeLikely = /^[A-Z0-9.\-]+$/i.test(query.trim()) && query.trim().length < 10;
+    const isCodeLikely = /^[A-Z0-9.\-\,]+$/i.test(query.trim()) && query.trim().length < 10;
     const isPhrase = query.trim().includes(' ');
 
     let dbQuery = window.dbClient
@@ -138,15 +144,16 @@ async function performSearch(query) {
     }
 
     if (isCodeLikely && !isPhrase) {
-      // [High] Match dotted (safeQuery) AND dotless (cleanQ/cleanQFiltered) formats for perfect ICD-10 matching
-      dbQuery = dbQuery.or(`code.ilike.${safeQuery}%,code.ilike.${cleanQ}%,code.ilike.${cleanQFiltered}%,short_description.ilike.%${safeQuery}%`);
+      // [High] Match dotted, dotless, and Smart Dot injected combinations
+      // IMPORTANT: Wrapped in double quotes to prevent API crashes on special characters (the "disconnect" bug)
+      dbQuery = dbQuery.or(`code.ilike."${safeQuery}%",code.ilike."${cleanQ}%",code.ilike."${cleanQFiltered}%",code.ilike."${dottedQ}%",short_description.ilike."%${safeQuery}%"`);
     } else {
       // Phrase/word search
-      const words = query.split(/\s+/).filter(w => w.length >= 2);
+      const words = safeQuery.replace(/[\.\-\,]/g, ' ').split(/\s+/).filter(w => w.length >= 2);
       if (words.length > 0) {
-        // Match any word OR the full phrase — no quotes, no word-boundary tricks
-        const wordFilters = words.map(w => `short_description.ilike.%${w}%`);
-        const fullPhrase = `short_description.ilike.%${safeQuery}%`;
+        // Wrap all terms in double quotes for database safety against SQL injection or parser crashes
+        const wordFilters = words.map(w => `short_description.ilike."%${w}%"`);
+        const fullPhrase = `short_description.ilike."%${safeQuery}%"`;
         dbQuery = dbQuery.or([...wordFilters, fullPhrase].join(','));
       } else {
         dbQuery = dbQuery.ilike('short_description', `%${safeQuery}%`);
@@ -199,8 +206,8 @@ async function performSearch(query) {
 
     // 5. Sort by relevance (Exact matches first, then starts-with phrases)
     finalResults.sort((a, b) => {
-      const aExact = a.code === cleanQ || a.code === cleanQFiltered;
-      const bExact = b.code === cleanQ || b.code === cleanQFiltered;
+      const aExact = a.code === cleanQ || a.code === cleanQFiltered || a.code === dottedQ;
+      const bExact = b.code === cleanQ || b.code === cleanQFiltered || b.code === dottedQ;
       if (aExact && !bExact) return -1;
       if (bExact && !aExact) return 1;
       

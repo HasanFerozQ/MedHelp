@@ -55,17 +55,21 @@ async function showSuggestions(q) {
   if (!window.dbClient) return;
 
   // Modern normalization:
-  // 1. Strip hyphens/spaces for internal matching
-  // 2. Detect common prefixes like CO, MA, M, N, PR, OA, PI, CR
-  const cleanQ = q.replace(/[\-\s]/g, '').toUpperCase();
+  // Strip hyphens, spaces, dots, and commas to prevent parser crash and find matches easily
+  const cleanQ = q.replace(/[\-\s\.\,]/g, '').toUpperCase();
   const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
-  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; // [High] Fix: normQ defined here
+  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; 
+  
+  // Strip double quotes to prevent API string breaks
+  const safeDescQ = q.replace(/"/g, '').trim(); 
+  
   const searchId = ++currentDenialSearchId; 
   try {
+    // Wrap inside double quotes to protect PostgREST from 500 errors
     const { data } = await window.dbClient
       .from('carc_codes')
       .select('code, description')
-      .or(`code.ilike.%${normQ}%,code.ilike.%${cleanQ}%,description.ilike.%${q}%`)
+      .or(`code.ilike."${normQ}%",code.ilike."${cleanQ}%",description.ilike."%${safeDescQ}%"`)
       .limit(3);
 
     // [High] Race Condition Guard: If a newer search has started, discard this result
@@ -104,17 +108,21 @@ async function searchDenials(query) {
   }
 
   const qUpper = query.toUpperCase();
-  const cleanQ = qUpper.replace(/[\-\s]/g, '');
+  const cleanQ = qUpper.replace(/[\-\s\.\,]/g, '');
   const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
-  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; // [High] Fix: normQ was undefined
+  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; 
+  
+  // Strip double quotes to prevent API string breaks
+  const safeDescQ = query.replace(/"/g, '').trim(); 
+  
   const searchId = ++currentDenialSearchId; 
   denialResults.innerHTML = '<div class="empty-state">Decoding Registry...</div>';
 
   try {
-    // [High] Robust matching: Exact Code OR starts with normQ/cleanQ OR keyword in description
+    // [High] Robust matching: Wrapped in double quotes to prevent API crashes on commas/spaces
     const [carcRes, rarcRes] = await Promise.all([
-      window.dbClient.from('carc_codes').select('*').or(`code.ilike.${normQ}%,code.ilike.${cleanQ}%,description.ilike.%${query}%`).limit(50),
-      window.dbClient.from('rarc_codes').select('*').or(`code.ilike.${normQ}%,code.ilike.${cleanQ}%,description.ilike.%${query}%`).limit(50)
+      window.dbClient.from('carc_codes').select('*').or(`code.ilike."${normQ}%",code.ilike."${cleanQ}%",description.ilike."%${safeDescQ}%"`).limit(50),
+      window.dbClient.from('rarc_codes').select('*').or(`code.ilike."${normQ}%",code.ilike."${cleanQ}%",description.ilike."%${safeDescQ}%"`).limit(50)
     ]);
 
     if (searchId !== currentDenialSearchId) return; // Race condition guard
