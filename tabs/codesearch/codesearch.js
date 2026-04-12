@@ -242,7 +242,8 @@ async function performSearch(query) {
         .then(({data: locData}) => {
           if (!locData) return;
           locData.forEach(row => {
-            const domBadges = document.querySelectorAll(`.reg-badge-for-${row.code}`);
+            const safeCode = row.code.replace(/"/g, '\\"');
+            const domBadges = document.querySelectorAll(`.reg-badge-async[data-badgecode="${safeCode}"]`);
             domBadges.forEach(badge => {
                if (badge.dataset.val === row.country || badge.dataset.val === 'ALL') {
                  badge.classList.remove('inactive');
@@ -290,7 +291,7 @@ function renderResults(results, rawCount = 0, rawFetchLimit = 150) {
             <div class="region-badges">
               ${regionList.map(reg => {
                 const active = item.regions.has(reg);
-                return `<span class="reg-badge reg-badge-for-${item.code} ${reg.toLowerCase()} ${active ? '' : 'inactive'}" data-val="${reg}">${reg}${active ? '' : ': N/A'}</span>`;
+                return `<span class="reg-badge reg-badge-async ${reg.toLowerCase()} ${active ? '' : 'inactive'}" data-badgecode="${escapeHtml(item.code)}" data-val="${reg}">${reg}${active ? '' : ': N/A'}</span>`;
               }).join('')}
             </div>
             <button class="copy-btn" data-code="${item.code}" title="Copy to clipboard">
