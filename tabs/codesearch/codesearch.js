@@ -128,9 +128,9 @@ async function performSearch(query) {
       .from('medical_codes')
       .select('code, short_description, country, code_type');
 
-    if (currentRegion !== 'ALL') {
-      dbQuery = dbQuery.eq('country', currentRegion);
-    }
+    // [Fix] Removed strict .eq('country') filter here!
+    // We must fetch from ALL regions so the global availability badges (UK, ME, etc.) are detected properly.
+    // The regional filtering is now applied client-side after grouping.
     if (currentFilter !== 'ALL') {
       dbQuery = dbQuery.eq('code_type', currentFilter);
     }
@@ -155,8 +155,8 @@ async function performSearch(query) {
       }
     }
     
-    // [Medium] Increase limit for ALL region searches
-    const fetchLimit = currentRegion === 'ALL' ? 300 : 150;
+    // [Medium] Always pull enough global records to safely group regions
+    const fetchLimit = 300;
     const { data, error, status } = await dbQuery.limit(fetchLimit);
     
     // Race Condition Guard: If a newer search has started, discard this result
@@ -196,8 +196,14 @@ async function performSearch(query) {
       }
     });
 
-    // 4. (Converted map to array for sorting and rendering)
+    // 4. Convert map to array for sorting and rendering
     let finalResults = Object.values(grouped);
+    
+    // [Fix] Apply the selected region filter client-side!
+    // This allows a US-only search to still accurately display that the code also exists in the UK or ME.
+    if (currentRegion !== 'ALL') {
+      finalResults = finalResults.filter(item => item.regions.has(currentRegion));
+    }
 
     // 5. Sort by relevance (Exact matches first, then starts-with phrases)
     finalResults.sort((a, b) => {
