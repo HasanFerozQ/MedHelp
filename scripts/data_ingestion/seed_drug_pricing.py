@@ -18,7 +18,8 @@ def seed_drug_pricing(file_path):
         print(f"Error: File {file_path} not found.")
         return
 
-    with open(file_path, mode='r', encoding='utf-8-sig') as f:
+    # CMS exports are notoriously in Windows-1252/latin1, not strict UTF-8
+    with open(file_path, mode='r', encoding='latin1') as f:
         reader = csv.DictReader(f)
         
         # Detected Headers: Often contains 'HCPCS Code', 'Short Description', 'Payment Limit'
