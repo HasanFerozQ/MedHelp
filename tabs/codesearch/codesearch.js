@@ -144,19 +144,22 @@ async function performSearch(query) {
     }
 
     if (isCodeLikely && !isPhrase) {
-      // [High] Match dotted, dotless, and Smart Dot injected combinations
-      // IMPORTANT: Wrapped in double quotes to prevent API crashes on special characters (the "disconnect" bug)
-      dbQuery = dbQuery.or(`code.ilike."${safeQuery}%",code.ilike."${cleanQ}%",code.ilike."${cleanQFiltered}%",code.ilike."${dottedQ}%",short_description.ilike."%${safeQuery}%"`);
+      // Deduplicate to prevent PostgREST 500 crash on identical nested OR keys
+      const uniqueCodes = Array.from(new Set([safeQuery, cleanQ, cleanQFiltered, dottedQ]));
+      const codeFilters = uniqueCodes.map(c => `code.ilike."${c}%"`).join(',');
+      dbQuery = dbQuery.or(`${codeFilters},short_description.ilike."%${safeQuery}%"`);
     } else {
-      // Phrase/word search
+      // Phrase search - include code matches just in case they enter a code disguised with special chars
       const words = safeQuery.replace(/[\.\-\,]/g, ' ').split(/\s+/).filter(w => w.length >= 2);
+      const uniqueCodes = Array.from(new Set([safeQuery, cleanQ, cleanQFiltered, dottedQ]));
+      const codeFilters = uniqueCodes.map(c => `code.ilike."${c}%"`).join(',');
+      
       if (words.length > 0) {
-        // Wrap all terms in double quotes for database safety against SQL injection or parser crashes
-        const wordFilters = words.map(w => `short_description.ilike."%${w}%"`);
+        const wordFilters = words.map(w => `short_description.ilike."%${w}%"`).join(',');
         const fullPhrase = `short_description.ilike."%${safeQuery}%"`;
-        dbQuery = dbQuery.or([...wordFilters, fullPhrase].join(','));
+        dbQuery = dbQuery.or(`${codeFilters},${wordFilters},${fullPhrase}`);
       } else {
-        dbQuery = dbQuery.ilike('short_description', `%${safeQuery}%`);
+        dbQuery = dbQuery.or(`${codeFilters},short_description.ilike."%${safeQuery}%"`);
       }
     }
     
