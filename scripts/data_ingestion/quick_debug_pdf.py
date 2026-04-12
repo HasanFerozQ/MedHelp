@@ -5,17 +5,16 @@ def debug_pdf():
     with pdfplumber.open(pdf_path) as pdf:
         c = 0
         print("--- EXTRACTED CODES DUMP ---")
-        for page in pdf.pages:
+        for i, page in enumerate(pdf.pages):
+            if i < 4: continue # Skip to page 5
             tables = page.extract_tables()
             for table in tables:
                 for row in table:
                     if not row or len(row) < 2: continue
-                    raw0 = str(row[0]).strip()
-                    if raw0 and any(c.isalpha() for c in raw0) and raw0.upper() != 'CODE':
-                        print(f"RAW ROW: {row[0]!r} | DESC: {str(row[1])[:30]!r}")
-                        c += 1
-                        if c > 50:
-                            return
+                    print(f"RAW ROW: {row[0]!r} | {row[1]!r} | {str(row[2])[:20] if len(row)>2 else ''}")
+                    c += 1
+                    if c > 20:
+                        return
 
 if __name__ == "__main__":
     debug_pdf()
