@@ -45,9 +45,8 @@ denialInput.addEventListener('input', (e) => {
 async function showSuggestions(q) {
   if (!window.dbClient) return;
 
-  // Modern normalization:
-  // Strip hyphens, spaces, dots, and commas to prevent parser crash and find matches easily
-  const cleanQ = q.replace(/[\-\s\.\,]/g, '').toUpperCase();
+  // Strip hyphens, spaces, dots, commas, and quotes to prevent parser crash and find matches easily
+  const cleanQ = q.replace(/[\-\s\.\,"']/g, '').toUpperCase();
   const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
   const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; 
   
@@ -99,7 +98,7 @@ async function searchDenials(query) {
   }
 
   const qUpper = query.toUpperCase();
-  const cleanQ = qUpper.replace(/[\-\s\.\,]/g, '');
+  const cleanQ = qUpper.replace(/[\-\s\.\,"']/g, '');
   const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
   const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; 
   
