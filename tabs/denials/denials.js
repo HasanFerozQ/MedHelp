@@ -2,15 +2,6 @@ const denialInput = document.getElementById('denial-search-input');
 const denialSuggest = document.getElementById('denial-suggestions');
 const denialResults = document.getElementById('denial-results');
 
-const escapeHtml = (str) => {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-};
 
 let denialTimeout = null;
 let currentDenialSearchId = 0;

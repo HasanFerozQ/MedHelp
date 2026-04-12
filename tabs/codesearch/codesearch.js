@@ -9,15 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
 });
 
-const escapeHtml = (str) => {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-};
+
 
 function setupEventListeners() {
   const searchInput = document.getElementById('code-search-input');
