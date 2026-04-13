@@ -335,13 +335,59 @@ const DOCUMENT_PROFILES = {
 };
 
 const NCCI_PAIRS = {
-  '80053': new Set(['80048', '82947', '84132', '84295', '82310', '82565', '84520', '82040']),
-  '80048': new Set(['82947', '84132', '84295', '82310', '82565', '84520']),
-  '85025': new Set(['85027']),
-  '81001': new Set(['81002', '81003']),
-  '93000': new Set(['93010', '93005']),
-  '12001': new Set(['29881', '27447', '27130']),
+  // key = Column 1 (primary), value = { Column2: { modifierAllowed: '0'|'1' } }
+  // modifierAllowed '0' = hard bundle (never separately payable)
+  // modifierAllowed '1' = soft bundle (payable with -59/-XE/-XS etc.)
+  '80053': {
+    '80048': { modifierAllowed: '0' }, // BMP bundled into CMP
+    '82947': { modifierAllowed: '0' }, // Glucose bundled into CMP
+    '84132': { modifierAllowed: '0' }, // Potassium bundled into CMP
+    '84295': { modifierAllowed: '0' }, // Sodium bundled into CMP
+    '82310': { modifierAllowed: '0' }, // Calcium bundled into CMP
+    '82565': { modifierAllowed: '0' }, // Creatinine bundled into CMP
+    '84520': { modifierAllowed: '0' }, // BUN bundled into CMP
+    '82040': { modifierAllowed: '0' }, // Albumin bundled into CMP
+  },
+  '80048': {
+    '82947': { modifierAllowed: '0' },
+    '84132': { modifierAllowed: '0' },
+    '84295': { modifierAllowed: '0' },
+    '82310': { modifierAllowed: '0' },
+    '82565': { modifierAllowed: '0' },
+    '84520': { modifierAllowed: '0' },
+  },
+  '85025': {
+    '85027': { modifierAllowed: '0' }, // CBC auto-diff bundles CBC manual
+  },
+  '81001': {
+    '81002': { modifierAllowed: '0' }, // UA w/ microscopy bundles UA w/o microscopy
+    '81003': { modifierAllowed: '0' }, // UA w/ microscopy bundles UA dipstick
+  },
+  '93000': {
+    '93010': { modifierAllowed: '0' }, // Complete ECG bundles interpretation only
+    '93005': { modifierAllowed: '0' }, // Complete ECG bundles tracing only
+  },
+  '12001': {
+    '29881': { modifierAllowed: '1' }, // Wound repair + arthroscopy — payable together w/ modifier
+    '27447': { modifierAllowed: '1' },
+    '27130': { modifierAllowed: '1' },
+  },
 };
+
+/**
+ * parseCurrency — handles \$1,234.00, (1234.00), $500 CR and similar variants.
+ * Returns a float. Negative for amounts in parentheses or with CR suffix.
+ */
+function parseCurrency(str) {
+  if (str === null || str === undefined || str === '') return null;
+  const s = String(str).trim();
+  const isNeg = /^\(/.test(s) || /CR$/i.test(s);  // parenthetical or CR suffix = negative
+  const cleaned = s.replace(/[\$,\(\)]/g, '').replace(/CR$/i, '').trim();
+  const val = parseFloat(cleaned);
+  if (isNaN(val)) return null;
+  return isNeg ? -Math.abs(val) : val;
+}
+window.parseCurrency = parseCurrency;
 
 const CARC_RE = /\b([A-Z]{1,2}-?\d{1,4})\b/g;
 const ANOMALY_MARKER_RE = /[■□✅⚠️🚨]/g;

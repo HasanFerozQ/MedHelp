@@ -5,6 +5,12 @@ window.currentEngineSavings  = 0;
 
 function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = {}) {
   let html = '';
+
+  // Sanitize helper — used in both per-row cards and document-level findings
+  const s = (v) => {
+    if (typeof window.sanitizeText === 'function') return window.sanitizeText(String(v || ''));
+    return String(v || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  };
   
   rows.forEach((r, idx) => {
     // Exact or loose match based on line item code
@@ -29,10 +35,6 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
        color = '#10b981'; border = '#10b981'; bg = 'rgba(16, 185, 129, 0.05)';
     }
 
-    const s = (v) => {
-      if (typeof window.sanitizeText === 'function') return window.sanitizeText(String(v || ''));
-      return String(v || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-    };
     const rationales = rationaleMap[idx] || [];
 
     // OCR Confidence Badge
@@ -110,7 +112,33 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
   });
   
     container.innerHTML = html;
-    
+
+    // ── Document-Level Findings (orphaned: no rowId, no codeRef) ──────────────
+    // These are global findings (financial summary, date sanity, invoice total mismatch, etc.)
+    // that are not tied to a specific row. They were previously invisible.
+    const orphanedFindings = findings.filter(f => !f.rowId && !f.codeRef);
+    if (orphanedFindings.length > 0) {
+      const orphanSection = document.createElement('div');
+      orphanSection.style.cssText = 'margin-top:16px; border:1px solid rgba(245,158,11,0.3); border-radius:10px; padding:14px 16px; background:rgba(245,158,11,0.03);';
+      
+      let orphanHtml = `<div style="font-size:10px; font-weight:800; color:#f59e0b; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">&#9888; Document-Level Findings</div>`;
+      orphanedFindings.forEach(f => {
+        const typeColor = f.type === 'danger' ? '#ef4444' : (f.type === 'info' ? 'var(--text-muted)' : '#f59e0b');
+        orphanHtml += `
+          <div style="display:flex; gap:8px; margin-bottom:8px; font-size:12px; line-height:1.5;">
+            <span style="color:${typeColor}; font-weight:bold; flex-shrink:0;">&#8226;</span>
+            <div>
+              <strong style="color:var(--text-h);">${s(f.title)}</strong>
+              ${f.confidence ? `<span style="font-size:10px; color:${typeColor}; background:${typeColor}18; padding:1px 4px; border-radius:4px; margin-left:4px;">${f.confidence}%</span>` : ''}
+              <span style="color:var(--text-muted);">: ${s(f.detail)}</span>
+            </div>
+          </div>`;
+      });
+
+      orphanSection.innerHTML = orphanHtml;
+      container.appendChild(orphanSection);
+    }
+
     // Update Real-time Summary Header (v8.5)
     updateAuditSummaryOverlay(findings);
 }
@@ -143,7 +171,7 @@ function renderFinalSummary(savings, benchmark, container) {
   
   let html = `
     <!-- Savings Summary -->
-    <div style="background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.04));border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:24px;text-align:center;margin-top:20px;">
+    <div style="background:var(--bg-card);border:1px solid rgba(34,197,94,.35);border-radius:12px;padding:24px;text-align:center;margin-top:20px;">
       <div style="font-size:11px; font-weight:800; text-transform:uppercase; color:#22c55e; letter-spacing:1px; margin-bottom:8px;">Estimated Overcharge Recovery</div>
       <div style="font-size:42px;font-weight:800;color:var(--text-h); line-height:1;">$${savings.toFixed(2)}</div>
       <div style="font-size:12px;color:var(--text-muted);margin-top:12px;">Waterfall calculations applied to all inputs. Limit capped to billed totals.</div>
@@ -162,12 +190,16 @@ function renderFinalSummary(savings, benchmark, container) {
 window.renderFinalSummary = renderFinalSummary;
 
 function clearAudit() {
-  const pasteArea = document.getElementById('bill-text');
-  const lineArea  = document.getElementById('line-items-text');
-  const res       = document.getElementById('audit-results');
-  if (pasteArea) pasteArea.value = '';
-  if (lineArea)  lineArea.value  = '';
-  if (res)       res.innerHTML   = '';
+  // Clear the interactive grid rows and re-run audit (replaces dead bill-text / line-items-text refs)
+  if (window.appGridRows && window.appGridRows.length > 0) {
+    window.appGridRows = [];
+    localStorage.removeItem('medihelp_grid_data');
+  }
+  const res = document.getElementById('audit-results');
+  if (res) { res.innerHTML = ''; res.classList.remove('visible'); }
+  const cards = document.getElementById('result-cards-container');
+  if (cards) cards.innerHTML = '';
+  if (typeof triggerAudit === 'function') triggerAudit();
 }
 window.clearAudit = clearAudit;
 
@@ -290,7 +322,7 @@ function renderDisputeLetter(doc, p, findings, savings) {
       doc.setFont('helvetica', 'italic');
       doc.setFontSize(8.5);
       doc.setTextColor(80);
-      const splitCite = doc.splitTextToSize(`📋 CMS Reference: ${CITATION_MAP[cat]}`, 160);
+      const splitCite = doc.splitTextToSize(`CMS Reference: ${CITATION_MAP[cat]}`, 160);
       doc.text(splitCite, 25, y);
       y += (splitCite.length * 4) + 4;
       doc.setTextColor(0);
@@ -375,13 +407,23 @@ function renderSummaryReport(doc, p, findings, savings) {
 
 window.exportAuditCSV = function() {
   const rows = window.appGridRows || [];
-  const lines = ['Date,Code,Modifier,ICD-10,Qty,Total Billed'];
+  const lines = ['Date,Code,Modifier,ICD-10 Dx,Qty,Unit Price,Total Billed,Ins. Paid,Patient Owed,Adjustment,Description,Source,OCR Confidence'];
   rows.forEach(r => {
-    const dxStr = Array.isArray(r.dx) ? r.dx.join(' ') : (r.dx || '');
+    const dxStr = Array.isArray(r.dx) ? r.dx.join(';') : (r.dx || '');
     lines.push([
-      r.date || '', r.code || '', r.modifier || '',
-      `\"${dxStr.replace(/\"/g,'\"\"')}\"`,
-      r.qty, r.total
+      r.date  || '',
+      r.code  || '',
+      r.modifier || '',
+      `"${dxStr.replace(/"/g, '""')}"`,
+      r.qty   ?? '',
+      r.price ?? '',
+      r.total ?? '',
+      r.paid  ?? '',
+      r.owed  ?? '',
+      r.adj   ?? '',
+      `"${(String(r.desc || '')).replace(/"/g, '""')}"`,
+      r.provenance || 'manual',
+      r.extraction_confidence ?? ''
     ].join(','));
   });
   const blob = new Blob([lines.join('\n')], { type: 'text/csv' });

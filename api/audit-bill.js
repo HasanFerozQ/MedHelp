@@ -64,6 +64,20 @@ function getText(block, blockMap, minConfidence = 85) {
   return { text: text.trim().replace(/\[\?\] /g, ''), hasLowConfidence };
 }
 
+/**
+ * parseCurrency — handles $1,234.00, (1234.00), $500 CR and similar variants.
+ * Returns a float. Negative for amounts in parentheses or with CR/cr suffix.
+ */
+function parseCurrency(str) {
+  if (str === null || str === undefined || str === '') return null;
+  const s = String(str).trim();
+  const isNeg = /^\(/.test(s) || /CR\s*$/i.test(s);
+  const cleaned = s.replace(/[\$,\(\)]/g, '').replace(/CR\s*$/i, '').trim();
+  const val = parseFloat(cleaned);
+  if (isNaN(val)) return null;
+  return isNeg ? -Math.abs(val) : val;
+}
+
 function normalizeTextractOutput(blocks) {
   const blockMap = {};
   blocks.forEach(b => blockMap[b.Id] = b);
@@ -185,12 +199,14 @@ function normalizeTextractOutput(blocks) {
           
           if (cellCpt.text.trim() !== "" || cellAmt.text.trim() !== "") {
             let finalQtyStr = headers.qty ? (rowData[headers.qty]?.text || "1") : "1";
-            let finalAmtStr = cellAmt.text.replace(/[^0-9.-]/g, '');
-            let finalUnitPriceStr = headers.unit_price ? (rowData[headers.unit_price]?.text || "").replace(/[^0-9.]/g, '') : null;
 
-            let adjRaw = headers.adjustment ? (rowData[headers.adjustment]?.text || "").replace(/[^0-9.\-]/g, '') : null;
-            let adjValue = adjRaw ? parseFloat(adjRaw) : 0;
-            if (!isNaN(adjValue) && adjValue > 0) adjValue = -adjValue;
+            // Use parseCurrency for all monetary fields — handles ($1,234.00), $500 CR etc.
+            const billedAmount = parseCurrency(cellAmt.text) ?? 0.00;
+            const unitPrice    = headers.unit_price ? parseCurrency(rowData[headers.unit_price]?.text) : null;
+            const adjRawVal    = headers.adjustment ? parseCurrency(rowData[headers.adjustment]?.text) : null;
+            // Normalize: adjustments reduce billed amount (negative in our model)
+            const adjValue     = adjRawVal !== null ? (adjRawVal > 0 ? -adjRawVal : adjRawVal) : 0;
+            const adjRaw       = adjRawVal !== null ? String(adjRawVal) : null; // for Paid calc gate
 
             const dxRaw = headers.dx ? (rowData[headers.dx]?.text || "").trim() : "";
             const ICD10_SERVER_RE = /\b([A-Z]\d{2}(?:\.\w{1,4})?)\b/g;
@@ -200,8 +216,6 @@ function normalizeTextractOutput(blocks) {
               /^\d{5}$/.test(cellCpt.text.trim()) || /^[A-Z]\d{4}$/.test(cellCpt.text.trim())
             );
 
-            const billedAmount = parseFloat(finalAmtStr) || 0.00;
-            const unitPrice = finalUnitPriceStr ? parseFloat(finalUnitPriceStr) : null;
             const qty = parseFloat(finalQtyStr) || 1;
 
             // Internal anomaly detection
@@ -461,27 +475,86 @@ module.exports = async (req, res) => {
     await runMiddleware(req, res, upload.single('bill'));
     if (!req.file) return res.status(400).json({ error: "Missing PDF" });
 
-    // Step 1: Textract Extraction
+    // Step 1: Textract Extraction with QUERIES for high-confidence grand total detection
     const command = new AnalyzeDocumentCommand({
       Document: {
         Bytes: req.file.buffer
       },
-      FeatureTypes: ["TABLES", "FORMS"]
+      FeatureTypes: ["TABLES", "FORMS", "QUERIES"],
+      QueriesConfig: {
+        Queries: [
+          { Text: "What is the total amount due?", Alias: "TOTAL_DUE" },
+          { Text: "What is the balance due?",     Alias: "BALANCE_DUE" },
+          { Text: "What is the patient responsibility?", Alias: "PATIENT_RESP" },
+        ]
+      }
     });
 
     const data = await textractClient.send(command).catch(err => {
         throw new Error(`AWS Textract OCR Failed: ${err.message}`);
     });
     
-    // Step 2: Normalization
+    // Step 2: Normalization — extract QUERY answers first for high-confidence grand total
     let normalizedItems = [];
     let grandTotal = null;
     try {
-        const result = normalizeTextractOutput(data.Blocks || []);
+        // Override grandTotal from QUERIES if available (highest confidence path).
+        // QUERY blocks (not QUERY_RESULT) carry the alias. Follow ANSWER relationships to get the text.
+        const blocks = data.Blocks || [];
+        const blockMap = {};
+        blocks.forEach(b => blockMap[b.Id] = b);
+
+        const queryBlocks = blocks.filter(b => b.BlockType === 'QUERY');
+        for (const qb of queryBlocks) {
+          const alias = qb.Query?.Alias || '';
+          if (alias !== 'TOTAL_DUE' && alias !== 'BALANCE_DUE') continue;
+
+          const answerRels = (qb.Relationships || []).find(r => r.Type === 'ANSWER');
+          if (!answerRels) continue;
+
+          for (const answerId of (answerRels.Ids || [])) {
+            const answerBlock = blockMap[answerId];
+            if (!answerBlock) continue;
+            const v = parseFloat((answerBlock.Text || '').replace(/[^0-9.]/g, ''));
+            if (!isNaN(v) && v > 0 && (grandTotal === null || v > grandTotal)) {
+              grandTotal = v; // QUERIES answer wins over FORMS heuristics
+            }
+          }
+        }
+
+        const result = normalizeTextractOutput(blocks);
         normalizedItems = result.items;
-        grandTotal = result.grandTotal;
+        // Only fallback to FORMS-detected grand total if QUERIES didn't find one
+        if (grandTotal === null) grandTotal = result.grandTotal;
     } catch (err) {
         throw new Error(`Normalization Layer Error: Failed to parse bill table structure. ${err.message}`);
+    }
+
+    // Step 2b: CPT Code Existence Check — batch validate against Supabase
+    // Any code not found in the DB is quarantined immediately (HITL) rather than
+    // silently entering the audit engine with a potentially garbled code.
+    try {
+        const candidateCodes = [...new Set(
+          normalizedItems.filter(i => i.CPT && i.IsValidCode).map(i => i.CPT)
+        )];
+        if (candidateCodes.length > 0) {
+          const { data: knownCodes } = await supabase
+            .from('cpt_codes')
+            .select('code')
+            .in('code', candidateCodes);
+          const knownSet = new Set((knownCodes || []).map(r => r.code));
+          normalizedItems.forEach(item => {
+            if (item.CPT && item.IsValidCode && !knownSet.has(item.CPT)) {
+              // Code passed format check but doesn't exist in CPT DB — likely OCR corruption
+              item.IsValidCode = false;
+              item.extraction_confidence = Math.min(item.extraction_confidence, 30);
+              item.needs_manual_review = true;
+              item.has_low_confidence_chars = true;
+            }
+          });
+        }
+    } catch (dbErr) {
+        console.warn('MediHelp: CPT existence batch check skipped:', dbErr.message);
     }
 
     // Step 3: Arithmetic Engine

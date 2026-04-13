@@ -318,11 +318,12 @@ class BucketAuditor {
         'warn', '', null, 80);
     }
 
-    // Zero-Pay High Value Signal
+    // Zero-Pay High Value Signal (treat null paid as $0 — common in PDF-extracted denied claims)
     validRows.forEach(r => {
-      if (r.total > 500 && r.paid === 0 && r.owed === r.total && !r.adj && r.math_complete) {
+      const effectivePaid = r.paid != null ? r.paid : 0;
+      if (r.total > 500 && effectivePaid === 0 && (r.owed == null || r.owed === r.total) && !r.adj && r.math_complete) {
         this.addFinding('financial', 'Likely Silent Denial / Process Oversight',
-          `Line item "${r.desc}" billed at $${r.total.toFixed(2)} passed directly to patient with $0 insurance payment and $0 adjustment. Verify EOB.`,
+          `Line item "${r.desc || r.code || 'Unknown'}" billed at $${r.total.toFixed(2)} passed directly to patient with $0 insurance payment and $0 adjustment. Verify EOB for this charge.`,
           'warn', r.code, r.rowId, 75);
       }
     });

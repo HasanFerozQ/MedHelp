@@ -455,6 +455,10 @@ async function triggerAudit() {
   try { await withTimeout(engine.runDatabaseCheck()); } catch(e) { console.warn('MediHelp: DB check skipped:', e.message); }
   engine.finalizeDeduplication();
 
+  // ── Confidence Score ─────────────────────────────────────────────────────
+  const confidence = engine.computeConfidence();
+  window.currentEngineConfidence = confidence;
+
   const container = document.getElementById('result-cards-container');
   if (!container) return;
   
@@ -476,9 +480,44 @@ async function triggerAudit() {
     renderResultCardsPerLineItem(rows, engine.findings, container, engine._savingsRationale || {});
     // Render the final trailing summary in the usual audit-results section
     renderFinalSummary(engine.potentialSavings, engine.totalBenchmark, document.getElementById('audit-results'));
+    // Render confidence badge
+    renderConfidenceBadge(confidence);
   } else {
     console.warn("MediHelp: renderResultCardsPerLineItem missing from report.js. Falling back.");
   }
+}
+
+function renderConfidenceBadge(confidence) {
+  let el = document.getElementById('audit-confidence-badge');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'audit-confidence-badge';
+    el.style.cssText = 'display:flex; align-items:center; gap:10px; margin:12px 0; padding:12px 16px; border-radius:10px; border:1px solid var(--border); background:var(--bg-card);';
+    const container = document.getElementById('result-cards-container');
+    if (container && container.parentNode) container.parentNode.insertBefore(el, container);
+  }
+
+  const score = confidence.score || 0;
+  const color = score >= 75 ? '#10b981' : score >= 50 ? '#f59e0b' : '#ef4444';
+  const label = score >= 75 ? 'High Confidence' : score >= 50 ? 'Moderate Confidence' : 'Low Confidence — Manual Review Advised';
+
+  el.innerHTML = `
+    <div style="position:relative; width:48px; height:48px; flex-shrink:0;">
+      <svg width="48" height="48" viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="20" fill="none" stroke="var(--border)" stroke-width="4"/>
+        <circle cx="24" cy="24" r="20" fill="none" stroke="${color}" stroke-width="4"
+          stroke-dasharray="${(score / 100) * 125.6} 125.6"
+          stroke-dashoffset="31.4" stroke-linecap="round" transform="rotate(-90 24 24)"/>
+      </svg>
+      <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:${color};">${score}</div>
+    </div>
+    <div>
+      <div style="font-size:12px; font-weight:700; color:var(--text-h);">Audit Confidence: <span style="color:${color};">${label}</span></div>
+      <ul style="margin:4px 0 0; padding-left:14px; font-size:11px; color:var(--text-muted); line-height:1.8;">
+        ${(confidence.reasons || []).map(r => `<li>${r}</li>`).join('')}
+      </ul>
+    </div>
+  `;
 }
 
 window.triggerAudit = triggerAudit;
