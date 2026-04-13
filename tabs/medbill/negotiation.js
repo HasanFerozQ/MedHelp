@@ -125,9 +125,36 @@ console.log('MediHelp: negotiation.js loaded.');
           result.textContent = `Submitted successfully. Your Case ID: ${d.caseId}`;
         }
       } catch (err) {
+        const fallback = openMailtoFallback({
+          fullName: (fullName?.value || '').trim(),
+          email: (document.getElementById('neg-email')?.value || '').trim(),
+          phone: (document.getElementById('neg-phone')?.value || '').trim(),
+          providerName: (document.getElementById('neg-provider-name')?.value || '').trim(),
+          billAmount: (document.getElementById('neg-bill-amount')?.value || '').trim(),
+          dateOfService: (document.getElementById('neg-dos')?.value || '').trim(),
+          hasInsurance: (document.getElementById('neg-insurance')?.value || '').trim(),
+          claimStatus: (document.getElementById('neg-claim-status')?.value || '').trim(),
+          visitType: (visitType?.value || '').trim(),
+          visitTypeOther: (visitOther?.value || '').trim(),
+          financialDifficulty: (document.getElementById('neg-financial-diff')?.value || '').trim(),
+          monthlyIncome: (document.getElementById('neg-income-range')?.value || '').trim(),
+          hardshipChecked: String(!!document.getElementById('neg-hardship')?.checked),
+          negotiationGoal: selectedGoal.value,
+          authorizationConsent: String(!!document.getElementById('neg-auth-consent')?.checked),
+          successFeeConsent: String(!!document.getElementById('neg-success-fee')?.checked),
+          upfrontFeeConsent: String(!!document.getElementById('neg-upfront-fee')?.checked),
+          signatureName: (signName?.value || '').trim(),
+          signatureDate: (signDate?.value || '').trim(),
+          savingsPotential: getCurrentSavingsValue().toFixed(2),
+          findingsCount: String((window.currentEngineFindings || []).length),
+          billFileName: billFile?.name || '',
+          eobFileName: eobFile?.name || ''
+        });
         if (result) {
-          result.style.color = '#ef4444';
-          result.textContent = `Submission failed: ${err.message}`;
+          result.style.color = fallback ? '#f59e0b' : '#ef4444';
+          result.textContent = fallback
+            ? 'API unavailable. Opened email draft fallback. Please attach Bill/EOB and send.'
+            : `Submission failed: ${err.message}`;
         }
       }
     });
@@ -152,4 +179,47 @@ console.log('MediHelp: negotiation.js loaded.');
   window.initNegotiatorIntake = initNegotiatorIntake;
   window.openNegotiatorModal = openNegotiatorModal;
   window.closeNegotiatorModal = closeNegotiatorModal;
+
+  function openMailtoFallback(data) {
+    try {
+      const caseId = `MH-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.random().toString(16).slice(2, 8).toUpperCase()}`;
+      const to = 'supportdesk@medihelp.live';
+      const subject = encodeURIComponent(`MediHelp Negotiation Intake (Fallback) - ${caseId}`);
+      const body = encodeURIComponent([
+        `Case ID: ${caseId}`,
+        '',
+        'Fallback Intake (API unavailable)',
+        '',
+        `Full Name: ${data.fullName}`,
+        `Email: ${data.email}`,
+        `Phone: ${data.phone}`,
+        `Provider: ${data.providerName}`,
+        `Bill Amount: ${data.billAmount}`,
+        `Date of Service: ${data.dateOfService}`,
+        `Has Insurance: ${data.hasInsurance}`,
+        `Claim Status: ${data.claimStatus}`,
+        `Visit Type: ${data.visitType}`,
+        `Visit Type Other: ${data.visitTypeOther}`,
+        `Financial Difficulty: ${data.financialDifficulty}`,
+        `Monthly Income: ${data.monthlyIncome}`,
+        `Hardship Checked: ${data.hardshipChecked}`,
+        `Negotiation Goal: ${data.negotiationGoal}`,
+        `Authorization Consent: ${data.authorizationConsent}`,
+        `15% Consent: ${data.successFeeConsent}`,
+        `$15 Consent: ${data.upfrontFeeConsent}`,
+        `Signature Name: ${data.signatureName}`,
+        `Signature Date: ${data.signatureDate}`,
+        `Savings Potential: $${data.savingsPotential}`,
+        `Findings Count: ${data.findingsCount}`,
+        '',
+        `Selected Bill file: ${data.billFileName}`,
+        `Selected EOB file: ${data.eobFileName}`,
+        'Please attach the files manually before sending.'
+      ].join('\n'));
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
 })();

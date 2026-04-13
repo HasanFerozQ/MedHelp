@@ -119,13 +119,80 @@ window.handlePdfSelect = async function(event) {
       triggerAudit();
     }
   } catch(e) {
-    alert("Extraction Error: " + e.message);
+    const msg = String(e && e.message ? e.message : e);
+    const isBackendUnavailable =
+      /AWS credentials not configured|AWS Textract failed|Server returned non-JSON response/i.test(msg);
+
+    if (isBackendUnavailable && file && /pdf/i.test(file.type || '')) {
+      try {
+        const fallbackRows = await extractPdfClientSide(file);
+        if (fallbackRows.length > 0) {
+          fallbackRows.forEach((r, idx) => {
+            window.appGridRows.push({
+              rowId: 'client-fallback-' + Date.now() + '-' + idx + Math.random().toString(36).substring(2, 6),
+              provenance: 'client-fallback',
+              date: r.date || '',
+              code: r.code || '',
+              modifier: '',
+              dx: r.dx ? [r.dx] : [],
+              qty: r.qty || 1,
+              price: null,
+              total: r.total != null ? r.total : null,
+              paid: null,
+              owed: null,
+              adj: null,
+              extraction_confidence: 55,
+              has_low_confidence_chars: false,
+              rowType: 'service',
+              desc: 'Client-side PDF fallback',
+              npi: ''
+            });
+          });
+          localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
+          switchAuditTab('manual');
+          triggerAudit();
+          alert(`Server extraction unavailable. Loaded ${fallbackRows.length} fallback line(s). Please verify all values manually.`);
+          return;
+        }
+      } catch (_) {
+        // continue to normal alert below
+      }
+    }
+
+    alert("Extraction Error: " + msg);
   } finally {
     if (dropzone) dropzone.style.display = 'block';
     if (loadingState) loadingState.style.display = 'none';
     if (event.target) event.target.value = ''; // reset file input
   }
 };
+
+async function extractPdfClientSide(file) {
+  if (!window.pdfjsLib) return [];
+  const buf = await file.arrayBuffer();
+  const pdf = await window.pdfjsLib.getDocument({ data: buf }).promise;
+  let text = '';
+  for (let p = 1; p <= pdf.numPages; p++) {
+    const page = await pdf.getPage(p);
+    const content = await page.getTextContent();
+    text += content.items.map(i => i.str).join(' ') + '\n';
+  }
+
+  const lines = text.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const out = [];
+  lines.forEach((line) => {
+    const date = (line.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/) || [])[0] || '';
+    const code = (line.match(/\b([A-Z]\d{4}|\d{5})\b/) || [])[1] || '';
+    const dx = (line.match(/\b([A-Z]\d{2}(?:\.\w{1,4})?)\b/) || [])[1] || '';
+    const qty = parseInt((line.match(/\bqty[:\s]*(\d+)\b/i) || [])[1] || '1', 10);
+    const money = [...line.matchAll(/\$\s*(\d+(?:,\d{3})*(?:\.\d{2})?)/g)].map(m => parseFloat(m[1].replace(/,/g, '')));
+    const total = money.length ? money[money.length - 1] : null;
+    if (code || total != null) {
+      out.push({ date, code, dx, qty: Number.isFinite(qty) ? qty : 1, total });
+    }
+  });
+  return out.slice(0, 40);
+}
 
 window.showManualReviewPrompt = function(items) {
   const container = document.getElementById('review-prompt-area');
