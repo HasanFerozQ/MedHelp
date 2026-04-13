@@ -97,11 +97,6 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
     
     // Update Real-time Summary Header (v8.5)
     updateAuditSummaryOverlay(findings);
-  } else {
-    container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 13px;">Add elements above to see live findings here.</div>';
-    const overlay = document.getElementById('audit-summary-overlay');
-    if (overlay) overlay.style.display = 'none';
-  }
 }
 
 function updateAuditSummaryOverlay(findings) {
