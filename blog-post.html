@@ -90,15 +90,15 @@
 
   <nav class="navbar">
     <div class="container nav-content">
-      <a href="index.html" class="nav-brand">
+      <a href="/" class="nav-brand">
         <img src="icons/logo.png?v=1.1" alt="MediHelp">
         MediHelp
       </a>
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="audit.html">Bill Audit</a>
-        <a href="providers.html">National Provider Search</a>
-        <a href="blog.html" class="active">Blog</a>
+        <a href="/">Home</a>
+        <a href="/audit">Bill Audit</a>
+        <a href="/providers">National Provider Search</a>
+        <a href="/blog" class="active">Blog</a>
       </div>
       <div class="nav-actions">
         <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
@@ -110,7 +110,7 @@
 
     <!-- Breadcrumb -->
     <div style="font-size:13px; color:var(--text-muted); margin-bottom:36px;">
-      <a href="blog.html" style="color:var(--accent); text-decoration:none;">← The Blog</a>
+      <a href="/blog" style="color:var(--accent); text-decoration:none;">← The Blog</a>
     </div>
 
     <div class="post-layout">
@@ -181,7 +181,7 @@
         <div class="sidebar-card" style="background:var(--accent-glow); border-color:var(--border-accent);">
           <h4 style="color:var(--accent-light);">Audit Your Bill</h4>
           <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px; line-height:1.6;">Found a suspicious charge? Run a free audit right now.</p>
-          <a href="audit.html" class="btn btn-primary" style="width:100%; justify-content:center;">Start Audit →</a>
+          <a href="/audit" class="btn btn-primary" style="width:100%; justify-content:center;">Start Audit →</a>
         </div>
       </aside>
     </div>
@@ -197,12 +197,12 @@
         <div class="footer-col">
           <h4>Tools</h4>
           <ul>
-            <li><a href="index.html#suite">Code Search</a></li>
-            <li><a href="index.html#suite">Claim Denials</a></li>
-            <li><a href="index.html#suite">Rx Savings</a></li>
-            <li><a href="providers.html">National Provider Search</a></li>
-            <li><a href="audit.html">Bill Audit</a></li>
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href="/#suite">Code Search</a></li>
+            <li><a href="/#suite">Claim Denials</a></li>
+            <li><a href="/#suite">Rx Savings</a></li>
+            <li><a href="/providers">National Provider Search</a></li>
+            <li><a href="/audit">Bill Audit</a></li>
+            <li><a href="/blog">Blog</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -216,15 +216,15 @@
         <div class="footer-col">
           <h4>Legal</h4>
           <ul>
-            <li><a href="privacy.html">Privacy Policy</a></li>
-            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
             <li><a href="sitemap.xml">Sitemap</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom" style="justify-content: center; border-top: 1px solid var(--border); padding-top: 40px; flex-direction: column; gap: 10px; align-items: center;">
         <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
-        <span style="font-size: 11px; opacity: 0.7;">Informational only. Not medical/legal advice. <a href="terms.html" style="color: var(--accent); text-decoration: none; font-weight: 700;">Terms & Disclaimer</a></span>
+        <span style="font-size: 11px; opacity: 0.7;">Informational only. Not medical/legal advice. <a href="/terms" style="color: var(--accent); text-decoration: none; font-weight: 700;">Terms & Disclaimer</a></span>
         <span style="display:block; font-size: 10px; opacity: 0.5;">Not affiliated with CMS or any government agency.</span>
       </div>
     </div>
@@ -280,7 +280,7 @@
       const post = posts.find(p => p.slug === decodeURIComponent(slug));
 
       if (!post) {
-        document.getElementById('post-body').innerHTML = '<p style="color:var(--text-muted);">Post not found. <a href="blog.html" style="color:var(--accent);">Return to Blog →</a></p>';
+        document.getElementById('post-body').innerHTML = '<p style="color:var(--text-muted);">Post not found. <a href="/blog" style="color:var(--accent);">Return to Blog →</a></p>';
         return;
       }
 
@@ -321,7 +321,7 @@
       const suggested = posts.filter(p => p.slug !== post.slug).slice(0, 3);
       document.getElementById('sidebar-suggested').innerHTML = suggested.length > 0
         ? suggested.map(s => `
-          <a href="blog-post.html?slug=${encodeURIComponent(s.slug)}" class="sidebar-post-link">
+          <a href="/blog-post?slug=${encodeURIComponent(s.slug)}" class="sidebar-post-link">
             <img src="${s.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&q=60'}" alt="${s.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&q=60'">
             <div>
               <div class="sp-title">${s.title}</div>

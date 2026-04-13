@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://medihelp.live/sitemap.xml
+Sitemap: https://www.medihelp.live/sitemap.xml
