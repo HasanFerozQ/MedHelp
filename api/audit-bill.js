@@ -38,10 +38,18 @@ const textractClient = awsCredentialsConfigured
     })
   : null;
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+let supabase = null;
+try {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (supabaseUrl && supabaseKey) {
+    supabase = createClient(supabaseUrl, supabaseKey);
+  } else {
+    console.warn('MediHelp: Supabase env vars missing; database-dependent checks will be skipped.');
+  }
+} catch (err) {
+  console.warn('MediHelp: Supabase client init failed; DB checks will be skipped:', err.message);
+}
 
 function getText(block, blockMap, minConfidence = 85) {
   let text = "";
@@ -360,6 +368,10 @@ function runArithmeticEngine(items, grandTotal) {
 
 // CLINICAL ENGINE: Uses Supabase database for Pricing & NCCI unbundling checks
 async function runClinicalEngine(items) {
+  if (!supabase) {
+    return { clinicalFindings: [], savingsOpportunity: 0, totalBenchmark: 0 };
+  }
+
   let clinicalFindings = [];
   let totalBenchmark = 0;
   let savingsOpportunity = 0;
