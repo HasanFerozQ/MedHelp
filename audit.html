@@ -43,30 +43,7 @@
     .audit-panel.active { display: block !important; }
     .audit-tab.active { color: var(--accent) !important; border-bottom-color: var(--accent) !important; }
   </style>
-  <script>
-    /**
-     * Isolated Tab Switcher for Bill Audit module.
-     * Guaranteed to be available even if external scripts fail to load.
-     */
-    function switchAuditTab(tabId, btn) {
-      if (!btn) return;
-      const area = btn.closest('.audit-area');
-      if (!area) return;
 
-      // 1. Deactivate all buttons in this bar
-      const buttons = area.querySelectorAll('.audit-tab');
-      buttons.forEach(b => b.classList.remove('active'));
-
-      // 2. Deactivate all panels in this container
-      const panels = area.querySelectorAll('.audit-panel');
-      panels.forEach(p => p.classList.remove('active'));
-
-      // 3. Activate selected
-      btn.classList.add('active');
-      const target = document.getElementById(tabId);
-      if (target) target.classList.add('active');
-    }
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/core.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -104,14 +81,38 @@
   </section>
 
   <div class="container" style="margin-bottom: 80px; max-width: 1280px;">
+      <!-- Tab Navigation -->
+      <div style="display: flex; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
+        <button id="tab-btn-manual" onclick="switchAuditTab('manual')" class="btn" style="background: var(--accent); color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; border: none; cursor: pointer;">Manual Line Entry</button>
+        <button id="tab-btn-pdf" onclick="switchAuditTab('pdf')" class="btn btn-ghost" style="background: transparent; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; color: var(--text-muted); border: 1px solid transparent;">Smart PDF Extraction</button>
+      </div>
+
+      <!-- PDF Extraction Tab -->
+      <div id="tab-content-pdf" style="display: none; margin-bottom: 30px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);">
+         <h3 style="font-size: 16px; margin: 0; color: var(--text-h); margin-bottom: 8px;">Upload Medical Bill</h3>
+         <p style="margin:0 0 16px; font-size: 12px; color: var(--text-muted);">Upload a PDF or Image. AWS Textract will securely extract the billing grid structure.</p>
+         
+         <div id="pdf-dropzone" style="border: 2px dashed var(--border); border-radius: 8px; padding: 40px; text-align: center; cursor: pointer; transition: border-color 0.2s; background: rgba(0,0,0,0.02);" onclick="document.getElementById('pdf-file-input').click()" ondragover="event.preventDefault(); this.style.borderColor='var(--accent)';" ondragleave="this.style.borderColor='var(--border)';" ondrop="event.preventDefault(); this.style.borderColor='var(--border)'; handlePdfSelect({target: {files: event.dataTransfer.files}});">
+            <div id="pdf-dropzone-icon" style="margin-bottom: 12px;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            </div>
+            <p id="pdf-dropzone-text" style="font-size: 14px; color: var(--text-h); margin: 0; font-weight: 600;">Click or Drag PDF/Image here</p>
+            <input type="file" id="pdf-file-input" accept="application/pdf,image/png,image/jpeg" style="display: none;" onchange="handlePdfSelect(event)">
+         </div>
+         <div id="pdf-loading-state" style="display: none; margin-top: 24px; text-align: center; font-size: 13px; color: var(--text-main);">
+            <div style="width: 24px; height: 24px; border: 3px solid rgba(6,182,212,0.2); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s infinite linear; margin: 0 auto 12px;"></div>
+            Processing document via AWS Textract. This may take 5-10 seconds...
+         </div>
+      </div>
+
       <!-- Manual Data Entry Form -->
       <div id="interactive-grid-container" style="margin-bottom: 30px;">
         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 15px;">
           <div>
-            <h3 style="font-size: 16px; margin: 0; color: var(--text-h);">🛠️ Add Medical Charge</h3>
+            <h3 style="font-size: 16px; margin: 0; color: var(--text-h);">Add Medical Charge</h3>
             <p style="margin:4px 0 0; font-size: 12px; color: var(--text-muted);">Submit line items individually. Responses will generate below.</p>
           </div>
-          <div style="display: flex; gap: 12px; align-items: center;">
+          <div style="display: flex; gap: 12px; align-items: flex-end;">
             <div style="text-align: right;">
               <label style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Payer Type</label>
               <select id="payer-type" onchange="triggerAudit()" style="background: var(--bg-card); color: var(--text-h); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; font-size: 12px; cursor: pointer; outline: none; transition: border-color 0.2s;">
@@ -190,10 +191,10 @@
                     <div>
                       <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Row Type</label>
                       <select id="entry-rowtype" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
-                        <option value="service" selected>Service Line</option>
-                        <option value="adjustment">Adjustment/Write-off</option>
-                        <option value="payment">Payment Line</option>
-                        <option value="credit">Credit/Refund Line</option>
+                        <option value="service" style="background:var(--bg-main); color:var(--text-h);" selected>Service Line</option>
+                        <option value="adjustment" style="background:var(--bg-main); color:var(--text-h);">Adjustment/Write-off</option>
+                        <option value="payment" style="background:var(--bg-main); color:var(--text-h);">Payment Line</option>
+                        <option value="credit" style="background:var(--bg-main); color:var(--text-h);">Credit/Refund Line</option>
                       </select>
                     </div>
                     <div>
@@ -221,7 +222,7 @@
 
       <!-- Live Result Section -->
       <div id="live-results-section" style="margin-bottom: 30px;">
-        <h3 style="font-size: 16px; margin: 0 0 15px; color: var(--text-h); padding-bottom: 10px; border-bottom: 1px solid var(--border);">📊 Audit Results</h3>
+        <h3 style="font-size: 16px; margin: 0 0 15px; color: var(--text-h); padding-bottom: 10px; border-bottom: 1px solid var(--border);">Audit Results</h3>
         <div id="result-cards-container" style="display: flex; flex-direction: column; gap: 12px;">
           <!-- Real-time Summary Header (v8.5) -->
           <div id="audit-summary-overlay" class="audit-summary-header" style="display: none;">

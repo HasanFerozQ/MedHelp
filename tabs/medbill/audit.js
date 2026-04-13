@@ -12,6 +12,93 @@ console.log('MediHelp: audit.js file source has been reached.');
 // NPPES_API moved to constants.js global scope
 
 // ── V8.0 Interactive Grid Architecture ──
+// ── PDF Extraction & Tab Orchestration ──
+window.switchAuditTab = function(tabName) {
+  const manualTab = document.getElementById('interactive-grid-container');
+  const pdfTab = document.getElementById('tab-content-pdf');
+  const manualBtn = document.getElementById('tab-btn-manual');
+  const pdfBtn = document.getElementById('tab-btn-pdf');
+  
+  if (!manualTab || !pdfTab) return;
+  
+  if (tabName === 'manual') {
+    manualTab.style.display = 'block';
+    pdfTab.style.display = 'none';
+    manualBtn.style.background = 'var(--accent)';
+    manualBtn.style.color = 'white';
+    pdfBtn.style.background = 'transparent';
+    pdfBtn.style.color = 'var(--text-muted)';
+  } else {
+    manualTab.style.display = 'none';
+    pdfTab.style.display = 'block';
+    pdfBtn.style.background = 'var(--accent)';
+    pdfBtn.style.color = 'white';
+    manualBtn.style.background = 'transparent';
+    manualBtn.style.color = 'var(--text-muted)';
+  }
+};
+
+window.handlePdfSelect = async function(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  const dropzone = document.getElementById('pdf-dropzone');
+  const loadingState = document.getElementById('pdf-loading-state');
+  
+  if (dropzone) dropzone.style.display = 'none';
+  if (loadingState) loadingState.style.display = 'block';
+  
+  try {
+    const formData = new FormData();
+    formData.append('bill', file);
+    
+    const baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+      ? 'http://localhost:3000' : '';
+      
+    const res = await fetch(`${baseUrl}/api/audit-bill`, {
+      method: 'POST',
+      body: formData
+    });
+    
+    const d = await res.json();
+    if (!d.ok) throw new Error(d.error || 'Extraction Failed');
+    
+    const newItems = d.normalized_bill || [];
+    if (newItems.length === 0) {
+      alert("No medical billing lines found in this document.");
+    } else {
+      newItems.forEach(item => {
+        window.appGridRows.push({
+          rowId: 'auto-' + Date.now() + Math.random().toString(36).substring(2,6),
+          provenance: 'textract',
+          date: item.Date || '',
+          code: item.CPT || '',
+          modifier: item.Modifier || '',
+          dx: Array.isArray(item.DX) ? item.DX : [],
+          qty: item.Qty || 1,
+          price: item.Unit_Price || null,
+          total: item.Billed_Amount || null,
+          paid: item.Paid || null,
+          owed: null,
+          adj: item.Adjustment || null,
+          rowType: 'service',
+          desc: '',
+          npi: ''
+        });
+      });
+      localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
+      
+      switchAuditTab('manual');
+      triggerAudit();
+    }
+  } catch(e) {
+    alert("Extraction Error: " + e.message);
+  } finally {
+    if (dropzone) dropzone.style.display = 'block';
+    if (loadingState) loadingState.style.display = 'none';
+    if (event.target) event.target.value = ''; // reset file input
+  }
+};
 
 function initAudit() {
   console.log('MediHelp: Initializing V8.0 Interactive Grid...');
@@ -121,6 +208,36 @@ function clearAuditGridConfirm() {
   }
 }
 window.clearAuditGridConfirm = clearAuditGridConfirm;
+
+function editAuditRow(idx) {
+  if (idx < 0 || idx >= window.appGridRows.length) return;
+  const r = window.appGridRows[idx];
+
+  const s = (val) => (val === null || val === undefined) ? '' : val;
+
+  document.getElementById('entry-date').value = s(r.date);
+  document.getElementById('entry-code').value = s(r.code);
+  document.getElementById('entry-mod').value  = s(r.modifier);
+  document.getElementById('entry-dx').value   = Array.isArray(r.dx) ? r.dx.join(', ') : s(r.dx);
+  document.getElementById('entry-qty').value  = s(r.qty);
+  document.getElementById('entry-price').value= s(r.price);
+  document.getElementById('entry-total').value= s(r.total);
+  document.getElementById('entry-paid').value = s(r.paid);
+  document.getElementById('entry-owed').value = s(r.owed);
+  document.getElementById('entry-adj').value  = s(r.adj);
+  document.getElementById('entry-desc').value = s(r.desc);
+  document.getElementById('entry-npi').value  = s(r.npi);
+  if (document.getElementById('entry-rowtype')) {
+    document.getElementById('entry-rowtype').value = r.rowType || 'service';
+  }
+
+  removeAuditRow(idx);
+
+  if (typeof switchAuditTab === 'function') {
+    switchAuditTab('manual');
+  }
+}
+window.editAuditRow = editAuditRow;
 
 function removeAuditRow(idx) {
   if (idx < 0 || idx >= window.appGridRows.length) return;

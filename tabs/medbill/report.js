@@ -45,19 +45,20 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
           </div>
           <div style="display:flex; align-items:center; gap:12px;">
             <div style="font-size:10px; font-weight:800; color:${color}; text-transform:uppercase; letter-spacing:0.5px; border:1px solid ${border}44; padding:2px 8px; border-radius:12px;">${statusText}</div>
+            <button onclick="editAuditRow(${idx})" style="background:transparent; border:1px solid var(--border); color:var(--text-main); border-radius:6px; padding:2px 8px; font-size:11px; font-weight:600; cursor:pointer; transition:background 0.2s;" onmouseover="this.style.background='var(--bg-main)';" onmouseout="this.style.background='transparent';">Edit</button>
             <button onclick="removeAuditRow(${idx})" style="background:rgba(239, 68, 68, 0.1); border:none; color:var(--danger); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; transition:background 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)';" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)';">✕</button>
           </div>
         </div>
         
         <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
-          ${relatedFindings.length === 0 ? `<div style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:6px;">✅ <span>Charge is mathematically and clinically sound.</span></div>` : ''}
+          ${relatedFindings.length === 0 ? `<div style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:6px;"><span style="color:#10b981;font-weight:bold;">✓</span> <span>Charge is mathematically and clinically sound.</span></div>` : ''}
           
           ${hardFindings.length > 0 ? `
             <div style="margin-bottom: 4px;">
               <div style="font-size:10px; font-weight:800; color:#ef4444; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px;">Overcharge / Disallowed</div>
               ${hardFindings.map(f => `
                 <div style="font-size:12px; color:var(--text-h); display:flex; gap:8px; line-height:1.5; margin-bottom:4px;">
-                  <span style="flex-shrink:0;">🛑</span>
+                  <span style="flex-shrink:0;color:#ef4444;font-weight:bold;">!</span>
                   <div>
                     <strong>${s(f.title)}</strong> ${f.confidence ? `<span style="font-size:10px; color:#ef4444; background:rgba(239,68,68,0.1); padding:1px 4px; border-radius:4px; margin-left:4px;">${f.confidence}% Certainty</span>` : ''}: <span style="color:var(--text-muted);">${s(f.detail)}</span>
                   </div>
@@ -71,7 +72,7 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
               <div style="font-size:10px; font-weight:800; color:#f59e0b; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px;">Documentation Risk</div>
               ${softFindings.map(f => `
                 <div style="font-size:12px; color:var(--text-h); display:flex; gap:8px; line-height:1.5; margin-bottom:4px;">
-                  <span style="flex-shrink:0;">⚠️</span>
+                  <span style="flex-shrink:0;color:#f59e0b;font-weight:bold;">!</span>
                   <div>
                     <strong>${s(f.title)}</strong> ${f.confidence ? `<span style="font-size:10px; color:#f59e0b; background:rgba(245,158,11,0.1); padding:1px 4px; border-radius:4px; margin-left:4px;">${f.confidence}% Confidence</span>` : ''}: <span style="color:var(--text-muted);">${s(f.detail)}</span>
                   </div>
@@ -180,7 +181,7 @@ async function generatePDF(forcedType = null) {
   const { jsPDF } = window.jspdf;
   const doc   = new jsPDF();
   const modal = document.getElementById('patient-modal');
-  const type  = forcedType || (modal ? modal.dataset.reportType : 'summary');
+  const type  = (typeof forcedType === 'string' ? forcedType : null) || (modal ? modal.dataset.reportType : 'summary');
 
   const pInfo = {
     first:        document.getElementById('p-first')?.value    || 'N/A',
@@ -375,4 +376,6 @@ window.exportAuditCSV = function() {
   URL.revokeObjectURL(url);
 };
 
-document.getElementById('btn-generate-final')?.addEventListener('click', generatePDF);
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btn-generate-final')?.addEventListener('click', generatePDF);
+});
