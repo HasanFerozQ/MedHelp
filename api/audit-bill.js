@@ -164,8 +164,19 @@ function normalizeTextractOutput(blocks) {
       });
 
       if (headers.cpt || headers.billed_amount) {
-        // Start from row 2 or 3 depending on header rows
-        const dataStart = headers.date === 1 || headers.cpt === 1 ? 2 : 3; 
+        // Track the lowest row that contained a header
+        let headerRowFoundIn = 1;
+        headerRows.forEach(hr => {
+          for (let c = 1; c <= maxCol; c++) {
+            const cell = grid[hr]?.[c];
+            if (!cell) continue;
+            const text = cell.text.toLowerCase();
+            if (text === 'cpt' || text === 'date' || text === 'code' || text.includes('charge')) {
+              headerRowFoundIn = hr;
+            }
+          }
+        });
+        const dataStart = headerRowFoundIn + 1; 
         
         for (let r = dataStart; r <= maxRow; r++) {
           const rowData = grid[r] || {};
@@ -216,7 +227,7 @@ function normalizeTextractOutput(blocks) {
               Modifier: headers.modifier ? (rowData[headers.modifier]?.text || "").trim() : "",
               Billed_Amount: billedAmount,
               Adjustment: adjValue,
-              Paid: adjValue < 0 ? Math.max(0, billedAmount + adjValue) : 0,
+              Paid: adjRaw !== null ? Math.max(0, billedAmount + adjValue) : 0,
               DX: dxCodes,
               extraction_confidence: Math.max(0, score),
               needs_manual_review: score < 70 || anomaly,

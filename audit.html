@@ -132,6 +132,25 @@
                 <option value="3.0">Worker's Comp (300% Medicare)</option>
               </select>
             </div>
+            
+            <div class="setting-item" style="display:flex; align-items:center; gap:8px;">
+              <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Locality</label>
+              <select id="gpci-region" style="background:var(--bg-main); border:1px solid var(--border); border-radius:4px; color:var(--text-h); font-size:12px; padding:4px 8px; outline:none;">
+                <option value="1.0">Standard (US Average)</option>
+                <option value="1.08">New York / Manhattan</option>
+                <option value="1.05">San Francisco / CA</option>
+                <option value="0.95">Rural / Southern US</option>
+              </select>
+            </div>
+
+            <div class="setting-item" style="display:flex; align-items:center; gap:8px;">
+              <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">POS</label>
+              <select id="facility-type" style="background:var(--bg-main); border:1px solid var(--border); border-radius:4px; color:var(--text-h); font-size:12px; padding:4px 8px; outline:none;">
+                <option value="office">Non-Facility (Office)</option>
+                <option value="hospital">Facility (Hospital/ASC)</option>
+              </select>
+            </div>
+
             <button class="btn btn-ghost" onclick="clearAuditInputs()" style="padding: 8px 16px; font-size: 12px; margin-right: 8px;">Refresh</button>
             <button class="btn btn-danger" onclick="clearAuditGridConfirm()" style="padding: 8px 16px; font-size: 12px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 4px; cursor: pointer;">Clear Grid</button>
           </div>

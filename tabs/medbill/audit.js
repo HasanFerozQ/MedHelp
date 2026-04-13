@@ -24,18 +24,21 @@ window.switchAuditTab = function(tabName) {
   if (tabName === 'manual') {
     manualTab.style.display = 'block';
     pdfTab.style.display = 'none';
-    manualBtn.style.background = 'var(--accent)';
-    manualBtn.style.color = 'white';
-    pdfBtn.style.background = 'transparent';
-    pdfBtn.style.color = 'var(--text-muted)';
+    if (manualBtn) { manualBtn.style.background = 'var(--accent)'; manualBtn.style.color = 'white'; }
+    if (pdfBtn) { pdfBtn.style.background = 'transparent'; pdfBtn.style.color = 'var(--text-muted)'; }
   } else {
     manualTab.style.display = 'none';
     pdfTab.style.display = 'block';
-    pdfBtn.style.background = 'var(--accent)';
-    pdfBtn.style.color = 'white';
-    manualBtn.style.background = 'transparent';
-    manualBtn.style.color = 'var(--text-muted)';
+    if (pdfBtn) { pdfBtn.style.background = 'var(--accent)'; pdfBtn.style.color = 'white'; }
+    if (manualBtn) { manualBtn.style.background = 'transparent'; manualBtn.style.color = 'var(--text-muted)'; }
   }
+};
+
+window.toggleAdvancedForm = function() {
+  const wrap = document.getElementById('advanced-form-wrap');
+  if (!wrap) return;
+  const isOpen = wrap.style.display !== 'none';
+  wrap.style.display = isOpen ? 'none' : 'grid';
 };
 
 window.handlePdfSelect = async function(event) {
@@ -79,9 +82,9 @@ window.handlePdfSelect = async function(event) {
       const cleanItems     = newItems.filter(i => !i.needs_manual_review);
 
       // Auto-populate the high-confidence ones
-      cleanItems.forEach(item => {
+      cleanItems.forEach((item, loopIdx) => {
         window.appGridRows.push({
-          rowId: 'auto-' + Date.now() + Math.random().toString(36).substring(2,6),
+          rowId: 'auto-' + Date.now() + '-' + loopIdx + Math.random().toString(36).substring(2,6),
           provenance: 'textract',
           date: item.Date || '',
           code: item.CPT || '',
@@ -90,9 +93,11 @@ window.handlePdfSelect = async function(event) {
           qty: item.Qty || 1,
           price: item.Unit_Price || null,
           total: item.Billed_Amount || null,
-          paid: item.Paid || null,
+          paid: item.Paid != null ? item.Paid : null,
           owed: null,
-          adj: item.Adjustment || null,
+          adj: item.Adjustment != null ? item.Adjustment : null,
+          extraction_confidence: item.extraction_confidence ?? 100,
+          has_low_confidence_chars: item.has_low_confidence_chars || false,
           rowType: 'service',
           desc: '',
           npi: ''
@@ -125,13 +130,18 @@ window.showManualReviewPrompt = function(items) {
   const list = container.querySelector('#review-items-list');
   if (!list) return;
 
+  const s = (v) => {
+    if (typeof window.sanitizeText === 'function') return window.sanitizeText(String(v || ''));
+    return String(v || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  };
+
   list.innerHTML = items.map((item, idx) => `
     <div class="review-row" style="background:rgba(245,158,11,0.05); border:1px solid rgba(245,158,11,0.2); border-radius:8px; padding:12px; margin-bottom:10px; display:flex; gap:12px; align-items:center;">
       <div style="background:#f59e0b; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:12px; font-weight:bold;">!</div>
       <div style="flex-grow:1; display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
-        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Date</label><input type="text" class="rev-date" value="${item.Date}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
-        <div><label style="font-size:10px; color:var(--text-muted); display:block;">CPT</label><input type="text" class="rev-code" value="${item.CPT}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
-        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Total</label><input type="text" class="rev-total" value="${item.Billed_Amount}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
+        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Date</label><input type="text" class="rev-date" value="${s(item.Date)}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
+        <div><label style="font-size:10px; color:var(--text-muted); display:block;">CPT</label><input type="text" class="rev-code" value="${s(item.CPT)}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
+        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Total</label><input type="text" class="rev-total" value="${parseFloat(item.Billed_Amount || 0).toFixed(2)}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
         <div>
           <label style="font-size:10px; color:var(--text-muted); display:block;">Reason</label>
           <span style="font-size:11px; color:#b45309;">${item.extraction_confidence < 30 ? 'Garbled/Invalid' : 'Needs Review'} (${item.extraction_confidence}%)</span>
@@ -148,6 +158,11 @@ window.approveReviewItem = function(btn) {
   const code = row.querySelector('.rev-code').value;
   const total = parseFloat(row.querySelector('.rev-total').value);
 
+  if (isNaN(total) || total <= 0) {
+    alert("Please enter a valid billed amount.");
+    return;
+  }
+
   window.appGridRows.push({
     rowId: 'auto-' + Date.now() + Math.random().toString(36).substring(2,6),
     provenance: 'textract-reviewed',
@@ -161,6 +176,8 @@ window.approveReviewItem = function(btn) {
     paid: null,
     owed: null,
     adj: null,
+    extraction_confidence: 100,
+    has_low_confidence_chars: false,
     rowType: 'service',
     desc: 'Reviewed OCR Entry',
     npi: ''
