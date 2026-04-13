@@ -42,6 +42,14 @@
     .audit-panel { display: none !important; }
     .audit-panel.active { display: block !important; }
     .audit-tab.active { color: var(--accent) !important; border-bottom-color: var(--accent) !important; }
+    .audit-select {
+      background: var(--bg-main) !important;
+      color: var(--text-h) !important;
+    }
+    .audit-select option {
+      background: #0f172a;
+      color: #e2e8f0;
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -126,7 +134,7 @@
           <div style="display: flex; gap: 12px; align-items: flex-end;">
             <div style="text-align: right;">
               <label style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Payer Type</label>
-              <select id="payer-type" onchange="triggerAudit()" style="background: var(--bg-card); color: var(--text-h); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; font-size: 12px; cursor: pointer; outline: none; transition: border-color 0.2s;">
+              <select id="payer-type" class="audit-select" onchange="triggerAudit()" style="background: var(--bg-card); color: var(--text-h); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; font-size: 12px; cursor: pointer; outline: none; transition: border-color 0.2s;">
                 <option value="1.5">Self-Pay (150% Medicare)</option>
                 <option value="2.5" selected>Commercial (250% Medicare)</option>
                 <option value="3.0">Worker's Comp (300% Medicare)</option>
@@ -135,7 +143,7 @@
             
             <div class="setting-item" style="display:flex; align-items:center; gap:8px;">
               <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Locality</label>
-              <select id="gpci-region" style="background:var(--bg-main); border:1px solid var(--border); border-radius:4px; color:var(--text-h); font-size:12px; padding:4px 8px; outline:none;">
+              <select id="gpci-region" class="audit-select" style="background:var(--bg-main); border:1px solid var(--border); border-radius:4px; color:var(--text-h); font-size:12px; padding:4px 8px; outline:none;">
                 <option value="1.0">Standard (US Average)</option>
                 <option value="1.08">New York / Manhattan</option>
                 <option value="1.05">San Francisco / CA</option>
@@ -145,7 +153,7 @@
 
             <div class="setting-item" style="display:flex; align-items:center; gap:8px;">
               <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">POS</label>
-              <select id="facility-type" style="background:var(--bg-main); border:1px solid var(--border); border-radius:4px; color:var(--text-h); font-size:12px; padding:4px 8px; outline:none;">
+              <select id="facility-type" class="audit-select" style="background:var(--bg-main); border:1px solid var(--border); border-radius:4px; color:var(--text-h); font-size:12px; padding:4px 8px; outline:none;">
                 <option value="office">Non-Facility (Office)</option>
                 <option value="hospital">Facility (Hospital/ASC)</option>
               </select>

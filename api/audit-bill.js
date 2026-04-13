@@ -22,18 +22,21 @@ const upload = multer({
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const region = process.env.AWS_REGION || "us-east-1";
+const awsCredentialsConfigured = !!(accessKeyId && secretAccessKey);
 
-if (!accessKeyId || !secretAccessKey) {
+if (!awsCredentialsConfigured) {
   console.error('FATAL: AWS credentials not set. Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars.');
 }
 
-const textractClient = new TextractClient({
-  region,
-  credentials: {
-      accessKeyId,
-      secretAccessKey
-  }
-});
+const textractClient = awsCredentialsConfigured
+  ? new TextractClient({
+      region,
+      credentials: {
+        accessKeyId,
+        secretAccessKey
+      }
+    })
+  : null;
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -471,21 +474,27 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: "Method not allowed" });
 
+  if (!awsCredentialsConfigured || !textractClient) {
+    return res.status(500).json({
+      ok: false,
+      error: 'AWS credentials not configured. Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.'
+    });
+  }
+
   try {
     await runMiddleware(req, res, upload.single('bill'));
     if (!req.file) return res.status(400).json({ error: "Missing PDF" });
 
     // Step 1: Textract Extraction
-    const command = new AnalyzeDocumentCommand({
-      Document: {
-        Bytes: req.file.buffer
-      },
-      FeatureTypes: ["TABLES", "FORMS"]
-    });
-
-    const data = await textractClient.send(command).catch(err => {
-        throw new Error(`AWS Textract OCR Failed: ${err.message}`);
-    });
+    let data;
+    try {
+      data = await textractClient.send(new AnalyzeDocumentCommand({
+        Document: { Bytes: req.file.buffer },
+        FeatureTypes: ["TABLES", "FORMS"]
+      }));
+    } catch (err) {
+      return res.status(500).json({ ok: false, error: `AWS Textract failed: ${err.message}` });
+    }
     
     // Step 2: Normalization
     let normalizedItems = [];

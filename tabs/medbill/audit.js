@@ -66,13 +66,18 @@ window.handlePdfSelect = async function(event) {
     const baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
       ? 'http://localhost:3000' : '';
       
-    const res = await fetch(`${baseUrl}/api/audit-bill`, {
-      method: 'POST',
-      body: formData
-    });
-    
-    const d = await res.json();
-    if (!d.ok) throw new Error(d.error || 'Extraction Failed');
+    const res = await fetch(`${baseUrl}/api/audit-bill`, { method: 'POST', body: formData });
+
+    // Always parse response as text first so non-JSON server errors become readable.
+    const raw = await res.text();
+    let d;
+    try {
+      d = JSON.parse(raw);
+    } catch {
+      throw new Error(`Server returned non-JSON response: ${raw.slice(0, 120)}`);
+    }
+
+    if (!d.ok) throw new Error(d.error || 'Extraction failed');
     
     const newItems = d.normalized_bill || [];
     if (newItems.length === 0) {
@@ -515,6 +520,11 @@ async function triggerAudit() {
   
   if (rows.length === 0) {
     container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 13px;">Add elements above to see live findings here.</div>';
+    const confidenceBadge = document.getElementById('audit-confidence-badge');
+    if (confidenceBadge) confidenceBadge.remove();
+    window.currentEngineConfidence = null;
+    window.currentEngineFindings = [];
+    window.currentEngineSavings = 0;
     const auditRes = document.getElementById('audit-results');
     if (auditRes) {
       auditRes.innerHTML = '';
