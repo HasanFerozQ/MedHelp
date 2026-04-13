@@ -40,12 +40,18 @@ const textractClient = awsCredentialsConfigured
 
 let supabase = null;
 try {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.SUPABASE_URL ||
+    null;
+  const supabaseKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_SERVICE_KEY ||
+    null;
   if (supabaseUrl && supabaseKey) {
     supabase = createClient(supabaseUrl, supabaseKey);
   } else {
-    console.warn('MediHelp: Supabase env vars missing; database-dependent checks will be skipped.');
+    console.warn('MediHelp: Supabase env vars missing (SUPABASE_URL/NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY); database-dependent checks will be skipped.');
   }
 } catch (err) {
   console.warn('MediHelp: Supabase client init failed; DB checks will be skipped:', err.message);
