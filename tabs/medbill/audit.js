@@ -42,6 +42,14 @@ window.handlePdfSelect = async function(event) {
   const file = event.target.files && event.target.files[0];
   if (!file) return;
 
+  // client-side MIME check
+  const allowed = ['application/pdf', 'image/png', 'image/jpeg', 'image/tiff'];
+  if (!allowed.includes(file.type)) {
+    alert("Please upload a valid PDF or Image file (PNG, JPG, TIFF).");
+    if (event.target) event.target.value = '';
+    return;
+  }
+
   const dropzone = document.getElementById('pdf-dropzone');
   const loadingState = document.getElementById('pdf-loading-state');
   
@@ -67,7 +75,11 @@ window.handlePdfSelect = async function(event) {
     if (newItems.length === 0) {
       alert("No medical billing lines found in this document.");
     } else {
-      newItems.forEach(item => {
+      const reviewRequired = newItems.filter(i => i.needs_manual_review);
+      const cleanItems     = newItems.filter(i => !i.needs_manual_review);
+
+      // Auto-populate the high-confidence ones
+      cleanItems.forEach(item => {
         window.appGridRows.push({
           rowId: 'auto-' + Date.now() + Math.random().toString(36).substring(2,6),
           provenance: 'textract',
@@ -86,8 +98,13 @@ window.handlePdfSelect = async function(event) {
           npi: ''
         });
       });
+
       localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
       
+      if (reviewRequired.length > 0) {
+        showManualReviewPrompt(reviewRequired);
+      }
+
       switchAuditTab('manual');
       triggerAudit();
     }
@@ -98,6 +115,67 @@ window.handlePdfSelect = async function(event) {
     if (loadingState) loadingState.style.display = 'none';
     if (event.target) event.target.value = ''; // reset file input
   }
+};
+
+window.showManualReviewPrompt = function(items) {
+  const container = document.getElementById('review-prompt-area');
+  if (!container) return;
+  
+  container.style.display = 'block';
+  const list = container.querySelector('#review-items-list');
+  if (!list) return;
+
+  list.innerHTML = items.map((item, idx) => `
+    <div class="review-row" style="background:rgba(245,158,11,0.05); border:1px solid rgba(245,158,11,0.2); border-radius:8px; padding:12px; margin-bottom:10px; display:flex; gap:12px; align-items:center;">
+      <div style="background:#f59e0b; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:12px; font-weight:bold;">!</div>
+      <div style="flex-grow:1; display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
+        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Date</label><input type="text" class="rev-date" value="${item.Date}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
+        <div><label style="font-size:10px; color:var(--text-muted); display:block;">CPT</label><input type="text" class="rev-code" value="${item.CPT}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
+        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Total</label><input type="text" class="rev-total" value="${item.Billed_Amount}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
+        <div>
+          <label style="font-size:10px; color:var(--text-muted); display:block;">Reason</label>
+          <span style="font-size:11px; color:#b45309;">${item.extraction_confidence < 30 ? 'Garbled/Invalid' : 'Needs Review'} (${item.extraction_confidence}%)</span>
+        </div>
+      </div>
+      <button onclick="approveReviewItem(this)" style="background:var(--accent); color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer;" data-idx="${idx}">Add to Bill</button>
+    </div>
+  `).join('');
+};
+
+window.approveReviewItem = function(btn) {
+  const row = btn.closest('.review-row');
+  const date = row.querySelector('.rev-date').value;
+  const code = row.querySelector('.rev-code').value;
+  const total = parseFloat(row.querySelector('.rev-total').value);
+
+  window.appGridRows.push({
+    rowId: 'auto-' + Date.now() + Math.random().toString(36).substring(2,6),
+    provenance: 'textract-reviewed',
+    date,
+    code,
+    modifier: '',
+    dx: [],
+    qty: 1,
+    price: null,
+    total,
+    paid: null,
+    owed: null,
+    adj: null,
+    rowType: 'service',
+    desc: 'Reviewed OCR Entry',
+    npi: ''
+  });
+
+  row.remove();
+  
+  const container = document.getElementById('review-prompt-area');
+  const remaining = container.querySelectorAll('.review-row').length;
+  if (remaining === 0) {
+    container.style.display = 'none';
+  }
+
+  localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
+  triggerAudit();
 };
 
 function initAudit() {
@@ -236,6 +314,12 @@ function editAuditRow(idx) {
   if (typeof switchAuditTab === 'function') {
     switchAuditTab('manual');
   }
+
+  // Auto-expand advanced section if modifier or advanced fields are present
+  const advWrap = document.getElementById('advanced-form-wrap');
+  if (advWrap && (r.modifier || r.rowType !== 'service' || r.desc || r.npi || r.adj)) {
+    advWrap.style.display = 'block';
+  }
 }
 window.editAuditRow = editAuditRow;
 
@@ -255,7 +339,7 @@ function saveToCache() {
   localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
 }
 
-const debouncedAudit = window.debounce(async () => {
+const debouncedAudit = (window.debounce || (fn => fn)) (async () => {
   try {
     await triggerAudit();
   } catch (err) {
@@ -265,6 +349,13 @@ const debouncedAudit = window.debounce(async () => {
 window.debouncedAudit = debouncedAudit;
 
 async function triggerAudit() {
+  // Race condition guard
+  if (typeof BucketAuditor === 'undefined') {
+    console.warn('MediHelp: BucketAuditor not loaded, retrying...');
+    setTimeout(triggerAudit, 500);
+    return;
+  }
+
   const rows = window.appGridRows || [];
 
   // Stage 1 & 2: Pre-Audit Validation Gate (Quarantine & Derive)

@@ -185,24 +185,37 @@ class BucketAuditor {
   // ── LAYER 1E — Duplicate Detection ───────────────────────────────────────
   runDuplicates() {
     const registry = {};
+    const distinctModifiers = new Set(['59', '76', '77', '91', 'RT', 'LT', 'XE', 'XS', 'XP', 'XU']);
+
     this.rows.forEach((r, idx) => {
       if (!r.code || r.isTotalRow) return;
       const dKey = r.date || 'UNDATED';
-      const key  = `${dKey}|${r.code}|${r.modifier || ''}`;
+      const key  = `${dKey}|${r.code}`; // Date + Code only
       (registry[key] = registry[key] || []).push({ r, idx });
     });
-    Object.values(registry).forEach(entries => {
+
+    Object.entries(registry).forEach(([key, entries]) => {
       if (entries.length < 2) return;
-      const { r } = entries[0];
-      const label = r.code + (r.modifier ? '-' + r.modifier : '');
-      this.addFinding('duplicate', 'Confirmed Duplicate Charge',
-        `CPT ${label} appears ${entries.length}× on ${r.date || 'same date'}. Only one is typically payable per CMS Claims Processing Manual, Chapter 4 §20.4.`,
-        'danger', r.code, r.rowId, 98);
-      entries.forEach(({ r: er }) => { if (er.raw) er.raw.classList.add('audit-row-error'); });
-      // Void all duplicate entries after the first (waterfall)
-      for (let i = 1; i < entries.length; i++) {
-        this.addRowSavings(entries[i].idx, entries[i].r.total, entries[i].r.total, `Voided exact duplicate charge for CPT ${entries[i].r.code}`);
-        this.voidRow(entries[i].idx);
+
+      // Check if any entry in this group has a distinct modifier that justifies the duplicate
+      const hasDistinctMod = entries.some(e => {
+        const mod = (e.r.modifier || '').replace(/^-/, '').toUpperCase();
+        return distinctModifiers.has(mod);
+      });
+
+      if (!hasDistinctMod) {
+        const { r } = entries[0];
+        this.addFinding('duplicate', 'Potential Duplicate Charge',
+          `CPT ${r.code} appears ${entries.length}× on ${r.date || 'same date'} without distinct unbundling modifiers (e.g. -59, -76). Only one is typically payable per CMS Chapter 4 §20.4.`,
+          'danger', r.code, r.r.rowId, 98);
+        
+        entries.forEach(({ r: er }, i) => { 
+          if (er.raw) er.raw.classList.add('audit-row-error'); 
+          if (i > 0) {
+            this.addRowSavings(entries[i].idx, entries[i].r.total, entries[i].r.total, `Voided likely duplicate charge for CPT ${entries[i].r.code}`);
+            this.voidRow(entries[i].idx);
+          }
+        });
       }
     });
   }
@@ -619,6 +632,8 @@ class BucketAuditor {
       }
     });
 
+    this.runUpcodingAudit();
+
     const missingDates = this.rows.filter(r => !r.date && r.total > 50 && !r.isTotalRow).length;
     if (missingDates > 0) {
       this.addFinding('completeness', 'Missing Service Dates',
@@ -700,10 +715,12 @@ class BucketAuditor {
     this.rows.forEach(r => {
       const text = `${r.desc || ''} ${r.code || ''}`;
       
-      // CARC Matching
+      // CARC Matching (Word Boundaires)
+      const carcCodesFromText = [];
       const cMatches = text.matchAll(new RegExp(adjRegex, 'gi'));
       for (const match of cMatches) {
-        carcCodes.add(match[1].toUpperCase() + '-' + match[2]);
+        const fullCode = match[1].toUpperCase() + '-' + match[2];
+        carcCodes.add(fullCode);
         carcCodes.add(match[2]); 
       }
 
@@ -793,6 +810,25 @@ class BucketAuditor {
 
     // ── Final Step: Adjustment Audit ──────────────────────────────────────────
     this.runAdjustmentAudit();
+  }
+
+  // ── LAYER 2H — Upcoding Detection ───────────────────────────────────────
+  runUpcodingAudit() {
+    this.rows.forEach(r => {
+      if (!r.code || r.isTotalRow || !r.dx || r.dx.length === 0) return;
+      
+      // High-level E&M codes
+      const isHighLevel = (r.code === '99215' || r.code === '99205' || r.code === '99214' || r.code === '99204');
+      if (!isHighLevel) return;
+
+      // Check if ANY diagnosis is routine/wellness
+      const routineDx = r.dx.find(dx => dx.toUpperCase().startsWith('Z00') || dx.toUpperCase().startsWith('Z01'));
+      if (routineDx) {
+        this.addFinding('clinical', 'High-Level Visit vs. Routine Diagnosis',
+          `CPT ${r.code} (High Complexity) is billed with a routine/wellness diagnosis (${routineDx}). Medicare typically expects a lower-level visit (e.g. 99212-3) for routine exams unless documentation supports significant additional complexity. Potential upcoding risk.`,
+          'warn', r.code, r.rowId, 75);
+      }
+    });
   }
 
   // ── LAYER 3B — Adjustment Code Logic ──────────────────────────────────────

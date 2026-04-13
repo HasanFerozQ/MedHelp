@@ -107,6 +107,17 @@
 
       <!-- Manual Data Entry Form -->
       <div id="interactive-grid-container" style="margin-bottom: 30px;">
+        
+        <!-- Human-in-the-Loop Review Area (Visible only when Textract finds ambiguous data) -->
+        <div id="review-prompt-area" style="display:none; margin-bottom:20px; border:2px solid #f59e0b; border-radius:12px; padding:16px; background:rgba(245,158,11,0.02);">
+          <h3 style="margin-top:0; font-size:14px; color:#b45309; display:flex; align-items:center; gap:8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            Review Required: Ambiguous Data Detected
+          </h3>
+          <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">The following items were extracted with low confidence or invalid formats. Please verify and correct them before adding to the bill.</p>
+          <div id="review-items-list"></div>
+        </div>
+
         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 15px;">
           <div>
             <h3 style="font-size: 16px; margin: 0; color: var(--text-h);">Add Medical Charge</h3>
@@ -137,10 +148,7 @@
                 <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">CPT/HCPCS Code <span style="color:var(--danger);">*</span></label>
                 <input type="text" id="entry-code" placeholder="e.g. 99214" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none; font-weight:bold; letter-spacing:0.5px;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
               </div>
-              <div>
-                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Modifier <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
-                <input type="text" id="entry-mod" placeholder="e.g. 25" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
-              </div>
+
               <div>
                 <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">ICD-10 Dx <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
                 <input type="text" id="entry-dx" placeholder="Z00.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
@@ -196,6 +204,10 @@
                         <option value="payment" style="background:var(--bg-main); color:var(--text-h);">Payment Line</option>
                         <option value="credit" style="background:var(--bg-main); color:var(--text-h);">Credit/Refund Line</option>
                       </select>
+                    </div>
+                    <div>
+                      <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Modifier <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
+                      <input type="text" id="entry-mod" placeholder="e.g. 25" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
                     </div>
                     <div>
                       <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Adjustment</label>

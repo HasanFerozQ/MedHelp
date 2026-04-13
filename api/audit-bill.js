@@ -40,21 +40,28 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-function getText(block, blockMap) {
+function getText(block, blockMap, minConfidence = 85) {
   let text = "";
+  let hasLowConfidence = false;
   if (block.Relationships) {
     block.Relationships.forEach(rel => {
       if (rel.Type === "CHILD") {
         rel.Ids.forEach(id => {
           const childBlock = blockMap[id];
           if (childBlock && childBlock.BlockType === "WORD") {
+            const conf = childBlock.Confidence || 0;
+            if (conf < minConfidence) {
+              hasLowConfidence = true;
+              // Add a marker for high-precision review
+              text += "[?] "; 
+            }
             text += childBlock.Text + " ";
           }
         });
       }
     });
   }
-  return text.trim();
+  return { text: text.trim().replace(/\[\?\] /g, ''), hasLowConfidence };
 }
 
 function normalizeTextractOutput(blocks) {
@@ -65,22 +72,27 @@ function normalizeTextractOutput(blocks) {
   const keyValues = blocks.filter(b => b.BlockType === "KEY_VALUE_SET");
 
   let normalizedItems = [];
-  let grandTotal = null;
+  let foundTotals = []; // { val, priority }
 
   // 1. Extract Grand Total from KEY_VALUE_SET (FORMS)
-  // Usually, a KEY block points to a VALUE block via a VALUE relationship
   keyValues.forEach(kv => {
     if (kv.EntityTypes && kv.EntityTypes.includes("KEY")) {
-      const keyText = getText(kv, blockMap).toLowerCase();
-      if (keyText.includes("total") || keyText.includes("amount due") || keyText.includes("balance")) {
-        // Find corresponding VALUE
+      const { text: keyText } = getText(kv, blockMap, 0); // Get key text regardless of confidence
+      const lowerKey = keyText.toLowerCase();
+      
+      let priority = 0;
+      if (lowerKey.includes("balance due") || lowerKey.includes("amount due")) priority = 3;
+      else if (lowerKey.includes("total") && !lowerKey.includes("sub")) priority = 2;
+      else if (lowerKey.includes("amount") || lowerKey.includes("balance")) priority = 1;
+
+      if (priority > 0) {
         let valText = null;
         if (kv.Relationships) {
           kv.Relationships.forEach(rel => {
             if (rel.Type === "VALUE") {
               rel.Ids.forEach(id => {
                 const valBlock = blockMap[id];
-                valText = getText(valBlock, blockMap);
+                valText = getText(valBlock, blockMap, 0).text;
               });
             }
           });
@@ -88,16 +100,21 @@ function normalizeTextractOutput(blocks) {
         if (valText) {
           const parsedVal = parseFloat(valText.replace(/[^0-9.]/g, ''));
           if (!isNaN(parsedVal) && parsedVal > 0) {
-             grandTotal = parsedVal; // Use the last non-zero total found
+             foundTotals.push({ val: parsedVal, priority });
           }
         }
       }
     }
   });
 
+  // Fallback: If no keywords found, find the largest numeric value in the forms layer
+  const grandTotal = foundTotals.length > 0 
+    ? foundTotals.sort((a,b) => b.priority - a.priority || b.val - a.val)[0].val 
+    : null;
+
   // 2. Extract Line Items from TABLES
   tables.forEach(tableBlock => {
-    const grid = {}; // grid[row][col] = text
+    const grid = {}; // grid[row][col] = { text, lowConf }
     let maxRow = 0;
     let maxCol = 0;
 
@@ -113,7 +130,7 @@ function normalizeTextractOutput(blocks) {
               if (c > maxCol) maxCol = c;
               
               if (!grid[r]) grid[r] = {};
-              grid[r][c] = getText(cellBlock, blockMap);
+              grid[r][c] = getText(cellBlock, blockMap, 85);
             }
           });
         }
@@ -123,64 +140,87 @@ function normalizeTextractOutput(blocks) {
     if (maxRow > 0) {
       let headers = {};
       
-      for (let c = 1; c <= maxCol; c++) {
-        const text = (grid[1] && grid[1][c]) ? grid[1][c].toLowerCase() : "";
-        if (text.includes("date")) headers.date = c;
-        else if (text.includes("cpt") || text.includes("code") || text.includes("hcpcs")) headers.cpt = c;
-        else if (text.includes("qty") || text.includes("unit") || text.includes("quantity")) headers.qty = c;
-        else if (text.includes("price") || text.includes("rate") || text.includes("fee")) headers.unit_price = c;
-        else if (text.includes("mod")) headers.modifier = c;
-        else if (text.includes("charge") || text.includes("amount") || text.includes("billed") || text.includes("total")) headers.billed_amount = c;
-        // CARC / contractual adjustment column (EOB-style bills)
-        else if (text.includes("adj") || text.includes("carc") || text.includes("adjustment") || text.includes("contractual")) headers.adjustment = c;
-        // ICD-10 / diagnosis column
-        else if (text.includes("diag") || text.includes("icd") || text.includes("dx")) headers.dx = c;
-      }
+      // Multi-row header support: check top 2 rows
+      const headerRows = [1, 2];
+      headerRows.forEach(hr => {
+        for (let c = 1; c <= maxCol; c++) {
+          const cell = grid[hr] ? grid[hr][c] : null;
+          if (!cell) continue;
+          const text = cell.text.toLowerCase();
 
-      // Fallback: If amount/billed header wasn't found but unit_price was, the right-most numeric column might be Line_Total
-      
+          // Priority header mapping (exact match vs partial)
+          if (text === "date" || text.includes("serv date") || text.includes("dos")) headers.date = c;
+          else if (text === "cpt" || text === "hcpcs" || (text.includes("code") && !text.includes("proc"))) headers.cpt = c;
+          else if (text.includes("qty") || text === "units" || text === "quantity") headers.qty = c;
+          else if (text.includes("price") || text === "rate" || text === "fee") headers.unit_price = c;
+          else if (text === "mod" || text === "modifier") headers.modifier = c;
+          else if (text === "total" || text === "billed" || text === "amount" || text.includes("charge")) {
+             // Only map if not already mapped or if this is a better match
+             if (!headers.billed_amount) headers.billed_amount = c;
+          }
+          else if (text.includes("adj") || text.includes("carc") || text.includes("contractual")) headers.adjustment = c;
+          else if (text.includes("diag") || text.includes("icd") || text.includes("dx")) headers.dx = c;
+        }
+      });
+
       if (headers.cpt || headers.billed_amount) {
-        for (let r = 2; r <= maxRow; r++) {
+        // Start from row 2 or 3 depending on header rows
+        const dataStart = headers.date === 1 || headers.cpt === 1 ? 2 : 3; 
+        
+        for (let r = dataStart; r <= maxRow; r++) {
           const rowData = grid[r] || {};
-          const cptVal = headers.cpt ? (rowData[headers.cpt] || "") : "";
-          const amtVal = headers.billed_amount ? (rowData[headers.billed_amount] || "") : "";
+          const cellCpt = rowData[headers.cpt] || { text: "", hasLowConfidence: false };
+          const cellAmt = rowData[headers.billed_amount] || { text: "", hasLowConfidence: false };
           
-          if (cptVal.trim() !== "" || amtVal.trim() !== "") {
-            let finalQty = headers.qty ? (rowData[headers.qty] || "1") : "1";
-            if (finalQty.trim() === "") finalQty = "1";
+          if (cellCpt.text.trim() !== "" || cellAmt.text.trim() !== "") {
+            let finalQtyStr = headers.qty ? (rowData[headers.qty]?.text || "1") : "1";
+            let finalAmtStr = cellAmt.text.replace(/[^0-9.-]/g, '');
+            let finalUnitPriceStr = headers.unit_price ? (rowData[headers.unit_price]?.text || "").replace(/[^0-9.]/g, '') : null;
 
-            let finalAmtStr = amtVal.replace(/[^0-9.-]/g, '');
-            let finalUnitPriceStr = headers.unit_price ? (rowData[headers.unit_price] || "").replace(/[^0-9.]/g, '') : null;
-
-            // CARC / contractual adjustment (typically a negative dollar amount on EOBs)
-            let adjRaw = headers.adjustment ? (rowData[headers.adjustment] || "").replace(/[^0-9.\-]/g, '') : null;
+            let adjRaw = headers.adjustment ? (rowData[headers.adjustment]?.text || "").replace(/[^0-9.\-]/g, '') : null;
             let adjValue = adjRaw ? parseFloat(adjRaw) : 0;
-            if (!isNaN(adjValue) && adjValue > 0) adjValue = -adjValue; // normalise: adjustments are negative
+            if (!isNaN(adjValue) && adjValue > 0) adjValue = -adjValue;
 
-            // ICD-10 / diagnosis codes
-            const dxRaw = headers.dx ? (rowData[headers.dx] || "").trim() : "";
+            const dxRaw = headers.dx ? (rowData[headers.dx]?.text || "").trim() : "";
             const ICD10_SERVER_RE = /\b([A-Z]\d{2}(?:\.\w{1,4})?)\b/g;
             const dxCodes = dxRaw ? [...dxRaw.matchAll(ICD10_SERVER_RE)].map(m => m[1]) : [];
 
-            // Accept HCPCS L2 codes (letter + 4 digits) as valid billing codes
-            const isValidCode = cptVal.trim() !== "" && (
-              /^\d{5}$/.test(cptVal.trim()) || /^[A-Z]\d{4}$/.test(cptVal.trim())
+            const isValidCode = cellCpt.text.trim() !== "" && (
+              /^\d{5}$/.test(cellCpt.text.trim()) || /^[A-Z]\d{4}$/.test(cellCpt.text.trim())
             );
 
             const billedAmount = parseFloat(finalAmtStr) || 0.00;
-            const paidAmount   = adjValue < 0 ? Math.max(0, billedAmount + adjValue) : 0;
+            const unitPrice = finalUnitPriceStr ? parseFloat(finalUnitPriceStr) : null;
+            const qty = parseFloat(finalQtyStr) || 1;
+
+            // Internal anomaly detection
+            let anomaly = false;
+            if (unitPrice && qty && Math.abs((unitPrice * qty) - billedAmount) > 0.01) {
+              anomaly = true;
+            }
+
+            // Confidence Scoring
+            let score = 100;
+            if (!isValidCode) score -= 40;
+            if (billedAmount === 0) score -= 30;
+            if (!headers.date || !rowData[headers.date]?.text) score -= 15;
+            if (rowData[headers.cpt]?.hasLowConfidence || rowData[headers.billed_amount]?.hasLowConfidence) score -= 20;
+            if (anomaly) score -= 25;
 
             normalizedItems.push({
-              Date: headers.date ? (rowData[headers.date] || "").trim() : "",
-              CPT: cptVal.trim(),
+              Date: headers.date ? (rowData[headers.date]?.text || "").trim() : "",
+              CPT: cellCpt.text.trim(),
               IsValidCode: isValidCode,
-              Qty: parseFloat(finalQty) || 1,
-              Unit_Price: finalUnitPriceStr && finalUnitPriceStr !== "" ? parseFloat(finalUnitPriceStr) : null,
-              Modifier: headers.modifier ? (rowData[headers.modifier] || "").trim() : "",
+              Qty: qty,
+              Unit_Price: unitPrice,
+              Modifier: headers.modifier ? (rowData[headers.modifier]?.text || "").trim() : "",
               Billed_Amount: billedAmount,
               Adjustment: adjValue,
-              Paid: paidAmount,
-              DX: dxCodes,  // ICD-10 diagnosis codes for CO-11 detection
+              Paid: adjValue < 0 ? Math.max(0, billedAmount + adjValue) : 0,
+              DX: dxCodes,
+              extraction_confidence: Math.max(0, score),
+              needs_manual_review: score < 70 || anomaly,
+              has_low_confidence_chars: cellCpt.hasLowConfidence || cellAmt.hasLowConfidence
             });
           }
         }

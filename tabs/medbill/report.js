@@ -29,8 +29,22 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
        color = '#10b981'; border = '#10b981'; bg = 'rgba(16, 185, 129, 0.05)';
     }
 
-    const s = (v) => window.sanitizeText(String(v || ''));
+    const s = (v) => {
+      if (typeof window.sanitizeText === 'function') return window.sanitizeText(String(v || ''));
+      return String(v || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    };
     const rationales = rationaleMap[idx] || [];
+
+    // OCR Confidence Badge
+    let confidenceBadge = '';
+    if (r.provenance && r.provenance.startsWith('textract')) {
+      const conf = r.extraction_confidence || 100;
+      const confColor = conf > 80 ? '#10b981' : (conf > 50 ? '#f59e0b' : '#ef4444');
+      confidenceBadge = `<span style="font-size:10px; font-weight:700; color:${confColor}; background: ${confColor}11; border: 1px solid ${confColor}33; padding: 2px 6px; border-radius: 4px; margin-left:8px;">OCR: ${conf}%</span>`;
+      if (r.has_low_confidence_chars) {
+        confidenceBadge += `<span style="font-size:10px; font-weight:700; color:#ef4444; margin-left:4px;" title="Specific characters in this row had low OCR confidence">[?]</span>`;
+      }
+    }
 
     html += `
       <div class="${statusClass}" style="border-left: 4px solid ${border}; background: ${bg}; border-radius: 8px; padding: 14px 16px; display:flex; flex-direction:column; gap:8px; margin-bottom: 12px; transition: all 0.2s;">
@@ -41,6 +55,7 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
             <span style="font-family:sans-serif; font-size:12px; font-weight:500; color:var(--text-muted); margin-left:12px;">
               Qty: ${r.qty || 1} | Billed: $${parseFloat(r.total || 0).toFixed(2)}
             </span>
+            ${confidenceBadge}
             ${r.dx && r.dx.length > 0 ? `<span style="font-family:sans-serif; font-size:11px; padding:2px 6px; border:1px solid var(--border); border-radius:12px; margin-left:12px; color:var(--text-muted);">Dx: ${r.dx.join(', ')}</span>` : ''}
           </div>
           <div style="display:flex; align-items:center; gap:12px;">
