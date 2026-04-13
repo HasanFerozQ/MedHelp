@@ -475,57 +475,26 @@ module.exports = async (req, res) => {
     await runMiddleware(req, res, upload.single('bill'));
     if (!req.file) return res.status(400).json({ error: "Missing PDF" });
 
-    // Step 1: Textract Extraction with QUERIES for high-confidence grand total detection
+    // Step 1: Textract Extraction
     const command = new AnalyzeDocumentCommand({
       Document: {
         Bytes: req.file.buffer
       },
-      FeatureTypes: ["TABLES", "FORMS", "QUERIES"],
-      QueriesConfig: {
-        Queries: [
-          { Text: "What is the total amount due?", Alias: "TOTAL_DUE" },
-          { Text: "What is the balance due?",     Alias: "BALANCE_DUE" },
-          { Text: "What is the patient responsibility?", Alias: "PATIENT_RESP" },
-        ]
-      }
+      FeatureTypes: ["TABLES", "FORMS"]
     });
 
     const data = await textractClient.send(command).catch(err => {
         throw new Error(`AWS Textract OCR Failed: ${err.message}`);
     });
     
-    // Step 2: Normalization — extract QUERY answers first for high-confidence grand total
+    // Step 2: Normalization
     let normalizedItems = [];
     let grandTotal = null;
     try {
-        // Override grandTotal from QUERIES if available (highest confidence path).
-        // QUERY blocks (not QUERY_RESULT) carry the alias. Follow ANSWER relationships to get the text.
         const blocks = data.Blocks || [];
-        const blockMap = {};
-        blocks.forEach(b => blockMap[b.Id] = b);
-
-        const queryBlocks = blocks.filter(b => b.BlockType === 'QUERY');
-        for (const qb of queryBlocks) {
-          const alias = qb.Query?.Alias || '';
-          if (alias !== 'TOTAL_DUE' && alias !== 'BALANCE_DUE') continue;
-
-          const answerRels = (qb.Relationships || []).find(r => r.Type === 'ANSWER');
-          if (!answerRels) continue;
-
-          for (const answerId of (answerRels.Ids || [])) {
-            const answerBlock = blockMap[answerId];
-            if (!answerBlock) continue;
-            const v = parseFloat((answerBlock.Text || '').replace(/[^0-9.]/g, ''));
-            if (!isNaN(v) && v > 0 && (grandTotal === null || v > grandTotal)) {
-              grandTotal = v; // QUERIES answer wins over FORMS heuristics
-            }
-          }
-        }
-
         const result = normalizeTextractOutput(blocks);
         normalizedItems = result.items;
-        // Only fallback to FORMS-detected grand total if QUERIES didn't find one
-        if (grandTotal === null) grandTotal = result.grandTotal;
+        grandTotal = result.grandTotal;
     } catch (err) {
         throw new Error(`Normalization Layer Error: Failed to parse bill table structure. ${err.message}`);
     }

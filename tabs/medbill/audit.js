@@ -208,6 +208,57 @@ function initAudit() {
   } else {
     window.appGridRows = [];
   }
+
+  // Handle handoff from landing page quick-audit
+  const pending = localStorage.getItem('mh_pending_audit');
+  if (pending) {
+    localStorage.removeItem('mh_pending_audit');
+    
+    // Inline regex extraction matching landing page logic
+    const lines = pending.split('\\n');
+    let hasLoadedItems = false;
+    
+    lines.forEach(line => {
+      const dates = line.match(/\\b(\\d{1,2}[\\/\\-]\\d{1,2}[\\/\\-]\\d{2,4})\\b/g);
+      const codeMatches = [...line.matchAll(/\\b([1-9]\\d{4}|[1-9]\\d{2})(?:-([A-Z0-9]{2}))?\\b/g)];
+      
+      const codesOnLine = codeMatches.map(m => ({
+        code: m[1],
+        modifier: m[2] || '',
+        qty: parseInt((line.match(/(?:qty|units?)[:\\s]+(\\d+)/i) || [null, '1'])[1], 10) || 1,
+        date: dates ? dates[0] : '',
+        isDRG: m[1].length === 3 && !!((window.MH_CONSTANTS?.DRG_BENCHMARKS || {})[m[1]])
+      })).filter(it => it.isDRG || (typeof window.isValidCPT === 'function' && window.isValidCPT(it.code)) || /\\d{5}/.test(it.code));
+
+      const dollarsOnLine = [...line.matchAll(/\\$\\s*(\\d+(?:\\.\\d{2})?)/g)].map(m => parseFloat(m[1]));
+
+      codesOnLine.forEach((it, idx) => {
+        hasLoadedItems = true;
+        window.appGridRows.push({
+          rowId: 'auto-handoff-' + Date.now() + '-' + idx + Math.random().toString(36).substring(2,6),
+          provenance: 'landing-page-extract',
+          date: it.date,
+          code: it.code,
+          modifier: it.modifier,
+          dx: [],
+          qty: it.qty,
+          price: null,
+          total: dollarsOnLine[idx] !== undefined ? dollarsOnLine[idx] : null,
+          paid: null,
+          owed: null,
+          adj: null,
+          extraction_confidence: 90,
+          rowType: 'service',
+          desc: 'Quick Audit Transfer',
+          npi: ''
+        });
+      });
+    });
+
+    if (hasLoadedItems) {
+      if (typeof saveToCache === 'function') saveToCache();
+    }
+  }
   
   // Give the UI a moment to render before firing the first audit
   setTimeout(triggerAudit, 100);

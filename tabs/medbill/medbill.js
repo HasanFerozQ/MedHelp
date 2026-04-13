@@ -40,7 +40,7 @@ function extractCodesWithCharges(text) {
         qty: parseInt((line.match(/(?:qty|units?)[:\s]+(\d+)/i) || [null, '1'])[1], 10),
         charge: null,
         date: dates ? dates[0] : 'UNDATED',
-        isDRG: m[1].length === 3,
+        isDRG: m[1].length === 3 && !!((window.MH_CONSTANTS?.DRG_BENCHMARKS || {})[m[1]]),
         rawLine: line.trim()
       }))
       .filter(it => it.isDRG || window.isValidCPT?.(it.code) || /\d{5}/.test(it.code));
@@ -136,7 +136,7 @@ function renderAuditResults(findings) {
 
     const pSet = (C.NCCI_PAIRS || {})[item.code];
     if (!item.isDRG && pSet) {
-      const hasPrimary = findings.some(other => other !== item && other.date === item.date && pSet.has(other.code));
+      const hasPrimary = findings.some(other => other !== item && other.date === item.date && !!pSet[other.code]);
       if (hasPrimary) {
         warningsHtml += `<div class="upcode-warning" style="background:#ffedd5; border-color:#fed7aa;"><strong>Bundling Alert:</strong> This service is typically included in the primary visit or metabolic panel.</div>`;
       }
@@ -210,7 +210,7 @@ function renderAuditResults(findings) {
   });
 
   document.getElementById('full-audit-link')?.addEventListener('click', () => {
-    const text = document.getElementById('paste-area').value;
+    const text = document.getElementById('paste-area')?.value || '';
     localStorage.setItem('mh_pending_audit', text);
     window.location.href = 'audit.html?action=advanced';
   });

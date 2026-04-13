@@ -320,8 +320,7 @@ class BucketAuditor {
 
     // Zero-Pay High Value Signal (treat null paid as $0 — common in PDF-extracted denied claims)
     validRows.forEach(r => {
-      const effectivePaid = r.paid != null ? r.paid : 0;
-      if (r.total > 500 && effectivePaid === 0 && (r.owed == null || r.owed === r.total) && !r.adj && r.math_complete) {
+      if (r.total > 500 && (r.paid === 0 || r.paid === null) && (r.owed == null || r.owed === r.total) && !r.adj && r.math_complete) {
         this.addFinding('financial', 'Likely Silent Denial / Process Oversight',
           `Line item "${r.desc || r.code || 'Unknown'}" billed at $${r.total.toFixed(2)} passed directly to patient with $0 insurance payment and $0 adjustment. Verify EOB for this charge.`,
           'warn', r.code, r.rowId, 75);
@@ -840,18 +839,26 @@ class BucketAuditor {
     this.rows.forEach(r => {
       const text = `${r.desc || ''} ${r.code || ''}`;
       
-      // Match CARC
+      // Match CARC (Expect formats like: 1, CO-1, PR 1, etc.)
       Object.entries(carcs).forEach(([code, desc]) => {
-        if (text.toUpperCase().includes(code)) {
+        // Create regex to match the code strictly as a standalone token or with a group prefix
+        const codeNum = code.replace(/[^0-9]/g, ''); // Extract just the digits if the DB returns formats like CO-1
+        const targetCode = codeNum || code;
+        const carcRegex = new RegExp(`\\b(?:CO|PR|OA|PI|CR)?[-\\s]?${targetCode}\\b`, 'i');
+        
+        if (carcRegex.test(text)) {
           this.addFinding('adjustment', `Adjustment: ${code}`,
             `Standard Denial Code ${code}: ${desc}. This industry-standard code provides the official reason for the insurer's adjustment or denial.`,
             'info', r.code || code);
         }
       });
 
-      // Match RARC
+      // Match RARC (Similar formats, e.g., N1, M1)
       Object.entries(rarcs).forEach(([code, desc]) => {
-        if (text.toUpperCase().includes(code)) {
+        // Typically RARCs are alphanumeric starting with a letter, e.g. N20, MA01
+        const rarcRegex = new RegExp(`\\b${code}\\b`, 'i');
+        
+        if (rarcRegex.test(text)) {
           this.addFinding('adjustment', `Remittance Note: ${code}`,
             `Remark Code ${code}: ${desc}. This provides additional clinical or administrative detail regarding your insurer's payment decision.`,
             'info', r.code || code);
