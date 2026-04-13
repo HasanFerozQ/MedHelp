@@ -4,25 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MediHelp | National Provider Search — Verify NPI & Specialties</title>
+  <meta name="description" content="Search the CMS NPPES registry to verify provider NPIs, specialties, taxonomy details, and practice location context.">
   <link rel="canonical" href="https://www.medihelp.live/providers">
   <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MediHelp">
+  <meta property="og:title" content="MediHelp Provider Search | Verify NPI and Specialty">
+  <meta property="og:description" content="Validate provider identity and taxonomy using the US NPPES registry.">
+  <meta property="og:url" content="https://www.medihelp.live/providers">
+  <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MediHelp Provider Search | Verify NPI and Specialty">
+  <meta name="twitter:description" content="Search and verify NPI records, taxonomy, and registry details.">
+  <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [{
       "@type": "Question",
-      "name": "How often is the CMS NPI registry data updated?",
+      "name": "What is the National Provider Search used for?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MediHelp sources data directly from the CMS NPPES public registry. The registry is updated daily at the federal level, and our searches provide real-time visibility into over 6 million active National Provider Identifiers (NPI)."
+        "text": "It helps verify provider identity, NPI status, and taxonomy to reduce billing confusion and catch specialty mismatches."
       }
     }, {
       "@type": "Question",
-      "name": "Why should I verify a doctor's NPI specialty taxonomy?",
+      "name": "Where does provider data come from?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Verifying a provider's primary taxonomy ensures they are registered for the service they are billing. Many instances of medical identity fraud or upcoding involve billing for advanced specialties outside of a provider's registered credentials."
+        "text": "MediHelp uses public CMS NPPES registry data for provider verification and search results."
       }
     }]
   }
@@ -160,10 +171,11 @@
   <script src="tabs/providers/providers.js"></script>
   <script>
     const providerFaqs = [
-      { q: 'How often is the CMS NPI registry data updated?', a: 'We source data from the federal NPPES system. The registry is updated daily, ensuring you have the latest information on over 7 million healthcare providers and practice locations.' },
-      { q: 'Why should I verify a doctor’s NPI specialty?', a: 'Billing for a specialized procedure (like Surgery) by a provider registered as a different specialty (like Psychiatry) is a major red flag for medical billing fraud and claim denials.' },
-      { q: 'What is an NPI Taxonomy code?', a: 'A Taxonomy code is a unique identifier that characterizes a provider’s specific specialty and level of expertise. It is the gold standard for cross-referencing valid billing authority.' },
-      { q: 'How do I find a provider’s practice location?', a: 'The NPI registry lists both the "Enumeration Date" and the primary business mailing address for every registered provider, helping you verify the legitimacy of a medical facility.' },
+      { q: 'What is this provider search for?', a: 'Use it to verify provider identity, NPI status, and taxonomy before trusting bills, claims, or referral paperwork.' },
+      { q: 'Where does provider data come from?', a: 'Results are sourced from the public CMS NPPES registry, which is the standard federal source for NPI records.' },
+      { q: 'Why does taxonomy matter?', a: 'Taxonomy helps confirm whether billed services align with the provider’s registered specialty and credentials.' },
+      { q: 'Can I search by name or NPI?', a: 'Yes. You can search by provider name or 10-digit NPI, and then filter by state for tighter results.' },
+      { q: 'Does this tool replace payer verification?', a: 'No. It is a validation aid. Always confirm final network and coverage status directly with your insurer.' },
     ];
     if (window.renderFAQ) renderFAQ('faq-providers', providerFaqs);
   </script>

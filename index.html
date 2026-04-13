@@ -8,6 +8,16 @@
   <meta name="description" content="MediHelp is your free, clinical partner in medical billing accuracy. Audit bills, search provider specialties, and find Rx savings in your browser.">
   <link rel="canonical" href="https://www.medihelp.live/">
   <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MediHelp">
+  <meta property="og:title" content="MediHelp | Medical Billing Transparency Tools">
+  <meta property="og:description" content="Audit medical bills, verify providers, decode denials, and explore billing insights with MediHelp.">
+  <meta property="og:url" content="https://www.medihelp.live/">
+  <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MediHelp | Medical Billing Transparency Tools">
+  <meta name="twitter:description" content="Free patient-first tools for bill audits, provider verification, and billing education.">
+  <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
@@ -22,21 +32,21 @@
       "name": "Is MediHelp truly free for patient use?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. MediHelp is a 100% free tool for patients. We provide professional-grade clinical auditing, CPT code validation, and Rx savings scouts at no cost. Our mission is to democratize medical billing transparency, supported only by non-intrusive advertisements."
+        "text": "Yes. MediHelp core tools are free for patients, including Bill Audit, Provider Search, and education resources for disputes."
       }
     }, {
       "@type": "Question",
       "name": "How is my medical data and HIPAA privacy protected?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MediHelp uses a 'Zero-Server Architecture.' All bill auditing, CPT analysis, and ICD-10 searches occur locally in your web browser. We never upload, store, or transmit your Protected Health Information (PHI) to our servers, making the tool functionally HIPAA-compliant by design."
+        "text": "MediHelp uses a privacy-first approach. Most audit workflows run in-browser, and we avoid storing sensitive bill data unless users opt into managed advocacy workflows."
       }
     }, {
       "@type": "Question",
-      "name": "Do I need a lawyer for a formal medical bill dispute?",
+      "name": "What can MediHelp help me do?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "In most cases, no. MediHelp empowers patients with self-advocacy tools. Our engine identifies specific billing errors like MUE frequency limits or NCCI bundling violations, allowing you to generate a professional dispute letter derived from official CMS standards."
+        "text": "MediHelp helps you audit bills for coding and pricing anomalies, verify providers by NPI, and learn how to prepare stronger billing disputes."
       }
     }]
   }
@@ -234,12 +244,12 @@
   <script>
     // Render Home FAQs
     const homeFaqs = [
-      { q: 'Is MediHelp truly free for patient use?', a: 'Yes. Every tool in our suite—from the Elite Bill Auditor to the National NPI Resolver—is 100% free. We are committed to medical billing transparency at no cost to the consumer.' },
-      { q: 'What is the Expert Human Negotiation Service?', a: 'For cases where our engine detects >$400 in potential savings, we offer managed advocacy. A human expert will represent you, verify clinical data, and negotiate directly with the provider to reduce your financial responsibility.' },
-      { q: 'How is my medical data and privacy protected?', a: 'We utilize a "Zero-Server" architecture for audits. For negotiation intake, we implement a "12-Hour Zero-Retention" policy, where all uploaded medical documents and IDs are permanently scrubbed from our vault within 12 hours of processing.' },
-      { q: 'Why is there a $15 intake fee for negotiations?', a: 'The $15 non-refundable administrative fee covers identity verification, legal "Power of Attorney" review, and clinical triage. This ensures our advocates only handle high-conviction cases where we can realistically secure significant savings.' },
-      { q: 'Do I need a lawyer for a formal medical bill dispute?', a: 'Not necessarily. MediHelp provides you with the clinical findings needed to file a professional appeal on your own. Our human advocates act as clinical surrogates, not legal counsel.' },
-      { q: 'What types of medical bills can I audit?', a: 'Our engine is optimized for ER Itemized Statements, Surgical Invoices, and Outpatient Specialty Bills. We support ICD-10-CM, CPT, HCPCS, and CARC/RARC denial codes.' },
+      { q: 'Is MediHelp free to use?', a: 'Yes. Core tools are free, including Bill Audit, Provider Search, and educational resources for appeal preparation.' },
+      { q: 'What can I do on MediHelp?', a: 'You can audit line-item bills, validate CPT/HCPCS context, check provider credentials by NPI, and review dispute guidance before contacting providers or payers.' },
+      { q: 'How is my data handled?', a: 'MediHelp follows a privacy-first model. Most audit workflows run in-browser, and sensitive records are not retained unless needed for optional managed advocacy.' },
+      { q: 'Can MediHelp replace legal or medical advice?', a: 'No. MediHelp provides informational and technical billing support only. Always confirm decisions with licensed professionals and your insurer.' },
+      { q: 'Which bill formats are supported?', a: 'The audit workflow supports manual entry and PDF extraction for common itemized bills using CPT, HCPCS, ICD-10, and payer adjustment references.' },
+      { q: 'Do you offer human support for difficult cases?', a: 'Yes. Managed advocacy services are available for users who want expert help after initial technical findings are reviewed.' },
     ];
     if (window.renderFAQ) renderFAQ('faq-home', homeFaqs);
   </script>

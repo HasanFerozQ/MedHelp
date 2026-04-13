@@ -4,32 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MediHelp | AI Bill Audit — Free Medical Bill Checker</title>
+  <meta name="description" content="Audit medical bills with manual entry or PDF extraction. Detect pricing variance, bundling, modifier, POS, and frequency anomalies.">
   <link rel="canonical" href="https://www.medihelp.live/audit">
   <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MediHelp">
+  <meta property="og:title" content="MediHelp Bill Audit | Free Medical Bill Checker">
+  <meta property="og:description" content="Upload or enter line items to audit common coding, pricing, and reconciliation issues.">
+  <meta property="og:url" content="https://www.medihelp.live/audit">
+  <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MediHelp Bill Audit | Free Medical Bill Checker">
+  <meta name="twitter:description" content="Audit medical bills with live findings and confidence scoring.">
+  <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [{
       "@type": "Question",
-      "name": "What is an MUE (Medically Unlikely Edit) in medical billing?",
+      "name": "What does the Bill Audit tool check?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Medically Unlikely Edits (MUE) are maximum frequency limits established by CMS for specific healthcare services on a single date of service. If a hospital bills more units than allowed, our engine flags it as a technical overcharge."
+        "text": "The tool checks arithmetic consistency, pricing variance, frequency limits, bundling logic, modifier usage, and place-of-service mismatches."
       }
     }, {
       "@type": "Question",
-      "name": "How does GPCI Locality affect my medical bill overcharges?",
+      "name": "Can I upload PDFs for extraction?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The Geographic Practice Cost Index (GPCI) adjusts Medicare pricing based on regional overhead costs. By selecting your specific locality in MediHelp, you ensure the audit uses the exact benchmarks for your jurisdiction, preventing pricing inflation."
+        "text": "Yes. You can upload a medical bill PDF and MediHelp will extract structured line items for review, then let you confirm low-confidence entries."
       }
     }, {
       "@type": "Question",
-      "name": "Why do hospitals use unbundled CPT codes?",
+      "name": "Can I still run a manual audit without a PDF?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Unbundling is the practice of billing for multiple individual steps of a procedure instead of using a single comprehensive CPT code. Our engine uses NCCI standards to detect these violations and calculate the correct bundled price."
+        "text": "Yes. Manual line entry is fully supported and useful when you have data from an itemized statement, EOB, or phone billing summary."
       }
     }]
   }
@@ -538,12 +549,12 @@
 
   <script>
     const auditFaqs = [
-      { q: 'Where do I find the codes (CPT, Modifiers, ICD-10) to enter on this page?', a: 'You need to request an "Itemized Statement" or "Detailed Bill" from your hospital or provider. Do not use the summary bill. On the itemized statement, look for a 5-digit number (usually under columns like "Rev Code", "CPT", or "HCPCS")—this is your main procedure code. ICD-10 diagnosis codes (e.g., Z00.00) are usually listed at the top under "Patient Diagnosis".' },
-      { q: 'What is a "Modifier" in medical billing?', a: 'A modifier is a 2-character code (like "25", "59", "LT", or "RT") that doctors append to a main CPT code to explain a special circumstance. For instance, modifier 25 tells the insurance company that a significant, separately identifiable evaluation occurred on the same day as another procedure. Modifiers can dramatically impact whether a charge gets bundled or paid separately.' },
-      { q: 'What is an MUE (Medically Unlikely Edit)?', a: 'MUEs are CMS-established frequency limits for healthcare services. If a hospital bills more units of a specific code than the MUE allows for a single day, our engine flags it as a potential "Revenue Padding" error.' },
-      { q: 'How does GPCI Locality affect my medical bill?', a: 'The Geographic Practice Cost Index (GPCI) adjusts Medicare rates based on local costs. We ensure benchmarks reflect your specific jurisdiction (e.g. NYC vs. Rural Texas) to prevent overvaluation.' },
-      { q: 'Why do hospitals use unbundled CPT codes?', a: 'Unbundling occurs when multiple steps (which should be bundled into one procedure) are billed separately to inflate costs. We detect these NCCI (National Correct Coding Initiative) violations instantly.' },
-      { q: 'Can I use this audit for a formal insurance appeal?', a: 'Yes. Our clinical audit provides the deterministic evidence, Medicare benchmarks, and regulatory citations needed for successful formal reconsideration requests and level-one appeals.' },
+      { q: 'What does this audit check?', a: 'The engine checks arithmetic consistency, benchmark variance, MUE frequency limits, NCCI bundling, modifier patterns, POS mismatches, and common reconciliation issues.' },
+      { q: 'Can I upload a PDF bill?', a: 'Yes. Use Smart PDF Extraction to parse line items, then review any low-confidence rows before adding them to your bill grid.' },
+      { q: 'Can I do manual entry only?', a: 'Yes. Manual Line Entry works without uploads and is ideal when using an itemized bill, EOB, or phone summary from the provider.' },
+      { q: 'How do I choose payer type and locality?', a: 'Payer type sets the negotiation benchmark multiplier, while locality adjusts regional pricing assumptions for more realistic variance checks.' },
+      { q: 'What does POS (facility vs non-facility) change?', a: 'POS mode affects context checks. For example, some hospital-only CPT patterns can be flagged when the claim is set to office/non-facility mode.' },
+      { q: 'Can this help with an appeal?', a: 'Yes. Findings can help you prepare structured questions and dispute documentation, but MediHelp is informational and not legal advice.' },
     ];
     
     if (window.renderFAQ) {

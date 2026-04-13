@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MediHelp Blog | Article</title>
+  <meta name="description" content="Read detailed MediHelp blog articles on billing integrity, denials, coding patterns, and patient advocacy.">
+  <link rel="canonical" href="https://www.medihelp.live/blog-post">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="MediHelp">
+  <meta property="og:title" content="MediHelp Blog | Article">
+  <meta property="og:description" content="Medical billing insights and advocacy guidance from MediHelp.">
+  <meta property="og:url" content="https://www.medihelp.live/blog-post">
+  <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MediHelp Blog | Article">
+  <meta name="twitter:description" content="Medical billing insights and advocacy guidance from MediHelp.">
+  <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
@@ -284,8 +297,20 @@
         return;
       }
 
-      // Update page title
+      // Update page title and social metadata
       document.title = `${post.title} | MediHelp Blog`;
+      const canonicalUrl = `${window.location.origin}/blog-post?slug=${encodeURIComponent(post.slug)}`;
+      const metaDescription = (post.excerpt || post.summary || cleanText(post.raw || '')).slice(0, 155);
+      const ogImage = post.thumbnail || 'https://www.medihelp.live/icons/logo.png?v=1.1';
+      setMeta('link[rel="canonical"]', 'href', canonicalUrl);
+      setMeta('meta[name="description"]', 'content', metaDescription);
+      setMeta('meta[property="og:title"]', 'content', `${post.title} | MediHelp Blog`);
+      setMeta('meta[property="og:description"]', 'content', metaDescription);
+      setMeta('meta[property="og:url"]', 'content', canonicalUrl);
+      setMeta('meta[property="og:image"]', 'content', ogImage);
+      setMeta('meta[name="twitter:title"]', 'content', `${post.title} | MediHelp Blog`);
+      setMeta('meta[name="twitter:description"]', 'content', metaDescription);
+      setMeta('meta[name="twitter:image"]', 'content', ogImage);
 
       // Header
       document.getElementById('post-header').innerHTML = `
@@ -332,6 +357,19 @@
 
       // Initialize Sharing
       initSharing(post);
+    }
+
+    function setMeta(selector, attr, value) {
+      const node = document.querySelector(selector);
+      if (node && value) node.setAttribute(attr, value);
+    }
+
+    function cleanText(md) {
+      return String(md || '')
+        .replace(/^---[\s\S]*?---\n?/, '')
+        .replace(/[#>*`_\-\[\]\(\)!]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
     }
 
     // Robust initialization
