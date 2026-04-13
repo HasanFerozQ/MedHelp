@@ -267,6 +267,9 @@ function initAudit() {
   
   // Give the UI a moment to render before firing the first audit
   setTimeout(triggerAudit, 100);
+  if (typeof window.initNegotiatorIntake === 'function') {
+    window.initNegotiatorIntake();
+  }
 }
 
 if (document.readyState === 'loading') {
@@ -530,6 +533,9 @@ async function triggerAudit() {
       auditRes.innerHTML = '';
       auditRes.classList.remove('visible');
     }
+    if (typeof window.updateNegotiatorSavingsPreview === 'function') {
+      window.updateNegotiatorSavingsPreview();
+    }
     return;
   }
 
@@ -545,6 +551,9 @@ async function triggerAudit() {
     renderConfidenceBadge(confidence);
   } else {
     console.warn("MediHelp: renderResultCardsPerLineItem missing from report.js. Falling back.");
+  }
+  if (typeof window.updateNegotiatorSavingsPreview === 'function') {
+    window.updateNegotiatorSavingsPreview();
   }
 }
 
