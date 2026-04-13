@@ -3,30 +3,35 @@
 window.currentEngineFindings = [];
 window.currentEngineSavings  = 0;
 
-function renderResultCardsPerLineItem(rows, findings, container) {
+function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = {}) {
   let html = '';
   
   rows.forEach((r, idx) => {
     // Exact or loose match based on line item code
-    // Since some findings don't have codeRef, we might use rowIdx if BucketAuditor ever provided it.
-    // For V8, codeRef is our strongest link.
-    const relatedFindings = findings.filter(f => f.codeRef === r.code || (f.index === idx));
+    const relatedFindings = findings.filter(f => f.rowId === r.rowId || (!f.rowId && f.codeRef && f.codeRef === r.code) || (!f.codeRef && f.index === idx));
     
-    // Determine overall color: danger > warn > success
+    // Categorize Findings based on strict 5-stage architecture
+    const hardFindings = relatedFindings.filter(f => f.confidence >= 90 || f.type === 'danger' || ['arithmetic', 'duplicate'].includes(f.category));
+    const softFindings = relatedFindings.filter(f => !hardFindings.includes(f));
+    
+    // Determine overall color and status
     let color = 'var(--text-muted)';
     let border = 'var(--border)';
     let bg = 'rgba(255,255,255,0.02)';
-    let statusText = 'No issues found';
+    let statusClass = 'audit-row-clean';
+    let statusText = 'Clean Charge';
     
-    if (relatedFindings.some(f => f.type === 'danger' || ['arithmetic', 'duplicate'].includes(f.category))) {
-       color = '#ef4444'; border = '#ef4444'; bg = 'rgba(239, 68, 68, 0.05)'; statusClass = 'audit-row-error'; statusText = 'Critical Errors Detected';
-    } else if (relatedFindings.length > 0) {
-       color = '#f59e0b'; border = '#f59e0b'; bg = 'rgba(245, 158, 11, 0.05)'; statusClass = 'audit-row-warn'; statusText = 'Warnings Identified';
+    if (hardFindings.length > 0) {
+       color = '#ef4444'; border = '#ef4444'; bg = 'rgba(239, 68, 68, 0.05)'; statusClass = 'audit-row-error'; statusText = 'Hard Billing Errors';
+    } else if (softFindings.length > 0) {
+       color = '#f59e0b'; border = '#f59e0b'; bg = 'rgba(245, 158, 11, 0.05)'; statusClass = 'audit-row-warn'; statusText = 'Documentation Risks';
     } else {
-       color = '#10b981'; border = '#10b981'; bg = 'rgba(16, 185, 129, 0.05)'; statusClass = 'audit-row-clean'; statusText = 'Clean Charge';
+       color = '#10b981'; border = '#10b981'; bg = 'rgba(16, 185, 129, 0.05)';
     }
 
     const s = (v) => window.sanitizeText(String(v || ''));
+    const rationales = rationaleMap[idx] || [];
+
     html += `
       <div class="${statusClass}" style="border-left: 4px solid ${border}; background: ${bg}; border-radius: 8px; padding: 14px 16px; display:flex; flex-direction:column; gap:8px; margin-bottom: 12px; transition: all 0.2s;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -34,7 +39,7 @@ function renderResultCardsPerLineItem(rows, findings, container) {
             ${s(r.code) || 'Uncoded'}
             ${r.modifier ? `<span style="color:var(--accent); margin-left:4px;">-${s(r.modifier)}</span>` : ''}
             <span style="font-family:sans-serif; font-size:12px; font-weight:500; color:var(--text-muted); margin-left:12px;">
-              Qty: ${r.qty} | Billed: $${parseFloat(r.total).toFixed(2)}
+              Qty: ${r.qty || 1} | Billed: $${parseFloat(r.total || 0).toFixed(2)}
             </span>
             ${r.dx && r.dx.length > 0 ? `<span style="font-family:sans-serif; font-size:11px; padding:2px 6px; border:1px solid var(--border); border-radius:12px; margin-left:12px; color:var(--text-muted);">Dx: ${r.dx.join(', ')}</span>` : ''}
           </div>
@@ -44,16 +49,45 @@ function renderResultCardsPerLineItem(rows, findings, container) {
           </div>
         </div>
         
-        <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
-          ${relatedFindings.length === 0 ? `<div style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:6px;">✅ <span>Charge is within standard limits and obeys NCCI bundling logic.</span></div>` : ''}
-          ${relatedFindings.map(f => `
-            <div style="font-size:12px; color:var(--text-h); display:flex; gap:8px; line-height:1.5;">
-              <span style="flex-shrink:0;">${f.type === 'danger' ? '🚨' : '⚠️'}</span>
-              <div>
-                <strong>${s(f.title)}</strong>: <span style="color:var(--text-muted);">${s(f.detail)}</span>
-              </div>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+          ${relatedFindings.length === 0 ? `<div style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:6px;">✅ <span>Charge is mathematically and clinically sound.</span></div>` : ''}
+          
+          ${hardFindings.length > 0 ? `
+            <div style="margin-bottom: 4px;">
+              <div style="font-size:10px; font-weight:800; color:#ef4444; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px;">Overcharge / Disallowed</div>
+              ${hardFindings.map(f => `
+                <div style="font-size:12px; color:var(--text-h); display:flex; gap:8px; line-height:1.5; margin-bottom:4px;">
+                  <span style="flex-shrink:0;">🛑</span>
+                  <div>
+                    <strong>${s(f.title)}</strong> ${f.confidence ? `<span style="font-size:10px; color:#ef4444; background:rgba(239,68,68,0.1); padding:1px 4px; border-radius:4px; margin-left:4px;">${f.confidence}% Certainty</span>` : ''}: <span style="color:var(--text-muted);">${s(f.detail)}</span>
+                  </div>
+                </div>
+              `).join('')}
             </div>
-          `).join('')}
+          ` : ''}
+
+          ${softFindings.length > 0 ? `
+            <div>
+              <div style="font-size:10px; font-weight:800; color:#f59e0b; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px;">Documentation Risk</div>
+              ${softFindings.map(f => `
+                <div style="font-size:12px; color:var(--text-h); display:flex; gap:8px; line-height:1.5; margin-bottom:4px;">
+                  <span style="flex-shrink:0;">⚠️</span>
+                  <div>
+                    <strong>${s(f.title)}</strong> ${f.confidence ? `<span style="font-size:10px; color:#f59e0b; background:rgba(245,158,11,0.1); padding:1px 4px; border-radius:4px; margin-left:4px;">${f.confidence}% Confidence</span>` : ''}: <span style="color:var(--text-muted);">${s(f.detail)}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+
+          ${rationales.length > 0 ? `
+            <div style="margin-top:4px; padding:8px; background:rgba(34,197,94,0.05); border:1px solid rgba(34,197,94,0.2); border-radius:6px;">
+              <div style="font-size:10px; font-weight:800; color:#10b981; text-transform:uppercase; margin-bottom:4px;">Mathematical Adjustments</div>
+              <ul style="margin:0; padding-left:16px; font-size:11px; color:#10b981;">
+                ${rationales.map(r => `<li>${s(r)}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ''}
         </div>
       </div>
     `;

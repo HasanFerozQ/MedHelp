@@ -120,42 +120,101 @@
                 <option value="3.0">Worker's Comp (300% Medicare)</option>
               </select>
             </div>
-            <button class="btn btn-ghost" onclick="triggerAudit()" style="padding: 8px 16px; font-size: 12px;">Refresh</button>
+            <button class="btn btn-ghost" onclick="clearAuditInputs()" style="padding: 8px 16px; font-size: 12px; margin-right: 8px;">Refresh</button>
+            <button class="btn btn-danger" onclick="clearAuditGridConfirm()" style="padding: 8px 16px; font-size: 12px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 4px; cursor: pointer;">Clear Grid</button>
           </div>
         </div>
 
         <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);">
-           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-bottom: 24px;">
+           <!-- Primary Inputs -->
+           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-bottom: 16px;">
               <div>
                 <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Date <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
-                <input type="text" id="entry-date" placeholder="MM/DD/YY" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px; font-size:14px; outline:none; transition:border-color 0.2s, box-shadow 0.2s;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+                <input type="text" id="entry-date" placeholder="MM/DD/YY" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
               </div>
               <div style="grid-column: span 1.5;">
                 <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">CPT/HCPCS Code <span style="color:var(--danger);">*</span></label>
-                <input type="text" id="entry-code" placeholder="e.g. 99214" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px; font-size:14px; outline:none; transition:border-color 0.2s; font-weight:bold; letter-spacing:0.5px; margin-bottom:4px;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
-                <div style="font-size:10px; color:var(--text-muted); line-height:1.2;">5-digit procedure code found on Itemized Statement.</div>
+                <input type="text" id="entry-code" placeholder="e.g. 99214" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none; font-weight:bold; letter-spacing:0.5px;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
               </div>
               <div>
                 <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Modifier <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
-                <input type="text" id="entry-mod" placeholder="e.g. 25" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px; font-size:14px; outline:none; transition:border-color 0.2s; margin-bottom:4px;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
-                <div style="font-size:10px; color:var(--text-muted); line-height:1.2;">2-char code indicating special circumstances.</div>
+                <input type="text" id="entry-mod" placeholder="e.g. 25" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
               </div>
               <div>
                 <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">ICD-10 Dx <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
-                <input type="text" id="entry-dx" placeholder="Z00.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px; font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+                <input type="text" id="entry-dx" placeholder="Z00.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
               </div>
               <div>
                 <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Units</label>
-                <input type="number" id="entry-qty" value="1" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px; font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+                <input type="number" id="entry-qty" value="1" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+              </div>
+           </div>
+
+           <!-- Financial Inputs -->
+           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-bottom: 16px;">
+              <div>
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Unit Price</label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
+                  <input type="number" id="entry-price" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px 10px 24px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+                </div>
               </div>
               <div>
                 <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Total Billed <span style="color:var(--danger);">*</span></label>
                 <div style="position:relative;">
-                  <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px; font-weight:bold;">$</span>
-                  <input type="number" id="entry-total" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:12px 14px 12px 28px; font-size:14px; outline:none; transition:border-color 0.2s; font-weight:bold;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
+                  <input type="number" id="entry-total" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px 10px 24px; font-size:13px; outline:none; font-weight:bold;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+                </div>
+              </div>
+              <div>
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Ins. Paid</label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
+                  <input type="number" id="entry-paid" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px 10px 24px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+                </div>
+              </div>
+              <div>
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Patient Owed</label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
+                  <input type="number" id="entry-owed" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px 10px 24px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
                 </div>
               </div>
            </div>
+
+           <!-- Advanced Toggle -->
+           <div style="margin-bottom: 24px;">
+              <button onclick="toggleAdvancedForm()" class="btn btn-ghost" style="padding: 4px 8px; font-size: 11px; color: var(--text-muted); border: 1px dashed var(--border);">+ Advanced / Context</button>
+              <div id="advanced-form-wrap" style="display: none; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border);">
+                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px;">
+                    <div>
+                      <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Row Type</label>
+                      <select id="entry-rowtype" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
+                        <option value="service" selected>Service Line</option>
+                        <option value="adjustment">Adjustment/Write-off</option>
+                        <option value="payment">Payment Line</option>
+                        <option value="credit">Credit/Refund Line</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Adjustment</label>
+                      <div style="position:relative;">
+                        <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
+                        <input type="number" id="entry-adj" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px 10px 24px; font-size:13px; outline:none;">
+                      </div>
+                    </div>
+                    <div>
+                      <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Line Description</label>
+                      <input type="text" id="entry-desc" placeholder="e.g. Office Visit" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
+                    </div>
+                    <div>
+                      <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Provider NPI</label>
+                      <input type="text" id="entry-npi" placeholder="10 digits" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
+                    </div>
+                 </div>
+              </div>
+           </div>
+
            <button onclick="submitAuditForm()" class="btn btn-primary" style="width:100%; padding:14px; font-size:15px; font-weight:800; letter-spacing:0.5px; border-radius:8px; transition: transform 0.15s, box-shadow 0.15s; cursor:pointer;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(6,182,212,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">Submit Line Item ➔</button>
         </div>
       </div>
@@ -448,6 +507,12 @@
     // Modal Controls (v4.4.1 Fix)
     window.openLearnModal  = () => { const m = document.getElementById('learn-modal'); if(m) m.style.display='flex'; };
     window.closeLearnModal = () => { const m = document.getElementById('learn-modal'); if(m) m.style.display='none'; };
+
+    // Toggle Advanced Form (Phase 1)
+    window.toggleAdvancedForm = () => {
+      const el = document.getElementById('advanced-form-wrap');
+      if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    };
   </script>
 </body>
 </html>

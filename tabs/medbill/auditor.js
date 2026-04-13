@@ -19,8 +19,8 @@ class BucketAuditor {
     this._hasReconError   = false;
   }
 
-  addFinding(category, title, detail, type = 'warn', codeRef = '') {
-    this.findings.push({ category, title, detail, type, codeRef });
+  addFinding(category, title, detail, type = 'warn', codeRef = '', rowId = null, confidence = null) {
+    this.findings.push({ category, title, detail, type, codeRef, rowId, confidence });
   }
 
   /**
@@ -28,7 +28,7 @@ class BucketAuditor {
    * Once a row is voided (_voidedRows), no further savings are added.
    * Per-row cap: never add more than the row's own total.
    */
-  addRowSavings(rowIdx, amount, rowTotal) {
+  addRowSavings(rowIdx, amount, rowTotal, rationale = 'General adjustment') {
     if (amount <= 0) return;
     if (this._voidedRows.has(rowIdx)) return; // row already fully voided — skip
     const cap     = rowTotal > 0 ? rowTotal : amount;
@@ -37,6 +37,15 @@ class BucketAuditor {
     const actual  = Math.min(amount, canAdd);
     this._rowSavings[rowIdx] = already + actual;
     this.potentialSavings   += actual;
+    
+    // Track rationale
+    this._savingsRationale = this._savingsRationale || {};
+    this._savingsRationale[rowIdx] = this._savingsRationale[rowIdx] || [];
+    this._savingsRationale[rowIdx].push(`${rationale} (-$${actual.toFixed(2)})`);
+  }
+
+  getSavingsRationale(rowIdx) {
+    return this._savingsRationale && this._savingsRationale[rowIdx] ? this._savingsRationale[rowIdx] : [];
   }
 
   /** Mark a row as fully voided — no further savings will stack on it */
@@ -108,49 +117,66 @@ class BucketAuditor {
     this.rows.forEach((r, idx) => {
       if (r.raw) r.raw.classList.remove('audit-row-error', 'audit-row-warn', 'audit-row-info');
       if (r.isTotalRow) return;
-      this._lineItemSum += r.total;
+      this._lineItemSum += (r.total || 0);
 
       if (this._voidedRows.has(idx)) return; // skip voided rows
+      
+      // Stop math engine if row is invalid
+      if (r.invalid) return;
 
       // 1a. qty × price = total (skip rows where price was back-derived)
-      const q = Math.min(Math.max(parseInt(r.qty, 10) || 1, 1), 999);
-      if (!r.priceWasDerived && r.total > 0 && r.price > 0) {
-        const expected = Math.round(q * r.price * 100) / 100;
-        if (Math.abs(expected - r.total) > 0.15) {
-          this.addFinding('arithmetic', 'Math Mismatch',
-            `${r.code || r.desc}: ${r.qty} × $${r.price.toFixed(2)} = $${expected.toFixed(2)}, but billed $${r.total.toFixed(2)}. (CMS Claims Processing Manual, Chapter 1 §30.2.5)`,
-            'danger', r.code);
-          if (r.raw) r.raw.classList.add('audit-row-error');
-          if (r.total > expected) this.addRowSavings(idx, r.total - expected, r.total);
+      if (r.math_complete && !r.priceWasDerived && r.total > 0 && r.price > 0 && r.qty > 0) {
+        const expected = Math.round(r.qty * r.price * 100) / 100;
+        const diff = Math.abs(expected - r.total);
+        if (diff > 0.02) { // strict tolerance for rounding
+          if (diff > Math.max(1.00, r.total * 0.02)) {
+            // Hard fail: explicit contradiction
+            this.addFinding('arithmetic', 'Confirmed Math Mismatch',
+              `${r.code || r.desc}: ${r.qty} × $${r.price.toFixed(2)} = $${expected.toFixed(2)}, but billed $${r.total.toFixed(2)}. This is a deterministic arithmetic error.`,
+              'danger', r.code, r.rowId, 100);
+            if (r.raw) r.raw.classList.add('audit-row-error');
+            if (r.total > expected) this.addRowSavings(idx, r.total - expected, r.total, `Corrected line item arithmetic from $${r.total} to $${expected.toFixed(2)}`);
+          } else {
+            // Soft fail: minor mismatch
+            this.addFinding('arithmetic', 'Rounding Inconsistency',
+              `${r.code || r.desc}: ${r.qty} × $${r.price.toFixed(2)} = $${expected.toFixed(2)} instead of $${r.total.toFixed(2)} (${diff.toFixed(2)} gap).`,
+              'warn', r.code, r.rowId, 60);
+          }
+        }
+      } else if (!r.math_complete && r.rowType === 'service') {
+         this.addFinding('arithmetic', 'Insufficient Financial Data',
+              `Line item "${r.desc}" is missing key financial inputs (qty, price, or total) preventing full deterministic audit.`,
+              'info', r.code, r.rowId, 0);
+      }
+
+      // 1b. Row-level Responsibility Reconciliation (paid + owed + adj ≈ total)
+      if (r.total > 0) {
+        const p = r.paid || 0;
+        const o = r.owed || 0;
+        const a = r.adj || 0;
+        if (p > 0 || o > 0 || a > 0) {
+          const sumAll = Math.round((p + o + a) * 100) / 100;
+          const diff  = Math.round(Math.abs(sumAll - r.total) * 100) / 100;
+          if (diff > 0.05) { // strict tolerance again
+            this.addFinding('arithmetic', 'Row Financial Inequality',
+              `${r.code || r.desc}: (Paid $${p.toFixed(2)} + Owed $${o.toFixed(2)} + Adj $${a.toFixed(2)}) = $${sumAll.toFixed(2)}, but Billed is $${r.total.toFixed(2)}. Gap: $${diff.toFixed(2)}. Verify missing contractual adjustments or credits.`,
+              'warn', r.code, r.rowId, 85);
+          }
         }
       }
 
-      // 1b. paid + owed ≈ total
-      if (r.total > 0 && (r.paid > 0 || r.owed > 0)) {
-        const sumPO = Math.round((r.paid + r.owed) * 100) / 100;
-        const diff  = Math.abs(sumPO - r.total);
-        if (diff > 1.00 && diff > r.total * 0.05) {
-          this.addFinding('arithmetic', 'Responsibility Gap',
-            `${r.code || r.desc}: Ins. paid ($${r.paid.toFixed(2)}) + Patient owed ($${r.owed.toFixed(2)}) = $${sumPO.toFixed(2)}, doesn't match billed $${r.total.toFixed(2)}. Check for missing contractual adjustment.`,
-            'warn', r.code);
-        }
-      }
-
-      // 1c. Negative balance — COMPLIANCE ALERT (not success)
-      if (r.total < -0.01) {
+      // 1c. Negative balance — COMPLIANCE ALERT
+      if (r.total < -0.01 && r.rowType !== 'credit' && r.rowType !== 'adjustment') {
         this.addFinding('financial', 'Credit Balance Liability (CMS Compliance)',
-          `${r.code || r.desc} has a negative billed amount ($${r.total.toFixed(2)}). Per CMS guidelines (Medicare Claims Processing Manual, Chapter 4 §50), credit balances must be reported and refunded within 60 days. This is a provider compliance risk — request an immediate refund.`,
-          'danger', r.code);
+          `${r.code || r.desc} has a negative billed amount ($${r.total.toFixed(2)}). Per CMS guidelines (Medicare Claims Processing Manual, Chapter 4 §50), credit balances must be reported and refunded.`,
+          'danger', r.code, r.rowId, 95);
         if (r.raw) r.raw.classList.add('audit-row-error');
-      } else if (r.total < 0) {
-        this.addFinding('arithmetic', 'Negative Amount',
-          `${r.code || r.desc} contains a negative dollar value. Verify it is an authorized credit adjustment.`, 'warn', r.code);
       }
 
       // 1d. Overpayment
       if (r.paid > r.total && r.total > 0) {
         this.addFinding('financial', 'Insurance Overpayment Anomaly',
-          `${r.code || r.desc}: Insurance payment ($${r.paid.toFixed(2)}) exceeds the billed total ($${r.total.toFixed(2)}).`, 'warn', r.code);
+          `${r.code || r.desc}: Insurance payment ($${r.paid.toFixed(2)}) exceeds the billed total ($${r.total.toFixed(2)}).`, 'warn', r.code, r.rowId, 90);
         if (r.raw) r.raw.classList.add('audit-row-warn');
       }
     });
@@ -169,13 +195,13 @@ class BucketAuditor {
       if (entries.length < 2) return;
       const { r } = entries[0];
       const label = r.code + (r.modifier ? '-' + r.modifier : '');
-      this.addFinding('duplicate', 'Duplicate Charge',
+      this.addFinding('duplicate', 'Confirmed Duplicate Charge',
         `CPT ${label} appears ${entries.length}× on ${r.date || 'same date'}. Only one is typically payable per CMS Claims Processing Manual, Chapter 4 §20.4.`,
-        'danger', r.code);
+        'danger', r.code, r.rowId, 98);
       entries.forEach(({ r: er }) => { if (er.raw) er.raw.classList.add('audit-row-error'); });
       // Void all duplicate entries after the first (waterfall)
       for (let i = 1; i < entries.length; i++) {
-        this.addRowSavings(entries[i].idx, entries[i].r.total, entries[i].r.total);
+        this.addRowSavings(entries[i].idx, entries[i].r.total, entries[i].r.total, `Voided exact duplicate charge for CPT ${entries[i].r.code}`);
         this.voidRow(entries[i].idx);
       }
     });
@@ -210,9 +236,9 @@ class BucketAuditor {
           if (rowQty > limit) {
             this.addFinding('frequency', 'Line Item Frequency Violation (MUE MAI 1)',
               `CPT ${code} billed at ${rowQty} units. CMS MUE limit for this line item is ${limit}. (MAI 1: Line Item Adjudication)`,
-              'danger', code);
+              'danger', code, e.r.rowId, 95);
             const unitPrice = e.r.total / rowQty;
-            this.addRowSavings(e.idx, (rowQty - limit) * unitPrice, e.r.total);
+            this.addRowSavings(e.idx, (rowQty - limit) * unitPrice, e.r.total, `Voided ${rowQty - limit} excess MUE units`);
             if (e.r.raw) e.r.raw.classList.add('audit-row-error');
           }
         });
@@ -223,17 +249,17 @@ class BucketAuditor {
           const typeLabel = mai === '2' ? 'MAI 2: Absolute Date of Service' : 'MAI 3: Clinical Date of Service';
           this.addFinding('frequency', `Daily Frequency Violation (MUE ${mai})`,
             `CPT ${code} sum units (${totalUnits}) on ${date} exceeds CMS limit of ${limit}. (${typeLabel})`,
-            'danger', code);
+            'danger', code, entries[0].r.rowId, 92);
           
           let allowance = limit;
           entries.forEach(e => {
             const rowQty = Math.min(Math.max(parseInt(e.r.qty, 10) || 1, 1), 999);
             if (allowance <= 0) {
-              this.addRowSavings(e.idx, e.r.total, e.r.total);
+              this.addRowSavings(e.idx, e.r.total, e.r.total, `Voided charge due to daily MUE limit exhaustion`);
               this.voidRow(e.idx);
             } else if (rowQty > allowance) {
               const unitPrice = e.r.total / rowQty;
-              this.addRowSavings(e.idx, (rowQty - allowance) * unitPrice, e.r.total);
+              this.addRowSavings(e.idx, (rowQty - allowance) * unitPrice, e.r.total, `Voided ${rowQty - allowance} excess MUE units above daily allowance`);
               allowance = 0;
             } else {
               allowance -= rowQty;
@@ -246,36 +272,45 @@ class BucketAuditor {
 
   // ── LAYER 1D — Financial Reconciliation ──────────────────────────────────
   runFinancialSummaryAudit() {
-    const totalBilled = this._lineItemSum || 0;
-    const totalPaid   = this.rows.filter(r => !r.isTotalRow).reduce((s, r) => s + r.paid, 0);
-    const totalOwed   = this.rows.filter(r => !r.isTotalRow).reduce((s, r) => s + r.owed, 0);
-    const reconSum    = Math.round((totalPaid + totalOwed) * 100) / 100;
+    // Only aggregate auditable service rows (skip pure info rows and invalids)
+    const validRows = this.rows.filter(r => !r.isTotalRow && !r.invalid && r.rowType === 'service');
+    if (validRows.length === 0) return;
+
+    const totalBilled = validRows.reduce((s, r) => s + (r.total || 0), 0);
+    const totalPaid   = validRows.reduce((s, r) => s + (r.paid || 0), 0);
+    const totalOwed   = validRows.reduce((s, r) => s + (r.owed || 0), 0);
+    const totalAdj    = validRows.reduce((s, r) => s + (r.adj || 0), 0);
+
+    const reconSum    = Math.round((totalPaid + totalOwed + totalAdj) * 100) / 100;
     const gap         = Math.abs(totalBilled - reconSum);
 
     if (totalPaid > totalBilled * 1.05 && totalPaid > 100) {
       this._hasReconError = true;
       this.addFinding('financial', 'Insurance Overpayment Detected',
-        `Total insurance paid ($${totalPaid.toFixed(2)}) exceeds total billed ($${totalBilled.toFixed(2)}). This signals a critical audit error or billing fraud.`,
-        'danger');
+        `Invoice: Total insurance paid ($${totalPaid.toFixed(2)}) exceeds total billed ($${totalBilled.toFixed(2)}).`,
+        'danger', '', null, 95);
     }
     if (totalOwed < -0.01) {
       this._hasReconError = true;
       this.addFinding('financial', 'Negative Patient Balance',
-        `Patient total responsibility is negative ($${totalOwed.toFixed(2)}). This indicates you are owed a refund for previous overpayments.`,
-        'danger');
+        `Invoice: Patient total responsibility is negative ($${totalOwed.toFixed(2)}). This indicates you are owed a refund.`,
+        'danger', '', null, 90);
     }
-    if (gap > 100 && gap > totalBilled * 0.10) {
+    
+    // Only flag grand reconciliation gap if we actually had paid/owed data
+    if ((totalPaid > 0 || totalOwed > 0 || totalAdj > 0) && gap > 1.00 && gap > totalBilled * 0.05) {
       this._hasReconError = true;
-      this.addFinding('financial', 'Responsibility Reconciliation Gap',
-        `Billed ($${totalBilled.toFixed(2)}) does not balance with Paid+Owed ($${reconSum.toFixed(2)}). A $${gap.toFixed(2)} discrepancy suggests missing contractual adjustments or unrecorded payments.`,
-        'warn');
+      this.addFinding('financial', 'Invoice Reconciliation Gap',
+        `Invoice sum: Billed ($${totalBilled.toFixed(2)}) does not balance with Paid+Owed+Adj ($${reconSum.toFixed(2)}). A $${gap.toFixed(2)} discrepancy remains.`,
+        'warn', '', null, 80);
     }
+
     // Zero-Pay High Value Signal
-    this.rows.forEach(r => {
-      if (!r.isTotalRow && r.total > 500 && r.paid === 0) {
-        this.addFinding('financial', 'Zero Insurance Payment Alert',
-          `Line item "${r.desc}" billed at $${r.total.toFixed(2)} shows $0.00 insurance payment. This is a red flag for a "Silent Denial" or processing oversight.`,
-          'warn', r.code);
+    validRows.forEach(r => {
+      if (r.total > 500 && r.paid === 0 && r.owed === r.total && !r.adj && r.math_complete) {
+        this.addFinding('financial', 'Likely Silent Denial / Process Oversight',
+          `Line item "${r.desc}" billed at $${r.total.toFixed(2)} passed directly to patient with $0 insurance payment and $0 adjustment. Verify EOB.`,
+          'warn', r.code, r.rowId, 75);
       }
     });
   }
@@ -290,13 +325,13 @@ class BucketAuditor {
       this.rows.forEach(r => {
         if (!r.code || r.isTotalRow || r.isDRG) return;
         if (inpatientCodes.has(r.code)) {
-          this.addFinding('POS', 'Institutional Code Mismatch',
+          this.addFinding('POS', 'Possible Institutional Code Mismatch',
             `Hospital Inpatient CPT ${r.code} detected while in "Office/Clinic" mode. This is a Place-of-Service (POS) mismatch per CMS Claims Processing Manual Chapter 26 §10.5. Verify if service was actually provided in a hospital (POS 21).`,
-            'danger', r.code);
+            'danger', r.code, r.rowId, 70);
         } else if (edCodes.has(r.code)) {
           this.addFinding('POS', 'Emergency Dept Code on Non-Facility Claim',
             `ED Code ${r.code} detected on what appears to be a non-facility claim. Verify POS code is 23 (Emergency Room).`,
-            'warn', r.code);
+            'warn', r.code, r.rowId, 60);
         }
       });
     }
@@ -319,7 +354,7 @@ class BucketAuditor {
       if (missing51.length >= 2) {
         this.addFinding('modifier', 'Multiple Procedure Reduction Missing (-51)',
           `Multiple surgical procedures (${entries.length}) billed on ${date} without a -51 modifier. Primary payers typically discount the second procedure by 50%. Potential overcharge detected.`,
-          'warn');
+          'warn', '', entries[0].r.rowId, 85);
       }
     });
   }
@@ -346,7 +381,7 @@ class BucketAuditor {
         if (!hasCompanion && sameDayCodes.size > 1) {
           this.addFinding('compatibility', 'Isolated Procedure — Missing Clinical Support',
             `${rule.label} billed without any expected support codes on ${r.date || 'this date'}. US Medicare guidelines suggest this procedure should exist within a high-level diagnostic context.`,
-            'warn', r.code);
+            'warn', r.code, r.rowId, 55);
         }
       }
 
@@ -357,7 +392,7 @@ class BucketAuditor {
           if (sameDayCodes.has(bad)) {
             this.addFinding('compatibility', 'Clinically Incompatible Service Pair',
               `${rule.label} and CPT ${bad} billed on the same date (${r.date || 'unknown'}). These services are clinically incompatible when performed together — verify encounter documentation.`,
-              'danger', r.code);
+              'danger', r.code, r.rowId, 65);
           }
         });
       }

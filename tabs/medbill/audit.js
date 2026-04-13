@@ -43,48 +43,84 @@ function submitAuditForm() {
   const modInput  = document.getElementById('entry-mod');
   const dxInput   = document.getElementById('entry-dx');
   const qtyInput  = document.getElementById('entry-qty');
+  const priceInput= document.getElementById('entry-price');
   const totInput  = document.getElementById('entry-total');
+  const paidInput = document.getElementById('entry-paid');
+  const owedInput = document.getElementById('entry-owed');
+  const adjInput  = document.getElementById('entry-adj');
+  const typeInput = document.getElementById('entry-rowtype');
+  const descInput = document.getElementById('entry-desc');
+  const npiInput  = document.getElementById('entry-npi');
 
   const code = codeInput.value.trim().toUpperCase();
-  const total = parseFloat(totInput.value) || 0;
+  const totalStr = totInput.value.trim();
+  const priceStr = priceInput.value.trim();
+  const qtyStr = qtyInput.value.trim();
 
-  if (!code && total <= 0) {
-    alert("Please enter a CPT Code or Total Billed Amount.");
+  // If no code and no total, it's totally blank
+  if (!code && !totalStr && !priceStr && !adjInput.value) {
+    alert("Please enter a CPT Code, Price, or Total amount.");
     return;
   }
 
-  const s = (v) => window.sanitizeText(String(v || ''));
-
   const newRow = {
+    rowId: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15),
+    provenance: 'user entered',
     idx: window.appGridRows.length,
     date: dateInput.value.trim(),
     code: code,
     modifier: modInput.value.trim().toUpperCase(),
     dx: [dxInput.value.trim().toUpperCase()].filter(Boolean),
-    qty: parseFloat(qtyInput.value) || 1,
-    price: 0,
-    total: total,
-    paid: 0,
-    owed: 0,
-    desc: 'Manual Entry'
+    
+    qty: qtyStr !== '' ? parseFloat(qtyStr) : null,
+    price: priceStr !== '' ? parseFloat(priceStr) : null,
+    total: totalStr !== '' ? parseFloat(totalStr) : null,
+    paid: paidInput.value !== '' ? parseFloat(paidInput.value) : null,
+    owed: owedInput.value !== '' ? parseFloat(owedInput.value) : null,
+    adj: adjInput.value !== '' ? parseFloat(adjInput.value) : null,
+    
+    rowType: typeInput.value || 'service',
+    desc: descInput.value.trim() || 'Manual Entry',
+    npi: npiInput.value.trim()
   };
 
   window.appGridRows.push(newRow);
   
-  // Clear inputs
-  codeInput.value = '';
-  modInput.value = '';
-  dxInput.value = '';
-  qtyInput.value = '1';
-  totInput.value = '';
-  dateInput.value = '';
-  
+  clearAuditInputs();
   codeInput.focus();
 
   saveToCache();
   triggerAudit();
 }
 window.submitAuditForm = submitAuditForm;
+
+function clearAuditInputs() {
+  document.getElementById('entry-date').value = '';
+  document.getElementById('entry-code').value = '';
+  document.getElementById('entry-mod').value = '';
+  document.getElementById('entry-dx').value = '';
+  document.getElementById('entry-qty').value = '1';
+  document.getElementById('entry-price').value = '';
+  document.getElementById('entry-total').value = '';
+  document.getElementById('entry-paid').value = '';
+  document.getElementById('entry-owed').value = '';
+  document.getElementById('entry-adj').value = '';
+  document.getElementById('entry-desc').value = '';
+  document.getElementById('entry-npi').value = '';
+  const type = document.getElementById('entry-rowtype');
+  if (type) type.value = 'service';
+}
+window.clearAuditInputs = clearAuditInputs;
+
+function clearAuditGridConfirm() {
+  if (window.appGridRows.length === 0) return;
+  if (confirm("Are you sure you want to clear all loaded entries? This cannot be undone.")) {
+    window.appGridRows = [];
+    saveToCache();
+    triggerAudit();
+  }
+}
+window.clearAuditGridConfirm = clearAuditGridConfirm;
 
 function removeAuditRow(idx) {
   if (idx < 0 || idx >= window.appGridRows.length) return;
@@ -114,14 +150,59 @@ window.debouncedAudit = debouncedAudit;
 async function triggerAudit() {
   const rows = window.appGridRows || [];
 
+  // Stage 1 & 2: Pre-Audit Validation Gate (Quarantine & Derive)
+  const auditableRows = [];
+  rows.forEach(r => {
+    let missingCount = 0;
+    if (r.qty === null || r.qty === undefined) missingCount++;
+    if (r.price === null || r.price === undefined) missingCount++;
+    if (r.total === null || r.total === undefined || r.total === '') missingCount++;
+    
+    r.math_complete = false;
+    r.invalid = false;
+    r.priceWasDerived = false;
+
+    // Hard fail: impossible negative service charges
+    if (r.total < 0 && r.rowType !== 'credit' && r.rowType !== 'adjustment') {
+        r.invalid = true;
+    }
+
+    // Controlled derivation (derive exactly 1 missing)
+    if (!r.invalid) {
+        if (missingCount === 1) {
+            let tempQ = r.qty !== null ? r.qty : 1;
+            if (r.total == null || r.total === '') {
+                r.total = tempQ * (r.price || 0);
+            } else if (r.price == null) {
+                r.price = r.total / tempQ;
+                r.priceWasDerived = true;
+            } else if (r.qty == null) {
+                r.qty = r.price ? Math.max(1, Math.round(r.total / r.price)) : 1;
+            }
+            r.math_complete = true;
+        } else if (missingCount === 0) {
+            r.math_complete = true;
+        }
+    }
+
+    // Normalize Money (2 decimals)
+    if (r.total != null && r.total !== '') r.total = Math.round(r.total * 100) / 100;
+    if (r.price != null && r.price !== '') r.price = Math.round(r.price * 100) / 100;
+    if (r.paid != null && r.paid !== '')  r.paid = Math.round(r.paid * 100) / 100;
+    if (r.owed != null && r.owed !== '')  r.owed = Math.round(r.owed * 100) / 100;
+    if (r.adj != null && r.adj !== '')   r.adj = Math.round(r.adj * 100) / 100;
+
+    if (!r.invalid) auditableRows.push(r);
+  });
+
   const multiplier = parseFloat(document.getElementById('payer-type')?.value) || 2.5;
-  const npis       = [];
+  const npis       = [...new Set(auditableRows.map(r => r.npi).filter(Boolean))];
   const gpci       = parseFloat(document.getElementById('gpci-region')?.value || '1.0');
   const isFacility = document.getElementById('facility-type')?.value === 'hospital';
   const profile    = window.currentDocumentProfile || null;
 
-  // Call Stage 3 Auditor
-  const engine = new BucketAuditor(rows, multiplier, npis, gpci, isFacility, profile);
+  // Call Stage 3 Auditor on Validated Rows
+  const engine = new BucketAuditor(auditableRows, multiplier, npis, gpci, isFacility, profile);
   
   engine.runArithmetic();
   engine.runInvoiceSumCheck();
@@ -167,7 +248,7 @@ async function triggerAudit() {
   window.currentEngineSavings  = engine.potentialSavings;
   
   if (typeof renderResultCardsPerLineItem === 'function') {
-    renderResultCardsPerLineItem(rows, engine.findings, container);
+    renderResultCardsPerLineItem(rows, engine.findings, container, engine._savingsRationale || {});
     // Render the final trailing summary in the usual audit-results section
     renderFinalSummary(engine.potentialSavings, engine.totalBenchmark, document.getElementById('audit-results'));
   } else {
