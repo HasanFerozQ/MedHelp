@@ -18,17 +18,20 @@ window.switchAuditTab = function(tabName) {
   const pdfTab = document.getElementById('tab-content-pdf');
   const manualBtn = document.getElementById('tab-btn-manual');
   const pdfBtn = document.getElementById('tab-btn-pdf');
+  const manualOnlySections = document.querySelectorAll('.manual-only-section');
   
   if (!manualTab || !pdfTab) return;
   
   if (tabName === 'manual') {
     manualTab.style.display = 'block';
     pdfTab.style.display = 'none';
+    manualOnlySections.forEach((el) => { el.style.display = ''; });
     if (manualBtn) { manualBtn.style.background = 'var(--accent)'; manualBtn.style.color = 'white'; }
     if (pdfBtn) { pdfBtn.style.background = 'transparent'; pdfBtn.style.color = 'var(--text-muted)'; }
   } else {
     manualTab.style.display = 'none';
     pdfTab.style.display = 'block';
+    manualOnlySections.forEach((el) => { el.style.display = 'none'; });
     if (pdfBtn) { pdfBtn.style.background = 'var(--accent)'; pdfBtn.style.color = 'white'; }
     if (manualBtn) { manualBtn.style.background = 'transparent'; manualBtn.style.color = 'var(--text-muted)'; }
   }
@@ -45,6 +48,7 @@ const STRICT_EXTRACTION_MIN_CONFIDENCE = 85;
 let pendingVerifiedRows = [];
 const extractionTelemetry = {
   profile: 'default_generic',
+  profileConfidence: 0,
   totalExtracted: 0,
   highConfidence: 0,
   manualReview: 0,
@@ -62,7 +66,7 @@ function renderExtractionTelemetry() {
   }
   panel.style.display = 'block';
   text.textContent =
-    `Profile: ${extractionTelemetry.profile} | Source: ${extractionTelemetry.source} | ` +
+    `Profile: ${extractionTelemetry.profile} (${extractionTelemetry.profileConfidence}% confidence) | Source: ${extractionTelemetry.source} | ` +
     `Extracted: ${extractionTelemetry.totalExtracted} | High-confidence: ${extractionTelemetry.highConfidence} | ` +
     `Needs review: ${extractionTelemetry.manualReview} | Imported: ${extractionTelemetry.importedVerified}`;
 }
@@ -73,13 +77,14 @@ function persistExtractionTelemetry() {
     const current = JSON.parse(localStorage.getItem(key) || '{}');
     const profile = extractionTelemetry.profile || 'default_generic';
     if (!current[profile]) {
-      current[profile] = { runs: 0, extracted: 0, highConfidence: 0, manualReview: 0, imported: 0 };
+      current[profile] = { runs: 0, extracted: 0, highConfidence: 0, manualReview: 0, imported: 0, confidenceTotal: 0 };
     }
     current[profile].runs += 1;
     current[profile].extracted += extractionTelemetry.totalExtracted;
     current[profile].highConfidence += extractionTelemetry.highConfidence;
     current[profile].manualReview += extractionTelemetry.manualReview;
     current[profile].imported += extractionTelemetry.importedVerified;
+    current[profile].confidenceTotal += Number(extractionTelemetry.profileConfidence || 0);
     localStorage.setItem(key, JSON.stringify(current));
   } catch (_) {
     // non-blocking telemetry
@@ -217,6 +222,7 @@ window.handlePdfSelect = async function(event) {
       }));
       pendingVerifiedRows = cleanItems;
       extractionTelemetry.profile = window.currentDocumentProfile || 'default_generic';
+      extractionTelemetry.profileConfidence = Number(d.extraction_profile_confidence || 0);
       extractionTelemetry.totalExtracted = newItems.length;
       extractionTelemetry.highConfidence = cleanItems.length;
       extractionTelemetry.manualReview = reviewRequired.length;
@@ -258,6 +264,7 @@ window.handlePdfSelect = async function(event) {
           }));
           pendingVerifiedRows = [];
           extractionTelemetry.profile = 'client_fallback';
+          extractionTelemetry.profileConfidence = 0;
           extractionTelemetry.totalExtracted = fallbackReviewRows.length;
           extractionTelemetry.highConfidence = 0;
           extractionTelemetry.manualReview = fallbackReviewRows.length;
@@ -287,27 +294,39 @@ async function extractPdfClientSide(file) {
   if (!window.pdfjsLib) return [];
   const buf = await file.arrayBuffer();
   const pdf = await window.pdfjsLib.getDocument({ data: buf }).promise;
-  let text = '';
+  let lines = [];
   for (let p = 1; p <= pdf.numPages; p++) {
     const page = await pdf.getPage(p);
     const content = await page.getTextContent();
-    text += content.items.map(i => i.str).join(' ') + '\n';
+    const rowsByY = new Map();
+    content.items.forEach((item) => {
+      const y = Math.round((item.transform && item.transform[5]) || 0);
+      const x = (item.transform && item.transform[4]) || 0;
+      if (!rowsByY.has(y)) rowsByY.set(y, []);
+      rowsByY.get(y).push({ x, str: item.str || '' });
+    });
+    const orderedRows = [...rowsByY.entries()]
+      .sort((a, b) => b[0] - a[0])
+      .map(([, cols]) => cols.sort((a, b) => a.x - b.x).map(c => c.str).join(' ').replace(/\s+/g, ' ').trim())
+      .filter(Boolean);
+    lines.push(...orderedRows);
   }
-
-  const lines = text.split(/\n+/).map(s => s.trim()).filter(Boolean);
   const out = [];
   lines.forEach((line) => {
     const date = (line.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/) || [])[0] || '';
-    const code = (line.match(/\b([A-Z]\d{4}|\d{5})\b/) || [])[1] || '';
-    const dx = (line.match(/\b([A-Z]\d{2}(?:\.\w{1,4})?)\b/) || [])[1] || '';
+    const codeMatches = [...line.matchAll(/\b([A-Z]\d{4}|\d{5})\b/g)].map(m => m[1]);
+    const code = codeMatches.find(c => /^\d{5}$/.test(c) || /^[A-Z]\d{4}$/.test(c)) || '';
+    const dx = (line.match(/\b([A-TV-Z][0-9][0-9AB](?:\.[A-Z0-9]{1,4})?)\b/i) || [])[1] || '';
     const qty = parseInt((line.match(/\bqty[:\s]*(\d+)\b/i) || [])[1] || '1', 10);
-    const money = [...line.matchAll(/\$\s*(\d+(?:,\d{3})*(?:\.\d{2})?)/g)].map(m => parseFloat(m[1].replace(/,/g, '')));
+    const money = [...line.matchAll(/(?:\$?\s*)(-?\d{1,3}(?:,\d{3})*(?:\.\d{2}))/g)]
+      .map(m => parseFloat(String(m[1]).replace(/,/g, '')))
+      .filter(n => Number.isFinite(n));
     const total = money.length ? money[money.length - 1] : null;
-    if (code || total != null) {
+    if (code && total != null) {
       out.push({ date, code, dx, qty: Number.isFinite(qty) ? qty : 1, total });
     }
   });
-  return out.slice(0, 40);
+  return out.slice(0, 120);
 }
 
 window.showManualReviewPrompt = function(items) {

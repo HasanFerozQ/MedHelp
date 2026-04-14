@@ -18,6 +18,9 @@ const upload = multer({
   limits: { fileSize: 4 * 1024 * 1024 }, // Keep under 4MB for Vercel
 });
 
+const TEXTRACT_MAX_ATTEMPTS = 3;
+const TEXTRACT_BACKOFF_MS = [0, 700, 1500];
+
 // Credentials must be set via environment variables — no fallback for security
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
@@ -179,7 +182,9 @@ function detectProviderTemplate(blocks, blockMap) {
 
   let best = null;
   let bestScore = 0;
+  let maxSignals = 1;
   PROVIDER_TEMPLATES.forEach((tpl) => {
+    maxSignals = Math.max(maxSignals, tpl.matchAnyPhrases.length || 1);
     const score = tpl.matchAnyPhrases.reduce((acc, phrase) => acc + (haystack.includes(phrase) ? 1 : 0), 0);
     if (score > bestScore) {
       bestScore = score;
@@ -190,10 +195,15 @@ function detectProviderTemplate(blocks, blockMap) {
   if (!best || bestScore < 2) {
     return {
       id: 'default_generic',
-      headerAliases: PROVIDER_TEMPLATES[0].headerAliases
+      headerAliases: PROVIDER_TEMPLATES[0].headerAliases,
+      confidence: 0
     };
   }
-  return best;
+  const confidence = Math.min(100, Math.round((bestScore / maxSignals) * 100));
+  return {
+    ...best,
+    confidence
+  };
 }
 
 function mapHeadersFromAliases(text, aliases) {
@@ -398,7 +408,12 @@ function normalizeTextractOutput(blocks) {
     }
   });
 
-  return { items: normalizedItems, grandTotal, detectedTemplate: template.id };
+  return {
+    items: normalizedItems,
+    grandTotal,
+    detectedTemplate: template.id,
+    templateConfidence: Number(template.confidence || 0)
+  };
 }
 
 // ARITHMETIC ENGINE: Runs deterministic validation checks
@@ -498,6 +513,42 @@ function runArithmeticEngine(items, grandTotal) {
   }
 
   return { findings, calculatedSum, grandTotal };
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function runTextractWithRetry(fileBuffer) {
+  let lastErr = null;
+  for (let attempt = 1; attempt <= TEXTRACT_MAX_ATTEMPTS; attempt++) {
+    try {
+      if (attempt > 1) {
+        console.warn(`MediHelp: Textract retry attempt ${attempt}/${TEXTRACT_MAX_ATTEMPTS}`);
+      }
+      const resp = await textractClient.send(new AnalyzeDocumentCommand({
+        Document: { Bytes: fileBuffer },
+        FeatureTypes: ["TABLES", "FORMS"]
+      }));
+      return { data: resp, attempts: attempt };
+    } catch (err) {
+      lastErr = err;
+      const msg = String(err?.message || '').toLowerCase();
+      const likelyTransient =
+        msg.includes('timeout') ||
+        msg.includes('throttl') ||
+        msg.includes('internal') ||
+        msg.includes('service unavailable') ||
+        msg.includes('network') ||
+        msg.includes('econn') ||
+        msg.includes('socket') ||
+        msg.includes('rate exceeded');
+      if (!likelyTransient || attempt === TEXTRACT_MAX_ATTEMPTS) break;
+      const waitMs = TEXTRACT_BACKOFF_MS[attempt] || (attempt * 1200);
+      await sleep(waitMs);
+    }
+  }
+  throw lastErr || new Error('Textract failed after retries');
 }
 
 // CLINICAL ENGINE: Uses Supabase database for Pricing & NCCI unbundling checks
@@ -633,11 +684,11 @@ module.exports = async (req, res) => {
 
     // Step 1: Textract Extraction
     let data;
+    let textractAttempts = 1;
     try {
-      data = await textractClient.send(new AnalyzeDocumentCommand({
-        Document: { Bytes: req.file.buffer },
-        FeatureTypes: ["TABLES", "FORMS"]
-      }));
+      const textractRun = await runTextractWithRetry(req.file.buffer);
+      data = textractRun.data;
+      textractAttempts = textractRun.attempts || 1;
     } catch (err) {
       return res.status(500).json({ ok: false, error: `AWS Textract failed: ${err.message}` });
     }
@@ -646,12 +697,14 @@ module.exports = async (req, res) => {
     let normalizedItems = [];
     let grandTotal = null;
     let detectedTemplate = 'default_generic';
+    let templateConfidence = 0;
     try {
         const blocks = data.Blocks || [];
         const result = normalizeTextractOutput(blocks);
         normalizedItems = result.items;
         grandTotal = result.grandTotal;
         detectedTemplate = result.detectedTemplate || detectedTemplate;
+        templateConfidence = Number(result.templateConfidence || templateConfidence || 0);
     } catch (err) {
         throw new Error(`Normalization Layer Error: Failed to parse bill table structure. ${err.message}`);
     }
@@ -714,6 +767,8 @@ module.exports = async (req, res) => {
         ok: true, 
         normalized_bill: normalizedItems, 
         extraction_profile: detectedTemplate || 'default_generic',
+        extraction_profile_confidence: templateConfidence,
+        textract_attempts: textractAttempts,
         result: { 
             summary: summaryText,
             findings: allFindings,
