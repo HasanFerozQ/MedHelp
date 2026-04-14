@@ -207,7 +207,7 @@ class BucketAuditor {
         const { r } = entries[0];
         this.addFinding('duplicate', 'Potential Duplicate Charge',
           `CPT ${r.code} appears ${entries.length}× on ${r.date || 'same date'} without distinct unbundling modifiers (e.g. -59, -76). Only one is typically payable per CMS Chapter 4 §20.4.`,
-          'danger', r.code, r.r.rowId, 98);
+          'danger', r.code, r.rowId, 98);
         
         entries.forEach(({ r: er }, i) => { 
           if (er.raw) er.raw.classList.add('audit-row-error'); 

@@ -27,13 +27,14 @@ function extractCodesWithCharges(text) {
   const lines = text.split('\n');
   const results = [];
   
-  const codeRegex    = /\b([1-9]\d{4}|[1-9]\d{2})(?:-([A-Z0-9]{2}))?\b/g;
+  const codeRegex    = /\b([1-9]\d{4}|[A-Z]\d{4})(?:-([A-Z0-9]{2}))?\b/g;
+  const drgRegex     = /\b([1-9]\d{2})\b/g;
   const dollarRegex  = /\$\s*(\d+(?:\.\d{2})?)/g;
   const dateRegex    = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
 
   lines.forEach(line => {
     const dates = line.match(dateRegex);
-    const codesOnLine = [...line.matchAll(codeRegex)]
+    const cptHcpcs = [...line.matchAll(codeRegex)]
       .map(m => ({
         code: m[1],
         modifier: m[2] || null,
@@ -43,7 +44,22 @@ function extractCodesWithCharges(text) {
         isDRG: m[1].length === 3 && !!((window.MH_CONSTANTS?.DRG_BENCHMARKS || {})[m[1]]),
         rawLine: line.trim()
       }))
-      .filter(it => it.isDRG || window.isValidCPT?.(it.code) || /\d{5}/.test(it.code));
+      .filter(it => window.isValidCPT?.(it.code) || /^[A-Z]\d{4}$/.test(it.code) || /\d{5}/.test(it.code));
+
+    const drgMatches = [...line.matchAll(drgRegex)]
+      .map(m => m[1])
+      .filter(code => !!((window.MH_CONSTANTS?.DRG_BENCHMARKS || {})[code]))
+      .map(code => ({
+        code,
+        modifier: null,
+        qty: parseInt((line.match(/(?:qty|units?)[:\s]+(\d+)/i) || [null, '1'])[1], 10),
+        charge: null,
+        date: dates ? dates[0] : 'UNDATED',
+        isDRG: true,
+        rawLine: line.trim()
+      }));
+
+    const codesOnLine = [...cptHcpcs, ...drgMatches];
 
     const dollarsOnLine = [...line.matchAll(dollarRegex)].map(m => ({
       value: parseFloat(m[1]),
@@ -222,7 +238,7 @@ function renderAuditResults(findings) {
 
   document.getElementById('full-audit-link')?.addEventListener('click', () => {
     const text = document.getElementById('paste-area')?.value || '';
-    localStorage.setItem('mh_pending_audit', text);
+    sessionStorage.setItem('mh_pending_audit', text);
     window.location.href = 'audit.html?action=advanced';
   });
 }

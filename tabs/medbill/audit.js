@@ -44,7 +44,7 @@ window.toggleAdvancedForm = function() {
   wrap.style.display = isOpen ? 'none' : 'grid';
 };
 
-const STRICT_EXTRACTION_MIN_CONFIDENCE = 85;
+const STRICT_EXTRACTION_MIN_CONFIDENCE = 75;
 let pendingVerifiedRows = [];
 const extractionTelemetry = {
   profile: 'default_generic',
@@ -183,7 +183,7 @@ function confidenceChip(label, value) {
 function persistExtractionTelemetry() {
   try {
     const key = 'medihelp_extraction_telemetry';
-    const current = JSON.parse(localStorage.getItem(key) || '{}');
+    const current = JSON.parse(sessionStorage.getItem(key) || '{}');
     const profile = extractionTelemetry.profile || 'default_generic';
     if (!current[profile]) {
       current[profile] = { runs: 0, extracted: 0, highConfidence: 0, manualReview: 0, imported: 0, confidenceTotal: 0 };
@@ -194,7 +194,7 @@ function persistExtractionTelemetry() {
     current[profile].manualReview += extractionTelemetry.manualReview;
     current[profile].imported += extractionTelemetry.importedVerified;
     current[profile].confidenceTotal += Number(extractionTelemetry.profileConfidence || 0);
-    localStorage.setItem(key, JSON.stringify(current));
+    sessionStorage.setItem(key, JSON.stringify(current));
   } catch (_) {
     // non-blocking telemetry
   }
@@ -217,13 +217,17 @@ function isStrongExtractedRow(item) {
     qty > 0 &&
     qty <= 50 &&
     confidence >= STRICT_EXTRACTION_MIN_CONFIDENCE &&
-    !item.has_low_confidence_chars &&
-    !item.needs_manual_review
+    (!item.has_low_confidence_chars || confidence >= 85) &&
+    (!item.needs_manual_review || Number(item.money_mapping_error || 0) <= 1.0)
   );
 }
 
 function toAppGridRow(item, sourceTag) {
   const rowType = String(item.row_type || '').toLowerCase();
+  const billedFallback = [item.Billed_Amount, item.total, item.Amount, item.charge].find((v) => Number.isFinite(Number(v)));
+  const paidFallback = [item.Paid, item.paid].find((v) => Number.isFinite(Number(v)));
+  const owedFallback = [item.Owed, item.owed].find((v) => Number.isFinite(Number(v)));
+  const adjFallback = [item.Adjustment, item.adj].find((v) => Number.isFinite(Number(v)));
   return {
     rowId: `${sourceTag}-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
     provenance: sourceTag,
@@ -233,10 +237,10 @@ function toAppGridRow(item, sourceTag) {
     dx: Array.isArray(item.DX) ? item.DX : [],
     qty: item.Qty || 1,
     price: item.Unit_Price != null ? item.Unit_Price : null,
-    total: item.Billed_Amount != null ? item.Billed_Amount : null,
-    paid: item.Paid != null ? item.Paid : null,
-    owed: item.Owed != null ? item.Owed : null,
-    adj: item.Adjustment != null ? item.Adjustment : null,
+    total: billedFallback != null ? Number(billedFallback) : null,
+    paid: paidFallback != null ? Number(paidFallback) : null,
+    owed: owedFallback != null ? Number(owedFallback) : null,
+    adj: adjFallback != null ? Number(adjFallback) : null,
     extraction_confidence: item.extraction_confidence ?? 100,
     has_low_confidence_chars: item.has_low_confidence_chars || false,
     rowType: rowType === 'summary/subtotal' ? 'summary' : (rowType || 'service'),
@@ -592,9 +596,9 @@ function initAudit() {
   }
 
   // Handle handoff from landing page quick-audit
-  const pending = localStorage.getItem('mh_pending_audit');
+  const pending = sessionStorage.getItem('mh_pending_audit');
   if (pending) {
-    localStorage.removeItem('mh_pending_audit');
+    sessionStorage.removeItem('mh_pending_audit');
     
     // Inline regex extraction matching landing page logic
     const lines = pending.split('\\n');

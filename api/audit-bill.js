@@ -29,6 +29,7 @@ const MONEY_EPSILON = 0.01;
 const DIRECT_TEXT_MAX_ROWS = 250;
 const RATE_WINDOW_MS = 5 * 60 * 1000;
 const RATE_MAX_REQUESTS = Number(process.env.AUDIT_RATE_LIMIT_COUNT || 20);
+const GEMINI_OVERRIDE_MARGIN = Number(process.env.GEMINI_OVERRIDE_MARGIN || 10);
 const requestBuckets = new Map();
 
 const DEFAULT_ALLOWED_ORIGINS = [
@@ -56,12 +57,22 @@ function setCorsHeaders(req, res) {
 
 function enforceRateLimit(req) {
   const ip = String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim();
+  const origin = String(req.headers.origin || 'unknown');
+  const ua = String(req.headers['user-agent'] || 'na').slice(0, 80);
+  const key = `${ip}|${origin}|${ua}`;
   const now = Date.now();
-  const bucket = requestBuckets.get(ip) || [];
+  const bucket = requestBuckets.get(key) || [];
   const active = bucket.filter((ts) => now - ts < RATE_WINDOW_MS);
   if (active.length >= RATE_MAX_REQUESTS) return { limited: true, retryAfterSec: Math.ceil((RATE_WINDOW_MS - (now - active[0])) / 1000) };
   active.push(now);
-  requestBuckets.set(ip, active);
+  requestBuckets.set(key, active);
+  if (requestBuckets.size > 1000) {
+    for (const [k, arr] of requestBuckets.entries()) {
+      const keep = arr.filter((ts) => now - ts < RATE_WINDOW_MS);
+      if (keep.length === 0) requestBuckets.delete(k);
+      else requestBuckets.set(k, keep);
+    }
+  }
   return { limited: false, retryAfterSec: 0 };
 }
 
@@ -314,6 +325,7 @@ function chooseMoneyMapping(money, qty) {
     candidates.push({ unitPrice, billed, paid: Number(paid || 0), adjustment: Number(adjustment || 0), owed: Number(owed || 0), mapping_source: src, mapping_error: Number(score.toFixed(2)) });
   };
   if (vals.length >= 5) mk(vals[0], vals[1], vals[2], vals[3], vals[4], 'u-b-p-a-o');
+  if (vals.length >= 5) mk(vals[0], vals[2], vals[3], vals[4], vals[1], 'u-owed-p-a-b');
   if (vals.length >= 4) mk(vals[0], vals[1], vals[2], vals[3], 0, 'u-b-p-a');
   if (vals.length >= 4) mk(vals[0], vals[1], vals[3], vals[2], 0, 'u-b-a-p');
   if (vals.length >= 3) mk(vals[0], vals[1], vals[2], 0, 0, 'u-b-p');
@@ -451,13 +463,19 @@ function parseRowsFromTextLines(linesOrObjects) {
   });
 
   stitched.forEach((entry) => {
-    const line = String(entry.text || '');
+    const line = String(entry.text || '')
+      .replace(/(\d{1,3}(?:,\d{3})*\.\d)\s+(\d)\b/g, '$1$2')
+      .replace(/\$\s*(\d{1,3}(?:,\d{3})*\.\d)\s+(\d)\b/g, '$$$1$2')
+      .replace(/\s+/g, ' ')
+      .trim();
     const sourcePage = typeof entry === 'string' ? null : Number(entry.page || 0);
     const date = (line.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/) || [])[0] || '';
     const code = ([...line.matchAll(/\b([A-Z]\d{4}|\d{5})\b/g)].map(m => m[1]).find(c => /^\d{5}$/.test(c) || /^[A-Z]\d{4}$/.test(c))) || '';
     const dx = (line.match(/\b([A-TV-Z][0-9][0-9AB](?:\.[A-Z0-9]{1,4})?)\b/i) || [])[1] || '';
-    const qty = parseInt((line.match(/\b(?:qty|units?)[:\s]*(\d+)\b/i) || [])[1] || '1', 10);
-    const money = [...line.matchAll(/(?:\$?\s*)(-?\d{1,3}(?:,\d{3})*(?:\.\d{2}))/g)]
+    const qtyFromLabel = (line.match(/\b(?:qty|units?)[:\s]*(\d+)\b/i) || [])[1];
+    const qtyFromColumns = (line.match(/\b(?:[A-TV-Z][0-9][0-9AB](?:\.[A-Z0-9]{1,4})?)\s+(\d{1,2})\s+[A-Za-z]/i) || [])[1];
+    const qty = parseInt(qtyFromLabel || qtyFromColumns || '1', 10);
+    const money = [...line.matchAll(/(?:\$?\s*)(-?\d{1,3}(?:,\d{3})*(?:\.\d{1,2}))/g)]
       .map(m => parseFloat(String(m[1]).replace(/,/g, '')))
       .filter(n => Number.isFinite(n));
     const mapping = chooseMoneyMapping(money, qty);
@@ -1419,7 +1437,7 @@ module.exports = async (req, res) => {
           geminiCompare = buildComparisonSummary(normalizedItems, geminiRows);
           const baseScore = scoreExtractionCandidate(normalizedItems, 0);
           const gemScore = scoreExtractionCandidate(geminiRows, geminiCompare.agreementScore || 0);
-          if (gemScore > baseScore + 6) {
+          if (gemScore > baseScore + GEMINI_OVERRIDE_MARGIN) {
             normalizedItems = geminiRows;
             detectedTemplate = 'textract_gemini_blend';
             templateConfidence = Math.max(45, templateConfidence);
