@@ -210,22 +210,44 @@ const MediHelp = {
     closeBtn.onclick = () => modal.classList.remove('active');
     window.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
 
-    // 4. Form Handling (mailto fallback)
+    // 4. Form Handling (server-side delivery)
     const form = modal.querySelector('#global-feedback-form');
-    form.onsubmit = (e) => {
+    form.onsubmit = async (e) => {
       e.preventDefault();
+      const submitBtn = form.querySelector('.btn-submit');
       const type = document.getElementById('fb-type').value;
       const email = document.getElementById('fb-email').value;
       const msg = document.getElementById('fb-message').value;
 
-      const subject = encodeURIComponent(`[MediHelp Feedback] ${type}`);
-      const body = encodeURIComponent(`From: ${email}\n\nMessage:\n${msg}`);
-      
-      // Professional mailto bridge
-      window.location.href = `mailto:supportdesk@medihelp.live?subject=${subject}&body=${body}`;
-      
-      modal.classList.remove('active');
-      form.reset();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      try {
+        const resp = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            source: 'feedback-widget',
+            type,
+            email,
+            message: msg
+          })
+        });
+
+        const data = await resp.json().catch(() => ({}));
+        if (!resp.ok || !data.ok) {
+          throw new Error(data.error || 'Could not send feedback.');
+        }
+
+        alert('Thanks! Your feedback was sent to our support team.');
+        modal.classList.remove('active');
+        form.reset();
+      } catch (err) {
+        alert(err.message || 'Failed to send feedback. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Feedback';
+      }
     };
   }
 };

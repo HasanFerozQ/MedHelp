@@ -9,10 +9,13 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Hardcoded for now per user instruction, move to .env later
-const accessKeyId = Deno.env.get('AWS_ACCESS_KEY_ID') || "AKIAW2FKXVUMBQW32WQD";
-const secretAccessKey = Deno.env.get('AWS_SECRET_ACCESS_KEY') || "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";
+const accessKeyId = Deno.env.get('AWS_ACCESS_KEY_ID');
+const secretAccessKey = Deno.env.get('AWS_SECRET_ACCESS_KEY');
 const region = Deno.env.get('AWS_REGION') || "us-east-1";
+
+if (!accessKeyId || !secretAccessKey) {
+  throw new Error('Missing AWS credentials. Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in function environment variables.');
+}
 
 const textractClient = new TextractClient({
   region,

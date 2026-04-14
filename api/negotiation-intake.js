@@ -1,6 +1,7 @@
 const multer = require('multer');
 const crypto = require('crypto');
 const PDFDocument = require('pdfkit');
+const nodemailer = require('nodemailer');
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -91,14 +92,17 @@ function buildIntakePdfBuffer({ caseId, fields }) {
   });
 }
 
-async function sendViaResend({ caseId, fields, attachments }) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    throw new Error('RESEND_API_KEY is missing. Configure email delivery for negotiation intake.');
-  }
+async function sendViaSmtp({ caseId, fields, attachments }) {
+  const host = process.env.NEGOTIATION_SMTP_HOST || 'mail.privateemail.com';
+  const port = Number(process.env.NEGOTIATION_SMTP_PORT || 587);
+  const user = process.env.NEGOTIATION_SMTP_USER;
+  const pass = process.env.NEGOTIATION_SMTP_PASS;
+  const from = process.env.NEGOTIATION_FROM_EMAIL || user;
+  const to = 'supportdesk@medihelp.live';
 
-  const from = process.env.NEGOTIATION_FROM_EMAIL || 'MediHelp Intake <onboarding@resend.dev>';
-  const to = process.env.NEGOTIATION_TO_EMAIL || 'supportdesk@medihelp.live';
+  if (!user || !pass) {
+    throw new Error('SMTP credentials are missing. Set NEGOTIATION_SMTP_USER and NEGOTIATION_SMTP_PASS.');
+  }
 
   const lines = [
     `Case ID: ${caseId}`,
@@ -144,33 +148,27 @@ async function sendViaResend({ caseId, fields, attachments }) {
 
   const intakePdf = await buildIntakePdfBuffer({ caseId, fields });
 
-  const finalAttachments = [
-    ...attachments,
-    {
-      filename: `intake-consent-${caseId}.pdf`,
-      content: intakePdf.toString('base64')
-    }
-  ];
-
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      subject: `MediHelp Negotiation Intake - ${caseId}`,
-      text: lines.join('\n'),
-      attachments: finalAttachments
-    })
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure: port === 465,
+    auth: { user, pass },
+    requireTLS: port !== 465
   });
 
-  const raw = await response.text();
-  if (!response.ok) {
-    throw new Error(`Resend delivery failed: ${raw.slice(0, 250)}`);
-  }
+  await transporter.sendMail({
+    from,
+    to,
+    subject: `MediHelp Negotiation Intake - ${caseId}`,
+    text: lines.join('\n'),
+    attachments: [
+      ...attachments,
+      {
+        filename: `intake-consent-${caseId}.pdf`,
+        content: intakePdf
+      }
+    ]
+  });
 }
 
 module.exports = async (req, res) => {
@@ -200,10 +198,10 @@ module.exports = async (req, res) => {
     const caseId = `MH-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${crypto.randomBytes(3).toString('hex').toUpperCase()}`;
     const attachments = [billFile, ...(req.files?.eob || [])].map((f) => ({
       filename: f.originalname || 'attachment.pdf',
-      content: f.buffer.toString('base64')
+      content: f.buffer
     }));
 
-    await sendViaResend({
+    await sendViaSmtp({
       caseId,
       fields: b,
       attachments

@@ -99,25 +99,45 @@
         </form>
 
         <script>
-          document.getElementById('contact-form').addEventListener('submit', function(e) {
+          document.getElementById('contact-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const submitBtn = this.querySelector('button[type="submit"]');
             const name = document.getElementById('contact-name').value;
             const type = document.getElementById('contact-type').value;
             const msg  = document.getElementById('contact-message').value;
-            
-            const subject = encodeURIComponent(`[${type}] Inquiry from ${name}`);
-            const body    = encodeURIComponent(`Name: ${name}\nInquiry Type: ${type}\n\nMessage:\n${msg}`);
-            
-            window.location.href = `mailto:supportdesk@medihelp.live?subject=${subject}&body=${body}`;
-            
-            // Optional: Show success state
-            this.innerHTML = `
-              <div style="text-align:center; padding: 20px;">
-                <div style="font-size: 40px; margin-bottom: 10px;">✉️</div>
-                <h3 style="color:var(--accent); margin-bottom:8px;">Opening Email Client...</h3>
-                <p style="font-size:13px; color:var(--text-muted);">Please send the pre-filled email from your app. We'll get back to you in 12-24 hours.</p>
-                <button onclick="location.reload()" class="btn btn-ghost" style="margin-top:10px;">Send another</button>
-              </div>`;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            try {
+              const resp = await fetch('/api/feedback', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  source: 'contact-form',
+                  name,
+                  type,
+                  message: msg
+                })
+              });
+
+              const data = await resp.json().catch(() => ({}));
+              if (!resp.ok || !data.ok) {
+                throw new Error(data.error || 'Could not send message.');
+              }
+
+              this.innerHTML = `
+                <div style="text-align:center; padding: 20px;">
+                  <div style="font-size: 40px; margin-bottom: 10px;">✅</div>
+                  <h3 style="color:var(--accent); margin-bottom:8px;">Message Sent</h3>
+                  <p style="font-size:13px; color:var(--text-muted);">Your message was delivered directly to supportdesk@medihelp.live.</p>
+                  <button onclick="location.reload()" class="btn btn-ghost" style="margin-top:10px;">Send another</button>
+                </div>`;
+            } catch (err) {
+              alert(err.message || 'Failed to send message. Please try again.');
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Send Message';
+            }
           });
         </script>
       </div>

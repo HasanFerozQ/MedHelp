@@ -11,3 +11,4 @@ scripts/*.txt
 # Local Dev
 .DS_Store
 *.log
+.vercel
