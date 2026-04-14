@@ -95,6 +95,34 @@ function parseCurrency(str) {
   return isNeg ? -Math.abs(val) : val;
 }
 
+function isLikelyDate(value) {
+  if (!value) return false;
+  const s = String(value).trim();
+  return /\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/.test(s) || /^\d{4}-\d{2}-\d{2}$/.test(s);
+}
+
+function collectRowQualityFlags(item) {
+  const reasons = [];
+  const cpt = String(item.CPT || '').trim().toUpperCase();
+  const qty = Number(item.Qty || 0);
+  const billed = Number(item.Billed_Amount || 0);
+  const confidence = Number(item.extraction_confidence || 0);
+
+  if (!cpt || !item.IsValidCode) reasons.push('Invalid or missing CPT/HCPCS code');
+  if (!isLikelyDate(item.Date)) reasons.push('Missing or invalid date of service');
+  if (!Number.isFinite(qty) || qty <= 0 || qty > 50) reasons.push('Unusual quantity');
+  if (!Number.isFinite(billed) || billed <= 0) reasons.push('Missing or invalid billed amount');
+  if (item.has_low_confidence_chars) reasons.push('Low-confidence OCR characters detected');
+  if (confidence < 85) reasons.push('Extraction confidence below strict threshold');
+
+  if (Number.isFinite(item.Unit_Price) && Number.isFinite(item.Billed_Amount) && Number.isFinite(item.Qty)) {
+    const delta = Math.abs((item.Unit_Price * item.Qty) - item.Billed_Amount);
+    if (delta > 0.01) reasons.push('Math mismatch between quantity, price, and billed amount');
+  }
+
+  return reasons;
+}
+
 function normalizeTextractOutput(blocks) {
   const blockMap = {};
   blocks.forEach(b => blockMap[b.Id] = b);
@@ -249,7 +277,7 @@ function normalizeTextractOutput(blocks) {
             if (rowData[headers.cpt]?.hasLowConfidence || rowData[headers.billed_amount]?.hasLowConfidence) score -= 20;
             if (anomaly) score -= 25;
 
-            normalizedItems.push({
+            const candidate = {
               Date: headers.date ? (rowData[headers.date]?.text || "").trim() : "",
               CPT: cellCpt.text.trim(),
               IsValidCode: isValidCode,
@@ -261,9 +289,13 @@ function normalizeTextractOutput(blocks) {
               Paid: adjRaw !== null ? Math.max(0, billedAmount + adjValue) : 0,
               DX: dxCodes,
               extraction_confidence: Math.max(0, score),
-              needs_manual_review: score < 70 || anomaly,
+              needs_manual_review: score < 85 || anomaly,
               has_low_confidence_chars: cellCpt.hasLowConfidence || cellAmt.hasLowConfidence
-            });
+            };
+            const reviewReasons = collectRowQualityFlags(candidate);
+            candidate.review_reasons = reviewReasons;
+            candidate.needs_manual_review = candidate.needs_manual_review || reviewReasons.length > 0;
+            normalizedItems.push(candidate);
           }
         }
       }
@@ -546,6 +578,7 @@ module.exports = async (req, res) => {
               item.extraction_confidence = Math.min(item.extraction_confidence, 30);
               item.needs_manual_review = true;
               item.has_low_confidence_chars = true;
+              item.review_reasons = [...(item.review_reasons || []), 'Code format is valid but not found in CPT registry'];
             }
           });
         }

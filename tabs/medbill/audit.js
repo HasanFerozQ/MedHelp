@@ -41,6 +41,87 @@ window.toggleAdvancedForm = function() {
   wrap.style.display = isOpen ? 'none' : 'grid';
 };
 
+const STRICT_EXTRACTION_MIN_CONFIDENCE = 85;
+let pendingVerifiedRows = [];
+
+function isStrongExtractedRow(item) {
+  const code = String(item.CPT || '').trim().toUpperCase();
+  const billed = Number(item.Billed_Amount || 0);
+  const qty = Number(item.Qty || 0);
+  const confidence = Number(item.extraction_confidence || 0);
+  const hasDate = /\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}-\d{2}-\d{2}/.test(String(item.Date || ''));
+  const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
+
+  return Boolean(
+    validCode &&
+    hasDate &&
+    Number.isFinite(billed) &&
+    billed > 0 &&
+    Number.isFinite(qty) &&
+    qty > 0 &&
+    qty <= 50 &&
+    confidence >= STRICT_EXTRACTION_MIN_CONFIDENCE &&
+    !item.has_low_confidence_chars &&
+    !item.needs_manual_review
+  );
+}
+
+function toAppGridRow(item, sourceTag) {
+  return {
+    rowId: `${sourceTag}-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+    provenance: sourceTag,
+    date: item.Date || '',
+    code: item.CPT || '',
+    modifier: item.Modifier || '',
+    dx: Array.isArray(item.DX) ? item.DX : [],
+    qty: item.Qty || 1,
+    price: item.Unit_Price != null ? item.Unit_Price : null,
+    total: item.Billed_Amount != null ? item.Billed_Amount : null,
+    paid: item.Paid != null ? item.Paid : null,
+    owed: null,
+    adj: item.Adjustment != null ? item.Adjustment : null,
+    extraction_confidence: item.extraction_confidence ?? 100,
+    has_low_confidence_chars: item.has_low_confidence_chars || false,
+    rowType: 'service',
+    desc: '',
+    npi: ''
+  };
+}
+
+function showExtractionVerificationGate(totalCount, cleanCount, reviewCount) {
+  const gate = document.getElementById('extraction-verify-gate');
+  const summary = document.getElementById('extraction-verify-summary');
+  const checkbox = document.getElementById('extraction-verify-check');
+  if (!gate || !summary || !checkbox) return;
+
+  checkbox.checked = false;
+  summary.textContent = `Extraction complete: ${totalCount} row(s) detected. ${cleanCount} high-confidence row(s) are ready to import. ${reviewCount} row(s) require manual verification first.`;
+  gate.style.display = cleanCount > 0 ? 'block' : 'none';
+}
+
+window.confirmExtractionImport = function() {
+  const gate = document.getElementById('extraction-verify-gate');
+  const checkbox = document.getElementById('extraction-verify-check');
+  if (!checkbox?.checked) {
+    alert('Please confirm that you reviewed the extracted data before importing.');
+    return;
+  }
+  if (!Array.isArray(pendingVerifiedRows) || pendingVerifiedRows.length === 0) {
+    alert('No verified rows are pending import.');
+    if (gate) gate.style.display = 'none';
+    return;
+  }
+
+  pendingVerifiedRows.forEach((item, idx) => {
+    window.appGridRows.push(toAppGridRow(item, `textract-verified-${idx}`));
+  });
+  pendingVerifiedRows = [];
+  if (gate) gate.style.display = 'none';
+  localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
+  switchAuditTab('manual');
+  triggerAudit();
+};
+
 window.handlePdfSelect = async function(event) {
   const file = event.target.files && event.target.files[0];
   if (!file) return;
@@ -83,40 +164,20 @@ window.handlePdfSelect = async function(event) {
     if (newItems.length === 0) {
       alert("No medical billing lines found in this document.");
     } else {
-      const reviewRequired = newItems.filter(i => i.needs_manual_review);
-      const cleanItems     = newItems.filter(i => !i.needs_manual_review);
+      const cleanItems = newItems.filter(isStrongExtractedRow);
+      const reviewRequired = newItems.filter(i => !isStrongExtractedRow(i)).map(i => ({
+        ...i,
+        needs_manual_review: true
+      }));
+      pendingVerifiedRows = cleanItems;
 
-      // Auto-populate the high-confidence ones
-      cleanItems.forEach((item, loopIdx) => {
-        window.appGridRows.push({
-          rowId: 'auto-' + Date.now() + '-' + loopIdx + Math.random().toString(36).substring(2,6),
-          provenance: 'textract',
-          date: item.Date || '',
-          code: item.CPT || '',
-          modifier: item.Modifier || '',
-          dx: Array.isArray(item.DX) ? item.DX : [],
-          qty: item.Qty || 1,
-          price: item.Unit_Price || null,
-          total: item.Billed_Amount || null,
-          paid: item.Paid != null ? item.Paid : null,
-          owed: null,
-          adj: item.Adjustment != null ? item.Adjustment : null,
-          extraction_confidence: item.extraction_confidence ?? 100,
-          has_low_confidence_chars: item.has_low_confidence_chars || false,
-          rowType: 'service',
-          desc: '',
-          npi: ''
-        });
-      });
-
-      localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
-      
-      if (reviewRequired.length > 0) {
-        showManualReviewPrompt(reviewRequired);
-      }
+      if (reviewRequired.length > 0) showManualReviewPrompt(reviewRequired);
+      showExtractionVerificationGate(newItems.length, cleanItems.length, reviewRequired.length);
 
       switchAuditTab('manual');
-      triggerAudit();
+      if (cleanItems.length === 0 && reviewRequired.length > 0) {
+        alert('No rows met strict confidence criteria. Please manually verify and add rows below.');
+      }
     }
   } catch(e) {
     const msg = String(e && e.message ? e.message : e);
@@ -127,31 +188,26 @@ window.handlePdfSelect = async function(event) {
       try {
         const fallbackRows = await extractPdfClientSide(file);
         if (fallbackRows.length > 0) {
-          fallbackRows.forEach((r, idx) => {
-            window.appGridRows.push({
-              rowId: 'client-fallback-' + Date.now() + '-' + idx + Math.random().toString(36).substring(2, 6),
-              provenance: 'client-fallback',
-              date: r.date || '',
-              code: r.code || '',
-              modifier: '',
-              dx: r.dx ? [r.dx] : [],
-              qty: r.qty || 1,
-              price: null,
-              total: r.total != null ? r.total : null,
-              paid: null,
-              owed: null,
-              adj: null,
-              extraction_confidence: 55,
-              has_low_confidence_chars: false,
-              rowType: 'service',
-              desc: 'Client-side PDF fallback',
-              npi: ''
-            });
-          });
-          localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
+          const fallbackReviewRows = fallbackRows.map(r => ({
+            Date: r.date || '',
+            CPT: r.code || '',
+            Qty: r.qty || 1,
+            Billed_Amount: r.total != null ? r.total : 0,
+            DX: r.dx ? [r.dx] : [],
+            Modifier: '',
+            Unit_Price: null,
+            Adjustment: null,
+            Paid: null,
+            extraction_confidence: 45,
+            has_low_confidence_chars: true,
+            needs_manual_review: true,
+            review_reasons: ['Server extraction unavailable', 'Client fallback requires manual verification']
+          }));
+          pendingVerifiedRows = [];
+          showManualReviewPrompt(fallbackReviewRows);
+          showExtractionVerificationGate(fallbackReviewRows.length, 0, fallbackReviewRows.length);
           switchAuditTab('manual');
-          triggerAudit();
-          alert(`Server extraction unavailable. Loaded ${fallbackRows.length} fallback line(s). Please verify all values manually.`);
+          alert(`Server extraction unavailable. ${fallbackRows.length} fallback row(s) require manual verification before import.`);
           return;
         }
       } catch (_) {
@@ -213,10 +269,10 @@ window.showManualReviewPrompt = function(items) {
       <div style="flex-grow:1; display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
         <div><label style="font-size:10px; color:var(--text-muted); display:block;">Date</label><input type="text" class="rev-date" value="${s(item.Date)}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
         <div><label style="font-size:10px; color:var(--text-muted); display:block;">CPT</label><input type="text" class="rev-code" value="${s(item.CPT)}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
-        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Total</label><input type="text" class="rev-total" value="${parseFloat(item.Billed_Amount || 0).toFixed(2)}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
+        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Total</label><input type="text" class="rev-total" value="${Number.isFinite(Number(item.Billed_Amount)) ? Number(item.Billed_Amount).toFixed(2) : ''}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
         <div>
           <label style="font-size:10px; color:var(--text-muted); display:block;">Reason</label>
-          <span style="font-size:11px; color:#b45309;">${item.extraction_confidence < 30 ? 'Garbled/Invalid' : 'Needs Review'} (${item.extraction_confidence}%)</span>
+          <span style="font-size:11px; color:#b45309;">${(item.review_reasons && item.review_reasons.length ? item.review_reasons[0] : (item.extraction_confidence < 30 ? 'Garbled/Invalid' : 'Needs Review'))} (${item.extraction_confidence || 0}%)</span>
         </div>
       </div>
       <button onclick="approveReviewItem(this)" style="background:var(--accent); color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer;" data-idx="${idx}">Add to Bill</button>
@@ -227,10 +283,14 @@ window.showManualReviewPrompt = function(items) {
 window.approveReviewItem = function(btn) {
   const row = btn.closest('.review-row');
   const date = row.querySelector('.rev-date').value;
-  const code = row.querySelector('.rev-code').value;
+  const code = row.querySelector('.rev-code').value.trim().toUpperCase();
   const total = parseFloat(row.querySelector('.rev-total').value);
 
-  if (isNaN(total) || total <= 0) {
+  if (!/^\d{5}$|^[A-Z]\d{4}$/.test(code)) {
+    alert("Please enter a valid CPT/HCPCS code before adding.");
+    return;
+  }
+  if (isNaN(total) || total <= 0 || total > 1000000) {
     alert("Please enter a valid billed amount.");
     return;
   }
