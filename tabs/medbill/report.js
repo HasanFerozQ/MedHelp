@@ -12,13 +12,22 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
     return String(v || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   };
   
+  const isHighValueFinding = (f) => {
+    const category = String(f.category || '').toLowerCase();
+    const title = String(f.title || '').toLowerCase();
+    if (f.type === 'danger') return true;
+    if (['bundling', 'duplicate', 'frequency', 'benchmark', 'financial', 'compatibility', 'modifier'].includes(category)) return true;
+    return /overcharge|pricing variance|mue|ncci|upcoding|duplicate|bundle|frequency/.test(title);
+  };
+
   rows.forEach((r, idx) => {
     // Exact or loose match based on line item code
     const relatedFindings = findings.filter(f => f.rowId === r.rowId || (!f.rowId && f.codeRef && f.codeRef === r.code) || (!f.codeRef && f.index === idx));
     
-    // Categorize Findings based on strict 5-stage architecture
-    const hardFindings = relatedFindings.filter(f => f.confidence >= 90 || f.type === 'danger' || ['arithmetic', 'duplicate'].includes(f.category));
-    const softFindings = relatedFindings.filter(f => !hardFindings.includes(f));
+    // Prioritize high-value issues and de-emphasize low-value parser noise
+    const hardFindings = relatedFindings.filter(f => isHighValueFinding(f));
+    const softFindings = relatedFindings.filter(f => !hardFindings.includes(f) && f.category !== 'arithmetic');
+    const lowValueFindings = relatedFindings.filter(f => f.category === 'arithmetic' && !isHighValueFinding(f));
     
     // Determine overall color and status
     let color = 'var(--text-muted)';
@@ -28,9 +37,11 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
     let statusText = 'Clean Charge';
     
     if (hardFindings.length > 0) {
-       color = '#ef4444'; border = '#ef4444'; bg = 'rgba(239, 68, 68, 0.05)'; statusClass = 'audit-row-error'; statusText = 'Hard Billing Errors';
+       color = '#ef4444'; border = '#ef4444'; bg = 'rgba(239, 68, 68, 0.05)'; statusClass = 'audit-row-error'; statusText = 'Critical Billing Issues';
     } else if (softFindings.length > 0) {
-       color = '#f59e0b'; border = '#f59e0b'; bg = 'rgba(245, 158, 11, 0.05)'; statusClass = 'audit-row-warn'; statusText = 'Documentation Risks';
+       color = '#f59e0b'; border = '#f59e0b'; bg = 'rgba(245, 158, 11, 0.05)'; statusClass = 'audit-row-warn'; statusText = 'Review Recommended';
+    } else if (lowValueFindings.length > 0) {
+       color = '#60a5fa'; border = '#60a5fa'; bg = 'rgba(96, 165, 250, 0.06)'; statusClass = 'audit-row-info'; statusText = 'Minor Validation Notes';
     } else {
        color = '#10b981'; border = '#10b981'; bg = 'rgba(16, 185, 129, 0.05)';
     }
@@ -72,7 +83,7 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
           
           ${hardFindings.length > 0 ? `
             <div style="margin-bottom: 4px;">
-              <div style="font-size:10px; font-weight:800; color:#ef4444; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px;">Overcharge / Disallowed</div>
+              <div style="font-size:10px; font-weight:800; color:#ef4444; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px;">High-Value Issues</div>
               ${hardFindings.map(f => `
                 <div style="font-size:12px; color:var(--text-h); display:flex; gap:8px; line-height:1.5; margin-bottom:4px;">
                   <span style="flex-shrink:0;color:#ef4444;font-weight:bold;">!</span>
@@ -96,6 +107,20 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
                 </div>
               `).join('')}
             </div>
+          ` : ''}
+
+          ${lowValueFindings.length > 0 ? `
+            <details style="margin-top:2px;">
+              <summary style="cursor:pointer; font-size:11px; color:#60a5fa; font-weight:700;">Minor validation details (${lowValueFindings.length})</summary>
+              <div style="padding-top:6px;">
+                ${lowValueFindings.map(f => `
+                  <div style="font-size:11px; color:var(--text-muted); display:flex; gap:8px; line-height:1.45; margin-bottom:4px;">
+                    <span style="flex-shrink:0;color:#60a5fa;font-weight:bold;">i</span>
+                    <div><strong>${s(f.title)}</strong>: ${s(f.detail)}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </details>
           ` : ''}
 
           ${rationales.length > 0 ? `
