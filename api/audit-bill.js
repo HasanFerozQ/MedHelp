@@ -284,17 +284,43 @@ function classifyRowType(item) {
   const desc = String(item.Description || item.desc || '').toLowerCase();
   const code = String(item.CPT || '').toUpperCase();
   const amount = Number(item.Billed_Amount || 0);
-  if (/subtotal|total current charges|balance forward|account summary|balance due/.test(desc)) return { rowType: 'summary/subtotal', confidence: 88 };
-  if (/adjust|contractual|write[- ]?off|carc/.test(desc) || Number(item.Adjustment || 0) < 0) return { rowType: 'adjustment', confidence: 82 };
-  if (/payment|remit|paid|insurance payment/.test(desc) || (Number(item.Paid || 0) > 0 && amount === 0)) return { rowType: 'payment', confidence: 78 };
-  if (/discount/.test(desc)) return { rowType: 'discount', confidence: 75 };
-  if (/tax/.test(desc)) return { rowType: 'tax', confidence: 75 };
-  if (/facility fee/.test(desc)) return { rowType: 'facility fee', confidence: 72 };
-  if (/pharmacy|drug|injection/.test(desc)) return { rowType: 'pharmacy item', confidence: 72 };
-  if (/^J\d{4}$/.test(code)) return { rowType: 'pharmacy item', confidence: 72 };
-  if (/lab|imaging|x-ray|mri|ct|ultrasound|panel|assay/.test(desc)) return { rowType: 'lab/imaging', confidence: 72 };
-  if ((/^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code)) && amount !== 0) return { rowType: 'charge', confidence: 80 };
-  return { rowType: 'unknown', confidence: 45 };
+  const paid = Number(item.Paid || 0);
+  const owed = Number(item.Owed || 0);
+  const adjustment = Number(item.Adjustment || 0);
+  if (/subtotal|total current charges|balance forward|account summary|balance due|totals?/.test(desc)) return { rowType: 'summary/subtotal', confidence: 90, reason: 'summary keywords' };
+  if (/adjust|contractual|write[- ]?off|carc/.test(desc) || adjustment < 0) return { rowType: 'adjustment', confidence: 84, reason: 'adjustment marker' };
+  if (/payment|remit|insurance payment|paid/.test(desc) || (paid > 0 && amount <= 0.01)) return { rowType: 'payment', confidence: 82, reason: 'payment marker' };
+  if (/discount/.test(desc)) return { rowType: 'discount', confidence: 75, reason: 'discount keyword' };
+  if (/tax/.test(desc)) return { rowType: 'tax', confidence: 75, reason: 'tax keyword' };
+  if (/facility fee/.test(desc)) return { rowType: 'facility fee', confidence: 72, reason: 'facility fee keyword' };
+  if (/pharmacy|drug|injection/.test(desc)) return { rowType: 'pharmacy item', confidence: 74, reason: 'pharmacy keyword' };
+  if (/^J\d{4}$/.test(code)) return { rowType: 'pharmacy item', confidence: 78, reason: 'J-code' };
+  if (/lab|imaging|x-ray|mri|ct|ultrasound|panel|assay/.test(desc)) return { rowType: 'lab/imaging', confidence: 74, reason: 'lab/imaging keyword' };
+  if ((/^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code)) && amount > 0 && owed >= 0) return { rowType: 'charge', confidence: 82, reason: 'valid code + billed amount' };
+  return { rowType: 'unknown', confidence: 45, reason: 'insufficient structured indicators' };
+}
+
+function chooseMoneyMapping(money, qty) {
+  const vals = (money || []).filter((n) => Number.isFinite(n));
+  if (!vals.length) {
+    return { unitPrice: null, billed: null, paid: 0, adjustment: 0, owed: 0, mapping_source: 'none', mapping_error: null };
+  }
+  const candidates = [];
+  const mk = (unitPrice, billed, paid, adjustment, owed, src) => {
+    const q = Number(qty || 1) || 1;
+    const mathErr = (Number.isFinite(unitPrice) && Number.isFinite(billed)) ? Math.abs((unitPrice * q) - billed) : 9999;
+    const reconErr = (Number.isFinite(billed) ? Math.abs((Number(paid || 0) + Number(adjustment || 0) + Number(owed || 0)) - billed) : 9999);
+    const score = mathErr + (reconErr * 0.5);
+    candidates.push({ unitPrice, billed, paid: Number(paid || 0), adjustment: Number(adjustment || 0), owed: Number(owed || 0), mapping_source: src, mapping_error: Number(score.toFixed(2)) });
+  };
+  if (vals.length >= 5) mk(vals[0], vals[1], vals[2], vals[3], vals[4], 'u-b-p-a-o');
+  if (vals.length >= 4) mk(vals[0], vals[1], vals[2], vals[3], 0, 'u-b-p-a');
+  if (vals.length >= 4) mk(vals[0], vals[1], vals[3], vals[2], 0, 'u-b-a-p');
+  if (vals.length >= 3) mk(vals[0], vals[1], vals[2], 0, 0, 'u-b-p');
+  if (vals.length >= 2) mk(vals[0], vals[1], 0, 0, 0, 'u-b');
+  if (vals.length >= 1) mk(null, vals[vals.length - 1], 0, 0, 0, 'b-only');
+  candidates.sort((a, b) => a.mapping_error - b.mapping_error);
+  return candidates[0];
 }
 
 function computeFieldConfidence(item) {
@@ -323,6 +349,7 @@ function computeFieldConfidence(item) {
   if (majorArithmeticMismatch) reviewReasons.push('Major arithmetic mismatch qty × unit price != billed amount');
   return {
     row_type: cls.rowType,
+    row_type_reason: cls.reason || '',
     date_confidence: dateConf,
     code_confidence: codeConf,
     modifier_confidence: modConf,
@@ -433,31 +460,12 @@ function parseRowsFromTextLines(linesOrObjects) {
     const money = [...line.matchAll(/(?:\$?\s*)(-?\d{1,3}(?:,\d{3})*(?:\.\d{2}))/g)]
       .map(m => parseFloat(String(m[1]).replace(/,/g, '')))
       .filter(n => Number.isFinite(n));
-    let unitPrice = null;
-    let billed = null;
-    let paid = 0;
-    let adjustment = 0;
-    if (money.length >= 5) {
-      unitPrice = money[0];
-      billed = money[1];
-      paid = money[2];
-      adjustment = money[3];
-    } else if (money.length === 4) {
-      unitPrice = money[0];
-      billed = money[1];
-      paid = money[2];
-      adjustment = money[3];
-    } else if (money.length === 3) {
-      unitPrice = money[0];
-      billed = money[1];
-      paid = money[2];
-      adjustment = 0;
-    } else if (money.length === 2) {
-      unitPrice = money[0];
-      billed = money[1];
-    } else if (money.length === 1) {
-      billed = money[0];
-    }
+    const mapping = chooseMoneyMapping(money, qty);
+    const unitPrice = mapping.unitPrice;
+    const billed = mapping.billed;
+    const paid = mapping.paid;
+    const adjustment = mapping.adjustment;
+    const owed = mapping.owed;
     if (code && billed != null) {
       const item = {
         Date: date,
@@ -469,6 +477,9 @@ function parseRowsFromTextLines(linesOrObjects) {
         Billed_Amount: billed,
         Adjustment: adjustment,
         Paid: paid,
+        Owed: owed,
+        money_mapping_source: mapping.mapping_source,
+        money_mapping_error: mapping.mapping_error,
         DX: dx ? [dx] : [],
         source_page: sourcePage || null,
         page_trust_score: 70,
@@ -478,6 +489,10 @@ function parseRowsFromTextLines(linesOrObjects) {
         review_reasons: ['Direct text extraction row (requires verification)']
       };
       Object.assign(item, computeFieldConfidence(item));
+      if (Number(mapping.mapping_error || 0) > Math.max(1.0, Math.abs(Number(billed || 0)) * 0.02)) {
+        item.needs_manual_review = true;
+        item.review_reasons = [...(item.review_reasons || []), `Money column mapping uncertainty (${mapping.mapping_source})`];
+      }
       out.push(item);
     }
   });
