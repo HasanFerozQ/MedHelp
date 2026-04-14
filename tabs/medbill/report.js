@@ -4,7 +4,8 @@ window.currentEngineFindings = [];
 window.currentEngineSavings  = 0;
 
 function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = {}) {
-  let html = '';
+  let criticalHtml = '';
+  let nonCriticalHtml = '';
 
   // Sanitize helper — used in both per-row cards and document-level findings
   const s = (v) => {
@@ -59,7 +60,20 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
       }
     }
 
-    html += `
+    const mapErr = Number(r.money_mapping_error || 0);
+    const highMapErr = Number.isFinite(mapErr) && mapErr > 1.0;
+    const debugChips = `
+      ${(r.rowType || r.row_type_reason || r.money_mapping_source)
+        ? `<div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;">
+            <span style="font-size:10px; border:1px solid var(--border); color:var(--text-main); border-radius:999px; padding:2px 6px;">row: ${s(r.rowType || 'unknown')}</span>
+            ${r.row_type_reason ? `<span style="font-size:10px; border:1px solid #60a5fa55; color:#60a5fa; background:#60a5fa14; border-radius:999px; padding:2px 6px;">${s(r.row_type_reason)}</span>` : ''}
+            ${r.money_mapping_source ? `<span style="font-size:10px; border:1px solid #a78bfa55; color:#a78bfa; background:#a78bfa14; border-radius:999px; padding:2px 6px;">map: ${s(r.money_mapping_source)}</span>` : ''}
+            ${Number.isFinite(mapErr) ? `<span style="font-size:10px; border:1px solid ${highMapErr ? '#ef444455' : '#22c55e55'}; color:${highMapErr ? '#ef4444' : '#22c55e'}; background:${highMapErr ? '#ef444414' : '#22c55e14'}; border-radius:999px; padding:2px 6px;">map err: ${mapErr.toFixed(2)}</span>` : ''}
+          </div>`
+        : ''}
+    `;
+
+    const cardHtml = `
       <div class="${statusClass}" style="border-left: 4px solid ${border}; background: ${bg}; border-radius: 8px; padding: 14px 16px; display:flex; flex-direction:column; gap:8px; margin-bottom: 12px; transition: all 0.2s;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div style="font-weight:800; color:var(--text-h); font-size:14px; font-family:monospace; display:flex; align-items:center;">
@@ -70,6 +84,7 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
             </span>
             ${confidenceBadge}
             ${r.dx && r.dx.length > 0 ? `<span style="font-family:sans-serif; font-size:11px; padding:2px 6px; border:1px solid var(--border); border-radius:12px; margin-left:12px; color:var(--text-muted);">Dx: ${r.dx.join(', ')}</span>` : ''}
+            ${highMapErr ? `<span style="font-size:10px; font-weight:700; color:#ef4444; margin-left:8px;">Mapping Review</span>` : ''}
           </div>
           <div style="display:flex; align-items:center; gap:12px;">
             <div style="font-size:10px; font-weight:800; color:${color}; text-transform:uppercase; letter-spacing:0.5px; border:1px solid ${border}44; padding:2px 8px; border-radius:12px;">${statusText}</div>
@@ -77,6 +92,7 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
             <button onclick="removeAuditRow(${idx})" style="background:rgba(239, 68, 68, 0.1); border:none; color:var(--danger); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; transition:background 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)';" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)';">✕</button>
           </div>
         </div>
+        ${debugChips}
         
         <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
           ${relatedFindings.length === 0 ? `<div style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:6px;"><span style="color:#10b981;font-weight:bold;">✓</span> <span>Charge is mathematically and clinically sound.</span></div>` : ''}
@@ -134,9 +150,17 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
         </div>
       </div>
     `;
+    if (hardFindings.length > 0 || highMapErr) criticalHtml += cardHtml;
+    else nonCriticalHtml += cardHtml;
   });
   
-    container.innerHTML = html;
+    const criticalCount = (criticalHtml.match(/class="audit-row/g) || []).length;
+    const nonCriticalCount = (nonCriticalHtml.match(/class="audit-row/g) || []).length;
+    container.innerHTML = `
+      ${criticalCount > 0 ? `<div style="font-size:11px; font-weight:800; text-transform:uppercase; color:#ef4444; margin: 2px 0 10px;">Critical Rows (${criticalCount})</div>` : ''}
+      ${criticalHtml || `<div style="font-size:12px;color:var(--text-muted);padding:8px 0;">No critical rows detected.</div>`}
+      ${nonCriticalCount > 0 ? `<details style="margin-top:8px;"><summary style="cursor:pointer; font-size:12px; color:var(--text-muted); font-weight:700;">Show Non-Critical Rows (${nonCriticalCount})</summary><div style="margin-top:10px;">${nonCriticalHtml}</div></details>` : ''}
+    `;
 
     // ── Document-Level Findings (orphaned: no rowId, no codeRef) ──────────────
     // These are global findings (financial summary, date sanity, invoice total mismatch, etc.)

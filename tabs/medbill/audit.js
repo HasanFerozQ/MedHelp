@@ -223,6 +223,7 @@ function isStrongExtractedRow(item) {
 }
 
 function toAppGridRow(item, sourceTag) {
+  const rowType = String(item.row_type || '').toLowerCase();
   return {
     rowId: `${sourceTag}-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
     provenance: sourceTag,
@@ -234,12 +235,15 @@ function toAppGridRow(item, sourceTag) {
     price: item.Unit_Price != null ? item.Unit_Price : null,
     total: item.Billed_Amount != null ? item.Billed_Amount : null,
     paid: item.Paid != null ? item.Paid : null,
-    owed: null,
+    owed: item.Owed != null ? item.Owed : null,
     adj: item.Adjustment != null ? item.Adjustment : null,
     extraction_confidence: item.extraction_confidence ?? 100,
     has_low_confidence_chars: item.has_low_confidence_chars || false,
-    rowType: 'service',
-    desc: '',
+    rowType: rowType === 'summary/subtotal' ? 'summary' : (rowType || 'service'),
+    row_type_reason: item.row_type_reason || '',
+    money_mapping_source: item.money_mapping_source || '',
+    money_mapping_error: Number(item.money_mapping_error || 0),
+    desc: item.Description || item.desc || '',
     npi: ''
   };
 }
@@ -529,6 +533,9 @@ window.approveReviewItem = function(btn) {
     extraction_confidence: 100,
     has_low_confidence_chars: false,
     rowType: 'service',
+    row_type_reason: 'manual reviewer confirmed',
+    money_mapping_source: 'manual_review',
+    money_mapping_error: 0,
     desc: 'Reviewed OCR Entry',
     npi: ''
   });
