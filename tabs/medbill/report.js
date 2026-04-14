@@ -286,7 +286,7 @@ function renderDisputeLetter(doc, p, findings, savings) {
   doc.text(`Statement Date: ${p.date}`, 20, 75);
 
   let y = 90;
-  const body = `I am writing to formally dispute the charges on the above-referenced invoice. I have identified several billing irregularities, referenced against specific CMS Medicare Claims Processing Manual chapters, that require immediate correction. Pursuant to 45 CFR §164.524, I request an itemized statement and all supporting documentation within 30 days.`;
+  const body = `I am submitting a formal billing dispute for the above-referenced account. A structured audit of the line-item statement identified material irregularities related to coding, arithmetic integrity, and/or reimbursement benchmarks. Please treat this as a request for formal review, documented correction, and an updated patient liability statement. Pursuant to 45 CFR §164.524, I also request complete supporting records used to generate the billed balance.`;
   const splitBody = doc.splitTextToSize(body, 170);
   doc.text(splitBody, 20, y);
   y += (splitBody.length * 6) + 10;
@@ -358,21 +358,37 @@ function renderDisputeLetter(doc, p, findings, savings) {
   if (y > 260) { doc.addPage(); y = 20; }
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
-  doc.text('I request a written response within 30 days identifying which errors will be corrected and the revised balance owed. Failure to respond may result in a complaint filed with your state insurance commissioner and/or the CMS Medicare Ombudsman.', 20, y);
+  doc.text('Please provide a written response within 30 days identifying accepted corrections, denied items with rationale, and revised patient responsibility. If applicable, include corrected claim references and remittance details.', 20, y);
   y += 20;
   doc.text('Sincerely,', 20, y + 20);
   doc.text(`${p.first} ${p.last}`, 20, y + 35);
 }
 
 function renderSummaryReport(doc, p, findings, savings) {
+  const rows = window.appGridRows || [];
+  const totalBilled = rows.reduce((sum, r) => sum + (parseFloat(r.total) || 0), 0);
+  const hardCount = findings.filter(f => (f.type || '').toLowerCase() === 'danger').length;
+  const warningCount = findings.filter(f => (f.type || '').toLowerCase() === 'warning').length;
+
   doc.setFontSize(18);
   doc.setTextColor(34, 197, 94);
-  doc.text('MediHelp Clinical Audit Summary', 20, 25);
+  doc.text('MediHelp Clinical Audit Summary Report', 20, 22);
 
   doc.setFontSize(10);
-  doc.setTextColor(100);
-  doc.text(`Patient: ${p.first} ${p.last} | Facility: ${p.hospital}`, 20, 35);
-  doc.line(20, 40, 190, 40);
+  doc.setTextColor(90);
+  doc.text(`Generated: ${new Date().toLocaleString()}`, 20, 30);
+  doc.text(`Patient: ${p.first} ${p.last}`, 20, 36);
+  doc.text(`Facility: ${p.hospital}`, 20, 42);
+  doc.text(`Account/Invoice: ${p.account}`, 20, 48);
+  doc.line(20, 52, 190, 52);
+
+  doc.setFontSize(11);
+  doc.setTextColor(20);
+  doc.text(`Lines Audited: ${rows.length}`, 20, 61);
+  doc.text(`Total Billed: $${totalBilled.toFixed(2)}`, 70, 61);
+  doc.text(`Potential Recovery: $${savings.toFixed(2)}`, 130, 61);
+  doc.text(`High Risk Findings: ${hardCount}`, 20, 68);
+  doc.text(`Documentation Warnings: ${warningCount}`, 80, 68);
 
   // Deduplicate before summary table
   const seenKey = new Set();
@@ -383,26 +399,50 @@ function renderSummaryReport(doc, p, findings, savings) {
       seenKey.add(key);
       return true;
     })
-    .map(f => [f.category, f.title, f.detail.substring(0, 120)]);
+    .map(f => [
+      (f.type || '').toUpperCase() || 'INFO',
+      f.category || 'general',
+      f.title,
+      (f.detail || '').substring(0, 130)
+    ]);
 
   if (typeof doc.autoTable !== 'function') {
     console.error('MediHelp: autoTable plugin not loaded.');
-    doc.text('Error: Table plugin not loaded.', 20, 55);
+    doc.text('Error: Table plugin not loaded.', 20, 80);
     return;
   }
   doc.autoTable({
-    startY: 55,
-    head: [['Category', 'Issue', 'Description']],
+    startY: 76,
+    head: [['Severity', 'Category', 'Issue', 'Description']],
     body: tableData,
     theme: 'striped',
-    headStyles: { fillColor: [34, 197, 94] }
+    headStyles: { fillColor: [34, 197, 94], textColor: 20 },
+    styles: { fontSize: 9, cellPadding: 3 },
+    columnStyles: {
+      0: { cellWidth: 22 },
+      1: { cellWidth: 28 },
+      2: { cellWidth: 45 },
+      3: { cellWidth: 85 }
+    }
   });
 
-  const finalY = doc.lastAutoTable.finalY + 20;
+  let finalY = doc.lastAutoTable.finalY + 14;
+  if (finalY > 245) {
+    doc.addPage();
+    finalY = 20;
+  }
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(0);
   doc.text(`Potential Recovery: $${savings.toFixed(2)} (deduplicated)`, 20, finalY);
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(90);
+  const note = doc.splitTextToSize(
+    'This report is an informational billing integrity analysis. Final liability depends on payer adjudication, provider documentation, contract terms, and corrected claim processing outcomes.',
+    170
+  );
+  doc.text(note, 20, finalY + 8);
 }
 
 window.exportAuditCSV = function() {

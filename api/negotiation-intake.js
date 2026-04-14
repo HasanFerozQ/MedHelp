@@ -20,7 +20,17 @@ function required(value) {
   return value !== undefined && value !== null && String(value).trim() !== '';
 }
 
-function buildIntakePdfBuffer({ caseId, fields }) {
+function parseBool(value) {
+  if (typeof value === 'boolean') return value;
+  const v = String(value || '').trim().toLowerCase();
+  return v === 'true' || v === '1' || v === 'yes' || v === 'on';
+}
+
+function sha256(buffer) {
+  return crypto.createHash('sha256').update(buffer).digest('hex');
+}
+
+function buildIntakePdfBuffer({ caseId, fields, integrityMeta }) {
   return new Promise((resolve, reject) => {
     try {
       const doc = new PDFDocument({ size: 'A4', margin: 48 });
@@ -80,6 +90,12 @@ function buildIntakePdfBuffer({ caseId, fields }) {
       row('Digital Signature Name', fields.signatureName);
       row('Digital Signature Date', fields.signatureDate);
 
+      h('Evidence Integrity Snapshot');
+      row('Consent Receipt SHA-256', integrityMeta.consentReceiptHash);
+      row('Bill SHA-256', integrityMeta.billHash);
+      row('EOB SHA-256', integrityMeta.eobHash || 'N/A');
+      row('Submitted At (UTC)', integrityMeta.submittedAtUtc);
+
       doc.moveDown(0.8);
       doc.font('Helvetica').fontSize(9).text(
         'Disclaimer: MediHelp is a billing advocacy service and does not provide legal, medical, or insurance advice.'
@@ -92,7 +108,7 @@ function buildIntakePdfBuffer({ caseId, fields }) {
   });
 }
 
-async function sendViaSmtp({ caseId, fields, attachments }) {
+async function sendViaSmtp({ caseId, fields, attachments, integrityMeta, consentReceiptText }) {
   const host = process.env.NEGOTIATION_SMTP_HOST || 'mail.privateemail.com';
   const port = Number(process.env.NEGOTIATION_SMTP_PORT || 587);
   const user = process.env.NEGOTIATION_SMTP_USER;
@@ -143,10 +159,16 @@ async function sendViaSmtp({ caseId, fields, attachments }) {
     '== Audit Snapshot ==',
     `Savings Potential: ${fields.savingsPotential || ''}`,
     `Findings Count: ${fields.findingsCount || ''}`,
-    `Source: ${fields.source || 'audit-page'}`
+    `Source: ${fields.source || 'audit-page'}`,
+    '',
+    '== Integrity & Evidence ==',
+    `Submitted At (UTC): ${integrityMeta.submittedAtUtc}`,
+    `Consent Receipt SHA-256: ${integrityMeta.consentReceiptHash}`,
+    `Bill SHA-256: ${integrityMeta.billHash}`,
+    `EOB SHA-256: ${integrityMeta.eobHash || 'N/A'}`
   ];
 
-  const intakePdf = await buildIntakePdfBuffer({ caseId, fields });
+  const intakePdf = await buildIntakePdfBuffer({ caseId, fields, integrityMeta });
 
   const transporter = nodemailer.createTransport({
     host,
@@ -159,6 +181,7 @@ async function sendViaSmtp({ caseId, fields, attachments }) {
   await transporter.sendMail({
     from,
     to,
+    replyTo: fields.email || undefined,
     subject: `MediHelp Negotiation Intake - ${caseId}`,
     text: lines.join('\n'),
     attachments: [
@@ -166,6 +189,14 @@ async function sendViaSmtp({ caseId, fields, attachments }) {
       {
         filename: `intake-consent-${caseId}.pdf`,
         content: intakePdf
+      },
+      {
+        filename: `consent-receipt-${caseId}.txt`,
+        content: Buffer.from(consentReceiptText, 'utf8')
+      },
+      {
+        filename: `integrity-metadata-${caseId}.json`,
+        content: Buffer.from(JSON.stringify(integrityMeta, null, 2), 'utf8')
       }
     ]
   });
@@ -186,8 +217,17 @@ module.exports = async (req, res) => {
     ]));
 
     const b = req.body || {};
-    if (!required(b.fullName) || !required(b.email) || !required(b.phone) || !required(b.authorizationConsent)) {
-      return res.status(400).json({ ok: false, error: 'Missing required intake fields.' });
+    const authConsent = parseBool(b.authorizationConsent);
+    const successConsent = parseBool(b.successFeeConsent);
+    const upfrontConsent = parseBool(b.upfrontFeeConsent);
+    if (!required(b.fullName) || !required(b.email) || !required(b.phone)) {
+      return res.status(400).json({ ok: false, error: 'Missing required identity/contact fields.' });
+    }
+    if (!authConsent || !successConsent || !upfrontConsent) {
+      return res.status(400).json({ ok: false, error: 'All required consent checkboxes must be accepted.' });
+    }
+    if (!required(b.signatureName) || !required(b.signatureDate)) {
+      return res.status(400).json({ ok: false, error: 'Digital signature is required before submission.' });
     }
 
     const billFile = req.files?.bill?.[0];
@@ -196,7 +236,48 @@ module.exports = async (req, res) => {
     }
 
     const caseId = `MH-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${crypto.randomBytes(3).toString('hex').toUpperCase()}`;
-    const attachments = [billFile, ...(req.files?.eob || [])].map((f) => ({
+    const eobFile = req.files?.eob?.[0];
+    const integrityMeta = {
+      caseId,
+      submittedAtUtc: new Date().toISOString(),
+      fullName: String(b.fullName || '').trim(),
+      email: String(b.email || '').trim(),
+      phone: String(b.phone || '').trim(),
+      signatureName: String(b.signatureName || '').trim(),
+      signatureDate: String(b.signatureDate || '').trim(),
+      authorizationConsent: authConsent,
+      successFeeConsent: successConsent,
+      upfrontFeeConsent: upfrontConsent,
+      billFileName: billFile.originalname || 'bill.pdf',
+      billMimeType: billFile.mimetype || 'application/pdf',
+      billSizeBytes: Number(billFile.size || billFile.buffer?.length || 0),
+      billHash: sha256(billFile.buffer),
+      eobFileName: eobFile?.originalname || null,
+      eobMimeType: eobFile?.mimetype || null,
+      eobSizeBytes: Number(eobFile?.size || eobFile?.buffer?.length || 0),
+      eobHash: eobFile?.buffer ? sha256(eobFile.buffer) : null
+    };
+    const consentReceiptText = [
+      'MediHelp Negotiation Intake Consent Receipt',
+      `Case ID: ${caseId}`,
+      `Submitted At (UTC): ${integrityMeta.submittedAtUtc}`,
+      '',
+      `Full Name: ${integrityMeta.fullName}`,
+      `Email: ${integrityMeta.email}`,
+      `Phone: ${integrityMeta.phone}`,
+      '',
+      `Authorization Consent: ${integrityMeta.authorizationConsent}`,
+      `15% Success Fee Consent: ${integrityMeta.successFeeConsent}`,
+      `Upfront Fee Consent: ${integrityMeta.upfrontFeeConsent}`,
+      `Digital Signature Name: ${integrityMeta.signatureName}`,
+      `Digital Signature Date: ${integrityMeta.signatureDate}`,
+      '',
+      'Attached File Integrity (SHA-256)',
+      `Bill: ${integrityMeta.billFileName} | ${integrityMeta.billHash}`,
+      `EOB: ${integrityMeta.eobFileName || 'N/A'} | ${integrityMeta.eobHash || 'N/A'}`
+    ].join('\n');
+
+    const attachments = [billFile, ...(eobFile ? [eobFile] : [])].map((f) => ({
       filename: f.originalname || 'attachment.pdf',
       content: f.buffer
     }));
@@ -204,7 +285,9 @@ module.exports = async (req, res) => {
     await sendViaSmtp({
       caseId,
       fields: b,
-      attachments
+      attachments,
+      integrityMeta,
+      consentReceiptText
     });
 
     return res.status(200).json({ ok: true, caseId });
