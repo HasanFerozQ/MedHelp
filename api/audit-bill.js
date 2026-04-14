@@ -309,14 +309,18 @@ function computeFieldConfidence(item) {
   const amountConf = Number.isFinite(amountNum) && Math.abs(amountNum) > 0 ? 90 : 35;
   const descConf = String(item.Description || item.desc || '').trim().length >= 3 ? 75 : 42;
   const unitNum = Number(item.Unit_Price);
-  const arithmeticMismatch = Number.isFinite(unitNum) && Number.isFinite(qtyNum) && Number.isFinite(amountNum) && qtyNum > 0 && Math.abs((unitNum * qtyNum) - amountNum) > MONEY_EPSILON;
+  const arithmeticDiff = Number.isFinite(unitNum) && Number.isFinite(qtyNum) && Number.isFinite(amountNum) && qtyNum > 0
+    ? Math.abs((unitNum * qtyNum) - amountNum)
+    : 0;
+  const majorArithmeticMismatch = Number.isFinite(unitNum) && Number.isFinite(qtyNum) && Number.isFinite(amountNum) && qtyNum > 0
+    && arithmeticDiff > Math.max(1.0, Math.abs(amountNum) * 0.02);
   const fieldsPresent = [dateConf >= 70, codeConf >= 70, qtyConf >= 70, amountConf >= 70, descConf >= 65].filter(Boolean).length;
   const completenessScore = (fieldsPresent / 5) * 100;
   let overall = Math.round(dateConf*0.14 + codeConf*0.2 + modConf*0.08 + descConf*0.16 + qtyConf*0.14 + amountConf*0.2 + cls.confidence*0.08);
   overall = Math.round((overall * 0.8) + (completenessScore * 0.2));
-  if (arithmeticMismatch) overall -= 25;
+  if (majorArithmeticMismatch) overall -= 25;
   const reviewReasons = [];
-  if (arithmeticMismatch) reviewReasons.push('Arithmetic mismatch qty × unit price != billed amount');
+  if (majorArithmeticMismatch) reviewReasons.push('Major arithmetic mismatch qty × unit price != billed amount');
   return {
     row_type: cls.rowType,
     date_confidence: dateConf,
@@ -328,8 +332,9 @@ function computeFieldConfidence(item) {
     row_type_confidence: cls.confidence,
     overall_confidence: Math.max(0, Math.min(100, overall)),
     completeness_score: Number(completenessScore.toFixed(1)),
-    arithmetic_mismatch: arithmeticMismatch,
-    confidence_penalty_applied: arithmeticMismatch ? 25 : 0,
+    arithmetic_mismatch: majorArithmeticMismatch,
+    arithmetic_diff: Number(arithmeticDiff.toFixed(2)),
+    confidence_penalty_applied: majorArithmeticMismatch ? 25 : 0,
     review_reasons: reviewReasons,
     canonical: fp
   };
@@ -404,8 +409,22 @@ async function extractTextLinesFromPdf(buffer) {
 
 function parseRowsFromTextLines(linesOrObjects) {
   const out = [];
-  (linesOrObjects || []).forEach((entry) => {
-    const line = typeof entry === 'string' ? entry : String(entry.text || '');
+  const source = (linesOrObjects || []);
+  const stitched = [];
+  source.forEach((entry) => {
+    const line = typeof entry === 'string' ? String(entry || '') : String(entry.text || '');
+    const page = typeof entry === 'string' ? null : Number(entry.page || 0);
+    if (!line.trim()) return;
+    const isRowStart = /^\s*\d+\s+\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\s+([A-Z]\d{4}|\d{5})\b/.test(line);
+    if (stitched.length === 0 || isRowStart) {
+      stitched.push({ page, text: line });
+    } else {
+      stitched[stitched.length - 1].text += ` ${line}`;
+    }
+  });
+
+  stitched.forEach((entry) => {
+    const line = String(entry.text || '');
     const sourcePage = typeof entry === 'string' ? null : Number(entry.page || 0);
     const date = (line.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/) || [])[0] || '';
     const code = ([...line.matchAll(/\b([A-Z]\d{4}|\d{5})\b/g)].map(m => m[1]).find(c => /^\d{5}$/.test(c) || /^[A-Z]\d{4}$/.test(c))) || '';
@@ -414,18 +433,42 @@ function parseRowsFromTextLines(linesOrObjects) {
     const money = [...line.matchAll(/(?:\$?\s*)(-?\d{1,3}(?:,\d{3})*(?:\.\d{2}))/g)]
       .map(m => parseFloat(String(m[1]).replace(/,/g, '')))
       .filter(n => Number.isFinite(n));
-    const total = money.length ? money[money.length - 1] : null;
-    if (code && total != null) {
+    let unitPrice = null;
+    let billed = null;
+    let paid = 0;
+    let adjustment = 0;
+    if (money.length >= 5) {
+      unitPrice = money[0];
+      billed = money[1];
+      paid = money[2];
+      adjustment = money[3];
+    } else if (money.length === 4) {
+      unitPrice = money[0];
+      billed = money[1];
+      paid = money[2];
+      adjustment = money[3];
+    } else if (money.length === 3) {
+      unitPrice = money[0];
+      billed = money[1];
+      paid = money[2];
+      adjustment = 0;
+    } else if (money.length === 2) {
+      unitPrice = money[0];
+      billed = money[1];
+    } else if (money.length === 1) {
+      billed = money[0];
+    }
+    if (code && billed != null) {
       const item = {
         Date: date,
         CPT: code,
         IsValidCode: /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code),
         Qty: Number.isFinite(qty) ? qty : 1,
-        Unit_Price: null,
+        Unit_Price: unitPrice,
         Modifier: '',
-        Billed_Amount: total,
-        Adjustment: 0,
-        Paid: 0,
+        Billed_Amount: billed,
+        Adjustment: adjustment,
+        Paid: paid,
         DX: dx ? [dx] : [],
         source_page: sourcePage || null,
         page_trust_score: 70,
@@ -519,7 +562,7 @@ function applyDuplicateHeuristics(rows) {
 async function runGeminiOcrFallback(fileBuffer, mimeType) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey || !fileBuffer) return [];
-  const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
+  const model = 'gemini-2.5-flash-lite';
   const prompt = `Extract medical bill line items as strict JSON array.
 Each object keys: Date, CPT, Qty, Unit_Price, Modifier, Billed_Amount, Description.
 Return only JSON array, no markdown.`;
@@ -564,10 +607,35 @@ Return only JSON array, no markdown.`;
       };
       Object.assign(item, computeFieldConfidence(item));
       return item;
-    }).filter(r => r.CPT && Number.isFinite(Number(r.Billed_Amount)));
+    }).filter(rw => rw.CPT && Number.isFinite(Number(rw.Billed_Amount)));
   } catch (_) {
     return [];
   }
+}
+
+function scoreExtractionCandidate(rows, crossCheckScore = 0) {
+  const list = rows || [];
+  if (!list.length) return 0;
+  const total = list.length;
+  const avgConf = list.reduce((s, r) => s + Number(r.overall_confidence || r.extraction_confidence || 0), 0) / total;
+  const validCodeRate = list.filter(r => /^\d{5}$/.test(String(r.CPT || '')) || /^[A-Z]\d{4}$/.test(String(r.CPT || ''))).length / total;
+  const validMoneyRate = list.filter(r => Number.isFinite(Number(r.Billed_Amount)) && Number(r.Billed_Amount) !== 0).length / total;
+  const reviewRate = list.filter(r => !!r.needs_manual_review).length / total;
+  return Math.round((avgConf * 0.4) + (validCodeRate * 100 * 0.25) + (validMoneyRate * 100 * 0.2) + (crossCheckScore * 0.2) - (reviewRate * 100 * 0.15));
+}
+
+function rankHighValueFindings(findings) {
+  const priority = (f) => {
+    const title = String(f.title || '').toLowerCase();
+    if (/bundle|ncci/.test(title)) return 100;
+    if (/duplicate/.test(title)) return 95;
+    if (/frequency|mue/.test(title)) return 92;
+    if (/pricing variance|overcharge|high pricing|excessive/.test(title)) return 90;
+    if (/upcoding|high-level/.test(title)) return 88;
+    if (/math mismatch|rounding|insufficient/.test(title)) return 45;
+    return 60;
+  };
+  return [...(findings || [])].sort((a, b) => priority(b) - priority(a)).slice(0, 5);
 }
 
 function descriptionSimilarity(a, b) {
@@ -1326,6 +1394,25 @@ module.exports = async (req, res) => {
       }
     }
 
+    let geminiRows = [];
+    let geminiCompare = null;
+    if (process.env.GEMINI_API_KEY && workingBuffer && /pdf/i.test(mime || '')) {
+      const shouldRunGemini = String(process.env.GEMINI_COMPARE_ENABLED || 'true') !== 'false';
+      if (shouldRunGemini) {
+        geminiRows = await runGeminiOcrFallback(workingBuffer, mime || 'application/pdf');
+        if (geminiRows.length > 0) {
+          geminiCompare = buildComparisonSummary(normalizedItems, geminiRows);
+          const baseScore = scoreExtractionCandidate(normalizedItems, 0);
+          const gemScore = scoreExtractionCandidate(geminiRows, geminiCompare.agreementScore || 0);
+          if (gemScore > baseScore + 6) {
+            normalizedItems = geminiRows;
+            detectedTemplate = 'textract_gemini_blend';
+            templateConfidence = Math.max(45, templateConfidence);
+          }
+        }
+      }
+    }
+
     const crossCheck = (!textractFailed && data && directRows.length > 0)
       ? buildComparisonSummary(normalizedItems, directRows)
       : { agreementScore: 0, notes: textractFailed ? ['Textract unavailable; no cross-check'] : ['No selectable text rows for cross-check'], verified: false };
@@ -1435,12 +1522,14 @@ module.exports = async (req, res) => {
         direct_text_used: directRows.length > 0,
         direct_text_truncated: directTextTruncated,
         cross_check: crossCheck,
+        gemini_compare: geminiCompare,
         page_trust: pageTrust,
         extraction_metrics: extractionMetrics,
         decision_state: decisionState,
         result: { 
             summary: summaryText,
             findings: allFindings,
+            top_findings: rankHighValueFindings(allFindings),
             potential_savings: clinicalResults.savingsOpportunity,
             medicare_benchmark_total: clinicalResults.totalBenchmark
         } 

@@ -130,6 +130,36 @@ function showExtractionStatus(message, level = 'info') {
   banner.style.display = 'block';
 }
 
+function showTopExtractionFindings(findings) {
+  const pdfTab = document.getElementById('tab-content-pdf');
+  if (!pdfTab) return;
+  let panel = document.getElementById('pdf-top-findings-panel');
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = 'pdf-top-findings-panel';
+    panel.style.marginTop = '8px';
+    panel.style.padding = '10px 12px';
+    panel.style.borderRadius = '8px';
+    panel.style.fontSize = '12px';
+    panel.style.border = '1px solid var(--border)';
+    panel.style.background = 'var(--bg-card)';
+    panel.style.display = 'none';
+    const status = document.getElementById('pdf-extraction-status-banner');
+    if (status && status.parentNode) status.parentNode.insertBefore(panel, status.nextSibling);
+    else pdfTab.appendChild(panel);
+  }
+  const list = Array.isArray(findings) ? findings.slice(0, 5) : [];
+  if (!list.length) {
+    panel.style.display = 'none';
+    panel.innerHTML = '';
+    return;
+  }
+  panel.style.display = 'block';
+  panel.innerHTML = `<div style="font-weight:700; margin-bottom:6px; color:var(--text-h);">Top Findings</div>${
+    list.map((f, i) => `<div style="padding:2px 0; color:var(--text-main);">${i + 1}. ${window.sanitizeText(f.title || 'Issue')}${f.code ? ` (${window.sanitizeText(f.code)})` : ''}</div>`).join('')
+  }`;
+}
+
 function decorateDecisionState(decisionState, metrics = null) {
   const map = {
     auto_acceptable: { label: 'Auto-Acceptable', level: 'success' },
@@ -320,6 +350,7 @@ window.handlePdfSelect = async function(event) {
           : `Extraction completed, but all ${reviewRequired.length} row(s) need manual verification before import.`,
         cleanItems.length > 0 ? 'success' : 'warn'
       );
+      showTopExtractionFindings(d?.result?.top_findings || []);
 
       switchAuditTab('pdf');
       if (cleanItems.length === 0 && reviewRequired.length > 0) {
@@ -378,6 +409,7 @@ window.handlePdfSelect = async function(event) {
     }
 
     showExtractionStatus(`Extraction error: ${msg}`, 'error');
+    showTopExtractionFindings([]);
   } finally {
     if (dropzone) dropzone.style.display = 'block';
     if (loadingState) loadingState.style.display = 'none';
