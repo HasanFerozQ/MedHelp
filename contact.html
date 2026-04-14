@@ -83,6 +83,14 @@
             <input type="text" id="contact-name" name="name" placeholder="John Doe" required>
           </div>
           <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="contact-email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="contact-phone" name="phone" placeholder="+1 555 123 4567" required>
+          </div>
+          <div class="form-group">
             <label>Inquiry Type</label>
             <select id="contact-type" name="type" required>
               <option value="Billing Audit">Billing Audit Inquiry</option>
@@ -103,6 +111,8 @@
             e.preventDefault();
             const submitBtn = this.querySelector('button[type="submit"]');
             const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const phone = document.getElementById('contact-phone').value;
             const type = document.getElementById('contact-type').value;
             const msg  = document.getElementById('contact-message').value;
 
@@ -116,6 +126,8 @@
                 body: JSON.stringify({
                   source: 'contact-form',
                   name,
+                  email,
+                  phone,
                   type,
                   message: msg
                 })

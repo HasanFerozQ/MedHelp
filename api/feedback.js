@@ -21,6 +21,7 @@ module.exports = async (req, res) => {
     const source = sanitize(body.source || 'website');
     const type = sanitize(body.type || 'General Inquiry');
     const email = sanitize(body.email);
+    const phone = sanitize(body.phone);
     const name = sanitize(body.name || 'Anonymous');
     const message = sanitize(body.message);
 
@@ -34,6 +35,12 @@ module.exports = async (req, res) => {
 
     if (source === 'contact-form' && !required(name)) {
       return res.status(400).json({ ok: false, error: 'Name is required for contact form submissions.' });
+    }
+    if (source === 'contact-form' && !required(email)) {
+      return res.status(400).json({ ok: false, error: 'Email is required for contact form submissions.' });
+    }
+    if (source === 'contact-form' && !required(phone)) {
+      return res.status(400).json({ ok: false, error: 'Phone is required for contact form submissions.' });
     }
 
     const host = process.env.NEGOTIATION_SMTP_HOST || 'mail.privateemail.com';
@@ -64,6 +71,7 @@ module.exports = async (req, res) => {
       `Type: ${type}`,
       `Name: ${name}`,
       `Email: ${email || 'Not provided'}`,
+      `Phone: ${phone || 'Not provided'}`,
       '',
       'Message:',
       message
