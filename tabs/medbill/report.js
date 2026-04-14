@@ -270,29 +270,55 @@ const CITATION_MAP = {
   NPI:           'Per CMS Provider Taxonomy Cross-Check — NPI Registry (npiregistry.cms.hhs.gov). Provider specialty must match the billed procedure category.',
 };
 
+function pdfSafeText(value) {
+  return String(value || '')
+    .replace(/[^\x09\x0A\x0D\x20-\x7E]/g, ' ') // strip unsupported symbols/emojis
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function writeWrapped(doc, text, x, y, maxWidth, lineHeight = 5, pageBottom = 275) {
+  const lines = doc.splitTextToSize(pdfSafeText(text), maxWidth);
+  let cursorY = y;
+  lines.forEach((line) => {
+    if (cursorY > pageBottom) {
+      doc.addPage();
+      cursorY = 20;
+    }
+    doc.text(line, x, cursorY);
+    cursorY += lineHeight;
+  });
+  return cursorY;
+}
+
 function renderDisputeLetter(doc, p, findings, savings) {
+  const left = 18;
+  const maxWidth = 174;
+  let y = 20;
   doc.setFontSize(10);
-  doc.text(new Date().toLocaleDateString(), 20, 20);
+  doc.text(pdfSafeText(new Date().toLocaleDateString()), left, y);
+  y += 10;
   doc.setFont('helvetica', 'bold');
-  doc.text('TO: Billing Department / Claims Administrator', 20, 35);
-  doc.text(`${p.hospital}`, 20, 40);
+  doc.text('TO: Billing Department / Claims Administrator', left, y);
+  y += 5;
+  doc.text(pdfSafeText(`${p.hospital}`), left, y);
+  y += 12;
 
   doc.setFontSize(12);
-  doc.text('RE: FORMAL BILLING DISPUTE & REQUEST FOR RECONSIDERATION', 20, 55);
+  doc.text('RE: FORMAL BILLING DISPUTE & REQUEST FOR RECONSIDERATION', left, y);
+  y += 10;
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
-  doc.text(`Patient Name: ${p.first} ${p.last}`, 20, 65);
-  doc.text(`Account/Invoice: ${p.account} | Insurance ID: ${p.ins}`, 20, 70);
-  doc.text(`Statement Date: ${p.date}`, 20, 75);
-
-  let y = 90;
+  y = writeWrapped(doc, `Patient Name: ${p.first} ${p.last}`, left, y, maxWidth);
+  y = writeWrapped(doc, `Account/Invoice: ${p.account} | Insurance ID: ${p.ins}`, left, y + 1, maxWidth);
+  y = writeWrapped(doc, `Statement Date: ${p.date}`, left, y + 1, maxWidth);
+  y += 6;
   const body = `I am submitting a formal billing dispute for the above-referenced account. A structured audit of the line-item statement identified material irregularities related to coding, arithmetic integrity, and/or reimbursement benchmarks. Please treat this as a request for formal review, documented correction, and an updated patient liability statement. Pursuant to 45 CFR §164.524, I also request complete supporting records used to generate the billed balance.`;
-  const splitBody = doc.splitTextToSize(body, 170);
-  doc.text(splitBody, 20, y);
-  y += (splitBody.length * 6) + 10;
+  y = writeWrapped(doc, body, left, y, maxWidth, 5.4) + 6;
 
   doc.setFont('helvetica', 'bold');
-  doc.text('SPECIFIC REASONS FOR DISPUTE (CMS-REFERENCED):', 20, y);
+  if (y > 260) { doc.addPage(); y = 20; }
+  doc.text('SPECIFIC REASONS FOR DISPUTE (CMS-REFERENCED):', left, y);
   y += 8;
   doc.setFont('helvetica', 'normal');
 
@@ -315,16 +341,14 @@ function renderDisputeLetter(doc, p, findings, savings) {
     const meta = (window.CATEGORY_META && window.CATEGORY_META[cat]) || { label: cat.toUpperCase() };
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(10);
-    doc.text(`${(meta.label || cat).toUpperCase()}`, 20, y);
+    doc.text(pdfSafeText(`${(meta.label || cat).toUpperCase()}`), left, y);
     y += 5;
 
     if (CITATION_MAP[cat]) {
       doc.setFont('helvetica', 'italic');
       doc.setFontSize(8.5);
       doc.setTextColor(80);
-      const splitCite = doc.splitTextToSize(`CMS Reference: ${CITATION_MAP[cat]}`, 160);
-      doc.text(splitCite, 25, y);
-      y += (splitCite.length * 4) + 4;
+      y = writeWrapped(doc, `CMS Reference: ${CITATION_MAP[cat]}`, left + 5, y, maxWidth - 10, 4.2, 270) + 2;
       doc.setTextColor(0);
     }
 
@@ -332,10 +356,8 @@ function renderDisputeLetter(doc, p, findings, savings) {
     doc.setFontSize(10);
     items.forEach(f => {
       if (y > 270) { doc.addPage(); y = 20; }
-      const line = `• ${f.title}: ${f.detail}`;
-      const splitLine = doc.splitTextToSize(line, 165);
-      doc.text(splitLine, 25, y);
-      y += (splitLine.length * 5) + 3;
+      const line = `- ${f.title}: ${f.detail}`;
+      y = writeWrapped(doc, line, left + 5, y, maxWidth - 8, 5.0, 272) + 2;
     });
     y += 6;
   });
@@ -345,23 +367,21 @@ function renderDisputeLetter(doc, p, findings, savings) {
     if (y > 240) { doc.addPage(); y = 20; }
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(11);
-    doc.text(`ESTIMATED OVERCHARGE (POTENTIAL RECOVERY): $${savings.toFixed(2)}`, 20, y);
+    doc.text(`ESTIMATED OVERCHARGE (POTENTIAL RECOVERY): $${savings.toFixed(2)}`, left, y);
     y += 8;
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9);
-    const savNote = doc.splitTextToSize('This figure is based on deduplicated, per-line-item savings calculations capped to each line\'s billed total. It represents a conservative estimate using CMS Medicare benchmark pricing where available.', 170);
-    doc.text(savNote, 20, y);
-    y += (savNote.length * 4) + 10;
+    y = writeWrapped(doc, 'This figure is based on deduplicated, per-line-item savings calculations capped to each line\'s billed total. It represents a conservative estimate using CMS Medicare benchmark pricing where available.', left, y, maxWidth, 4.4, 272) + 8;
   }
 
   y += 10;
   if (y > 260) { doc.addPage(); y = 20; }
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
-  doc.text('Please provide a written response within 30 days identifying accepted corrections, denied items with rationale, and revised patient responsibility. If applicable, include corrected claim references and remittance details.', 20, y);
-  y += 20;
-  doc.text('Sincerely,', 20, y + 20);
-  doc.text(`${p.first} ${p.last}`, 20, y + 35);
+  y = writeWrapped(doc, 'Please provide a written response within 30 days identifying accepted corrections, denied items with rationale, and revised patient responsibility. If applicable, include corrected claim references and remittance details.', left, y, maxWidth, 5.0, 272) + 10;
+  if (y > 250) { doc.addPage(); y = 20; }
+  doc.text('Sincerely,', left, y + 10);
+  doc.text(pdfSafeText(`${p.first} ${p.last}`), left, y + 25);
 }
 
 function renderSummaryReport(doc, p, findings, savings) {

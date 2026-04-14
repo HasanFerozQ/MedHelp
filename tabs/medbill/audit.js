@@ -304,6 +304,7 @@ window.handlePdfSelect = async function(event) {
     }
   } catch(e) {
     const msg = String(e && e.message ? e.message : e);
+    const isUnsupportedFormat = /unsupported document format/i.test(msg);
     const isBackendUnavailable =
       /AWS credentials not configured|AWS Textract failed|Server returned non-JSON response/i.test(msg);
 
@@ -324,7 +325,7 @@ window.handlePdfSelect = async function(event) {
             extraction_confidence: 45,
             has_low_confidence_chars: true,
             needs_manual_review: true,
-            review_reasons: ['Server extraction unavailable', 'Client fallback requires manual verification']
+            review_reasons: [isUnsupportedFormat ? 'Textract does not support this PDF encoding' : 'Server extraction unavailable', 'Client fallback requires manual verification']
           }));
           pendingVerifiedRows = [];
           extractionTelemetry.profile = 'client_fallback';
@@ -337,7 +338,12 @@ window.handlePdfSelect = async function(event) {
           renderExtractionTelemetry();
           showManualReviewPrompt(fallbackReviewRows);
           showExtractionVerificationGate(fallbackReviewRows.length, 0, fallbackReviewRows.length);
-          showExtractionStatus(`Server extraction is temporarily unavailable. Loaded ${fallbackReviewRows.length} fallback row(s); please verify before import.`, 'warn');
+          showExtractionStatus(
+            isUnsupportedFormat
+              ? `Textract cannot process this PDF encoding. Loaded ${fallbackReviewRows.length} fallback row(s); please verify before import.`
+              : `Server extraction is temporarily unavailable. Loaded ${fallbackReviewRows.length} fallback row(s); please verify before import.`,
+            'warn'
+          );
           switchAuditTab('pdf');
           return;
         }

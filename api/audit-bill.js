@@ -2,6 +2,7 @@ require('dotenv').config();
 const { TextractClient, AnalyzeDocumentCommand } = require("@aws-sdk/client-textract");
 const { createClient } = require("@supabase/supabase-js");
 const multer = require("multer");
+const { PDFDocument } = require('pdf-lib');
 
 // Helper to run middleware in Vercel
 const runMiddleware = (req, res, fn) => {
@@ -551,6 +552,16 @@ async function runTextractWithRetry(fileBuffer) {
   throw lastErr || new Error('Textract failed after retries');
 }
 
+async function normalizePdfForTextract(buffer) {
+  const pdfDoc = await PDFDocument.load(buffer, { ignoreEncryption: false });
+  const normalizedBytes = await pdfDoc.save({
+    useObjectStreams: false,
+    addDefaultPage: false,
+    updateFieldAppearances: false
+  });
+  return Buffer.from(normalizedBytes);
+}
+
 // CLINICAL ENGINE: Uses Supabase database for Pricing & NCCI unbundling checks
 async function runClinicalEngine(items) {
   if (!supabase) {
@@ -685,12 +696,28 @@ module.exports = async (req, res) => {
     // Step 1: Textract Extraction
     let data;
     let textractAttempts = 1;
+    let normalizationApplied = false;
     try {
       const textractRun = await runTextractWithRetry(req.file.buffer);
       data = textractRun.data;
       textractAttempts = textractRun.attempts || 1;
     } catch (err) {
-      return res.status(500).json({ ok: false, error: `AWS Textract failed: ${err.message}` });
+      const message = String(err?.message || '');
+      const canNormalize = /unsupported document format/i.test(message) && /pdf/i.test(req.file?.mimetype || '');
+      if (canNormalize) {
+        try {
+          const normalizedBuffer = await normalizePdfForTextract(req.file.buffer);
+          const textractRun = await runTextractWithRetry(normalizedBuffer);
+          data = textractRun.data;
+          textractAttempts = textractRun.attempts || 1;
+          normalizationApplied = true;
+          console.warn('MediHelp: Applied automatic PDF normalization before Textract.');
+        } catch (normErr) {
+          return res.status(500).json({ ok: false, error: `AWS Textract failed after auto-normalization: ${normErr.message}` });
+        }
+      } else {
+        return res.status(500).json({ ok: false, error: `AWS Textract failed: ${message}` });
+      }
     }
     
     // Step 2: Normalization
@@ -769,6 +796,7 @@ module.exports = async (req, res) => {
         extraction_profile: detectedTemplate || 'default_generic',
         extraction_profile_confidence: templateConfidence,
         textract_attempts: textractAttempts,
+        pdf_normalization_applied: normalizationApplied,
         result: { 
             summary: summaryText,
             findings: allFindings,
