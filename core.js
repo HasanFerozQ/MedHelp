@@ -249,12 +249,42 @@ const MediHelp = {
         submitBtn.textContent = 'Send Feedback';
       }
     };
+  },
+
+  initGlobalNegotiationBanner: function() {
+    const path = window.location.pathname || '';
+    if (path.includes('/audit')) return; // audit page has dedicated CTA block
+    if (document.getElementById('global-negotiation-banner')) return;
+
+    const footer = document.querySelector('.site-footer');
+    if (!footer || !footer.parentNode) return;
+
+    const wrap = document.createElement('section');
+    wrap.id = 'global-negotiation-banner';
+    wrap.className = 'global-negotiation-banner';
+    wrap.innerHTML = `
+      <div class="container">
+        <div class="global-negotiation-banner__card">
+          <div class="global-negotiation-banner__kicker">MediHelp Premium Service</div>
+          <h3 class="global-negotiation-banner__title">Human Negotiation: Full Audit + Provider Negotiation</h3>
+          <p class="global-negotiation-banner__text">We re-audit your bill, build your dispute case, and negotiate with billing teams directly to reduce your payable balance.</p>
+          <div class="global-negotiation-banner__points">
+            <span>Includes expert line-item audit</span>
+            <span>$15 initiation fee</span>
+            <span>15% success-based only on realized savings</span>
+          </div>
+          <a class="btn global-negotiation-banner__btn" href="/audit#human-negotiation">Start Full Audit + Negotiation</a>
+        </div>
+      </div>
+    `;
+    footer.parentNode.insertBefore(wrap, footer);
   }
 };
 
 // 7. Auto-init on Load
 document.addEventListener('DOMContentLoaded', () => {
   MediHelp.initFeedbackWidget();
+  MediHelp.initGlobalNegotiationBanner();
 });
 
 // Export to window

@@ -75,3 +75,15 @@ If your bill looks off, trust your instincts.
 Use MediHelp Bill Audit to identify risk, then escalate to **Human Negotiation** when you want real support.
 
 Your case gets a trackable Case ID, structured documentation, and a process built for measurable savings.
+
+---
+
+## Ready to Escalate Your Case?
+
+If you want a professional team to **audit your bill and negotiate directly with billing departments**, start your case now.
+
+- $15 initiation fee
+- 15% success-based fee only on realized savings
+- Structured case ID and consent-backed intake process
+
+[Start Full Audit + Human Negotiation](https://www.medihelp.live/audit)
