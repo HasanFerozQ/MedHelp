@@ -22,6 +22,8 @@
   --text-h: #f8fafc;
   --text-body: #cbd5e1;
   --text-muted: #64748b;
+  --bg-main: #0f1724;
+  --text-main: #cbd5e1;
   --border: rgba(255,255,255,0.08);
   --border-accent: rgba(34, 197, 94, 0.45);
   --shadow: 0 4px 40px rgba(0,0,0,0.4);
@@ -49,10 +51,39 @@
   --text-h: #0f172a;
   --text-body: #1e293b;
   --text-muted: #57687a;
+  --bg-main: #ffffff;
+  --text-main: #1e293b;
   --border: rgba(0,0,0,0.08);
   --border-accent: rgba(8, 145, 178, 0.5);
   --shadow: 0 4px 24px rgba(0,0,0,0.1);
   --shadow-accent: 0 0 40px rgba(8, 145, 178, 0.1);
+}
+
+/* --- Theme-safe native form controls --- */
+select,
+input,
+textarea {
+  color: var(--text-h);
+}
+
+select {
+  background-color: var(--bg-main);
+  border-color: var(--border);
+  color-scheme: light dark;
+}
+
+select option {
+  background-color: var(--bg-main);
+  color: var(--text-h);
+}
+
+[data-theme="light"] select {
+  color-scheme: light;
+}
+
+[data-theme="light"] select option {
+  background-color: #ffffff;
+  color: #0f172a;
 }
 
 /* --- Reset --- */

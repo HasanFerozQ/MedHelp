@@ -12,7 +12,7 @@ Medical bills are confusing by design. Most patients see codes, totals, and due 
 
 We do not just send a template email. We combine **structured audit intelligence** with **real human advocacy** to push for lower balances and cleaner billing outcomes.
 
-![Medical billing paperwork and review](https://images.unsplash.com/photo-1584516150909-c43483ee7939?w=1200&q=80&auto=format&fit=crop)
+![Medical billing paperwork and review](https://images.unsplash.com/photo-1576671081837-49000212a370?w=1200&q=80&auto=format&fit=crop)
 
 ## What we do for you
 
@@ -37,7 +37,7 @@ We organize your file into a dispute-ready structure:
 ### 3) Communicate with billing teams
 MediHelp then supports provider-facing dispute communication and follow-through, so you are not doing this alone.
 
-![Patient advocate discussing claim strategy](https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format&fit=crop)
+![Patient advocate discussing claim strategy](https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&q=80&auto=format&fit=crop)
 
 ## Why our model is different
 
@@ -67,7 +67,7 @@ After you submit your Human Negotiation form:
 3. Once initiated, negotiation and billing-office outreach starts.
 4. Final payment details are shared only when savings are achieved.
 
-![Healthcare team reviewing cost documents](https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1200&q=80&auto=format&fit=crop)
+![Healthcare team reviewing cost documents](https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format&fit=crop)
 
 ## Start with confidence
 
