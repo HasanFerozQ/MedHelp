@@ -739,11 +739,22 @@ window.debouncedAudit = debouncedAudit;
 
 async function triggerAudit() {
   // Race condition guard
+  triggerAudit._retryCount = triggerAudit._retryCount || 0;
   if (typeof BucketAuditor === 'undefined') {
+    triggerAudit._retryCount += 1;
+    if (triggerAudit._retryCount > 10) {
+      console.error('MediHelp: BucketAuditor failed to load after retries.');
+      const container = document.getElementById('result-cards-container');
+      if (container) {
+        container.innerHTML = '<div style="color:var(--danger,#dc2626);padding:14px;border:1px solid var(--border);border-radius:8px;">Audit engine could not load. Please refresh the page and retry.</div>';
+      }
+      return;
+    }
     console.warn('MediHelp: BucketAuditor not loaded, retrying...');
     setTimeout(triggerAudit, 500);
     return;
   }
+  triggerAudit._retryCount = 0;
 
   const rows = window.appGridRows || [];
 

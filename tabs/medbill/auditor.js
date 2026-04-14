@@ -108,7 +108,7 @@ class BucketAuditor {
     if (!base) return null;
     let price = base.price * parseFloat(this.gpci || 1.0);
     if (this.isFacility) price *= (window.FACILITY_PROF_MULT || 0.78);
-    return { price, desc: base.desc };
+    return { price, desc: base.desc, approximation: this.isFacility ? 'facility_multiplier_applied' : 'standard_non_facility' };
   }
 
   // ── LAYER 1A — Arithmetic Accuracy ───────────────────────────────────────
@@ -844,7 +844,7 @@ class BucketAuditor {
         // Create regex to match the code strictly as a standalone token or with a group prefix
         const codeNum = code.replace(/[^0-9]/g, ''); // Extract just the digits if the DB returns formats like CO-1
         const targetCode = codeNum || code;
-        const carcRegex = new RegExp(`\\b(?:CO|PR|OA|PI|CR)?[-\\s]?${targetCode}\\b`, 'i');
+        const carcRegex = new RegExp(`\\b(?:CO|PR|OA|PI|CR)[-\\s]?${targetCode}\\b|\\b${targetCode}\\b(?!\\d)`, 'i');
         
         if (carcRegex.test(text)) {
           this.addFinding('adjustment', `Adjustment: ${code}`,

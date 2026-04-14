@@ -45,11 +45,21 @@ function extractCodesWithCharges(text) {
       }))
       .filter(it => it.isDRG || window.isValidCPT?.(it.code) || /\d{5}/.test(it.code));
 
-    const dollarsOnLine = [...line.matchAll(dollarRegex)].map(m => parseFloat(m[1]));
+    const dollarsOnLine = [...line.matchAll(dollarRegex)].map(m => ({
+      value: parseFloat(m[1]),
+      index: m.index || 0
+    }));
 
     codesOnLine.forEach((item, idx) => {
-      if (dollarsOnLine[idx] !== undefined) {
-        item.charge = dollarsOnLine[idx];
+      const codePos = (line.indexOf(item.code) >= 0 ? line.indexOf(item.code) : idx * 8);
+      let nearest = null;
+      dollarsOnLine.forEach((d) => {
+        if (!Number.isFinite(d.value)) return;
+        const dist = Math.abs(d.index - codePos);
+        if (!nearest || dist < nearest.dist) nearest = { dist, value: d.value };
+      });
+      if (nearest) {
+        item.charge = nearest.value;
       }
       results.push(item);
     });
@@ -154,7 +164,7 @@ function renderAuditResults(findings) {
     html += `
       <div class="result-card" style="flex-direction: column;">
         <div style="display: flex; width: 100%; align-items: center;">
-          <span class="code-val">${item.code}${item.modifier ? '-' + item.modifier : ''}</span>
+          <span class="code-val">${window.sanitizeText(item.code)}${item.modifier ? '-' + window.sanitizeText(item.modifier) : ''}</span>
           ${flagBadge}
         </div>
         <div class="result-desc">${priceInfo ? window.sanitizeText(priceInfo.desc) : 'Unknown medical code'}</div>
@@ -198,9 +208,10 @@ function renderAuditResults(findings) {
   });
 
   document.getElementById('export-csv-btn')?.addEventListener('click', () => {
+      const constants = window.MH_CONSTANTS || {};
       const csvLines = ['Code,Modifier,Description,Billed,Benchmark'];
       latestFindings.forEach(item => {
-        const pInfo = item.isDRG ? { desc: 'Hospital', price: (C.DRG_BASE_RATE || 10400) } : getBenchmark(item.code);
+        const pInfo = item.isDRG ? { desc: 'Hospital', price: (constants.DRG_BASE_RATE || 10400) } : getBenchmark(item.code);
         csvLines.push(`${item.code},${item.modifier || ''},"${(pInfo?.desc||'').replace(/"/g,'')}",${item.charge || 0},${pInfo?.price || 0}`);
       });
       const blob = new Blob([csvLines.join('\n')], { type: 'text/csv' });
@@ -218,8 +229,12 @@ function renderAuditResults(findings) {
 
 function handleInlinePrice(e) {
   const val = parseFloat(e.target.value);
+  const idx = Number(e.target.dataset.index);
+  if (!Number.isInteger(idx) || !latestFindings[idx]) return;
   if (!isNaN(val)) {
-    latestFindings[e.target.dataset.index].charge = val;
+    const prev = Number(latestFindings[idx].charge);
+    if (Number.isFinite(prev) && Math.abs(prev - val) < 0.001) return;
+    latestFindings[idx].charge = val;
     renderAuditResults(latestFindings);
   }
 }

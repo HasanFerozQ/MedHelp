@@ -4,6 +4,8 @@ const { createClient } = require("@supabase/supabase-js");
 const multer = require("multer");
 const { PDFDocument } = require('pdf-lib');
 const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js');
+let sharp = null;
+try { sharp = require('sharp'); } catch (_) { sharp = null; }
 
 // Helper to run middleware in Vercel
 const runMiddleware = (req, res, fn) => {
@@ -25,6 +27,9 @@ const TEXTRACT_BACKOFF_MS = [0, 700, 1500];
 const TEXTRACT_BYTES_LIMIT = 10 * 1024 * 1024;
 const MONEY_EPSILON = 0.01;
 const DIRECT_TEXT_MAX_ROWS = 250;
+const RATE_WINDOW_MS = 5 * 60 * 1000;
+const RATE_MAX_REQUESTS = Number(process.env.AUDIT_RATE_LIMIT_COUNT || 20);
+const requestBuckets = new Map();
 
 const DEFAULT_ALLOWED_ORIGINS = [
   'https://www.medihelp.live',
@@ -47,6 +52,91 @@ function setCorsHeaders(req, res) {
   }
   res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+}
+
+function enforceRateLimit(req) {
+  const ip = String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim();
+  const now = Date.now();
+  const bucket = requestBuckets.get(ip) || [];
+  const active = bucket.filter((ts) => now - ts < RATE_WINDOW_MS);
+  if (active.length >= RATE_MAX_REQUESTS) return { limited: true, retryAfterSec: Math.ceil((RATE_WINDOW_MS - (now - active[0])) / 1000) };
+  active.push(now);
+  requestBuckets.set(ip, active);
+  return { limited: false, retryAfterSec: 0 };
+}
+
+async function buildDocumentPreflight(file) {
+  const mime = String(file?.mimetype || '').toLowerCase();
+  const preflight = {
+    mime_type: mime,
+    file_size_bytes: Number(file?.size || file?.buffer?.length || 0),
+    page_count: 1,
+    has_selectable_text: false,
+    is_scanned_like: false,
+    is_encrypted_pdf: false,
+    needs_preprocessing: false,
+    image_quality_hints: []
+  };
+  if (!file?.buffer) return preflight;
+
+  if (mime.includes('pdf')) {
+    try {
+      const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(file.buffer) });
+      const pdf = await loadingTask.promise;
+      preflight.page_count = pdf.numPages || 1;
+      let textItems = 0;
+      for (let p = 1; p <= Math.min(pdf.numPages, 3); p++) {
+        const page = await pdf.getPage(p);
+        const content = await page.getTextContent();
+        textItems += (content.items || []).length;
+      }
+      preflight.has_selectable_text = textItems > 25;
+      preflight.is_scanned_like = !preflight.has_selectable_text;
+      preflight.needs_preprocessing = preflight.is_scanned_like;
+    } catch (err) {
+      preflight.image_quality_hints.push('pdf_text_probe_failed');
+      preflight.is_scanned_like = true;
+      preflight.needs_preprocessing = true;
+    }
+    try {
+      await PDFDocument.load(file.buffer, { ignoreEncryption: false });
+    } catch (err) {
+      if (/encrypted|password/i.test(String(err?.message || ''))) {
+        preflight.is_encrypted_pdf = true;
+        preflight.needs_preprocessing = true;
+      }
+    }
+  } else if (mime.startsWith('image/')) {
+    preflight.is_scanned_like = true;
+    preflight.needs_preprocessing = true;
+    if (sharp) {
+      try {
+        const meta = await sharp(file.buffer).metadata();
+        preflight.image_width = meta.width || null;
+        preflight.image_height = meta.height || null;
+        if ((meta.width || 0) < 1400 || (meta.height || 0) < 1400) preflight.image_quality_hints.push('low_resolution_scan');
+      } catch (_) {
+        preflight.image_quality_hints.push('image_metadata_unavailable');
+      }
+    }
+  }
+  return preflight;
+}
+
+async function preprocessImageForOcr(buffer) {
+  if (!sharp || !buffer) return { buffer, applied: false, mode: 'none' };
+  try {
+    const out = await sharp(buffer)
+      .rotate()
+      .grayscale()
+      .normalize()
+      .sharpen()
+      .png({ compressionLevel: 9 })
+      .toBuffer();
+    return { buffer: out, applied: true, mode: 'image_300dpi_grayscale_sharpen' };
+  } catch (_) {
+    return { buffer, applied: false, mode: 'preprocess_failed' };
+  }
 }
 
 // Credentials must be set via environment variables — no fallback for security
@@ -91,6 +181,7 @@ try {
 function getText(block, blockMap, minConfidence = 85) {
   let text = "";
   let hasLowConfidence = false;
+  const lowConfidenceWords = [];
   if (block.Relationships) {
     block.Relationships.forEach(rel => {
       if (rel.Type === "CHILD") {
@@ -100,8 +191,7 @@ function getText(block, blockMap, minConfidence = 85) {
             const conf = childBlock.Confidence || 0;
             if (conf < minConfidence) {
               hasLowConfidence = true;
-              // Add a marker for high-precision review
-              text += "[?] "; 
+              if (childBlock.Text) lowConfidenceWords.push(childBlock.Text);
             }
             text += childBlock.Text + " ";
           }
@@ -109,7 +199,7 @@ function getText(block, blockMap, minConfidence = 85) {
       }
     });
   }
-  return { text: text.trim().replace(/\[\?\] /g, ''), hasLowConfidence };
+  return { text: text.trim(), hasLowConfidence, lowConfidenceWords };
 }
 
 /**
@@ -120,7 +210,10 @@ function parseCurrency(str) {
   if (str === null || str === undefined || str === '') return null;
   const s = String(str).trim();
   const isNeg = /^\(/.test(s) || /\(.*\d.*\)/.test(s) || /CR\s*$/i.test(s) || /^-/.test(s);
-  const cleaned = s.replace(/[\$,\(\)]/g, '').replace(/CR\s*$/i, '').trim();
+  let cleaned = s.replace(/[\$\(\)]/g, '').replace(/CR\s*$/i, '').trim();
+  const hasEuropean = /\d{1,3}(?:\.\d{3})+,\d{2}$/.test(cleaned);
+  if (hasEuropean) cleaned = cleaned.replace(/\./g, '').replace(',', '.');
+  else cleaned = cleaned.replace(/,/g, '');
   const val = parseFloat(cleaned);
   if (isNaN(val)) return null;
   return isNeg ? -Math.abs(val) : val;
@@ -168,8 +261,8 @@ function normalizeDateForCompare(value) {
 }
 
 function splitCodeModifier(rawCode = '') {
-  const s = String(rawCode || '').trim().toUpperCase();
-  const m = s.match(/^([A-Z]\d{4}|\d{5})[-\s]?([A-Z0-9]{2})$/);
+  const s = String(rawCode || '').trim().toUpperCase().replace(/\s*-\s*/g, '-').replace(/\s+/g, ' ');
+  const m = s.match(/^([A-Z]\d{4}|\d{5})(?:\s*-\s*|\s+)?([A-Z0-9]{2})$/);
   if (m) return { code: m[1], modifier: m[2] };
   return { code: s, modifier: '' };
 }
@@ -183,7 +276,7 @@ function canonicalFingerprint(item) {
     modifier: (item.Modifier || sm.modifier || '').trim().toUpperCase(),
     qty: Number.isFinite(qty) ? String(Number(qty)) : '',
     amount: Number.isFinite(Number(item.Billed_Amount)) ? Number(item.Billed_Amount).toFixed(2) : '',
-    desc: String(item.Description || item.desc || '').toUpperCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim()
+    desc: String(item.Description || item.desc || '').toUpperCase().replace(/\s+/g, ' ').trim()
   };
 }
 
@@ -215,7 +308,15 @@ function computeFieldConfidence(item) {
   const amountNum = Number(item.Billed_Amount);
   const amountConf = Number.isFinite(amountNum) && Math.abs(amountNum) > 0 ? 90 : 35;
   const descConf = String(item.Description || item.desc || '').trim().length >= 3 ? 75 : 42;
-  const overall = Math.round(dateConf*0.14 + codeConf*0.2 + modConf*0.08 + descConf*0.16 + qtyConf*0.14 + amountConf*0.2 + cls.confidence*0.08);
+  const unitNum = Number(item.Unit_Price);
+  const arithmeticMismatch = Number.isFinite(unitNum) && Number.isFinite(qtyNum) && Number.isFinite(amountNum) && qtyNum > 0 && Math.abs((unitNum * qtyNum) - amountNum) > MONEY_EPSILON;
+  const fieldsPresent = [dateConf >= 70, codeConf >= 70, qtyConf >= 70, amountConf >= 70, descConf >= 65].filter(Boolean).length;
+  const completenessScore = (fieldsPresent / 5) * 100;
+  let overall = Math.round(dateConf*0.14 + codeConf*0.2 + modConf*0.08 + descConf*0.16 + qtyConf*0.14 + amountConf*0.2 + cls.confidence*0.08);
+  overall = Math.round((overall * 0.8) + (completenessScore * 0.2));
+  if (arithmeticMismatch) overall -= 25;
+  const reviewReasons = [];
+  if (arithmeticMismatch) reviewReasons.push('Arithmetic mismatch qty × unit price != billed amount');
   return {
     row_type: cls.rowType,
     date_confidence: dateConf,
@@ -226,6 +327,10 @@ function computeFieldConfidence(item) {
     amount_confidence: amountConf,
     row_type_confidence: cls.confidence,
     overall_confidence: Math.max(0, Math.min(100, overall)),
+    completeness_score: Number(completenessScore.toFixed(1)),
+    arithmetic_mismatch: arithmeticMismatch,
+    confidence_penalty_applied: arithmeticMismatch ? 25 : 0,
+    review_reasons: reviewReasons,
     canonical: fp
   };
 }
@@ -409,6 +514,60 @@ function applyDuplicateHeuristics(rows) {
     }
   }
   return out;
+}
+
+async function runGeminiOcrFallback(fileBuffer, mimeType) {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey || !fileBuffer) return [];
+  const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
+  const prompt = `Extract medical bill line items as strict JSON array.
+Each object keys: Date, CPT, Qty, Unit_Price, Modifier, Billed_Amount, Description.
+Return only JSON array, no markdown.`;
+  const body = {
+    contents: [{
+      parts: [
+        { text: prompt },
+        { inline_data: { mime_type: mimeType || 'application/pdf', data: fileBuffer.toString('base64') } }
+      ]
+    }],
+    generationConfig: { temperature: 0.1 }
+  };
+  try {
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) return [];
+    const json = await r.json();
+    const text = json?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') || '';
+    const cleaned = text.replace(/```json|```/gi, '').trim();
+    const arr = JSON.parse(cleaned);
+    if (!Array.isArray(arr)) return [];
+    return arr.map((row) => {
+      const item = {
+        Date: String(row.Date || '').trim(),
+        CPT: String(row.CPT || '').trim().toUpperCase(),
+        IsValidCode: /^\d{5}$/.test(String(row.CPT || '').trim()) || /^[A-Z]\d{4}$/.test(String(row.CPT || '').trim().toUpperCase()),
+        Qty: Number(row.Qty || 1) || 1,
+        Unit_Price: Number(row.Unit_Price || 0) || null,
+        Modifier: String(row.Modifier || '').trim().toUpperCase(),
+        Billed_Amount: Number(row.Billed_Amount || 0) || 0,
+        Adjustment: 0,
+        Paid: 0,
+        DX: [],
+        Description: String(row.Description || '').trim(),
+        extraction_confidence: 58,
+        needs_manual_review: true,
+        has_low_confidence_chars: false,
+        review_reasons: ['AI OCR fallback extraction (manual verification required)']
+      };
+      Object.assign(item, computeFieldConfidence(item));
+      return item;
+    }).filter(r => r.CPT && Number.isFinite(Number(r.Billed_Amount)));
+  } catch (_) {
+    return [];
+  }
 }
 
 function descriptionSimilarity(a, b) {
@@ -1068,6 +1227,11 @@ module.exports = async (req, res) => {
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: "Method not allowed" });
+  const rate = enforceRateLimit(req);
+  if (rate.limited) {
+    res.setHeader('Retry-After', String(rate.retryAfterSec));
+    return res.status(429).json({ ok: false, error: 'Too many audit requests. Please retry shortly.' });
+  }
 
   if (!awsCredentialsConfigured || !textractClient) {
     return res.status(500).json({
@@ -1078,10 +1242,25 @@ module.exports = async (req, res) => {
 
   try {
     await runMiddleware(req, res, upload.single('bill'));
-    if (!req.file) return res.status(400).json({ error: "Missing PDF" });
+    if (!req.file) return res.status(400).json({ error: "Missing file upload." });
+    const mime = String(req.file.mimetype || '').toLowerCase();
+    const allowedMimes = ['application/pdf', 'image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/tiff'];
+    if (!allowedMimes.includes(mime)) {
+      return res.status(400).json({ ok: false, error: 'Unsupported file type. Upload PDF or image (PNG/JPG/WEBP/TIFF).' });
+    }
+    const preflight = await buildDocumentPreflight(req.file);
+    let workingBuffer = req.file.buffer;
+    let preprocessingApplied = false;
+    let preprocessingMode = 'none';
+    if (preflight.needs_preprocessing && mime.startsWith('image/')) {
+      const prep = await preprocessImageForOcr(workingBuffer);
+      workingBuffer = prep.buffer;
+      preprocessingApplied = prep.applied;
+      preprocessingMode = prep.mode;
+    }
 
     // Step 0: Direct text extraction first (if PDF has selectable text)
-    const directExtract = await extractTextLinesFromPdf(req.file.buffer);
+    const directExtract = mime.includes('pdf') ? await extractTextLinesFromPdf(workingBuffer) : { lineObjects: [], hasSelectableText: false, pageStats: [] };
     const directRows = directExtract.hasSelectableText ? parseRowsFromTextLines(directExtract.lineObjects) : [];
     const directTextTruncated = directExtract.hasSelectableText && directRows.length >= DIRECT_TEXT_MAX_ROWS;
 
@@ -1092,7 +1271,7 @@ module.exports = async (req, res) => {
     let textractFailed = false;
     let textractError = '';
     try {
-      const textractRun = await runTextractWithRetry(req.file.buffer);
+      const textractRun = await runTextractWithRetry(workingBuffer);
       data = textractRun.data;
       textractAttempts = textractRun.attempts || 1;
     } catch (err) {
@@ -1100,7 +1279,7 @@ module.exports = async (req, res) => {
       const canNormalize = /unsupported document format/i.test(message) && /pdf/i.test(req.file?.mimetype || '');
       if (canNormalize) {
         try {
-          const normalizedBuffer = await normalizePdfForTextract(req.file.buffer);
+          const normalizedBuffer = await normalizePdfForTextract(workingBuffer);
           const textractRun = await runTextractWithRetry(normalizedBuffer);
           data = textractRun.data;
           textractAttempts = textractRun.attempts || 1;
@@ -1137,7 +1316,14 @@ module.exports = async (req, res) => {
       detectedTemplate = 'direct_text_first';
       templateConfidence = 40;
     } else {
-      return res.status(500).json({ ok: false, error: textractError || 'Extraction failed and no direct text rows found.' });
+      const aiRows = await runGeminiOcrFallback(workingBuffer, mime || 'application/pdf');
+      if (aiRows.length > 0) {
+        normalizedItems = aiRows;
+        detectedTemplate = 'ai_ocr_fallback';
+        templateConfidence = 35;
+      } else {
+        return res.status(500).json({ ok: false, error: textractError || 'Extraction failed and no direct text rows found.' });
+      }
     }
 
     const crossCheck = (!textractFailed && data && directRows.length > 0)
@@ -1181,7 +1367,7 @@ module.exports = async (req, res) => {
         const candidateCodes = [...new Set(
           normalizedItems.filter(i => i.CPT && i.IsValidCode).map(i => i.CPT)
         )];
-        if (candidateCodes.length > 0) {
+        if (supabase && candidateCodes.length > 0) {
           const { data: knownCodes } = await supabase
             .from('cpt_codes')
             .select('code')
@@ -1205,7 +1391,7 @@ module.exports = async (req, res) => {
     // Step 3: filter auditable rows by row_type before auditing
     const auditableRows = normalizedItems.filter((r) => {
       const t = String(r.row_type || classifyRowType(r).rowType || '').toLowerCase();
-      return t === 'charge' || t === 'lab/imaging' || t === 'pharmacy item' || t === 'facility fee';
+      return t === 'charge' || t === 'lab/imaging' || t === 'pharmacy item';
     });
 
     // Step 4: Arithmetic Engine
@@ -1239,6 +1425,9 @@ module.exports = async (req, res) => {
         normalized_bill: normalizedItems, 
         extraction_profile: detectedTemplate || 'default_generic',
         extraction_profile_confidence: templateConfidence,
+        preflight,
+        preprocessing_applied: preprocessingApplied,
+        preprocessing_mode: preprocessingMode,
         textract_attempts: textractAttempts,
         pdf_normalization_applied: normalizationApplied,
         textract_unavailable: textractFailed,
