@@ -473,7 +473,17 @@ window.showManualReviewPrompt = function(items) {
     return String(v || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   };
 
-  list.innerHTML = items.map((item, idx) => `
+  const criticalItems = [];
+  const nonCriticalItems = [];
+  (items || []).forEach((item, idx) => {
+    const mapErr = Number(item.money_mapping_error || 0);
+    const isCritical = mapErr > 1.0 || String(item.row_type || '').toLowerCase() === 'unknown' || /money column mapping uncertainty/i.test(String((item.review_reasons || []).join(' ')));
+    const payload = { item, idx };
+    if (isCritical) criticalItems.push(payload);
+    else nonCriticalItems.push(payload);
+  });
+
+  const renderReviewRow = ({ item, idx }) => `
     <div class="review-row" style="background:rgba(245,158,11,0.05); border:1px solid rgba(245,158,11,0.2); border-radius:8px; padding:12px; margin-bottom:10px; display:flex; gap:12px; align-items:center;">
       <div style="background:#f59e0b; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:12px; font-weight:bold;">!</div>
       <div style="flex-grow:1; display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
@@ -493,13 +503,28 @@ window.showManualReviewPrompt = function(items) {
         ${confidenceChip('amount', item.amount_confidence || 0)}
         ${confidenceChip('row type', item.row_type_confidence || 0)}
         <span style="font-size:10px; border:1px solid var(--border); color:var(--text-main); border-radius:999px; padding:2px 6px;">type: ${(item.row_type || 'unknown')}</span>
+        ${(item.row_type_reason)
+          ? `<span style="font-size:10px; border:1px solid #60a5fa55; color:#60a5fa; background:#60a5fa14; border-radius:999px; padding:2px 6px;">${s(item.row_type_reason)}</span>`
+          : ''}
+        ${(item.money_mapping_source)
+          ? `<span style="font-size:10px; border:1px solid #a78bfa55; color:#a78bfa; background:#a78bfa14; border-radius:999px; padding:2px 6px;">map: ${s(item.money_mapping_source)}</span>`
+          : ''}
+        ${(Number.isFinite(Number(item.money_mapping_error)))
+          ? `<span style="font-size:10px; border:1px solid ${Number(item.money_mapping_error) > 1 ? '#ef444455' : '#22c55e55'}; color:${Number(item.money_mapping_error) > 1 ? '#ef4444' : '#22c55e'}; background:${Number(item.money_mapping_error) > 1 ? '#ef444414' : '#22c55e14'}; border-radius:999px; padding:2px 6px;">map err: ${Number(item.money_mapping_error).toFixed(2)}</span>`
+          : ''}
         ${(item.duplicate_status && item.duplicate_status !== 'none')
           ? `<span style="font-size:10px; border:1px solid #f59e0b55; color:#f59e0b; background:#f59e0b14; border-radius:999px; padding:2px 6px;">${item.duplicate_status}</span>`
           : ''}
       </div>
       <button onclick="approveReviewItem(this)" style="background:var(--accent); color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer;" data-idx="${idx}">Add to Bill</button>
     </div>
-  `).join('');
+  `;
+
+  list.innerHTML = `
+    ${criticalItems.length ? `<div style="font-size:11px;font-weight:800;color:#ef4444;text-transform:uppercase;letter-spacing:0.4px;margin:2px 0 8px;">Critical Review Rows (${criticalItems.length})</div>` : ''}
+    ${criticalItems.map(renderReviewRow).join('')}
+    ${nonCriticalItems.length ? `<details style="margin-top:8px;"><summary style="cursor:pointer;font-size:12px;color:var(--text-muted);font-weight:700;">Show non-critical review rows (${nonCriticalItems.length})</summary><div style="margin-top:10px;">${nonCriticalItems.map(renderReviewRow).join('')}</div></details>` : ''}
+  `;
 };
 
 window.approveReviewItem = function(btn) {
