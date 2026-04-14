@@ -200,6 +200,49 @@ async function sendViaSmtp({ caseId, fields, attachments, integrityMeta, consent
       }
     ]
   });
+
+  const userEmail = String(fields.email || '').trim();
+  if (userEmail) {
+    const acknowledgementHtml = `
+      <div style="font-family:Arial,Helvetica,sans-serif; max-width:640px; margin:0 auto; color:#111827; line-height:1.6;">
+        <h2 style="margin:0 0 10px;">MediHelp Human Negotiation Intake Received</h2>
+        <p style="margin:0 0 12px;">Thank you for submitting your negotiation intake. Please save your Case ID for all future communication.</p>
+        <div style="padding:14px; border:1px solid #d1d5db; border-radius:8px; background:#f9fafb; margin-bottom:14px;">
+          <div style="font-size:12px; color:#6b7280; margin-bottom:4px;">Your Case ID</div>
+          <div style="font-size:22px; font-weight:800; letter-spacing:0.4px;">${caseId}</div>
+        </div>
+        <p style="font-weight:700; margin:0 0 8px;">What happens next:</p>
+        <ol style="margin:0 0 12px 18px; padding:0;">
+          <li>Process will take 3-5 working days.</li>
+          <li>SupportDesk will email payment link and details to your provided email for the $15 initiation fee.</li>
+          <li>After submission of initiation fee, negotiator starts audit and negotiations and contacts you with results.</li>
+          <li>Final payment details are shared after successful negotiations (15% of saved amount).</li>
+        </ol>
+        <p style="margin:0;">If you need help, reply to this email and include your Case ID.</p>
+      </div>
+    `;
+
+    await transporter.sendMail({
+      from,
+      to: userEmail,
+      subject: `MediHelp Case Confirmation - ${caseId}`,
+      html: acknowledgementHtml,
+      text: [
+        'MediHelp Human Negotiation Intake Received',
+        '',
+        `Your Case ID: ${caseId}`,
+        'Please save this Case ID for future communication.',
+        '',
+        'What happens next:',
+        '1) Process will take 3-5 working days.',
+        '2) SupportDesk will email payment link and details to your provided email for the $15 initiation fee.',
+        '3) After submission of initiation fee, negotiator starts audit and negotiations and contacts you with results.',
+        '4) Final payment details are shared after successful negotiations (15% of saved amount).',
+        '',
+        'If you need help, reply to this email and include your Case ID.'
+      ].join('\n')
+    });
+  }
 }
 
 module.exports = async (req, res) => {

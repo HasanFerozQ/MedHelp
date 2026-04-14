@@ -1,7 +1,7 @@
 ---
 title: Malaria Vaccine Breakthrough — A Historic Second Shot
 date: 2026-04-05
-thumbnail: images/malaria_vaccine_hero.png
+thumbnail: https://images.unsplash.com/photo-1584515933487-779824d29309?w=1400&q=80&auto=format&fit=crop
 category: Global Health
 summary: The World Health Organization (WHO) has recommended the widespread use of a second malaria vaccine, the R21/Matrix-M. For millions of children in sub-Saharan Africa, this is a life-saving advancement.
 ---

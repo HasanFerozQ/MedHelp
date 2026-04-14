@@ -1,7 +1,7 @@
 ---
 title: AI in Medical Diagnostics — The Future of Patient Screening
 date: 2026-04-05
-thumbnail: images/ai_diagnostics_hero.png
+thumbnail: https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1400&q=80&auto=format&fit=crop
 category: Health Tech
 summary: Artificial intelligence is no longer speculative fiction. From cardiology to radiology, AI-powered diagnostic tools are identifying diseases with unprecedented accuracy, often catching issues years before traditional methods.
 ---

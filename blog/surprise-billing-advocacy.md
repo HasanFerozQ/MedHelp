@@ -1,7 +1,7 @@
 ---
 title: Avoiding "Surprise Billing" — A Patient’s Guide to the No Surprises Act
 date: 2026-04-05
-thumbnail: images/surprise_billing_hero.png
+thumbnail: https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1400&q=80&auto=format&fit=crop
 category: Billing Advocacy
 summary: In the complex landscape of healthcare, surprise medical bills can be devastating. Since the implementation of the No Surprises Act, patients have newfound protections. Learn how to identify and dispute an illegal out-of-network charge.
 ---
