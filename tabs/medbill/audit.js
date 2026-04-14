@@ -43,6 +43,48 @@ window.toggleAdvancedForm = function() {
 
 const STRICT_EXTRACTION_MIN_CONFIDENCE = 85;
 let pendingVerifiedRows = [];
+const extractionTelemetry = {
+  profile: 'default_generic',
+  totalExtracted: 0,
+  highConfidence: 0,
+  manualReview: 0,
+  importedVerified: 0,
+  source: 'server'
+};
+
+function renderExtractionTelemetry() {
+  const panel = document.getElementById('extraction-telemetry-panel');
+  const text = document.getElementById('extraction-telemetry-text');
+  if (!panel || !text) return;
+  if (!extractionTelemetry.totalExtracted) {
+    panel.style.display = 'none';
+    return;
+  }
+  panel.style.display = 'block';
+  text.textContent =
+    `Profile: ${extractionTelemetry.profile} | Source: ${extractionTelemetry.source} | ` +
+    `Extracted: ${extractionTelemetry.totalExtracted} | High-confidence: ${extractionTelemetry.highConfidence} | ` +
+    `Needs review: ${extractionTelemetry.manualReview} | Imported: ${extractionTelemetry.importedVerified}`;
+}
+
+function persistExtractionTelemetry() {
+  try {
+    const key = 'medihelp_extraction_telemetry';
+    const current = JSON.parse(localStorage.getItem(key) || '{}');
+    const profile = extractionTelemetry.profile || 'default_generic';
+    if (!current[profile]) {
+      current[profile] = { runs: 0, extracted: 0, highConfidence: 0, manualReview: 0, imported: 0 };
+    }
+    current[profile].runs += 1;
+    current[profile].extracted += extractionTelemetry.totalExtracted;
+    current[profile].highConfidence += extractionTelemetry.highConfidence;
+    current[profile].manualReview += extractionTelemetry.manualReview;
+    current[profile].imported += extractionTelemetry.importedVerified;
+    localStorage.setItem(key, JSON.stringify(current));
+  } catch (_) {
+    // non-blocking telemetry
+  }
+}
 
 function isStrongExtractedRow(item) {
   const code = String(item.CPT || '').trim().toUpperCase();
@@ -115,9 +157,12 @@ window.confirmExtractionImport = function() {
   pendingVerifiedRows.forEach((item, idx) => {
     window.appGridRows.push(toAppGridRow(item, `textract-verified-${idx}`));
   });
+  extractionTelemetry.importedVerified += pendingVerifiedRows.length;
   pendingVerifiedRows = [];
   if (gate) gate.style.display = 'none';
   localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
+  persistExtractionTelemetry();
+  renderExtractionTelemetry();
   switchAuditTab('manual');
   triggerAudit();
 };
@@ -159,6 +204,7 @@ window.handlePdfSelect = async function(event) {
     }
 
     if (!d.ok) throw new Error(d.error || 'Extraction failed');
+    window.currentDocumentProfile = d.extraction_profile || 'default_generic';
     
     const newItems = d.normalized_bill || [];
     if (newItems.length === 0) {
@@ -170,6 +216,13 @@ window.handlePdfSelect = async function(event) {
         needs_manual_review: true
       }));
       pendingVerifiedRows = cleanItems;
+      extractionTelemetry.profile = window.currentDocumentProfile || 'default_generic';
+      extractionTelemetry.totalExtracted = newItems.length;
+      extractionTelemetry.highConfidence = cleanItems.length;
+      extractionTelemetry.manualReview = reviewRequired.length;
+      extractionTelemetry.importedVerified = 0;
+      extractionTelemetry.source = 'server';
+      renderExtractionTelemetry();
 
       if (reviewRequired.length > 0) showManualReviewPrompt(reviewRequired);
       showExtractionVerificationGate(newItems.length, cleanItems.length, reviewRequired.length);
@@ -204,6 +257,13 @@ window.handlePdfSelect = async function(event) {
             review_reasons: ['Server extraction unavailable', 'Client fallback requires manual verification']
           }));
           pendingVerifiedRows = [];
+          extractionTelemetry.profile = 'client_fallback';
+          extractionTelemetry.totalExtracted = fallbackReviewRows.length;
+          extractionTelemetry.highConfidence = 0;
+          extractionTelemetry.manualReview = fallbackReviewRows.length;
+          extractionTelemetry.importedVerified = 0;
+          extractionTelemetry.source = 'client-fallback';
+          renderExtractionTelemetry();
           showManualReviewPrompt(fallbackReviewRows);
           showExtractionVerificationGate(fallbackReviewRows.length, 0, fallbackReviewRows.length);
           switchAuditTab('manual');

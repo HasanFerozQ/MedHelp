@@ -123,9 +123,88 @@ function collectRowQualityFlags(item) {
   return reasons;
 }
 
+const PROVIDER_TEMPLATES = [
+  {
+    id: 'generic_hospital_statement_v1',
+    matchAnyPhrases: ['patient account', 'statement date', 'account number', 'date of service', 'amount due'],
+    headerAliases: {
+      date: ['date of service', 'service date', 'dos', 'svc date', 'date'],
+      cpt: ['cpt', 'hcpcs', 'procedure code', 'service code', 'code'],
+      qty: ['qty', 'units', 'quantity'],
+      unit_price: ['unit price', 'rate', 'fee', 'charge each'],
+      billed_amount: ['total charge', 'total', 'amount', 'billed amount', 'charge amount', 'charges'],
+      modifier: ['modifier', 'mod'],
+      adjustment: ['adjustment', 'contractual', 'carc', 'write off'],
+      dx: ['dx', 'diagnosis', 'icd', 'icd-10']
+    }
+  },
+  {
+    id: 'facility_revenue_table_v1',
+    matchAnyPhrases: ['revenue code', 'service description', 'line charge', 'patient responsibility'],
+    headerAliases: {
+      date: ['service date', 'date'],
+      cpt: ['procedure code', 'hcpcs', 'cpt', 'code'],
+      qty: ['units', 'qty'],
+      unit_price: ['rate', 'unit charge'],
+      billed_amount: ['line charge', 'total charge', 'charges', 'amount'],
+      modifier: ['modifier', 'mod'],
+      adjustment: ['adjustment', 'contractual'],
+      dx: ['diagnosis', 'dx', 'icd']
+    }
+  },
+  {
+    id: 'cms_itemized_style_v1',
+    matchAnyPhrases: ['hcfa', 'ub-04', 'claim number', 'place of service'],
+    headerAliases: {
+      date: ['from date', 'to date', 'date of service', 'date'],
+      cpt: ['cpt/hcpcs', 'hcpcs', 'cpt', 'procedure'],
+      qty: ['units', 'qty'],
+      unit_price: ['allowed', 'rate', 'unit price'],
+      billed_amount: ['charged', 'billed', 'submitted charges', 'total'],
+      modifier: ['modifier'],
+      adjustment: ['adjustment'],
+      dx: ['icd', 'diagnosis', 'dx']
+    }
+  }
+];
+
+function detectProviderTemplate(blocks, blockMap) {
+  const sample = [];
+  const textBlocks = blocks.filter(b => b.BlockType === 'LINE' || b.BlockType === 'WORD').slice(0, 800);
+  textBlocks.forEach((b) => {
+    if (b.BlockType === 'LINE' && b.Text) sample.push(b.Text.toLowerCase());
+    else if (b.BlockType === 'WORD' && b.Text) sample.push(b.Text.toLowerCase());
+  });
+  const haystack = sample.join(' ');
+
+  let best = null;
+  let bestScore = 0;
+  PROVIDER_TEMPLATES.forEach((tpl) => {
+    const score = tpl.matchAnyPhrases.reduce((acc, phrase) => acc + (haystack.includes(phrase) ? 1 : 0), 0);
+    if (score > bestScore) {
+      bestScore = score;
+      best = tpl;
+    }
+  });
+
+  if (!best || bestScore < 2) {
+    return {
+      id: 'default_generic',
+      headerAliases: PROVIDER_TEMPLATES[0].headerAliases
+    };
+  }
+  return best;
+}
+
+function mapHeadersFromAliases(text, aliases) {
+  const t = String(text || '').trim().toLowerCase();
+  return aliases.find(a => t === a || t.includes(a));
+}
+
 function normalizeTextractOutput(blocks) {
   const blockMap = {};
   blocks.forEach(b => blockMap[b.Id] = b);
+  const template = detectProviderTemplate(blocks, blockMap);
   
   const tables = blocks.filter(b => b.BlockType === "TABLE");
   const keyValues = blocks.filter(b => b.BlockType === "KEY_VALUE_SET");
@@ -198,6 +277,7 @@ function normalizeTextractOutput(blocks) {
 
     if (maxRow > 0) {
       let headers = {};
+      const alias = template.headerAliases || PROVIDER_TEMPLATES[0].headerAliases;
       
       // Multi-row header support: check top 2 rows
       const headerRows = [1, 2];
@@ -207,20 +287,36 @@ function normalizeTextractOutput(blocks) {
           if (!cell) continue;
           const text = cell.text.toLowerCase();
 
-          // Priority header mapping (exact match vs partial)
-          if (text === "date" || text.includes("serv date") || text.includes("dos")) headers.date = c;
-          else if (text === "cpt" || text === "hcpcs" || (text.includes("code") && !text.includes("proc"))) headers.cpt = c;
-          else if (text.includes("qty") || text === "units" || text === "quantity") headers.qty = c;
-          else if (text.includes("price") || text === "rate" || text === "fee") headers.unit_price = c;
-          else if (text === "mod" || text === "modifier") headers.modifier = c;
-          else if (text === "total" || text === "billed" || text === "amount" || text.includes("charge")) {
-             // Only map if not already mapped or if this is a better match
-             if (!headers.billed_amount) headers.billed_amount = c;
-          }
-          else if (text.includes("adj") || text.includes("carc") || text.includes("contractual")) headers.adjustment = c;
-          else if (text.includes("diag") || text.includes("icd") || text.includes("dx")) headers.dx = c;
+          if (!headers.date && mapHeadersFromAliases(text, alias.date || [])) headers.date = c;
+          else if (!headers.cpt && mapHeadersFromAliases(text, alias.cpt || [])) headers.cpt = c;
+          else if (!headers.qty && mapHeadersFromAliases(text, alias.qty || [])) headers.qty = c;
+          else if (!headers.unit_price && mapHeadersFromAliases(text, alias.unit_price || [])) headers.unit_price = c;
+          else if (!headers.billed_amount && mapHeadersFromAliases(text, alias.billed_amount || [])) headers.billed_amount = c;
+          else if (!headers.modifier && mapHeadersFromAliases(text, alias.modifier || [])) headers.modifier = c;
+          else if (!headers.adjustment && mapHeadersFromAliases(text, alias.adjustment || [])) headers.adjustment = c;
+          else if (!headers.dx && mapHeadersFromAliases(text, alias.dx || [])) headers.dx = c;
         }
       });
+
+      // Template-based fallback mapping when headers are weak/noisy.
+      if (!headers.cpt || !headers.billed_amount) {
+        for (let c = 1; c <= maxCol; c++) {
+          const colSamples = [];
+          for (let r = 2; r <= Math.min(maxRow, 8); r++) {
+            const v = (grid[r]?.[c]?.text || '').trim();
+            if (v) colSamples.push(v);
+          }
+          if (!colSamples.length) continue;
+
+          const codeHits = colSamples.filter(v => /^\d{5}$/.test(v) || /^[A-Z]\d{4}$/.test(v)).length;
+          const moneyHits = colSamples.filter(v => parseCurrency(v) !== null).length;
+          const dateHits = colSamples.filter(v => isLikelyDate(v)).length;
+
+          if (!headers.cpt && codeHits >= 2) headers.cpt = c;
+          if (!headers.billed_amount && moneyHits >= 2) headers.billed_amount = c;
+          if (!headers.date && dateHits >= 2) headers.date = c;
+        }
+      }
 
       if (headers.cpt || headers.billed_amount) {
         // Track the lowest row that contained a header
@@ -302,7 +398,7 @@ function normalizeTextractOutput(blocks) {
     }
   });
 
-  return { items: normalizedItems, grandTotal };
+  return { items: normalizedItems, grandTotal, detectedTemplate: template.id };
 }
 
 // ARITHMETIC ENGINE: Runs deterministic validation checks
@@ -549,11 +645,13 @@ module.exports = async (req, res) => {
     // Step 2: Normalization
     let normalizedItems = [];
     let grandTotal = null;
+    let detectedTemplate = 'default_generic';
     try {
         const blocks = data.Blocks || [];
         const result = normalizeTextractOutput(blocks);
         normalizedItems = result.items;
         grandTotal = result.grandTotal;
+        detectedTemplate = result.detectedTemplate || detectedTemplate;
     } catch (err) {
         throw new Error(`Normalization Layer Error: Failed to parse bill table structure. ${err.message}`);
     }
@@ -615,6 +713,7 @@ module.exports = async (req, res) => {
     res.status(200).json({ 
         ok: true, 
         normalized_bill: normalizedItems, 
+        extraction_profile: detectedTemplate || 'default_generic',
         result: { 
             summary: summaryText,
             findings: allFindings,
