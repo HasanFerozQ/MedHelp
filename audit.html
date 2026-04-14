@@ -60,12 +60,82 @@
       -webkit-text-fill-color: var(--text-h);
     }
     .audit-select option {
-      background: #ffffff !important;
-      color: #0f172a !important;
+      background: #0f172a !important;
+      color: #e2e8f0 !important;
     }
     .audit-select option:checked {
-      background: #38bdf8 !important;
-      color: #082f49 !important;
+      background: #0ea5e9 !important;
+      color: #ecfeff !important;
+    }
+    #negotiator-form select,
+    #negotiator-form input,
+    #negotiator-form textarea {
+      background: #0b1629 !important;
+      color: #f8fafc !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    }
+    #negotiator-form select option {
+      background: #0f172a !important;
+      color: #e2e8f0 !important;
+    }
+    .audit-guidance-note {
+      margin: 0 0 16px;
+      padding: 14px 16px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.14), rgba(30, 41, 59, 0.6));
+      color: var(--text-main);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+    .audit-guidance-note strong {
+      color: #67e8f9;
+    }
+    .negotiation-cta-wrap {
+      margin: 26px 0 38px;
+      padding: 22px;
+      border-radius: 14px;
+      border: 1px solid rgba(234, 179, 8, 0.35);
+      background: linear-gradient(135deg, rgba(120, 53, 15, 0.4), rgba(251, 191, 36, 0.09));
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+    }
+    .negotiation-cta-btn {
+      background: linear-gradient(135deg, #f59e0b, #facc15);
+      color: #111827;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 10px 24px rgba(245, 158, 11, 0.38);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+    .negotiation-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(245, 158, 11, 0.5);
+      filter: brightness(1.03);
+    }
+    .neg-upload-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .neg-upload-card {
+      border: 1px dashed rgba(148, 163, 184, 0.42);
+      border-radius: 10px;
+      padding: 12px;
+      background: rgba(15, 23, 42, 0.45);
+    }
+    .neg-upload-card label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-h);
+    }
+    .neg-upload-card p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin: 0 0 8px;
+      line-height: 1.5;
     }
   </style>
 
@@ -108,6 +178,10 @@
 
   <div class="container" style="margin-bottom: 80px; max-width: 1280px;">
       <!-- Tab Navigation -->
+      <div class="audit-guidance-note">
+        <strong>Before you begin:</strong> Use an itemized bill (UB-04/HCFA-1500 format where possible) for the most accurate findings.
+        For PDF extraction, text-based PDFs provide significantly better parsing quality than scanned photo PDFs.
+      </div>
       <div style="display: flex; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
         <button id="tab-btn-manual" onclick="switchAuditTab('manual')" class="btn" style="background: var(--accent); color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; border: none; cursor: pointer;">Manual Line Entry</button>
         <button id="tab-btn-pdf" onclick="switchAuditTab('pdf')" class="btn btn-ghost" style="background: transparent; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; color: var(--text-muted); border: 1px solid transparent;">Smart PDF Extraction</button>
@@ -304,14 +378,14 @@
 
       <div id="audit-results" class="audit-results"></div>
 
-      <div style="margin: 24px 0 36px; padding: 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card);">
+      <div class="negotiation-cta-wrap">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
           <div>
-            <h3 style="margin:0; font-size:16px; color:var(--text-h);">Human Negotiation Service</h3>
-            <p style="margin:6px 0 0; font-size:12px; color:var(--text-muted);">Button: Let an Expert Negotiate for You -> Hire Negotiator</p>
+            <h3 style="margin:0; font-size:18px; color:var(--text-h);">Professional Human Negotiation</h3>
+            <p style="margin:6px 0 0; font-size:12px; color:var(--text-muted);">Escalate your case to MediHelp advocates for provider-facing negotiation, dispute drafting, and structured resolution support.</p>
             <p id="negotiator-savings-preview" style="margin:6px 0 0; font-size:12px; color:var(--accent); font-weight:700;">Current Savings Potential: $0.00</p>
           </div>
-          <button class="btn btn-primary" onclick="openNegotiatorModal()" style="padding: 10px 16px; font-size: 13px; font-weight: 700;">Hire Negotiator</button>
+          <button class="btn negotiation-cta-btn" onclick="openNegotiatorModal()" style="padding: 12px 18px; font-size: 13px;">Start Expert Negotiation</button>
         </div>
       </div>
 
@@ -322,25 +396,27 @@
     <div class="modal-content" style="max-width:980px; margin-bottom:36px;">
       <div class="modal-header">
         <h3>Start Human Negotiation Intake</h3>
-        <p>Upload documents, share details, and authorize MediHelp to communicate on your behalf.</p>
+        <p>Submit your case securely for professional negotiation support. Our team reviews your documentation and handles communication with billing parties on your behalf.</p>
       </div>
       <div class="modal-body" style="padding:24px;">
         <div style="background:rgba(6,182,212,0.08); border:1px solid rgba(6,182,212,0.3); border-radius:10px; padding:12px; font-size:12px; color:var(--text-main); margin-bottom:16px; line-height:1.6;">
-          <div>1) Process will take 3-5 working days.</div>
-          <div>2) SupportDesk will email payment link and details to your provided email for the $15 initiation fee.</div>
-          <div>3) After submission of initiation fee, negotiator starts audit and negotiations and contacts you with results.</div>
-          <div>4) Final payment details are shared after successful negotiations (15% of saved amount).</div>
+          <div>1) Initial review timeline: approximately 3-5 business days after complete intake submission.</div>
+          <div>2) A secure payment link for the $15 initiation fee will be emailed to the address you provide.</div>
+          <div>3) Once initiated, our advocate begins provider-side negotiation and sends progress updates.</div>
+          <div>4) Success-based fee applies only when measurable savings are achieved (15% of secured savings).</div>
         </div>
 
         <form id="negotiator-form">
-          <h4 style="margin:0 0 10px;">1) Upload Bill</h4>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
-            <div>
-              <label style="font-size:12px; font-weight:700;">Bill (PDF) *</label>
+          <h4 style="margin:0 0 10px;">1) Upload Supporting Documents</h4>
+          <div class="neg-upload-grid">
+            <div class="neg-upload-card">
+              <label>Itemized Bill (PDF) *</label>
+              <p>Upload a text-based itemized bill for the most accurate extraction and dispute mapping.</p>
               <input type="file" id="neg-bill" accept="application/pdf" required style="width:100%; margin-top:6px;">
             </div>
-            <div>
-              <label style="font-size:12px; font-weight:700;">EOB (optional)</label>
+            <div class="neg-upload-card">
+              <label>EOB / Insurer Notice (optional)</label>
+              <p>Attach your Explanation of Benefits to improve reconciliation and payment-trace analysis.</p>
               <input type="file" id="neg-eob" accept="application/pdf,image/png,image/jpeg" style="width:100%; margin-top:6px;">
             </div>
           </div>
@@ -348,7 +424,7 @@
           <h4 style="margin:0 0 10px;">2) Analysis Snapshot</h4>
           <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Estimated Savings Potential from current audit: <strong id="neg-savings-value" style="color:var(--accent);">$0.00</strong></div>
 
-          <h4 style="margin:0 0 10px;">3) Intake Form (Critical)</h4>
+          <h4 style="margin:0 0 10px;">3) Intake Form (Required)</h4>
           <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:10px;">
             <input id="neg-full-name" type="text" placeholder="Full Name *" required style="padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-h);">
             <input id="neg-email" type="email" placeholder="Email *" required style="padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-h);">
@@ -405,7 +481,7 @@
             <label><input type="radio" name="neg-goal" value="Not sure (recommend for me)"> Not sure (recommend for me)</label>
           </div>
 
-          <h4 style="margin:0 0 10px;">Consent Section - Authorization to Act</h4>
+          <h4 style="margin:0 0 10px;">Consent & Authorization to Act (Required)</h4>
           <div style="font-size:12px; color:var(--text-muted); line-height:1.7; margin-bottom:12px; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:12px;">
             <div>1. I authorize MediHelp to communicate with providers, billing departments, and insurers for bill review/dispute/negotiation.</div>
             <div>2. Scope: review statements, identify errors/overcharges, and negotiate adjustments/discounts.</div>

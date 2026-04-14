@@ -64,6 +64,16 @@ console.log('MediHelp: negotiation.js loaded.');
         alert('Please click "I Consent (Digital Signature)" before submitting.');
         return;
       }
+      if (!(document.getElementById('neg-auth-consent')?.checked
+        && document.getElementById('neg-success-fee')?.checked
+        && document.getElementById('neg-upfront-fee')?.checked)) {
+        alert('Please accept all required consent checkboxes before submitting.');
+        return;
+      }
+      if (!(signName?.value || '').trim() || !(signDate?.value || '').trim()) {
+        alert('Digital signature is incomplete. Please click "I Consent (Digital Signature)".');
+        return;
+      }
 
       const billFile = document.getElementById('neg-bill')?.files?.[0];
       if (!billFile) {
