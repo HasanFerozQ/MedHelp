@@ -3,6 +3,7 @@ const { TextractClient, AnalyzeDocumentCommand } = require("@aws-sdk/client-text
 const { createClient } = require("@supabase/supabase-js");
 const multer = require("multer");
 const { PDFDocument } = require('pdf-lib');
+const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js');
 
 // Helper to run middleware in Vercel
 const runMiddleware = (req, res, fn) => {
@@ -21,6 +22,32 @@ const upload = multer({
 
 const TEXTRACT_MAX_ATTEMPTS = 3;
 const TEXTRACT_BACKOFF_MS = [0, 700, 1500];
+const TEXTRACT_BYTES_LIMIT = 10 * 1024 * 1024;
+const MONEY_EPSILON = 0.01;
+const DIRECT_TEXT_MAX_ROWS = 250;
+
+const DEFAULT_ALLOWED_ORIGINS = [
+  'https://www.medihelp.live',
+  'https://medihelp.live',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000'
+];
+
+function getAllowedOrigins() {
+  const configured = String(process.env.CORS_ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
+  return configured.length > 0 ? configured : DEFAULT_ALLOWED_ORIGINS;
+}
+
+function setCorsHeaders(req, res) {
+  const origin = req.headers.origin;
+  const allowed = getAllowedOrigins();
+  if (origin && allowed.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+}
 
 // Credentials must be set via environment variables — no fallback for security
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
@@ -92,7 +119,7 @@ function getText(block, blockMap, minConfidence = 85) {
 function parseCurrency(str) {
   if (str === null || str === undefined || str === '') return null;
   const s = String(str).trim();
-  const isNeg = /^\(/.test(s) || /CR\s*$/i.test(s);
+  const isNeg = /^\(/.test(s) || /\(.*\d.*\)/.test(s) || /CR\s*$/i.test(s) || /^-/.test(s);
   const cleaned = s.replace(/[\$,\(\)]/g, '').replace(/CR\s*$/i, '').trim();
   const val = parseFloat(cleaned);
   if (isNaN(val)) return null;
@@ -125,6 +152,350 @@ function collectRowQualityFlags(item) {
   }
 
   return reasons;
+}
+
+function normalizeDateForCompare(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+  const m = raw.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+  if (m) {
+    const mm = m[1].padStart(2, '0');
+    const dd = m[2].padStart(2, '0');
+    const yy = m[3].length === 2 ? `20${m[3]}` : m[3];
+    return `${yy}-${mm}-${dd}`;
+  }
+  return raw;
+}
+
+function splitCodeModifier(rawCode = '') {
+  const s = String(rawCode || '').trim().toUpperCase();
+  const m = s.match(/^([A-Z]\d{4}|\d{5})[-\s]?([A-Z0-9]{2})$/);
+  if (m) return { code: m[1], modifier: m[2] };
+  return { code: s, modifier: '' };
+}
+
+function canonicalFingerprint(item) {
+  const sm = splitCodeModifier(item.CPT || '');
+  const qty = Number(item.Qty || 0);
+  return {
+    date: normalizeDateForCompare(item.Date),
+    code: sm.code,
+    modifier: (item.Modifier || sm.modifier || '').trim().toUpperCase(),
+    qty: Number.isFinite(qty) ? String(Number(qty)) : '',
+    amount: Number.isFinite(Number(item.Billed_Amount)) ? Number(item.Billed_Amount).toFixed(2) : '',
+    desc: String(item.Description || item.desc || '').toUpperCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim()
+  };
+}
+
+function classifyRowType(item) {
+  const desc = String(item.Description || item.desc || '').toLowerCase();
+  const code = String(item.CPT || '').toUpperCase();
+  const amount = Number(item.Billed_Amount || 0);
+  if (/subtotal|total current charges|balance forward|account summary|balance due/.test(desc)) return { rowType: 'summary/subtotal', confidence: 88 };
+  if (/adjust|contractual|write[- ]?off|carc/.test(desc) || Number(item.Adjustment || 0) < 0) return { rowType: 'adjustment', confidence: 82 };
+  if (/payment|remit|paid|insurance payment/.test(desc) || (Number(item.Paid || 0) > 0 && amount === 0)) return { rowType: 'payment', confidence: 78 };
+  if (/discount/.test(desc)) return { rowType: 'discount', confidence: 75 };
+  if (/tax/.test(desc)) return { rowType: 'tax', confidence: 75 };
+  if (/facility fee/.test(desc)) return { rowType: 'facility fee', confidence: 72 };
+  if (/pharmacy|drug|injection/.test(desc)) return { rowType: 'pharmacy item', confidence: 72 };
+  if (/^J\d{4}$/.test(code)) return { rowType: 'pharmacy item', confidence: 72 };
+  if (/lab|imaging|x-ray|mri|ct|ultrasound|panel|assay/.test(desc)) return { rowType: 'lab/imaging', confidence: 72 };
+  if ((/^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code)) && amount !== 0) return { rowType: 'charge', confidence: 80 };
+  return { rowType: 'unknown', confidence: 45 };
+}
+
+function computeFieldConfidence(item) {
+  const cls = classifyRowType(item);
+  const fp = canonicalFingerprint(item);
+  const dateConf = isLikelyDate(item.Date) ? 85 : 35;
+  const codeConf = (/^\d{5}$/.test(fp.code) || /^[A-Z]\d{4}$/.test(fp.code)) ? 90 : 30;
+  const modConf = fp.modifier ? (/^[A-Z0-9]{2}$/.test(fp.modifier) ? 78 : 45) : 68;
+  const qtyNum = Number(item.Qty || 0);
+  const qtyConf = Number.isFinite(qtyNum) && qtyNum > 0 && qtyNum <= 50 ? 82 : 40;
+  const amountNum = Number(item.Billed_Amount);
+  const amountConf = Number.isFinite(amountNum) && Math.abs(amountNum) > 0 ? 90 : 35;
+  const descConf = String(item.Description || item.desc || '').trim().length >= 3 ? 75 : 42;
+  const overall = Math.round(dateConf*0.14 + codeConf*0.2 + modConf*0.08 + descConf*0.16 + qtyConf*0.14 + amountConf*0.2 + cls.confidence*0.08);
+  return {
+    row_type: cls.rowType,
+    date_confidence: dateConf,
+    code_confidence: codeConf,
+    modifier_confidence: modConf,
+    description_confidence: descConf,
+    qty_confidence: qtyConf,
+    amount_confidence: amountConf,
+    row_type_confidence: cls.confidence,
+    overall_confidence: Math.max(0, Math.min(100, overall)),
+    canonical: fp
+  };
+}
+
+function computePipelineMetrics(rows, crossCheck) {
+  const list = rows || [];
+  const total = Math.max(1, list.length);
+  const validMoneyRate = list.filter(r => Number.isFinite(Number(r.Billed_Amount)) && Number(r.Billed_Amount) !== 0).length / total;
+  const validDateRate = list.filter(r => isLikelyDate(r.Date)).length / total;
+  const validCodeRate = list.filter(r => /^\d{5}$/.test(String(r.CPT || '')) || /^[A-Z]\d{4}$/.test(String(r.CPT || ''))).length / total;
+  const unknownRowTypeRate = list.filter(r => String(r.row_type || '') === 'unknown').length / total;
+  const duplicateSuspicionRate = list.filter(r => String(r.duplicate_status || 'none') !== 'none').length / total;
+  const lowPageTrustRate = list.filter(r => Number(r.page_trust_score || 70) < 45).length / total;
+  const arithmeticConsistencyRate = list.filter(r => {
+    if (!Number.isFinite(Number(r.Unit_Price)) || !Number.isFinite(Number(r.Qty)) || !Number.isFinite(Number(r.Billed_Amount))) return false;
+    return Math.abs((Number(r.Unit_Price) * Number(r.Qty)) - Number(r.Billed_Amount)) <= 0.01;
+  }).length / total;
+  return {
+    validMoneyRate: Number(validMoneyRate.toFixed(3)),
+    validDateRate: Number(validDateRate.toFixed(3)),
+    validCodeRate: Number(validCodeRate.toFixed(3)),
+    unknownRowTypeRate: Number(unknownRowTypeRate.toFixed(3)),
+    duplicateSuspicionRate: Number(duplicateSuspicionRate.toFixed(3)),
+    lowPageTrustRate: Number(lowPageTrustRate.toFixed(3)),
+    arithmeticConsistencyRate: Number(arithmeticConsistencyRate.toFixed(3)),
+    agreementScore: Number(crossCheck?.agreementScore || 0)
+  };
+}
+
+function deriveDecisionState(m) {
+  if ((m.unknownRowTypeRate || 0) > 0.45 || (m.validMoneyRate || 0) < 0.55 || (m.lowPageTrustRate || 0) > 0.45) return 'unsafe_to_import';
+  if ((m.agreementScore || 0) < 50 || (m.arithmeticConsistencyRate || 0) < 0.45) return 'review_required';
+  if ((m.agreementScore || 0) < 75 || (m.unknownRowTypeRate || 0) > 0.2 || (m.duplicateSuspicionRate || 0) > 0.25) return 'review_recommended';
+  return 'auto_acceptable';
+}
+
+async function extractTextLinesFromPdf(buffer) {
+  try {
+    const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(buffer) });
+    const pdf = await loadingTask.promise;
+    const lines = [];
+    const lineObjects = [];
+    const pageStats = [];
+    let textItemCount = 0;
+
+    for (let p = 1; p <= pdf.numPages; p++) {
+      const page = await pdf.getPage(p);
+      const content = await page.getTextContent();
+      textItemCount += (content.items || []).length;
+      const rowsByY = new Map();
+      (content.items || []).forEach((item) => {
+        const y = Math.round((item.transform && item.transform[5]) || 0);
+        const x = (item.transform && item.transform[4]) || 0;
+        if (!rowsByY.has(y)) rowsByY.set(y, []);
+        rowsByY.get(y).push({ x, str: item.str || '' });
+      });
+      const orderedRows = [...rowsByY.entries()]
+        .sort((a, b) => b[0] - a[0])
+        .map(([, cols]) => cols.sort((a, b) => a.x - b.x).map(c => c.str).join(' ').replace(/\s+/g, ' ').trim())
+        .filter(Boolean);
+      pageStats.push({ page: p, text_items: (content.items || []).length, row_count: orderedRows.length });
+      lines.push(...orderedRows);
+      orderedRows.forEach((line) => lineObjects.push({ page: p, text: line }));
+    }
+
+    return { lines, lineObjects, pageStats, hasSelectableText: textItemCount > 20 };
+  } catch (_) {
+    return { lines: [], lineObjects: [], pageStats: [], hasSelectableText: false };
+  }
+}
+
+function parseRowsFromTextLines(linesOrObjects) {
+  const out = [];
+  (linesOrObjects || []).forEach((entry) => {
+    const line = typeof entry === 'string' ? entry : String(entry.text || '');
+    const sourcePage = typeof entry === 'string' ? null : Number(entry.page || 0);
+    const date = (line.match(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/) || [])[0] || '';
+    const code = ([...line.matchAll(/\b([A-Z]\d{4}|\d{5})\b/g)].map(m => m[1]).find(c => /^\d{5}$/.test(c) || /^[A-Z]\d{4}$/.test(c))) || '';
+    const dx = (line.match(/\b([A-TV-Z][0-9][0-9AB](?:\.[A-Z0-9]{1,4})?)\b/i) || [])[1] || '';
+    const qty = parseInt((line.match(/\b(?:qty|units?)[:\s]*(\d+)\b/i) || [])[1] || '1', 10);
+    const money = [...line.matchAll(/(?:\$?\s*)(-?\d{1,3}(?:,\d{3})*(?:\.\d{2}))/g)]
+      .map(m => parseFloat(String(m[1]).replace(/,/g, '')))
+      .filter(n => Number.isFinite(n));
+    const total = money.length ? money[money.length - 1] : null;
+    if (code && total != null) {
+      const item = {
+        Date: date,
+        CPT: code,
+        IsValidCode: /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code),
+        Qty: Number.isFinite(qty) ? qty : 1,
+        Unit_Price: null,
+        Modifier: '',
+        Billed_Amount: total,
+        Adjustment: 0,
+        Paid: 0,
+        DX: dx ? [dx] : [],
+        source_page: sourcePage || null,
+        page_trust_score: 70,
+        extraction_confidence: 62,
+        needs_manual_review: true,
+        has_low_confidence_chars: false,
+        review_reasons: ['Direct text extraction row (requires verification)']
+      };
+      Object.assign(item, computeFieldConfidence(item));
+      out.push(item);
+    }
+  });
+  return out.slice(0, DIRECT_TEXT_MAX_ROWS);
+}
+
+function computePageTrustScores(rows, pageStats) {
+  const rowList = rows || [];
+  const byPage = new Map();
+  rowList.forEach((r) => {
+    const p = Number(r.source_page || 0);
+    if (!p) return;
+    if (!byPage.has(p)) byPage.set(p, []);
+    byPage.get(p).push(r);
+  });
+  const result = {};
+  (pageStats || []).forEach((stat) => {
+    const page = Number(stat.page || 0);
+    if (!page) return;
+    const pageRows = byPage.get(page) || [];
+    const total = Math.max(1, pageRows.length);
+    const validCodeRate = pageRows.filter(r => /^\d{5}$/.test(String(r.CPT || '')) || /^[A-Z]\d{4}$/.test(String(r.CPT || ''))).length / total;
+    const validMoneyRate = pageRows.filter(r => Number.isFinite(Number(r.Billed_Amount)) && Number(r.Billed_Amount) !== 0).length / total;
+    const rowDensity = Math.min(1, Number(stat.row_count || 0) / 25);
+    const score = Math.round((validCodeRate * 0.4 + validMoneyRate * 0.4 + rowDensity * 0.2) * 100);
+    result[page] = {
+      trust_score: Math.max(0, Math.min(100, score)),
+      valid_code_rate: Number(validCodeRate.toFixed(3)),
+      valid_money_rate: Number(validMoneyRate.toFixed(3)),
+      row_density: Number(rowDensity.toFixed(3)),
+      parsed_rows: pageRows.length,
+      text_rows: Number(stat.row_count || 0)
+    };
+  });
+  return result;
+}
+
+function applyPageTrustToRows(rows, pageTrust) {
+  return (rows || []).map((r) => {
+    const p = Number(r.source_page || 0);
+    const trust = p && pageTrust[p] ? pageTrust[p].trust_score : 70;
+    const adjusted = Math.round((Number(r.extraction_confidence || r.overall_confidence || 65) * 0.7) + (trust * 0.3));
+    const lowTrust = trust < 45;
+    return {
+      ...r,
+      page_trust_score: trust,
+      extraction_confidence: Math.max(0, Math.min(100, adjusted)),
+      needs_manual_review: r.needs_manual_review || lowTrust,
+      review_reasons: lowTrust ? [...(r.review_reasons || []), `Low page trust score (${trust})`] : (r.review_reasons || [])
+    };
+  });
+}
+
+function applyDuplicateHeuristics(rows) {
+  const out = (rows || []).map(r => ({ ...r }));
+  for (let i = 0; i < out.length; i++) {
+    for (let j = i + 1; j < out.length; j++) {
+      const a = out[i];
+      const b = out[j];
+      const aAmt = Number(a.Billed_Amount || 0);
+      const bAmt = Number(b.Billed_Amount || 0);
+      const sameAmount = Math.abs(aAmt - bAmt) <= MONEY_EPSILON;
+      const sim = descriptionSimilarity(a.Description || a.desc, b.Description || b.desc);
+      const typeA = String(a.row_type || '').toLowerCase();
+      const typeB = String(b.row_type || '').toLowerCase();
+      const summaryCollision = (typeA === 'summary/subtotal' && typeB !== 'summary/subtotal') || (typeB === 'summary/subtotal' && typeA !== 'summary/subtotal');
+      if (sameAmount && sim >= 0.82) {
+        out[i].duplicate_status = out[i].duplicate_status === 'none' ? 'probable duplicate' : out[i].duplicate_status;
+        out[j].duplicate_status = out[j].duplicate_status === 'none' ? 'probable duplicate' : out[j].duplicate_status;
+      }
+      if (sameAmount && summaryCollision) {
+        out[i].needs_manual_review = true;
+        out[j].needs_manual_review = true;
+        out[i].review_reasons = [...(out[i].review_reasons || []), 'Summary/detail amount collision'];
+        out[j].review_reasons = [...(out[j].review_reasons || []), 'Summary/detail amount collision'];
+      }
+    }
+  }
+  return out;
+}
+
+function descriptionSimilarity(a, b) {
+  const ta = new Set(String(a || '').toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/).filter(t => t.length > 2));
+  const tb = new Set(String(b || '').toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/).filter(t => t.length > 2));
+  if (!ta.size || !tb.size) return 0;
+  let intersect = 0;
+  ta.forEach((t) => { if (tb.has(t)) intersect++; });
+  const union = new Set([...ta, ...tb]).size || 1;
+  return intersect / union;
+}
+
+function buildComparisonSummary(primaryRows, verifyRows) {
+  const a = primaryRows || [];
+  const b = verifyRows || [];
+  if (!a.length || !b.length) {
+    return { agreementScore: 0, notes: ['Insufficient overlap for cross-check'], verified: false };
+  }
+
+  const usedVerify = new Set();
+  let dateMatch = 0;
+  let codeMatch = 0;
+  let amountMatch = 0;
+  let qtyMatch = 0;
+  let descSimTotal = 0;
+
+  a.forEach((rowA) => {
+    let bestIndex = -1;
+    let bestScore = -1;
+    b.forEach((rowB, idx) => {
+      if (usedVerify.has(idx)) return;
+      const dateScore = normalizeDateForCompare(rowA.Date) === normalizeDateForCompare(rowB.Date) ? 1 : 0;
+      const codeScore = splitCodeModifier(rowA.CPT).code === splitCodeModifier(rowB.CPT).code ? 1 : 0;
+      const amountA = Number(rowA.Billed_Amount || 0);
+      const amountB = Number(rowB.Billed_Amount || 0);
+      const amountDelta = Math.abs(amountA - amountB);
+      const amountScore = amountDelta <= 0.01 ? 1 : (amountDelta <= 1 ? 0.5 : 0);
+      const qtyA = Number(rowA.Qty || 0);
+      const qtyB = Number(rowB.Qty || 0);
+      const qtyScore = (qtyA > 0 && qtyB > 0 && Math.abs(qtyA - qtyB) <= 0.01) ? 1 : 0;
+      const descScore = descriptionSimilarity(rowA.Description || rowA.desc, rowB.Description || rowB.desc);
+      const combined = (dateScore * 0.2) + (codeScore * 0.3) + (amountScore * 0.3) + (qtyScore * 0.1) + (descScore * 0.1);
+      if (combined > bestScore) {
+        bestScore = combined;
+        bestIndex = idx;
+      }
+    });
+
+    if (bestIndex >= 0) {
+      usedVerify.add(bestIndex);
+      const best = b[bestIndex];
+      if (normalizeDateForCompare(rowA.Date) === normalizeDateForCompare(best.Date)) dateMatch++;
+      if (splitCodeModifier(rowA.CPT).code === splitCodeModifier(best.CPT).code) codeMatch++;
+      if (Math.abs(Number(rowA.Billed_Amount || 0) - Number(best.Billed_Amount || 0)) <= MONEY_EPSILON) amountMatch++;
+      if (Math.abs(Number(rowA.Qty || 0) - Number(best.Qty || 0)) <= 0.01 && Number(rowA.Qty || 0) > 0 && Number(best.Qty || 0) > 0) qtyMatch++;
+      descSimTotal += descriptionSimilarity(rowA.Description || rowA.desc, best.Description || best.desc);
+    }
+  });
+
+  const base = Math.max(1, a.length);
+  const dateRate = dateMatch / base;
+  const codeRate = codeMatch / base;
+  const amountRate = amountMatch / base;
+  const qtyRate = qtyMatch / base;
+  const descRate = descSimTotal / base;
+  const rowCountDelta = Math.abs(a.length - b.length);
+  const weighted = (dateRate * 0.2) + (codeRate * 0.3) + (amountRate * 0.3) + (qtyRate * 0.1) + (descRate * 0.1);
+  const rowPenalty = rowCountDelta <= 2 ? 0 : Math.min(0.2, rowCountDelta / Math.max(a.length, b.length, 1) * 0.2);
+  const agreementScore = Math.min(100, Math.max(0, Math.round((weighted - rowPenalty) * 100)));
+  const verified = agreementScore >= 70;
+  return {
+    agreementScore,
+    field_scores: {
+      date_match: Number((dateRate * 100).toFixed(1)),
+      code_match: Number((codeRate * 100).toFixed(1)),
+      amount_match: Number((amountRate * 100).toFixed(1)),
+      qty_match: Number((qtyRate * 100).toFixed(1)),
+      desc_similarity: Number((descRate * 100).toFixed(1))
+    },
+    verified,
+    notes: [
+      `Primary rows: ${a.length}`,
+      `Verification rows: ${b.length}`,
+      `Field-level weighted score applied`,
+      `Row-count delta: ${rowCountDelta}`
+    ]
+  };
 }
 
 const PROVIDER_TEMPLATES = [
@@ -183,9 +554,7 @@ function detectProviderTemplate(blocks, blockMap) {
 
   let best = null;
   let bestScore = 0;
-  let maxSignals = 1;
   PROVIDER_TEMPLATES.forEach((tpl) => {
-    maxSignals = Math.max(maxSignals, tpl.matchAnyPhrases.length || 1);
     const score = tpl.matchAnyPhrases.reduce((acc, phrase) => acc + (haystack.includes(phrase) ? 1 : 0), 0);
     if (score > bestScore) {
       bestScore = score;
@@ -200,7 +569,7 @@ function detectProviderTemplate(blocks, blockMap) {
       confidence: 0
     };
   }
-  const confidence = Math.min(100, Math.round((bestScore / maxSignals) * 100));
+  const confidence = Math.min(100, Math.round((bestScore / Math.max(1, best.matchAnyPhrases.length || 1)) * 100));
   return {
     ...best,
     confidence
@@ -247,8 +616,8 @@ function normalizeTextractOutput(blocks) {
           });
         }
         if (valText) {
-          const parsedVal = parseFloat(valText.replace(/[^0-9.]/g, ''));
-          if (!isNaN(parsedVal) && parsedVal > 0) {
+          const parsedVal = parseCurrency(valText);
+          if (parsedVal !== null && parsedVal !== 0) {
              foundTotals.push({ val: parsedVal, priority });
           }
         }
@@ -372,7 +741,7 @@ function normalizeTextractOutput(blocks) {
 
             // Internal anomaly detection
             let anomaly = false;
-            if (unitPrice && qty && Math.abs((unitPrice * qty) - billedAmount) > 0.01) {
+            if (unitPrice && qty && Math.abs((unitPrice * qty) - billedAmount) > MONEY_EPSILON) {
               anomaly = true;
             }
 
@@ -399,6 +768,7 @@ function normalizeTextractOutput(blocks) {
               needs_manual_review: score < 85 || anomaly,
               has_low_confidence_chars: cellCpt.hasLowConfidence || cellAmt.hasLowConfidence
             };
+            Object.assign(candidate, computeFieldConfidence(candidate));
             const reviewReasons = collectRowQualityFlags(candidate);
             candidate.review_reasons = reviewReasons;
             candidate.needs_manual_review = candidate.needs_manual_review || reviewReasons.length > 0;
@@ -455,7 +825,7 @@ function runArithmeticEngine(items, grandTotal) {
     if (item.Unit_Price !== null) {
       const expectedTotal = item.Qty * item.Unit_Price;
       const difference    = Math.abs(expectedTotal - item.Billed_Amount);
-      if (difference > 0.001) {
+      if (difference > MONEY_EPSILON) {
         findings.push({
           type: 'Warning',
           code: item.CPT,
@@ -503,7 +873,7 @@ function runArithmeticEngine(items, grandTotal) {
   // 4. Summation Math Check
   if (grandTotal !== null) {
       const difference = Math.abs(calculatedSum - grandTotal);
-      if (difference > 0.001) {
+      if (difference > MONEY_EPSILON) {
          findings.push({
             type: "Warning",
             code: "DOCUMENT",
@@ -521,6 +891,12 @@ function sleep(ms) {
 }
 
 async function runTextractWithRetry(fileBuffer) {
+  if (!fileBuffer || !Buffer.isBuffer(fileBuffer) || fileBuffer.length === 0) {
+    throw new Error('Empty document payload');
+  }
+  if (fileBuffer.length > TEXTRACT_BYTES_LIMIT) {
+    throw new Error(`Document exceeds Textract byte limit (${Math.round(TEXTRACT_BYTES_LIMIT / (1024 * 1024))}MB)`);
+  }
   let lastErr = null;
   for (let attempt = 1; attempt <= TEXTRACT_MAX_ATTEMPTS; attempt++) {
     try {
@@ -553,7 +929,7 @@ async function runTextractWithRetry(fileBuffer) {
 }
 
 async function normalizePdfForTextract(buffer) {
-  const pdfDoc = await PDFDocument.load(buffer, { ignoreEncryption: false });
+  const pdfDoc = await PDFDocument.load(buffer, { ignoreEncryption: true });
   const normalizedBytes = await pdfDoc.save({
     useObjectStreams: false,
     addDefaultPage: false,
@@ -621,50 +997,63 @@ async function runClinicalEngine(items) {
     return acc;
   }, {});
 
+  const allCodesAcrossDates = [...new Set(
+    items.map(i => String(i.CPT || '').trim().toUpperCase()).filter(c => c && c.length >= 5)
+  )];
+
+  const { data: allNcciEdits } = allCodesAcrossDates.length > 1
+    ? await supabase
+      .from('ncci_ptp_edits')
+      .select('column1_code, column2_code, modifier_allowed')
+      .in('column1_code', allCodesAcrossDates)
+      .in('column2_code', allCodesAcrossDates)
+    : { data: [] };
+
+  const ncciSavingsSeen = new Set();
+
   for (const date in itemsByDate) {
     const dateItems = itemsByDate[date];
     if (dateItems.length < 2) continue;
+    if (!allNcciEdits || allNcciEdits.length === 0) continue;
 
-    const codesForDate = dateItems.map(i => i.CPT).filter(c => c && c.length >= 5);
-    
-    // Bulk query for all possible pairs from this date
-    const { data: ncciEdits } = await supabase
-      .from('ncci_ptp_edits')
-      .select('column1_code, column2_code, modifier_allowed')
-      .in('column1_code', codesForDate)
-      .in('column2_code', codesForDate);
+    const codesForDateSet = new Set(dateItems.map(i => String(i.CPT || '').trim().toUpperCase()).filter(c => c));
+    const dateEdits = allNcciEdits.filter(
+      (e) => codesForDateSet.has(e.column1_code) && codesForDateSet.has(e.column2_code)
+    );
 
-    if (ncciEdits && ncciEdits.length > 0) {
-      ncciEdits.forEach(edit => {
-          // Find the specific line item for the component (Column 2)
-          const componentItem = dateItems.find(i => i.CPT === edit.column2_code);
-          const primaryItem = dateItems.find(i => i.CPT === edit.column1_code);
+    dateEdits.forEach(edit => {
+      // Find the specific line item for the component (Column 2)
+      const componentItem = dateItems.find(i => i.CPT === edit.column2_code);
+      const primaryItem = dateItems.find(i => i.CPT === edit.column1_code);
 
-          if (!componentItem) return; // Guard: skip if component code not found on this date
+      if (!componentItem) return; // Guard: skip if component code not found on this date
 
-          if (edit.modifier_allowed === '0') {
-            clinicalFindings.push({
-              type: "Danger",
+      if (edit.modifier_allowed === '0') {
+        clinicalFindings.push({
+          type: "Danger",
+          code: edit.column2_code,
+          title: "Clinical Bundle Violation",
+          reason: `Code ${edit.column2_code} is an inseparable component of ${edit.column1_code} and should not be billed separately per CMS NCCI rules.`
+        });
+        const key = `${date}|${edit.column1_code}|${edit.column2_code}|${Number(componentItem.Billed_Amount || 0).toFixed(2)}`;
+        if (!ncciSavingsSeen.has(key)) {
+          savingsOpportunity += Number(componentItem.Billed_Amount || 0);
+          ncciSavingsSeen.add(key);
+        }
+      } else if (edit.modifier_allowed === '1') {
+        const hasModifier = (componentItem.Modifier && componentItem.Modifier !== "") ||
+                            (primaryItem && primaryItem.Modifier && primaryItem.Modifier !== "");
+
+        if (!hasModifier) {
+           clinicalFindings.push({
+              type: "Warning",
               code: edit.column2_code,
-              title: "Clinical Bundle Violation",
-              reason: `Code ${edit.column2_code} is an inseparable component of ${edit.column1_code} and should not be billed separately per CMS NCCI rules.`
-            });
-            savingsOpportunity += componentItem.Billed_Amount;
-          } else if (edit.modifier_allowed === '1') {
-            const hasModifier = (componentItem.Modifier && componentItem.Modifier !== "") || 
-                                (primaryItem && primaryItem.Modifier && primaryItem.Modifier !== "");
-            
-            if (!hasModifier) {
-               clinicalFindings.push({
-                  type: "Warning",
-                  code: edit.column2_code,
-                  title: "Missing Modifier",
-                  reason: `Code ${edit.column2_code} overlaps with ${edit.column1_code}. It requires a distinct modifier (e.g. -59) to be allowed.`
-               });
-            }
-          }
-      });
-    }
+              title: "Missing Modifier",
+              reason: `Code ${edit.column2_code} overlaps with ${edit.column1_code}. It requires a distinct modifier (e.g. -59) to be allowed.`
+           });
+        }
+      }
+    });
   }
 
   return { 
@@ -675,9 +1064,7 @@ async function runClinicalEngine(items) {
 }
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCorsHeaders(req, res);
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: "Method not allowed" });
@@ -693,10 +1080,17 @@ module.exports = async (req, res) => {
     await runMiddleware(req, res, upload.single('bill'));
     if (!req.file) return res.status(400).json({ error: "Missing PDF" });
 
-    // Step 1: Textract Extraction
-    let data;
+    // Step 0: Direct text extraction first (if PDF has selectable text)
+    const directExtract = await extractTextLinesFromPdf(req.file.buffer);
+    const directRows = directExtract.hasSelectableText ? parseRowsFromTextLines(directExtract.lineObjects) : [];
+    const directTextTruncated = directExtract.hasSelectableText && directRows.length >= DIRECT_TEXT_MAX_ROWS;
+
+    // Step 1: Textract Extraction (primary verification engine)
+    let data = null;
     let textractAttempts = 1;
     let normalizationApplied = false;
+    let textractFailed = false;
+    let textractError = '';
     try {
       const textractRun = await runTextractWithRetry(req.file.buffer);
       data = textractRun.data;
@@ -713,10 +1107,12 @@ module.exports = async (req, res) => {
           normalizationApplied = true;
           console.warn('MediHelp: Applied automatic PDF normalization before Textract.');
         } catch (normErr) {
-          return res.status(500).json({ ok: false, error: `AWS Textract failed after auto-normalization: ${normErr.message}` });
+          textractFailed = true;
+          textractError = `AWS Textract failed after auto-normalization: ${normErr.message}`;
         }
       } else {
-        return res.status(500).json({ ok: false, error: `AWS Textract failed: ${message}` });
+        textractFailed = true;
+        textractError = `AWS Textract failed: ${message}`;
       }
     }
     
@@ -725,16 +1121,58 @@ module.exports = async (req, res) => {
     let grandTotal = null;
     let detectedTemplate = 'default_generic';
     let templateConfidence = 0;
-    try {
-        const blocks = data.Blocks || [];
-        const result = normalizeTextractOutput(blocks);
-        normalizedItems = result.items;
-        grandTotal = result.grandTotal;
-        detectedTemplate = result.detectedTemplate || detectedTemplate;
-        templateConfidence = Number(result.templateConfidence || templateConfidence || 0);
-    } catch (err) {
-        throw new Error(`Normalization Layer Error: Failed to parse bill table structure. ${err.message}`);
+    if (!textractFailed && data) {
+      try {
+          const blocks = data.Blocks || [];
+          const result = normalizeTextractOutput(blocks);
+          normalizedItems = result.items;
+          grandTotal = result.grandTotal;
+          detectedTemplate = result.detectedTemplate || detectedTemplate;
+          templateConfidence = Number(result.templateConfidence || templateConfidence || 0);
+      } catch (err) {
+          throw new Error(`Normalization Layer Error: Failed to parse bill table structure. ${err.message}`);
+      }
+    } else if (directRows.length > 0) {
+      normalizedItems = directRows;
+      detectedTemplate = 'direct_text_first';
+      templateConfidence = 40;
+    } else {
+      return res.status(500).json({ ok: false, error: textractError || 'Extraction failed and no direct text rows found.' });
     }
+
+    const crossCheck = (!textractFailed && data && directRows.length > 0)
+      ? buildComparisonSummary(normalizedItems, directRows)
+      : { agreementScore: 0, notes: textractFailed ? ['Textract unavailable; no cross-check'] : ['No selectable text rows for cross-check'], verified: false };
+
+    if (!crossCheck.verified && directRows.length > 0 && !textractFailed) {
+      normalizedItems = normalizedItems.map((item) => ({
+        ...item,
+        extraction_confidence: Math.min(Number(item.extraction_confidence || 70), 68),
+        needs_manual_review: true,
+        review_reasons: [...(item.review_reasons || []), 'Cross-check mismatch between direct text and Textract']
+      }));
+    }
+
+    // Canonical duplicate candidate tagging
+    const seenKeys = new Map();
+    normalizedItems = normalizedItems.map((item) => {
+      const fp = item.canonical || canonicalFingerprint(item);
+      const descHash = String(fp.desc || '').slice(0, 28);
+      const key = `${fp.date}|${fp.code}|${fp.qty}|${fp.amount}|${descHash}`;
+      const seenCount = seenKeys.get(key) || 0;
+      seenKeys.set(key, seenCount + 1);
+      return {
+        ...item,
+        duplicate_status: seenCount > 0 ? (seenCount === 1 ? 'probable duplicate' : 'exact duplicate') : 'none'
+      };
+    });
+
+    normalizedItems = applyDuplicateHeuristics(normalizedItems);
+    const pageTrust = computePageTrustScores(normalizedItems, directExtract.pageStats);
+    normalizedItems = applyPageTrustToRows(normalizedItems, pageTrust);
+
+    const extractionMetrics = computePipelineMetrics(normalizedItems, crossCheck);
+    const decisionState = deriveDecisionState(extractionMetrics);
 
     // Step 2b: CPT Code Existence Check — batch validate against Supabase
     // Any code not found in the DB is quarantined immediately (HITL) rather than
@@ -764,18 +1202,24 @@ module.exports = async (req, res) => {
         console.warn('MediHelp: CPT existence batch check skipped:', dbErr.message);
     }
 
-    // Step 3: Arithmetic Engine
+    // Step 3: filter auditable rows by row_type before auditing
+    const auditableRows = normalizedItems.filter((r) => {
+      const t = String(r.row_type || classifyRowType(r).rowType || '').toLowerCase();
+      return t === 'charge' || t === 'lab/imaging' || t === 'pharmacy item' || t === 'facility fee';
+    });
+
+    // Step 4: Arithmetic Engine
     let engineResults = { findings: [] };
     try {
-        engineResults = runArithmeticEngine(normalizedItems, grandTotal);
+        engineResults = runArithmeticEngine(auditableRows, grandTotal);
     } catch (err) {
         throw new Error(`Arithmetic Engine Error: Mathematical validation loop crashed. ${err.message}`);
     }
 
-    // Step 4: Clinical Engine (New for Step 5)
+    // Step 5: Clinical Engine
     let clinicalResults = { clinicalFindings: [], savingsOpportunity: 0 };
     try {
-        clinicalResults = await runClinicalEngine(normalizedItems);
+        clinicalResults = await runClinicalEngine(auditableRows);
     } catch (err) {
         console.error("Clinical Engine Error:", err.message);
         // We don't crash the whole audit if DB lookup fails, we just show arithmetic
@@ -797,6 +1241,14 @@ module.exports = async (req, res) => {
         extraction_profile_confidence: templateConfidence,
         textract_attempts: textractAttempts,
         pdf_normalization_applied: normalizationApplied,
+        textract_unavailable: textractFailed,
+        textract_error: textractError || null,
+        direct_text_used: directRows.length > 0,
+        direct_text_truncated: directTextTruncated,
+        cross_check: crossCheck,
+        page_trust: pageTrust,
+        extraction_metrics: extractionMetrics,
+        decision_state: decisionState,
         result: { 
             summary: summaryText,
             findings: allFindings,
@@ -807,7 +1259,7 @@ module.exports = async (req, res) => {
 
   } catch (err) {
     console.error("Audit Execution Error:", err.message);
-    res.status(500).json({ ok: false, error: err.message, detailed_stack: err.stack });
+    res.status(500).json({ ok: false, error: 'Audit processing failed. Please retry with a clearer itemized PDF.' });
   }
 };
 

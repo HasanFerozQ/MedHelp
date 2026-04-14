@@ -49,6 +49,7 @@ let pendingVerifiedRows = [];
 const extractionTelemetry = {
   profile: 'default_generic',
   profileConfidence: 0,
+  decisionState: '',
   totalExtracted: 0,
   highConfidence: 0,
   manualReview: 0,
@@ -67,6 +68,7 @@ function renderExtractionTelemetry() {
   panel.style.display = 'block';
   text.textContent =
     `Profile: ${extractionTelemetry.profile} (${extractionTelemetry.profileConfidence}% confidence) | Source: ${extractionTelemetry.source} | ` +
+    `Decision: ${extractionTelemetry.decisionState || 'n/a'} | ` +
     `Extracted: ${extractionTelemetry.totalExtracted} | High-confidence: ${extractionTelemetry.highConfidence} | ` +
     `Needs review: ${extractionTelemetry.manualReview} | Imported: ${extractionTelemetry.importedVerified}`;
 }
@@ -126,6 +128,26 @@ function showExtractionStatus(message, level = 'info') {
   banner.style.color = t.text;
   banner.textContent = message;
   banner.style.display = 'block';
+}
+
+function decorateDecisionState(decisionState, metrics = null) {
+  const map = {
+    auto_acceptable: { label: 'Auto-Acceptable', level: 'success' },
+    review_recommended: { label: 'Review Recommended', level: 'info' },
+    review_required: { label: 'Review Required', level: 'warn' },
+    unsafe_to_import: { label: 'Unsafe to Import', level: 'error' }
+  };
+  const conf = map[decisionState] || { label: 'Unknown Decision', level: 'info' };
+  const metricText = metrics
+    ? ` | agreement ${metrics.agreementScore || 0}% | valid codes ${(Number(metrics.validCodeRate || 0) * 100).toFixed(0)}% | unknown rows ${(Number(metrics.unknownRowTypeRate || 0) * 100).toFixed(0)}%`
+    : '';
+  showExtractionStatus(`Import Decision: ${conf.label}${metricText}`, conf.level);
+}
+
+function confidenceChip(label, value) {
+  const n = Number(value || 0);
+  const color = n >= 80 ? '#22c55e' : (n >= 60 ? '#f59e0b' : '#ef4444');
+  return `<span style="font-size:10px; border:1px solid ${color}55; color:${color}; background:${color}14; border-radius:999px; padding:2px 6px; white-space:nowrap;">${label}: ${n}%</span>`;
 }
 
 function persistExtractionTelemetry() {
@@ -281,12 +303,14 @@ window.handlePdfSelect = async function(event) {
       pendingVerifiedRows = cleanItems;
       extractionTelemetry.profile = window.currentDocumentProfile || 'default_generic';
       extractionTelemetry.profileConfidence = Number(d.extraction_profile_confidence || 0);
+      extractionTelemetry.decisionState = String(d.decision_state || '');
       extractionTelemetry.totalExtracted = newItems.length;
       extractionTelemetry.highConfidence = cleanItems.length;
       extractionTelemetry.manualReview = reviewRequired.length;
       extractionTelemetry.importedVerified = 0;
       extractionTelemetry.source = 'server';
       renderExtractionTelemetry();
+      decorateDecisionState(d.decision_state, d.extraction_metrics || null);
 
       if (reviewRequired.length > 0) showManualReviewPrompt(reviewRequired);
       showExtractionVerificationGate(newItems.length, cleanItems.length, reviewRequired.length);
@@ -330,6 +354,7 @@ window.handlePdfSelect = async function(event) {
           pendingVerifiedRows = [];
           extractionTelemetry.profile = 'client_fallback';
           extractionTelemetry.profileConfidence = 0;
+          extractionTelemetry.decisionState = 'review_required';
           extractionTelemetry.totalExtracted = fallbackReviewRows.length;
           extractionTelemetry.highConfidence = 0;
           extractionTelemetry.manualReview = fallbackReviewRows.length;
@@ -423,6 +448,18 @@ window.showManualReviewPrompt = function(items) {
           <label style="font-size:10px; color:var(--text-muted); display:block;">Reason</label>
           <span style="font-size:11px; color:#b45309;">${(item.review_reasons && item.review_reasons.length ? item.review_reasons[0] : (item.extraction_confidence < 30 ? 'Garbled/Invalid' : 'Needs Review'))} (${item.extraction_confidence || 0}%)</span>
         </div>
+      </div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;">
+        ${confidenceChip('overall', item.overall_confidence || item.extraction_confidence || 0)}
+        ${confidenceChip('date', item.date_confidence || 0)}
+        ${confidenceChip('code', item.code_confidence || 0)}
+        ${confidenceChip('qty', item.qty_confidence || 0)}
+        ${confidenceChip('amount', item.amount_confidence || 0)}
+        ${confidenceChip('row type', item.row_type_confidence || 0)}
+        <span style="font-size:10px; border:1px solid var(--border); color:var(--text-main); border-radius:999px; padding:2px 6px;">type: ${(item.row_type || 'unknown')}</span>
+        ${(item.duplicate_status && item.duplicate_status !== 'none')
+          ? `<span style="font-size:10px; border:1px solid #f59e0b55; color:#f59e0b; background:#f59e0b14; border-radius:999px; padding:2px 6px;">${item.duplicate_status}</span>`
+          : ''}
       </div>
       <button onclick="approveReviewItem(this)" style="background:var(--accent); color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer;" data-idx="${idx}">Add to Bill</button>
     </div>
