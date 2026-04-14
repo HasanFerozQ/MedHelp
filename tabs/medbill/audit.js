@@ -71,6 +71,63 @@ function renderExtractionTelemetry() {
     `Needs review: ${extractionTelemetry.manualReview} | Imported: ${extractionTelemetry.importedVerified}`;
 }
 
+function showExtractionStatus(message, level = 'info') {
+  const pdfTab = document.getElementById('tab-content-pdf');
+  if (!pdfTab) {
+    if (level === 'error') alert(message);
+    return;
+  }
+
+  let banner = document.getElementById('pdf-extraction-status-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'pdf-extraction-status-banner';
+    banner.style.marginTop = '12px';
+    banner.style.padding = '10px 12px';
+    banner.style.borderRadius = '8px';
+    banner.style.fontSize = '12px';
+    banner.style.lineHeight = '1.55';
+    banner.style.border = '1px solid';
+    banner.style.display = 'none';
+    const loadingState = document.getElementById('pdf-loading-state');
+    if (loadingState && loadingState.parentNode) {
+      loadingState.parentNode.insertBefore(banner, loadingState.nextSibling);
+    } else {
+      pdfTab.appendChild(banner);
+    }
+  }
+
+  const themes = {
+    info: {
+      bg: 'rgba(14,165,233,0.12)',
+      border: 'rgba(14,165,233,0.35)',
+      text: '#7dd3fc'
+    },
+    success: {
+      bg: 'rgba(34,197,94,0.12)',
+      border: 'rgba(34,197,94,0.35)',
+      text: '#86efac'
+    },
+    warn: {
+      bg: 'rgba(245,158,11,0.12)',
+      border: 'rgba(245,158,11,0.35)',
+      text: '#fcd34d'
+    },
+    error: {
+      bg: 'rgba(239,68,68,0.12)',
+      border: 'rgba(239,68,68,0.35)',
+      text: '#fca5a5'
+    }
+  };
+
+  const t = themes[level] || themes.info;
+  banner.style.background = t.bg;
+  banner.style.borderColor = t.border;
+  banner.style.color = t.text;
+  banner.textContent = message;
+  banner.style.display = 'block';
+}
+
 function persistExtractionTelemetry() {
   try {
     const key = 'medihelp_extraction_telemetry';
@@ -175,6 +232,7 @@ window.confirmExtractionImport = function() {
 window.handlePdfSelect = async function(event) {
   const file = event.target.files && event.target.files[0];
   if (!file) return;
+  switchAuditTab('pdf');
 
   // client-side MIME check
   const allowed = ['application/pdf', 'image/png', 'image/jpeg', 'image/tiff'];
@@ -213,7 +271,7 @@ window.handlePdfSelect = async function(event) {
     
     const newItems = d.normalized_bill || [];
     if (newItems.length === 0) {
-      alert("No medical billing lines found in this document.");
+      showExtractionStatus('No billable line items were detected in this document. Try a clearer text-based itemized PDF.', 'warn');
     } else {
       const cleanItems = newItems.filter(isStrongExtractedRow);
       const reviewRequired = newItems.filter(i => !isStrongExtractedRow(i)).map(i => ({
@@ -232,10 +290,16 @@ window.handlePdfSelect = async function(event) {
 
       if (reviewRequired.length > 0) showManualReviewPrompt(reviewRequired);
       showExtractionVerificationGate(newItems.length, cleanItems.length, reviewRequired.length);
+      showExtractionStatus(
+        cleanItems.length > 0
+          ? `Extraction completed. ${cleanItems.length} high-confidence row(s) ready to import and ${reviewRequired.length} row(s) need review.`
+          : `Extraction completed, but all ${reviewRequired.length} row(s) need manual verification before import.`,
+        cleanItems.length > 0 ? 'success' : 'warn'
+      );
 
-      switchAuditTab('manual');
+      switchAuditTab('pdf');
       if (cleanItems.length === 0 && reviewRequired.length > 0) {
-        alert('No rows met strict confidence criteria. Please manually verify and add rows below.');
+        showExtractionStatus('No rows met strict confidence criteria. Please manually verify and add rows below.', 'warn');
       }
     }
   } catch(e) {
@@ -273,8 +337,8 @@ window.handlePdfSelect = async function(event) {
           renderExtractionTelemetry();
           showManualReviewPrompt(fallbackReviewRows);
           showExtractionVerificationGate(fallbackReviewRows.length, 0, fallbackReviewRows.length);
-          switchAuditTab('manual');
-          alert(`Server extraction unavailable. ${fallbackRows.length} fallback row(s) require manual verification before import.`);
+          showExtractionStatus(`Server extraction is temporarily unavailable. Loaded ${fallbackReviewRows.length} fallback row(s); please verify before import.`, 'warn');
+          switchAuditTab('pdf');
           return;
         }
       } catch (_) {
@@ -282,7 +346,7 @@ window.handlePdfSelect = async function(event) {
       }
     }
 
-    alert("Extraction Error: " + msg);
+    showExtractionStatus(`Extraction error: ${msg}`, 'error');
   } finally {
     if (dropzone) dropzone.style.display = 'block';
     if (loadingState) loadingState.style.display = 'none';
@@ -346,9 +410,9 @@ window.showManualReviewPrompt = function(items) {
     <div class="review-row" style="background:rgba(245,158,11,0.05); border:1px solid rgba(245,158,11,0.2); border-radius:8px; padding:12px; margin-bottom:10px; display:flex; gap:12px; align-items:center;">
       <div style="background:#f59e0b; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:12px; font-weight:bold;">!</div>
       <div style="flex-grow:1; display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
-        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Date</label><input type="text" class="rev-date" value="${s(item.Date)}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
-        <div><label style="font-size:10px; color:var(--text-muted); display:block;">CPT</label><input type="text" class="rev-code" value="${s(item.CPT)}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
-        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Total</label><input type="text" class="rev-total" value="${Number.isFinite(Number(item.Billed_Amount)) ? Number(item.Billed_Amount).toFixed(2) : ''}" style="width:100%; padding:4px; font-size:12px; border:1px solid var(--border); border-radius:4px;"></div>
+        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Date</label><input type="text" class="rev-date" value="${s(item.Date)}" style="width:100%; padding:6px 8px; font-size:12px; border:1px solid var(--border); border-radius:4px; background:var(--bg-main); color:var(--text-h);"></div>
+        <div><label style="font-size:10px; color:var(--text-muted); display:block;">CPT</label><input type="text" class="rev-code" value="${s(item.CPT)}" style="width:100%; padding:6px 8px; font-size:12px; border:1px solid var(--border); border-radius:4px; background:var(--bg-main); color:var(--text-h);"></div>
+        <div><label style="font-size:10px; color:var(--text-muted); display:block;">Total</label><input type="text" class="rev-total" value="${Number.isFinite(Number(item.Billed_Amount)) ? Number(item.Billed_Amount).toFixed(2) : ''}" style="width:100%; padding:6px 8px; font-size:12px; border:1px solid var(--border); border-radius:4px; background:var(--bg-main); color:var(--text-h);"></div>
         <div>
           <label style="font-size:10px; color:var(--text-muted); display:block;">Reason</label>
           <span style="font-size:11px; color:#b45309;">${(item.review_reasons && item.review_reasons.length ? item.review_reasons[0] : (item.extraction_confidence < 30 ? 'Garbled/Invalid' : 'Needs Review'))} (${item.extraction_confidence || 0}%)</span>
