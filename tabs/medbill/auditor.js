@@ -939,7 +939,7 @@ const CATEGORY_META = {
   bundling:      { label: '🔗 Bundling (NCCI)',       color: '#ec4899' },
   frequency:     { label: '📊 Frequency (MUE)',      color: '#f43f5e' },
   financial:     { label: '⚖️ Financial Integrity',  color: '#10b981' },
-  compatibility: { label: '🩺 Clinical Context',     color: '#06b6d4' },
+  compatibility: { label: '🩺 Clinical Context',     color: '#22c55e' },
   POS:           { label: '📍 Place of Service',     color: '#8b5cf6' },
   adjustment:    { label: 'ℹ️ Denial Explanations',  color: '#8b5cf6' },
 };

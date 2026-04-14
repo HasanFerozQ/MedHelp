@@ -12,20 +12,20 @@
   --bg-card: #131c2d;
   --bg-card-hover: #1a2640;
   --bg-glass: rgba(19, 28, 45, 0.7);
-  --accent: #06b6d4;
-  --accent-glow: rgba(6, 182, 212, 0.25);
-  --accent-light: #22d3ee;
-  --accent-dim: #0891b2;
-  --success: #10b981;
+  --accent: #22c55e;
+  --accent-glow: rgba(34, 197, 94, 0.28);
+  --accent-light: #4ade80;
+  --accent-dim: #16a34a;
+  --success: #22c55e;
   --warning: #f59e0b;
   --danger: #ef4444;
   --text-h: #f8fafc;
   --text-body: #cbd5e1;
   --text-muted: #64748b;
   --border: rgba(255,255,255,0.08);
-  --border-accent: rgba(6, 182, 212, 0.4);
+  --border-accent: rgba(34, 197, 94, 0.45);
   --shadow: 0 4px 40px rgba(0,0,0,0.4);
-  --shadow-accent: 0 0 40px rgba(6, 182, 212, 0.15);
+  --shadow-accent: 0 0 40px rgba(34, 197, 94, 0.2);
   --radius: 16px;
   --radius-sm: 10px;
   --radius-lg: 24px;
@@ -516,7 +516,7 @@ body {
   opacity: 0.5;
 }
 
-.result-badge.us { border-color: rgba(6, 182, 212, 0.4); }
+.result-badge.us { border-color: rgba(34, 197, 94, 0.4); }
 .result-badge.uk { border-color: rgba(16, 185, 129, 0.4); }
 .result-badge.me { border-color: rgba(167, 139, 250, 0.4); }
 
@@ -1808,7 +1808,7 @@ body {
   text-decoration: line-through;
 }
 
-.reg-badge.us { border-color: rgba(6, 182, 212, 0.4); color: var(--text-h); }
+.reg-badge.us { border-color: rgba(34, 197, 94, 0.4); color: var(--text-h); }
 .reg-badge.uk { border-color: rgba(16, 185, 129, 0.4); color: var(--text-h); }
 .reg-badge.me { border-color: rgba(167, 139, 250, 0.4); color: var(--text-h); }
 
@@ -1846,7 +1846,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 32px rgba(6, 182, 212, 0.4);
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.38);
   cursor: pointer;
   z-index: 9999;
   transition: var(--transition);
@@ -1855,7 +1855,7 @@ body {
 
 .feedback-fab:hover {
   transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 12px 40px rgba(6, 182, 212, 0.5);
+  box-shadow: 0 12px 40px rgba(34, 197, 94, 0.46);
   background: var(--accent-light);
 }
 
@@ -2212,7 +2212,7 @@ body {
 .generate-case-btn:hover {
   filter: brightness(1.1);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
 }
 /* ============================================================
    NATIONAL PROVIDER SEARCH (NPS) UI (v5.0)
@@ -2288,7 +2288,7 @@ body {
 .npi-credential {
   font-size: 11px;
   color: var(--accent);
-  background: rgba(6, 182, 212, 0.1);
+  background: rgba(34, 197, 94, 0.12);
   padding: 2px 8px;
   border-radius: 4px;
   font-weight: 700;
@@ -2375,7 +2375,7 @@ body {
 .btn-location:hover {
   background: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(6, 182, 212, 0.4);
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
 }
 
 .btn-location svg {
