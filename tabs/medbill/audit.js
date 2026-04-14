@@ -328,6 +328,14 @@ window.handlePdfSelect = async function(event) {
 
     if (!d.ok) throw new Error(d.error || 'Extraction failed');
     window.currentDocumentProfile = d.extraction_profile || 'default_generic';
+    if (d.direct_text_parse_stats && Number(d.direct_text_parse_stats.dropped || 0) > 0) {
+      const reasons = d.direct_text_parse_stats.drop_reasons || {};
+      const topReason = Object.keys(reasons).sort((a, b) => (reasons[b] || 0) - (reasons[a] || 0))[0];
+      showExtractionStatus(
+        `Parser note: ${d.direct_text_parse_stats.parsed || 0} row(s) parsed, ${d.direct_text_parse_stats.dropped || 0} dropped (${topReason || 'unknown reason'}).`,
+        'info'
+      );
+    }
     
     const newItems = d.normalized_bill || [];
     if (newItems.length === 0) {

@@ -448,6 +448,11 @@ async function extractTextLinesFromPdf(buffer) {
 
 function parseRowsFromTextLines(linesOrObjects) {
   const out = [];
+  const stats = { parsed: 0, dropped: 0, drop_reasons: {} };
+  const bumpDrop = (reason) => {
+    stats.dropped += 1;
+    stats.drop_reasons[reason] = (stats.drop_reasons[reason] || 0) + 1;
+  };
   const source = (linesOrObjects || []);
   const stitched = [];
   source.forEach((entry) => {
@@ -484,7 +489,16 @@ function parseRowsFromTextLines(linesOrObjects) {
     const paid = mapping.paid;
     const adjustment = mapping.adjustment;
     const owed = mapping.owed;
-    if (code && billed != null) {
+    if (code && billed == null && money.length > 0) {
+      // Safe fallback: preserve candidate with best available amount instead of dropping.
+      const fallback = Math.max(...money);
+      if (Number.isFinite(fallback)) {
+        mapping.billed = fallback;
+        mapping.mapping_source = `${mapping.mapping_source || 'unknown'}+fallback_max_money`;
+      }
+    }
+    const finalBilled = Number(mapping.billed);
+    if (code && Number.isFinite(finalBilled) && finalBilled > 0) {
       const item = {
         Date: date,
         CPT: code,
@@ -492,7 +506,7 @@ function parseRowsFromTextLines(linesOrObjects) {
         Qty: Number.isFinite(qty) ? qty : 1,
         Unit_Price: unitPrice,
         Modifier: '',
-        Billed_Amount: billed,
+        Billed_Amount: finalBilled,
         Adjustment: adjustment,
         Paid: paid,
         Owed: owed,
@@ -507,14 +521,27 @@ function parseRowsFromTextLines(linesOrObjects) {
         review_reasons: ['Direct text extraction row (requires verification)']
       };
       Object.assign(item, computeFieldConfidence(item));
-      if (Number(mapping.mapping_error || 0) > Math.max(1.0, Math.abs(Number(billed || 0)) * 0.02)) {
+      if (Number(mapping.mapping_error || 0) > Math.max(1.0, Math.abs(Number(finalBilled || 0)) * 0.02)) {
         item.needs_manual_review = true;
         item.review_reasons = [...(item.review_reasons || []), `Money column mapping uncertainty (${mapping.mapping_source})`];
       }
       out.push(item);
+      stats.parsed += 1;
+    } else if (!code) {
+      bumpDrop('missing_code');
+    } else if (!Number.isFinite(finalBilled) || finalBilled <= 0) {
+      bumpDrop('missing_or_invalid_billed_amount');
+    } else {
+      bumpDrop('unclassified_drop');
     }
   });
-  return out.slice(0, DIRECT_TEXT_MAX_ROWS);
+  const clipped = out.slice(0, DIRECT_TEXT_MAX_ROWS);
+  if (out.length > DIRECT_TEXT_MAX_ROWS) {
+    const over = out.length - DIRECT_TEXT_MAX_ROWS;
+    stats.dropped += over;
+    stats.drop_reasons.row_cap_applied = (stats.drop_reasons.row_cap_applied || 0) + over;
+  }
+  return { rows: clipped, stats };
 }
 
 function computePageTrustScores(rows, pageStats) {
@@ -1362,7 +1389,9 @@ module.exports = async (req, res) => {
 
     // Step 0: Direct text extraction first (if PDF has selectable text)
     const directExtract = mime.includes('pdf') ? await extractTextLinesFromPdf(workingBuffer) : { lineObjects: [], hasSelectableText: false, pageStats: [] };
-    const directRows = directExtract.hasSelectableText ? parseRowsFromTextLines(directExtract.lineObjects) : [];
+    const directParsed = directExtract.hasSelectableText ? parseRowsFromTextLines(directExtract.lineObjects) : { rows: [], stats: { parsed: 0, dropped: 0, drop_reasons: {} } };
+    const directRows = directParsed.rows || [];
+    const directParseStats = directParsed.stats || { parsed: directRows.length, dropped: 0, drop_reasons: {} };
     const directTextTruncated = directExtract.hasSelectableText && directRows.length >= DIRECT_TEXT_MAX_ROWS;
 
     // Step 1: Textract Extraction (primary verification engine)
@@ -1554,6 +1583,7 @@ module.exports = async (req, res) => {
         textract_error: textractError || null,
         direct_text_used: directRows.length > 0,
         direct_text_truncated: directTextTruncated,
+        direct_text_parse_stats: directParseStats,
         cross_check: crossCheck,
         gemini_compare: geminiCompare,
         page_trust: pageTrust,
