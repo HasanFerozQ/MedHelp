@@ -766,6 +766,33 @@ function getExtractionHealth(rows) {
   };
 }
 
+function evaluateExtractionCandidate(rows) {
+  const list = rows || [];
+  const total = Math.max(1, list.length);
+  const validCodeRate = list.filter(r => /^\d{5}$/.test(String(r.CPT || '')) || /^[A-Z]\d{4}$/.test(String(r.CPT || ''))).length / total;
+  const validMoneyRate = list.filter(r => Number.isFinite(Number(r.Billed_Amount)) && Number(r.Billed_Amount) > 0).length / total;
+  const unknownRowTypeRate = list.filter(r => String(r.row_type || '').toLowerCase() === 'unknown').length / total;
+  const avgConfidence = list.reduce((s, r) => s + Number(r.overall_confidence || r.extraction_confidence || 0), 0) / total;
+  const rowCountFactor = Math.min(1, list.length / 30);
+  const health = getExtractionHealth(list);
+  let score =
+    (validCodeRate * 35) +
+    (validMoneyRate * 35) +
+    ((1 - unknownRowTypeRate) * 20) +
+    ((Math.max(0, Math.min(100, avgConfidence)) / 100) * 10) +
+    (rowCountFactor * 10);
+  if (health.collapsed) score -= 30;
+  return {
+    score: Number(score.toFixed(2)),
+    validCodeRate: Number(validCodeRate.toFixed(3)),
+    validMoneyRate: Number(validMoneyRate.toFixed(3)),
+    unknownRowTypeRate: Number(unknownRowTypeRate.toFixed(3)),
+    avgConfidence: Number(avgConfidence.toFixed(2)),
+    rowCount: list.length,
+    collapsed: health.collapsed
+  };
+}
+
 function rankHighValueFindings(findings) {
   const priority = (f) => {
     const title = String(f.title || '').toLowerCase();
@@ -1534,6 +1561,7 @@ module.exports = async (req, res) => {
     
     // Step 2: Normalization
     let normalizedItems = [];
+    let textractRows = [];
     let grandTotal = null;
     let detectedTemplate = 'default_generic';
     let templateConfidence = 0;
@@ -1541,7 +1569,8 @@ module.exports = async (req, res) => {
       try {
           const blocks = data.Blocks || [];
           const result = normalizeTextractOutput(blocks);
-          normalizedItems = result.items;
+          textractRows = result.items || [];
+          normalizedItems = textractRows;
           grandTotal = result.grandTotal;
           detectedTemplate = result.detectedTemplate || detectedTemplate;
           templateConfidence = Number(result.templateConfidence || templateConfidence || 0);
@@ -1582,6 +1611,25 @@ module.exports = async (req, res) => {
       }
     }
 
+    // Candidate arbitration: choose the healthiest extraction source.
+    const sourceCandidates = [
+      { name: 'current', rows: normalizedItems, profile: detectedTemplate, confidence: templateConfidence },
+      { name: 'textract', rows: textractRows, profile: 'textract_primary', confidence: 65 },
+      { name: 'direct', rows: directRows, profile: 'direct_text_preferred', confidence: 75 },
+      { name: 'gemini', rows: geminiRows, profile: 'gemini_recovery', confidence: 55 }
+    ].filter(c => Array.isArray(c.rows) && c.rows.length > 0);
+    if (sourceCandidates.length > 0) {
+      const ranked = sourceCandidates
+        .map((c) => ({ ...c, eval: evaluateExtractionCandidate(c.rows) }))
+        .sort((a, b) => b.eval.score - a.eval.score);
+      const best = ranked[0];
+      if (best && best.rows !== normalizedItems) {
+        normalizedItems = best.rows;
+        detectedTemplate = best.profile;
+        templateConfidence = Math.max(templateConfidence, best.confidence || 0);
+      }
+    }
+
     // Recovery path: if primary extraction collapses row types/amounts, switch source.
     const baseHealth = getExtractionHealth(normalizedItems);
     if (baseHealth.collapsed) {
@@ -1606,11 +1654,30 @@ module.exports = async (req, res) => {
       }
     }
 
+    // Normalize confidence/readiness so structurally valid rows are not trapped by stale low defaults.
+    normalizedItems = normalizedItems.map((item) => {
+      const overall = Number(item.overall_confidence || item.extraction_confidence || 0);
+      const code = String(item.CPT || '').toUpperCase();
+      const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
+      const billed = Number(item.Billed_Amount || 0);
+      const qty = Number(item.Qty || 0);
+      const normalizedConfidence = Math.max(
+        Number(item.extraction_confidence || 0),
+        Math.min(95, Math.round(overall))
+      );
+      const autoReady = validCode && billed > 0 && qty > 0 && normalizedConfidence >= 78;
+      return {
+        ...item,
+        extraction_confidence: normalizedConfidence,
+        needs_manual_review: autoReady ? false : !!item.needs_manual_review
+      };
+    });
+
     const crossCheck = (!textractFailed && data && directRows.length > 0)
       ? buildComparisonSummary(normalizedItems, directRows)
       : { agreementScore: 0, notes: textractFailed ? ['Textract unavailable; no cross-check'] : ['No selectable text rows for cross-check'], verified: false };
 
-    if (!crossCheck.verified && directRows.length > 0 && !textractFailed) {
+    if (!crossCheck.verified && directRows.length > 0 && !textractFailed && !/^direct_text/.test(String(detectedTemplate || ''))) {
       normalizedItems = normalizedItems.map((item) => ({
         ...item,
         extraction_confidence: Math.min(Number(item.extraction_confidence || 70), 68),
