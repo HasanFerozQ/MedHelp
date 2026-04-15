@@ -21,7 +21,18 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
     return /overcharge|pricing variance|mue|ncci|upcoding|duplicate|bundle|frequency/.test(title);
   };
 
-  rows.forEach((r, idx) => {
+  const rowOrder = rows
+    .map((r, idx) => {
+      const related = findings.filter(f => f.rowId === r.rowId || (!f.rowId && f.codeRef && f.codeRef === r.code) || (!f.codeRef && f.index === idx));
+      const dangerCount = related.filter(f => f.type === 'danger').length;
+      const warnCount = related.filter(f => f.type === 'warn').length;
+      const mapErr = Number(r.money_mapping_error || 0);
+      const score = (dangerCount * 100) + (warnCount * 20) + (Number.isFinite(mapErr) ? Math.min(15, mapErr) : 0);
+      return { r, idx, score };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  rowOrder.forEach(({ r, idx }) => {
     // Exact or loose match based on line item code
     const relatedFindings = findings.filter(f => f.rowId === r.rowId || (!f.rowId && f.codeRef && f.codeRef === r.code) || (!f.codeRef && f.index === idx));
     

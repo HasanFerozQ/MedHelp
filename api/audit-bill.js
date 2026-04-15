@@ -422,7 +422,9 @@ function computeFieldConfidence(item) {
   const completenessScore = (fieldsPresent / 5) * 100;
   let overall = Math.round(dateConf*0.14 + codeConf*0.2 + modConf*0.08 + descConf*0.16 + qtyConf*0.14 + amountConf*0.2 + cls.confidence*0.08);
   overall = Math.round((overall * 0.8) + (completenessScore * 0.2));
-  if (majorArithmeticMismatch) overall -= 25;
+  if (majorArithmeticMismatch) {
+    overall -= 10;
+  }
   const reviewReasons = [];
   if (majorArithmeticMismatch) reviewReasons.push('Major arithmetic mismatch qty × unit price != billed amount');
   return {
@@ -439,7 +441,7 @@ function computeFieldConfidence(item) {
     completeness_score: Number(completenessScore.toFixed(1)),
     arithmetic_mismatch: majorArithmeticMismatch,
     arithmetic_diff: Number(arithmeticDiff.toFixed(2)),
-    confidence_penalty_applied: majorArithmeticMismatch ? 25 : 0,
+    confidence_penalty_applied: majorArithmeticMismatch ? 10 : 0,
     review_reasons: reviewReasons,
     canonical: fp
   };

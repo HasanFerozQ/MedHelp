@@ -283,6 +283,39 @@ class BucketAuditor {
     });
   }
 
+  // ── Targeted fallback rules for common critical claim errors ─────────────
+  runCriticalFallbackRules() {
+    const byDate = {};
+    this.rows.forEach((r) => {
+      if (!r.isTotalRow) (byDate[r.date || 'UNDATED'] = byDate[r.date || 'UNDATED'] || []).push(r);
+    });
+
+    Object.entries(byDate).forEach(([date, list]) => {
+      const codes = new Set(list.map(r => String(r.code || '').trim()));
+      if (codes.has('85025') && codes.has('99214')) {
+        this.addFinding('bundling', 'Bundling Risk (CBC + E&M same encounter)',
+          `CBC ${'85025'} appears with E&M ${'99214'} on ${date}. Validate CO-97 style inclusion/bundling policy and payer edits before patient billing.`,
+          'warn', '85025');
+      }
+    });
+
+    this.rows.forEach((r) => {
+      const code = String(r.code || '').trim();
+      const qty = Number(r.qty || 0);
+      const text = `${r.desc || ''} ${r.code || ''}`.toLowerCase();
+      if (code === '90837' && qty > 1) {
+        this.addFinding('frequency', 'Psychotherapy Daily Unit Limit Risk',
+          `Code 90837 billed at ${qty} units. Typical adjudication is 1 unit/day; review for excess units.`,
+          'danger', code, r.rowId, 95);
+      }
+      if (code === '29881' && /prior\s*auth|pre[-\s]?auth|authorization\s*(missing|not\s*obtained|required)/i.test(text)) {
+        this.addFinding('modifier', 'Prior Authorization Missing',
+          `Procedure 29881 indicates missing prior authorization context. This commonly results in full denial until authorization evidence is supplied.`,
+          'danger', code, r.rowId, 93);
+      }
+    });
+  }
+
   // ── LAYER 1D — Financial Reconciliation ──────────────────────────────────
   runFinancialSummaryAudit() {
     // Aggregate all billable care rows, not just generic "service" type.

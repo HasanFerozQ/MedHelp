@@ -44,7 +44,7 @@ window.toggleAdvancedForm = function() {
   wrap.style.display = isOpen ? 'none' : 'grid';
 };
 
-const STRICT_EXTRACTION_MIN_CONFIDENCE = 75;
+const STRICT_EXTRACTION_MIN_CONFIDENCE = 65;
 let pendingVerifiedRows = [];
 const extractionTelemetry = {
   profile: 'default_generic',
@@ -262,7 +262,15 @@ function toAppGridRow(item, sourceTag) {
     adj: adjFallback != null ? Number(adjFallback) : null,
     extraction_confidence: item.extraction_confidence ?? 100,
     has_low_confidence_chars: item.has_low_confidence_chars || false,
-    rowType: rowType === 'summary/subtotal' ? 'summary' : ((rowType === 'charge_candidate' || rowType === 'charge') ? 'service' : (rowType || 'service')),
+    rowType:
+      rowType === 'charge' ? 'service' :
+      rowType === 'charge_candidate' ? 'service' :
+      rowType === 'lab/imaging' ? 'service' :
+      rowType === 'pharmacy item' ? 'service' :
+      rowType === 'summary/subtotal' ? 'summary' :
+      rowType === 'payment' ? 'payment' :
+      rowType === 'adjustment' ? 'adjustment' :
+      'service',
     row_type_reason: item.row_type_reason || '',
     money_mapping_source: item.money_mapping_source || '',
     money_mapping_error: Number(item.money_mapping_error || 0),
@@ -912,6 +920,7 @@ async function triggerAudit() {
   engine.runDRGAudit();
   engine.runDuplicates();
   engine.runFrequencyAudit();
+  engine.runCriticalFallbackRules();
   engine.runFinancialSummaryAudit();
   engine.runClinicalCompatibilityAudit();
   engine.runDXCompatibilityAudit();
