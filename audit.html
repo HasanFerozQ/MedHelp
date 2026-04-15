@@ -334,6 +334,33 @@
           <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">The following items were extracted with low confidence or invalid formats. Please verify and correct them before adding to line items.</p>
           <div id="review-items-list"></div>
         </div>
+
+        <!-- PDF Specific Live Result Section -->
+        <div id="pdf-live-results-section" style="display:none; margin-top: 30px;">
+          <h3 style="font-size: 16px; margin: 0 0 15px; color: var(--text-h); padding-bottom: 10px; border-bottom: 1px solid var(--border);">Extraction Audit Results</h3>
+          <div id="pdf-result-cards-container" style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- Real-time Summary Header (v8.5) -->
+            <div id="pdf-audit-summary-overlay" class="audit-summary-header" style="display: none;">
+              <div class="audit-stat-group">
+                <div class="audit-stat">
+                  <span class="audit-stat-label">Total Billed</span>
+                  <span id="pdf-stat-total-billed" class="audit-stat-value">$0.00</span>
+                </div>
+                <div class="audit-stat">
+                  <span class="audit-stat-label">Potential Savings</span>
+                  <span id="pdf-stat-total-savings" class="audit-stat-value savings">$0.00</span>
+                </div>
+              </div>
+              <button class="generate-case-btn" onclick="handleAuditExport('dispute')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Generate Dispute Letter
+              </button>
+            </div>
+            <div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 13px;">Extracting document...</div>
+          </div>
+        </div>
+        <div id="pdf-audit-results" class="audit-results" style="display:none; margin-top:20px;"></div>
+
       </div>
 
       <!-- Manual Data Entry Form -->
@@ -771,6 +798,51 @@
       <div class="modal-footer">
         <button class="btn btn-ghost" onclick="closePatientModal()">Cancel</button>
         <button class="btn btn-primary" id="btn-generate-final">Generate Clinical PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF Extraction Row Edit Modal -->
+  <div id="pdf-edit-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-content" style="max-width:550px;">
+      <div class="modal-header">
+         <h3>Edit Extracted Row</h3>
+         <p>Adjust values below. The PDF Audit will instantly recalculate.</p>
+      </div>
+      <div class="modal-body" style="padding: 24px;">
+         <input type="hidden" id="pdf-edit-idx">
+         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-bottom: 16px;">
+            <div>
+              <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Date</label>
+              <input type="text" id="pdf-edit-date" placeholder="MM/DD/YY" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
+            </div>
+            <div>
+              <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Code</label>
+              <input type="text" id="pdf-edit-code" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none; font-weight:bold;">
+            </div>
+            <div>
+              <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Units</label>
+              <input type="number" id="pdf-edit-qty" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
+            </div>
+            <div>
+              <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Total Billed</label>
+              <input type="number" step="0.01" id="pdf-edit-total" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
+            </div>
+         </div>
+         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px;">
+            <div>
+              <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Modifier</label>
+              <input type="text" id="pdf-edit-mod" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
+            </div>
+            <div style="grid-column: span 3;">
+              <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Description</label>
+              <input type="text" id="pdf-edit-desc" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
+            </div>
+         </div>
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center;">
+         <button class="btn btn-ghost" onclick="closePdfEditModal()">Cancel</button>
+         <button class="btn btn-primary" onclick="savePdfEditModal()">Save Changes</button>
       </div>
     </div>
   </div>

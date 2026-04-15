@@ -284,7 +284,6 @@ const MediHelp = {
 // 7. Auto-init on Load
 document.addEventListener('DOMContentLoaded', () => {
   MediHelp.initFeedbackWidget();
-  MediHelp.initGlobalNegotiationBanner();
 });
 
 // Export to window

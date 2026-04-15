@@ -3,7 +3,7 @@
 window.currentEngineFindings = [];
 window.currentEngineSavings  = 0;
 
-function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = {}) {
+function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = {}, context = 'manual') {
   let criticalHtml = '';
   let nonCriticalHtml = '';
 
@@ -99,8 +99,8 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
           </div>
           <div style="display:flex; align-items:center; gap:12px;">
             <div style="font-size:10px; font-weight:800; color:${color}; text-transform:uppercase; letter-spacing:0.5px; border:1px solid ${border}44; padding:2px 8px; border-radius:12px;">${statusText}</div>
-            <button onclick="editAuditRow(${idx})" style="background:transparent; border:1px solid var(--border); color:var(--text-main); border-radius:6px; padding:2px 8px; font-size:11px; font-weight:600; cursor:pointer; transition:background 0.2s;" onmouseover="this.style.background='var(--bg-main)';" onmouseout="this.style.background='transparent';">Edit</button>
-            <button onclick="removeAuditRow(${idx})" style="background:rgba(239, 68, 68, 0.1); border:none; color:var(--danger); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; transition:background 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)';" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)';">✕</button>
+            <button onclick="${context === 'pdf' ? `editPdfAuditRow(${idx})` : `editAuditRow(${idx})`}" style="background:transparent; border:1px solid var(--border); color:var(--text-main); border-radius:6px; padding:2px 8px; font-size:11px; font-weight:600; cursor:pointer; transition:background 0.2s;" onmouseover="this.style.background='var(--bg-main)';" onmouseout="this.style.background='transparent';">Edit</button>
+            <button onclick="${context === 'pdf' ? `removePdfAuditRow(${idx})` : `removeAuditRow(${idx})`}" style="background:rgba(239, 68, 68, 0.1); border:none; color:var(--danger); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; transition:background 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)';" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)';">✕</button>
           </div>
         </div>
         ${debugChips}
@@ -203,16 +203,17 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
     updateAuditSummaryOverlay(findings);
 }
 
-function updateAuditSummaryOverlay(findings) {
-  const overlay = document.getElementById('audit-summary-overlay');
+function updateAuditSummaryOverlay(findings, context = 'manual') {
+  const overlay = document.getElementById(context === 'pdf' ? 'pdf-audit-summary-overlay' : 'audit-summary-overlay');
   if (!overlay) return;
 
-  const savingsField = document.getElementById('stat-total-savings');
-  const billedField  = document.getElementById('stat-total-billed');
+  const savingsField = document.getElementById(context === 'pdf' ? 'pdf-stat-total-savings' : 'stat-total-savings');
+  const billedField  = document.getElementById(context === 'pdf' ? 'pdf-stat-total-billed' : 'stat-total-billed');
   
-  const totalSavings = window.currentEngineSavings || 0;
+  const totalSavings = (context === 'pdf' ? window.currentPdfEngineSavings : window.currentEngineSavings) || 0;
   // Calculate total billed from current rows
-  const totalBilled = (window.appGridRows || []).reduce((s, r) => s + (parseFloat(r.total) || 0), 0);
+  const gridRows = context === 'pdf' ? (window.pdfGridRows || []) : (window.appGridRows || []);
+  const totalBilled = gridRows.reduce((s, r) => s + (parseFloat(r.total || r.Billed_Amount) || 0), 0);
 
   if (totalBilled > 0) {
     overlay.style.display = 'flex';

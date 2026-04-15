@@ -303,10 +303,26 @@ window.confirmExtractionImport = function() {
     return;
   }
 
+  // Use pdfGridRows as source of truth for the edited clean items if available
   pendingVerifiedRows.forEach((item, idx) => {
-    window.appGridRows.push(toAppGridRow(item, `textract-verified-${idx}`));
+    let finalRowData = toAppGridRow(item, `textract-verified-${idx}`);
+    // If the user modified the row in the PDF grid, use those values
+    if (window.pdfGridRows && window.pdfGridRows.length > 0) {
+       const matchingPdfRow = window.pdfGridRows.find(pr => pr.code === item.CPT || pr.code === item.code);
+       if (matchingPdfRow) {
+         finalRowData.date = matchingPdfRow.date;
+         finalRowData.code = matchingPdfRow.code;
+         finalRowData.qty = matchingPdfRow.qty;
+         finalRowData.total = matchingPdfRow.total;
+         finalRowData.price = matchingPdfRow.price;
+         finalRowData.modifier = matchingPdfRow.modifier;
+       }
+    }
+    window.appGridRows.push(finalRowData);
   });
+  
   extractionTelemetry.importedVerified += pendingVerifiedRows.length;
+  // Clear both pending and pdfGridRows on import
   pendingVerifiedRows = [];
   if (gate) gate.style.display = 'none';
   localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
@@ -396,6 +412,14 @@ window.handlePdfSelect = async function(event) {
       showTopExtractionFindings(d?.result?.top_findings || []);
 
       switchAuditTab('pdf');
+      
+      // Setup isolated PDF grid
+      document.getElementById('pdf-live-results-section').style.display = 'block';
+      window.pdfGridRows = newItems.map((item, idx) => toAppGridRow(item, `textract-pdf-${idx}`));
+      if (typeof window.triggerPdfAudit === 'function') {
+        window.triggerPdfAudit();
+      }
+
       if (cleanItems.length === 0 && reviewRequired.length > 0) {
         showExtractionStatus('No rows met strict confidence criteria. Please manually verify and add rows below.', 'warn');
       }
@@ -1019,5 +1043,134 @@ function renderConfidenceBadge(confidence) {
 }
 
 window.triggerAudit = triggerAudit;
+
+// ── PDF Isolated Audit Grid Handlers ─────────────────────────────────────
+window.pdfGridRows = [];
+window.currentPdfEngineFindings = [];
+window.currentPdfEngineSavings = 0;
+
+window.editPdfAuditRow = function(idx) {
+  if (idx < 0 || idx >= window.pdfGridRows.length) return;
+  const r = window.pdfGridRows[idx];
+  document.getElementById('pdf-edit-idx').value = idx;
+  document.getElementById('pdf-edit-date').value = r.date || '';
+  document.getElementById('pdf-edit-code').value = r.code || '';
+  document.getElementById('pdf-edit-qty').value = r.qty || 1;
+  document.getElementById('pdf-edit-total').value = r.total !== null ? r.total : '';
+  document.getElementById('pdf-edit-mod').value = r.modifier || '';
+  document.getElementById('pdf-edit-desc').value = r.desc || '';
+  document.getElementById('pdf-edit-modal').style.display = 'flex';
+};
+
+window.closePdfEditModal = function() {
+  document.getElementById('pdf-edit-modal').style.display = 'none';
+};
+
+window.savePdfEditModal = function() {
+  const idx = parseInt(document.getElementById('pdf-edit-idx').value, 10);
+  if (isNaN(idx) || idx < 0 || idx >= window.pdfGridRows.length) return;
+  
+  const r = window.pdfGridRows[idx];
+  r.date = document.getElementById('pdf-edit-date').value.trim();
+  r.code = document.getElementById('pdf-edit-code').value.trim().toUpperCase();
+  r.qty = parseFloat(document.getElementById('pdf-edit-qty').value) || 1;
+  r.total = parseFloat(document.getElementById('pdf-edit-total').value);
+  if (isNaN(r.total)) r.total = null;
+  r.modifier = document.getElementById('pdf-edit-mod').value.trim().toUpperCase();
+  r.desc = document.getElementById('pdf-edit-desc').value.trim();
+  if (r.total !== null && r.qty > 0) r.price = r.total / r.qty;
+  
+  closePdfEditModal();
+  triggerPdfAudit();
+};
+
+window.removePdfAuditRow = function(idx) {
+  if (idx < 0 || idx >= window.pdfGridRows.length) return;
+  window.pdfGridRows.splice(idx, 1);
+  window.pdfGridRows.forEach((r, i) => r.idx = i);
+  triggerPdfAudit();
+};
+
+async function triggerPdfAudit() {
+  const rows = window.pdfGridRows || [];
+  const auditableRows = [];
+  rows.forEach(r => {
+    let missingCount = 0;
+    if (r.qty === null || r.qty === undefined) missingCount++;
+    if (r.price === null || r.price === undefined) missingCount++;
+    if (r.total === null || r.total === undefined || r.total === '') missingCount++;
+    
+    r.math_complete = false;
+    r.invalid = false;
+    r.priceWasDerived = false;
+
+    if (r.total < 0 && r.rowType !== 'credit' && r.rowType !== 'adjustment') r.invalid = true;
+    if (!r.invalid) {
+        if (missingCount === 1) {
+            let tempQ = r.qty !== null ? r.qty : 1;
+            if (r.total == null || r.total === '') { r.total = tempQ * (r.price || 0); } 
+            else if (r.price == null) { r.price = r.total / tempQ; r.priceWasDerived = true; } 
+            else if (r.qty == null) { r.qty = r.price ? Math.max(1, Math.round(r.total / r.price)) : 1; }
+            r.math_complete = true;
+        } else if (missingCount === 0) {
+            r.math_complete = true;
+        }
+    }
+
+    if (r.total != null && r.total !== '') r.total = Math.round(r.total * 100) / 100;
+    if (r.price != null && r.price !== '') r.price = Math.round(r.price * 100) / 100;
+    if (!r.invalid) auditableRows.push(r);
+  });
+
+  const multiplier = parseFloat(document.getElementById('payer-type')?.value) || 2.5;
+  const npis = [...new Set(auditableRows.map(r => r.npi).filter(Boolean))];
+  const gpci = parseFloat(document.getElementById('gpci-region')?.value || '1.0');
+  const isFacility = document.getElementById('facility-type')?.value === 'hospital';
+  const profile = window.currentDocumentProfile || null;
+
+  const engine = new BucketAuditor(auditableRows, multiplier, npis, gpci, isFacility, profile);
+  engine.runArithmetic();
+  engine.runBundling();
+  engine.runDRGAudit();
+  engine.runDuplicates();
+  engine.runFrequencyAudit();
+  engine.runCriticalFallbackRules();
+  engine.runFinancialSummaryAudit();
+  engine.runClinicalCompatibilityAudit();
+  engine.runDXCompatibilityAudit();
+  engine.runPOSAudit();
+  engine.runMultipleProcedureAudit();
+  engine.runConsistency();
+  engine.runSemantic();
+  engine.runCompleteness();
+  engine.runModifiers();
+  engine.runDateSanity();
+  try { await engine.runDatabaseCheck(); } catch(e) {}
+  engine.finalizeDeduplication();
+  engine.runInvoiceSumCheck();
+
+  const container = document.getElementById('pdf-result-cards-container');
+  if (!container) return;
+  if (rows.length === 0) {
+    container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 13px;">No extracted rows remaining.</div>';
+    window.currentPdfEngineFindings = [];
+    window.currentPdfEngineSavings = 0;
+    const auditRes = document.getElementById('pdf-audit-results');
+    if (auditRes) { auditRes.innerHTML = ''; auditRes.style.display = 'none'; }
+    if (typeof window.updateAuditSummaryOverlay === 'function') window.updateAuditSummaryOverlay([], 'pdf');
+    return;
+  }
+
+  window.currentPdfEngineFindings = engine.findings;
+  window.currentPdfEngineSavings = engine.potentialSavings;
+  
+  if (typeof renderResultCardsPerLineItem === 'function') {
+    renderResultCardsPerLineItem(rows, engine.findings, container, engine._savingsRationale || {}, 'pdf');
+    const summaryContainer = document.getElementById('pdf-audit-results');
+    summaryContainer.style.display = 'block';
+    renderFinalSummary(engine.potentialSavings, engine.totalBenchmark, summaryContainer);
+  }
+}
+window.triggerPdfAudit = triggerPdfAudit;
 
 })(); // END SCOPE ISOLATION

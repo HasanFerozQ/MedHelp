@@ -129,7 +129,7 @@ class BucketAuditor {
         const expected = Math.round(r.qty * r.price * 100) / 100;
         const diff = Math.abs(expected - r.total);
         if (diff > 0.02) { // strict tolerance for rounding
-          if (diff > Math.max(1.00, r.total * 0.02)) {
+          if (diff > Math.max(1.00, Math.abs(r.total) * 0.01)) {
             // Hard fail: explicit contradiction
             this.addFinding('arithmetic', 'Confirmed Math Mismatch',
               `${r.code || r.desc}: ${r.qty} × $${r.price.toFixed(2)} = $${expected.toFixed(2)}, but billed $${r.total.toFixed(2)}. This is a deterministic arithmetic error.`,
