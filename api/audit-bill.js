@@ -1971,13 +1971,25 @@ module.exports = async (req, res) => {
 
     let geminiRows = detectedTemplate === 'ai_ocr_fallback' ? [...normalizedItems] : [];
     let geminiCompare = null;
+    const geminiDiagnostics = {
+      enabled: !!process.env.GEMINI_API_KEY,
+      compare_enabled: String(process.env.GEMINI_COMPARE_ENABLED || 'true') !== 'false',
+      merge_enabled: String(process.env.GEMINI_MERGE_ENABLED || 'true') !== 'false',
+      attempted: false,
+      rows_returned: 0,
+      used_override: false,
+      added_missing_rows: 0,
+      skipped_reason: ''
+    };
     if (process.env.GEMINI_API_KEY && workingBuffer && /pdf/i.test(mime || '')) {
       const shouldRunGemini = String(process.env.GEMINI_COMPARE_ENABLED || 'true') !== 'false';
       const allowGeminiMerge = String(process.env.GEMINI_MERGE_ENABLED || 'true') !== 'false';
       if (shouldRunGemini) {
+        geminiDiagnostics.attempted = true;
         if (geminiRows.length === 0) {
           geminiRows = await runGeminiOcrFallback(workingBuffer, mime || 'application/pdf');
         }
+        geminiDiagnostics.rows_returned = geminiRows.length;
         if (geminiRows.length > 0) {
           geminiCompare = buildComparisonSummary(normalizedItems, geminiRows);
           const baseScore = scoreExtractionCandidate(normalizedItems, 0);
@@ -1986,6 +1998,7 @@ module.exports = async (req, res) => {
             normalizedItems = geminiRows;
             detectedTemplate = 'textract_gemini_blend';
             templateConfidence = Math.max(45, templateConfidence);
+            geminiDiagnostics.used_override = true;
           }
           if (allowGeminiMerge && normalizedItems.length > 0) {
             const mergeResult = mergeMissingRows(normalizedItems, geminiRows);
@@ -1993,14 +2006,23 @@ module.exports = async (req, res) => {
               normalizedItems = mergeResult.rows;
               detectedTemplate = `${detectedTemplate}+gemini_fill`;
               templateConfidence = Math.max(50, templateConfidence);
+              geminiDiagnostics.added_missing_rows = mergeResult.addedCount;
               geminiCompare = {
                 ...(geminiCompare || {}),
                 merge_added_rows: mergeResult.addedCount
               };
             }
           }
+        } else {
+          geminiDiagnostics.skipped_reason = 'gemini_returned_no_rows';
         }
+      } else {
+        geminiDiagnostics.skipped_reason = 'gemini_compare_disabled';
       }
+    } else if (!process.env.GEMINI_API_KEY) {
+      geminiDiagnostics.skipped_reason = 'missing_gemini_api_key';
+    } else if (!/pdf/i.test(mime || '')) {
+      geminiDiagnostics.skipped_reason = 'non_pdf_input';
     }
 
     const useEnsembleArbitration = String(process.env.ENSEMBLE_ARBITRATION_ENABLED || 'false') === 'true';
@@ -2232,6 +2254,7 @@ module.exports = async (req, res) => {
         direct_text_parse_stats: directParseStats,
         cross_check: crossCheck,
         gemini_compare: geminiCompare,
+        gemini_diagnostics: geminiDiagnostics,
         page_trust: pageTrust,
         source_consensus: consensusCalibrated.stats,
         field_consensus: fieldVoted.stats,
