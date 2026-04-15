@@ -205,14 +205,14 @@ function isStrongExtractedRow(item) {
   const billed = Number(item.Billed_Amount || 0);
   const qty = Number(item.Qty || 0);
   const confidence = Number(item.extraction_confidence || 0);
+  const rowType = String(item.row_type || '').toLowerCase();
   const hasDate = /\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}-\d{2}-\d{2}/.test(String(item.Date || ''));
   const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
 
   return Boolean(
     validCode &&
     hasDate &&
-    Number.isFinite(billed) &&
-    billed > 0 &&
+    ((Number.isFinite(billed) && billed > 0) || rowType === 'charge_candidate') &&
     Number.isFinite(qty) &&
     qty > 0 &&
     qty <= 50 &&
@@ -224,10 +224,25 @@ function isStrongExtractedRow(item) {
 
 function toAppGridRow(item, sourceTag) {
   const rowType = String(item.row_type || '').toLowerCase();
-  const billedFallback = [item.Billed_Amount, item.total, item.Amount, item.charge].find((v) => Number.isFinite(Number(v)));
+  const billedFallback = [
+    item.Billed_Amount,
+    item.total,
+    item.Amount,
+    item.charge,
+    (Number.isFinite(Number(item.Unit_Price)) && Number.isFinite(Number(item.Qty))) ? (Number(item.Unit_Price) * Number(item.Qty)) : null
+  ].find((v) => Number.isFinite(Number(v)));
   const paidFallback = [item.Paid, item.paid].find((v) => Number.isFinite(Number(v)));
   const owedFallback = [item.Owed, item.owed].find((v) => Number.isFinite(Number(v)));
   const adjFallback = [item.Adjustment, item.adj].find((v) => Number.isFinite(Number(v)));
+  if (sourceTag.startsWith('textract') || sourceTag.startsWith('fallback')) {
+    console.log({
+      code: item.CPT,
+      money: item.money_raw || item.raw_money_tokens || [],
+      mapping: item.money_mapping_source || '',
+      error: Number(item.money_mapping_error || 0),
+      billed: item.Billed_Amount
+    });
+  }
   return {
     rowId: `${sourceTag}-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
     provenance: sourceTag,
@@ -243,7 +258,7 @@ function toAppGridRow(item, sourceTag) {
     adj: adjFallback != null ? Number(adjFallback) : null,
     extraction_confidence: item.extraction_confidence ?? 100,
     has_low_confidence_chars: item.has_low_confidence_chars || false,
-    rowType: rowType === 'summary/subtotal' ? 'summary' : (rowType || 'service'),
+    rowType: rowType === 'summary/subtotal' ? 'summary' : ((rowType === 'charge_candidate' || rowType === 'charge') ? 'service' : (rowType || 'service')),
     row_type_reason: item.row_type_reason || '',
     money_mapping_source: item.money_mapping_source || '',
     money_mapping_error: Number(item.money_mapping_error || 0),
@@ -889,7 +904,6 @@ async function triggerAudit() {
   const engine = new BucketAuditor(auditableRows, multiplier, npis, gpci, isFacility, profile);
   
   engine.runArithmetic();
-  engine.runInvoiceSumCheck();
   engine.runBundling();
   engine.runDRGAudit();
   engine.runDuplicates();
@@ -913,6 +927,7 @@ async function triggerAudit() {
 
   try { await withTimeout(engine.runDatabaseCheck()); } catch(e) { console.warn('MediHelp: DB check skipped:', e.message); }
   engine.finalizeDeduplication();
+  engine.runInvoiceSumCheck();
 
   // ── Confidence Score ─────────────────────────────────────────────────────
   const confidence = engine.computeConfidence();

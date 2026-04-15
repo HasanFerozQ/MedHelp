@@ -143,8 +143,8 @@ function renderAuditResults(findings) {
         totalCharged += item.charge;
         totalMedicare += medicarePrice;
         const flag = flagOvercharge(item.charge, medicarePrice);
-        flagBadge = `<span class="code-tag" style="background-color: ${flag.color}20; color: ${flag.color}; margin-left: auto;">${flag.flag}</span>`;
-        chargeDisplay = `$${item.charge.toFixed(2)}`;
+        flagBadge = `<span class="code-tag flag-badge" data-index="${index}" style="background-color: ${flag.color}20; color: ${flag.color}; margin-left: auto;">${flag.flag}</span>`;
+        chargeDisplay = `<span class="billed-display" data-index="${index}">$${item.charge.toFixed(2)}</span>`;
       } else {
         chargeDisplay = `<input type="number" class="inline-price-input" data-index="${index}" placeholder="Price $" step="0.01">`;
       }
@@ -178,7 +178,7 @@ function renderAuditResults(findings) {
     }
     
     html += `
-      <div class="result-card" style="flex-direction: column;">
+      <div class="result-card" data-index="${index}" style="flex-direction: column;">
         <div style="display: flex; width: 100%; align-items: center;">
           <span class="code-val">${window.sanitizeText(item.code)}${item.modifier ? '-' + window.sanitizeText(item.modifier) : ''}</span>
           ${flagBadge}
@@ -251,7 +251,46 @@ function handleInlinePrice(e) {
     const prev = Number(latestFindings[idx].charge);
     if (Number.isFinite(prev) && Math.abs(prev - val) < 0.001) return;
     latestFindings[idx].charge = val;
-    renderAuditResults(latestFindings);
+
+    const item = latestFindings[idx];
+    const constants = window.MH_CONSTANTS || {};
+    const benchmark = item.isDRG
+      ? ((constants.DRG_BASE_RATE || 10400) * (((constants.DRG_BENCHMARKS || {})[item.code]?.weight) || 1))
+      : (getBenchmark(item.code)?.price || null);
+
+    const rowCard = document.querySelector(`.result-card[data-index="${idx}"]`);
+    if (!rowCard) return;
+    const billedInput = rowCard.querySelector(`.inline-price-input[data-index="${idx}"]`);
+    if (billedInput) {
+      const billedSpan = document.createElement('span');
+      billedSpan.className = 'billed-display';
+      billedSpan.dataset.index = String(idx);
+      billedSpan.textContent = `$${val.toFixed(2)}`;
+      billedInput.replaceWith(billedSpan);
+    } else {
+      const existing = rowCard.querySelector(`.billed-display[data-index="${idx}"]`);
+      if (existing) existing.textContent = `$${val.toFixed(2)}`;
+    }
+
+    if (Number.isFinite(benchmark) && benchmark > 0) {
+      const flag = flagOvercharge(val, benchmark);
+      let badge = rowCard.querySelector(`.flag-badge[data-index="${idx}"]`);
+      if (!badge) {
+        const header = rowCard.querySelector('div');
+        if (header) {
+          badge = document.createElement('span');
+          badge.className = 'code-tag flag-badge';
+          badge.dataset.index = String(idx);
+          badge.style.marginLeft = 'auto';
+          header.appendChild(badge);
+        }
+      }
+      if (badge) {
+        badge.textContent = flag.flag;
+        badge.style.backgroundColor = `${flag.color}20`;
+        badge.style.color = flag.color;
+      }
+    }
   }
 }
 

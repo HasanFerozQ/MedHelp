@@ -285,8 +285,9 @@ class BucketAuditor {
 
   // ── LAYER 1D — Financial Reconciliation ──────────────────────────────────
   runFinancialSummaryAudit() {
-    // Only aggregate auditable service rows (skip pure info rows and invalids)
-    const validRows = this.rows.filter(r => !r.isTotalRow && !r.invalid && r.rowType === 'service');
+    // Aggregate all billable care rows, not just generic "service" type.
+    const excludedTypes = new Set(['summary', 'summary/subtotal', 'adjustment', 'payment', 'discount', 'tax']);
+    const validRows = this.rows.filter((r) => !r.isTotalRow && !r.invalid && !excludedTypes.has(String(r.rowType || '').toLowerCase()));
     if (validRows.length === 0) return;
 
     const totalBilled = validRows.reduce((s, r) => s + (r.total || 0), 0);
@@ -540,10 +541,16 @@ class BucketAuditor {
   runInvoiceSumCheck() {
     const totalRow = this.rows.find(r => r.isTotalRow && r.total > 0);
     if (!totalRow) return;
-    const diff = Math.abs(this._lineItemSum - totalRow.total);
+    const lineItemSum = this.rows.reduce((sum, r, idx) => {
+      if (r.isTotalRow || this._voidedRows.has(idx)) return sum;
+      if (!Number.isFinite(Number(r.total))) return sum;
+      return sum + Number(r.total);
+    }, 0);
+    this._lineItemSum = lineItemSum;
+    const diff = Math.abs(lineItemSum - totalRow.total);
     if (diff > 1.00) {
       this.addFinding('arithmetic', 'Invoice Total Mismatch',
-        `Line items sum to $${this._lineItemSum.toFixed(2)} but invoice total shows $${totalRow.total.toFixed(2)} — a $${diff.toFixed(2)} discrepancy.`,
+        `Line items sum to $${lineItemSum.toFixed(2)} but invoice total shows $${totalRow.total.toFixed(2)} — a $${diff.toFixed(2)} discrepancy.`,
         'danger');
     }
   }
@@ -838,13 +845,14 @@ class BucketAuditor {
     
     this.rows.forEach(r => {
       const text = `${r.desc || ''} ${r.code || ''}`;
+      const hasAdjustmentContext = /\b(?:CO|PR|OA|PI|CR)[-\s]?\d{1,4}\b|\b(?:adjust(?:ment)?|denial|remark|carc|rarc|write[-\s]?off|patient\s+responsibility|claim\s+denied)\b/i.test(text);
       
       // Match CARC (Expect formats like: 1, CO-1, PR 1, etc.)
-      Object.entries(carcs).forEach(([code, desc]) => {
+      if (hasAdjustmentContext) Object.entries(carcs).forEach(([code, desc]) => {
         // Create regex to match the code strictly as a standalone token or with a group prefix
         const codeNum = code.replace(/[^0-9]/g, ''); // Extract just the digits if the DB returns formats like CO-1
         const targetCode = codeNum || code;
-        const carcRegex = new RegExp(`\\b(?:CO|PR|OA|PI|CR)[-\\s]?${targetCode}\\b|\\b${targetCode}\\b(?!\\d)`, 'i');
+        const carcRegex = new RegExp(`\\b(?:CO|PR|OA|PI|CR)[-\\s]?${targetCode}\\b`, 'i');
         
         if (carcRegex.test(text)) {
           this.addFinding('adjustment', `Adjustment: ${code}`,

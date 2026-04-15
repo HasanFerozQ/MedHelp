@@ -297,6 +297,7 @@ function classifyRowType(item) {
   const amount = Number(item.Billed_Amount || 0);
   const paid = Number(item.Paid || 0);
   const owed = Number(item.Owed || 0);
+  const qty = Number(item.Qty || 0);
   const adjustment = Number(item.Adjustment || 0);
   // Keep summary detection specific so procedure text like "total knee arthroplasty"
   // is not incorrectly classified as a subtotal/summary row.
@@ -318,32 +319,86 @@ function classifyRowType(item) {
   if (/pharmacy|drug|injection/.test(desc)) return { rowType: 'pharmacy item', confidence: 74, reason: 'pharmacy keyword' };
   if (/^J\d{4}$/.test(code)) return { rowType: 'pharmacy item', confidence: 78, reason: 'J-code' };
   if (/lab|imaging|x-ray|mri|ct|ultrasound|panel|assay/.test(desc)) return { rowType: 'lab/imaging', confidence: 74, reason: 'lab/imaging keyword' };
-  if ((/^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code)) && amount > 0 && owed >= 0) return { rowType: 'charge', confidence: 82, reason: 'valid code + billed amount' };
+  const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
+  if (validCode && qty > 0) {
+    if (amount > 0) return { rowType: 'charge', confidence: 90, reason: 'valid charge row' };
+    return { rowType: 'charge_candidate', confidence: 70, reason: 'missing amount but valid structure' };
+  }
   return { rowType: 'unknown', confidence: 45, reason: 'insufficient structured indicators' };
 }
 
 function chooseMoneyMapping(money, qty) {
   const vals = (money || []).filter((n) => Number.isFinite(n));
   if (!vals.length) {
-    return { unitPrice: null, billed: null, paid: 0, adjustment: 0, owed: 0, mapping_source: 'none', mapping_error: null };
+    return {
+      unitPrice: null,
+      billed: null,
+      paid: 0,
+      adjustment: 0,
+      owed: 0,
+      mapping_source: 'none',
+      mapping_error: 999
+    };
   }
-  const candidates = [];
-  const mk = (unitPrice, billed, paid, adjustment, owed, src) => {
-    const q = Number(qty || 1) || 1;
-    const mathErr = (Number.isFinite(unitPrice) && Number.isFinite(billed)) ? Math.abs((unitPrice * q) - billed) : 9999;
-    const reconErr = (Number.isFinite(billed) ? Math.abs((Number(paid || 0) + Number(adjustment || 0) + Number(owed || 0)) - billed) : 9999);
-    const score = mathErr + (reconErr * 0.5);
-    candidates.push({ unitPrice, billed, paid: Number(paid || 0), adjustment: Number(adjustment || 0), owed: Number(owed || 0), mapping_source: src, mapping_error: Number(score.toFixed(2)) });
+  const q = Number(qty || 1) || 1;
+
+  // If only one value appears, it's most likely the billed amount.
+  if (vals.length === 1) {
+    return {
+      unitPrice: null,
+      billed: vals[0],
+      paid: 0,
+      adjustment: 0,
+      owed: 0,
+      mapping_source: 'b-only',
+      mapping_error: 0
+    };
+  }
+
+  // If two values appear, prefer unit*billed relationship.
+  if (vals.length === 2) {
+    const [a, b] = vals;
+    const expected = Math.abs((a * q) - b);
+    if (expected < 0.01) {
+      return {
+        unitPrice: a,
+        billed: b,
+        paid: 0,
+        adjustment: 0,
+        owed: 0,
+        mapping_source: 'u-b',
+        mapping_error: Number(expected.toFixed(2))
+      };
+    }
+    return {
+      unitPrice: null,
+      billed: Math.max(a, b),
+      paid: 0,
+      adjustment: 0,
+      owed: 0,
+      mapping_source: 'b-max',
+      mapping_error: Number(expected.toFixed(2))
+    };
+  }
+
+  // For 3+ values, anchor billed to the largest plausible charge.
+  const maxVal = Math.max(...vals);
+  let unitPrice = null;
+  for (const v of vals) {
+    if (Math.abs((v * q) - maxVal) < 0.01) {
+      unitPrice = v;
+      break;
+    }
+  }
+  return {
+    unitPrice,
+    billed: maxVal,
+    paid: 0,
+    adjustment: 0,
+    owed: 0,
+    mapping_source: 'b-max-heuristic',
+    mapping_error: unitPrice ? 0 : 5
   };
-  if (vals.length >= 5) mk(vals[0], vals[1], vals[2], vals[3], vals[4], 'u-b-p-a-o');
-  if (vals.length >= 5) mk(vals[0], vals[2], vals[3], vals[4], vals[1], 'u-owed-p-a-b');
-  if (vals.length >= 4) mk(vals[0], vals[1], vals[2], vals[3], 0, 'u-b-p-a');
-  if (vals.length >= 4) mk(vals[0], vals[1], vals[3], vals[2], 0, 'u-b-a-p');
-  if (vals.length >= 3) mk(vals[0], vals[1], vals[2], 0, 0, 'u-b-p');
-  if (vals.length >= 2) mk(vals[0], vals[1], 0, 0, 0, 'u-b');
-  if (vals.length >= 1) mk(null, vals[vals.length - 1], 0, 0, 0, 'b-only');
-  candidates.sort((a, b) => a.mapping_error - b.mapping_error);
-  return candidates[0];
 }
 
 function computeFieldConfidence(item) {
@@ -523,6 +578,7 @@ function parseRowsFromTextLines(linesOrObjects) {
         Adjustment: adjustment,
         Paid: paid,
         Owed: owed,
+        Description: line,
         raw_money_tokens: moneyMatches.map((m) => String(m[1] || '').trim()),
         money_mapping_source: mapping.mapping_source,
         money_mapping_error: mapping.mapping_error,
@@ -696,6 +752,18 @@ function scoreExtractionCandidate(rows, crossCheckScore = 0) {
   const validMoneyRate = list.filter(r => Number.isFinite(Number(r.Billed_Amount)) && Number(r.Billed_Amount) !== 0).length / total;
   const reviewRate = list.filter(r => !!r.needs_manual_review).length / total;
   return Math.round((avgConf * 0.4) + (validCodeRate * 100 * 0.25) + (validMoneyRate * 100 * 0.2) + (crossCheckScore * 0.2) - (reviewRate * 100 * 0.15));
+}
+
+function getExtractionHealth(rows) {
+  const list = rows || [];
+  const total = Math.max(1, list.length);
+  const zeroOrMissingAmountRate = list.filter(r => !Number.isFinite(Number(r.Billed_Amount)) || Number(r.Billed_Amount) <= 0).length / total;
+  const unknownRowTypeRate = list.filter(r => String(r.row_type || '').toLowerCase() === 'unknown').length / total;
+  return {
+    zeroOrMissingAmountRate: Number(zeroOrMissingAmountRate.toFixed(3)),
+    unknownRowTypeRate: Number(unknownRowTypeRate.toFixed(3)),
+    collapsed: list.length >= 5 && (zeroOrMissingAmountRate > 0.55 || unknownRowTypeRate > 0.65)
+  };
 }
 
 function rankHighValueFindings(findings) {
@@ -1514,6 +1582,30 @@ module.exports = async (req, res) => {
       }
     }
 
+    // Recovery path: if primary extraction collapses row types/amounts, switch source.
+    const baseHealth = getExtractionHealth(normalizedItems);
+    if (baseHealth.collapsed) {
+      const directHealth = getExtractionHealth(directRows);
+      const gemHealth = getExtractionHealth(geminiRows);
+      const baseScore = scoreExtractionCandidate(normalizedItems, 0);
+      const directScore = scoreExtractionCandidate(directRows, 0);
+      const gemScore = scoreExtractionCandidate(geminiRows, 0);
+
+      if (directRows.length > 0 && !directHealth.collapsed && directScore >= baseScore) {
+        normalizedItems = directRows;
+        detectedTemplate = 'direct_text_recovery';
+        templateConfidence = Math.max(templateConfidence, 55);
+      } else if (geminiRows.length > 0 && !gemHealth.collapsed && gemScore >= baseScore) {
+        normalizedItems = geminiRows;
+        detectedTemplate = 'gemini_recovery';
+        templateConfidence = Math.max(templateConfidence, 50);
+      } else if (directRows.length > 0 && directHealth.zeroOrMissingAmountRate < baseHealth.zeroOrMissingAmountRate) {
+        normalizedItems = directRows;
+        detectedTemplate = 'direct_text_partial_recovery';
+        templateConfidence = Math.max(templateConfidence, 45);
+      }
+    }
+
     const crossCheck = (!textractFailed && data && directRows.length > 0)
       ? buildComparisonSummary(normalizedItems, directRows)
       : { agreementScore: 0, notes: textractFailed ? ['Textract unavailable; no cross-check'] : ['No selectable text rows for cross-check'], verified: false };
@@ -1579,7 +1671,7 @@ module.exports = async (req, res) => {
     // Step 3: filter auditable rows by row_type before auditing
     const auditableRows = normalizedItems.filter((r) => {
       const t = String(r.row_type || classifyRowType(r).rowType || '').toLowerCase();
-      return t === 'charge' || t === 'lab/imaging' || t === 'pharmacy item';
+      return t === 'charge' || t === 'charge_candidate' || t === 'lab/imaging' || t === 'pharmacy item';
     });
 
     // Step 4: Arithmetic Engine
