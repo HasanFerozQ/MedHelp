@@ -1023,8 +1023,8 @@ function normalizeTextractOutput(blocks) {
             let finalQtyStr = headers.qty ? (rowData[headers.qty]?.text || "1") : "1";
 
             // Use parseCurrency for all monetary fields — handles ($1,234.00), $500 CR etc.
-            const billedAmount = parseCurrency(cellAmt.text) ?? 0.00;
-            const unitPrice    = headers.unit_price ? parseCurrency(rowData[headers.unit_price]?.text) : null;
+            let billedAmount = parseCurrency(cellAmt.text) ?? 0.00;
+            let unitPrice    = headers.unit_price ? parseCurrency(rowData[headers.unit_price]?.text) : null;
             const adjRawVal    = headers.adjustment ? parseCurrency(rowData[headers.adjustment]?.text) : null;
             // Normalize: adjustments reduce billed amount (negative in our model)
             const adjValue     = adjRawVal !== null ? (adjRawVal > 0 ? -adjRawVal : adjRawVal) : 0;
@@ -1039,6 +1039,22 @@ function normalizeTextractOutput(blocks) {
             );
 
             const qty = parseFloat(finalQtyStr) || 1;
+            const rowMoneyValues = Object.values(rowData)
+              .map((cell) => parseCurrency(cell?.text))
+              .filter((n) => Number.isFinite(n));
+            const fallbackMoneyMap = rowMoneyValues.length > 0 ? chooseMoneyMapping(rowMoneyValues, qty) : null;
+
+            // If billed column mapping is weak/empty, recover billed from row-level money values.
+            if ((!Number.isFinite(billedAmount) || billedAmount <= 0) && fallbackMoneyMap && Number.isFinite(fallbackMoneyMap.billed) && fallbackMoneyMap.billed > 0) {
+              billedAmount = fallbackMoneyMap.billed;
+            } else if (Number.isFinite(unitPrice) && Number.isFinite(billedAmount) && billedAmount > 0 && qty > 0 && billedAmount < unitPrice) {
+              // Guard against swapped unit/billed mapping on noisy OCR tables.
+              const maxMoney = rowMoneyValues.reduce((m, n) => Math.max(m, n), Number.NEGATIVE_INFINITY);
+              if (Number.isFinite(maxMoney) && maxMoney > billedAmount) billedAmount = maxMoney;
+            }
+            if ((!Number.isFinite(unitPrice) || unitPrice <= 0) && fallbackMoneyMap && Number.isFinite(fallbackMoneyMap.unitPrice) && fallbackMoneyMap.unitPrice > 0) {
+              unitPrice = fallbackMoneyMap.unitPrice;
+            }
             const coveredCols = new Set(Object.values(headers).filter((v) => Number.isFinite(v)));
             const derivedDescription = Object.entries(rowData)
               .filter(([col]) => !coveredCols.has(Number(col)))
