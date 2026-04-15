@@ -44,7 +44,7 @@ window.toggleAdvancedForm = function() {
   wrap.style.display = isOpen ? 'none' : 'grid';
 };
 
-const STRICT_EXTRACTION_MIN_CONFIDENCE = 65;
+const STRICT_EXTRACTION_MIN_CONFIDENCE = 62;
 let pendingVerifiedRows = [];
 const extractionTelemetry = {
   profile: 'default_generic',
@@ -205,24 +205,28 @@ function isStrongExtractedRow(item) {
   const billed = Number(item.Billed_Amount || 0);
   const qty = Number(item.Qty || 0);
   const confidence = Number(item.extraction_confidence || 0);
+  const overallConfidence = Number(item.overall_confidence || confidence);
   const rowType = String(item.row_type || '').toLowerCase();
   const hasDate = /\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}-\d{2}-\d{2}/.test(String(item.Date || ''));
   const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
+  const mappingError = Number(item.money_mapping_error || 0);
+  const hasLowChars = !!item.has_low_confidence_chars;
+  const strongStructure = validCode && hasDate && Number.isFinite(billed) && billed > 0 && Number.isFinite(qty) && qty > 0 && qty <= 50;
+  const confidencePass = confidence >= STRICT_EXTRACTION_MIN_CONFIDENCE || overallConfidence >= 70;
+  const lowCharPass = !hasLowChars || confidence >= 72 || overallConfidence >= 76;
+  const reviewPass = !item.needs_manual_review || mappingError <= 2.0 || confidence >= 82 || (strongStructure && overallConfidence >= 74);
 
   return Boolean(
-    validCode &&
-    hasDate &&
-    ((Number.isFinite(billed) && billed > 0) || rowType === 'charge_candidate') &&
-    Number.isFinite(qty) &&
-    qty > 0 &&
-    qty <= 50 &&
-    confidence >= STRICT_EXTRACTION_MIN_CONFIDENCE &&
-    (!item.has_low_confidence_chars || confidence >= 85) &&
-    (
-      !item.needs_manual_review ||
-      Number(item.money_mapping_error || 0) <= 1.0 ||
-      confidence >= 88
-    )
+    ((strongStructure && confidencePass && lowCharPass && reviewPass) ||
+      (
+        rowType === 'charge_candidate' &&
+        validCode &&
+        hasDate &&
+        Number.isFinite(qty) &&
+        qty > 0 &&
+        qty <= 50 &&
+        (confidence >= STRICT_EXTRACTION_MIN_CONFIDENCE || overallConfidence >= 72)
+      ))
   );
 }
 
