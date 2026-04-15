@@ -297,7 +297,6 @@ function classifyRowType(item) {
   const amount = Number(item.Billed_Amount || 0);
   const paid = Number(item.Paid || 0);
   const owed = Number(item.Owed || 0);
-  const qty = Number(item.Qty || 0);
   const adjustment = Number(item.Adjustment || 0);
   // Keep summary detection specific so procedure text like "total knee arthroplasty"
   // is not incorrectly classified as a subtotal/summary row.
@@ -319,9 +318,7 @@ function classifyRowType(item) {
   if (/pharmacy|drug|injection/.test(desc)) return { rowType: 'pharmacy item', confidence: 74, reason: 'pharmacy keyword' };
   if (/^J\d{4}$/.test(code)) return { rowType: 'pharmacy item', confidence: 78, reason: 'J-code' };
   if (/lab|imaging|x-ray|mri|ct|ultrasound|panel|assay/.test(desc)) return { rowType: 'lab/imaging', confidence: 74, reason: 'lab/imaging keyword' };
-  const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
-  if (validCode && amount > 0 && owed >= 0) return { rowType: 'charge', confidence: 82, reason: 'valid code + billed amount' };
-  if (validCode && qty > 0) return { rowType: 'charge_candidate', confidence: 66, reason: 'valid code + quantity, amount uncertain' };
+  if ((/^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code)) && amount > 0 && owed >= 0) return { rowType: 'charge', confidence: 82, reason: 'valid code + billed amount' };
   return { rowType: 'unknown', confidence: 45, reason: 'insufficient structured indicators' };
 }
 
@@ -331,17 +328,11 @@ function chooseMoneyMapping(money, qty) {
     return { unitPrice: null, billed: null, paid: 0, adjustment: 0, owed: 0, mapping_source: 'none', mapping_error: null };
   }
   const candidates = [];
-  const maxVal = vals.reduce((m, n) => Math.max(m, n), Number.NEGATIVE_INFINITY);
   const mk = (unitPrice, billed, paid, adjustment, owed, src) => {
     const q = Number(qty || 1) || 1;
     const mathErr = (Number.isFinite(unitPrice) && Number.isFinite(billed)) ? Math.abs((unitPrice * q) - billed) : 9999;
     const reconErr = (Number.isFinite(billed) ? Math.abs((Number(paid || 0) + Number(adjustment || 0) + Number(owed || 0)) - billed) : 9999);
-    const billedNum = Number(billed);
-    const paidNum = Number(paid || 0);
-    const billedPenalty = !Number.isFinite(billedNum) || billedNum <= 0 ? 500 : 0;
-    const paidPenalty = (Number.isFinite(billedNum) && paidNum > billedNum + MONEY_EPSILON) ? 120 : 0;
-    const maxPenalty = (Number.isFinite(billedNum) && Number.isFinite(maxVal) && billedNum < (maxVal * 0.45)) ? 60 : 0;
-    const score = mathErr + (reconErr * 0.5) + billedPenalty + paidPenalty + maxPenalty;
+    const score = mathErr + (reconErr * 0.5);
     candidates.push({ unitPrice, billed, paid: Number(paid || 0), adjustment: Number(adjustment || 0), owed: Number(owed || 0), mapping_source: src, mapping_error: Number(score.toFixed(2)) });
   };
   if (vals.length >= 5) mk(vals[0], vals[1], vals[2], vals[3], vals[4], 'u-b-p-a-o');
@@ -1572,7 +1563,7 @@ module.exports = async (req, res) => {
     // Step 3: filter auditable rows by row_type before auditing
     const auditableRows = normalizedItems.filter((r) => {
       const t = String(r.row_type || classifyRowType(r).rowType || '').toLowerCase();
-      return t === 'charge' || t === 'charge_candidate' || t === 'lab/imaging' || t === 'pharmacy item';
+      return t === 'charge' || t === 'lab/imaging' || t === 'pharmacy item';
     });
 
     // Step 4: Arithmetic Engine
