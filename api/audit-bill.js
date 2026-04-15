@@ -1269,6 +1269,20 @@ function runArithmeticEngine(items, grandTotal) {
         });
       }
     }
+    const arithmeticDiff = Number(item.arithmetic_diff || 0);
+    if (Number(item.arithmetic_mismatch) || (arithmeticDiff > Math.max(1.0, Math.abs(Number(item.Billed_Amount || 0)) * 0.02))) {
+      const qty = Number(item.Qty || 0);
+      const unit = Number(item.Unit_Price || 0);
+      const expected = (qty > 0 && unit > 0) ? (qty * unit) : null;
+      findings.push({
+        type: 'Danger',
+        code: item.CPT || 'UNKNOWN',
+        title: 'Confirmed Arithmetic Error — Unit Price × Qty ≠ Total',
+        reason: expected != null
+          ? `Line item contradiction: ${qty} × $${unit.toFixed(2)} = $${expected.toFixed(2)} but billed total is $${Number(item.Billed_Amount || 0).toFixed(2)} (difference $${Math.abs(expected - Number(item.Billed_Amount || 0)).toFixed(2)}).`
+          : `Line item has deterministic arithmetic mismatch against billed amount (difference $${Math.abs(arithmeticDiff).toFixed(2)}).`
+      });
+    }
 
     // 3. CARC Adjustment consistency check
     if (item.Adjustment && item.Adjustment < 0) {
@@ -1281,6 +1295,18 @@ function runArithmeticEngine(items, grandTotal) {
           reason: `Adjustment ($${item.Adjustment.toFixed(2)}) exceeds billed amount ($${item.Billed_Amount.toFixed(2)}). The resulting credit balance ($${Math.abs(expectedPaid).toFixed(2)}) must be refunded within 60 days per CMS Chapter 4 §50.`
         });
       }
+    }
+    const billed = Number(item.Billed_Amount || 0);
+    const paid = Number(item.Paid || 0);
+    const adj = Number(item.Adjustment || 0);
+    const postAdjNet = billed + adj;
+    if (paid > 0 && billed > 0 && paid > (postAdjNet + 1)) {
+      findings.push({
+        type: 'Danger',
+        code: item.CPT || 'UNKNOWN',
+        title: 'Insurance Payment Exceeds Post-Adjustment Balance',
+        reason: `Insurer paid $${paid.toFixed(2)} while net post-adjustment balance is $${postAdjNet.toFixed(2)} (billed $${billed.toFixed(2)} + adjustment $${adj.toFixed(2)}). Overpayment delta: $${(paid - postAdjNet).toFixed(2)}.`
+      });
     }
 
     // 4. Duplicate Detection Check
@@ -1307,6 +1333,14 @@ function runArithmeticEngine(items, grandTotal) {
 
   // 4. Summation Math Check
   if (grandTotal !== null) {
+      if (grandTotal < -0.01) {
+         findings.push({
+            type: "Danger",
+            code: "DOCUMENT",
+            title: "Negative Amount Due — Credit Balance Signal",
+            reason: `Document Amount Due / Balance Due is negative ($${grandTotal.toFixed(2)}), indicating likely overbilling or refund liability.`
+         });
+      }
       const difference = Math.abs(calculatedSum - grandTotal);
       if (difference > MONEY_EPSILON) {
          findings.push({

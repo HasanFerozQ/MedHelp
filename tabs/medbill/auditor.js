@@ -179,6 +179,16 @@ class BucketAuditor {
           `${r.code || r.desc}: Insurance payment ($${r.paid.toFixed(2)}) exceeds the billed total ($${r.total.toFixed(2)}).`, 'warn', r.code, r.rowId, 90);
         if (r.raw) r.raw.classList.add('audit-row-warn');
       }
+      // 1e. Post-adjustment overpayment (stronger): paid exceeds billed after contractual adjustment.
+      if (r.total > 0 && Number.isFinite(Number(r.paid)) && Number.isFinite(Number(r.adj))) {
+        const netAfterAdj = Number(r.total || 0) + Number(r.adj || 0);
+        if (Number(r.paid || 0) > netAfterAdj + 1) {
+          this.addFinding('financial', 'Insurance Overpayment Exceeds Post-Adjustment Balance',
+            `${r.code || r.desc}: Insurance payment ($${Number(r.paid || 0).toFixed(2)}) exceeds post-adjustment net balance ($${netAfterAdj.toFixed(2)}). Potential overpayment or reconciliation error.`,
+            'danger', r.code, r.rowId, 95);
+          if (r.raw) r.raw.classList.add('audit-row-error');
+        }
+      }
     });
   }
 
@@ -413,6 +423,21 @@ class BucketAuditor {
 
   // ── LAYER 1D — Financial Reconciliation ──────────────────────────────────
   runFinancialSummaryAudit() {
+    // Catch direct Amount Due / Balance Due credits even when summary rows are excluded.
+    const amountDueRows = this.rows.filter((r) =>
+      !r.invalid &&
+      /amount due|balance due/i.test(String(r.desc || '')) &&
+      Number.isFinite(Number(r.total)) &&
+      Number(r.total) < -0.01
+    );
+    if (amountDueRows.length > 0) {
+      const row = amountDueRows[0];
+      this._hasReconError = true;
+      this.addFinding('financial', 'Negative Amount Due — Credit Balance Signal',
+        `Document-level Amount Due/Balance Due is negative ($${Number(row.total || 0).toFixed(2)}). This indicates likely overbilling and refund liability.`,
+        'danger', row.code || '', row.rowId || null, 98);
+    }
+
     // Aggregate all billable care rows, not just generic "service" type.
     const excludedTypes = new Set(['summary', 'summary/subtotal', 'adjustment', 'payment', 'discount', 'tax']);
     const validRows = this.rows.filter((r) => !r.isTotalRow && !r.invalid && !excludedTypes.has(String(r.rowType || '').toLowerCase()));
