@@ -222,6 +222,23 @@ function isStrongExtractedRow(item) {
   );
 }
 
+function isFallbackImportableRow(item) {
+  const code = String(item.CPT || '').trim().toUpperCase();
+  const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
+  const hasDate = /\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}-\d{2}-\d{2}/.test(String(item.Date || ''));
+  const qty = Number(item.Qty || 0);
+  const billed = Number(item.Billed_Amount || 0);
+  const rowType = String(item.row_type || '').toLowerCase();
+  return Boolean(
+    validCode &&
+    hasDate &&
+    Number.isFinite(qty) &&
+    qty > 0 &&
+    qty <= 80 &&
+    (billed > 0 || rowType === 'charge_candidate' || rowType === 'charge' || rowType === 'lab/imaging' || rowType === 'pharmacy item')
+  );
+}
+
 function toAppGridRow(item, sourceTag) {
   const rowType = String(item.row_type || '').toLowerCase();
   const billedFallback = [
@@ -356,8 +373,17 @@ window.handlePdfSelect = async function(event) {
     if (newItems.length === 0) {
       showExtractionStatus('No billable line items were detected in this document. Try a clearer text-based itemized PDF.', 'warn');
     } else {
-      const cleanItems = newItems.filter(isStrongExtractedRow);
-      const reviewRequired = newItems.filter(i => !isStrongExtractedRow(i)).map(i => ({
+      let cleanItems = newItems.filter(isStrongExtractedRow);
+      // Fallback gate: if strict confidence blocks all rows, allow structurally valid rows.
+      if (cleanItems.length === 0) {
+        cleanItems = newItems.filter(isFallbackImportableRow).map((i) => ({
+          ...i,
+          needs_manual_review: true,
+          review_reasons: [...(i.review_reasons || []), 'Imported via fallback gate (strict confidence unavailable)']
+        }));
+      }
+      const cleanIds = new Set(cleanItems.map((i) => `${i.Date}|${i.CPT}|${i.Billed_Amount}|${i.Qty}`));
+      const reviewRequired = newItems.filter((i) => !cleanIds.has(`${i.Date}|${i.CPT}|${i.Billed_Amount}|${i.Qty}`)).map(i => ({
         ...i,
         needs_manual_review: true
       }));
@@ -375,11 +401,14 @@ window.handlePdfSelect = async function(event) {
 
       if (reviewRequired.length > 0) showManualReviewPrompt(reviewRequired);
       showExtractionVerificationGate(newItems.length, cleanItems.length, reviewRequired.length);
+      const usedFallbackGate = cleanItems.some((i) => (i.review_reasons || []).includes('Imported via fallback gate (strict confidence unavailable)'));
       showExtractionStatus(
         cleanItems.length > 0
-          ? `Extraction completed. ${cleanItems.length} high-confidence row(s) ready to import and ${reviewRequired.length} row(s) need review.`
+          ? (usedFallbackGate
+              ? `Extraction completed with fallback import gate. ${cleanItems.length} structurally valid row(s) ready to import and ${reviewRequired.length} row(s) need review.`
+              : `Extraction completed. ${cleanItems.length} high-confidence row(s) ready to import and ${reviewRequired.length} row(s) need review.`)
           : `Extraction completed, but all ${reviewRequired.length} row(s) need manual verification before import.`,
-        cleanItems.length > 0 ? 'success' : 'warn'
+        cleanItems.length > 0 ? (usedFallbackGate ? 'info' : 'success') : 'warn'
       );
       showTopExtractionFindings(d?.result?.top_findings || []);
 
