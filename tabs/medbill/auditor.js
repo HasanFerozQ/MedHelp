@@ -179,12 +179,12 @@ class BucketAuditor {
           `${r.code || r.desc}: Insurance payment ($${r.paid.toFixed(2)}) exceeds the billed total ($${r.total.toFixed(2)}).`, 'warn', r.code, r.rowId, 90);
         if (r.raw) r.raw.classList.add('audit-row-warn');
       }
-      // 1e. Paid exceeds post-adjustment net balance (stronger overpayment signal)
+      // 1e. Post-adjustment overpayment (stronger): paid exceeds billed after contractual adjustment.
       if (r.total > 0 && Number.isFinite(Number(r.paid)) && Number.isFinite(Number(r.adj))) {
         const netAfterAdj = Number(r.total || 0) + Number(r.adj || 0);
         if (Number(r.paid || 0) > netAfterAdj + 1) {
           this.addFinding('financial', 'Insurance Overpayment Exceeds Post-Adjustment Balance',
-            `${r.code || r.desc}: Insurance payment ($${Number(r.paid || 0).toFixed(2)}) exceeds post-adjustment balance ($${netAfterAdj.toFixed(2)}).`,
+            `${r.code || r.desc}: Insurance payment ($${Number(r.paid || 0).toFixed(2)}) exceeds post-adjustment net balance ($${netAfterAdj.toFixed(2)}). Potential overpayment or reconciliation error.`,
             'danger', r.code, r.rowId, 95);
           if (r.raw) r.raw.classList.add('audit-row-error');
         }
@@ -423,7 +423,7 @@ class BucketAuditor {
 
   // ── LAYER 1D — Financial Reconciliation ──────────────────────────────────
   runFinancialSummaryAudit() {
-    // Catch document-level negative Amount Due/Balance Due lines even if summary rows are excluded later.
+    // Catch direct Amount Due / Balance Due credits even when summary rows are excluded.
     const amountDueRows = this.rows.filter((r) =>
       !r.invalid &&
       /amount due|balance due/i.test(String(r.desc || '')) &&

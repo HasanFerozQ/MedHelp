@@ -1380,7 +1380,7 @@ function runArithmeticEngine(items, grandTotal) {
       }
     }
     const arithmeticDiff = Number(item.arithmetic_diff || 0);
-    if (Number(item.arithmetic_mismatch) || arithmeticDiff > Math.max(1.0, Math.abs(Number(item.Billed_Amount || 0)) * 0.02)) {
+    if (Number(item.arithmetic_mismatch) || (arithmeticDiff > Math.max(1.0, Math.abs(Number(item.Billed_Amount || 0)) * 0.02))) {
       const qty = Number(item.Qty || 0);
       const unit = Number(item.Unit_Price || 0);
       const expected = (qty > 0 && unit > 0) ? (qty * unit) : null;
@@ -1389,7 +1389,7 @@ function runArithmeticEngine(items, grandTotal) {
         code: item.CPT || 'UNKNOWN',
         title: 'Confirmed Arithmetic Error — Unit Price × Qty ≠ Total',
         reason: expected != null
-          ? `Line item contradiction: ${qty} × $${unit.toFixed(2)} = $${expected.toFixed(2)} but billed total is $${Number(item.Billed_Amount || 0).toFixed(2)}.`
+          ? `Line item contradiction: ${qty} × $${unit.toFixed(2)} = $${expected.toFixed(2)} but billed total is $${Number(item.Billed_Amount || 0).toFixed(2)} (difference $${Math.abs(expected - Number(item.Billed_Amount || 0)).toFixed(2)}).`
           : `Line item has deterministic arithmetic mismatch against billed amount (difference $${Math.abs(arithmeticDiff).toFixed(2)}).`
       });
     }
@@ -1415,7 +1415,7 @@ function runArithmeticEngine(items, grandTotal) {
         type: 'Danger',
         code: item.CPT || 'UNKNOWN',
         title: 'Insurance Payment Exceeds Post-Adjustment Balance',
-        reason: `Insurer paid $${paid.toFixed(2)} while post-adjustment balance is $${postAdjNet.toFixed(2)} (billed $${billed.toFixed(2)} + adjustment $${adj.toFixed(2)}).`
+        reason: `Insurer paid $${paid.toFixed(2)} while net post-adjustment balance is $${postAdjNet.toFixed(2)} (billed $${billed.toFixed(2)} + adjustment $${adj.toFixed(2)}). Overpayment delta: $${(paid - postAdjNet).toFixed(2)}.`
       });
     }
 

@@ -44,8 +44,9 @@ window.toggleAdvancedForm = function() {
   wrap.style.display = isOpen ? 'none' : 'grid';
 };
 
-const STRICT_EXTRACTION_MIN_CONFIDENCE = 65;
+const STRICT_EXTRACTION_MIN_CONFIDENCE = 62;
 let pendingVerifiedRows = [];
+let pendingReviewContext = 'pdf';
 const extractionTelemetry = {
   profile: 'default_generic',
   profileConfidence: 0,
@@ -205,24 +206,28 @@ function isStrongExtractedRow(item) {
   const billed = Number(item.Billed_Amount || 0);
   const qty = Number(item.Qty || 0);
   const confidence = Number(item.extraction_confidence || 0);
+  const overallConfidence = Number(item.overall_confidence || confidence);
   const rowType = String(item.row_type || '').toLowerCase();
   const hasDate = /\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}-\d{2}-\d{2}/.test(String(item.Date || ''));
   const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
+  const mappingError = Number(item.money_mapping_error || 0);
+  const hasLowChars = !!item.has_low_confidence_chars;
+  const strongStructure = validCode && hasDate && Number.isFinite(billed) && billed > 0 && Number.isFinite(qty) && qty > 0 && qty <= 50;
+  const confidencePass = confidence >= STRICT_EXTRACTION_MIN_CONFIDENCE || overallConfidence >= 70;
+  const lowCharPass = !hasLowChars || confidence >= 72 || overallConfidence >= 76;
+  const reviewPass = !item.needs_manual_review || mappingError <= 2.0 || confidence >= 82 || (strongStructure && overallConfidence >= 74);
 
   return Boolean(
-    validCode &&
-    hasDate &&
-    ((Number.isFinite(billed) && billed > 0) || rowType === 'charge_candidate') &&
-    Number.isFinite(qty) &&
-    qty > 0 &&
-    qty <= 50 &&
-    confidence >= STRICT_EXTRACTION_MIN_CONFIDENCE &&
-    (!item.has_low_confidence_chars || confidence >= 85) &&
-    (
-      !item.needs_manual_review ||
-      Number(item.money_mapping_error || 0) <= 1.0 ||
-      confidence >= 88
-    )
+    ((strongStructure && confidencePass && lowCharPass && reviewPass) ||
+      (
+        rowType === 'charge_candidate' &&
+        validCode &&
+        hasDate &&
+        Number.isFinite(qty) &&
+        qty > 0 &&
+        qty <= 50 &&
+        (confidence >= STRICT_EXTRACTION_MIN_CONFIDENCE || overallConfidence >= 72)
+      ))
   );
 }
 
@@ -303,33 +308,14 @@ window.confirmExtractionImport = function() {
     return;
   }
 
-  // Use pdfGridRows as source of truth for the edited clean items if available
-  pendingVerifiedRows.forEach((item, idx) => {
-    let finalRowData = toAppGridRow(item, `textract-verified-${idx}`);
-    // If the user modified the row in the PDF grid, use those values
-    if (window.pdfGridRows && window.pdfGridRows.length > 0) {
-       const matchingPdfRow = window.pdfGridRows.find(pr => pr.code === item.CPT || pr.code === item.code);
-       if (matchingPdfRow) {
-         finalRowData.date = matchingPdfRow.date;
-         finalRowData.code = matchingPdfRow.code;
-         finalRowData.qty = matchingPdfRow.qty;
-         finalRowData.total = matchingPdfRow.total;
-         finalRowData.price = matchingPdfRow.price;
-         finalRowData.modifier = matchingPdfRow.modifier;
-       }
-    }
-    window.appGridRows.push(finalRowData);
-  });
-  
+  // Keep PDF Hybrid flow isolated in its own audit section.
   extractionTelemetry.importedVerified += pendingVerifiedRows.length;
-  // Clear both pending and pdfGridRows on import
   pendingVerifiedRows = [];
   if (gate) gate.style.display = 'none';
-  localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
   persistExtractionTelemetry();
   renderExtractionTelemetry();
-  switchAuditTab('manual');
-  triggerAudit();
+  switchAuditTab('pdf');
+  if (typeof window.triggerPdfAudit === 'function') window.triggerPdfAudit();
 };
 
 window.handlePdfSelect = async function(event) {
@@ -524,6 +510,7 @@ async function extractPdfClientSide(file) {
 }
 
 window.showManualReviewPrompt = function(items) {
+  pendingReviewContext = 'pdf';
   const container = document.getElementById('review-prompt-area');
   if (!container) return;
   
@@ -605,7 +592,7 @@ window.approveReviewItem = function(btn) {
     return;
   }
 
-  window.appGridRows.push({
+  const reviewedRow = {
     rowId: 'auto-' + Date.now() + Math.random().toString(36).substring(2,6),
     provenance: 'textract-reviewed',
     date,
@@ -626,7 +613,19 @@ window.approveReviewItem = function(btn) {
     money_mapping_error: 0,
     desc: 'Reviewed OCR Entry',
     npi: ''
-  });
+  };
+
+  if (pendingReviewContext === 'pdf') {
+    const existingIdx = (window.pdfGridRows || []).findIndex((r) =>
+      String(r.code || '').toUpperCase() === code &&
+      String(r.date || '') === date &&
+      Math.abs(Number(r.total || 0) - total) <= 0.01
+    );
+    if (existingIdx >= 0) window.pdfGridRows[existingIdx] = { ...window.pdfGridRows[existingIdx], ...reviewedRow };
+    else window.pdfGridRows.push(reviewedRow);
+  } else {
+    window.appGridRows.push(reviewedRow);
+  }
 
   row.remove();
   
@@ -636,8 +635,12 @@ window.approveReviewItem = function(btn) {
     container.style.display = 'none';
   }
 
-  localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
-  triggerAudit();
+  if (pendingReviewContext === 'pdf') {
+    if (typeof window.triggerPdfAudit === 'function') window.triggerPdfAudit();
+  } else {
+    localStorage.setItem('medihelp_grid_data', JSON.stringify(window.appGridRows));
+    triggerAudit();
+  }
 };
 
 function initAudit() {
