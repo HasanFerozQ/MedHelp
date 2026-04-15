@@ -1014,6 +1014,230 @@ function buildComparisonSummary(primaryRows, verifyRows) {
   };
 }
 
+function buildRowKey(item) {
+  const fp = canonicalFingerprint(item || {});
+  const descCore = String(fp.desc || '').slice(0, 32);
+  return `${fp.date}|${fp.code}|${fp.modifier}|${fp.qty}|${fp.amount}|${descCore}`;
+}
+
+function mergeMissingRows(primaryRows, secondaryRows) {
+  const base = Array.isArray(primaryRows) ? [...primaryRows] : [];
+  const secondary = Array.isArray(secondaryRows) ? secondaryRows : [];
+  const seen = new Set(base.map((r) => buildRowKey(r)));
+  const added = [];
+  secondary.forEach((row) => {
+    const code = String(row?.CPT || '').toUpperCase();
+    const billed = Number(row?.Billed_Amount || 0);
+    const qty = Number(row?.Qty || 0);
+    const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
+    if (!validCode || !Number.isFinite(billed) || billed <= 0 || !Number.isFinite(qty) || qty <= 0) return;
+    const key = buildRowKey(row);
+    if (seen.has(key)) return;
+    seen.add(key);
+    added.push({
+      ...row,
+      extraction_confidence: Math.max(58, Number(row.extraction_confidence || row.overall_confidence || 60)),
+      needs_manual_review: true,
+      review_reasons: [...(row.review_reasons || []), 'Added from Gemini to recover missing line item']
+    });
+  });
+  return { rows: [...base, ...added], addedCount: added.length };
+}
+
+function buildLooseRowKey(item) {
+  const fp = canonicalFingerprint(item || {});
+  const amt = Number(item?.Billed_Amount || item?.amount || 0);
+  const qty = Number(item?.Qty || item?.qty || 0);
+  const roundedAmt = Number.isFinite(amt) ? (Math.round(amt * 100) / 100).toFixed(2) : '';
+  return `${fp.date}|${fp.code}|${qty > 0 ? qty : ''}|${roundedAmt}`;
+}
+
+function computeSourceConsensus(rows, namedSources) {
+  const sourceMaps = (namedSources || [])
+    .filter((s) => Array.isArray(s?.rows) && s.rows.length > 0)
+    .map((s) => {
+      const strict = new Set();
+      const loose = new Set();
+      (s.rows || []).forEach((r) => {
+        strict.add(buildRowKey(r));
+        loose.add(buildLooseRowKey(r));
+      });
+      return { name: s.name, strict, loose };
+    });
+
+  return (rows || []).map((row) => {
+    const strictKey = buildRowKey(row);
+    const looseKey = buildLooseRowKey(row);
+    const matchedSources = sourceMaps
+      .filter((m) => m.strict.has(strictKey) || m.loose.has(looseKey))
+      .map((m) => m.name);
+    return { row, matchedSources, supportCount: matchedSources.length };
+  });
+}
+
+function applyConsensusCalibration(rows, namedSources) {
+  const consensus = computeSourceConsensus(rows, namedSources);
+  let multiSourceRows = 0;
+  let singleSourceRows = 0;
+  const calibrated = consensus.map(({ row, supportCount, matchedSources }) => {
+    const current = Number(row.extraction_confidence || row.overall_confidence || 60);
+    const strongStructure =
+      (/^\d{5}$/.test(String(row.CPT || '')) || /^[A-Z]\d{4}$/.test(String(row.CPT || ''))) &&
+      isLikelyDate(row.Date) &&
+      Number(row.Qty || 0) > 0 &&
+      Number(row.Billed_Amount || 0) > 0;
+
+    let adjusted = current;
+    if (supportCount >= 3) adjusted += 10;
+    else if (supportCount === 2) adjusted += 6;
+    else if (supportCount <= 1) adjusted -= strongStructure ? 4 : 10;
+
+    if (supportCount >= 2) multiSourceRows += 1;
+    else singleSourceRows += 1;
+
+    const reasons = [...(row.review_reasons || [])];
+    if (supportCount <= 1) reasons.push('Single-source extraction; lower consensus confidence');
+
+    return {
+      ...row,
+      extraction_confidence: Math.max(35, Math.min(98, Math.round(adjusted))),
+      source_support_count: supportCount,
+      source_support: matchedSources,
+      needs_manual_review: row.needs_manual_review || supportCount <= 1,
+      review_reasons: reasons
+    };
+  });
+
+  return {
+    rows: calibrated,
+    stats: {
+      multi_source_rows: multiSourceRows,
+      single_source_rows: singleSourceRows,
+      total_rows: calibrated.length
+    }
+  };
+}
+
+function rankCandidateWithAgreement(candidates) {
+  const list = (candidates || []).filter(c => Array.isArray(c.rows) && c.rows.length > 0);
+  if (!list.length) return null;
+  const withEval = list.map((c) => ({ ...c, eval: evaluateExtractionCandidate(c.rows) }));
+  const withAgreement = withEval.map((c, idx) => {
+    let agreementTotal = 0;
+    let agreementCount = 0;
+    withEval.forEach((other, jdx) => {
+      if (idx === jdx) return;
+      const cmp = buildComparisonSummary(c.rows, other.rows);
+      if (Number.isFinite(Number(cmp.agreementScore))) {
+        agreementTotal += Number(cmp.agreementScore || 0);
+        agreementCount += 1;
+      }
+    });
+    const avgAgreement = agreementCount > 0 ? (agreementTotal / agreementCount) : 0;
+    const finalScore = Number(c.eval.score || 0) + (avgAgreement * 0.22);
+    return { ...c, avgAgreement: Number(avgAgreement.toFixed(2)), finalScore: Number(finalScore.toFixed(2)) };
+  });
+  withAgreement.sort((a, b) => b.finalScore - a.finalScore);
+  return withAgreement[0];
+}
+
+function weightedPick(pairs, normalizer = (v) => String(v || '').trim()) {
+  const scoreByValue = new Map();
+  (pairs || []).forEach(({ value, weight }) => {
+    const key = normalizer(value);
+    if (!key) return;
+    scoreByValue.set(key, (scoreByValue.get(key) || 0) + Number(weight || 0));
+  });
+  let bestKey = '';
+  let bestScore = -1;
+  for (const [k, s] of scoreByValue.entries()) {
+    if (s > bestScore) {
+      bestKey = k;
+      bestScore = s;
+    }
+  }
+  return { key: bestKey, score: bestScore, candidates: scoreByValue.size };
+}
+
+function applyFieldVotingAndCriticalGuard(baseRows, namedSources) {
+  const sourceWeights = { current: 1.0, textract: 1.0, direct: 0.95, gemini: 0.85 };
+  const validSources = (namedSources || []).filter((s) => Array.isArray(s?.rows) && s.rows.length > 0);
+  const sourceMaps = validSources.map((s) => {
+    const map = new Map();
+    s.rows.forEach((r) => {
+      const key = buildLooseRowKey(r);
+      if (!key) return;
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(r);
+    });
+    return { name: s.name, rows: s.rows, map };
+  });
+
+  let criticalGuardedRows = 0;
+  const out = (baseRows || []).map((row) => {
+    const key = buildLooseRowKey(row);
+    const peers = [{ source: 'current', weight: sourceWeights.current, row }];
+    sourceMaps.forEach((s) => {
+      const matches = s.map.get(key) || [];
+      matches.slice(0, 2).forEach((m) => peers.push({ source: s.name, weight: sourceWeights[s.name] || 0.8, row: m }));
+    });
+
+    const datePick = weightedPick(peers.map((p) => ({ value: normalizeDateForCompare(p.row.Date), weight: p.weight })));
+    const codePick = weightedPick(
+      peers
+        .map((p) => ({ value: String(p.row.CPT || '').toUpperCase(), weight: p.weight }))
+        .filter((p) => /^\d{5}$/.test(p.value) || /^[A-Z]\d{4}$/.test(p.value))
+    );
+    const qtyPick = weightedPick(
+      peers
+        .map((p) => ({ value: Number(p.row.Qty || 0), weight: p.weight }))
+        .filter((p) => Number.isFinite(p.value) && p.value > 0 && p.value <= 50),
+      (v) => String(Number(v))
+    );
+    const billedPick = weightedPick(
+      peers
+        .map((p) => ({ value: Number(p.row.Billed_Amount || 0), weight: p.weight }))
+        .filter((p) => Number.isFinite(p.value) && p.value > 0),
+      (v) => Number(v).toFixed(2)
+    );
+
+    const votedDate = datePick.key || normalizeDateForCompare(row.Date);
+    const votedCode = codePick.key || String(row.CPT || '').toUpperCase();
+    const votedQty = qtyPick.key ? Number(qtyPick.key) : Number(row.Qty || 1);
+    const votedBilled = billedPick.key ? Number(billedPick.key) : Number(row.Billed_Amount || 0);
+
+    let updated = {
+      ...row,
+      Date: votedDate || row.Date,
+      CPT: votedCode || row.CPT,
+      Qty: Number.isFinite(votedQty) && votedQty > 0 ? votedQty : row.Qty,
+      Billed_Amount: Number.isFinite(votedBilled) && votedBilled > 0 ? votedBilled : row.Billed_Amount,
+      field_consensus: {
+        peers_considered: peers.length,
+        date_candidates: datePick.candidates,
+        code_candidates: codePick.candidates,
+        qty_candidates: qtyPick.candidates,
+        billed_candidates: billedPick.candidates,
+        code_vote_score: Number(codePick.score || 0)
+      }
+    };
+    updated.IsValidCode = /^\d{5}$/.test(String(updated.CPT || '')) || /^[A-Z]\d{4}$/.test(String(updated.CPT || ''));
+    updated = { ...updated, ...computeFieldConfidence(updated) };
+
+    const codeSupport = peers.filter((p) => String(p.row.CPT || '').toUpperCase() === String(updated.CPT || '').toUpperCase()).length;
+    const criticalCode = !updated.IsValidCode || codeSupport < 2;
+    if (criticalCode) {
+      criticalGuardedRows += 1;
+      updated.needs_manual_review = true;
+      updated.extraction_confidence = Math.min(Number(updated.extraction_confidence || updated.overall_confidence || 65), 58);
+      updated.review_reasons = [...(updated.review_reasons || []), 'Critical code guard: insufficient multi-source support for billed code'];
+    }
+    return updated;
+  });
+
+  return { rows: out, stats: { critical_guarded_rows: criticalGuardedRows, total_rows: out.length } };
+}
+
 const PROVIDER_TEMPLATES = [
   {
     id: 'generic_hospital_statement_v1',
@@ -1661,7 +1885,8 @@ module.exports = async (req, res) => {
     let workingBuffer = req.file.buffer;
     let preprocessingApplied = false;
     let preprocessingMode = 'none';
-    if (preflight.needs_preprocessing && mime.startsWith('image/')) {
+    const alwaysPreprocessImages = String(process.env.OCR_ALWAYS_PREPROCESS_IMAGES || 'true') !== 'false';
+    if (mime.startsWith('image/') && (preflight.needs_preprocessing || alwaysPreprocessImages)) {
       const prep = await preprocessImageForOcr(workingBuffer);
       workingBuffer = prep.buffer;
       preprocessingApplied = prep.applied;
@@ -1743,6 +1968,7 @@ module.exports = async (req, res) => {
     let geminiCompare = null;
     if (process.env.GEMINI_API_KEY && workingBuffer && /pdf/i.test(mime || '')) {
       const shouldRunGemini = String(process.env.GEMINI_COMPARE_ENABLED || 'true') !== 'false';
+      const allowGeminiMerge = String(process.env.GEMINI_MERGE_ENABLED || 'true') !== 'false';
       if (shouldRunGemini) {
         geminiRows = await runGeminiOcrFallback(workingBuffer, mime || 'application/pdf');
         if (geminiRows.length > 0) {
@@ -1753,6 +1979,18 @@ module.exports = async (req, res) => {
             normalizedItems = geminiRows;
             detectedTemplate = 'textract_gemini_blend';
             templateConfidence = Math.max(45, templateConfidence);
+          }
+          if (allowGeminiMerge && normalizedItems.length > 0) {
+            const mergeResult = mergeMissingRows(normalizedItems, geminiRows);
+            if (mergeResult.addedCount > 0) {
+              normalizedItems = mergeResult.rows;
+              detectedTemplate = `${detectedTemplate}+gemini_fill`;
+              templateConfidence = Math.max(50, templateConfidence);
+              geminiCompare = {
+                ...(geminiCompare || {}),
+                merge_added_rows: mergeResult.addedCount
+              };
+            }
           }
         }
       }
@@ -1766,10 +2004,7 @@ module.exports = async (req, res) => {
       { name: 'gemini', rows: geminiRows, profile: 'gemini_recovery', confidence: 55 }
     ].filter(c => Array.isArray(c.rows) && c.rows.length > 0);
     if (sourceCandidates.length > 0) {
-      const ranked = sourceCandidates
-        .map((c) => ({ ...c, eval: evaluateExtractionCandidate(c.rows) }))
-        .sort((a, b) => b.eval.score - a.eval.score);
-      const best = ranked[0];
+      const best = rankCandidateWithAgreement(sourceCandidates);
       if (best && best.rows !== normalizedItems) {
         normalizedItems = best.rows;
         detectedTemplate = best.profile;
@@ -1865,6 +2100,18 @@ module.exports = async (req, res) => {
     normalizedItems = applyDuplicateHeuristics(normalizedItems);
     const pageTrust = computePageTrustScores(normalizedItems, directExtract.pageStats);
     normalizedItems = applyPageTrustToRows(normalizedItems, pageTrust);
+    const consensusCalibrated = applyConsensusCalibration(normalizedItems, [
+      { name: 'textract', rows: textractRows },
+      { name: 'direct', rows: directRows },
+      { name: 'gemini', rows: geminiRows }
+    ]);
+    normalizedItems = consensusCalibrated.rows;
+    const fieldVoted = applyFieldVotingAndCriticalGuard(normalizedItems, [
+      { name: 'textract', rows: textractRows },
+      { name: 'direct', rows: directRows },
+      { name: 'gemini', rows: geminiRows }
+    ]);
+    normalizedItems = fieldVoted.rows;
 
     const extractionMetrics = computePipelineMetrics(normalizedItems, crossCheck);
     const decisionState = deriveDecisionState(extractionMetrics);
@@ -1965,6 +2212,8 @@ module.exports = async (req, res) => {
         cross_check: crossCheck,
         gemini_compare: geminiCompare,
         page_trust: pageTrust,
+        source_consensus: consensusCalibrated.stats,
+        field_consensus: fieldVoted.stats,
         extraction_metrics: extractionMetrics,
         decision_state: decisionState,
         result: { 
