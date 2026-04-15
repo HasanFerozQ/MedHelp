@@ -298,7 +298,18 @@ function classifyRowType(item) {
   const paid = Number(item.Paid || 0);
   const owed = Number(item.Owed || 0);
   const adjustment = Number(item.Adjustment || 0);
-  if (/subtotal|total current charges|balance forward|account summary|balance due|totals?/.test(desc)) return { rowType: 'summary/subtotal', confidence: 90, reason: 'summary keywords' };
+  // Keep summary detection specific so procedure text like "total knee arthroplasty"
+  // is not incorrectly classified as a subtotal/summary row.
+  if (
+    /\bsubtotal\b/.test(desc) ||
+    /\btotal\s+(?:current\s+)?charges?\b/.test(desc) ||
+    /\bbalance\s+forward\b/.test(desc) ||
+    /\baccount\s+summary\b/.test(desc) ||
+    /\bbalance\s+due\b/.test(desc) ||
+    /^\s*totals?\s*$/i.test(desc)
+  ) {
+    return { rowType: 'summary/subtotal', confidence: 90, reason: 'summary keywords' };
+  }
   if (/adjust|contractual|write[- ]?off|carc/.test(desc) || adjustment < 0) return { rowType: 'adjustment', confidence: 84, reason: 'adjustment marker' };
   if (/payment|remit|insurance payment|paid/.test(desc) || (paid > 0 && amount <= 0.01)) return { rowType: 'payment', confidence: 82, reason: 'payment marker' };
   if (/discount/.test(desc)) return { rowType: 'discount', confidence: 75, reason: 'discount keyword' };
@@ -480,7 +491,8 @@ function parseRowsFromTextLines(linesOrObjects) {
     const qtyFromLabel = (line.match(/\b(?:qty|units?)[:\s]*(\d+)\b/i) || [])[1];
     const qtyFromColumns = (line.match(/\b(?:[A-TV-Z][0-9][0-9AB](?:\.[A-Z0-9]{1,4})?)\s+(\d{1,2})\s+[A-Za-z]/i) || [])[1];
     const qty = parseInt(qtyFromLabel || qtyFromColumns || '1', 10);
-    const money = [...line.matchAll(/(?:\$?\s*)(-?\d{1,3}(?:,\d{3})*(?:\.\d{1,2}))/g)]
+    // Accept money tokens with or without decimal cents.
+    const money = [...line.matchAll(/(?:\$?\s*)(-?\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?)/g)]
       .map(m => parseFloat(String(m[1]).replace(/,/g, '')))
       .filter(n => Number.isFinite(n));
     const mapping = chooseMoneyMapping(money, qty);
