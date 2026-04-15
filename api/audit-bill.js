@@ -27,6 +27,8 @@ const TEXTRACT_BACKOFF_MS = [0, 700, 1500];
 const TEXTRACT_BYTES_LIMIT = 10 * 1024 * 1024;
 const MONEY_EPSILON = 0.01;
 const DIRECT_TEXT_MAX_ROWS = 250;
+const MAX_PDF_PAGES = Number(process.env.MAX_PDF_PAGES || 30);
+const MIN_PDF_PAGES = Number(process.env.MIN_PDF_PAGES || 1);
 const RATE_WINDOW_MS = 5 * 60 * 1000;
 const RATE_MAX_REQUESTS = Number(process.env.AUDIT_RATE_LIMIT_COUNT || 20);
 const GEMINI_OVERRIDE_MARGIN = Number(process.env.GEMINI_OVERRIDE_MARGIN || 10);
@@ -745,6 +747,114 @@ Return only JSON array, no markdown.`;
   }
 }
 
+async function runGeminiAuditVerification(baseFindings, items, fileBuffer, mimeType, model = 'gemini-2.5-flash-lite') {
+  if (!Array.isArray(baseFindings) || baseFindings.length === 0) return { correctedFindings: [], notes: [] };
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey || !fileBuffer) return { correctedFindings: [], notes: [] };
+
+  const findingsSummary = baseFindings.slice(0, 80).map((f) =>
+    `type=${f.type || ''} title=${f.title || ''} code=${f.code || ''} detail=${f.reason || f.detail || ''}`
+  ).join('\n');
+  const rowSummary = (items || []).slice(0, 120).map((i) =>
+    `date=${i.Date || ''} code=${i.CPT || ''} qty=${i.Qty || ''} billed=${i.Billed_Amount || ''} paid=${i.Paid || ''} adj=${i.Adjustment || ''} owed=${i.Owed || ''} desc=${i.Description || ''}`
+  ).join('\n');
+  const prompt = `You are a strict medical billing QA verifier.
+Validate audit findings against the uploaded PDF + extracted rows.
+Keep only strongly supported findings, correct inaccurate wording/amounts, and add only clearly missed high-impact findings.
+Return ONLY JSON:
+{"corrected_findings":[{"type":"Warning|Danger|System","title":"...","detail":"...","code":"CPT_OR_DOCUMENT","severity":"warn|danger|info","confidence":0-100}],"notes":["short note"]}`;
+
+  try {
+    const body = {
+      contents: [{
+        parts: [
+          { text: `${prompt}\n\nINPUT ROWS:\n${rowSummary}\n\nCURRENT FINDINGS:\n${findingsSummary}` },
+          { inline_data: { mime_type: mimeType || 'application/pdf', data: fileBuffer.toString('base64') } }
+        ]
+      }],
+      generationConfig: { temperature: 0.05, maxOutputTokens: 3072, response_mime_type: "application/json" }
+    };
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) return { correctedFindings: [], notes: [`gemini_verify_http_${r.status}`] };
+    const json = await r.json();
+    const text = json?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') || '';
+    const cleaned = text.replace(/```json|```/gi, '').trim();
+    const parsed = JSON.parse(cleaned || '{}');
+    return {
+      correctedFindings: Array.isArray(parsed.corrected_findings) ? parsed.corrected_findings : [],
+      notes: Array.isArray(parsed.notes) ? parsed.notes : []
+    };
+  } catch (err) {
+    return { correctedFindings: [], notes: [`gemini_verify_error:${String(err?.message || err).slice(0, 80)}`] };
+  }
+}
+
+function mergeVerifiedFindings(baseFindings, correctedFindings) {
+  const base = Array.isArray(baseFindings) ? baseFindings : [];
+  const corrected = Array.isArray(correctedFindings) ? correctedFindings : [];
+  if (corrected.length === 0) {
+    return {
+      findings: base,
+      mergeNotes: ['No Gemini corrections returned; kept deterministic findings.']
+    };
+  }
+
+  const baseCritical = base.filter((f) => String(f.type || '').toLowerCase() === 'danger');
+  const correctedMapped = corrected.map((f) => ({
+    type: f.type || 'Warning',
+    title: f.title || 'Verified Finding',
+    reason: f.detail || f.reason || '',
+    code: f.code || 'DOCUMENT',
+    severity: f.severity || (String(f.type || '').toLowerCase() === 'danger' ? 'danger' : 'warn'),
+    confidence: Number(f.confidence || 0),
+    model_source: 'Gemini Audit Verification'
+  }));
+
+  // Keep all deterministic danger findings by default.
+  const keptCritical = [];
+  const criticalKeys = new Set();
+  baseCritical.forEach((f) => {
+    const key = `${String(f.code || 'DOCUMENT')}|${String(f.title || '').toLowerCase().slice(0, 80)}`;
+    if (!criticalKeys.has(key)) {
+      criticalKeys.add(key);
+      keptCritical.push(f);
+    }
+  });
+
+  // Add deterministic non-danger findings unless a high-confidence Gemini finding
+  // matches same code+title stem (Gemini can refine wording).
+  const merged = [...keptCritical];
+  const correctedIndex = new Set(
+    correctedMapped.map((f) => `${String(f.code || 'DOCUMENT')}|${String(f.title || '').toLowerCase().slice(0, 32)}`)
+  );
+  base.forEach((f) => {
+    if (String(f.type || '').toLowerCase() === 'danger') return;
+    const key = `${String(f.code || 'DOCUMENT')}|${String(f.title || '').toLowerCase().slice(0, 32)}`;
+    if (!correctedIndex.has(key)) merged.push(f);
+  });
+
+  // Add Gemini findings (dedup by code+title stem).
+  const seen = new Set(merged.map((f) => `${String(f.code || 'DOCUMENT')}|${String(f.title || '').toLowerCase().slice(0, 80)}`));
+  correctedMapped.forEach((f) => {
+    const key = `${String(f.code || 'DOCUMENT')}|${String(f.title || '').toLowerCase().slice(0, 80)}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    merged.push(f);
+  });
+
+  return {
+    findings: merged,
+    mergeNotes: [
+      `Deterministic danger findings preserved: ${keptCritical.length}`,
+      `Gemini corrected/additional findings merged: ${correctedMapped.length}`
+    ]
+  };
+}
+
 function scoreExtractionCandidate(rows, crossCheckScore = 0) {
   const list = rows || [];
   if (!list.length) return 0;
@@ -1269,6 +1379,20 @@ function runArithmeticEngine(items, grandTotal) {
         });
       }
     }
+    const arithmeticDiff = Number(item.arithmetic_diff || 0);
+    if (Number(item.arithmetic_mismatch) || arithmeticDiff > Math.max(1.0, Math.abs(Number(item.Billed_Amount || 0)) * 0.02)) {
+      const qty = Number(item.Qty || 0);
+      const unit = Number(item.Unit_Price || 0);
+      const expected = (qty > 0 && unit > 0) ? (qty * unit) : null;
+      findings.push({
+        type: 'Danger',
+        code: item.CPT || 'UNKNOWN',
+        title: 'Confirmed Arithmetic Error — Unit Price × Qty ≠ Total',
+        reason: expected != null
+          ? `Line item contradiction: ${qty} × $${unit.toFixed(2)} = $${expected.toFixed(2)} but billed total is $${Number(item.Billed_Amount || 0).toFixed(2)}.`
+          : `Line item has deterministic arithmetic mismatch against billed amount (difference $${Math.abs(arithmeticDiff).toFixed(2)}).`
+      });
+    }
 
     // 3. CARC Adjustment consistency check
     if (item.Adjustment && item.Adjustment < 0) {
@@ -1281,6 +1405,18 @@ function runArithmeticEngine(items, grandTotal) {
           reason: `Adjustment ($${item.Adjustment.toFixed(2)}) exceeds billed amount ($${item.Billed_Amount.toFixed(2)}). The resulting credit balance ($${Math.abs(expectedPaid).toFixed(2)}) must be refunded within 60 days per CMS Chapter 4 §50.`
         });
       }
+    }
+    const billed = Number(item.Billed_Amount || 0);
+    const paid = Number(item.Paid || 0);
+    const adj = Number(item.Adjustment || 0);
+    const postAdjNet = billed + adj;
+    if (paid > 0 && billed > 0 && paid > (postAdjNet + 1)) {
+      findings.push({
+        type: 'Danger',
+        code: item.CPT || 'UNKNOWN',
+        title: 'Insurance Payment Exceeds Post-Adjustment Balance',
+        reason: `Insurer paid $${paid.toFixed(2)} while post-adjustment balance is $${postAdjNet.toFixed(2)} (billed $${billed.toFixed(2)} + adjustment $${adj.toFixed(2)}).`
+      });
     }
 
     // 4. Duplicate Detection Check
@@ -1307,6 +1443,14 @@ function runArithmeticEngine(items, grandTotal) {
 
   // 4. Summation Math Check
   if (grandTotal !== null) {
+      if (grandTotal < -0.01) {
+         findings.push({
+            type: "Danger",
+            code: "DOCUMENT",
+            title: "Negative Amount Due — Credit Balance Signal",
+            reason: `Document Amount Due / Balance Due is negative ($${grandTotal.toFixed(2)}), indicating likely overbilling or refund liability.`
+         });
+      }
       const difference = Math.abs(calculatedSum - grandTotal);
       if (difference > MONEY_EPSILON) {
          findings.push({
@@ -1525,6 +1669,15 @@ module.exports = async (req, res) => {
       return res.status(400).json({ ok: false, error: 'Unsupported file type. Upload PDF or image (PNG/JPG/WEBP/TIFF).' });
     }
     const preflight = await buildDocumentPreflight(req.file);
+    if (mime.includes('pdf')) {
+      const pages = Number(preflight.page_count || 0);
+      if (pages < MIN_PDF_PAGES || pages > MAX_PDF_PAGES) {
+        return res.status(400).json({
+          ok: false,
+          error: `PDF page limit exceeded. Allowed range: ${MIN_PDF_PAGES}-${MAX_PDF_PAGES} pages. Uploaded: ${pages}.`
+        });
+      }
+    }
     let workingBuffer = req.file.buffer;
     let preprocessingApplied = false;
     let preprocessingMode = 'none';
@@ -1774,7 +1927,10 @@ module.exports = async (req, res) => {
 
     // Combine Findings
     const allFindings = [...engineResults.findings, ...clinicalResults.clinicalFindings];
-    const numAnomalies = allFindings.length;
+    const geminiVerified = await runGeminiAuditVerification(allFindings, auditableRows, workingBuffer, mime);
+    const mergedVerification = mergeVerifiedFindings(allFindings, geminiVerified.correctedFindings || []);
+    const finalFindings = mergedVerification.findings;
+    const numAnomalies = finalFindings.length;
     
     let summaryText = `Found ${normalizedItems.length} billing items. Clinical datasets detect $${clinicalResults.savingsOpportunity.toFixed(2)} in potential savings.`;
     if (numAnomalies > 5) {
@@ -1803,10 +1959,11 @@ module.exports = async (req, res) => {
         decision_state: decisionState,
         result: { 
             summary: summaryText,
-            findings: allFindings,
-            top_findings: rankHighValueFindings(allFindings),
+            findings: finalFindings,
+            top_findings: rankHighValueFindings(finalFindings),
             potential_savings: clinicalResults.savingsOpportunity,
-            medicare_benchmark_total: clinicalResults.totalBenchmark
+            medicare_benchmark_total: clinicalResults.totalBenchmark,
+            verification_notes: [...(geminiVerified.notes || []), ...(mergedVerification.mergeNotes || [])]
         } 
     });
 
