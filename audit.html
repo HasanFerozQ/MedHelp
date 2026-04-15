@@ -287,13 +287,9 @@
 
   <div class="container" style="margin-bottom: 80px; max-width: 1280px;">
       <!-- Tab Navigation -->
-      <!-- Disclaimer Banner -->
-      <div class="audit-disclaimer-banner" style="margin-bottom: 24px; padding: 14px 18px; border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 10px; background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(0, 0, 0, 0.2)); display: flex; gap: 12px; align-items: flex-start;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" style="flex-shrink: 0; margin-top: 2px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-        <div>
-          <h4 style="margin: 0 0 6px; font-size: 13px; color: #facc15; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">AI-Assisted Processing</h4>
-          <p style="margin: 0; font-size: 12px; color: var(--text-main); line-height: 1.5;">This tool uses AI and rule-based systems to surface potential billing errors. <strong>It can make mistakes and miss context.</strong> Always verify extracted data and clinical findings against your original itemized bill and provider documentation before initiating disputes.</p>
-        </div>
+      <div class="audit-guidance-note">
+        <strong>Before you begin:</strong> Use an itemized bill (UB-04/HCFA-1500 format where possible) for the most accurate findings.
+        For PDF extraction, text-based PDFs provide significantly better parsing quality than scanned photo PDFs.
       </div>
       <div style="display: flex; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
         <button id="tab-btn-manual" onclick="switchAuditTab('manual')" class="btn" style="background: var(--accent); color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; border: none; cursor: pointer;">Manual Line Entry</button>

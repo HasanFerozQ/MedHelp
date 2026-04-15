@@ -27,22 +27,6 @@ const TEXTRACT_BACKOFF_MS = [0, 700, 1500];
 const TEXTRACT_BYTES_LIMIT = 10 * 1024 * 1024;
 const MONEY_EPSILON = 0.01;
 const DIRECT_TEXT_MAX_ROWS = 250;
-
-/**
- * Robustly parse strings into numbers, stripping currency symbols, 
- * commas, and handling accounting-style negative parentheses.
- */
-function parseCurrency(val) {
-  if (val == null || val === '') return null;
-  if (typeof val === 'number') return val;
-  const cleaned = String(val)
-    .replace(/[$\s,]/g, '')
-    .replace(/\((.*)\)/, '-$1')
-    .trim();
-  const n = parseFloat(cleaned);
-  return Number.isFinite(n) ? Math.round(n * 100) / 100 : null;
-}
-
 const RATE_WINDOW_MS = 5 * 60 * 1000;
 const RATE_MAX_REQUESTS = Number(process.env.AUDIT_RATE_LIMIT_COUNT || 20);
 const GEMINI_OVERRIDE_MARGIN = Number(process.env.GEMINI_OVERRIDE_MARGIN || 10);
@@ -412,9 +396,8 @@ function chooseMoneyMapping(money, qty) {
     paid: 0,
     adjustment: 0,
     owed: 0,
-    mapping_source: unitPrice ? 'b-max-heuristic-matched' : 'b-max-heuristic',
-    mapping_error: unitPrice ? 0 : 5,
-    priceWasDerived: !!unitPrice && maxVal > 0
+    mapping_source: 'b-max-heuristic',
+    mapping_error: unitPrice ? 0 : 5
   };
 }
 
@@ -711,29 +694,10 @@ function applyDuplicateHeuristics(rows) {
 async function runGeminiOcrFallback(fileBuffer, mimeType) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey || !fileBuffer) return [];
-  const model = 'gemini-2.5-flash-preview-04-17';
-  // Comprehensive prompt — includes DX (ICD-10), financial fields, and clinical context
-  // so Gemini participates fully in every downstream audit rule, not just extraction.
-  const prompt = `You are a medical billing extraction specialist. Analyze this medical bill and extract every line-item service charge as a strict JSON array.
-
-For EACH line item include ALL of these fields (use null if not found):
-- Date: service date (MM/DD/YYYY)
-- CPT: CPT or HCPCS code (5-digit number or letter+4 digits, e.g. 93000, G0444)
-- Qty: number of units billed (integer, default 1)
-- Unit_Price: per-unit charge amount (number, null if not shown)
-- Modifier: 2-character modifier code if present (e.g. "25", "59", null)
-- Billed_Amount: total billed amount for this line
-- Paid: amount paid by insurance (0 if shown as $0 or blank)
-- Adjustment: contractual adjustment amount (0 if not shown, negative if credit)
-- Owed: patient responsibility / amount owed (0 if not shown)
-- DX: array of ICD-10 diagnosis codes associated with this line (e.g. ["S72.001A", "I25.10"]), empty array [] if none
-- Description: full service description text
-
-Rules:
-- Return ONLY a valid JSON array, no markdown, no explanation.
-- If the bill shows a unit price AND a total that do not multiply correctly (qty * unit_price != billed_total), still return both values exactly as shown on the bill.
-- Extract ALL ICD-10 codes you can find on the bill or associated with each line.
-- Preserve exact dollar amounts as numbers without currency symbols.`;
+  const model = 'gemini-2.5-flash-lite';
+  const prompt = `Extract medical bill line items as strict JSON array.
+Each object keys: Date, CPT, Qty, Unit_Price, Modifier, Billed_Amount, Description.
+Return only JSON array, no markdown.`;
   const body = {
     contents: [{
       parts: [
@@ -741,110 +705,8 @@ Rules:
         { inline_data: { mime_type: mimeType || 'application/pdf', data: fileBuffer.toString('base64') } }
       ]
     }],
-    generationConfig: { temperature: 0.05, maxOutputTokens: 8192 }
+    generationConfig: { temperature: 0.1 }
   };
-  try {
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if (!r.ok) {
-      const errText = await r.text().catch(() => '');
-      console.warn(`MediHelp: Gemini API error ${r.status}: ${errText.slice(0, 200)}`);
-      return [];
-    }
-    const json = await r.json();
-    const text = json?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') || '';
-    const cleaned = text.replace(/```json|```/gi, '').trim();
-    const arr = JSON.parse(cleaned);
-    if (!Array.isArray(arr)) return [];
-    return arr.map((row) => {
-      // Normalize DX: accept both array and comma-separated string
-      let dxArr = [];
-      if (Array.isArray(row.DX)) {
-        dxArr = row.DX.map(d => String(d || '').trim().toUpperCase()).filter(Boolean);
-      } else if (typeof row.DX === 'string' && row.DX.trim()) {
-        dxArr = row.DX.split(/[,;\s]+/).map(d => d.trim().toUpperCase()).filter(Boolean);
-      }
-      const item = {
-        Date: String(row.Date || '').trim(),
-        CPT: String(row.CPT || '').trim().toUpperCase(),
-        IsValidCode: /^\d{5}$/.test(String(row.CPT || '').trim()) || /^[A-Z]\d{4}$/.test(String(row.CPT || '').trim().toUpperCase()),
-        Qty: Number(row.Qty || 1) || 1,
-        Unit_Price: parseCurrency(row.Unit_Price),
-        Modifier: String(row.Modifier || '').trim().toUpperCase(),
-        Billed_Amount: parseCurrency(row.Billed_Amount) || 0,
-        Adjustment: parseCurrency(row.Adjustment) || 0,
-        Paid: parseCurrency(row.Paid) || 0,
-        Owed: parseCurrency(row.Owed) || 0,
-        DX: dxArr,
-        Description: String(row.Description || '').trim(),
-        extraction_confidence: 82,
-        needs_manual_review: false,
-        has_low_confidence_chars: false,
-        review_reasons: []
-      };
-      Object.assign(item, computeFieldConfidence(item));
-      return item;
-    }).filter(rw => rw.CPT && Number.isFinite(Number(rw.Billed_Amount)));
-  } catch (err) {
-    console.warn('MediHelp: Gemini OCR fallback error:', String(err?.message || err).slice(0, 200));
-    return [];
-  }
-}
-
-/**
- * GEMINI ROLE 2: Clinical Audit Pass (Reasoning)
- * Acts as a senior auditor looking for clinical/narrative inconsistencies
- * that deterministic code might overlook.
- */
-async function runGeminiClinicalAudit(items, fileBuffer, mimeType, model = "gemini-1.5-flash") {
-  if (!items || items.length === 0) return [];
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return [];
-
-  const rowSummary = items.map(i => 
-    `Date: ${i.Date}, CPT: ${i.CPT}, Desc: ${i.Description}, Qty: ${i.Qty || 1}, Total: $${i.Billed_Amount}, DX: ${(i.DX || []).join(',')}`
-  ).join('\n');
-
-  const prompt = `
-Act as a Senior Medical Auditor. I have extracted these rows from a medical bill. 
-Review them against the original document for clinical anomalies.
-
-STRUCTURED DATA:
-${rowSummary}
-
-INSTRUCTIONS:
-1. Identify high-risk clinical mismatches (e.g., Cardiology procedures paired with Orthopedic diagnoses).
-2. Identify "Hidden Denials" found in footnotes or plan remarks (e.g. CO-197, CO-16, "Prior Auth Missing").
-3. Check for Quantity Paradoxes (e.g., description says "Double treatment" or "8 units" but Qty column is "1").
-4. Check for Medically Unnecessary Screenings (e.g., Depression screenings on acute visits without Wellness context).
-5. Output ONLY a valid JSON array of finding objects.
-
-JSON Format:
-[
-  {
-    "type": "Warning", 
-    "title": "DX-Procedure Mismatch (CO-11 Risk)",
-    "detail": "Detailed explanation...",
-    "code": "CPT_CODE",
-    "severity": "danger",
-    "confidence": 95
-  }
-]
-`;
-
-  const body = {
-    contents: [{
-      parts: [
-        { text: prompt },
-        { inline_data: { mime_type: mimeType || 'application/pdf', data: fileBuffer.toString('base64') } }
-      ]
-    }],
-    generationConfig: { temperature: 0.1, maxOutputTokens: 2048, response_mime_type: "application/json" }
-  };
-
   try {
     const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
       method: 'POST',
@@ -856,9 +718,29 @@ JSON Format:
     const text = json?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') || '';
     const cleaned = text.replace(/```json|```/gi, '').trim();
     const arr = JSON.parse(cleaned);
-    return Array.isArray(arr) ? arr : [];
-  } catch (err) {
-    console.warn('MediHelp: Gemini Clinical Pass error:', err.message);
+    if (!Array.isArray(arr)) return [];
+    return arr.map((row) => {
+      const item = {
+        Date: String(row.Date || '').trim(),
+        CPT: String(row.CPT || '').trim().toUpperCase(),
+        IsValidCode: /^\d{5}$/.test(String(row.CPT || '').trim()) || /^[A-Z]\d{4}$/.test(String(row.CPT || '').trim().toUpperCase()),
+        Qty: Number(row.Qty || 1) || 1,
+        Unit_Price: Number(row.Unit_Price || 0) || null,
+        Modifier: String(row.Modifier || '').trim().toUpperCase(),
+        Billed_Amount: Number(row.Billed_Amount || 0) || 0,
+        Adjustment: 0,
+        Paid: 0,
+        DX: [],
+        Description: String(row.Description || '').trim(),
+        extraction_confidence: 58,
+        needs_manual_review: true,
+        has_low_confidence_chars: false,
+        review_reasons: ['AI OCR fallback extraction (manual verification required)']
+      };
+      Object.assign(item, computeFieldConfidence(item));
+      return item;
+    }).filter(rw => rw.CPT && Number.isFinite(Number(rw.Billed_Amount)));
+  } catch (_) {
     return [];
   }
 }
@@ -1012,235 +894,6 @@ function buildComparisonSummary(primaryRows, verifyRows) {
       `Row-count delta: ${rowCountDelta}`
     ]
   };
-}
-
-function buildRowKey(item) {
-  const fp = canonicalFingerprint(item || {});
-  const descCore = String(fp.desc || '').slice(0, 32);
-  return `${fp.date}|${fp.code}|${fp.modifier}|${fp.qty}|${fp.amount}|${descCore}`;
-}
-
-function mergeMissingRows(primaryRows, secondaryRows) {
-  const base = Array.isArray(primaryRows) ? [...primaryRows] : [];
-  const secondary = Array.isArray(secondaryRows) ? secondaryRows : [];
-  const seen = new Set(base.map((r) => buildRowKey(r)));
-  const added = [];
-  secondary.forEach((row) => {
-    const code = String(row?.CPT || '').toUpperCase();
-    const billed = Number(row?.Billed_Amount || 0);
-    const qty = Number(row?.Qty || 0);
-    const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
-    if (!validCode || !Number.isFinite(billed) || billed <= 0 || !Number.isFinite(qty) || qty <= 0) return;
-    const key = buildRowKey(row);
-    if (seen.has(key)) return;
-    seen.add(key);
-    added.push({
-      ...row,
-      extraction_confidence: Math.max(58, Number(row.extraction_confidence || row.overall_confidence || 60)),
-      needs_manual_review: true,
-      review_reasons: [...(row.review_reasons || []), 'Added from Gemini to recover missing line item']
-    });
-  });
-  return { rows: [...base, ...added], addedCount: added.length };
-}
-
-function buildLooseRowKey(item) {
-  const fp = canonicalFingerprint(item || {});
-  const amt = Number(item?.Billed_Amount || item?.amount || 0);
-  const qty = Number(item?.Qty || item?.qty || 0);
-  const roundedAmt = Number.isFinite(amt) ? (Math.round(amt * 100) / 100).toFixed(2) : '';
-  return `${fp.date}|${fp.code}|${qty > 0 ? qty : ''}|${roundedAmt}`;
-}
-
-function computeSourceConsensus(rows, namedSources) {
-  const sourceMaps = (namedSources || [])
-    .filter((s) => Array.isArray(s?.rows) && s.rows.length > 0)
-    .map((s) => {
-      const strict = new Set();
-      const loose = new Set();
-      (s.rows || []).forEach((r) => {
-        strict.add(buildRowKey(r));
-        loose.add(buildLooseRowKey(r));
-      });
-      return { name: s.name, strict, loose };
-    });
-
-  return (rows || []).map((row) => {
-    const strictKey = buildRowKey(row);
-    const looseKey = buildLooseRowKey(row);
-    const matchedSources = sourceMaps
-      .filter((m) => m.strict.has(strictKey) || m.loose.has(looseKey))
-      .map((m) => m.name);
-    return { row, matchedSources, supportCount: matchedSources.length };
-  });
-}
-
-function applyConsensusCalibration(rows, namedSources) {
-  const consensus = computeSourceConsensus(rows, namedSources);
-  let multiSourceRows = 0;
-  let singleSourceRows = 0;
-  const calibrated = consensus.map(({ row, supportCount, matchedSources }) => {
-    const current = Number(row.extraction_confidence || row.overall_confidence || 60);
-    const strongStructure =
-      (/^\d{5}$/.test(String(row.CPT || '')) || /^[A-Z]\d{4}$/.test(String(row.CPT || ''))) &&
-      isLikelyDate(row.Date) &&
-      Number(row.Qty || 0) > 0 &&
-      Number(row.Billed_Amount || 0) > 0;
-
-    let adjusted = current;
-    if (supportCount >= 3) adjusted += 10;
-    else if (supportCount === 2) adjusted += 6;
-    else if (supportCount <= 1) adjusted -= strongStructure ? 4 : 10;
-
-    if (supportCount >= 2) multiSourceRows += 1;
-    else singleSourceRows += 1;
-
-    const reasons = [...(row.review_reasons || [])];
-    const lowSupport = supportCount <= 1;
-    if (lowSupport) reasons.push('Single-source extraction; lower consensus confidence');
-    const forceReviewForLowSupport = lowSupport && !strongStructure;
-
-    return {
-      ...row,
-      extraction_confidence: Math.max(35, Math.min(98, Math.round(adjusted))),
-      source_support_count: supportCount,
-      source_support: matchedSources,
-      needs_manual_review: row.needs_manual_review || forceReviewForLowSupport,
-      review_reasons: reasons
-    };
-  });
-
-  return {
-    rows: calibrated,
-    stats: {
-      multi_source_rows: multiSourceRows,
-      single_source_rows: singleSourceRows,
-      total_rows: calibrated.length
-    }
-  };
-}
-
-function rankCandidateWithAgreement(candidates) {
-  const list = (candidates || []).filter(c => Array.isArray(c.rows) && c.rows.length > 0);
-  if (!list.length) return null;
-  const withEval = list.map((c) => ({ ...c, eval: evaluateExtractionCandidate(c.rows) }));
-  const withAgreement = withEval.map((c, idx) => {
-    let agreementTotal = 0;
-    let agreementCount = 0;
-    withEval.forEach((other, jdx) => {
-      if (idx === jdx) return;
-      const cmp = buildComparisonSummary(c.rows, other.rows);
-      if (Number.isFinite(Number(cmp.agreementScore))) {
-        agreementTotal += Number(cmp.agreementScore || 0);
-        agreementCount += 1;
-      }
-    });
-    const avgAgreement = agreementCount > 0 ? (agreementTotal / agreementCount) : 0;
-    const finalScore = Number(c.eval.score || 0) + (avgAgreement * 0.22);
-    return { ...c, avgAgreement: Number(avgAgreement.toFixed(2)), finalScore: Number(finalScore.toFixed(2)) };
-  });
-  withAgreement.sort((a, b) => b.finalScore - a.finalScore);
-  return withAgreement[0];
-}
-
-function weightedPick(pairs, normalizer = (v) => String(v || '').trim()) {
-  const scoreByValue = new Map();
-  (pairs || []).forEach(({ value, weight }) => {
-    const key = normalizer(value);
-    if (!key) return;
-    scoreByValue.set(key, (scoreByValue.get(key) || 0) + Number(weight || 0));
-  });
-  let bestKey = '';
-  let bestScore = -1;
-  for (const [k, s] of scoreByValue.entries()) {
-    if (s > bestScore) {
-      bestKey = k;
-      bestScore = s;
-    }
-  }
-  return { key: bestKey, score: bestScore, candidates: scoreByValue.size };
-}
-
-function applyFieldVotingAndCriticalGuard(baseRows, namedSources) {
-  const sourceWeights = { current: 1.0, textract: 1.0, direct: 0.95, gemini: 0.85 };
-  const validSources = (namedSources || []).filter((s) => Array.isArray(s?.rows) && s.rows.length > 0);
-  const sourceMaps = validSources.map((s) => {
-    const map = new Map();
-    s.rows.forEach((r) => {
-      const key = buildLooseRowKey(r);
-      if (!key) return;
-      if (!map.has(key)) map.set(key, []);
-      map.get(key).push(r);
-    });
-    return { name: s.name, rows: s.rows, map };
-  });
-
-  let criticalGuardedRows = 0;
-  const out = (baseRows || []).map((row) => {
-    const key = buildLooseRowKey(row);
-    const peers = [{ source: 'current', weight: sourceWeights.current, row }];
-    sourceMaps.forEach((s) => {
-      const matches = s.map.get(key) || [];
-      matches.slice(0, 2).forEach((m) => peers.push({ source: s.name, weight: sourceWeights[s.name] || 0.8, row: m }));
-    });
-
-    const datePick = weightedPick(peers.map((p) => ({ value: normalizeDateForCompare(p.row.Date), weight: p.weight })));
-    const codePick = weightedPick(
-      peers
-        .map((p) => ({ value: String(p.row.CPT || '').toUpperCase(), weight: p.weight }))
-        .filter((p) => /^\d{5}$/.test(p.value) || /^[A-Z]\d{4}$/.test(p.value))
-    );
-    const qtyPick = weightedPick(
-      peers
-        .map((p) => ({ value: Number(p.row.Qty || 0), weight: p.weight }))
-        .filter((p) => Number.isFinite(p.value) && p.value > 0 && p.value <= 50),
-      (v) => String(Number(v))
-    );
-    const billedPick = weightedPick(
-      peers
-        .map((p) => ({ value: Number(p.row.Billed_Amount || 0), weight: p.weight }))
-        .filter((p) => Number.isFinite(p.value) && p.value > 0),
-      (v) => Number(v).toFixed(2)
-    );
-
-    const votedDate = datePick.key || normalizeDateForCompare(row.Date);
-    const votedCode = codePick.key || String(row.CPT || '').toUpperCase();
-    const votedQty = qtyPick.key ? Number(qtyPick.key) : Number(row.Qty || 1);
-    const votedBilled = billedPick.key ? Number(billedPick.key) : Number(row.Billed_Amount || 0);
-
-    let updated = {
-      ...row,
-      Date: votedDate || row.Date,
-      CPT: votedCode || row.CPT,
-      Qty: Number.isFinite(votedQty) && votedQty > 0 ? votedQty : row.Qty,
-      Billed_Amount: Number.isFinite(votedBilled) && votedBilled > 0 ? votedBilled : row.Billed_Amount,
-      field_consensus: {
-        peers_considered: peers.length,
-        date_candidates: datePick.candidates,
-        code_candidates: codePick.candidates,
-        qty_candidates: qtyPick.candidates,
-        billed_candidates: billedPick.candidates,
-        code_vote_score: Number(codePick.score || 0)
-      }
-    };
-    updated.IsValidCode = /^\d{5}$/.test(String(updated.CPT || '')) || /^[A-Z]\d{4}$/.test(String(updated.CPT || ''));
-    updated = { ...updated, ...computeFieldConfidence(updated) };
-
-    const codeSupport = peers.filter((p) => String(p.row.CPT || '').toUpperCase() === String(updated.CPT || '').toUpperCase()).length;
-    const hasLowChars = !!updated.has_low_confidence_chars;
-    const overall = Number(updated.overall_confidence || updated.extraction_confidence || 0);
-    const weakCodeEvidence = codeSupport < 2 && (hasLowChars || overall < 72);
-    const criticalCode = !updated.IsValidCode || weakCodeEvidence;
-    if (criticalCode) {
-      criticalGuardedRows += 1;
-      updated.needs_manual_review = true;
-      updated.extraction_confidence = Math.min(Number(updated.extraction_confidence || updated.overall_confidence || 65), 64);
-      updated.review_reasons = [...(updated.review_reasons || []), 'Critical code guard: insufficient multi-source support for billed code'];
-    }
-    return updated;
-  });
-
-  return { rows: out, stats: { critical_guarded_rows: criticalGuardedRows, total_rows: out.length } };
 }
 
 const PROVIDER_TEMPLATES = [
@@ -1521,9 +1174,9 @@ function normalizeTextractOutput(blocks) {
               .trim();
 
             // Internal anomaly detection
-            let mappingError = 0;
-            if (unitPrice && qty && Number.isFinite(unitPrice) && Number.isFinite(billedAmount)) {
-              mappingError = Math.abs((unitPrice * qty) - billedAmount);
+            let anomaly = false;
+            if (unitPrice && qty && Math.abs((unitPrice * qty) - billedAmount) > MONEY_EPSILON) {
+              anomaly = true;
             }
 
             // Confidence Scoring
@@ -1532,7 +1185,7 @@ function normalizeTextractOutput(blocks) {
             if (billedAmount === 0) score -= 30;
             if (!headers.date || !rowData[headers.date]?.text) score -= 15;
             if (rowData[headers.cpt]?.hasLowConfidence || rowData[headers.billed_amount]?.hasLowConfidence) score -= 20;
-            if (mappingError > 1.0) score -= 25;
+            if (anomaly) score -= 25;
 
             const candidate = {
               Date: headers.date ? (rowData[headers.date]?.text || "").trim() : "",
@@ -1547,11 +1200,8 @@ function normalizeTextractOutput(blocks) {
               Description: derivedDescription,
               DX: dxCodes,
               extraction_confidence: Math.max(0, score),
-              needs_manual_review: score < 85 || mappingError > 1.0,
-              has_low_confidence_chars: cellCpt.hasLowConfidence || cellAmt.hasLowConfidence,
-              money_mapping_source: fallbackMoneyMap ? fallbackMoneyMap.mapping_source : (headers.billed_amount ? 'column_map' : 'none'),
-              money_mapping_error: mappingError,
-              priceWasDerived: fallbackMoneyMap ? !!fallbackMoneyMap.priceWasDerived : false
+              needs_manual_review: score < 85 || anomaly,
+              has_low_confidence_chars: cellCpt.hasLowConfidence || cellAmt.hasLowConfidence
             };
             Object.assign(candidate, computeFieldConfidence(candidate));
             const reviewReasons = collectRowQualityFlags(candidate);
@@ -1746,19 +1396,7 @@ async function runClinicalEngine(items) {
 
   const feeMap = {};
   (cptRes.data || []).forEach(f => { feeMap[f.cpt_code] = { price: f.base_price, type: 'CPT', desc: f.description }; });
-  (drugRes.data || []).forEach(f => { feeMap[f.hcpcs_code] = { price: f.hcpcs_code, type: 'DRUG', desc: f.short_description }; });
-
-  // DB Health Check: If we have codes but zero benchmark data, warn the user
-  const foundFeesCount = (cptRes.data || []).length + (drugRes.data || []).length;
-  if (allCodes.length > 0 && foundFeesCount === 0) {
-    clinicalFindings.push({
-      type: "System",
-      title: "Clinical Datasets Incomplete",
-      detail: "Audit ran, but the Medicare benchmark database returned no matches for these codes. Pricing variance and specialty rules were skipped. Verify Supabase seed state.",
-      severity: "warn",
-      confidence: 100
-    });
-  }
+  (drugRes.data || []).forEach(f => { feeMap[f.hcpcs_code] = { price: f.payment_limit, type: 'DRUG', desc: f.short_description }; });
 
   // 2. PRICING VALIDATION
   items.forEach(item => {
@@ -1890,8 +1528,7 @@ module.exports = async (req, res) => {
     let workingBuffer = req.file.buffer;
     let preprocessingApplied = false;
     let preprocessingMode = 'none';
-    const alwaysPreprocessImages = String(process.env.OCR_ALWAYS_PREPROCESS_IMAGES || 'true') !== 'false';
-    if (mime.startsWith('image/') && (preflight.needs_preprocessing || alwaysPreprocessImages)) {
+    if (preflight.needs_preprocessing && mime.startsWith('image/')) {
       const prep = await preprocessImageForOcr(workingBuffer);
       workingBuffer = prep.buffer;
       preprocessingApplied = prep.applied;
@@ -1969,27 +1606,12 @@ module.exports = async (req, res) => {
       }
     }
 
-    let geminiRows = detectedTemplate === 'ai_ocr_fallback' ? [...normalizedItems] : [];
+    let geminiRows = [];
     let geminiCompare = null;
-    const geminiDiagnostics = {
-      enabled: !!process.env.GEMINI_API_KEY,
-      compare_enabled: String(process.env.GEMINI_COMPARE_ENABLED || 'true') !== 'false',
-      merge_enabled: String(process.env.GEMINI_MERGE_ENABLED || 'true') !== 'false',
-      attempted: false,
-      rows_returned: 0,
-      used_override: false,
-      added_missing_rows: 0,
-      skipped_reason: ''
-    };
     if (process.env.GEMINI_API_KEY && workingBuffer && /pdf/i.test(mime || '')) {
       const shouldRunGemini = String(process.env.GEMINI_COMPARE_ENABLED || 'true') !== 'false';
-      const allowGeminiMerge = String(process.env.GEMINI_MERGE_ENABLED || 'true') !== 'false';
       if (shouldRunGemini) {
-        geminiDiagnostics.attempted = true;
-        if (geminiRows.length === 0) {
-          geminiRows = await runGeminiOcrFallback(workingBuffer, mime || 'application/pdf');
-        }
-        geminiDiagnostics.rows_returned = geminiRows.length;
+        geminiRows = await runGeminiOcrFallback(workingBuffer, mime || 'application/pdf');
         if (geminiRows.length > 0) {
           geminiCompare = buildComparisonSummary(normalizedItems, geminiRows);
           const baseScore = scoreExtractionCandidate(normalizedItems, 0);
@@ -1998,36 +1620,10 @@ module.exports = async (req, res) => {
             normalizedItems = geminiRows;
             detectedTemplate = 'textract_gemini_blend';
             templateConfidence = Math.max(45, templateConfidence);
-            geminiDiagnostics.used_override = true;
           }
-          if (allowGeminiMerge && normalizedItems.length > 0) {
-            const mergeResult = mergeMissingRows(normalizedItems, geminiRows);
-            if (mergeResult.addedCount > 0) {
-              normalizedItems = mergeResult.rows;
-              detectedTemplate = `${detectedTemplate}+gemini_fill`;
-              templateConfidence = Math.max(50, templateConfidence);
-              geminiDiagnostics.added_missing_rows = mergeResult.addedCount;
-              geminiCompare = {
-                ...(geminiCompare || {}),
-                merge_added_rows: mergeResult.addedCount
-              };
-            }
-          }
-        } else {
-          geminiDiagnostics.skipped_reason = 'gemini_returned_no_rows';
         }
-      } else {
-        geminiDiagnostics.skipped_reason = 'gemini_compare_disabled';
       }
-    } else if (!process.env.GEMINI_API_KEY) {
-      geminiDiagnostics.skipped_reason = 'missing_gemini_api_key';
-    } else if (!/pdf/i.test(mime || '')) {
-      geminiDiagnostics.skipped_reason = 'non_pdf_input';
     }
-
-    const useEnsembleArbitration = String(process.env.ENSEMBLE_ARBITRATION_ENABLED || 'false') === 'true';
-    const useConsensusCalibration = String(process.env.ENSEMBLE_CONSENSUS_ENABLED || 'false') === 'true';
-    const useFieldVotingGuard = String(process.env.ENSEMBLE_FIELD_VOTING_ENABLED || 'false') === 'true';
 
     // Candidate arbitration: choose the healthiest extraction source.
     const sourceCandidates = [
@@ -2037,11 +1633,10 @@ module.exports = async (req, res) => {
       { name: 'gemini', rows: geminiRows, profile: 'gemini_recovery', confidence: 55 }
     ].filter(c => Array.isArray(c.rows) && c.rows.length > 0);
     if (sourceCandidates.length > 0) {
-      const best = useEnsembleArbitration
-        ? rankCandidateWithAgreement(sourceCandidates)
-        : sourceCandidates
-            .map((c) => ({ ...c, eval: evaluateExtractionCandidate(c.rows) }))
-            .sort((a, b) => b.eval.score - a.eval.score)[0];
+      const ranked = sourceCandidates
+        .map((c) => ({ ...c, eval: evaluateExtractionCandidate(c.rows) }))
+        .sort((a, b) => b.eval.score - a.eval.score);
+      const best = ranked[0];
       if (best && best.rows !== normalizedItems) {
         normalizedItems = best.rows;
         detectedTemplate = best.profile;
@@ -2097,27 +1692,12 @@ module.exports = async (req, res) => {
       : { agreementScore: 0, notes: textractFailed ? ['Textract unavailable; no cross-check'] : ['No selectable text rows for cross-check'], verified: false };
 
     if (!crossCheck.verified && directRows.length > 0 && !textractFailed && !/^direct_text/.test(String(detectedTemplate || ''))) {
-      // Avoid a blanket hard-cap: keep structurally strong rows usable while still
-      // forcing manual review whenever OCR engines disagree materially.
-      normalizedItems = normalizedItems.map((item) => {
-        const current = Number(item.extraction_confidence || 70);
-        const overall = Number(item.overall_confidence || current);
-        const code = String(item.CPT || '').toUpperCase();
-        const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
-        const hasDate = isLikelyDate(item.Date);
-        const billed = Number(item.Billed_Amount || 0);
-        const qty = Number(item.Qty || 0);
-        const structurallyStrong = validCode && hasDate && billed > 0 && qty > 0;
-        const basePenalty = structurallyStrong ? 8 : 14;
-        const penalized = Math.max(35, Math.round(Math.min(current, overall) - basePenalty));
-        const floor = structurallyStrong ? 74 : 62;
-        return {
-          ...item,
-          extraction_confidence: Math.max(floor, penalized),
-          needs_manual_review: true,
-          review_reasons: [...(item.review_reasons || []), 'Cross-check mismatch between direct text and Textract']
-        };
-      });
+      normalizedItems = normalizedItems.map((item) => ({
+        ...item,
+        extraction_confidence: Math.min(Number(item.extraction_confidence || 70), 68),
+        needs_manual_review: true,
+        review_reasons: [...(item.review_reasons || []), 'Cross-check mismatch between direct text and Textract']
+      }));
     }
 
     // Canonical duplicate candidate tagging
@@ -2137,24 +1717,6 @@ module.exports = async (req, res) => {
     normalizedItems = applyDuplicateHeuristics(normalizedItems);
     const pageTrust = computePageTrustScores(normalizedItems, directExtract.pageStats);
     normalizedItems = applyPageTrustToRows(normalizedItems, pageTrust);
-    let consensusCalibrated = { rows: normalizedItems, stats: { multi_source_rows: 0, single_source_rows: 0, total_rows: normalizedItems.length } };
-    let fieldVoted = { rows: normalizedItems, stats: { critical_guarded_rows: 0, total_rows: normalizedItems.length } };
-    if (useConsensusCalibration) {
-      consensusCalibrated = applyConsensusCalibration(normalizedItems, [
-        { name: 'textract', rows: textractRows },
-        { name: 'direct', rows: directRows },
-        { name: 'gemini', rows: geminiRows }
-      ]);
-      normalizedItems = consensusCalibrated.rows;
-    }
-    if (useFieldVotingGuard) {
-      fieldVoted = applyFieldVotingAndCriticalGuard(normalizedItems, [
-        { name: 'textract', rows: textractRows },
-        { name: 'direct', rows: directRows },
-        { name: 'gemini', rows: geminiRows }
-      ]);
-      normalizedItems = fieldVoted.rows;
-    }
 
     const extractionMetrics = computePipelineMetrics(normalizedItems, crossCheck);
     const decisionState = deriveDecisionState(extractionMetrics);
@@ -2207,29 +1769,11 @@ module.exports = async (req, res) => {
         clinicalResults = await runClinicalEngine(auditableRows);
     } catch (err) {
         console.error("Clinical Engine Error:", err.message);
+        // We don't crash the whole audit if DB lookup fails, we just show arithmetic
     }
 
-    // [v8.8] Step 6: Gemini Clinical Reasoning Pass (Role 2)
-    // Supplement deterministic findings with high-level clinical reasoning.
-    let geminiClinicalFindings = [];
-    if (auditableRows.length > 0) {
-      try {
-        geminiClinicalFindings = await runGeminiClinicalAudit(auditableRows, file.buffer, file.mimetype);
-      } catch (err) {
-        console.warn('MediHelp: Gemini Clinical reasoning pass skipped:', err.message);
-      }
-    }
-
-    // Combine Findings (Deduplicate Gemini findings if rule engine already caught them)
-    // Simple dedup by code + similarity (broadly)
-    const ruleCodes = new Set(clinicalResults.clinicalFindings.map(f => `${f.code}|${f.title.slice(0,10)}`));
-    const uniqueGeminiFindings = geminiClinicalFindings.filter(gf => !ruleCodes.has(`${gf.code}|${gf.title.slice(0,10)}`));
-
-    const allFindings = [
-      ...engineResults.findings, 
-      ...clinicalResults.clinicalFindings,
-      ...uniqueGeminiFindings.map(f => ({ ...f, type: f.type || 'Warning', model_source: 'Gemini 1.5 Clinical Audit' }))
-    ];
+    // Combine Findings
+    const allFindings = [...engineResults.findings, ...clinicalResults.clinicalFindings];
     const numAnomalies = allFindings.length;
     
     let summaryText = `Found ${normalizedItems.length} billing items. Clinical datasets detect $${clinicalResults.savingsOpportunity.toFixed(2)} in potential savings.`;
@@ -2254,10 +1798,7 @@ module.exports = async (req, res) => {
         direct_text_parse_stats: directParseStats,
         cross_check: crossCheck,
         gemini_compare: geminiCompare,
-        gemini_diagnostics: geminiDiagnostics,
         page_trust: pageTrust,
-        source_consensus: consensusCalibrated.stats,
-        field_consensus: fieldVoted.stats,
         extraction_metrics: extractionMetrics,
         decision_state: decisionState,
         result: { 

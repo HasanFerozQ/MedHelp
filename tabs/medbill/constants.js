@@ -134,38 +134,6 @@ function isEMCode(code) {
   );
 }
 
-// ── Critical Procedure Flags ───────────────────────────────────────────────
-
-/**
- * Procedures that nearly always require prior authorization (CO-197 risk).
- * Includes common orthopedics, advanced imaging, cardiology, and sleep studies.
- */
-const COMMON_PRIOR_AUTH_CODES = new Set([
-  // Ortho / spine
-  '29881', '29822', '29823', '29827', '22551', '22612', '27447', '27130',
-  // Advanced Imaging (CT/MRI/PET)
-  '70450', '70551', '70553', '71250', '71260', '71270', '72141', '72148',
-  '73221', '73721', '74150', '74176', '74177', '74178', '78815',
-  // Cardiology
-  '93306', '93452', '93458', '93880', '93922', '93923',
-  // Other frequent flyers
-  '95810', '95811'
-]);
-
-/**
- * Common procedures with 10-day or 90-day global surgery periods.
- * Used for detecting same-day E&M + surgery unbundling violations.
- */
-const GLOBAL_SURGERY_PERIODS = {
-  // 10-Day Global (Minor Procedures)
-  '10060': 10, '10061': 10, '11400': 10, '11420': 10, '12001': 10, '12002': 10,
-  '17000': 10, '17110': 10, '20610': 10, '20611': 10, '69210': 10,
-  // 90-Day Global (Major Procedures)
-  '27447': 90, '27130': 90, '29881': 90, '29827': 90, '22551': 90, 
-  '38500': 90, '41520': 90, '43280': 90, '44140': 90, '47562': 90,
-  '49505': 90, '58150': 90, '58571': 90, '63030': 90, '66984': 90
-};
-
 function parseDate(str) {
   if (!str) return null;
   const normalized = str.trim().replace(/[\/\.]/g, '-');
