@@ -318,6 +318,26 @@ class BucketAuditor {
           'warn', '85025');
       }
 
+      // ── Global Package Violation: E&M same day as Surgery ──
+      if (typeof GLOBAL_SURGERY_PERIODS !== 'undefined' && typeof isEMCode === 'function') {
+        const surgeryCodes = list.filter(r => GLOBAL_SURGERY_PERIODS[String(r.code || '').trim()]);
+        const emCodes = list.filter(r => isEMCode(String(r.code || '').trim()));
+        
+        if (surgeryCodes.length > 0 && emCodes.length > 0) {
+          emCodes.forEach(emRow => {
+            const mod = (emRow.modifier || '').toUpperCase().replace(/^-/, '');
+            if (mod !== '25' && mod !== '57') {
+              const surg = surgeryCodes[0].code;
+              this.addFinding('modifier', 'Global Package Violation — E&M + Surgery Without Modifier',
+                `E&M ${emRow.code} was billed on the same date as surgery ${surg} (Global Period: ${GLOBAL_SURGERY_PERIODS[surg]} days). ` + 
+                `Without modifier 25 (significant, separately identifiable E&M), the E&M charge is bundled into the surgical global package and will be denied (CO-97).`,
+                'danger', emRow.code, emRow.rowId, 95);
+              if (emRow.raw) emRow.raw.classList.add('audit-row-error');
+            }
+          });
+        }
+      }
+
       // ── CO-50: G0444 Annual Depression Screen on Acute / Non-Wellness Visit ──
       // G0444 is ONLY a covered benefit during Annual Wellness Visits (G0439/Z00.xx).
       // Billing it with acute diagnoses triggers CO-50 (not medically necessary).
@@ -394,14 +414,12 @@ class BucketAuditor {
         }
       }
 
-      // ── CO-197: Knee Arthroscopy Without Prior Authorization ──
-      // 29881 is one of the most commonly preauth-required procedures.
-      // CO-197 = "Precertification/authorization/notification absent".
+      // ── CO-197: Procedure Without Prior Authorization ──
       // Detection strategy: CO-197 text in description OR zero-pay pattern
       // (paid=$0, no contractual adj) which is the canonical CO-197 fingerprint
       // when the procedure already occurred. Do NOT require auth keywords in the
       // description — that text is almost never present on the actual bill.
-      if (code === '29881') {
+      if (typeof COMMON_PRIOR_AUTH_CODES !== 'undefined' && COMMON_PRIOR_AUTH_CODES.has(code)) {
         const hasCO197text   = /\bCO[-\s]?197\b|\bPR[-\s]?197\b/i.test(text);
         const hasAuthKeyword = /prior\s*auth|pre[-\s]?auth|authorization\s*(missing|not\s*obtained|required)/i.test(text);
         // Zero-pay without adj is the most reliable signal: payer denied the whole claim
@@ -417,7 +435,7 @@ class BucketAuditor {
               ? 'Authorization-related keyword detected in claim description.'
               : `Zero-payment pattern ($0 paid, $0 contractual adjustment on a $${(r.total || 0).toFixed(2)} charge) is the canonical CO-197 fingerprint for a missing-authorization full denial.`;
           this.addFinding('modifier', 'Prior Authorization Required — CO-197 Denial',
-            `CPT 29881 (Knee Arthroscopy with Meniscectomy) requires prior authorization from virtually all commercial payers and Medicare Advantage plans. ` +
+            `CPT ${code} is on the high-frequency prior-authorization list. Requires authorization from virtually all commercial payers and Medicare Advantage plans. ` +
             `${reason} ` +
             `The claim must be resubmitted with documented proof of authorization. Without retro-authorization, the full charge amount ($${(r.total || 0).toFixed(2)}) will remain denied and the patient cannot be balance-billed for a provider authorization failure. ` +
             `(CMS Medicare Claims Processing Manual, Chapter 1 \u00a710; Denial Code CO-197)`,

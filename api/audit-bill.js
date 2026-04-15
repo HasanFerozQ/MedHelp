@@ -27,6 +27,22 @@ const TEXTRACT_BACKOFF_MS = [0, 700, 1500];
 const TEXTRACT_BYTES_LIMIT = 10 * 1024 * 1024;
 const MONEY_EPSILON = 0.01;
 const DIRECT_TEXT_MAX_ROWS = 250;
+
+/**
+ * Robustly parse strings into numbers, stripping currency symbols, 
+ * commas, and handling accounting-style negative parentheses.
+ */
+function parseCurrency(val) {
+  if (val == null || val === '') return null;
+  if (typeof val === 'number') return val;
+  const cleaned = String(val)
+    .replace(/[$\s,]/g, '')
+    .replace(/\((.*)\)/, '-$1')
+    .trim();
+  const n = parseFloat(cleaned);
+  return Number.isFinite(n) ? Math.round(n * 100) / 100 : null;
+}
+
 const RATE_WINDOW_MS = 5 * 60 * 1000;
 const RATE_MAX_REQUESTS = Number(process.env.AUDIT_RATE_LIMIT_COUNT || 20);
 const GEMINI_OVERRIDE_MARGIN = Number(process.env.GEMINI_OVERRIDE_MARGIN || 10);
@@ -396,8 +412,9 @@ function chooseMoneyMapping(money, qty) {
     paid: 0,
     adjustment: 0,
     owed: 0,
-    mapping_source: 'b-max-heuristic',
-    mapping_error: unitPrice ? 0 : 5
+    mapping_source: unitPrice ? 'b-max-heuristic-matched' : 'b-max-heuristic',
+    mapping_error: unitPrice ? 0 : 5,
+    priceWasDerived: !!unitPrice && maxVal > 0
   };
 }
 
@@ -755,24 +772,93 @@ Rules:
         CPT: String(row.CPT || '').trim().toUpperCase(),
         IsValidCode: /^\d{5}$/.test(String(row.CPT || '').trim()) || /^[A-Z]\d{4}$/.test(String(row.CPT || '').trim().toUpperCase()),
         Qty: Number(row.Qty || 1) || 1,
-        Unit_Price: row.Unit_Price != null ? (Number(row.Unit_Price) || null) : null,
+        Unit_Price: parseCurrency(row.Unit_Price),
         Modifier: String(row.Modifier || '').trim().toUpperCase(),
-        Billed_Amount: Number(row.Billed_Amount || 0) || 0,
-        Adjustment: Number(row.Adjustment || 0) || 0,
-        Paid: Number(row.Paid || 0) || 0,
-        Owed: Number(row.Owed || 0) || 0,
+        Billed_Amount: parseCurrency(row.Billed_Amount) || 0,
+        Adjustment: parseCurrency(row.Adjustment) || 0,
+        Paid: parseCurrency(row.Paid) || 0,
+        Owed: parseCurrency(row.Owed) || 0,
         DX: dxArr,
         Description: String(row.Description || '').trim(),
-        extraction_confidence: 72,
-        needs_manual_review: true,
+        extraction_confidence: 82,
+        needs_manual_review: false,
         has_low_confidence_chars: false,
-        review_reasons: ['Gemini Vision extraction (verify key fields)']
+        review_reasons: []
       };
       Object.assign(item, computeFieldConfidence(item));
       return item;
     }).filter(rw => rw.CPT && Number.isFinite(Number(rw.Billed_Amount)));
   } catch (err) {
     console.warn('MediHelp: Gemini OCR fallback error:', String(err?.message || err).slice(0, 200));
+    return [];
+  }
+}
+
+/**
+ * GEMINI ROLE 2: Clinical Audit Pass (Reasoning)
+ * Acts as a senior auditor looking for clinical/narrative inconsistencies
+ * that deterministic code might overlook.
+ */
+async function runGeminiClinicalAudit(items, fileBuffer, mimeType, model = "gemini-1.5-flash") {
+  if (!items || items.length === 0) return [];
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) return [];
+
+  const rowSummary = items.map(i => 
+    `Date: ${i.Date}, CPT: ${i.CPT}, Desc: ${i.Description}, Qty: ${i.Qty || 1}, Total: $${i.Billed_Amount}, DX: ${(i.DX || []).join(',')}`
+  ).join('\n');
+
+  const prompt = `
+Act as a Senior Medical Auditor. I have extracted these rows from a medical bill. 
+Review them against the original document for clinical anomalies.
+
+STRUCTURED DATA:
+${rowSummary}
+
+INSTRUCTIONS:
+1. Identify high-risk clinical mismatches (e.g., Cardiology procedures paired with Orthopedic diagnoses).
+2. Identify "Hidden Denials" found in footnotes or plan remarks (e.g. CO-197, CO-16, "Prior Auth Missing").
+3. Check for Quantity Paradoxes (e.g., description says "Double treatment" or "8 units" but Qty column is "1").
+4. Check for Medically Unnecessary Screenings (e.g., Depression screenings on acute visits without Wellness context).
+5. Output ONLY a valid JSON array of finding objects.
+
+JSON Format:
+[
+  {
+    "type": "Warning", 
+    "title": "DX-Procedure Mismatch (CO-11 Risk)",
+    "detail": "Detailed explanation...",
+    "code": "CPT_CODE",
+    "severity": "danger",
+    "confidence": 95
+  }
+]
+`;
+
+  const body = {
+    contents: [{
+      parts: [
+        { text: prompt },
+        { inline_data: { mime_type: mimeType || 'application/pdf', data: fileBuffer.toString('base64') } }
+      ]
+    }],
+    generationConfig: { temperature: 0.1, maxOutputTokens: 2048, response_mime_type: "application/json" }
+  };
+
+  try {
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) return [];
+    const json = await r.json();
+    const text = json?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') || '';
+    const cleaned = text.replace(/```json|```/gi, '').trim();
+    const arr = JSON.parse(cleaned);
+    return Array.isArray(arr) ? arr : [];
+  } catch (err) {
+    console.warn('MediHelp: Gemini Clinical Pass error:', err.message);
     return [];
   }
 }
@@ -1206,9 +1292,9 @@ function normalizeTextractOutput(blocks) {
               .trim();
 
             // Internal anomaly detection
-            let anomaly = false;
-            if (unitPrice && qty && Math.abs((unitPrice * qty) - billedAmount) > MONEY_EPSILON) {
-              anomaly = true;
+            let mappingError = 0;
+            if (unitPrice && qty && Number.isFinite(unitPrice) && Number.isFinite(billedAmount)) {
+              mappingError = Math.abs((unitPrice * qty) - billedAmount);
             }
 
             // Confidence Scoring
@@ -1217,7 +1303,7 @@ function normalizeTextractOutput(blocks) {
             if (billedAmount === 0) score -= 30;
             if (!headers.date || !rowData[headers.date]?.text) score -= 15;
             if (rowData[headers.cpt]?.hasLowConfidence || rowData[headers.billed_amount]?.hasLowConfidence) score -= 20;
-            if (anomaly) score -= 25;
+            if (mappingError > 1.0) score -= 25;
 
             const candidate = {
               Date: headers.date ? (rowData[headers.date]?.text || "").trim() : "",
@@ -1232,8 +1318,11 @@ function normalizeTextractOutput(blocks) {
               Description: derivedDescription,
               DX: dxCodes,
               extraction_confidence: Math.max(0, score),
-              needs_manual_review: score < 85 || anomaly,
-              has_low_confidence_chars: cellCpt.hasLowConfidence || cellAmt.hasLowConfidence
+              needs_manual_review: score < 85 || mappingError > 1.0,
+              has_low_confidence_chars: cellCpt.hasLowConfidence || cellAmt.hasLowConfidence,
+              money_mapping_source: fallbackMoneyMap ? fallbackMoneyMap.mapping_source : (headers.billed_amount ? 'column_map' : 'none'),
+              money_mapping_error: mappingError,
+              priceWasDerived: fallbackMoneyMap ? !!fallbackMoneyMap.priceWasDerived : false
             };
             Object.assign(candidate, computeFieldConfidence(candidate));
             const reviewReasons = collectRowQualityFlags(candidate);
@@ -1428,7 +1517,19 @@ async function runClinicalEngine(items) {
 
   const feeMap = {};
   (cptRes.data || []).forEach(f => { feeMap[f.cpt_code] = { price: f.base_price, type: 'CPT', desc: f.description }; });
-  (drugRes.data || []).forEach(f => { feeMap[f.hcpcs_code] = { price: f.payment_limit, type: 'DRUG', desc: f.short_description }; });
+  (drugRes.data || []).forEach(f => { feeMap[f.hcpcs_code] = { price: f.hcpcs_code, type: 'DRUG', desc: f.short_description }; });
+
+  // DB Health Check: If we have codes but zero benchmark data, warn the user
+  const foundFeesCount = (cptRes.data || []).length + (drugRes.data || []).length;
+  if (allCodes.length > 0 && foundFeesCount === 0) {
+    clinicalFindings.push({
+      type: "System",
+      title: "Clinical Datasets Incomplete",
+      detail: "Audit ran, but the Medicare benchmark database returned no matches for these codes. Pricing variance and specialty rules were skipped. Verify Supabase seed state.",
+      severity: "warn",
+      confidence: 100
+    });
+  }
 
   // 2. PRICING VALIDATION
   items.forEach(item => {
@@ -1801,11 +1902,29 @@ module.exports = async (req, res) => {
         clinicalResults = await runClinicalEngine(auditableRows);
     } catch (err) {
         console.error("Clinical Engine Error:", err.message);
-        // We don't crash the whole audit if DB lookup fails, we just show arithmetic
     }
 
-    // Combine Findings
-    const allFindings = [...engineResults.findings, ...clinicalResults.clinicalFindings];
+    // [v8.8] Step 6: Gemini Clinical Reasoning Pass (Role 2)
+    // Supplement deterministic findings with high-level clinical reasoning.
+    let geminiClinicalFindings = [];
+    if (auditableRows.length > 0) {
+      try {
+        geminiClinicalFindings = await runGeminiClinicalAudit(auditableRows, file.buffer, file.mimetype);
+      } catch (err) {
+        console.warn('MediHelp: Gemini Clinical reasoning pass skipped:', err.message);
+      }
+    }
+
+    // Combine Findings (Deduplicate Gemini findings if rule engine already caught them)
+    // Simple dedup by code + similarity (broadly)
+    const ruleCodes = new Set(clinicalResults.clinicalFindings.map(f => `${f.code}|${f.title.slice(0,10)}`));
+    const uniqueGeminiFindings = geminiClinicalFindings.filter(gf => !ruleCodes.has(`${gf.code}|${gf.title.slice(0,10)}`));
+
+    const allFindings = [
+      ...engineResults.findings, 
+      ...clinicalResults.clinicalFindings,
+      ...uniqueGeminiFindings.map(f => ({ ...f, type: f.type || 'Warning', model_source: 'Gemini 1.5 Clinical Audit' }))
+    ];
     const numAnomalies = allFindings.length;
     
     let summaryText = `Found ${normalizedItems.length} billing items. Clinical datasets detect $${clinicalResults.savingsOpportunity.toFixed(2)} in potential savings.`;
