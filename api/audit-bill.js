@@ -1096,14 +1096,16 @@ function applyConsensusCalibration(rows, namedSources) {
     else singleSourceRows += 1;
 
     const reasons = [...(row.review_reasons || [])];
-    if (supportCount <= 1) reasons.push('Single-source extraction; lower consensus confidence');
+    const lowSupport = supportCount <= 1;
+    if (lowSupport) reasons.push('Single-source extraction; lower consensus confidence');
+    const forceReviewForLowSupport = lowSupport && !strongStructure;
 
     return {
       ...row,
       extraction_confidence: Math.max(35, Math.min(98, Math.round(adjusted))),
       source_support_count: supportCount,
       source_support: matchedSources,
-      needs_manual_review: row.needs_manual_review || supportCount <= 1,
+      needs_manual_review: row.needs_manual_review || forceReviewForLowSupport,
       review_reasons: reasons
     };
   });
@@ -1225,11 +1227,14 @@ function applyFieldVotingAndCriticalGuard(baseRows, namedSources) {
     updated = { ...updated, ...computeFieldConfidence(updated) };
 
     const codeSupport = peers.filter((p) => String(p.row.CPT || '').toUpperCase() === String(updated.CPT || '').toUpperCase()).length;
-    const criticalCode = !updated.IsValidCode || codeSupport < 2;
+    const hasLowChars = !!updated.has_low_confidence_chars;
+    const overall = Number(updated.overall_confidence || updated.extraction_confidence || 0);
+    const weakCodeEvidence = codeSupport < 2 && (hasLowChars || overall < 72);
+    const criticalCode = !updated.IsValidCode || weakCodeEvidence;
     if (criticalCode) {
       criticalGuardedRows += 1;
       updated.needs_manual_review = true;
-      updated.extraction_confidence = Math.min(Number(updated.extraction_confidence || updated.overall_confidence || 65), 58);
+      updated.extraction_confidence = Math.min(Number(updated.extraction_confidence || updated.overall_confidence || 65), 64);
       updated.review_reasons = [...(updated.review_reasons || []), 'Critical code guard: insufficient multi-source support for billed code'];
     }
     return updated;
@@ -1964,13 +1969,15 @@ module.exports = async (req, res) => {
       }
     }
 
-    let geminiRows = [];
+    let geminiRows = detectedTemplate === 'ai_ocr_fallback' ? [...normalizedItems] : [];
     let geminiCompare = null;
     if (process.env.GEMINI_API_KEY && workingBuffer && /pdf/i.test(mime || '')) {
       const shouldRunGemini = String(process.env.GEMINI_COMPARE_ENABLED || 'true') !== 'false';
       const allowGeminiMerge = String(process.env.GEMINI_MERGE_ENABLED || 'true') !== 'false';
       if (shouldRunGemini) {
-        geminiRows = await runGeminiOcrFallback(workingBuffer, mime || 'application/pdf');
+        if (geminiRows.length === 0) {
+          geminiRows = await runGeminiOcrFallback(workingBuffer, mime || 'application/pdf');
+        }
         if (geminiRows.length > 0) {
           geminiCompare = buildComparisonSummary(normalizedItems, geminiRows);
           const baseScore = scoreExtractionCandidate(normalizedItems, 0);
@@ -1996,6 +2003,10 @@ module.exports = async (req, res) => {
       }
     }
 
+    const useEnsembleArbitration = String(process.env.ENSEMBLE_ARBITRATION_ENABLED || 'false') === 'true';
+    const useConsensusCalibration = String(process.env.ENSEMBLE_CONSENSUS_ENABLED || 'false') === 'true';
+    const useFieldVotingGuard = String(process.env.ENSEMBLE_FIELD_VOTING_ENABLED || 'false') === 'true';
+
     // Candidate arbitration: choose the healthiest extraction source.
     const sourceCandidates = [
       { name: 'current', rows: normalizedItems, profile: detectedTemplate, confidence: templateConfidence },
@@ -2004,7 +2015,11 @@ module.exports = async (req, res) => {
       { name: 'gemini', rows: geminiRows, profile: 'gemini_recovery', confidence: 55 }
     ].filter(c => Array.isArray(c.rows) && c.rows.length > 0);
     if (sourceCandidates.length > 0) {
-      const best = rankCandidateWithAgreement(sourceCandidates);
+      const best = useEnsembleArbitration
+        ? rankCandidateWithAgreement(sourceCandidates)
+        : sourceCandidates
+            .map((c) => ({ ...c, eval: evaluateExtractionCandidate(c.rows) }))
+            .sort((a, b) => b.eval.score - a.eval.score)[0];
       if (best && best.rows !== normalizedItems) {
         normalizedItems = best.rows;
         detectedTemplate = best.profile;
@@ -2100,18 +2115,24 @@ module.exports = async (req, res) => {
     normalizedItems = applyDuplicateHeuristics(normalizedItems);
     const pageTrust = computePageTrustScores(normalizedItems, directExtract.pageStats);
     normalizedItems = applyPageTrustToRows(normalizedItems, pageTrust);
-    const consensusCalibrated = applyConsensusCalibration(normalizedItems, [
-      { name: 'textract', rows: textractRows },
-      { name: 'direct', rows: directRows },
-      { name: 'gemini', rows: geminiRows }
-    ]);
-    normalizedItems = consensusCalibrated.rows;
-    const fieldVoted = applyFieldVotingAndCriticalGuard(normalizedItems, [
-      { name: 'textract', rows: textractRows },
-      { name: 'direct', rows: directRows },
-      { name: 'gemini', rows: geminiRows }
-    ]);
-    normalizedItems = fieldVoted.rows;
+    let consensusCalibrated = { rows: normalizedItems, stats: { multi_source_rows: 0, single_source_rows: 0, total_rows: normalizedItems.length } };
+    let fieldVoted = { rows: normalizedItems, stats: { critical_guarded_rows: 0, total_rows: normalizedItems.length } };
+    if (useConsensusCalibration) {
+      consensusCalibrated = applyConsensusCalibration(normalizedItems, [
+        { name: 'textract', rows: textractRows },
+        { name: 'direct', rows: directRows },
+        { name: 'gemini', rows: geminiRows }
+      ]);
+      normalizedItems = consensusCalibrated.rows;
+    }
+    if (useFieldVotingGuard) {
+      fieldVoted = applyFieldVotingAndCriticalGuard(normalizedItems, [
+        { name: 'textract', rows: textractRows },
+        { name: 'direct', rows: directRows },
+        { name: 'gemini', rows: geminiRows }
+      ]);
+      normalizedItems = fieldVoted.rows;
+    }
 
     const extractionMetrics = computePipelineMetrics(normalizedItems, crossCheck);
     const decisionState = deriveDecisionState(extractionMetrics);
