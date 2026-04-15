@@ -124,6 +124,22 @@ class BucketAuditor {
       // Stop math engine if row is invalid
       if (r.invalid) return;
 
+      // 1a-pre. Server-side extraction arithmetic mismatch (money_mapping_error)
+      // When audit-bill.js chooseMoneyMapping() detected that unit_price × qty ≠ billed_total
+      // (e.g. 71046 ×2: bill shows $345 unit ×2=$690, but total printed as $489),
+      // it stores the dollar discrepancy in money_mapping_error. Surface this as a
+      // dedicated finding so it is not silently absorbed into benchmark savings.
+      const mappingErr = Number(r.money_mapping_error || 0);
+      if (mappingErr > Math.max(1.0, (r.total || 0) * 0.01) && !r.priceWasDerived) {
+        this.addFinding('arithmetic', 'Confirmed Arithmetic Error — Unit Price × Qty ≠ Total',
+          `CPT ${r.code || r.desc}: The bill columns show a math error — the extracted unit price × quantity does not equal the billed total (discrepancy: $${mappingErr.toFixed(2)}). ` +
+          `This is a server-detected deterministic arithmetic error, not an estimate. ` +
+          `${r.qty > 1 ? `For ${r.qty} units billed, verify the correct total is (${r.qty} × unit price). ` : ''}` +
+          `Request a corrected Explanation of Benefits or re-statement from the provider.`,
+          'danger', r.code, r.rowId, 92);
+        if (r.raw) r.raw.classList.add('audit-row-error');
+      }
+
       // 1a. qty × price = total (skip rows where price was back-derived)
       if (r.math_complete && !r.priceWasDerived && r.total > 0 && r.price > 0 && r.qty > 0) {
         const expected = Math.round(r.qty * r.price * 100) / 100;
@@ -339,8 +355,9 @@ class BucketAuditor {
 
       // ── CO-4: Psychotherapy Excess Units (90837 / 90834) ──
       // CMS MUE = 1 unit/day for all psychotherapy codes.
-      // Also scan description text for unit counts (e.g. "×8", "8 units") in case
-      // the parser extracted qty=1 but the description reveals the true billed quantity.
+      // Strategy 1: qty field or description-embedded unit count ("×8", "8 units").
+      // Strategy 2: total-to-benchmark ratio — catches qty=1 extractions where the
+      //   parser missed the true unit count but the dollar total reveals it.
       if (code === '90837' || code === '90834') {
         const descUnitsMatch = text.match(/[×xX]\s*(\d{1,2})|(?:^|\s)(\d{1,2})\s*[Uu]nits?\b/);
         const descUnits = descUnitsMatch
@@ -356,6 +373,24 @@ class BucketAuditor {
             `Only 1 psychotherapy session per patient per day is separately payable — the ${effectiveQty - 1} excess unit(s) ` +
             `will be denied without a valid appeal basis. Correct to 1 unit or split across separate dates of service.`,
             'danger', code, r.rowId, 97);
+        } else {
+          // Strategy 2: infer excess units from total ÷ Medicare benchmark ratio.
+          // 90837 = $122.43/session, 90834 = $88.59/session (Medicare non-facility).
+          // If billed total > 2.5× daily benchmark, the amount implies multiple sessions.
+          const PSYCH_BENCHMARKS = { '90837': 122.43, '90834': 88.59 };
+          const benchPerUnit = PSYCH_BENCHMARKS[code] || 0;
+          const rowTotal = Number(r.total || 0);
+          if (benchPerUnit > 0 && rowTotal > benchPerUnit * 2.5) {
+            const impliedUnits = Math.round(rowTotal / benchPerUnit);
+            this.addFinding('frequency', `Psychotherapy Excess Units — CO-4 Risk (Inferred from Total)`,
+              `CPT ${code} (${codeLabel}) billed at $${rowTotal.toFixed(2)} with quantity recorded as 1. ` +
+              `The Medicare benchmark for this code is $${benchPerUnit.toFixed(2)}/session; ` +
+              `a total of $${rowTotal.toFixed(2)} implies approximately ${impliedUnits} sessions were rendered. ` +
+              `CMS MUE = 1 unit/day — if multiple sessions were provided on the same date, each must be billed ` +
+              `on a separate date of service to avoid CO-4 denial. ` +
+              `(If the quantity was extracted incorrectly from the PDF, verify the actual units billed.)`,
+              'danger', code, r.rowId, 88);
+          }
         }
       }
 
@@ -547,30 +582,86 @@ class BucketAuditor {
 
   // ── LAYER 2G — DX–Procedure Mismatch (CO-11) ─────────────────────────────
   /**
-   * Uses the ICD-10 codes extracted by the parser (r.dx) to verify that the
-   * billed CPT category is clinically coherent with the reported diagnosis.
-   * Example: ECG (93000 → E&M/Medicine) with ICD-10 S72.001A (fracture → Surgery/EM)
-   *          → 'I' chapter would normally be Cardiac... S chapter allows Surgery but not cardiac-only.
+   * Uses ICD-10 codes to verify that the billed CPT category is clinically coherent
+   * with the reported diagnosis. Applies TWO strategies:
+   *
+   *  A) Row-owned DX: each row has r.dx[] — checks each DX directly (danger severity).
+   *  B) Date-level DX propagation: for rows with NO own DX (common when the parser
+   *     assigns ICD-10 codes only to the E&M header row), we inherit all DX from the
+   *     same service date. We ONLY flag if NONE of the inherited DX are compatible
+   *     with the CPT — one compatible DX is enough to justify the procedure.
+   *
+   * This specifically catches CO-11 cases like ECG (93000 → Cardiology) billed on
+   * the same date as fracture surgery (S72 → chapter S, which does not allow Cardiology).
    */
   runDXCompatibilityAudit() {
     const compatMap = window.DX_CPT_COMPAT || {};
+
+    // ── Build a date-level DX pool from all rows ──────────────────────────────
+    // Many parsers (Textract table, direct text) assign ICD-10 only to the first
+    // service row or header, leaving procedure rows with empty dx[].
+    const dxByDate = {};      // { date: Set<dx> }
+    const allBillDx = new Set();
     this.rows.forEach(r => {
-      if (!r.code || r.isTotalRow || !r.dx || r.dx.length === 0) return;
+      if (r.isTotalRow) return;
+      const dx = Array.isArray(r.dx) ? r.dx.filter(Boolean) : [];
+      if (dx.length === 0) return;
+      const key = r.date || 'UNDATED';
+      if (!dxByDate[key]) dxByDate[key] = new Set();
+      dx.forEach(d => { dxByDate[key].add(d); allBillDx.add(d); });
+    });
+
+    this.rows.forEach(r => {
+      if (!r.code || r.isTotalRow) return;
       const cptCategory = classifyCPT(r.code);
       if (!cptCategory) return;
 
-      r.dx.forEach(dx => {
-        if (!dx || dx.length < 3) return;
-        const chapter = dx[0].toUpperCase(); // ICD-10 first letter = chapter
-        const allowed = compatMap[chapter];
-        if (!allowed) return; // unknown chapter — skip
+      const rowDx = Array.isArray(r.dx) ? r.dx.filter(Boolean) : [];
+      const isRowOwned = rowDx.length > 0;
 
-        if (!allowed.includes(cptCategory)) {
-          this.addFinding('compatibility', 'DX–Procedure Mismatch (CO-11)',
-            `CPT ${r.code} (${cptCategory}) is billed with diagnosis ${dx} which falls under ICD-10 chapter "${chapter}". This pairing is clinically inconsistent and is a common CO-11 denial reason. Request the visit note to verify medical necessity.`,
-            'danger', r.code);
+      if (isRowOwned) {
+        // ── Strategy A: row has its own DX codes ──
+        rowDx.forEach(dx => {
+          if (!dx || dx.length < 3) return;
+          const chapter = dx[0].toUpperCase();
+          const allowed = compatMap[chapter];
+          if (!allowed) return;
+          if (!allowed.includes(cptCategory)) {
+            this.addFinding('compatibility', 'DX\u2013Procedure Mismatch (CO-11)',
+              `CPT ${r.code} (${cptCategory}) is billed with diagnosis ${dx} which falls under ICD-10 chapter \"${chapter}\". This pairing is clinically inconsistent and is a common CO-11 denial reason. Request the visit note to verify medical necessity.`,
+              'danger', r.code, r.rowId);
+          }
+        });
+      } else {
+        // ── Strategy B: row has NO own DX — inherit from date pool ────────────
+        const dateKey = r.date || 'UNDATED';
+        const inheritedDx = [...(dxByDate[dateKey] || allBillDx)];
+        if (inheritedDx.length === 0) return;
+
+        // Check each inherited DX against this CPT category
+        const incompatible = inheritedDx.filter(dx => {
+          if (!dx || dx.length < 3) return false;
+          const chapter = dx[0].toUpperCase();
+          const allowed = compatMap[chapter];
+          return allowed && !allowed.includes(cptCategory);
+        });
+        const compatible = inheritedDx.filter(dx => {
+          if (!dx || dx.length < 3) return false;
+          const chapter = dx[0].toUpperCase();
+          const allowed = compatMap[chapter];
+          return !allowed || allowed.includes(cptCategory);
+        });
+
+        // Only flag if ALL inherited DX are incompatible.
+        // (One compatible DX is sufficient clinical justification.)
+        if (compatible.length === 0 && incompatible.length > 0) {
+          const dxList = [...new Set(incompatible)].slice(0, 3).join(', ');
+          this.addFinding('compatibility', 'DX\u2013Procedure Mismatch (CO-11)',
+            `CPT ${r.code} (${cptCategory}) has no diagnosis code on its own line, but all encounter-level diagnoses in this bill (${dxList}) are clinically incompatible with this procedure category. ` +
+            `This is a common CO-11 denial pattern. Request the visit note to confirm medical necessity for this service given the reported diagnoses.`,
+            'warn', r.code, r.rowId, 75);
         }
-      });
+      }
     });
   }
 

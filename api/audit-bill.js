@@ -694,10 +694,29 @@ function applyDuplicateHeuristics(rows) {
 async function runGeminiOcrFallback(fileBuffer, mimeType) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey || !fileBuffer) return [];
-  const model = 'gemini-2.5-flash-lite';
-  const prompt = `Extract medical bill line items as strict JSON array.
-Each object keys: Date, CPT, Qty, Unit_Price, Modifier, Billed_Amount, Description.
-Return only JSON array, no markdown.`;
+  const model = 'gemini-2.5-flash-preview-04-17';
+  // Comprehensive prompt — includes DX (ICD-10), financial fields, and clinical context
+  // so Gemini participates fully in every downstream audit rule, not just extraction.
+  const prompt = `You are a medical billing extraction specialist. Analyze this medical bill and extract every line-item service charge as a strict JSON array.
+
+For EACH line item include ALL of these fields (use null if not found):
+- Date: service date (MM/DD/YYYY)
+- CPT: CPT or HCPCS code (5-digit number or letter+4 digits, e.g. 93000, G0444)
+- Qty: number of units billed (integer, default 1)
+- Unit_Price: per-unit charge amount (number, null if not shown)
+- Modifier: 2-character modifier code if present (e.g. "25", "59", null)
+- Billed_Amount: total billed amount for this line
+- Paid: amount paid by insurance (0 if shown as $0 or blank)
+- Adjustment: contractual adjustment amount (0 if not shown, negative if credit)
+- Owed: patient responsibility / amount owed (0 if not shown)
+- DX: array of ICD-10 diagnosis codes associated with this line (e.g. ["S72.001A", "I25.10"]), empty array [] if none
+- Description: full service description text
+
+Rules:
+- Return ONLY a valid JSON array, no markdown, no explanation.
+- If the bill shows a unit price AND a total that do not multiply correctly (qty * unit_price != billed_total), still return both values exactly as shown on the bill.
+- Extract ALL ICD-10 codes you can find on the bill or associated with each line.
+- Preserve exact dollar amounts as numbers without currency symbols.`;
   const body = {
     contents: [{
       parts: [
@@ -705,7 +724,7 @@ Return only JSON array, no markdown.`;
         { inline_data: { mime_type: mimeType || 'application/pdf', data: fileBuffer.toString('base64') } }
       ]
     }],
-    generationConfig: { temperature: 0.1 }
+    generationConfig: { temperature: 0.05, maxOutputTokens: 8192 }
   };
   try {
     const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
@@ -713,34 +732,47 @@ Return only JSON array, no markdown.`;
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     });
-    if (!r.ok) return [];
+    if (!r.ok) {
+      const errText = await r.text().catch(() => '');
+      console.warn(`MediHelp: Gemini API error ${r.status}: ${errText.slice(0, 200)}`);
+      return [];
+    }
     const json = await r.json();
     const text = json?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') || '';
     const cleaned = text.replace(/```json|```/gi, '').trim();
     const arr = JSON.parse(cleaned);
     if (!Array.isArray(arr)) return [];
     return arr.map((row) => {
+      // Normalize DX: accept both array and comma-separated string
+      let dxArr = [];
+      if (Array.isArray(row.DX)) {
+        dxArr = row.DX.map(d => String(d || '').trim().toUpperCase()).filter(Boolean);
+      } else if (typeof row.DX === 'string' && row.DX.trim()) {
+        dxArr = row.DX.split(/[,;\s]+/).map(d => d.trim().toUpperCase()).filter(Boolean);
+      }
       const item = {
         Date: String(row.Date || '').trim(),
         CPT: String(row.CPT || '').trim().toUpperCase(),
         IsValidCode: /^\d{5}$/.test(String(row.CPT || '').trim()) || /^[A-Z]\d{4}$/.test(String(row.CPT || '').trim().toUpperCase()),
         Qty: Number(row.Qty || 1) || 1,
-        Unit_Price: Number(row.Unit_Price || 0) || null,
+        Unit_Price: row.Unit_Price != null ? (Number(row.Unit_Price) || null) : null,
         Modifier: String(row.Modifier || '').trim().toUpperCase(),
         Billed_Amount: Number(row.Billed_Amount || 0) || 0,
-        Adjustment: 0,
-        Paid: 0,
-        DX: [],
+        Adjustment: Number(row.Adjustment || 0) || 0,
+        Paid: Number(row.Paid || 0) || 0,
+        Owed: Number(row.Owed || 0) || 0,
+        DX: dxArr,
         Description: String(row.Description || '').trim(),
-        extraction_confidence: 58,
+        extraction_confidence: 72,
         needs_manual_review: true,
         has_low_confidence_chars: false,
-        review_reasons: ['AI OCR fallback extraction (manual verification required)']
+        review_reasons: ['Gemini Vision extraction (verify key fields)']
       };
       Object.assign(item, computeFieldConfidence(item));
       return item;
     }).filter(rw => rw.CPT && Number.isFinite(Number(rw.Billed_Amount)));
-  } catch (_) {
+  } catch (err) {
+    console.warn('MediHelp: Gemini OCR fallback error:', String(err?.message || err).slice(0, 200));
     return [];
   }
 }
