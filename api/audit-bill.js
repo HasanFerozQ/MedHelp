@@ -1825,12 +1825,27 @@ module.exports = async (req, res) => {
       : { agreementScore: 0, notes: textractFailed ? ['Textract unavailable; no cross-check'] : ['No selectable text rows for cross-check'], verified: false };
 
     if (!crossCheck.verified && directRows.length > 0 && !textractFailed && !/^direct_text/.test(String(detectedTemplate || ''))) {
-      normalizedItems = normalizedItems.map((item) => ({
-        ...item,
-        extraction_confidence: Math.min(Number(item.extraction_confidence || 70), 68),
-        needs_manual_review: true,
-        review_reasons: [...(item.review_reasons || []), 'Cross-check mismatch between direct text and Textract']
-      }));
+      // Avoid a blanket hard-cap: keep structurally strong rows usable while still
+      // forcing manual review whenever OCR engines disagree materially.
+      normalizedItems = normalizedItems.map((item) => {
+        const current = Number(item.extraction_confidence || 70);
+        const overall = Number(item.overall_confidence || current);
+        const code = String(item.CPT || '').toUpperCase();
+        const validCode = /^\d{5}$/.test(code) || /^[A-Z]\d{4}$/.test(code);
+        const hasDate = isLikelyDate(item.Date);
+        const billed = Number(item.Billed_Amount || 0);
+        const qty = Number(item.Qty || 0);
+        const structurallyStrong = validCode && hasDate && billed > 0 && qty > 0;
+        const basePenalty = structurallyStrong ? 8 : 14;
+        const penalized = Math.max(35, Math.round(Math.min(current, overall) - basePenalty));
+        const floor = structurallyStrong ? 74 : 62;
+        return {
+          ...item,
+          extraction_confidence: Math.max(floor, penalized),
+          needs_manual_review: true,
+          review_reasons: [...(item.review_reasons || []), 'Cross-check mismatch between direct text and Textract']
+        };
+      });
     }
 
     // Canonical duplicate candidate tagging
