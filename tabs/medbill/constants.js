@@ -4,6 +4,8 @@ const CPT_RANGES = [
   { min: 10000, max: 69999, category: 'Surgery' },
   { min: 70000, max: 79999, category: 'Radiology' },
   { min: 80000, max: 89999, category: 'Pathology/Lab' },
+  // Cardiology MUST precede the broad E&M range — enables CO-11 DX mismatch detection
+  { min: 93000, max: 93799, category: 'Cardiology' },
   { min: 90000, max: 99999, category: 'E&M / Medicine' },
 ];
 
@@ -71,32 +73,36 @@ const GLOBAL_PERIOD_OK_MODS = new Set(['24', '25', '57']);
 // Key = first letter of ICD-10 code (chapter designator)
 // Value = array of CPT categories that are clinically coherent with this ICD-10 chapter
 const DX_CPT_COMPAT = {
-  'A': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],            // Infectious
-  'B': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],            // Parasitic
-  'C': ['Surgery', 'E&M / Medicine', 'Radiology', 'Pathology/Lab', 'HCPCS L2'], // Neoplasms
-  'D': ['E&M / Medicine', 'Pathology/Lab', 'Radiology', 'Surgery'], // Blood disorders
-  'E': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],            // Endocrine (Diabetes etc)
-  'F': ['E&M / Medicine'],                                           // Mental/Behavioral → psych only
-  'G': ['E&M / Medicine', 'Radiology', 'Surgery'],                  // Neurological
-  'H': ['E&M / Medicine', 'Surgery', 'Radiology'],                  // Eye/Ear
-  'I': ['E&M / Medicine', 'Radiology', 'Surgery', 'Pathology/Lab', 'HCPCS L2'], // Cardiac/circulatory
-  'J': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],            // Respiratory (NO cardiac procedures)
-  'K': ['E&M / Medicine', 'Surgery', 'Pathology/Lab'],              // Digestive
-  'L': ['E&M / Medicine', 'Surgery'],                               // Skin
-  'M': ['E&M / Medicine', 'Surgery', 'Radiology'],                  // Musculoskeletal
-  'N': ['E&M / Medicine', 'Surgery', 'Pathology/Lab', 'Radiology'], // Genitourinary
-  'O': ['E&M / Medicine', 'Surgery', 'Radiology'],                  // Pregnancy
-  'P': ['E&M / Medicine', 'Pathology/Lab'],                         // Perinatal
-  'Q': ['Surgery', 'E&M / Medicine'],                               // Congenital
-  'R': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],            // Symptoms/Signs (general)
-  'S': ['Surgery', 'E&M / Medicine', 'Radiology'],                  // Injury/Trauma (NO psych-only etc)
-  'T': ['E&M / Medicine', 'Surgery', 'Pathology/Lab'],              // Poisoning/adverse effects
-  'U': ['E&M / Medicine', 'Pathology/Lab'],                         // COVID/new codes
-  'V': ['E&M / Medicine', 'Surgery', 'Radiology'],                  // External causes
-  'W': ['E&M / Medicine', 'Surgery'],                               // External causes (falls etc)
-  'X': ['E&M / Medicine', 'Surgery'],                               // External causes
-  'Y': ['E&M / Medicine', 'Surgery'],                               // External causes
-  'Z': ['E&M / Medicine', 'Pathology/Lab'],                         // Health status / encounters
+  // CARDIOLOGY notes:
+  //   'Cardiology' (93000-93799) is ONLY allowed where cardiac monitoring is clinically coherent.
+  //   It is intentionally EXCLUDED from 'S' (trauma/fracture), 'M' (musculoskeletal), 'F' (psych),
+  //   'H' (eye/ear), and 'L' (skin) to enable CO-11 DX–Procedure mismatch detection.
+  'A': ['E&M / Medicine', 'Pathology/Lab', 'Radiology', 'Cardiology'],            // Infectious (incl. endocarditis)
+  'B': ['E&M / Medicine', 'Pathology/Lab', 'Radiology'],                           // Parasitic
+  'C': ['Surgery', 'E&M / Medicine', 'Radiology', 'Pathology/Lab', 'HCPCS L2', 'Cardiology'], // Neoplasms (cardiac tumors, chemo toxicity)
+  'D': ['E&M / Medicine', 'Pathology/Lab', 'Radiology', 'Surgery', 'Cardiology'], // Blood disorders
+  'E': ['E&M / Medicine', 'Pathology/Lab', 'Radiology', 'Cardiology'],             // Endocrine (diabetic cardiomyopathy)
+  'F': ['E&M / Medicine'],                                                           // Mental/Behavioral → psych only, NO cardiac
+  'G': ['E&M / Medicine', 'Radiology', 'Surgery', 'Cardiology'],                   // Neurological (stroke → ECG monitoring)
+  'H': ['E&M / Medicine', 'Surgery', 'Radiology'],                                  // Eye/Ear — NO cardiac
+  'I': ['E&M / Medicine', 'Radiology', 'Surgery', 'Pathology/Lab', 'HCPCS L2', 'Cardiology'], // Cardiac/Circulatory — primary domain
+  'J': ['E&M / Medicine', 'Pathology/Lab', 'Radiology', 'Cardiology'],             // Respiratory (PE, pulm HTN need ECG)
+  'K': ['E&M / Medicine', 'Surgery', 'Pathology/Lab'],                              // Digestive — NO cardiac
+  'L': ['E&M / Medicine', 'Surgery'],                                               // Skin — NO cardiac
+  'M': ['E&M / Medicine', 'Surgery', 'Radiology'],                                  // Musculoskeletal — NO cardiac (CO-11 target)
+  'N': ['E&M / Medicine', 'Surgery', 'Pathology/Lab', 'Radiology'],                // Genitourinary
+  'O': ['E&M / Medicine', 'Surgery', 'Radiology'],                                  // Pregnancy
+  'P': ['E&M / Medicine', 'Pathology/Lab'],                                          // Perinatal
+  'Q': ['Surgery', 'E&M / Medicine'],                                                // Congenital
+  'R': ['E&M / Medicine', 'Pathology/Lab', 'Radiology', 'Cardiology'],             // Symptoms/Signs (chest pain/palpitations → ECG)
+  'S': ['Surgery', 'E&M / Medicine', 'Radiology'],                                  // Injury/Trauma — NO cardiac (CO-11 primary target)
+  'T': ['E&M / Medicine', 'Surgery', 'Pathology/Lab', 'Cardiology'],               // Poisoning/adverse effects (drug-induced arrhythmia)
+  'U': ['E&M / Medicine', 'Pathology/Lab'],                                          // COVID/new codes
+  'V': ['E&M / Medicine', 'Surgery', 'Radiology'],                                  // External causes
+  'W': ['E&M / Medicine', 'Surgery'],                                               // External causes (falls)
+  'X': ['E&M / Medicine', 'Surgery'],                                               // External causes
+  'Y': ['E&M / Medicine', 'Surgery'],                                               // External causes
+  'Z': ['E&M / Medicine', 'Pathology/Lab', 'Cardiology'],                          // Health status (screening ECG on wellness visit)
 };
 
 /**

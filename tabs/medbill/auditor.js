@@ -290,28 +290,123 @@ class BucketAuditor {
       if (!r.isTotalRow) (byDate[r.date || 'UNDATED'] = byDate[r.date || 'UNDATED'] || []).push(r);
     });
 
+    const g0444FiredDates = new Set(); // dedup guard for G0444 byDate vs row-level
+
     Object.entries(byDate).forEach(([date, list]) => {
       const codes = new Set(list.map(r => String(r.code || '').trim()));
+
+      // ── Bundling: CBC + E&M same encounter ──
       if (codes.has('85025') && codes.has('99214')) {
         this.addFinding('bundling', 'Bundling Risk (CBC + E&M same encounter)',
           `CBC ${'85025'} appears with E&M ${'99214'} on ${date}. Validate CO-97 style inclusion/bundling policy and payer edits before patient billing.`,
           'warn', '85025');
       }
+
+      // ── CO-50: G0444 Annual Depression Screen on Acute / Non-Wellness Visit ──
+      // G0444 is ONLY a covered benefit during Annual Wellness Visits (G0439/Z00.xx).
+      // Billing it with acute diagnoses triggers CO-50 (not medically necessary).
+      if (codes.has('G0444')) {
+        const hasWellnessVisit = codes.has('G0439') || codes.has('G0402') ||
+          list.some(r => Array.isArray(r.dx) && r.dx.some(dx => /^Z00/i.test(dx)));
+
+        // Collect all DX codes present on this date from all rows
+        const allDx = list.flatMap(r => Array.isArray(r.dx) ? r.dx : []);
+        const hasAcuteDx = allDx.length > 0 && allDx.some(dx => dx && !/^Z/i.test(dx));
+
+        // Acute visit codes (non-routine complexity) alongside G0444 = red flag
+        const hasAcuteVisitCode = list.some(r => {
+          const n = parseInt(String(r.code || ''), 10);
+          return (n >= 99202 && n <= 99215) || (n >= 99221 && n <= 99285);
+        });
+
+        if ((hasAcuteDx || hasAcuteVisitCode) && !hasWellnessVisit) {
+          g0444FiredDates.add(date);
+          this.addFinding('compatibility', 'Preventive Screen on Acute Visit — CO-50 Risk',
+            `G0444 (Annual Depression Screening) is a preventive benefit payable ONLY during Annual Wellness Visits (AWV, G0439) or "Welcome to Medicare" visits. ` +
+            `This claim on ${date} shows acute/non-wellness diagnosis codes${hasAcuteDx ? ` (${allDx.filter(dx => !/^Z/i.test(dx)).slice(0,2).join(', ')})` : ''} without a corresponding AWV code. ` +
+            `Payer will deny G0444 as CO-50 (not deemed medically necessary in this encounter context). ` +
+            `G0444 must be billed on the same date as the Annual Wellness Visit with a Z00.xx diagnosis.`,
+            'danger', 'G0444', null, 92);
+        }
+      }
     });
 
+    // ── Row-level Critical Checks ──
     this.rows.forEach((r) => {
-      const code = String(r.code || '').trim();
-      const qty = Number(r.qty || 0);
-      const text = `${r.desc || ''} ${r.code || ''}`.toLowerCase();
-      if (code === '90837' && qty > 1) {
-        this.addFinding('frequency', 'Psychotherapy Daily Unit Limit Risk',
-          `Code 90837 billed at ${qty} units. Typical adjudication is 1 unit/day; review for excess units.`,
-          'danger', code, r.rowId, 95);
+      const code  = String(r.code || '').trim();
+      const qty   = Number(r.qty || 0);
+      const text  = `${r.desc || ''} ${r.code || ''}`;
+
+      // ── CO-4: Psychotherapy Excess Units (90837 / 90834) ──
+      // CMS MUE = 1 unit/day for all psychotherapy codes.
+      // Also scan description text for unit counts (e.g. "×8", "8 units") in case
+      // the parser extracted qty=1 but the description reveals the true billed quantity.
+      if (code === '90837' || code === '90834') {
+        const descUnitsMatch = text.match(/[×xX]\s*(\d{1,2})|(?:^|\s)(\d{1,2})\s*[Uu]nits?\b/);
+        const descUnits = descUnitsMatch
+          ? parseInt(descUnitsMatch[1] || descUnitsMatch[2], 10)
+          : 1;
+        const effectiveQty = Math.max(qty || 1, descUnits);
+        const codeLabel = code === '90837' ? 'Psychotherapy 60 min' : 'Psychotherapy 45 min';
+
+        if (effectiveQty > 1) {
+          this.addFinding('frequency', `Psychotherapy Excess Units — CO-4 Risk`,
+            `CPT ${code} (${codeLabel}) billed at ${effectiveQty} units. CMS MUE limit is 1 unit per day; ` +
+            `billing ${effectiveQty} units will trigger a CO-4 denial ("service/quantity inconsistent with the procedure code"). ` +
+            `Only 1 psychotherapy session per patient per day is separately payable — the ${effectiveQty - 1} excess unit(s) ` +
+            `will be denied without a valid appeal basis. Correct to 1 unit or split across separate dates of service.`,
+            'danger', code, r.rowId, 97);
+        }
       }
-      if (code === '29881' && /prior\s*auth|pre[-\s]?auth|authorization\s*(missing|not\s*obtained|required)/i.test(text)) {
-        this.addFinding('modifier', 'Prior Authorization Missing',
-          `Procedure 29881 indicates missing prior authorization context. This commonly results in full denial until authorization evidence is supplied.`,
-          'danger', code, r.rowId, 93);
+
+      // ── CO-197: Knee Arthroscopy Without Prior Authorization ──
+      // 29881 is one of the most commonly preauth-required procedures.
+      // CO-197 = "Precertification/authorization/notification absent".
+      // Detection strategy: CO-197 text in description OR zero-pay pattern
+      // (paid=$0, no contractual adj) which is the canonical CO-197 fingerprint
+      // when the procedure already occurred. Do NOT require auth keywords in the
+      // description — that text is almost never present on the actual bill.
+      if (code === '29881') {
+        const hasCO197text   = /\bCO[-\s]?197\b|\bPR[-\s]?197\b/i.test(text);
+        const hasAuthKeyword = /prior\s*auth|pre[-\s]?auth|authorization\s*(missing|not\s*obtained|required)/i.test(text);
+        // Zero-pay without adj is the most reliable signal: payer denied the whole claim
+        const isFullDenialPattern = r.total > 200 &&
+          (r.paid === 0 || r.paid === null) &&
+          (!r.adj || r.adj === 0) &&
+          !hasCO197text && !hasAuthKeyword; // avoid double-finding with text matches
+
+        if (hasCO197text || hasAuthKeyword || isFullDenialPattern) {
+          const reason = hasCO197text
+            ? 'CO-197 detected in claim text — confirmed prior-authorization denial.'
+            : hasAuthKeyword
+              ? 'Authorization-related keyword detected in claim description.'
+              : `Zero-payment pattern ($0 paid, $0 contractual adjustment on a $${(r.total || 0).toFixed(2)} charge) is the canonical CO-197 fingerprint for a missing-authorization full denial.`;
+          this.addFinding('modifier', 'Prior Authorization Required — CO-197 Denial',
+            `CPT 29881 (Knee Arthroscopy with Meniscectomy) requires prior authorization from virtually all commercial payers and Medicare Advantage plans. ` +
+            `${reason} ` +
+            `The claim must be resubmitted with documented proof of authorization. Without retro-authorization, the full charge amount ($${(r.total || 0).toFixed(2)}) will remain denied and the patient cannot be balance-billed for a provider authorization failure. ` +
+            `(CMS Medicare Claims Processing Manual, Chapter 1 \u00a710; Denial Code CO-197)`,
+            'danger', code, r.rowId, 95);
+        }
+      }
+
+      // ── CO-50: G0444 row-level DX check ──
+      // Catch G0444 rows that have their own dx[] populated with non-wellness codes,
+      // in case the byDate check did not fire (e.g. single isolated row or date mismatch).
+      if (code === 'G0444' && Array.isArray(r.dx) && r.dx.length > 0) {
+        const date = r.date || 'UNDATED';
+        if (!g0444FiredDates.has(date)) {
+          const hasWellnessDx = r.dx.some(dx => /^Z00/i.test(dx));
+          const hasAcuteDx    = r.dx.some(dx => !/^Z/i.test(dx));
+          if (hasAcuteDx && !hasWellnessDx) {
+            g0444FiredDates.add(date);
+            this.addFinding('compatibility', 'Preventive Screen on Acute Visit — CO-50 Risk',
+              `G0444 (Annual Depression Screening) is billed with diagnosis ${r.dx.filter(dx => !/^Z/i.test(dx)).join(', ')} — a non-wellness ICD-10 chapter. ` +
+              `This benefit is payable ONLY with Annual Wellness Visit context (Z00.xx). ` +
+              `Payer will deny as CO-50 (not medically necessary for acute/non-preventive encounters).`,
+              'danger', code, r.rowId, 92);
+          }
+        }
       }
     });
   }
@@ -353,10 +448,14 @@ class BucketAuditor {
     }
 
     // Zero-Pay High Value Signal (treat null paid as $0 — common in PDF-extracted denied claims)
+    // Codes with a dedicated prior-auth or denial-reason check are suppressed here to avoid
+    // a vague generic finding shadowing the specific actionable one.
+    const PREAUTH_CHECKED_CODES = new Set(['29881', '29880', '29879', '29877']);
     validRows.forEach(r => {
+      if (PREAUTH_CHECKED_CODES.has(String(r.code || ''))) return; // covered by CO-197 check
       if (r.total > 500 && (r.paid === 0 || r.paid === null) && (r.owed == null || r.owed === r.total) && !r.adj && r.math_complete) {
         this.addFinding('financial', 'Likely Silent Denial / Process Oversight',
-          `Line item "${r.desc || r.code || 'Unknown'}" billed at $${r.total.toFixed(2)} passed directly to patient with $0 insurance payment and $0 adjustment. Verify EOB for this charge.`,
+          `Line item "${r.desc || r.code || 'Unknown'}" billed at $${r.total.toFixed(2)} passed directly to patient with $0 insurance payment and $0 adjustment. Verify EOB for this charge — check if prior authorization or a referral was required.`,
           'warn', r.code, r.rowId, 75);
       }
     });
@@ -840,8 +939,20 @@ class BucketAuditor {
       const cap = bench.price * r.qty * this.multiplier;
       this.totalBenchmark += bench.price * r.qty;
       if (r.total > cap) {
+        // Check if the overcharge pattern looks like a fee-schedule arithmetic error
+        // (billed unit price is a suspicious round number or deviates >50% from benchmark unit price)
+        const billedUnitPrice = r.qty > 0 ? r.total / r.qty : r.total;
+        const benchUnitPrice  = bench.price;
+        const isPriceArithmeticSuspect = Number.isFinite(billedUnitPrice) &&
+          Number.isFinite(benchUnitPrice) && benchUnitPrice > 0 &&
+          (billedUnitPrice / benchUnitPrice) > 3.0; // >3× benchmark/unit is unusual
+
+        const arithmeticNote = isPriceArithmeticSuspect
+          ? ` Billed unit price ($${billedUnitPrice.toFixed(2)}) is ${(billedUnitPrice / benchUnitPrice).toFixed(1)}× the Medicare unit rate ($${benchUnitPrice.toFixed(2)}) — verify whether the fee schedule rate was applied correctly (possible arithmetic fee-schedule error).`
+          : '';
+
         this.addFinding('benchmark', 'High Pricing Variance',
-          `CPT ${r.code}: Billed $${r.total.toFixed(2)} vs ${this.multiplier}× Medicare benchmark $${cap.toFixed(2)}. Potential overcharge of $${(r.total - cap).toFixed(2)}. (CMS Medicare Physician Fee Schedule — cms.gov/Medicare/Medicare-Fee-for-Service-Payment/PhysicianFeeSched)`,
+          `CPT ${r.code}: Billed $${r.total.toFixed(2)} vs ${this.multiplier}× Medicare benchmark $${cap.toFixed(2)}. Potential overcharge of $${(r.total - cap).toFixed(2)}.${arithmeticNote} (CMS Medicare Physician Fee Schedule — cms.gov/Medicare/Medicare-Fee-for-Service-Payment/PhysicianFeeSched)`,
           'warn', r.code);
         if (r.raw) r.raw.classList.add('audit-row-warn');
         this.addRowSavings(idx, r.total - cap, r.total);
