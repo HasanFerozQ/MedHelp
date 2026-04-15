@@ -554,7 +554,7 @@ window.showManualReviewPrompt = function(items) {
   list.innerHTML = `
     ${criticalItems.length ? `<div style="font-size:11px;font-weight:800;color:#ef4444;text-transform:uppercase;letter-spacing:0.4px;margin:2px 0 8px;">Critical Review Rows (${criticalItems.length})</div>` : ''}
     ${criticalItems.map(renderReviewRow).join('')}
-    ${nonCriticalItems.length ? `<details style="margin-top:8px;"><summary style="cursor:pointer;font-size:12px;color:var(--text-muted);font-weight:700;">Show non-critical review rows (${nonCriticalItems.length})</summary><div style="margin-top:10px;">${nonCriticalItems.map(renderReviewRow).join('')}</div></details>` : ''}
+    ${nonCriticalItems.length ? `<details open style="margin-top:8px;"><summary style="cursor:pointer;font-size:12px;color:var(--text-muted);font-weight:700;">Non-critical review rows (${nonCriticalItems.length})</summary><div style="margin-top:10px;">${nonCriticalItems.map(renderReviewRow).join('')}</div></details>` : ''}
   `;
 };
 

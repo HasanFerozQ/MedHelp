@@ -1076,21 +1076,33 @@ function normalizeTextractOutput(blocks) {
 
       // Template-based fallback mapping when headers are weak/noisy.
       if (!headers.cpt || !headers.billed_amount) {
+        const moneyColumnStats = [];
         for (let c = 1; c <= maxCol; c++) {
           const colSamples = [];
+          const moneyVals = [];
           for (let r = 2; r <= Math.min(maxRow, 8); r++) {
             const v = (grid[r]?.[c]?.text || '').trim();
-            if (v) colSamples.push(v);
+            if (!v) continue;
+            colSamples.push(v);
+            const pv = parseCurrency(v);
+            if (Number.isFinite(pv)) moneyVals.push(Math.abs(pv));
           }
           if (!colSamples.length) continue;
 
           const codeHits = colSamples.filter(v => /^\d{5}$/.test(v) || /^[A-Z]\d{4}$/.test(v)).length;
           const moneyHits = colSamples.filter(v => parseCurrency(v) !== null).length;
           const dateHits = colSamples.filter(v => isLikelyDate(v)).length;
+          const moneyAvg = moneyVals.length ? (moneyVals.reduce((s, n) => s + n, 0) / moneyVals.length) : 0;
+          if (moneyHits >= 2) moneyColumnStats.push({ c, moneyHits, moneyAvg });
 
           if (!headers.cpt && codeHits >= 2) headers.cpt = c;
           if (!headers.billed_amount && moneyHits >= 2) headers.billed_amount = c;
           if (!headers.date && dateHits >= 2) headers.date = c;
+        }
+        // If money mapping was guessed, prefer the money-heavy column as billed.
+        if (moneyColumnStats.length > 0) {
+          moneyColumnStats.sort((a, b) => (b.moneyAvg - a.moneyAvg) || (b.moneyHits - a.moneyHits));
+          headers.billed_amount = moneyColumnStats[0].c;
         }
       }
 

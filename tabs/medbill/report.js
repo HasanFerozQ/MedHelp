@@ -126,7 +126,7 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
           ` : ''}
 
           ${lowValueFindings.length > 0 ? `
-            <details style="margin-top:2px;">
+            <details open style="margin-top:2px;">
               <summary style="cursor:pointer; font-size:11px; color:#60a5fa; font-weight:700;">Minor validation details (${lowValueFindings.length})</summary>
               <div style="padding-top:6px;">
                 ${lowValueFindings.map(f => `
@@ -159,7 +159,7 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
     container.innerHTML = `
       ${criticalCount > 0 ? `<div style="font-size:11px; font-weight:800; text-transform:uppercase; color:#ef4444; margin: 2px 0 10px;">Critical Rows (${criticalCount})</div>` : ''}
       ${criticalHtml || `<div style="font-size:12px;color:var(--text-muted);padding:8px 0;">No critical rows detected.</div>`}
-      ${nonCriticalCount > 0 ? `<details style="margin-top:8px;"><summary style="cursor:pointer; font-size:12px; color:var(--text-muted); font-weight:700;">Show Non-Critical Rows (${nonCriticalCount})</summary><div style="margin-top:10px;">${nonCriticalHtml}</div></details>` : ''}
+      ${nonCriticalCount > 0 ? `<details open style="margin-top:8px;"><summary style="cursor:pointer; font-size:12px; color:var(--text-muted); font-weight:700;">Non-Critical Rows (${nonCriticalCount})</summary><div style="margin-top:10px;">${nonCriticalHtml}</div></details>` : ''}
     `;
 
     // ── Document-Level Findings (orphaned: no rowId, no codeRef) ──────────────
