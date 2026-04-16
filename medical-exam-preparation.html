@@ -229,7 +229,7 @@
     // Separate scoring maps
     let currentStandaloneIds = [];
     let currentCaseQuestionIds = [];
-    let currentCaseScenariosCount = 0;
+    let currentLoadedCases = [];
 
     function saveProgress() {
       localStorage.setItem('mh_prep_progress', JSON.stringify(userProgress));
@@ -400,7 +400,7 @@
       // Reset ID tracking
       currentStandaloneIds = [];
       currentCaseQuestionIds = [];
-      currentCaseScenariosCount = 0;
+      currentLoadedCases = [];
 
       if ((mError || !mcqs.length) && (cError || !cases.length)) {
         list.innerHTML = '<p style="text-align:center; padding: 40px;">No questions found for this topic.</p>';
@@ -427,7 +427,7 @@
         header.textContent = 'Clinical Case Studies';
         list.appendChild(header);
 
-        currentCaseScenariosCount = cases.length;
+        currentLoadedCases = cases;
         cases.forEach((cs, cIdx) => {
           currentCaseQuestionIds.push(...cs.case_questions.map(q => q.id));
           list.appendChild(renderCaseBlock(cs, cIdx));
@@ -540,7 +540,16 @@
       const mcqCorrect = mcqAnswered.filter(id => topicProgress[id].correct).length;
       
       const caseAnswered = currentCaseQuestionIds.filter(id => topicProgress[id]);
-      const caseCorrectCount = caseAnswered.filter(id => topicProgress[id].correct).length;
+      
+      // Calculate completed scenarios (where all questions for that scenario are correct)
+      let casesCompletedCount = 0;
+      currentLoadedCases.forEach(cs => {
+        const scenarioQuestions = cs.case_questions.map(q => q.id);
+        const correctInScenario = scenarioQuestions.filter(id => topicProgress[id] && topicProgress[id].correct).length;
+        if (scenarioQuestions.length > 0 && correctInScenario === scenarioQuestions.length) {
+          casesCompletedCount++;
+        }
+      });
       
       const totalAnswered = mcqAnswered.length + caseAnswered.length;
       const totalPossible = currentStandaloneIds.length + currentCaseQuestionIds.length;
@@ -548,7 +557,7 @@
       document.getElementById('topic-stats').textContent = `${totalAnswered} / ${totalPossible} Questions Completed`;
       
       document.getElementById('mcq-live-score').textContent = `MCQ: ${mcqCorrect} / ${currentStandaloneIds.length}`;
-      document.getElementById('case-live-score').textContent = `Case: ${caseCorrectCount} / ${currentCaseScenariosCount}`;
+      document.getElementById('case-live-score').textContent = `Case: ${casesCompletedCount} / ${currentLoadedCases.length}`;
       
       // Hide case score if no cases exist
       document.getElementById('case-live-score').style.display = currentCaseQuestionIds.length ? 'block' : 'none';
