@@ -53,20 +53,33 @@ ALTER TABLE public.topics ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.mcqs ENABLE ROW LEVEL SECURITY;
 
 -- 1. Public Read (SELECT) for everyone
+DROP POLICY IF EXISTS "Allow public read on semesters" ON public.semesters;
+DROP POLICY IF EXISTS "Allow public read on topics" ON public.topics;
+DROP POLICY IF EXISTS "Allow public read on mcqs" ON public.mcqs;
+
 CREATE POLICY "Allow public read on semesters" ON public.semesters FOR SELECT USING (true);
 CREATE POLICY "Allow public read on topics" ON public.topics FOR SELECT USING (true);
 CREATE POLICY "Allow public read on mcqs" ON public.mcqs FOR SELECT USING (true);
 
 -- 2. Admin (Authenticated) Write/Update/Delete
--- Ensure you have an Admin role or specific UID check
+-- Strictly restricted to your specific email address
+DROP POLICY IF EXISTS "Allow admin all on semesters" ON public.semesters;
 CREATE POLICY "Allow admin all on semesters" ON public.semesters 
-FOR ALL TO authenticated USING (true) WITH CHECK (true);
+FOR ALL TO authenticated 
+USING (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com') 
+WITH CHECK (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com');
 
+DROP POLICY IF EXISTS "Allow admin all on topics" ON public.topics;
 CREATE POLICY "Allow admin all on topics" ON public.topics 
-FOR ALL TO authenticated USING (true) WITH CHECK (true);
+FOR ALL TO authenticated 
+USING (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com') 
+WITH CHECK (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com');
 
+DROP POLICY IF EXISTS "Allow admin all on mcqs" ON public.mcqs;
 CREATE POLICY "Allow admin all on mcqs" ON public.mcqs 
-FOR ALL TO authenticated USING (true) WITH CHECK (true);
+FOR ALL TO authenticated 
+USING (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com') 
+WITH CHECK (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com');
 
 -- ==========================================
 -- Storage (MCQ Images)
@@ -77,7 +90,16 @@ INSERT INTO storage.buckets (id, name, public)
 VALUES ('mcq-images', 'mcq-images', true)
 ON CONFLICT (id) DO NOTHING;
 
--- Storage Policies (Allow public to view, authenticated to upload)
+-- Storage Policies (Allow public to view, only YOU to upload/delete)
+DROP POLICY IF EXISTS "Public Access" ON storage.objects;
 CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'mcq-images');
-CREATE POLICY "Admin Upload" ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'mcq-images');
-CREATE POLICY "Admin Delete" ON storage.objects FOR DELETE TO authenticated USING (bucket_id = 'mcq-images');
+
+DROP POLICY IF EXISTS "Admin Upload" ON storage.objects;
+CREATE POLICY "Admin Upload" ON storage.objects 
+FOR INSERT TO authenticated 
+WITH CHECK (bucket_id = 'mcq-images' AND auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com');
+
+DROP POLICY IF EXISTS "Admin Delete" ON storage.objects;
+CREATE POLICY "Admin Delete" ON storage.objects 
+FOR DELETE TO authenticated 
+USING (bucket_id = 'mcq-images' AND auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com');
