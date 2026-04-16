@@ -229,6 +229,7 @@
     // Separate scoring maps
     let currentStandaloneIds = [];
     let currentCaseQuestionIds = [];
+    let currentCaseScenariosCount = 0;
 
     function saveProgress() {
       localStorage.setItem('mh_prep_progress', JSON.stringify(userProgress));
@@ -399,6 +400,7 @@
       // Reset ID tracking
       currentStandaloneIds = [];
       currentCaseQuestionIds = [];
+      currentCaseScenariosCount = 0;
 
       if ((mError || !mcqs.length) && (cError || !cases.length)) {
         list.innerHTML = '<p style="text-align:center; padding: 40px;">No questions found for this topic.</p>';
@@ -425,6 +427,7 @@
         header.textContent = 'Clinical Case Studies';
         list.appendChild(header);
 
+        currentCaseScenariosCount = cases.length;
         cases.forEach((cs, cIdx) => {
           currentCaseQuestionIds.push(...cs.case_questions.map(q => q.id));
           list.appendChild(renderCaseBlock(cs, cIdx));
@@ -537,7 +540,7 @@
       const mcqCorrect = mcqAnswered.filter(id => topicProgress[id].correct).length;
       
       const caseAnswered = currentCaseQuestionIds.filter(id => topicProgress[id]);
-      const caseCorrect = caseAnswered.filter(id => topicProgress[id].correct).length;
+      const caseCorrectCount = caseAnswered.filter(id => topicProgress[id].correct).length;
       
       const totalAnswered = mcqAnswered.length + caseAnswered.length;
       const totalPossible = currentStandaloneIds.length + currentCaseQuestionIds.length;
@@ -545,7 +548,7 @@
       document.getElementById('topic-stats').textContent = `${totalAnswered} / ${totalPossible} Questions Completed`;
       
       document.getElementById('mcq-live-score').textContent = `MCQ: ${mcqCorrect} / ${currentStandaloneIds.length}`;
-      document.getElementById('case-live-score').textContent = `Case: ${caseCorrect} / ${currentCaseQuestionIds.length}`;
+      document.getElementById('case-live-score').textContent = `Case: ${caseCorrectCount} / ${currentCaseScenariosCount}`;
       
       // Hide case score if no cases exist
       document.getElementById('case-live-score').style.display = currentCaseQuestionIds.length ? 'block' : 'none';
