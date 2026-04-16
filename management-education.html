@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Management Education | MediHelp Admin</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+  <style>
+    .admin-container { padding-top: 40px; padding-bottom: 80px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 32px; }
+    .card-title { font-size: 20px; font-weight: 800; color: var(--text-h); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .full-width { grid-column: span 2; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 12px 16px; color: var(--text-h); font-family: var(--font-main); font-size: 15px; outline: none; transition: var(--transition);
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    .btn-row { display: flex; gap: 12px; margin-top: 10px; }
+    
+    /* Login Overlay */
+    #auth-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; visibility: hidden; opacity: 0; transition: var(--transition); }
+    #auth-overlay.visible { visibility: visible; opacity: 1; }
+    .login-card { width: 100%; max-width: 400px; text-align: center; }
+
+    /* Management Table */
+    .mgmt-table-wrapper { overflow-x: auto; margin-top: 20px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+    .mgmt-table { width: 100%; border-collapse: collapse; background: var(--bg-elevated); font-size: 14px; }
+    .mgmt-table th, .mgmt-table td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border); }
+    .mgmt-table th { background: var(--bg-card); color: var(--text-muted); text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em; }
+    .mgmt-table tr:last-child td { border-bottom: none; }
+    .mgmt-table tr:hover td { background: var(--bg-card-hover); }
+    .btn-delete { color: var(--danger); background: none; border: none; cursor: pointer; font-weight: 700; padding: 4px 8px; border-radius: 4px; transition: var(--transition); }
+    .btn-delete:hover { background: rgba(239, 68, 68, 0.1); }
+
+    .img-preview { max-width: 100px; max-height: 60px; border-radius: 4px; object-fit: cover; border: 1px solid var(--border); }
+    
+    .hidden { display: none; }
+    .toggle-group { display: flex; gap: 20px; margin-bottom: 10px; }
+    .toggle-item { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; }
+    
+    #loading-state { text-align: center; padding: 40px; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png?v=1.1" alt="MediHelp">
+        MediHelp Admin
+      </a>
+      <div class="nav-actions">
+        <button id="logout-btn" class="btn btn-ghost" style="padding: 8px 16px; font-size: 13px;">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container admin-container">
+    
+    <!-- DASHBOARD HEADER -->
+    <header style="margin-bottom: 40px;">
+      <h1 style="font-size: 32px; font-weight: 900; color: var(--text-h); letter-spacing: -1px; margin-bottom: 8px;">Management Education Portal</h1>
+      <p style="color: var(--text-muted);">Manage Semesters, Topics, and MCQs for the Medical Exam Preparation platform.</p>
+    </header>
+
+    <div id="content-area">
+      <!-- 1. TOPIC CREATION -->
+      <section class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          Create New Topic
+        </h2>
+        <form id="topic-form" class="form-grid">
+          <div class="form-group">
+            <label>Semester</label>
+            <select id="topic-semester" class="form-select" required>
+              <option value="">Select Semester...</option>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+              <option value="5">Semester 5</option>
+              <option value="6">Semester 6</option>
+              <option value="7">Semester 7</option>
+              <option value="8">Semester 8</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Topic Title</label>
+            <input type="text" id="topic-title" class="form-input" placeholder="e.g. Cardiovascular Physiology" required>
+          </div>
+          <div class="full-width">
+            <button type="submit" class="btn btn-primary">Create Topic</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 2. MCQ UPLOADER -->
+      <section class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload New MCQ
+        </h2>
+        <form id="mcq-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Semester</label>
+              <select id="mcq-semester" class="form-select" required onchange="loadTopicsBySemester(this.value, 'mcq-topic')">
+                <option value="">Select Semester...</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Topic</label>
+              <select id="mcq-topic" class="form-select" required disabled>
+                <option value="">Select Topic...</option>
+              </select>
+            </div>
+            
+            <div class="form-group full-width">
+              <label>Question</label>
+              <textarea id="mcq-question" class="form-textarea" rows="3" placeholder="Enter the MCQ question here..." required></textarea>
+            </div>
+
+            <!-- Image Handling -->
+            <div class="form-group full-width">
+              <label>Image (Optional)</label>
+              <div class="toggle-group">
+                <label class="toggle-item"><input type="radio" name="img-type" value="none" checked onchange="toggleImgInput('none')"> None</label>
+                <label class="toggle-item"><input type="radio" name="img-type" value="url" onchange="toggleImgInput('url')"> External URL</label>
+                <label class="toggle-item"><input type="radio" name="img-type" value="file" onchange="toggleImgInput('file')"> Local Upload</label>
+              </div>
+              <div id="img-input-url" class="hidden">
+                 <input type="url" id="mcq-img-url" class="form-input" placeholder="https://example.com/image.jpg">
+              </div>
+              <div id="img-input-file" class="hidden">
+                 <input type="file" id="mcq-img-file" class="form-input" accept="image/*">
+                 <p style="font-size:11px; color:var(--text-muted); margin-top:5px;">Max 5MB. Will be automatically resized.</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Option A</label>
+              <input type="text" id="mcq-opt-0" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label>Option B</label>
+              <input type="text" id="mcq-opt-1" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label>Option C</label>
+              <input type="text" id="mcq-opt-2" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label>Option D</label>
+              <input type="text" id="mcq-opt-3" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label>Correct Answer</label>
+              <select id="mcq-correct" class="form-select" required>
+                <option value="0">Option A</option>
+                <option value="1">Option B</option>
+                <option value="2">Option C</option>
+                <option value="3">Option D</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label>Explanation / Definition</label>
+              <textarea id="mcq-explanation" class="form-textarea" rows="2" placeholder="Explain why the answer is correct..."></textarea>
+            </div>
+
+            <div class="full-width">
+              <button type="submit" id="submit-mcq" class="btn btn-primary" style="width: 100%;">Upload MCQ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- 3. MCQ MANAGEMENT (LIST / DELETE) -->
+      <section class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Manage & Delete Questions
+        </h2>
+        
+        <div class="form-grid" style="margin-bottom: 24px;">
+          <div class="form-group">
+            <label>Filter Semester</label>
+            <select id="filter-semester" class="form-select" onchange="loadTopicsBySemester(this.value, 'filter-topic'); refreshMcqList();">
+              <option value="">All Semesters</option>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+              <option value="5">Semester 5</option>
+              <option value="6">Semester 6</option>
+              <option value="7">Semester 7</option>
+              <option value="8">Semester 8</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Filter Topic</label>
+            <select id="filter-topic" class="form-select" onchange="refreshMcqList()">
+              <option value="">All Topics</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="loading-mcqs" class="hidden">Loading MCQs...</div>
+        
+        <div class="mgmt-table-wrapper">
+          <table class="mgmt-table">
+            <thead>
+              <tr>
+                <th>Preview</th>
+                <th>Question</th>
+                <th>Topic</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="mcq-list-body">
+              <!-- Rows injected here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- AUTH OVERLAY -->
+  <div id="auth-overlay">
+    <div class="card login-card">
+      <h2 class="card-title" style="justify-content: center;">Admin Login</h2>
+      <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 24px;">MediHelp Internal Management Access Only</p>
+      <form id="login-form">
+        <div class="form-group" style="text-align: left;">
+          <label>Email</label>
+          <input type="email" id="login-email" class="form-input" required>
+        </div>
+        <div class="form-group" style="text-align: left;">
+          <label>Password</label>
+          <input type="password" id="login-password" class="form-input" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // --- AUTH LOGIC ---
+    const authOverlay = document.getElementById('auth-overlay');
+    
+    async function checkUser() {
+      const { data: { user } } = await window.dbClient.auth.getUser();
+      if (!user) {
+        authOverlay.classList.add('visible');
+      } else {
+        authOverlay.classList.remove('visible');
+        refreshMcqList();
+      }
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const btn = e.target.querySelector('button');
+      
+      btn.disabled = true;
+      btn.textContent = 'Verifying...';
+
+      const { error } = await window.dbClient.auth.signInWithPassword({ email, password });
+      
+      if (error) {
+        alert('Access Denied: ' + error.message);
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+      } else {
+        checkUser();
+      }
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await window.dbClient.auth.signOut();
+      checkUser();
+    });
+
+    // --- SHARED DATA LOGIC ---
+    async function loadTopicsBySemester(semId, targetSelectId) {
+      const target = document.getElementById(targetSelectId);
+      target.innerHTML = `<option value="">Select Topic...</option>`;
+      
+      if (!semId) {
+        target.disabled = true;
+        return;
+      }
+
+      const { data, error } = await window.dbClient
+        .from('topics')
+        .select('*')
+        .eq('semester_id', semId)
+        .order('title', { ascending: true });
+
+      if (error) {
+        console.error('Error fetching topics:', error);
+        return;
+      }
+
+      data.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.id;
+        opt.textContent = t.title;
+        target.appendChild(opt);
+      });
+      
+      target.disabled = false;
+    }
+
+    // --- TOPIC CREATION ---
+    document.getElementById('topic-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const semId = document.getElementById('topic-semester').value;
+      const title = document.getElementById('topic-title').value;
+      const btn = e.target.querySelector('button');
+
+      btn.disabled = true;
+      
+      const { error } = await window.dbClient
+        .from('topics')
+        .insert([{ semester_id: semId, title: title }]);
+
+      if (error) {
+        alert('Error creating topic: ' + error.message);
+      } else {
+        alert('Topic created successfully!');
+        e.target.reset();
+        // Refresh dropdowns if necessary
+        loadTopicsBySemester(document.getElementById('mcq-semester').value, 'mcq-topic');
+      }
+      btn.disabled = false;
+    });
+
+    // --- MCQ UPLOADER ---
+    function toggleImgInput(type) {
+      document.getElementById('img-input-url').classList.add('hidden');
+      document.getElementById('img-input-file').classList.add('hidden');
+      if (type === 'url') document.getElementById('img-input-url').classList.remove('hidden');
+      if (type === 'file') document.getElementById('img-input-file').classList.remove('hidden');
+    }
+
+    document.getElementById('mcq-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const topicId = document.getElementById('mcq-topic').value;
+      const question = document.getElementById('mcq-question').value;
+      const explanation = document.getElementById('mcq-explanation').value;
+      const correctIndex = document.getElementById('mcq-correct').value;
+      const options = [
+        document.getElementById('mcq-opt-0').value,
+        document.getElementById('mcq-opt-1').value,
+        document.getElementById('mcq-opt-2').value,
+        document.getElementById('mcq-opt-3').value
+      ];
+
+      const btn = document.getElementById('submit-mcq');
+      btn.disabled = true;
+      btn.textContent = 'Uploading...';
+
+      let imageUrl = null;
+      const type = document.querySelector('input[name="img-type"]:checked').value;
+
+      try {
+        if (type === 'url') {
+          imageUrl = document.getElementById('mcq-img-url').value;
+        } else if (type === 'file') {
+          const file = document.getElementById('mcq-img-file').files[0];
+          if (file) {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+            const filePath = `mcqs/${fileName}`;
+
+            const { data, error: uploadError } = await window.dbClient.storage
+              .from('mcq-images')
+              .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+            
+            const { data: { publicUrl } } = window.dbClient.storage
+              .from('mcq-images')
+              .getPublicUrl(filePath);
+            
+            imageUrl = publicUrl;
+          }
+        }
+
+        const { error: insertError } = await window.dbClient
+          .from('mcqs')
+          .insert([{
+            topic_id: topicId,
+            question,
+            image_url: imageUrl,
+            options,
+            correct_index: parseInt(correctIndex),
+            explanation
+          }]);
+
+        if (insertError) throw insertError;
+
+        alert('MCQ uploaded successfully!');
+        e.target.reset();
+        toggleImgInput('none');
+        refreshMcqList();
+      } catch (err) {
+        alert('Upload failed: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Upload MCQ';
+      }
+    });
+
+    // --- MANAGEMENT AREA ---
+    async function refreshMcqList() {
+      const semId = document.getElementById('filter-semester').value;
+      const topicId = document.getElementById('filter-topic').value;
+      const tbody = document.getElementById('mcq-list-body');
+      
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Fetching questions...</td></tr>';
+
+      let query = window.dbClient
+        .from('mcqs')
+        .select('*, topics!inner(id, title, semester_id)');
+
+      if (topicId) {
+        query = query.eq('topic_id', topicId);
+      } else if (semId) {
+        query = query.eq('topics.semester_id', semId);
+      }
+
+      const { data, error } = await query.order('created_at', { ascending: false }).limit(50);
+
+      if (error) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--danger);">Error: ${error.message}</td></tr>`;
+        return;
+      }
+
+      if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No questions found for this filter.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = '';
+      data.forEach(q => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            ${q.image_url ? `<img src="${q.image_url}" class="img-preview">` : `<span style="font-size:10px; color:var(--text-muted);">No Img</span>`}
+          </td>
+          <td style="max-width:300px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtml(q.question)}">
+            ${escapeHtml(q.question)}
+          </td>
+          <td style="color:var(--text-muted); font-size:12px;">${escapeHtml(q.topics.title)}</td>
+          <td style="text-align:right;">
+            <button class="btn-delete" onclick="deleteMcq('${q.id}', '${q.image_url}')">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function deleteMcq(id, imgUrl) {
+      if (!confirm('Are you sure you want to delete this question?')) return;
+
+      const { error } = await window.dbClient
+        .from('mcqs')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        alert('Delete failed: ' + error.message);
+      } else {
+        // Attempt to delete image from storage if it was a storage URL
+        if (imgUrl && imgUrl.includes('/mcq-images/')) {
+          const path = imgUrl.split('/mcq-images/')[1].split('?')[0]; // Extract relative path
+          await window.dbClient.storage.from('mcq-images').remove([decodeURIComponent(path)]);
+        }
+        refreshMcqList();
+      }
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', checkUser);
+  </script>
+</body>
+</html>

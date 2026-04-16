@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Exam Preparation | MediHelp</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+  <style>
+    .prep-hero { padding: 40px 0; border-bottom: 1px solid var(--border); background: var(--bg-elevated); margin-bottom: 40px; }
+    .semester-nav { display: flex; gap: 4px; overflow-x: auto; padding: 10px 0; margin-bottom: 30px; scrollbar-width: none; border-bottom: 1px solid var(--border); }
+    .semester-tab { 
+      padding: 12px 24px; color: var(--text-muted); font-weight: 700; font-size: 14px; 
+      cursor: pointer; border-radius: var(--radius-sm); white-space: nowrap; transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    .semester-tab:hover { color: var(--text-h); background: var(--bg-card); }
+    .semester-tab.active { color: var(--accent); background: var(--accent-glow); border-color: var(--border-accent); }
+
+    .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .topic-card { 
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; 
+      cursor: pointer; transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+    }
+    .topic-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-accent); }
+    .topic-card h3 { font-size: 18px; font-weight: 800; color: var(--text-h); line-height: 1.3; }
+    .topic-progress { font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+    .progress-bar-bg { height: 6px; background: var(--bg-elevated); border-radius: 3px; margin-top: 5px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; }
+
+    /* MCQ AREA */
+    #mcq-container { display: none; }
+    .quiz-header { 
+      position: sticky; top: 124px; z-index: 100; background: var(--bg-glass); backdrop-filter: blur(20px); 
+      padding: 16px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 30px;
+      display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow);
+    }
+    .mcq-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 24px; transition: var(--transition); }
+    .mcq-image { width: 100%; max-height: 400px; object-fit: contain; border-radius: var(--radius-sm); margin-bottom: 24px; background: #000; border: 1px solid var(--border); }
+    .mcq-question { font-size: 19px; font-weight: 700; color: var(--text-h); margin-bottom: 24px; line-height: 1.5; }
+    .mcq-options { display: grid; gap: 12px; }
+    .option-btn { 
+      background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); 
+      padding: 16px 20px; text-align: left; color: var(--text-body); font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 12px;
+    }
+    .option-btn:hover:not(.locked) { border-color: var(--accent); background: var(--bg-card-hover); }
+    .option-btn.correct { background: rgba(34, 197, 94, 0.15) !important; border-color: var(--success) !important; color: var(--success); }
+    .option-btn.incorrect { background: rgba(239, 68, 68, 0.15) !important; border-color: var(--danger) !important; color: var(--danger); }
+    .option-btn.locked { cursor: default; }
+
+    .explanation-box { 
+      margin-top: 24px; padding: 20px; background: rgba(34, 197, 94, 0.05); border-left: 4px solid var(--accent); 
+      border-radius: 4px; display: none; 
+    }
+    .explanation-box h4 { font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
+    .explanation-box p { font-size: 14px; color: var(--text-body); line-height: 1.6; }
+
+    .score-badge { background: var(--accent-glow); color: var(--accent-light); padding: 6px 14px; border-radius: 100px; font-weight: 800; font-size: 14px; border: 1px solid var(--border-accent); }
+    
+    .hidden { display: none; }
+    
+    @media (max-width: 768px) {
+      .quiz-header { top: 70px; }
+      .mcq-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png?v=1.1" alt="MediHelp">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/medical-exam-preparation" class="active">Exam Prep</a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" style="margin-right: 20px;">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="prep-hero">
+    <div class="container">
+      <div class="hero-eyebrow">Interactive Learning</div>
+      <h1 style="font-size: 40px; font-weight: 900; color: var(--text-h); letter-spacing: -1.5px; margin-bottom: 12px;">Medical Exam Preparation</h1>
+      <p style="color: var(--text-muted); font-size: 18px; max-width: 800px;">Master 8 semesters of MBBS & US-Standard syllabus with 100 high-yield MCQs per topic.</p>
+    </div>
+  </header>
+
+  <main class="container" style="padding-bottom: 100px;">
+    
+    <!-- DASHBOARD VIEW -->
+    <div id="dashboard-view">
+      <div class="semester-nav" id="semester-bar">
+        <!-- Injected Semesters -->
+      </div>
+
+      <div id="topic-loading" style="text-align:center; padding: 40px; color: var(--text-muted);">Loading topics...</div>
+      <div class="topic-grid" id="topic-grid">
+        <!-- Injected Topics -->
+      </div>
+    </div>
+
+    <!-- QUIZ VIEW -->
+    <div id="mcq-view" class="hidden">
+      <!-- Sticky Header -->
+      <div class="quiz-header">
+        <div style="display:flex; align-items:center; gap:16px;">
+          <button class="btn btn-ghost" onclick="showDashboard()" style="padding: 8px 12px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+          </button>
+          <div>
+            <h2 id="current-topic-title" style="font-size: 16px; font-weight: 800; color: var(--text-h);">Topic Name</h2>
+            <p id="topic-stats" style="font-size: 12px; color: var(--text-muted); font-weight: 600;">0 / 100 Completed</p>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="score-badge" id="live-score">Score: 0%</div>
+          <button class="btn btn-ghost" onclick="resetTopic()" style="padding: 8px 12px; color: var(--danger);">Reset Progress</button>
+        </div>
+      </div>
+
+      <div id="mcq-list" style="max-width: 800px; margin: 0 auto;">
+        <!-- Injected Question Cards -->
+      </div>
+
+      <div id="quiz-loading" style="text-align:center; padding: 40px; color: var(--text-muted);">Loading MCQs...</div>
+    </div>
+
+  </main>
+
+  <script>
+    // --- STATE MANAGEMENT ---
+    let currentSemester = 1;
+    let currentTopicId = null;
+    let userProgress = JSON.parse(localStorage.getItem('mh_prep_progress') || '{}');
+
+    function saveProgress() {
+      localStorage.setItem('mh_prep_progress', JSON.stringify(userProgress));
+    }
+
+    // --- DASHBOARD LOGIC ---
+    async function initSemesters() {
+      const bar = document.getElementById('semester-bar');
+      bar.innerHTML = '';
+      
+      for (let i = 1; i <= 8; i++) {
+        const tab = document.createElement('div');
+        tab.className = `semester-tab ${i === currentSemester ? 'active' : ''}`;
+        tab.textContent = `Semester ${i}`;
+        tab.onclick = () => switchSemester(i);
+        bar.appendChild(tab);
+      }
+      loadTopics(currentSemester);
+    }
+
+    function switchSemester(id) {
+      currentSemester = id;
+      document.querySelectorAll('.semester-tab').forEach((t, i) => {
+        t.classList.toggle('active', (i + 1) === id);
+      });
+      loadTopics(id);
+    }
+
+    async function loadTopics(semId) {
+      const grid = document.getElementById('topic-grid');
+      const loader = document.getElementById('topic-loading');
+      
+      grid.innerHTML = '';
+      loader.classList.remove('hidden');
+
+      const { data, error } = await window.dbClient
+        .from('topics')
+        .select('*, mcqs(id)')
+        .eq('semester_id', semId)
+        .order('title', { ascending: true });
+
+      loader.classList.add('hidden');
+
+      if (error || !data.length) {
+        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this semester yet.</p>';
+        return;
+      }
+
+      data.forEach(topic => {
+        const total = topic.mcqs.length;
+        const progress = userProgress[topic.id] ? Object.keys(userProgress[topic.id]).length : 0;
+        const percent = total > 0 ? Math.round((progress / total) * 100) : 0;
+
+        const card = document.createElement('div');
+        card.className = 'topic-card';
+        card.onclick = () => startQuiz(topic.id, topic.title);
+        card.innerHTML = `
+          <div>
+            <h3>${escapeHtml(topic.title)}</h3>
+          </div>
+          <div>
+            <div class="topic-progress">
+              <span>${progress} / ${total} MCQs</span>
+              <span>${percent}%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width: ${percent}%;"></div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // --- QUIZ LOGIC ---
+    async function startQuiz(topicId, title) {
+      currentTopicId = topicId;
+      document.getElementById('dashboard-view').classList.add('hidden');
+      document.getElementById('mcq-view').classList.remove('hidden');
+      document.getElementById('current-topic-title').textContent = title;
+      
+      loadMcqs(topicId);
+    }
+
+    function showDashboard() {
+      document.getElementById('mcq-view').classList.add('hidden');
+      document.getElementById('dashboard-view').classList.remove('hidden');
+      loadTopics(currentSemester);
+    }
+
+    async function loadMcqs(topicId) {
+      const list = document.getElementById('mcq-list');
+      const loader = document.getElementById('quiz-loading');
+      list.innerHTML = '';
+      loader.classList.remove('hidden');
+
+      const { data, error } = await window.dbClient
+        .from('mcqs')
+        .select('*')
+        .eq('topic_id', topicId)
+        .order('created_at', { ascending: true });
+
+      loader.classList.add('hidden');
+
+      if (error || !data.length) {
+        list.innerHTML = '<p style="text-align:center; padding: 40px;">No questions found for this topic.</p>';
+        return;
+      }
+
+      data.forEach((mcq, idx) => {
+        const card = renderMcqCard(mcq, idx);
+        list.appendChild(card);
+      });
+      
+      updateQuizHeader();
+    }
+
+    function renderMcqCard(mcq, index) {
+      const card = document.createElement('div');
+      card.className = 'mcq-card';
+      card.id = `mcq-${mcq.id}`;
+      
+      const answered = userProgress[currentTopicId] && userProgress[currentTopicId][mcq.id];
+      
+      card.innerHTML = `
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:12px; font-weight:700;">Question ${index + 1}</div>
+        ${mcq.image_url ? `<img src="${mcq.image_url}" class="mcq-image" loading="lazy">` : ''}
+        <div class="mcq-question">${escapeHtml(mcq.question)}</div>
+        <div class="mcq-options">
+          ${mcq.options.map((opt, i) => `
+            <button class="option-btn ${answered ? 'locked' : ''} ${answered && answered.choice === i ? (i === mcq.correct_index ? 'correct' : 'incorrect') : ''} ${answered && i === mcq.correct_index ? 'correct' : ''}" 
+                    onclick="handleAnswer('${mcq.id}', ${i}, ${mcq.correct_index})">
+              <span style="opacity:0.6; width:20px; font-weight:800;">${String.fromCharCode(65 + i)}</span>
+              ${escapeHtml(opt)}
+            </button>
+          `).join('')}
+        </div>
+        <div class="explanation-box" style="${answered ? 'display:block;' : ''}">
+          <h4>Explanation & Definition</h4>
+          <p>${escapeHtml(mcq.explanation || 'No explanation provided.')}</p>
+        </div>
+      `;
+      return card;
+    }
+
+    function handleAnswer(mcqId, choice, correctIndex) {
+      if (userProgress[currentTopicId] && userProgress[currentTopicId][mcqId]) return;
+
+      if (!userProgress[currentTopicId]) userProgress[currentTopicId] = {};
+      userProgress[currentTopicId][mcqId] = {
+        choice: choice,
+        correct: choice === correctIndex
+      };
+      
+      saveProgress();
+
+      // Update UI
+      const card = document.getElementById(`mcq-${mcqId}`);
+      const btns = card.querySelectorAll('.option-btn');
+      
+      btns.forEach((btn, i) => {
+        btn.classList.add('locked');
+        if (i === correctIndex) btn.classList.add('correct');
+        if (i === choice && i !== correctIndex) btn.classList.add('incorrect');
+      });
+
+      card.querySelector('.explanation-box').style.display = 'block';
+      updateQuizHeader();
+    }
+
+    function updateQuizHeader() {
+      const topicProgress = userProgress[currentTopicId] || {};
+      const answeredCount = Object.keys(topicProgress).length;
+      const correctCount = Object.values(topicProgress).filter(p => p.correct).length;
+      
+      document.getElementById('topic-stats').textContent = `${answeredCount} MCQs Answered`;
+      
+      const scorePercent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+      document.getElementById('live-score').textContent = `Score: ${scorePercent}%`;
+    }
+
+    function resetTopic() {
+      if (!confirm('Are you sure you want to reset all progress for this topic?')) return;
+      delete userProgress[currentTopicId];
+      saveProgress();
+      loadMcqs(currentTopicId);
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      initSemesters();
+    });
+  </script>
+</body>
+</html>
