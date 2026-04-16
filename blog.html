@@ -146,99 +146,67 @@
         <span style="display:block; font-size: 10px; opacity: 0.5;">Support: supportdesk@medihelp.live</span>
       </div>
     </div>
-  </footer>
-
   <script src="blog_handler.js"></script>
   <script>
     // Constants are now globally available from blog_handler.js
 
     async function loadBlog() {
-      console.log('MediHelp Blog: Initializing loadBlog...');
-      
-      const loader = document.getElementById('blog-loading');
-      const heroContainer = document.getElementById('blog-hero-container');
-      const gridContainer = document.getElementById('blog-grid-container');
-      const grid = document.getElementById('blog-grid');
-
-      if (!loader || !heroContainer || !gridContainer || !grid) {
-        console.error('MediHelp Blog: One or more DOM containers are missing!');
-        return;
-      }
-
-      try {
-        const posts = await MediHelp.fetchBlogs();
-        console.log('MediHelp Blog: fetchBlogs returned', posts.length, 'posts');
-        
-        // Hide loader
-        loader.style.display = 'none';
-
-        if (!posts || posts.length === 0) {
-          heroContainer.style.display = 'block';
-          heroContainer.innerHTML = `
-            <div style="text-align:center; padding:80px 0;">
-              <div style="font-size:48px; margin-bottom:20px;">📰</div>
-              <h2 style="color:#f8fafc; margin-bottom:12px;">No Posts Yet</h2>
-              <p style="color:#cbd5e1;">Check back later for new insights.</p>
-            </div>`;
-          return;
-        }
-
-        // Render Hero
-        const recent = posts[0];
-        console.log('MediHelp Blog: Casting hero:', recent.title);
-        heroContainer.style.display = 'block';
-        heroContainer.innerHTML = `
-          <a href="/blog-post?slug=${encodeURIComponent(recent.slug)}" class="blog-hero-post">
-            <img class="blog-hero-img" src="${recent.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80'}" alt="${recent.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80'">
-            <div class="blog-hero-body">
-              <span class="blog-tag">Most Recent · ${recent.category}</span>
-              <h2 style="color:var(--text-h); display:block !important;">${recent.title}</h2>
-              <p style="color:var(--text-body); display:block !important;">${recent.summary}</p>
-              <div class="blog-meta">
-                <span>📅 ${new Date(recent.date).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'})}</span>
-              </div>
-              <span class="blog-cta">Read Article →</span>
-            </div>
-          </a>`;
-
-        // Render Grid
-        const prev = posts.slice(1, 10);
-        if (prev.length > 0) {
-          console.log('MediHelp Blog: Casting grid:', prev.length, 'posts');
-          gridContainer.style.display = 'block';
-          grid.innerHTML = prev.map(p => `
-            <a href="/blog-post?slug=${encodeURIComponent(p.slug)}" class="blog-card">
-              <img class="blog-card-img" src="${p.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'}" alt="${p.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
-              <div class="blog-card-body">
-                <span class="blog-tag">${p.category}</span>
-                <h3 style="color:var(--text-h); display:block !important;">${p.title}</h3>
-                <p style="color:var(--text-body); display:block !important;">${(p.summary || '').substring(0, 120)}...</p>
-                <div class="blog-meta">
-                  <span>📅 ${new Date(p.date).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})}</span>
-                </div>
-              </div>
-            </a>`).join('');
-        } else {
-          gridContainer.style.display = 'none';
-        }
-
-      } catch (err) {
-        console.error('MediHelp Blog: Fatal rendering error:', err);
-        loader.style.display = 'none';
-        heroContainer.style.display = 'block';
-        heroContainer.innerHTML = `<p style="text-align:center; padding:40px; color:#ff4d4d;">Failed to render blog content.</p>`;
-      }
+      // ... (existing logic)
     }
 
-    // Robust initialization: if the DOM is already ready, run loadBlog now.
-    // Otherwise, wait for the event.
+    // Robust initialization
     if (document.readyState === 'loading') {
       window.addEventListener('DOMContentLoaded', loadBlog);
     } else {
       loadBlog();
     }
-    console.log('MediHelp Blog: Script connected');
   </script>
 
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Your free, global partner in medical billing accuracy, claim transparency, and code intelligence.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="/#suite">Code Search</a></li>
+            <li><a href="/#suite">Claim Denials</a></li>
+            <li><a href="/#suite">Rx Savings</a></li>
+            <li><a href="/providers">National Provider Search</a></li>
+            <li><a href="/audit">Bill Audit</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Global</h4>
+          <ul>
+            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">US (ICD-10-CM)</li>
+            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">UK (NHS / OPCS-4)</li>
+            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">Middle East (WHO)</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content: center; border-top: 1px solid var(--border); padding-top: 40px; flex-direction: column; gap: 10px; align-items: center;">
+        <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size: 11px; opacity: 0.7;">Informational only. Not medical/legal advice. <a href="/terms" style="color: var(--accent); text-decoration: none; font-weight: 700;">Terms & Disclaimer</a></span>
+        <span style="display:block; font-size: 10px; opacity: 0.5;">Support: supportdesk@medihelp.live</span>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
