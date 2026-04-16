@@ -186,6 +186,7 @@
 
             <div class="full-width">
               <button type="submit" id="submit-mcq" class="btn btn-primary" style="width: 100%;">Upload MCQ</button>
+              <button type="button" id="cancel-edit" class="btn btn-ghost hidden" style="width: 100%; margin-top: 10px;">Cancel Editing</button>
             </div>
           </div>
         </form>
@@ -388,6 +389,8 @@
     });
 
     // --- MCQ UPLOADER ---
+    let editingMcqId = null;
+
     function toggleImgInput(type) {
       document.getElementById('img-input-url').classList.add('hidden');
       document.getElementById('img-input-file').classList.add('hidden');
@@ -409,11 +412,18 @@
       ];
 
       const btn = document.getElementById('submit-mcq');
+      const originalBtnText = btn.textContent;
       btn.disabled = true;
-      btn.textContent = 'Uploading...';
+      btn.textContent = editingMcqId ? 'Updating...' : 'Uploading...';
 
       let imageUrl = null;
-      const type = document.querySelector('input[name="img-type"]:checked').value;
+      // If editing, default to the existing image unless changed
+      if (editingMcqId) {
+        imageUrl = window.currentEditingImageUrl;
+      }
+
+      const typeInput = document.querySelector('input[name="img-type"]:checked');
+      const type = typeInput ? typeInput.value : 'none';
 
       try {
         if (type === 'url') {
@@ -439,30 +449,98 @@
           }
         }
 
-        const { error: insertError } = await window.dbClient
-          .from('mcqs')
-          .insert([{
-            topic_id: topicId,
-            question,
-            image_url: imageUrl,
-            options,
-            correct_index: parseInt(correctIndex),
-            explanation
-          }]);
+        const mcqData = {
+          topic_id: topicId,
+          question,
+          image_url: imageUrl,
+          options,
+          correct_index: parseInt(correctIndex),
+          explanation
+        };
 
-        if (insertError) throw insertError;
+        if (editingMcqId) {
+          const { error } = await window.dbClient
+            .from('mcqs')
+            .update(mcqData)
+            .eq('id', editingMcqId);
+          if (error) throw error;
+          alert('MCQ updated successfully!');
+          cancelEditing();
+        } else {
+          const { error: insertError } = await window.dbClient
+            .from('mcqs')
+            .insert([mcqData]);
+          if (insertError) throw insertError;
+          alert('MCQ uploaded successfully!');
+          resetMcqFormFields(); // Keep Semester/Topic selected
+        }
 
-        alert('MCQ uploaded successfully!');
-        e.target.reset();
-        toggleImgInput('none');
         refreshMcqList();
       } catch (err) {
-        alert('Upload failed: ' + err.message);
+        alert('Operation failed: ' + err.message);
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Upload MCQ';
+        btn.textContent = editingMcqId ? 'Update MCQ' : 'Upload MCQ';
       }
     });
+
+    function resetMcqFormFields() {
+      // Manual reset of question fields only, keeping Semester & Topic
+      document.getElementById('mcq-question').value = '';
+      document.getElementById('mcq-explanation').value = '';
+      document.getElementById('mcq-correct').value = '0';
+      document.getElementById('mcq-opt-0').value = '';
+      document.getElementById('mcq-opt-1').value = '';
+      document.getElementById('mcq-opt-2').value = '';
+      document.getElementById('mcq-opt-3').value = '';
+      document.getElementById('mcq-img-url').value = '';
+      document.getElementById('mcq-img-file').value = '';
+      document.querySelector('input[name="img-type"][value="none"]').checked = true;
+      toggleImgInput('none');
+    }
+
+    function editMcq(id, dataStr) {
+      const q = JSON.parse(decodeURIComponent(dataStr));
+      editingMcqId = id;
+      window.currentEditingImageUrl = q.image_url;
+
+      // Fill form
+      document.getElementById('mcq-semester').value = q.topics.semester_id;
+      loadTopicsBySemester(q.topics.semester_id, 'mcq-topic').then(() => {
+        document.getElementById('mcq-topic').value = q.topic_id;
+      });
+
+      document.getElementById('mcq-question').value = q.question;
+      document.getElementById('mcq-explanation').value = q.explanation;
+      document.getElementById('mcq-correct').value = q.correct_index;
+      document.getElementById('mcq-opt-0').value = q.options[0];
+      document.getElementById('mcq-opt-1').value = q.options[1];
+      document.getElementById('mcq-opt-2').value = q.options[2];
+      document.getElementById('mcq-opt-3').value = q.options[3];
+
+      if (q.image_url) {
+        document.querySelector('input[name="img-type"][value="url"]').checked = true;
+        toggleImgInput('url');
+        document.getElementById('mcq-img-url').value = q.image_url;
+      } else {
+        document.querySelector('input[name="img-type"][value="none"]').checked = true;
+        toggleImgInput('none');
+      }
+
+      document.getElementById('submit-mcq').textContent = 'Update MCQ';
+      document.getElementById('cancel-edit').classList.remove('hidden');
+      window.scrollTo({ top: document.getElementById('mcq-form').offsetTop - 100, behavior: 'smooth' });
+    }
+
+    function cancelEditing() {
+      editingMcqId = null;
+      window.currentEditingImageUrl = null;
+      document.getElementById('submit-mcq').textContent = 'Upload MCQ';
+      document.getElementById('cancel-edit').classList.add('hidden');
+      resetMcqFormFields();
+    }
+
+    document.getElementById('cancel-edit').addEventListener('click', cancelEditing);
 
     // --- MANAGEMENT AREA ---
     async function refreshMcqList() {
@@ -497,6 +575,8 @@
       tbody.innerHTML = '';
       data.forEach(q => {
         const tr = document.createElement('tr');
+        // Encode data for the edit button
+        const dataStr = encodeURIComponent(JSON.stringify(q));
         tr.innerHTML = `
           <td>
             ${q.image_url ? `<img src="${q.image_url}" class="img-preview">` : `<span style="font-size:10px; color:var(--text-muted);">No Img</span>`}
@@ -505,7 +585,8 @@
             ${escapeHtml(q.question)}
           </td>
           <td style="color:var(--text-muted); font-size:12px;">${escapeHtml(q.topics.title)}</td>
-          <td style="text-align:right;">
+          <td style="text-align:right; white-space:nowrap;">
+            <button class="btn-ghost" style="padding:4px 8px; font-size:12px; margin-right:5px;" onclick="editMcq('${q.id}', '${dataStr}')">Edit</button>
             <button class="btn-delete" onclick="deleteMcq('${q.id}', '${q.image_url}')">Delete</button>
           </td>
         `;
