@@ -298,7 +298,7 @@
         .from('topics')
         .select('*, mcqs(id)')
         .eq('semester_id', semId)
-        .order('title', { ascending: true });
+        .order('order', { ascending: true });
 
       loader.classList.add('hidden');
 
