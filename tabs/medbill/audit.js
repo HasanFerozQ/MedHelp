@@ -131,6 +131,42 @@ function showExtractionStatus(message, level = 'info') {
   banner.style.display = 'block';
 }
 
+function showHumanNegotiatorBanner(reasonText) {
+  const pdfTab = document.getElementById('tab-content-pdf');
+  if (!pdfTab) return;
+
+  let banner = document.getElementById('human-negotiator-audit-banner');
+  if (!banner) {
+    banner = document.createElement('section');
+    banner.id = 'human-negotiator-audit-banner';
+    banner.style.marginTop = '12px';
+    banner.style.padding = '14px 16px';
+    banner.style.borderRadius = '10px';
+    banner.style.border = '1px solid rgba(239,68,68,0.35)';
+    banner.style.background = 'rgba(239,68,68,0.08)';
+    banner.style.color = '#fecaca';
+    banner.style.display = 'none';
+    const loadingState = document.getElementById('pdf-loading-state');
+    if (loadingState && loadingState.parentNode) loadingState.parentNode.insertBefore(banner, loadingState.nextSibling);
+    else pdfTab.appendChild(banner);
+  }
+
+  const safeReason = typeof window.sanitizeText === 'function'
+    ? window.sanitizeText(String(reasonText || ''))
+    : String(reasonText || '');
+
+  banner.innerHTML = `
+    <div style="font-size:14px; font-weight:900; color:var(--text-h); margin-bottom:6px;">Human Negotiator + Auditor</div>
+    <div style="font-size:12px; color:var(--text-main); line-height:1.6; margin-bottom:12px;">
+      ${safeReason}
+    </div>
+    <button class="btn negotiation-cta-btn" onclick="openNegotiatorModal()" style="padding: 12px 18px; font-size: 14px;">
+      Start Full Audit + Negotiation
+    </button>
+  `;
+  banner.style.display = 'block';
+}
+
 function showTopExtractionFindings(findings) {
   const pdfTab = document.getElementById('tab-content-pdf');
   if (!pdfTab) return;
@@ -323,6 +359,9 @@ window.handlePdfSelect = async function(event) {
   if (!file) return;
   switchAuditTab('pdf');
 
+  const oldBanner = document.getElementById('human-negotiator-audit-banner');
+  if (oldBanner) oldBanner.style.display = 'none';
+
   // client-side MIME check
   const allowed = ['application/pdf', 'image/png', 'image/jpeg', 'image/tiff'];
   if (!allowed.includes(file.type)) {
@@ -415,6 +454,17 @@ window.handlePdfSelect = async function(event) {
     const isUnsupportedFormat = /unsupported document format/i.test(msg);
     const isBackendUnavailable =
       /AWS credentials not configured|AWS Textract failed|Server returned non-JSON response/i.test(msg);
+
+    // If we reject due to size/pages, route the user to human negotiation.
+    const isPdfLimitRejection = /PDF (page limit exceeded|size limit exceeded)/i.test(msg)
+      || /PDF page limit exceeded/i.test(msg);
+    if (isPdfLimitRejection) {
+      showHumanNegotiatorBanner(
+        `This PDF can't be processed automatically due to MediHelp limits (max 20MB and 15-20 pages). ${msg}`
+      );
+      showExtractionStatus(msg, 'warn');
+      return;
+    }
 
     if (isBackendUnavailable && file && /pdf/i.test(file.type || '')) {
       try {

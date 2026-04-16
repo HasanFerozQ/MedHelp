@@ -19,7 +19,7 @@ const runMiddleware = (req, res, fn) => {
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 4 * 1024 * 1024 }, // Keep under 4MB for Vercel
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max to support PDF size cap
 });
 
 const TEXTRACT_MAX_ATTEMPTS = 3;
@@ -27,11 +27,12 @@ const TEXTRACT_BACKOFF_MS = [0, 700, 1500];
 const TEXTRACT_BYTES_LIMIT = 10 * 1024 * 1024;
 const MONEY_EPSILON = 0.01;
 const DIRECT_TEXT_MAX_ROWS = 250;
-const MAX_PDF_PAGES = Number(process.env.MAX_PDF_PAGES || 30);
+const MAX_PDF_SIZE_BYTES = Number(process.env.MAX_PDF_SIZE_BYTES || 20 * 1024 * 1024);
+// Keep PDFs within a predictable extraction window for our deterministic pipeline.
+const MAX_PDF_PAGES = Number(process.env.MAX_PDF_PAGES || 20);
 const MIN_PDF_PAGES = Number(process.env.MIN_PDF_PAGES || 1);
 const RATE_WINDOW_MS = 5 * 60 * 1000;
 const RATE_MAX_REQUESTS = Number(process.env.AUDIT_RATE_LIMIT_COUNT || 20);
-const GEMINI_OVERRIDE_MARGIN = Number(process.env.GEMINI_OVERRIDE_MARGIN || 10);
 const requestBuckets = new Map();
 
 const DEFAULT_ALLOWED_ORIGINS = [
@@ -1661,7 +1662,14 @@ module.exports = async (req, res) => {
   }
 
   try {
-    await runMiddleware(req, res, upload.single('bill'));
+    try {
+      await runMiddleware(req, res, upload.single('bill'));
+    } catch (err) {
+      if (err?.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({ ok: false, error: 'PDF size limit exceeded. Max: 20MB.' });
+      }
+      throw err;
+    }
     if (!req.file) return res.status(400).json({ error: "Missing file upload." });
     const mime = String(req.file.mimetype || '').toLowerCase();
     const allowedMimes = ['application/pdf', 'image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/tiff'];
@@ -1671,10 +1679,18 @@ module.exports = async (req, res) => {
     const preflight = await buildDocumentPreflight(req.file);
     if (mime.includes('pdf')) {
       const pages = Number(preflight.page_count || 0);
-      if (pages < MIN_PDF_PAGES || pages > MAX_PDF_PAGES) {
+      const fileSizeBytes = Number(preflight.file_size_bytes || 0);
+      if (fileSizeBytes > MAX_PDF_SIZE_BYTES) {
+        return res.status(400).json({ ok: false, error: 'PDF size limit exceeded. Max: 20MB.' });
+      }
+      if (pages < MIN_PDF_PAGES) {
+        // If we can't confidently detect page count, we avoid rejecting too aggressively.
+        // This minimum is kept mostly for sanity; the primary gate is max pages.
+      }
+      if (pages > MAX_PDF_PAGES) {
         return res.status(400).json({
           ok: false,
-          error: `PDF page limit exceeded. Allowed range: ${MIN_PDF_PAGES}-${MAX_PDF_PAGES} pages. Uploaded: ${pages}.`
+          error: `PDF page limit exceeded. Max: ${MAX_PDF_PAGES} pages. Uploaded: ${pages}.`
         });
       }
     }
@@ -1749,41 +1765,14 @@ module.exports = async (req, res) => {
       detectedTemplate = 'direct_text_first';
       templateConfidence = 40;
     } else {
-      const aiRows = await runGeminiOcrFallback(workingBuffer, mime || 'application/pdf');
-      if (aiRows.length > 0) {
-        normalizedItems = aiRows;
-        detectedTemplate = 'ai_ocr_fallback';
-        templateConfidence = 35;
-      } else {
-        return res.status(500).json({ ok: false, error: textractError || 'Extraction failed and no direct text rows found.' });
-      }
-    }
-
-    let geminiRows = [];
-    let geminiCompare = null;
-    if (process.env.GEMINI_API_KEY && workingBuffer && /pdf/i.test(mime || '')) {
-      const shouldRunGemini = String(process.env.GEMINI_COMPARE_ENABLED || 'true') !== 'false';
-      if (shouldRunGemini) {
-        geminiRows = await runGeminiOcrFallback(workingBuffer, mime || 'application/pdf');
-        if (geminiRows.length > 0) {
-          geminiCompare = buildComparisonSummary(normalizedItems, geminiRows);
-          const baseScore = scoreExtractionCandidate(normalizedItems, 0);
-          const gemScore = scoreExtractionCandidate(geminiRows, geminiCompare.agreementScore || 0);
-          if (gemScore > baseScore + GEMINI_OVERRIDE_MARGIN) {
-            normalizedItems = geminiRows;
-            detectedTemplate = 'textract_gemini_blend';
-            templateConfidence = Math.max(45, templateConfidence);
-          }
-        }
-      }
+      return res.status(500).json({ ok: false, error: textractError || 'Extraction failed and no direct text rows found.' });
     }
 
     // Candidate arbitration: choose the healthiest extraction source.
     const sourceCandidates = [
       { name: 'current', rows: normalizedItems, profile: detectedTemplate, confidence: templateConfidence },
       { name: 'textract', rows: textractRows, profile: 'textract_primary', confidence: 65 },
-      { name: 'direct', rows: directRows, profile: 'direct_text_preferred', confidence: 75 },
-      { name: 'gemini', rows: geminiRows, profile: 'gemini_recovery', confidence: 55 }
+      { name: 'direct', rows: directRows, profile: 'direct_text_preferred', confidence: 75 }
     ].filter(c => Array.isArray(c.rows) && c.rows.length > 0);
     if (sourceCandidates.length > 0) {
       const ranked = sourceCandidates
@@ -1801,19 +1790,13 @@ module.exports = async (req, res) => {
     const baseHealth = getExtractionHealth(normalizedItems);
     if (baseHealth.collapsed) {
       const directHealth = getExtractionHealth(directRows);
-      const gemHealth = getExtractionHealth(geminiRows);
       const baseScore = scoreExtractionCandidate(normalizedItems, 0);
       const directScore = scoreExtractionCandidate(directRows, 0);
-      const gemScore = scoreExtractionCandidate(geminiRows, 0);
 
       if (directRows.length > 0 && !directHealth.collapsed && directScore >= baseScore) {
         normalizedItems = directRows;
         detectedTemplate = 'direct_text_recovery';
         templateConfidence = Math.max(templateConfidence, 55);
-      } else if (geminiRows.length > 0 && !gemHealth.collapsed && gemScore >= baseScore) {
-        normalizedItems = geminiRows;
-        detectedTemplate = 'gemini_recovery';
-        templateConfidence = Math.max(templateConfidence, 50);
       } else if (directRows.length > 0 && directHealth.zeroOrMissingAmountRate < baseHealth.zeroOrMissingAmountRate) {
         normalizedItems = directRows;
         detectedTemplate = 'direct_text_partial_recovery';
@@ -1927,9 +1910,7 @@ module.exports = async (req, res) => {
 
     // Combine Findings
     const allFindings = [...engineResults.findings, ...clinicalResults.clinicalFindings];
-    const geminiVerified = await runGeminiAuditVerification(allFindings, auditableRows, workingBuffer, mime);
-    const mergedVerification = mergeVerifiedFindings(allFindings, geminiVerified.correctedFindings || []);
-    const finalFindings = mergedVerification.findings;
+    const finalFindings = allFindings;
     const numAnomalies = finalFindings.length;
     
     let summaryText = `Found ${normalizedItems.length} billing items. Clinical datasets detect $${clinicalResults.savingsOpportunity.toFixed(2)} in potential savings.`;
@@ -1953,7 +1934,6 @@ module.exports = async (req, res) => {
         direct_text_truncated: directTextTruncated,
         direct_text_parse_stats: directParseStats,
         cross_check: crossCheck,
-        gemini_compare: geminiCompare,
         page_trust: pageTrust,
         extraction_metrics: extractionMetrics,
         decision_state: decisionState,
@@ -1962,8 +1942,7 @@ module.exports = async (req, res) => {
             findings: finalFindings,
             top_findings: rankHighValueFindings(finalFindings),
             potential_savings: clinicalResults.savingsOpportunity,
-            medicare_benchmark_total: clinicalResults.totalBenchmark,
-            verification_notes: [...(geminiVerified.notes || []), ...(mergedVerification.mergeNotes || [])]
+          medicare_benchmark_total: clinicalResults.totalBenchmark
         } 
     });
 
