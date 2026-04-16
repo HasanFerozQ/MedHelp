@@ -7,6 +7,27 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
+
+  <!-- SEO SCHEMA MARKUP -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Medical Exam Preparation (USMLE & MBBS)",
+    "description": "Comprehensive USMLE preparation MCQs and MBBS exam questions with high-yield anatomy MCQs with answers and clinical case scenarios USMLE style.",
+    "provider": {
+      "@type": "Organization",
+      "name": "MediHelp",
+      "url": "https://www.medihelp.live"
+    },
+    "educationalLevel": "Professional development",
+    "offers": {
+      "@type": "Offer",
+      "category": "Free",
+      "price": "0"
+    }
+  }
+  </script>
   <style>
     .prep-hero { padding: 40px 0; border-bottom: 1px solid var(--border); background: var(--bg-elevated); margin-bottom: 40px; }
     .semester-nav { display: flex; gap: 4px; overflow-x: auto; padding: 10px 0; margin-bottom: 30px; scrollbar-width: none; border-bottom: 1px solid var(--border); }
@@ -160,6 +181,14 @@
       .case-title { font-size: 18px; }
       .case-scenario { font-size: 14px; }
     }
+
+    /* FAQ SECTION STYLES */
+    .faq-section { margin-top: 80px; padding: 60px 0; border-top: 1px solid var(--border); }
+    .faq-title { font-size: 28px; font-weight: 900; color: var(--text-h); margin-bottom: 40px; text-align: center; }
+    .faq-grid { display: grid; gap: 16px; max-width: 800px; margin: 0 auto; }
+    .faq-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px; }
+    .faq-item h3 { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 12px; }
+    .faq-item p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
   </style>
 </head>
 <body>
@@ -197,8 +226,12 @@
   <header class="prep-hero">
     <div class="container">
       <div class="hero-eyebrow">Interactive Learning</div>
-      <h1 style="font-size: 40px; font-weight: 900; color: var(--text-h); letter-spacing: -1.5px; margin-bottom: 12px;">Medical Exam Preparation</h1>
-      <p style="color: var(--text-muted); font-size: 18px; max-width: 800px;">Master 8 semesters of MBBS & US-Standard syllabus with 100 high-yield MCQs per topic.</p>
+      <h1 style="font-size: 40px; font-weight: 900; color: var(--text-h); letter-spacing: -1.5px; margin-bottom: 12px; line-height: 1.1;">
+        USMLE, MBBS & Medical Exams Preparation – 1000+ MCQs & Case-Based Learning
+      </h1>
+      <p style="color: var(--text-muted); font-size: 18px; max-width: 800px; line-height: 1.6;">
+        Master your boards with our high-yield <strong>USMLE preparation MCQs</strong>, <strong>MBBS exam questions</strong>, and interactive <strong>medical case study questions</strong>. We provide detailed <strong>anatomy MCQs with answers</strong> and realistic <strong>clinical case scenarios USMLE</strong> style to ensure you are ready for any exam.
+      </p>
       
       <!-- Smart Search -->
       <div class="search-container">
@@ -225,6 +258,29 @@
       <div class="topic-grid" id="topic-grid">
         <!-- Injected Topics -->
       </div>
+
+      <!-- FAQ SECTION (SEO BOOST) -->
+      <section class="faq-section">
+        <h2 class="faq-title">Frequently Asked Questions</h2>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>How do these USMLE preparation MCQs help in my studies?</h3>
+            <p>Our database consists of high-yield questions designed by medical experts. By practicing our <strong>anatomy MCQs with answers</strong>, you build the pattern recognition skills necessary for USMLE Step 1 and clinical rotations.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Are the MBBS exam questions updated according to the latest syllabus?</h3>
+            <p>Yes, all <strong>MBBS exam questions</strong> are categorized by semester and topic, ensuring they align perfectly with university standard syllabuses and clinical professional exams.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do you offer realistic medical case study questions?</h3>
+            <p>Absolutely. We specialize in <strong>clinical case scenarios USMLE</strong> style, which link basic science knowledge to real-world patient presentations, improving your diagnostic accuracy.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I track my progress across different semesters?</h3>
+            <p>Our interactive dashboard saves your progress locally, allowing you to see exactly how many questions you've mastered in each module, from Thorax to Abdomen.</p>
+          </div>
+        </div>
+      </section>
     </div>
 
     <!-- QUIZ VIEW -->
@@ -397,7 +453,10 @@
         card.onclick = () => startQuiz(topic.id, topic.title);
         card.innerHTML = `
           <div>
-            <h3>${escapeHtml(topic.title)}</h3>
+            <h3 style="margin-bottom: 8px;">${escapeHtml(topic.title)} Anatomy MCQs (USMLE & MBBS Preparation)</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px;">
+              Practice high-yield <strong>${escapeHtml(topic.title)}</strong> anatomy questions with clinical relevance for your medical boards.
+            </p>
           </div>
           <div class="topic-progress">
             <div class="topic-stats-row">
