@@ -61,6 +61,26 @@
     
     .hidden { display: none; }
 
+    /* SEARCH BAR STYLES */
+    .search-container { position: relative; max-width: 600px; margin-top: 24px; }
+    .search-input-wrapper { display: flex; align-items: center; background: var(--bg-card); border: 2px solid var(--border); border-radius: 100px; padding: 4px 20px; transition: var(--transition); }
+    .search-input-wrapper:focus-within { border-color: var(--accent); box-shadow: var(--shadow-accent); }
+    .search-input { background: none; border: none; color: var(--text-h); padding: 12px 10px; width: 100%; font-size: 15px; font-weight: 600; outline: none; }
+    .search-input::placeholder { color: var(--text-muted); }
+    
+    .search-results { 
+      position: absolute; top: calc(100% + 10px); left: 0; right: 0; background: var(--bg-glass); 
+      backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: var(--radius); 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4); max-height: 400px; overflow-y: auto; z-index: 2000;
+      visibility: hidden; opacity: 0; transform: translateY(10px); transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .search-results.visible { visibility: visible; opacity: 1; transform: translateY(0); }
+    .search-item { padding: 14px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+    .search-item:last-child { border-bottom: none; }
+    .search-item:hover { background: rgba(255,255,255,0.05); }
+    .search-item-title { font-weight: 700; color: var(--text-h); font-size: 14px; }
+    .search-item-sem { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px; background: var(--accent-glow); color: var(--accent); white-space: nowrap; }
+
     /* Custom Confirmation Modal */
     #confirm-modal {
       position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
@@ -121,6 +141,17 @@
       <div class="hero-eyebrow">Interactive Learning</div>
       <h1 style="font-size: 40px; font-weight: 900; color: var(--text-h); letter-spacing: -1.5px; margin-bottom: 12px;">Medical Exam Preparation</h1>
       <p style="color: var(--text-muted); font-size: 18px; max-width: 800px;">Master 8 semesters of MBBS & US-Standard syllabus with 100 high-yield MCQs per topic.</p>
+      
+      <!-- Smart Search -->
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="topic-search" class="search-input" placeholder="Search topics across all semesters..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results">
+          <!-- Results injected here -->
+        </div>
+      </div>
     </div>
   </header>
 
@@ -172,9 +203,65 @@
     let currentSemester = 1;
     let currentTopicId = null;
     let userProgress = JSON.parse(localStorage.getItem('mh_prep_progress') || '{}');
+    let allTopicsIndex = [];
 
     function saveProgress() {
       localStorage.setItem('mh_prep_progress', JSON.stringify(userProgress));
+    }
+
+    // --- SEARCH LOGIC ---
+    async function initSearch() {
+      const { data, error } = await window.dbClient
+        .from('topics')
+        .select('id, title, semester_id')
+        .order('title', { ascending: true });
+
+      if (data) allTopicsIndex = data;
+
+      const input = document.getElementById('topic-search');
+      const resultsContainer = document.getElementById('search-results');
+
+      input.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        if (!query) {
+          resultsContainer.classList.remove('visible');
+          return;
+        }
+
+        const matches = allTopicsIndex.filter(t => t.title.toLowerCase().includes(query)).slice(0, 10);
+        
+        if (matches.length > 0) {
+          resultsContainer.innerHTML = matches.map(t => `
+            <div class="search-item" onclick="navigateToTopic('${t.id}', '${escapeJs(t.title)}', ${t.semester_id})">
+              <span class="search-item-title">${escapeHtml(t.title)}</span>
+              <span class="search-item-sem">Semester ${t.semester_id}</span>
+            </div>
+          `).join('');
+          resultsContainer.classList.add('visible');
+        } else {
+          resultsContainer.innerHTML = '<div class="search-item"><span style="color:var(--text-muted)">No topics found</span></div>';
+          resultsContainer.classList.add('visible');
+        }
+      });
+
+      // Close results when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!input.contains(e.target) && !resultsContainer.contains(e.target)) {
+          resultsContainer.classList.remove('visible');
+        }
+      });
+    }
+
+    function navigateToTopic(topicId, title, semId) {
+      document.getElementById('topic-search').value = '';
+      document.getElementById('search-results').classList.remove('visible');
+      
+      switchSemester(semId);
+      startQuiz(topicId, title);
+    }
+
+    function escapeJs(str) {
+      return str.replace(/'/g, "\\'");
     }
 
     // --- DASHBOARD LOGIC ---
@@ -402,6 +489,7 @@
     // Init
     document.addEventListener('DOMContentLoaded', () => {
       initSemesters();
+      initSearch();
     });
   </script>
 </body>
