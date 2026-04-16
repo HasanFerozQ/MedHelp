@@ -226,6 +226,29 @@
     }
     .secondary-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; padding: 8px 16px; border-radius: 8px; font-size: 12px; }
     .secondary-btn:hover { color: var(--text-h); border-color: var(--accent); }
+
+    /* MOBILE RESPONSIVENESS FOR PREMIUM MODAL */
+    @media (max-width: 600px) {
+      .premium-card { padding: 30px 20px; border-radius: 16px; }
+      .premium-card h2 { font-size: 22px; }
+      .premium-card p { font-size: 14px; margin-bottom: 20px; }
+      .premium-features { padding: 15px; margin-bottom: 20px; }
+      .feature-item { font-size: 13px; }
+      .premium-btn { padding: 14px; font-size: 15px; }
+    }
+
+    /* TOAST NOTIFICATIONS */
+    .toast-msg {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: var(--bg-card); border: 1px solid var(--border-accent);
+      color: var(--text-h); padding: 12px 24px; border-radius: 12px;
+      font-weight: 600; font-size: 14px; z-index: 2000; opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .toast-msg.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast-msg.success { border-color: var(--success); }
+    .toast-msg.error { border-color: var(--danger); }
   </style>
 </head>
 <body>
@@ -357,6 +380,8 @@
         <button class="secondary-btn" style="border:none; margin-top:20px;" onclick="closePremiumModal()">Maybe Later</button>
       </div>
     </div>
+
+    <div id="toast" class="toast-msg"></div>
 
     <!-- QUIZ VIEW -->
     <div id="mcq-view" class="hidden">
@@ -628,18 +653,22 @@
       document.getElementById('premium-modal').classList.remove('visible');
     }
 
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = `toast-msg visible ${type}`;
+      setTimeout(() => t.classList.remove('visible'), 3000);
+    }
+
     function verifyAccessKey() {
       const key = document.getElementById('access-key-input').value.trim().toUpperCase();
-      // Placeholder: In a real app, you'd verify this against a DB/Gumroad API
-      // For instant setup, we use a master key or successful redirect logic
       if (key === 'MEDMASTER2026') {
         localStorage.setItem('medi_premium_active', 'true');
         showToast('Premium Access Activated! 🚀', 'success');
         closePremiumModal();
-        // Automatically start the quiz if one was pending
         if (currentTopicId) startQuiz(currentTopicId, document.getElementById('current-topic-title').textContent);
       } else {
-        showToast('Invalid Access Key. Please check your Gumroad receipt.', 'error');
+        showToast('Invalid Access Key. Please check your receipt.', 'error');
       }
     }
 
