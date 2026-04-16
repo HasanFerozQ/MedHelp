@@ -280,11 +280,23 @@
             </button>
           `).join('')}
         </div>
-        <div class="explanation-box" style="${answered ? 'display:block;' : ''}">
-          <h4>Explanation & Definition</h4>
-          <p>${escapeHtml(mcq.explanation || 'No explanation provided.')}</p>
+        <div class="explanation-box" id="explanation-${mcq.id}" style="${answered ? 'display:block;' : ''}">
+          <h4>Learning Note</h4>
+          <p id="correct-answer-text-${mcq.id}" style="margin-bottom:8px; display: ${answered ? 'block' : 'none'};">
+            <strong>Correct Answer:</strong> <span class="answer-label" style="color:var(--success); font-weight:800;"></span>
+          </p>
+          <p class="explanation-text">${escapeHtml(mcq.explanation || 'No explanation provided.')}</p>
         </div>
       `;
+      
+      // If already answered, set the label text
+      if (answered) {
+        setTimeout(() => {
+          const label = card.querySelector(`#correct-answer-text-${mcq.id} .answer-label`);
+          if (label) label.textContent = mcq.options[mcq.correct_index];
+        }, 0);
+      }
+
       return card;
     }
 
@@ -309,7 +321,17 @@
         if (i === choice && i !== correctIndex) btn.classList.add('incorrect');
       });
 
-      card.querySelector('.explanation-box').style.display = 'block';
+      // Show correct answer text and explanation
+      const expBox = document.getElementById(`explanation-${mcqId}`);
+      const correctText = document.getElementById(`correct-answer-text-${mcqId}`);
+      const label = correctText.querySelector('.answer-label');
+      
+      // Get the correct option text from the button
+      label.textContent = btns[correctIndex].textContent.trim().substring(2); // Remove the 'A ', 'B ' prefix
+      
+      correctText.style.display = 'block';
+      expBox.style.display = 'block';
+      
       updateQuizHeader();
     }
 
