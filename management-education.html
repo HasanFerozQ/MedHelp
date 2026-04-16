@@ -283,11 +283,11 @@
     
     async function checkUser() {
       const { data: { user } } = await window.dbClient.auth.getUser();
-      const ADMIN_EMAIL = 'hasan.feroz.qureshi@gmail.com';
+      const ADMIN_UID = '0fcd3894-4ca1-4538-9f45-b0334ee65407';
 
       if (!user) {
         authOverlay.classList.add('visible');
-      } else if (user.email !== ADMIN_EMAIL) {
+      } else if (user.id !== ADMIN_UID) {
         alert('Unauthorized Access: This portal is for administrative use only.');
         await window.dbClient.auth.signOut();
         authOverlay.classList.add('visible');

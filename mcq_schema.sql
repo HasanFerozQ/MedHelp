@@ -62,24 +62,24 @@ CREATE POLICY "Allow public read on topics" ON public.topics FOR SELECT USING (t
 CREATE POLICY "Allow public read on mcqs" ON public.mcqs FOR SELECT USING (true);
 
 -- 2. Admin (Authenticated) Write/Update/Delete
--- Strictly restricted to your specific email address
+-- Strictly restricted to your specific User UID for maximum privacy
 DROP POLICY IF EXISTS "Allow admin all on semesters" ON public.semesters;
 CREATE POLICY "Allow admin all on semesters" ON public.semesters 
 FOR ALL TO authenticated 
-USING (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com') 
-WITH CHECK (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com');
+USING (auth.uid() = '0fcd3894-4ca1-4538-9f45-b0334ee65407') 
+WITH CHECK (auth.uid() = '0fcd3894-4ca1-4538-9f45-b0334ee65407');
 
 DROP POLICY IF EXISTS "Allow admin all on topics" ON public.topics;
 CREATE POLICY "Allow admin all on topics" ON public.topics 
 FOR ALL TO authenticated 
-USING (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com') 
-WITH CHECK (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com');
+USING (auth.uid() = '0fcd3894-4ca1-4538-9f45-b0334ee65407') 
+WITH CHECK (auth.uid() = '0fcd3894-4ca1-4538-9f45-b0334ee65407');
 
 DROP POLICY IF EXISTS "Allow admin all on mcqs" ON public.mcqs;
 CREATE POLICY "Allow admin all on mcqs" ON public.mcqs 
 FOR ALL TO authenticated 
-USING (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com') 
-WITH CHECK (auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com');
+USING (auth.uid() = '0fcd3894-4ca1-4538-9f45-b0334ee65407') 
+WITH CHECK (auth.uid() = '0fcd3894-4ca1-4538-9f45-b0334ee65407');
 
 -- ==========================================
 -- Storage (MCQ Images)
@@ -97,9 +97,9 @@ CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = '
 DROP POLICY IF EXISTS "Admin Upload" ON storage.objects;
 CREATE POLICY "Admin Upload" ON storage.objects 
 FOR INSERT TO authenticated 
-WITH CHECK (bucket_id = 'mcq-images' AND auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com');
+WITH CHECK (bucket_id = 'mcq-images' AND auth.uid() = '0fcd3894-4ca1-4538-9f45-b0334ee65407');
 
 DROP POLICY IF EXISTS "Admin Delete" ON storage.objects;
 CREATE POLICY "Admin Delete" ON storage.objects 
 FOR DELETE TO authenticated 
-USING (bucket_id = 'mcq-images' AND auth.jwt() ->> 'email' = 'hasan.feroz.qureshi@gmail.com');
+USING (bucket_id = 'mcq-images' AND auth.uid() = '0fcd3894-4ca1-4538-9f45-b0334ee65407');
