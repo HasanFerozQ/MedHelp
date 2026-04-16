@@ -204,7 +204,8 @@
           </div>
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
-          <div class="score-badge" id="live-score">Score: 0%</div>
+          <div class="score-badge" id="mcq-live-score" style="background: var(--accent-glow); border-color: var(--border-accent); color: var(--accent-light);">MCQ: 0/0</div>
+          <div class="score-badge" id="case-live-score" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.3); color: #c084fc;">Case: 0/0</div>
           <button class="btn btn-ghost" onclick="resetTopic()" style="padding: 8px 12px; color: var(--danger);">Reset Progress</button>
         </div>
       </div>
@@ -224,6 +225,10 @@
     let currentTopicId = null;
     let userProgress = JSON.parse(localStorage.getItem('mh_prep_progress') || '{}');
     let allTopicsIndex = [];
+
+    // Separate scoring maps
+    let currentStandaloneIds = [];
+    let currentCaseQuestionIds = [];
 
     function saveProgress() {
       localStorage.setItem('mh_prep_progress', JSON.stringify(userProgress));
@@ -391,6 +396,10 @@
 
       loader.classList.add('hidden');
 
+      // Reset ID tracking
+      currentStandaloneIds = [];
+      currentCaseQuestionIds = [];
+
       if ((mError || !mcqs.length) && (cError || !cases.length)) {
         list.innerHTML = '<p style="text-align:center; padding: 40px;">No questions found for this topic.</p>';
         return;
@@ -398,6 +407,7 @@
 
       // Render Standalone MCQs
       if (mcqs && mcqs.length > 0) {
+        currentStandaloneIds = mcqs.map(m => m.id);
         const header = document.createElement('div');
         header.className = 'section-divider';
         header.textContent = 'High-Yield MCQs';
@@ -416,6 +426,7 @@
         list.appendChild(header);
 
         cases.forEach((cs, cIdx) => {
+          currentCaseQuestionIds.push(...cs.case_questions.map(q => q.id));
           list.appendChild(renderCaseBlock(cs, cIdx));
         });
       }
@@ -521,12 +532,23 @@
 
     function updateQuizHeader() {
       const topicProgress = userProgress[currentTopicId] || {};
-      const answeredCount = Object.keys(topicProgress).length;
-      const correctCount = Object.values(topicProgress).filter(p => p.correct).length;
       
-      document.getElementById('topic-stats').textContent = `${answeredCount} MCQs Answered`;
+      const mcqAnswered = currentStandaloneIds.filter(id => topicProgress[id]);
+      const mcqCorrect = mcqAnswered.filter(id => topicProgress[id].correct).length;
       
-      document.getElementById('live-score').textContent = `Score: ${correctCount} / ${answeredCount}`;
+      const caseAnswered = currentCaseQuestionIds.filter(id => topicProgress[id]);
+      const caseCorrect = caseAnswered.filter(id => topicProgress[id].correct).length;
+      
+      const totalAnswered = mcqAnswered.length + caseAnswered.length;
+      const totalPossible = currentStandaloneIds.length + currentCaseQuestionIds.length;
+
+      document.getElementById('topic-stats').textContent = `${totalAnswered} / ${totalPossible} Questions Completed`;
+      
+      document.getElementById('mcq-live-score').textContent = `MCQ: ${mcqCorrect} / ${currentStandaloneIds.length}`;
+      document.getElementById('case-live-score').textContent = `Case: ${caseCorrect} / ${currentCaseQuestionIds.length}`;
+      
+      // Hide case score if no cases exist
+      document.getElementById('case-live-score').style.display = currentCaseQuestionIds.length ? 'block' : 'none';
     }
 
     function resetTopic() {
