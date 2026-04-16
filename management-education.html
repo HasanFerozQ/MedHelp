@@ -44,9 +44,26 @@
     .toggle-item { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; }
     
     #loading-state { text-align: center; padding: 40px; color: var(--text-muted); }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: var(--bg-card); border: 1px solid var(--accent); color: var(--text-h);
+      padding: 12px 24px; border-radius: 100px; font-weight: 700; font-size: 14px;
+      z-index: 10000; box-shadow: var(--shadow-accent); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex; align-items: center; gap: 10px; pointer-events: none;
+    }
+    #toast.visible { transform: translateX(-50%) translateY(0); }
+    #toast.error { border-color: var(--danger); box-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
   </style>
 </head>
 <body>
+
+  <!-- Toast Element -->
+  <div id="toast">
+    <span id="toast-icon">🚀</span>
+    <span id="toast-msg">Action Successful</span>
+  </div>
 
   <!-- ── NAV ── -->
   <nav class="navbar">
@@ -279,6 +296,21 @@
   </div>
 
   <script>
+    // --- UTILS ---
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      const toastIcon = document.getElementById('toast-icon');
+      
+      toastMsg.textContent = msg;
+      toastIcon.textContent = type === 'error' ? '❌' : '✅';
+      toast.className = type === 'error' ? 'error visible' : 'visible';
+      
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 3000);
+    }
+
     // --- AUTH LOGIC ---
     const authOverlay = document.getElementById('auth-overlay');
     
@@ -289,7 +321,7 @@
       if (!user) {
         authOverlay.classList.add('visible');
       } else if (user.id !== ADMIN_UID) {
-        alert('Unauthorized Access: This portal is for administrative use only.');
+        showToast('Unauthorized Access: This portal is for administrative use only.', 'error');
         await window.dbClient.auth.signOut();
         authOverlay.classList.add('visible');
       } else {
@@ -310,7 +342,7 @@
       const { error } = await window.dbClient.auth.signInWithPassword({ email, password });
       
       if (error) {
-        alert('Access Denied: ' + error.message);
+        showToast('Access Denied: ' + error.message, 'error');
         btn.disabled = false;
         btn.textContent = 'Sign In';
       } else {
@@ -325,7 +357,7 @@
           redirectTo: window.location.origin + window.location.pathname
         }
       });
-      if (error) alert('Google Sign-In Error: ' + error.message);
+      if (error) showToast('Google Sign-In Error: ' + error.message, 'error');
     });
 
     document.getElementById('logout-btn').addEventListener('click', async () => {
@@ -378,9 +410,9 @@
         .insert([{ semester_id: semId, title: title }]);
 
       if (error) {
-        alert('Error creating topic: ' + error.message);
+        showToast('Error creating topic: ' + error.message, 'error');
       } else {
-        alert('Topic created successfully!');
+        showToast('Topic created successfully!');
         e.target.reset();
         // Refresh dropdowns if necessary
         loadTopicsBySemester(document.getElementById('mcq-semester').value, 'mcq-topic');
@@ -464,20 +496,20 @@
             .update(mcqData)
             .eq('id', editingMcqId);
           if (error) throw error;
-          alert('MCQ updated successfully!');
+          showToast('MCQ updated successfully!');
           cancelEditing();
         } else {
           const { error: insertError } = await window.dbClient
             .from('mcqs')
             .insert([mcqData]);
           if (insertError) throw insertError;
-          alert('MCQ uploaded successfully!');
+          showToast('MCQ uploaded successfully!');
           resetMcqFormFields(); // Keep Semester/Topic selected
         }
 
         refreshMcqList();
       } catch (err) {
-        alert('Operation failed: ' + err.message);
+        showToast('Operation failed: ' + err.message, 'error');
       } finally {
         btn.disabled = false;
         btn.textContent = editingMcqId ? 'Update MCQ' : 'Upload MCQ';
@@ -603,8 +635,9 @@
         .eq('id', id);
 
       if (error) {
-        alert('Delete failed: ' + error.message);
+        showToast('Delete failed: ' + error.message, 'error');
       } else {
+        showToast('Question deleted');
         // Attempt to delete image from storage if it was a storage URL
         if (imgUrl && imgUrl.includes('/mcq-images/')) {
           const path = imgUrl.split('/mcq-images/')[1].split('?')[0]; // Extract relative path
