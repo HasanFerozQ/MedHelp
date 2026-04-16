@@ -25,7 +25,8 @@
     }
     .topic-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-accent); }
     .topic-card h3 { font-size: 18px; font-weight: 800; color: var(--text-h); line-height: 1.3; }
-    .topic-progress { font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+    .topic-progress { font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; flex-direction: column; gap: 8px; }
+    .topic-stats-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .progress-bar-bg { height: 6px; background: var(--bg-elevated); border-radius: 3px; margin-top: 5px; overflow: hidden; }
     .progress-bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; }
 
@@ -57,16 +58,31 @@
     .explanation-box h4 { font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
     .explanation-box p { font-size: 14px; color: var(--text-body); line-height: 1.6; }
 
-    .score-badge { background: var(--accent-glow); color: var(--accent-light); padding: 6px 14px; border-radius: 100px; font-weight: 800; font-size: 14px; border: 1px solid var(--border-accent); }
+    .score-badge { background: var(--bg-card); color: var(--text-h); padding: 8px 16px; border-radius: 12px; font-weight: 800; font-size: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); display: flex; align-items: center; gap: 8px; }
+    .score-badge.mcq { border-left: 4px solid var(--success); }
+    .score-badge.case { border-left: 4px solid #a855f7; }
     
     .hidden { display: none; }
 
-    /* SEARCH BAR STYLES */
+    /* SEARCH BAR STYLES - UI FIX */
     .search-container { position: relative; max-width: 600px; margin-top: 24px; }
-    .search-input-wrapper { display: flex; align-items: center; background: var(--bg-card); border: 2px solid var(--border); border-radius: 100px; padding: 4px 20px; transition: var(--transition); }
-    .search-input-wrapper:focus-within { border-color: var(--accent); box-shadow: var(--shadow-accent); }
-    .search-input { background: none; border: none; color: var(--text-h); padding: 12px 10px; width: 100%; font-size: 15px; font-weight: 600; outline: none; }
-    .search-input::placeholder { color: var(--text-muted); }
+    .search-input-wrapper { 
+      display: flex; align-items: center; background: var(--bg-card); 
+      border: 1px solid var(--border); border-radius: 100px; padding: 2px 20px; 
+      transition: var(--transition); box-shadow: var(--shadow);
+    }
+    .search-input-wrapper:focus-within { 
+      border-color: var(--accent); 
+      box-shadow: 0 0 0 4px var(--accent-glow);
+      background: var(--bg-elevated);
+    }
+    .search-input { 
+      background: transparent !important; border: none !important; 
+      color: var(--text-h); padding: 12px 10px; width: 100%; 
+      font-size: 16px; font-weight: 600; outline: none !important; 
+      box-shadow: none !important;
+    }
+    .search-input::placeholder { color: var(--text-muted); opacity: 0.7; }
     
     .search-results { 
       position: absolute; top: calc(100% + 10px); left: 0; right: 0; background: var(--bg-glass); 
@@ -117,10 +133,32 @@
     }
     .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
     
+    /* MOBILE RESPONSIVENESS */
     @media (max-width: 768px) {
-      .quiz-header { top: 70px; }
-      .mcq-card { padding: 20px; }
+      .prep-hero { padding: 30px 0; margin-bottom: 20px; }
+      .prep-hero h1 { font-size: 28px !important; }
+      .prep-hero p { font-size: 15px !important; }
+      
+      .semester-nav { padding: 5px 0; margin-bottom: 20px; }
+      .semester-tab { padding: 10px 18px; font-size: 13px; }
+      
+      .topic-grid { grid-template-columns: 1fr; gap: 16px; }
+      .topic-card { padding: 20px; }
+      
+      .quiz-header { 
+        position: fixed; top: 60px; left: 0; right: 0; 
+        border-radius: 0; border-x: none; margin-bottom: 0;
+        padding: 12px 16px;
+      }
+      #mcq-list { margin-top: 100px; }
+      
+      .mcq-card { padding: 20px; border-radius: var(--radius-sm); }
+      .mcq-question { font-size: 17px; }
+      .option-btn { padding: 14px 16px; font-size: 14px; }
+      
       .case-box { padding: 20px; }
+      .case-title { font-size: 18px; }
+      .case-scenario { font-size: 14px; }
     }
   </style>
 </head>
@@ -322,7 +360,7 @@
 
       const { data, error } = await window.dbClient
         .from('topics')
-        .select('*, mcqs(id)')
+        .select('*, mcqs(id), case_studies(id, case_questions(id))')
         .eq('semester_id', semId)
         .order('order', { ascending: true });
 
@@ -334,9 +372,25 @@
       }
 
       data.forEach(topic => {
-        const total = topic.mcqs.length;
-        const progress = userProgress[topic.id] ? Object.keys(userProgress[topic.id]).length : 0;
-        const percent = total > 0 ? Math.round((progress / total) * 100) : 0;
+        const totalMcqs = topic.mcqs.length;
+        const topicProg = userProgress[topic.id] || {};
+        
+        // MCQ Progress
+        const mcqIds = topic.mcqs.map(m => m.id);
+        const progressMcqs = mcqIds.filter(id => topicProg[id]).length;
+        
+        // Case Progress (Scenarios)
+        const totalCases = topic.case_studies.length;
+        let completedCases = 0;
+        topic.case_studies.forEach(cs => {
+          const qIds = cs.case_questions.map(q => q.id);
+          const correct = qIds.filter(id => topicProg[id] && topicProg[id].correct).length;
+          if (qIds.length > 0 && correct === qIds.length) completedCases++;
+        });
+
+        const totalQ = totalMcqs + topic.case_studies.flatMap(cs => cs.case_questions).length;
+        const totalCorrect = Object.values(topicProg).filter(v => v.correct).length;
+        const percent = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
 
         const card = document.createElement('div');
         card.className = 'topic-card';
@@ -345,11 +399,16 @@
           <div>
             <h3>${escapeHtml(topic.title)}</h3>
           </div>
-          <div>
-            <div class="topic-progress">
-              <span>${progress} / ${total} MCQs</span>
+          <div class="topic-progress">
+            <div class="topic-stats-row">
+              <span style="color:var(--success)">• ${progressMcqs} / ${totalMcqs} MCQs</span>
               <span>${percent}%</span>
             </div>
+            ${totalCases > 0 ? `
+            <div class="topic-stats-row">
+              <span style="color:#a855f7">• ${completedCases} / ${totalCases} Cases</span>
+            </div>
+            ` : ''}
             <div class="progress-bar-bg">
               <div class="progress-bar-fill" style="width: ${percent}%;"></div>
             </div>
