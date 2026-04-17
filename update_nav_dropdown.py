@@ -16,6 +16,9 @@ def update_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
+    # Fix footer links
+    content = content.replace('<li><a href="/cpt-code-search">Rx Savings</a></li>', '<li><a href="/rx-savings">Rx Savings</a></li>')
+
     # Normalize active links back to clean state
     temp_content = content.replace(' class="active">', '>')
     
@@ -32,6 +35,7 @@ def update_file(filepath):
         <div class="nav-dropdown">
           <div class="nav-dropdown-btn">More ▼</div>
           <div class="nav-dropdown-menu">
+            <a href="/rx-savings">Rx Savings</a>
             <a href="/providers">National Provider Search</a>
             <a href="/blog">Blog</a>
           </div>
@@ -48,6 +52,7 @@ def update_file(filepath):
         'cpt-code-search.html': 'href="/cpt-code-search"',
         'claim-denial-codes.html': 'href="/claim-denial-codes"',
         'audit.html': 'href="/audit"',
+        'rx-savings.html': 'href="/rx-savings"',
         'providers.html': 'href="/providers"',
         'blog.html': 'href="/blog"',
         'blog-post.html': 'href="/blog"'

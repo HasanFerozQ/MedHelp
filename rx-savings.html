@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Rx Savings Search | Compare Drug Prices & Save Money | MediHelp</title>
+  <meta name="description" content="Search and compare drug prices across GoodRx, Cost Plus Drugs, and Amazon Pharmacy. Use MediHelp's free Rx savings tool to find the lowest prescription prices.">
+  <link rel="canonical" href="https://www.medihelp.live/rx-savings">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MediHelp">
+  <meta property="og:title" content="Free Rx Savings Search | MediHelp">
+  <meta property="og:description" content="Compare prescription prices and find the best deals on medications with MediHelp.">
+  <meta property="og:url" content="https://www.medihelp.live/rx-savings">
+  <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Rx Savings Search Tool",
+    "url": "https://www.medihelp.live/rx-savings",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "description": "Compare prescription drug prices and find free coupons.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <script src="core.js"></script>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png?v=1.1" alt="MediHelp">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/audit">Medical Bill Audit</a>
+        <a href="/cpt-code-search">CPT Codes</a>
+        <a href="/claim-denial-codes">Denial Codes</a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">More ▼</div>
+          <div class="nav-dropdown-menu">
+            <a href="/rx-savings" class="active">Rx Savings</a>
+            <a href="/providers">National Provider Search</a>
+            <a href="/blog">Blog</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero container">
+    <div class="hero-eyebrow">Compare Prices · Save Up to 80%</div>
+    <h1>Free Rx Savings<br><span class="grad">Search & Comparison.</span></h1>
+    <p>Search for medications and instantly compare cash prices across the top prescription savings platforms.</p>
+    <div class="hero-cta" style="display:flex; justify-content:center; gap:12px; margin-top:24px;">
+       <button class="btn btn-primary" onclick="document.getElementById('rx-search-input').focus();">Search Medications Now</button>
+       <a href="/audit" class="btn btn-ghost">Audit Your Bill</a>
+    </div>
+  </section>
+
+  <!-- ── TOOL SECTION ── -->
+  <section class="container" style="margin-bottom: 80px;">
+    <div class="suite-wrapper" style="padding: 40px; border-radius: 24px;">
+      <div style="text-align: center; margin-bottom: 32px;">
+        <h2 style="margin-bottom: 12px;">Find the Lowest Price</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Search any drug name (e.g., Amoxicillin, Lisinopril) to compare real-time estimates and find discount links.</p>
+      </div>
+
+      <div class="rx-search" style="max-width: 600px; margin: 0 auto 40px;">
+        <div class="search-box" style="margin-bottom:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="rx-search-input" class="search-input" placeholder="Search a drug name..." autocomplete="off">
+          <div id="rx-suggestions" class="suggestions-list"></div>
+        </div>
+      </div>
+
+      <div id="rx-results" class="results-area" style="min-height: 200px;">
+        <p class="status-msg">Enter a medication name to compare free prices across US pharmacies.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-label">Rx Savings FAQ</div>
+      <h2 class="section-title">Common Questions</h2>
+      <div class="faq-grid" id="faq-rx"></div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Your free, global partner in medical billing accuracy, claim transparency, and code intelligence.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="/cpt-code-search">CPT Code Search</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings</a></li>
+            <li><a href="/providers">National Provider Search</a></li>
+            <li><a href="/audit">Medical Bill Audit</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Global</h4>
+          <ul>
+            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">US (ICD-10-CM)</li>
+            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">UK (NHS / OPCS-4)</li>
+            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">Middle East (WHO)</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content: center; border-top: 1px solid var(--border); padding-top: 40px; flex-direction: column; gap: 10px; align-items: center;">
+        <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size: 11px; opacity: 0.7;">Informational only. Not medical/legal advice. <a href="/terms" style="color: var(--accent); text-decoration: none; font-weight: 700;">Terms & Disclaimer</a></span>
+        <span style="display:block; font-size: 10px; opacity: 0.5;">Support: supportdesk@medihelp.live</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="tabs/rxscout/rxscout.js"></script>
+  <script>
+    const rxFaqs = [
+      { q: 'How does the Rx savings search work?', a: 'MediHelp use the National Library of Medicine (RxNav) to match your medication and then provides direct links to transparency platforms like GoodRx and Cost Plus Drugs to help you compare the lowest available prices.' },
+      { q: 'Is this tool free?', a: 'Yes. MediHelp offers this tool for free to help patients find the most affordable way to fulfill their prescriptions.' },
+      { q: 'Can I use these discounts with insurance?', a: 'Often, the cash prices found through these tools are lower than an insurance co-pay. However, you typically cannot use a discount coupon *and* your insurance together; you must choose the lower cost option at the pharmacy counter.' },
+      { q: 'What is Cost Plus Drugs?', a: 'Mark Cuban Cost Plus Drug Company sells generic medications at a transparent, fixed markup (15%) plus pharmacy fees, often significantly cheaper than traditional retail pharmacies.' }
+    ];
+    if (window.renderFAQ) renderFAQ('faq-rx', rxFaqs);
+  </script>
+</body>
+</html>
