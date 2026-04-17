@@ -115,6 +115,7 @@ body {
 /* --- Global Links --- */
 a {
   color: var(--accent);
+  font-weight: 500;
   transition: var(--transition);
 }
 a:hover {
@@ -136,6 +137,36 @@ a:hover {
 [data-theme="light"] .problem-box {
   background: #FEF2F2;
   border-color: #FECACA;
+  box-shadow: 0 6px 20px rgba(239,68,68,0.1);
+}
+
+/* --- Layout Components --- */
+.section {
+  padding: 60px 0;
+}
+
+.section-alt {
+  background: var(--bg-elevated);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 12px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+[data-theme="light"] .card {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
 }
 
 /* ============================================================
@@ -409,7 +440,7 @@ a:hover {
   background: linear-gradient(135deg, #22C55E, #16A34A);
   color: #fff;
   border: none;
-  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.25);
 }
 
 .btn-primary:hover {
