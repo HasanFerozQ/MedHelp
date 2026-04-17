@@ -90,8 +90,8 @@
   <!-- ── HERO ── -->
   <section class="hero container">
     <div class="hero-eyebrow">CMS NPPES Registry · 6M+ Records</div>
-    <h1>NPI Lookup Tool<br><span class="grad">(Search Healthcare Providers)</span></h1>
-    <p>Search healthcare providers using NPI numbers. Find doctor details, verify provider information, and check healthcare records instantly.</p>
+    <h1>NPI Lookup Tool (Search Healthcare Providers by NPI Number)</h1>
+    <p>Search healthcare providers online for free using NPI numbers. Find doctor details, verify provider information, and check healthcare records instantly.</p>
     <div class="hero-cta" style="display:flex; justify-content:center; gap:12px; margin-top:24px;">
        <button class="btn btn-primary" onclick="document.getElementById('npi-name').focus();">Search Provider</button>
        <a href="/audit" class="btn btn-ghost">Audit Medical Bill</a>
@@ -110,9 +110,27 @@
       <li>Insurance claim submission and processing</li>
       <li>Standardized provider identification and verification</li>
     </ul>
-    <p style="color: var(--text-muted); line-height: 1.6; padding: 20px; background: var(--bg-elevated); border-radius: 12px; border: 1px solid var(--border);">
-      Each doctor, hospital, clinic, and healthcare provider has a unique, 10-digit NPI number that never expires or changes.
+    <div style="color: var(--text-h); font-weight: 700; text-align: center; padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-elevated); margin-top: 24px;">
+      🛡️ Verified data sourced from the official CMS NPPES NPI Registry.
+    </div>
+  </section>
+
+  <!-- ── AUTHORITY BLOCK ── -->
+  <section class="container" style="margin-bottom: 60px; max-width: 900px; text-align: left;">
+    <h2 style="margin-bottom: 16px;">How to Verify Doctor Credentials & NPI Status</h2>
+    <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 24px;">
+      Verifying your healthcare provider is a critical part of ensuring medical billing accuracy and patient safety. Use our NPI lookup tool to perform a deep-dive verification of any provider in the US.
     </p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+      <div style="padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card);">
+         <h4 style="margin-bottom: 8px;">Check Practice Status</h4>
+         <p style="font-size: 14px; color: var(--text-muted);">Ensure the provider is actively registered and has a valid Medicare/Medicaid NPI.</p>
+      </div>
+      <div style="padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card);">
+         <h4 style="margin-bottom: 8px;">Verify Specialty Access</h4>
+         <p style="font-size: 14px; color: var(--text-muted);">Cross-check taxonomy codes to confirm their specialty matches the services billed.</p>
+      </div>
+    </div>
   </section>
 
   <section id="suite" class="container" style="margin-bottom: 80px;">

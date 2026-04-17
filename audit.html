@@ -13,10 +13,24 @@
   <meta property="og:description" content="Upload or enter line items to audit common coding, pricing, and reconciliation issues.">
   <meta property="og:url" content="https://www.medihelp.live/audit">
   <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Medical Bill Audit Tool | MediHelp">
-  <meta name="twitter:description" content="Audit medical bills with live findings and confidence scoring.">
   <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "MediHelp Medical Bill Audit Tool",
+    "url": "https://www.medihelp.live/audit",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "description": "Audit medical bills online, detect overcharges, and verify CPT codes for errors.",
+    "softwareVersion": "5.5",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -381,6 +395,30 @@
         </div>
       </section>
 
+      <!-- Mid-page Strategic Connectivity Hub -->
+      <section class="container" style="margin-bottom: 60px;">
+        <div style="background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); padding: 40px; text-align: center;">
+          <h3 style="margin-bottom: 24px;">Integrated Medical Billing Suite</h3>
+          <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 700px; margin-left: auto; margin-right: auto;">
+            Found a suspicious charge or a denied claim? Use our specialized tools to verify the details before you dispute your hospital bill.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+            <a href="/cpt-code-search" style="padding: 24px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); text-decoration: none; transition: 0.3s; display: block;">
+              <h4 style="color: var(--success); margin-bottom: 8px;">Check CPT Codes Instantly</h4>
+              <p style="font-size: 14px; color: var(--text-muted);">Verify procedure meanings and identify upcoding errors.</p>
+            </a>
+            <a href="/claim-denial-codes" style="padding: 24px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); text-decoration: none; transition: 0.3s; display: block;">
+              <h4 style="color: var(--warning); margin-bottom: 8px;">Understand Denial Reasons</h4>
+              <p style="font-size: 14px; color: var(--text-muted);">Decode insurance rejection codes and plan your resolution.</p>
+            </a>
+            <a href="/blog" style="padding: 24px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); text-decoration: none; transition: 0.3s; display: block;">
+              <h4 style="color: var(--accent); margin-bottom: 8px;">Read Savings Guides</h4>
+              <p style="font-size: 14px; color: var(--text-muted);">Step-by-step tactics to reduce hospital bills legally.</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <!-- SEO H2: Tool Intro -->
       <div style="text-align: center; margin-bottom: 32px;">
         <h2 style="margin-bottom: 12px;">Medical Bill Audit Tool (Manual Entry)</h2>
@@ -627,23 +665,25 @@
             </div>
           </div>
 
-          <h4 style="margin:0 0 10px;">2) Analysis Snapshot</h4>
-          <div class="neg-snapshot-card">
-            <div id="neg-snapshot-status" style="font-size:13px; color:var(--text-main); font-weight:600;">Using current audit results. Upload Bill (PDF) to auto-refresh this snapshot.</div>
-            <div class="neg-snapshot-stats">
-              <div class="neg-snapshot-stat">
-                <span class="k">Estimated Savings</span>
-                <span class="v" id="neg-savings-value">$0.00</span>
-              </div>
-              <div class="neg-snapshot-stat">
-                <span class="k">Findings Detected</span>
-                <span class="v" id="neg-findings-value">0</span>
-              </div>
-              <div class="neg-snapshot-stat">
-                <span class="k">Snapshot Source</span>
-                <span class="v" id="neg-snapshot-source" style="font-size:15px;">Current Audit</span>
-              </div>
+          <h4 style="margin:0 0 10px;">2) Noticeable Billing Issues</h4>
+          <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:16px;">
+            <p style="font-size:13px; color:var(--text-h); font-weight:700; margin-bottom:12px;">Did you notice any specific issues with your bill?</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+              <label style="display:flex; align-items:center; gap:8px; font-size:12px; cursor:pointer;">
+                <input type="checkbox" name="neg-issue" value="Services not received"> I was charged for services I did not receive
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; font-size:12px; cursor:pointer;">
+                <input type="checkbox" name="neg-issue" value="Duplicate charges"> I see duplicate charges
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; font-size:12px; cursor:pointer;">
+                <input type="checkbox" name="neg-issue" value="Unclear charges"> I don’t understand some charges
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; font-size:12px; cursor:pointer;">
+                <input type="checkbox" name="neg-issue" value="Not sure"> Not sure (please review everything)
+              </label>
             </div>
+            <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:6px; text-transform:uppercase;">Other Details & Background</label>
+            <textarea id="neg-other-details" placeholder="Please provide any additional context or specific charges you want us to investigate..." style="width:100%; min-height:80px; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-h); font-size:13px;"></textarea>
           </div>
 
           <h4 style="margin:0 0 10px;">3) Intake Form (Required)</h4>
@@ -659,7 +699,7 @@
           </div>
           <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:10px;">
             <select id="neg-insurance" style="padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-h);">
-              <option value="">Do you have insurance?</option>
+              <option value="">Was this bill processed through insurance?</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -706,9 +746,9 @@
           <h4 style="margin:0 0 10px;">Consent & Authorization to Act (Required)</h4>
           <div style="font-size:12px; color:var(--text-muted); line-height:1.7; margin-bottom:12px; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:12px;">
             <div>1. I authorize MediHelp to communicate with healthcare providers, billing offices, and payers solely for claim/billing review, dispute correspondence, and negotiated resolution.</div>
-            <div>2. Scope of authority is limited to billing advocacy actions and does not establish legal, medical, or insurance advisory representation.</div>
+            <div>2. MediHelp acts as a billing advocate, not a legal representative. This service does not establish legal, medical, or insurance advisory representation.</div>
             <div>3. I consent to the processing and transmission of my submitted billing documents and account details for case handling and resolution activities.</div>
-            <div>4. I understand the initiation fee and the success-based fee model (15% of realized savings), and acknowledge that outcomes cannot be guaranteed.</div>
+            <div>4. I understand the initiation fee and the success-based fee model (15% of realized savings), and acknowledge that MediHelp does not guarantee specific outcomes.</div>
             <div>5. I acknowledge that this digital consent and signature constitute my authorization record for this case and may be retained for compliance/audit purposes.</div>
             <div>6. I may revoke authorization by written notice; actions already performed before revocation remain valid for operational and recordkeeping purposes.</div>
           </div>
@@ -725,8 +765,8 @@
             <span id="neg-signature-status" style="font-size:12px; color:var(--text-muted);">Not signed</span>
           </div>
 
-          <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">Disclaimer: MediHelp is a billing advocacy service and does not provide legal, medical, or insurance advice.</div>
-          <button type="submit" class="btn btn-primary" style="width:100%; padding:12px; font-weight:800;">Start My Bill Negotiation</button>
+          <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">Disclaimer: MediHelp acts as a billing advocate, not a legal representative. We do not provide legal, medical, or insurance advice and do not guarantee outcomes.</div>
+          <button type="submit" class="btn btn-primary" style="width:100%; padding:12px; font-weight:800;">Start My Case Review →</button>
           <div id="neg-submit-result" style="margin-top:10px; font-size:12px;"></div>
         </form>
       </div>
