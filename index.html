@@ -4,49 +4,107 @@
   <meta name="google-site-verification" content="5qSgIce5-N4XK8YJHpfBOtlbj-VfyJCvTbiZEsDy7VM" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediHelp | The Operating System for Medical Billing & Transparency</title>
-  <meta name="description" content="MediHelp is your free, clinical partner in medical billing accuracy. Audit bills, search provider specialties, and find Rx savings in your browser.">
-  <link rel="canonical" href="https://www.medihelp.live/">
-  <meta name="robots" content="index, follow">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="MediHelp">
-  <meta property="og:title" content="MediHelp | Medical Billing Transparency Tools">
-  <meta property="og:description" content="Audit medical bills, verify providers, decode denials, and explore billing insights with MediHelp.">
-  <meta property="og:url" content="https://www.medihelp.live/">
-  <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="MediHelp | Medical Billing Transparency Tools">
-  <meta name="twitter:description" content="Free patient-first tools for bill audits, provider verification, and billing education.">
-  <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <title>MediHelp | Audit Medical Bills, Check CPT Codes, Understand Claim Denials</title>
+  <meta name="description" content="Audit your medical bill, spot billing errors, check CPT codes, and understand insurance claim denials with MediHelp’s free medical billing tools." />
+  <link rel="canonical" href="https://www.medihelp.live/" />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MediHelp | Audit Medical Bills, Check CPT Codes, Understand Claim Denials" />
+  <meta property="og:description" content="Find medical billing errors, review CPT codes, and understand claim denials with MediHelp." />
+  <meta property="og:url" content="https://www.medihelp.live/" />
+  <meta property="og:site_name" content="MediHelp" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MediHelp | Audit Medical Bills, Check CPT Codes, Understand Claim Denials" />
+  <meta name="twitter:description" content="Audit medical bills, verify CPT codes, and understand claim denials with MediHelp." />
+  
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.medihelp.live/#organization",
+      "name": "MediHelp",
+      "url": "https://www.medihelp.live/"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.medihelp.live/#website",
+      "url": "https://www.medihelp.live/",
+      "name": "MediHelp",
+      "publisher": {
+        "@id": "https://www.medihelp.live/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.medihelp.live/#webpage",
+      "url": "https://www.medihelp.live/",
+      "name": "MediHelp | Audit Medical Bills, Check CPT Codes, Understand Claim Denials",
+      "isPartOf": {
+        "@id": "https://www.medihelp.live/#website"
+      },
+      "about": {
+        "@id": "https://www.medihelp.live/#organization"
+      },
+      "description": "Audit medical bills, check CPT codes, and understand claim denial reasons with MediHelp."
+    }
+  ]
+}
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [{
       "@type": "Question",
-      "name": "Is MediHelp truly free for patient use?",
+      "name": "Is MediHelp free to use?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. MediHelp core tools are free for patients, including Bill Audit, Provider Search, and education resources for disputes."
+        "text": "Yes. Core tools are free, including Bill Audit, Provider Search, and educational resources for appeal preparation."
       }
     }, {
       "@type": "Question",
-      "name": "How is my medical data and HIPAA privacy protected?",
+      "name": "What can I do on MediHelp?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MediHelp uses a privacy-first approach. Most audit workflows run in-browser, and we avoid storing sensitive bill data unless users opt into managed advocacy workflows."
+        "text": "You can audit line-item bills, validate CPT/HCPCS context, check provider credentials by NPI, and review dispute guidance before contacting providers or payers."
       }
     }, {
       "@type": "Question",
-      "name": "What can MediHelp help me do?",
+      "name": "How is my data handled?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MediHelp helps you audit bills for coding and pricing anomalies, verify providers by NPI, and learn how to prepare stronger billing disputes."
+        "text": "MediHelp follows a privacy-first model. Most audit workflows run in-browser, and sensitive records are not retained unless needed for optional managed advocacy."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Can MediHelp replace legal or medical advice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. MediHelp provides informational and technical billing support only. Always confirm decisions with licensed professionals and your insurer."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Which bill formats are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The audit workflow supports manual entry and PDF extraction for common itemized bills using CPT, HCPCS, ICD-10, and payer adjustment references."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Do you offer human support for difficult cases?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Managed advocacy services are available for users who want expert help after initial technical findings are reviewed."
       }
     }]
   }
@@ -63,11 +121,16 @@
       </a>
       <div class="nav-links">
         <a href="/" class="active">Home</a>
-        <a href="/cpt-code-search">CPT Code Search</a>
-        <a href="/claim-denial-codes">Claim Denial Codes</a>
         <a href="/audit">Medical Bill Audit</a>
-        <a href="/providers">National Provider Search</a>
-        <a href="/blog">Blog</a>
+        <a href="/cpt-code-search">CPT Codes</a>
+        <a href="/claim-denial-codes">Denial Codes</a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">More ▼</div>
+          <div class="nav-dropdown-menu">
+            <a href="/providers">National Provider Search</a>
+            <a href="/blog">Blog</a>
+          </div>
+        </div>
       </div>
       <div class="nav-actions">
         <button id="theme-toggle" title="Toggle Dark/Light Mode" style="margin-right: 20px;">🌙</button>
@@ -82,49 +145,87 @@
 
   <!-- ── HERO ── -->
   <section class="hero container">
-    <div class="hero-eyebrow">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-      Free Medical Billing Tools
+    <div class="hero-eyebrow" style="color: var(--text-muted); background: transparent; border: none; padding: 0; font-weight: bold; margin-bottom: 20px;">
+      No signup required • Fast online tools • Informational and patient-friendly
     </div>
-    <h1>Audit Your Medical Bill &amp; Find Hidden Errors <span class="grad">in Seconds.</span></h1>
-    <p>Learn how to audit medical bills independently, use our CPT code lookup free tools, and figure out exactly why a claim was denied using our CARC code database.</p>
+    <h1 style="font-size: 42px;">Audit Your Medical Bill, Check CPT Codes, and Understand Claim Denials</h1>
+    <p>Use MediHelp’s free medical billing tools to review medical bills, spot possible overcharges, search CPT codes, and understand CARC and RARC claim denial codes before you pay.</p>
     <div class="hero-cta">
       <a href="/audit" class="btn btn-primary">
-        Medical Bill Audit Tool
+        Audit Your Bill Free
       </a>
-      <a href="/cpt-code-search" class="btn btn-ghost">
-        CPT Code Lookup Free
-      </a>
-      <a href="/claim-denial-codes" class="btn btn-ghost" style="margin-left:8px;">
-        Why Claim Denied CARC Code
+      <a href="/cpt-code-search" class="btn btn-ghost" style="margin-left:8px;">
+        Search CPT Codes
       </a>
     </div>
   </section>
 
-  <section id="features" class="container">
-    <div class="faq-grid" style="grid-template-columns: 1fr 1fr 1fr;">
-       <div class="faq-card" style="padding: 24px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
-         <h3 style="font-weight: 800; font-size: 18px; margin-bottom: 12px; color: var(--accent);">How to Audit Medical Bill</h3>
-         <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
-           Medical bills are notorious for unbundling and upcoding errors. Our tool allows you to plug your CPT codes and prices in to check against Medicare benchmarks effortlessly.
-         </p>
-         <a href="/audit" class="btn" style="background: rgba(34,211,238,0.1); color: var(--accent); font-size: 13px; font-weight: 700; border: 1px solid rgba(34,211,238,0.3);">Run an Audit</a>
-       </div>
-       <div class="faq-card" style="padding: 24px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
-         <h3 style="font-weight: 800; font-size: 18px; margin-bottom: 12px; color: #22c55e;">CPT Code Lookup Free</h3>
-         <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
-           Stop guessing what your procedures mean. Access our localized database of 74,000+ codes (US, UK, Middle East) to decode complex hospital language and protect your wallet.
-         </p>
-         <a href="/cpt-code-search" class="btn" style="background: rgba(34,197,94,0.1); color: #22c55e; font-size: 13px; font-weight: 700; border: 1px solid rgba(34,197,94,0.3);">Search Codes</a>
-       </div>
-       <div class="faq-card" style="padding: 24px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
-         <h3 style="font-weight: 800; font-size: 18px; margin-bottom: 12px; color: #f59e0b;">Why Claim Denied CARC</h3>
-         <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
-           Did your insurance deny coverage? We can tell you why. Simply input the CARC or RARC denial code listed on your EOB (Explanation of Benefits) to find specific appeal advice.
-         </p>
-         <a href="/claim-denial-codes" class="btn" style="background: rgba(245,158,11,0.1); color: #f59e0b; font-size: 13px; font-weight: 700; border: 1px solid rgba(245,158,11,0.3);">Denial Search</a>
-       </div>
+  <!-- ── MAIN CONTENT SECTIONS ── -->
+  <section class="container" style="padding-top: 40px;">
+    
+    <div style="margin-bottom: 60px;">
+      <h2>Free Medical Billing Tools for Patients</h2>
+      <p style="color: var(--text-muted); line-height: 1.6; font-size: 16px;">Medical bills and insurance paperwork are difficult to understand. MediHelp helps patients review common billing problems, look up procedure codes, and understand why claims were denied using free online tools built for medical billing transparency.</p>
     </div>
+
+    <!-- Section: Medical Bill Audit Tool -->
+    <div style="margin-bottom: 60px; display: flex; flex-direction: column; gap: 16px; background: var(--bg-card); padding: 32px; border-radius: 12px; border: 1px solid var(--border);">
+      <h2 style="color: var(--accent); margin-bottom: 0;">Medical Bill Audit Tool</h2>
+      <p style="color: var(--text-muted); line-height: 1.6;">Review itemized medical bills for duplicate charges, possible upcoding, unbundling issues, and pricing red flags. Our <a href="/audit" style="color: var(--accent); font-weight: 600;">medical bill audit tool</a> helps you check charges before you pay or dispute a bill.</p>
+      <div>
+        <a href="/audit" class="btn" style="background: rgba(34,211,238,0.1); color: var(--accent); font-weight: 700; border: 1px solid rgba(34,211,238,0.3); padding: 12px 24px;">Start With the Medical Bill Audit Tool</a>
+      </div>
+    </div>
+
+    <!-- Section: Free CPT Code Lookup -->
+    <div style="margin-bottom: 60px; display: flex; flex-direction: column; gap: 16px; background: var(--bg-card); padding: 32px; border-radius: 12px; border: 1px solid var(--border);">
+      <h2 style="color: #22c55e; margin-bottom: 0;">Free CPT Code Lookup</h2>
+      <p style="color: var(--text-muted); line-height: 1.6;">Search medical billing codes and understand what procedures and services may appear on your bill. Use the <a href="/cpt-code-search" style="color: #22c55e; font-weight: 600;">free CPT code lookup</a> tool to review terminology, compare line items, and better understand hospital or provider charges.</p>
+      <div>
+        <a href="/cpt-code-search" class="btn" style="background: rgba(34,197,94,0.1); color: #22c55e; font-weight: 700; border: 1px solid rgba(34,197,94,0.3); padding: 12px 24px;">Search CPT Codes</a>
+      </div>
+    </div>
+
+    <!-- Section: Claim Denial Codes Explained -->
+    <div style="margin-bottom: 60px; display: flex; flex-direction: column; gap: 16px; background: var(--bg-card); padding: 32px; border-radius: 12px; border: 1px solid var(--border);">
+      <h2 style="color: #f59e0b; margin-bottom: 0;">Claim Denial Codes Explained</h2>
+      <p style="color: var(--text-muted); line-height: 1.6;">Look up <a href="/claim-denial-codes" style="color: #f59e0b; font-weight: 600;">CARC and RARC denial codes</a> to understand why a health insurance claim was denied. Get a clearer explanation of denial reasons and what to review before contacting your insurer or provider.</p>
+      <div>
+        <a href="/claim-denial-codes" class="btn" style="background: rgba(245,158,11,0.1); color: #f59e0b; font-weight: 700; border: 1px solid rgba(245,158,11,0.3); padding: 12px 24px;">Look Up Denial Codes</a>
+      </div>
+    </div>
+
+    <!-- Info Grids -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-bottom: 60px;">
+      
+      <!-- Section: How MediHelp Works -->
+      <div>
+        <h2 style="margin-bottom: 20px;">How MediHelp Works</h2>
+        <ul style="color: var(--text-muted); line-height: 1.8; font-size: 15px; padding-left: 20px;">
+          <li><strong>Step 1:</strong> Choose a tool based on your billing issue</li>
+          <li><strong>Step 2:</strong> Review your bill, CPT code, or denial code</li>
+          <li><strong>Step 3:</strong> Understand the issue before you pay, appeal, or contact billing</li>
+        </ul>
+      </div>
+
+      <!-- Section: Why Patients Use MediHelp -->
+      <div>
+        <h2 style="margin-bottom: 20px;">Why Patients Use MediHelp</h2>
+        <ul style="color: var(--text-muted); line-height: 1.8; font-size: 15px; padding-left: 20px;">
+          <li>Spot possible billing errors</li>
+          <li>Understand medical codes in plain language</li>
+          <li>Check common claim denial reasons</li>
+          <li>Use free tools before making payment decisions</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Section: Provider Search Link Block -->
+    <div style="margin-bottom: 60px; padding: 24px; text-align: center; border-radius: 8px; border: 1px dashed var(--border);">
+       <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 0;">Looking to verify doctors and organizations using NPI data? Use our <a href="/providers" style="color: var(--accent); font-weight: bold; text-decoration: underline;">national provider search</a> tool.</p>
+    </div>
+
   </section>
 
   <!-- ── FAQ ── -->
@@ -156,14 +257,6 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Global</h4>
-          <ul>
-            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">US (ICD-10-CM)</li>
-            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">UK (NHS / OPCS-4)</li>
-            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">Middle East (WHO)</li>
-          </ul>
-        </div>
-        <div class="footer-col">
           <h4>Legal</h4>
           <ul>
             <li><a href="/privacy">Privacy Policy</a></li>
@@ -182,7 +275,6 @@
       </div>
     </div>
   </footer>
-
 
   <script>
     // Render Home FAQs
