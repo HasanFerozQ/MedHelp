@@ -394,137 +394,136 @@
       </div>
 
       <!-- Manual Data Entry Form -->
-      <div id="interactive-grid-container" style="margin-bottom: 30px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 15px;">
-          <div>
-            <h3 style="font-size: 16px; margin: 0; color: var(--text-h);">Add Medical Charge</h3>
-            <p style="margin:4px 0 0; font-size: 12px; color: var(--text-muted);">Submit line items individually. Responses will generate below.</p>
-          </div>
-          <div style="display: flex; gap: 12px; align-items: flex-end;">
-            <div style="text-align: right;">
-              <label style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Payer Type</label>
-              <select id="payer-type" class="audit-select" onchange="triggerAudit()" style="background: var(--bg-card); color: var(--text-h); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; font-size: 12px; cursor: pointer; outline: none; transition: border-color 0.2s;">
+      <!-- Manual Data Entry Form -->
+      <div id="interactive-grid-container" style="margin-bottom: 40px;">
+        
+        <!-- Console Control Bar -->
+        <div class="tool-toggle-group" style="width: 100%; justify-content: space-between; margin-bottom: 24px; padding: 12px 24px; border-radius: 16px;">
+          <div style="display: flex; gap: 24px; align-items: center;">
+            <div class="setting-item">
+              <label style="font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px;">Payer Context</label>
+              <select id="payer-type" class="console-input" onchange="triggerAudit()" style="padding: 6px 12px; font-size: 12px; width: auto;">
                 <option value="1.5">Self-Pay (150% Medicare)</option>
                 <option value="2.5" selected>Commercial (250% Medicare)</option>
                 <option value="3.0">Worker's Comp (300% Medicare)</option>
               </select>
             </div>
-            
-            <div class="setting-item" style="display:flex; align-items:center; gap:8px;">
-              <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Locality</label>
-              <select id="gpci-region" class="audit-select" style="background:var(--bg-main); border:1px solid var(--border); border-radius:4px; color:var(--text-h); font-size:12px; padding:4px 8px; outline:none;">
+            <div class="setting-item">
+              <label style="font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px;">Locality</label>
+              <select id="gpci-region" class="console-input" style="padding: 6px 12px; font-size: 12px; width: auto;">
                 <option value="1.0">Standard (US Average)</option>
                 <option value="1.08">New York / Manhattan</option>
                 <option value="1.05">San Francisco / CA</option>
                 <option value="0.95">Rural / Southern US</option>
               </select>
             </div>
-
-            <div class="setting-item" style="display:flex; align-items:center; gap:8px;">
-              <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">POS</label>
-              <select id="facility-type" class="audit-select" style="background:var(--bg-main); border:1px solid var(--border); border-radius:4px; color:var(--text-h); font-size:12px; padding:4px 8px; outline:none;">
+            <div class="setting-item">
+              <label style="font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px;">Facility Type</label>
+              <select id="facility-type" class="console-input" style="padding: 6px 12px; font-size: 12px; width: auto;">
                 <option value="office">Non-Facility (Office)</option>
                 <option value="hospital">Facility (Hospital/ASC)</option>
               </select>
             </div>
-
-            <button class="btn btn-ghost" onclick="clearAuditInputs()" style="padding: 8px 16px; font-size: 12px; margin-right: 8px;">Refresh</button>
-            <button class="btn btn-danger" onclick="clearAuditGridConfirm()" style="padding: 8px 16px; font-size: 12px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 4px; cursor: pointer;">Clear Grid</button>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <button class="btn btn-ghost" onclick="clearAuditInputs()" style="padding: 8px 16px; font-size: 12px;">Refresh</button>
+            <button class="btn" onclick="clearAuditGridConfirm()" style="padding: 8px 16px; font-size: 12px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);">Clear Grid</button>
           </div>
         </div>
 
-        <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);">
-           <!-- Primary Inputs -->
-           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-bottom: 16px;">
-              <div>
-                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Date <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
-                <input type="text" id="entry-date" placeholder="MM/DD/YY" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+        <div class="tool-card" style="padding: 32px;">
+           <h3 style="font-size: 18px; margin: 0 0 24px; color: var(--text-h); font-weight: 700;">Add Line Item to Audit</h3>
+           
+           <!-- Console Grid: Primary Inputs -->
+           <div class="console-grid" style="margin-bottom: 24px;">
+              <div class="console-field">
+                <label>Date (Optional)</label>
+                <input type="text" id="entry-date" class="console-input" placeholder="MM/DD/YY">
               </div>
-              <div style="grid-column: span 1.5;">
-                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">CPT/HCPCS Code <span style="color:var(--danger);">*</span></label>
-                <input type="text" id="entry-code" placeholder="e.g. 99214" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none; font-weight:bold; letter-spacing:0.5px;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+              <div class="console-field" style="grid-column: span 1.5;">
+                <label>CPT/HCPCS Code <span style="color:var(--danger);">*</span></label>
+                <input type="text" id="entry-code" class="console-input" placeholder="e.g. 99214" style="font-weight: 700; letter-spacing: 0.5px;">
               </div>
-
-              <div>
-                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">ICD-10 Dx <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
-                <input type="text" id="entry-dx" placeholder="Z00.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+              <div class="console-field">
+                <label>ICD-10 Dx (Optional)</label>
+                <input type="text" id="entry-dx" class="console-input" placeholder="Z00.00">
               </div>
-              <div>
-                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Units</label>
-                <input type="number" id="entry-qty" value="1" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
-              </div>
-           </div>
-
-           <!-- Financial Inputs -->
-           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-bottom: 16px;">
-              <div>
-                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Unit Price</label>
-                <div style="position:relative;">
-                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
-                  <input type="number" id="entry-price" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px 10px 24px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
-                </div>
-              </div>
-              <div>
-                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Total Billed <span style="color:var(--danger);">*</span></label>
-                <div style="position:relative;">
-                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
-                  <input type="number" id="entry-total" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px 10px 24px; font-size:13px; outline:none; font-weight:bold;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
-                </div>
-              </div>
-              <div>
-                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Ins. Paid</label>
-                <div style="position:relative;">
-                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
-                  <input type="number" id="entry-paid" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px 10px 24px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
-                </div>
-              </div>
-              <div>
-                <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Patient Owed</label>
-                <div style="position:relative;">
-                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
-                  <input type="number" id="entry-owed" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px 10px 24px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
-                </div>
+              <div class="console-field">
+                <label>Units</label>
+                <input type="number" id="entry-qty" class="console-input" value="1">
               </div>
            </div>
 
-           <!-- Advanced Toggle -->
-           <div style="margin-bottom: 24px;">
-              <button onclick="toggleAdvancedForm()" class="btn btn-ghost" style="padding: 4px 8px; font-size: 11px; color: var(--text-muted); border: 1px dashed var(--border);">+ Advanced / Context</button>
-              <div id="advanced-form-wrap" style="display: none; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border);">
-                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px;">
-                    <div>
-                      <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Row Type</label>
-                      <select id="entry-rowtype" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
-                        <option value="service" style="background:var(--bg-main); color:var(--text-h);" selected>Service Line</option>
-                        <option value="adjustment" style="background:var(--bg-main); color:var(--text-h);">Adjustment/Write-off</option>
-                        <option value="payment" style="background:var(--bg-main); color:var(--text-h);">Payment Line</option>
-                        <option value="credit" style="background:var(--bg-main); color:var(--text-h);">Credit/Refund Line</option>
+           <!-- Console Grid: Financials -->
+           <div class="console-grid" style="margin-bottom: 32px; background: rgba(34, 197, 94, 0.03); border-color: rgba(34, 197, 94, 0.12);">
+              <div class="console-field">
+                <label>Unit Price</label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
+                  <input type="number" id="entry-price" class="console-input" step="0.01" placeholder="0.00" style="padding-left: 28px;">
+                </div>
+              </div>
+              <div class="console-field">
+                <label>Total Billed <span style="color:var(--danger);">*</span></label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
+                  <input type="number" id="entry-total" class="console-input" step="0.01" placeholder="0.00" style="padding-left: 28px; font-weight: 800; border-color: rgba(34, 197, 94, 0.3);">
+                </div>
+              </div>
+              <div class="console-field">
+                <label>Ins. Paid</label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
+                  <input type="number" id="entry-paid" class="console-input" step="0.01" placeholder="0.00" style="padding-left: 28px;">
+                </div>
+              </div>
+              <div class="console-field">
+                <label>Patient Owed</label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
+                  <input type="number" id="entry-owed" class="console-input" step="0.01" placeholder="0.00" style="padding-left: 28px;">
+                </div>
+              </div>
+           </div>
+
+           <!-- Advanced Console -->
+           <div style="margin-bottom: 32px;">
+              <button onclick="toggleAdvancedForm()" class="btn btn-ghost" style="padding: 6px 12px; font-size: 11px; color: var(--text-muted); border: 1px dashed var(--border); border-radius: 8px;">+ Show Advanced Options</button>
+              <div id="advanced-form-wrap" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border);">
+                 <div class="console-grid">
+                    <div class="console-field">
+                      <label>Row Type</label>
+                      <select id="entry-rowtype" class="console-input">
+                        <option value="service" selected>Service Line</option>
+                        <option value="adjustment">Adjustment/Write-off</option>
+                        <option value="payment">Payment Line</option>
+                        <option value="credit">Credit/Refund Line</option>
                       </select>
                     </div>
-                    <div>
-                      <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Modifier <span style="opacity:0.5; font-weight:normal;">(Opt)</span></label>
-                      <input type="text" id="entry-mod" placeholder="e.g. 25" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;" onfocus="this.style.borderColor='var(--accent)';" onblur="this.style.borderColor='var(--border)';">
+                    <div class="console-field">
+                      <label>Modifier</label>
+                      <input type="text" id="entry-mod" class="console-input" placeholder="e.g. 25">
                     </div>
-                    <div>
-                      <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Adjustment</label>
+                    <div class="console-field">
+                      <label>Line Adjustment</label>
                       <div style="position:relative;">
                         <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px; font-weight:bold;">$</span>
-                        <input type="number" id="entry-adj" step="0.01" placeholder="0.00" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px 10px 24px; font-size:13px; outline:none;">
+                        <input type="number" id="entry-adj" class="console-input" step="0.01" placeholder="0.00" style="padding-left: 28px;">
                       </div>
                     </div>
-                    <div>
-                      <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Line Description</label>
-                      <input type="text" id="entry-desc" placeholder="e.g. Office Visit" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
+                    <div class="console-field" style="grid-column: span 1.5;">
+                      <label>Line Description</label>
+                      <input type="text" id="entry-desc" class="console-input" placeholder="e.g. Office Visit">
                     </div>
-                    <div>
-                      <label style="font-size:10px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:8px; text-transform:uppercase;">Provider NPI</label>
-                      <input type="text" id="entry-npi" placeholder="10 digits" style="width:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-main); color:var(--text-h); padding:10px 12px; font-size:13px; outline:none;">
+                    <div class="console-field">
+                      <label>Provider NPI</label>
+                      <input type="text" id="entry-npi" class="console-input" placeholder="10 digits">
                     </div>
                  </div>
               </div>
            </div>
 
-           <button onclick="submitAuditForm()" class="btn btn-primary" style="width:100%; padding:14px; font-size:15px; font-weight:800; letter-spacing:0.5px; border-radius:8px; transition: transform 0.15s, box-shadow 0.15s; cursor:pointer;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(6,182,212,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">Submit Line Item ➔</button>
+           <button onclick="submitAuditForm()" class="btn btn-primary" style="width:100%; padding:18px; font-size:16px; font-weight:800; letter-spacing:1px; border-radius:14px; background: linear-gradient(135deg, #22C55E, #16A34A); box-shadow: 0 8px 24px rgba(34, 197, 94, 0.25);">Submit Line Item to Audit Console ➔</button>
         </div>
       </div>
 

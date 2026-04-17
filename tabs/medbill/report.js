@@ -44,18 +44,19 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
     // Determine overall color and status
     let color = 'var(--text-muted)';
     let border = 'var(--border)';
-    let bg = 'rgba(255,255,255,0.02)';
+    let glow = 'none';
+    let bg = 'var(--bg-card)';
     let statusClass = 'audit-row-clean';
     let statusText = 'Clean Charge';
     
     if (hardFindings.length > 0) {
-       color = '#ef4444'; border = '#ef4444'; bg = 'rgba(239, 68, 68, 0.05)'; statusClass = 'audit-row-error'; statusText = 'Critical Billing Issues';
+       color = '#ef4444'; border = '#ef4444'; glow = 'var(--glow-error)'; bg = 'rgba(239, 68, 68, 0.03)'; statusClass = 'audit-row-error'; statusText = 'Critical Billing Issues';
     } else if (softFindings.length > 0) {
-       color = '#f59e0b'; border = '#f59e0b'; bg = 'rgba(245, 158, 11, 0.05)'; statusClass = 'audit-row-warn'; statusText = 'Review Recommended';
+       color = '#f59e0b'; border = '#f59e0b'; bg = 'rgba(245, 158, 11, 0.03)'; statusClass = 'audit-row-warn'; statusText = 'Review Recommended';
     } else if (lowValueFindings.length > 0) {
-       color = '#60a5fa'; border = '#60a5fa'; bg = 'rgba(96, 165, 250, 0.06)'; statusClass = 'audit-row-info'; statusText = 'Minor Validation Notes';
+       color = '#60a5fa'; border = '#60a5fa'; bg = 'rgba(96, 165, 250, 0.04)'; statusClass = 'audit-row-info'; statusText = 'Minor Validation Notes';
     } else {
-       color = '#10b981'; border = '#10b981'; bg = 'rgba(16, 185, 129, 0.05)';
+       color = '#10b981'; border = '#10b981'; glow = 'var(--glow-accent)'; bg = 'rgba(16, 185, 129, 0.03)';
     }
 
     const rationales = rationaleMap[idx] || [];
@@ -65,9 +66,9 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
     if (r.provenance && r.provenance.startsWith('textract')) {
       const conf = r.extraction_confidence || 100;
       const confColor = conf > 80 ? '#10b981' : (conf > 50 ? '#f59e0b' : '#ef4444');
-      confidenceBadge = `<span style="font-size:10px; font-weight:700; color:${confColor}; background: ${confColor}11; border: 1px solid ${confColor}33; padding: 2px 6px; border-radius: 4px; margin-left:8px;">OCR: ${conf}%</span>`;
+      confidenceBadge = `<span style="font-size:10px; font-weight:800; color:${confColor}; background: ${confColor}11; border: 1px solid ${confColor}33; padding: 2px 8px; border-radius: 999px; margin-left:12px; letter-spacing:0.02em;">OCR: ${conf}%</span>`;
       if (r.has_low_confidence_chars) {
-        confidenceBadge += `<span style="font-size:10px; font-weight:700; color:#ef4444; margin-left:4px;" title="Specific characters in this row had low OCR confidence">[?]</span>`;
+        confidenceBadge += `<span style="font-size:10px; font-weight:700; color:#ef4444; margin-left:4px;" title="Specific characters in this row had low OCR confidence">⚠️</span>`;
       }
     }
 
@@ -85,22 +86,24 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
     `;
 
     const cardHtml = `
-      <div class="${statusClass}" style="border-left: 4px solid ${border}; background: ${bg}; border-radius: 8px; padding: 14px 16px; display:flex; flex-direction:column; gap:8px; margin-bottom: 12px; transition: all 0.2s;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div style="font-weight:800; color:var(--text-h); font-size:14px; font-family:monospace; display:flex; align-items:center;">
-            ${s(r.code) || 'Uncoded'}
-            ${r.modifier ? `<span style="color:var(--accent); margin-left:4px;">-${s(r.modifier)}</span>` : ''}
-            <span style="font-family:sans-serif; font-size:12px; font-weight:500; color:var(--text-muted); margin-left:12px;">
-              Qty: ${r.qty || 1} | Billed: $${parseFloat(r.total || 0).toFixed(2)}
+      <div class="${statusClass}" style="border-left: 5px solid ${border}; background: ${bg}; box-shadow: ${glow}; border-radius: 16px; padding: 20px 24px; display:flex; flex-direction:column; gap:12px; margin-bottom: 20px; border: 1px solid ${border}22; border-left-width: 5px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div style="font-weight:800; color:var(--text-h); font-size:16px; font-family:var(--font-mono); display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span style="background:var(--bg-elevated); padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);">${s(r.code) || 'Uncoded'}</span>
+            ${r.modifier ? `<span style="color:var(--accent); font-weight:900;">-${s(r.modifier)}</span>` : ''}
+            <span style="font-family:var(--font-main); font-size:14px; font-weight:600; color:var(--text-muted); margin-left:8px;">
+              Qty: ${r.qty || 1} · <span style="color:var(--text-h);">$${parseFloat(r.total || 0).toFixed(2)}</span>
             </span>
             ${confidenceBadge}
-            ${r.dx && r.dx.length > 0 ? `<span style="font-family:sans-serif; font-size:11px; padding:2px 6px; border:1px solid var(--border); border-radius:12px; margin-left:12px; color:var(--text-muted);">Dx: ${r.dx.join(', ')}</span>` : ''}
-            ${highMapErr ? `<span style="font-size:10px; font-weight:700; color:#ef4444; margin-left:8px;">Mapping Review</span>` : ''}
+            ${r.dx && r.dx.length > 0 ? `<span style="font-family:var(--font-main); font-size:11px; font-weight:700; padding:3px 10px; background:var(--bg-elevated); border:1px solid var(--border); border-radius:20px; color:var(--text-muted);">Dx: ${r.dx.join(', ')}</span>` : ''}
+            ${highMapErr ? `<span style="font-size:10px; font-weight:900; color:#ef4444; text-transform:uppercase; letter-spacing:0.05em;">! Encoding Review Required</span>` : ''}
           </div>
-          <div style="display:flex; align-items:center; gap:12px;">
-            <div style="font-size:10px; font-weight:800; color:${color}; text-transform:uppercase; letter-spacing:0.5px; border:1px solid ${border}44; padding:2px 8px; border-radius:12px;">${statusText}</div>
-            <button onclick="${context === 'pdf' ? `editPdfAuditRow(${idx})` : `editAuditRow(${idx})`}" style="background:transparent; border:1px solid var(--border); color:var(--text-main); border-radius:6px; padding:2px 8px; font-size:11px; font-weight:600; cursor:pointer; transition:background 0.2s;" onmouseover="this.style.background='var(--bg-main)';" onmouseout="this.style.background='transparent';">Edit</button>
-            <button onclick="${context === 'pdf' ? `removePdfAuditRow(${idx})` : `removeAuditRow(${idx})`}" style="background:rgba(239, 68, 68, 0.1); border:none; color:var(--danger); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; transition:background 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)';" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)';">✕</button>
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div style="font-size:11px; font-weight:800; color:${color}; text-transform:uppercase; letter-spacing:0.1em; border:1px solid ${border}33; padding:4px 12px; border-radius:30px; background: ${border}11;">${statusText}</div>
+            <div style="display:flex; gap:6px;">
+              <button onclick="${context === 'pdf' ? `editPdfAuditRow(${idx})` : `editAuditRow(${idx})`}" class="btn btn-ghost" style="padding: 6px 14px; font-size: 11px; font-weight: 700;">Edit</button>
+              <button onclick="${context === 'pdf' ? `removePdfAuditRow(${idx})` : `removeAuditRow(${idx})`}" style="background:rgba(239, 68, 68, 0.1); border:1px solid rgba(239, 68, 68, 0.2); color:var(--danger); border-radius:10px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; transition:var(--transition);" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)';" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)';">✕</button>
+            </div>
           </div>
         </div>
         ${debugChips}
@@ -174,8 +177,6 @@ function renderResultCardsPerLineItem(rows, findings, container, rationaleMap = 
     `;
 
     // ── Document-Level Findings (orphaned: no rowId, no codeRef) ──────────────
-    // These are global findings (financial summary, date sanity, invoice total mismatch, etc.)
-    // that are not tied to a specific row. They were previously invisible.
     const orphanedFindings = findings.filter(f => !f.rowId && !f.codeRef);
     if (orphanedFindings.length > 0) {
       const orphanSection = document.createElement('div');
@@ -232,18 +233,28 @@ function renderFinalSummary(savings, benchmark, container) {
   
   let html = `
     <!-- Savings Summary -->
-    <div style="background:var(--bg-card);border:1px solid rgba(34,197,94,.35);border-radius:12px;padding:24px;text-align:center;margin-top:20px;">
-      <div style="font-size:11px; font-weight:800; text-transform:uppercase; color:#22c55e; letter-spacing:1px; margin-bottom:8px;">Estimated Overcharge Recovery</div>
-      <div style="font-size:42px;font-weight:800;color:var(--text-h); line-height:1;">$${savings.toFixed(2)}</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:12px;">Waterfall calculations applied to all inputs. Limit capped to billed totals.</div>
-      ${benchmark > 0 ? `<div style="font-size:12px;color:var(--text-main);margin-top:4px;font-weight:600;">Total Medicare Benchmark Equivalent: $${benchmark.toFixed(2)}</div>` : ''}
+    <div class="tool-card" style="padding: 48px; text-align:center; margin-top:40px; border-color: rgba(34, 197, 94, 0.3); border-width: 2px; background: linear-gradient(180deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%);">
+      <div style="font-size:14px; font-weight:900; text-transform:uppercase; color:var(--accent); letter-spacing:2px; margin-bottom:12px;">Total Estimated Overcharge Recovery</div>
+      <div style="font-size:64px; font-weight:900; color:var(--text-h); line-height:1; letter-spacing:-2px; margin-bottom: 8px;">$${savings.toFixed(2)}</div>
+      <div style="font-size:16px; color:var(--text-muted); max-width: 500px; margin: 0 auto 32px; font-weight: 500;">Automated waterfall audit completed. Identification of billing errors, bundles, and overcharges finished.</div>
+      
+      <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 24px; padding: 20px; background: var(--bg); border-radius: 16px; border: 1px solid var(--border);">
+        <div style="text-align: left;">
+          <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Medicare Equiv.</div>
+          <div style="font-size: 20px; font-weight: 700; color: var(--text-h);">$${benchmark.toFixed(2)}</div>
+        </div>
+        <div style="text-align: left; border-left: 1px solid var(--border); padding-left: 40px;">
+          <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Result</div>
+          <div style="font-size: 20px; font-weight: 700; color: var(--accent);">${savings > 0 ? 'Savings Found' : 'Balanced'}</div>
+        </div>
+      </div>
     </div>
 
     <!-- Export Buttons -->
-    <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:20px;">
-      <button onclick="exportAuditCSV()" class="btn btn-ghost" style="font-size:12px;flex:1;min-width:120px;letter-spacing:0.02em;">Export CSV</button>
-      <button onclick="handleAuditExport('summary')" class="btn btn-secondary" style="font-size:12px;flex:1;min-width:160px;background:var(--bg-card);color:var(--text-main);border:1px solid var(--border);font-weight:600;letter-spacing:0.02em;">Download Summary Report</button>
-      <button onclick="handleAuditExport('dispute')" class="btn btn-primary" style="font-size:12px;flex:2;min-width:240px;font-weight:700;letter-spacing:0.03em;box-shadow:0 4px 12px rgba(0,0,0,0.1);">Generate Dispute Letter</button>
+    <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap; padding-top:20px;">
+      <button onclick="exportAuditCSV()" class="btn btn-ghost" style="padding: 16px 24px; font-size:14px; flex:1; min-width:140px; font-weight: 700;">Export CSV Data</button>
+      <button onclick="handleAuditExport('summary')" class="btn btn-secondary" style="padding: 16px 24px; font-size:14px; flex:1; min-width:180px; font-weight: 700;">Download Report PDF</button>
+      <button onclick="handleAuditExport('dispute')" class="btn btn-primary" style="padding: 18px 48px; font-size:16px; flex:2; min-width:300px; font-weight:900; letter-spacing:0.03em; background: var(--accent); box-shadow: var(--glow-accent);">👉 Generate Dispute Letter</button>
     </div>
   `;
   container.innerHTML = html;
@@ -316,7 +327,6 @@ async function generatePDF(forcedType = null) {
 
 /**
  * CITATION_MAP (v6.0) — Evidence-based citations for the dispute letter.
- * Each entry maps an audit category to a specific CMS Manual chapter reference.
  */
 const CITATION_MAP = {
   bundling:      'Per CMS National Correct Coding Initiative (NCCI) — Medicare Claims Processing Manual, Chapter 23, §20. This code pair constitutes a Column 1/Column 2 edit; the component code is not separately billable.',
@@ -471,7 +481,6 @@ function renderSummaryReport(doc, p, findings, savings) {
   doc.text(`High Risk Findings: ${hardCount}`, 20, 68);
   doc.text(`Documentation Warnings: ${warningCount}`, 80, 68);
 
-  // Deduplicate before summary table
   const seenKey = new Set();
   const tableData = findings
     .filter(f => {

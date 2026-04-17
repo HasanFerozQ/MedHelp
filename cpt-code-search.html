@@ -20,10 +20,10 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "CPT Code Lookup Tool",
-    "url": "https://www.medihelp.live/cpt-code-lookup",
+    "url": "https://www.medihelp.live/cpt-code-search",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Web",
-    "description": "Search CPT codes and understand medical billing procedures.",
+    "description": "Search CPT codes online and understand medical billing procedures.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -69,7 +69,7 @@
   <section class="hero container">
     <div class="hero-eyebrow">74,000+ Codes · Free Access</div>
     <h1>Free CPT Code Lookup Tool<br><span class="grad">for Medical Billing.</span></h1>
-    <p>Search CPT codes, understand procedure meanings, and verify medical billing charges using our free CPT code lookup tool.</p>
+    <p>Search CPT codes online for free, understand medical procedures, and verify billing charges using MediHelp’s CPT code search tool.</p>
     <div class="hero-cta" style="display:flex; justify-content:center; gap:12px; margin-top:24px;">
        <button class="btn btn-primary" onclick="document.getElementById('code-search-input').focus();">Search CPT Codes</button>
        <a href="/audit" class="btn btn-ghost">Start Free Audit</a>
@@ -80,41 +80,40 @@
   <section class="container" style="padding: 40px 0; max-width: 800px; text-align: left;">
     <h2 style="margin-bottom: 16px;">What is a CPT Code in Medical Billing?</h2>
     <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">
-      CPT (Current Procedural Terminology) codes are standardized medical codes used by healthcare providers to describe procedures and services. These codes are used for:
+      Understanding CPT codes is essential for reviewing medical bills and avoiding incorrect charges. CPT (Current Procedural Terminology) codes are standardized medical codes used by healthcare providers to describe procedures and services. 
     </p>
+    <p style="color: var(--text-h); font-weight: 600; margin-bottom: 12px;">These codes are used for:</p>
     <ul style="color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; padding-left: 20px;">
       <li>Medical billing</li>
       <li>Insurance claims</li>
       <li>Service documentation</li>
     </ul>
     <p style="color: var(--text-muted); line-height: 1.6;">
-      Each CPT code represents a specific medical service, such as consultations, lab tests, or procedures. Understanding these codes is essential for verifying your hospital bill accuracy.
+      Each CPT code represents a specific medical service, such as consultations, lab tests, or procedures. Correct identification of these codes is the first step in avoiding hospital billing errors.
     </p>
   </section>
 
   <!-- ── TOOL SECTION ── -->
-  <section id="suite" class="container" style="margin-bottom: 40px;">
-    <div class="suite-wrapper" style="padding: 40px; border-radius: 24px;">
-      <div style="text-align: center; margin-bottom: 32px;">
-        <h2 style="margin-bottom: 12px;">Search CPT Codes Instantly</h2>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 12px;">Use our CPT code lookup tool to search medical billing codes and understand what each procedure means.</p>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 14px;">This helps you verify charges on your medical bill and identify possible errors.</p>
+  <section id="suite" class="container" style="margin-bottom: 80px;">
+    <div class="tool-card">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <h2 style="margin-bottom: 12px; font-size: 32px; letter-spacing: -0.5px;">Search CPT Codes Instantly</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 12px; font-size: 16px;">Use this free CPT code lookup tool to search medical billing codes instantly and understand what each charge means.</p>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 14px; opacity: 0.8;">This helps you verify charges on your medical bill and identify possible errors manually or with expert help.</p>
       </div>
 
-      <div class="region-bar" style="max-width: 500px; margin: 0 auto 16px;">
-        <label>Select Region:</label>
-        <div class="region-pills">
-          <button class="region-pill active" data-region="US">US (ICD-10-CM)</button>
-          <button class="region-pill" data-region="UK">UK (ICD-10 WHO)</button>
-          <button class="region-pill" data-region="ME">Middle East (WHO)</button>
-        </div>
+      <div class="tool-toggle-group">
+        <button class="tool-toggle-btn active" data-region="US" onclick="selectRegion(this, 'US')">US (ICD-10-CM)</button>
+        <button class="tool-toggle-btn" data-region="UK" onclick="selectRegion(this, 'UK')">UK (ICD-10 WHO)</button>
+        <button class="tool-toggle-btn" data-region="ME" onclick="selectRegion(this, 'ME')">Middle East (WHO)</button>
       </div>
 
-      <div class="search-box" style="max-width: 600px; margin: 0 auto;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="code-search-input" class="search-input" placeholder="e.g. 99214 or 'Chest Pain'...">
+      <div class="search-wrapper">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="code-search-input" class="tool-input" placeholder="e.g. 99214 or 'Chest Pain'...">
       </div>
-      <div id="search-results-list" class="results-area" style="min-height: 200px;">
+
+      <div id="search-results-list" class="results-area" style="min-height: 200px; margin-top: 40px;">
         <p class="status-msg">Start typing to search 74,000+ medical codes.</p>
       </div>
     </div>
@@ -129,10 +128,17 @@
       <li>Identify upcoding (higher-cost codes used incorrectly)</li>
       <li>Understand what you’re being charged for</li>
     </ul>
+    
+    <div style="background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.1); padding: 24px; border-radius: 12px; margin-top: 24px;">
+      <h3 style="font-size: 18px; color: var(--text-h); margin-bottom: 8px;">Upcoding: A Common Billing Error</h3>
+      <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+        Upcoding is when a higher-cost CPT code is used instead of the correct one. This can lead to overcharges on your medical bill. Checking CPT codes helps detect this issue and ensures you only pay for the services you actually received.
+      </p>
+    </div>
   </section>
 
   <!-- ── TRAFFIC CAPTURE SECTION ── -->
-  <section class="container" style="padding: 40px 0; max-width: 800px; text-align: left; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); margin-bottom: 60px;">
+  <section class="container" style="padding: 40px 40px; max-width: 800px; text-align: left; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); margin-bottom: 60px;">
     <h2 style="margin-bottom: 16px;">Common CPT Codes Patients Search</h2>
     <p style="color: var(--text-muted); margin-bottom: 20px;">Some of the most commonly searched CPT codes include:</p>
     <ul style="color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; padding-left: 20px;">
@@ -141,14 +147,24 @@
       <li><strong>CPT Code 93000</strong> – ECG test (electrocardiogram)</li>
       <li><strong>CPT Code 80053</strong> – Comprehensive metabolic panel (CMP)</li>
     </ul>
-    <p style="font-weight: 600; color: var(--text-h);">👉 Use the search tool above to look up any CPT code instantly.</p>
+    
+    <div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border);">
+      <h2 style="margin-bottom: 16px;">How to Look Up a CPT Code</h2>
+      <p style="color: var(--text-muted); margin-bottom: 16px;">Most patients don't know how to look up CPT codes effectively. To verify a code:</p>
+      <ul style="color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; padding-left: 20px;">
+        <li>1. Enter the code or procedure name in the search bar</li>
+        <li>2. Select your region (US, UK, etc.)</li>
+        <li>3. Review the description and billing details</li>
+      </ul>
+      <p style="color: var(--text-h); font-weight: 600;">👉 This helps you verify if your medical bill is accurate and identifies potential overcharges.</p>
+    </div>
   </section>
 
   <!-- ── INTERNAL LINKING ── -->
   <section class="container" style="padding: 20px 0; text-align: center;">
     <h3 style="margin-bottom: 16px;">You can also:</h3>
     <p style="color: var(--text-muted);">
-      Audit your bill using our <a href="/audit" style="color:var(--accent); font-weight:700;">medical bill audit tool</a> or 
+      Learn how to <a href="/audit" style="color:var(--accent); font-weight:700;">audit your medical bill for errors</a> or 
       understand claim issues with <a href="/claim-denial-codes" style="color:var(--accent); font-weight:700;">claim denial codes</a>.
     </p>
   </section>
@@ -223,6 +239,7 @@
       { q: 'How do I find a CPT code?', a: 'You can find CPT codes on your itemized hospital bill or superbill. Use the MediHelp search tool above to look up descriptions by name or code.' },
       { q: 'Can CPT codes be wrong?', a: 'Yes. Upcoding (billing a more complex code) or unbundling (billing steps separately that should be grouped) are common medical billing errors.' },
       { q: 'What is upcoding in medical billing?', a: 'Upcoding occurs when a provider submits a CPT code for a higher-level or more expensive service than what was actually performed or documented.' },
+      { q: 'What is the most commonly used CPT code?', a: 'CPT code 99213 (Office visit, 20-29 minutes) and 99214 (Office visit, 30-39 minutes) are among the most frequently billed codes in outpatient medicine.' },
       { q: 'Are CPT codes the same worldwide?', a: 'CPT codes are a US standard maintained by the AMA. While other countries use similar systems (like OPCS-4 in the UK), code definitions vary globally.' }
     ];
     if (window.renderFAQ) renderFAQ('faq-cpt', cptFaqs);
