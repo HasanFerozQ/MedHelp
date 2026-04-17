@@ -115,9 +115,9 @@ body {
 }
 
 .container {
-  max-width: 1180px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 32px;
 }
 
 /* --- Global Links --- */
@@ -136,7 +136,7 @@ a:hover {
   border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: 12px;
   padding: 40px;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: left;
   transition: var(--transition);
@@ -182,7 +182,7 @@ a:hover {
 .search-wrapper {
   position: relative;
   width: 100%;
-  max-width: 640px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -485,7 +485,7 @@ a:hover {
 .hero p {
   font-size: 18px;
   color: var(--text-muted);
-  max-width: 680px;
+  max-width: 800px;
   margin: 0 auto 32px;
   text-align: center;
 }
