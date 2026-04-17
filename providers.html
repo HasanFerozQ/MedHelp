@@ -3,37 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>National Provider Search | Verify NPI & Specialty Fast | MediHelp</title>
-  <meta name="description" content="Search the CMS NPPES registry to verify provider NPIs, medical specialties, and practice locations. Use our free national provider search to check for billing errors.">
+  <title>NPI Lookup Tool | Search Healthcare Providers by NPI Number</title>
+  <meta name="description" content="Search healthcare providers by NPI number, verify doctor information, and find provider details using MediHelp’s NPI lookup tool." />
   <link rel="canonical" href="https://www.medihelp.live/providers">
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MediHelp">
-  <meta property="og:title" content="MediHelp Provider Search | Verify NPI and Specialty">
-  <meta property="og:description" content="Validate provider identity and taxonomy using the US NPPES registry.">
+  <meta property="og:title" content="NPI Lookup Tool | MediHelp">
+  <meta property="og:description" content="Search healthcare providers by NPI number and verify provider details.">
   <meta property="og:url" content="https://www.medihelp.live/providers">
   <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="MediHelp Provider Search | Verify NPI and Specialty">
-  <meta name="twitter:description" content="Search and verify NPI records, taxonomy, and registry details.">
-  <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "NPI Lookup Tool",
+    "url": "https://www.medihelp.live/national-provider-search",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "description": "Search healthcare providers by NPI number and verify provider details.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [{
       "@type": "Question",
-      "name": "What is the National Provider Search used for?",
+      "name": "What is an NPI number?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "It helps verify provider identity, NPI status, and taxonomy to reduce billing confusion and catch specialty mismatches."
+        "text": "An NPI (National Provider Identifier) is a unique 10-digit identification number assigned to healthcare providers by CMS."
       }
     }, {
       "@type": "Question",
-      "name": "Where does provider data come from?",
+      "name": "How do I find a provider’s NPI?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MediHelp uses public CMS NPPES registry data for provider verification and search results."
+        "text": "You can find a provider's NPI using the MediHelp NPI lookup tool by searching their name and state."
       }
     }]
   }
@@ -72,16 +87,45 @@
     </div>
   </nav>
 
+  <!-- ── HERO ── -->
   <section class="hero container">
-    <div class="hero-eyebrow">CMS NPPES Registry · 6M+ Providers</div>
-    <h1>National Provider Search<br><span class="grad">Verify NPI & Specialties.</span></h1>
-    <p>Search over 6 million US healthcare providers by name, NPI number, or medical specialty — sourced directly from CMS.</p>
-    <p style="margin-top: 12px; font-size: 14px; color: var(--text-muted); font-style: italic;">Designed to help patients understand complex medical billing and avoid unnecessary overpayments.</p>
-    <p style="margin-top: 12px; font-size: 15px; color: var(--text-muted);">Many patients use the <span style="color:var(--text-h); font-weight:600;">national provider search</span> to check hospital bill errors and verify if a specialist is overcharging or upcoding.</p>
+    <div class="hero-eyebrow">CMS NPPES Registry · 6M+ Records</div>
+    <h1>NPI Lookup Tool<br><span class="grad">(Search Healthcare Providers)</span></h1>
+    <p>Search healthcare providers using NPI numbers. Find doctor details, verify provider information, and check healthcare records instantly.</p>
+    <div class="hero-cta" style="display:flex; justify-content:center; gap:12px; margin-top:24px;">
+       <button class="btn btn-primary" onclick="document.getElementById('npi-name').focus();">Search Provider</button>
+       <a href="/audit" class="btn btn-ghost">Audit Medical Bill</a>
+    </div>
   </section>
 
-  <div class="container" style="margin-bottom: 80px;">
-    <div class="suite-wrapper" style="padding: 40px;">
+  <!-- ── SEO FOUNDATION ── -->
+  <section class="container" style="padding: 40px 0; max-width: 900px; text-align: left;">
+    <h2 style="margin-bottom: 16px;">What is an NPI Number?</h2>
+    <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 24px;">
+      An NPI (National Provider Identifier) is a unique identification number assigned to healthcare providers in the United States. It was mandated by the HIPAA Administrative Simplification Standard.
+    </p>
+    <p style="color: var(--text-h); font-weight: 600; margin-bottom: 12px;">The NPI number is used for:</p>
+    <ul style="color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; padding-left: 20px;">
+      <li>Accurate medical billing across systems</li>
+      <li>Insurance claim submission and processing</li>
+      <li>Standardized provider identification and verification</li>
+    </ul>
+    <p style="color: var(--text-muted); line-height: 1.6; padding: 20px; background: var(--bg-elevated); border-radius: 12px; border: 1px solid var(--border);">
+      Each doctor, hospital, clinic, and healthcare provider has a unique, 10-digit NPI number that never expires or changes.
+    </p>
+  </section>
+
+  <section id="suite" class="container" style="margin-bottom: 80px;">
+    <div class="tool-card">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <h2 style="margin-bottom: 12px; font-size: 32px; letter-spacing: -0.5px;">Search Providers by NPI</h2>
+        <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto 16px; font-size: 16px;">
+          Use our NPI lookup tool to search healthcare providers by name or NPI number.
+        </p>
+        <p style="color: var(--text-h); font-weight: 600; font-size: 14px; opacity: 0.9;">
+          This helps you verify provider credentials and ensure accurate billing information.
+        </p>
+      </div>
 
       <!-- Search Filters -->
       <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:12px; margin-bottom:24px; align-items:end;">
@@ -123,20 +167,56 @@
     </div>
   </div>
 
-  <!-- ── PERSUASION BLOCK ── -->
-  <section class="container" style="padding: 40px 0; text-align: center;">
-    <p style="color: var(--text-muted); margin-bottom: 16px;">Verify your provider's credentials today to ensure billing accuracy.</p>
-    <h2 style="margin-bottom: 24px; font-size: 24px;">👉 Specialty mismatches are a common cause of overcharging. Audit your bill now.</h2>
-    <a href="/audit" class="btn btn-primary" style="padding: 16px 32px; font-size: 18px;">👉 Audit Your Bill Free Now</a>
+  <!-- ── VALUE SECTION ── -->
+  <section class="container" style="padding: 40px 0; max-width: 900px; text-align: left;">
+    <h2 style="margin-bottom: 16px;">Why Use an NPI Lookup Tool?</h2>
+    <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">Searching NPI numbers is a critical step in verifying the medical care you receive and the accuracy of your financial statements. Using our tool helps you:</p>
+    <ul style="color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; padding-left: 20px;">
+      <li><strong>Verify healthcare providers:</strong> Confirm providers are registered with CMS.</li>
+      <li><strong>Avoid billing errors:</strong> Ensure the NPI on your bill matches the provider you saw.</li>
+      <li><strong>Confirm provider identity:</strong> Protect yourself against healthcare identity fraud.</li>
+      <li><strong>Accurate insurance claims:</strong> Prevent claim denials due to provider mismatches.</li>
+    </ul>
+  </section>
+
+  <!-- ── HIGH TRAFFIC SECTION ── -->
+  <section class="container" style="padding: 40px 40px; max-width: 900px; text-align: left; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); margin-bottom: 60px;">
+    <h2 style="margin-bottom: 16px;">How to Find a Provider Using NPI</h2>
+    <p style="color: var(--text-muted); margin-bottom: 16px;">To find a healthcare provider using their NPI number or name, follow these 3 steps:</p>
+    <ul style="color: var(--text-muted); line-height: 2.0; margin-bottom: 24px; padding-left: 20px; list-style-type: decimal;">
+      <li><strong>Enter credentials:</strong> Input the provider's first/last name or their 10-digit NPI number.</li>
+      <li><strong>Review records:</strong> Examine the practice address, NPI status, and taxonomy codes.</li>
+      <li><strong>Confirm specialty:</strong> Verify the provider's medical specialty matches the service rendered.</li>
+    </ul>
+    <p style="color: var(--text-body); background: var(--bg-elevated); padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border);">
+      <strong>Audit Tip:</strong> Specialty mismatches (e.g., a General Practitioner billing as a Specialist) are a common cause of overcharging.
+    </p>
+  </section>
+
+  <!-- ── INTERNAL LINKING ── -->
+  <section class="container" style="padding: 24px 0; text-align: center;">
+    <h3 style="margin-bottom: 16px;">Take Action on Your Medical Bills:</h3>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px;">
+      <a href="/audit" style="color:var(--accent); font-weight:700; text-decoration:none; padding:10px 20px; border:1px solid var(--border); border-radius:12px; background:var(--bg-card);">👉 Audit your medical bill for errors</a>
+      <a href="/cpt-code-search" style="color:var(--accent); font-weight:700; text-decoration:none; padding:10px 20px; border:1px solid var(--border); border-radius:12px; background:var(--bg-card);">👉 Verify billing codes with CPT lookup</a>
+      <a href="/claim-denial-codes" style="color:var(--accent); font-weight:700; text-decoration:none; padding:10px 20px; border:1px solid var(--border); border-radius:12px; background:var(--bg-card);">👉 Understand claim denial codes</a>
+    </div>
   </section>
 
   <!-- ── FAQ ── -->
   <section class="faq-section">
     <div class="container">
-      <div class="section-label">Provider Search FAQ</div>
-      <h2 class="section-title">Common Questions</h2>
+      <div class="section-label">NPI Search FAQs</div>
+      <h2 class="section-title">NPI Lookup FAQs</h2>
       <div class="faq-grid" id="faq-providers"></div>
     </div>
+  </section>
+
+  <!-- ── FINAL CTA ── -->
+  <section class="container" style="padding: 80px 0; text-align: center;">
+    <h2 style="margin-bottom: 12px;">Search Providers Now and Verify Healthcare Information</h2>
+    <p style="color: var(--text-muted); margin-bottom: 32px;">Ensure your healthcare records and billing statements are 100% accurate.</p>
+    <button class="btn btn-primary" style="padding: 18px 48px; font-size: 16px; font-weight:900;" onclick="document.getElementById('npi-name').focus();">👉 Search Provider</button>
   </section>
 
   <footer class="site-footer">
@@ -188,11 +268,11 @@
   <script src="tabs/providers/providers.js"></script>
   <script>
     const providerFaqs = [
-      { q: 'What is this provider search for?', a: 'Use it to verify provider identity, NPI status, and taxonomy before trusting bills, claims, or referral paperwork.' },
-      { q: 'Where does provider data come from?', a: 'Results are sourced from the public CMS NPPES registry, which is the standard federal source for NPI records.' },
-      { q: 'Why does taxonomy matter?', a: 'Taxonomy helps confirm whether billed services align with the provider’s registered specialty and credentials.' },
-      { q: 'Can I search by name or NPI?', a: 'Yes. You can search by provider name or 10-digit NPI, and then filter by state for tighter results.' },
-      { q: 'Does this tool replace payer verification?', a: 'No. It is a validation aid. Always confirm final network and coverage status directly with your insurer.' },
+      { q: 'What is an NPI number?', a: 'An NPI (National Provider Identifier) is a unique 10-digit number assigned by CMS to healthcare providers to standardize medical billing and insurance transactions.' },
+      { q: 'How do I find a provider’s NPI?', a: 'You can use the MediHelp NPI lookup tool by entering the provider\'s name and location. Alternatively, NPI numbers can usually be found on the header of their medical statements or prescriptions.' },
+      { q: 'Is NPI public information?', a: 'Yes. The NPI registry (NPPES) is a public database maintained by the federal government to ensure transparency in provider identification.' },
+      { q: 'Can two providers have the same NPI?', a: 'No. Each NPI is globally unique and assigned to a single specific provider (Individual) or healthcare entity (Organization).' },
+      { q: 'Why is NPI important in medical billing?', a: 'Insurance companies use the NPI to identify who provided the service. If the NPI on the bill is incorrect, the claim will be denied, and the patient may be incorrectly balanced-billed.' }
     ];
     if (window.renderFAQ) renderFAQ('faq-providers', providerFaqs);
   </script>

@@ -3,31 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Rx Savings Search | Compare Drug Prices & Save Money | MediHelp</title>
-  <meta name="description" content="Search and compare drug prices across GoodRx, Cost Plus Drugs, and Amazon Pharmacy. Use MediHelp's free Rx savings tool to find the lowest prescription prices.">
+  <title>Save Money on Prescriptions | Compare Drug Prices & Discounts</title>
+  <meta name="description" content="Find the cheapest prescription drugs, compare pharmacy prices, and save money using MediHelp’s Rx savings tool." />
   <link rel="canonical" href="https://www.medihelp.live/rx-savings">
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MediHelp">
-  <meta property="og:title" content="Free Rx Savings Search | MediHelp">
-  <meta property="og:description" content="Compare prescription prices and find the best deals on medications with MediHelp.">
+  <meta property="og:title" content="Save Money on Prescriptions | MediHelp">
+  <meta property="og:description" content="Compare prescription drug prices and save money on medications.">
   <meta property="og:url" content="https://www.medihelp.live/rx-savings">
   <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
   <meta name="twitter:card" content="summary_large_image">
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Rx Savings Search Tool",
+    "name": "Rx Savings Tool",
     "url": "https://www.medihelp.live/rx-savings",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Web",
-    "description": "Compare prescription drug prices and find free coupons.",
+    "description": "Compare prescription drug prices and save money on medications.",
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD"
     }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Why are drug prices different at pharmacies?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pharmacies set their own prices based on business costs, PBM contracts, and profit margins, leading to significant variations even for the same drug."
+      }
+    }, {
+      "@type": "Question",
+      "name": "How can I get cheaper prescriptions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "To get cheaper prescriptions, compare cash prices across pharmacies, use discount coupons, or switch to FDA-approved generic alternatives."
+      }
+    }]
   }
   </script>
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
@@ -66,20 +89,43 @@
   <!-- ── HERO ── -->
   <section class="hero container">
     <div class="hero-eyebrow">Compare Prices · Save Up to 80%</div>
-    <h1>Free Rx Savings<br><span class="grad">Search & Comparison.</span></h1>
-    <p>Search for medications and instantly compare cash prices across the top prescription savings platforms.</p>
+    <h1>Save Money on Prescriptions &<br><span class="grad">Compare Drug Prices Instantly.</span></h1>
+    <p>Compare prescription drug prices, find the cheapest pharmacies, and save money on medications using our Rx savings tool.</p>
     <div class="hero-cta" style="display:flex; justify-content:center; gap:12px; margin-top:24px;">
-       <button class="btn btn-primary" onclick="document.getElementById('rx-search-input').focus();">Search Medications Now</button>
-       <a href="/audit" class="btn btn-ghost">Audit Your Bill</a>
+       <button class="btn btn-primary" onclick="document.getElementById('rx-search-input').focus();">Search Drug Prices</button>
+       <a href="/audit" class="btn btn-ghost">Audit Medical Bill</a>
     </div>
   </section>
 
+  <!-- ── HIGH INTENT SECTION ── -->
+  <section class="container" style="padding: 40px 0; max-width: 900px; text-align: left;">
+    <h2 style="margin-bottom: 16px;">How to Save Money on Prescriptions</h2>
+    <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 24px;">
+      Prescription drug prices can vary significantly between pharmacies, even in the same neighborhood. Understanding how to navigate these price differences is the key to significant savings.
+    </p>
+    <p style="color: var(--text-h); font-weight: 600; margin-bottom: 12px;">Top strategies to save money on your medications:</p>
+    <ul style="color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; padding-left: 20px;">
+      <li><strong>Compare prices:</strong> Always check prices across different pharmacy chains.</li>
+      <li><strong>Use discount programs:</strong> Leverage free coupons and manufacturer programs.</li>
+      <li><strong>Generic alternatives:</strong> Ask your doctor if a lower-cost generic version is available.</li>
+      <li><strong>Avoid retail markup:</strong> Bypass expensive retail pharmacy markups with direct-to-consumer platforms.</li>
+    </ul>
+    <p style="color: var(--text-h); font-weight: 700; text-align: center; padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-elevated);">
+      👉 MediHelp helps you find the lowest price instantly by comparing multiple platforms.
+    </p>
+  </section>
+
   <!-- ── TOOL SECTION ── -->
-  <section class="container" style="margin-bottom: 80px;">
+  <section id="suite" class="container" style="margin-bottom: 80px;">
     <div class="tool-card">
       <div style="text-align: center; margin-bottom: 40px;">
-        <h2 style="margin-bottom: 12px; font-size: 32px; letter-spacing: -0.5px;">Find the Lowest Price</h2>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 16px;">Search any drug name (e.g., Amoxicillin, Lisinopril) to compare real-time estimates and find discount links.</p>
+        <h2 style="margin-bottom: 12px; font-size: 32px; letter-spacing: -0.5px;">Compare Drug Prices Instantly</h2>
+        <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto 16px; font-size: 16px;">
+          Use our Rx savings tool to search medications and compare prices across different pharmacies.
+        </p>
+        <p style="color: var(--text-h); font-weight: 600; font-size: 14px; opacity: 0.9;">
+          Find the cheapest option before purchasing your prescription.
+        </p>
       </div>
 
       <div class="search-wrapper">
@@ -94,13 +140,49 @@
     </div>
   </section>
 
+  <!-- ── VALUE & TRAFFIC SECTION ── -->
+  <section class="container" style="padding: 40px 40px; max-width: 900px; text-align: left; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); margin-bottom: 60px;">
+    <h2 style="margin-bottom: 16px;">Why Drug Price Comparison Matters</h2>
+    <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">
+      Drug prices are not regulated in the same way as other medical services, meaning the price you pay can change based on the pharmacy's network, location, and specific discount contracts.
+    </p>
+
+    <h2 style="margin-bottom: 16px;">Common Drugs People Search For</h2>
+    <p style="color: var(--text-muted); margin-bottom: 20px;">Some of the most frequently searched medications with high price variability include:</p>
+    <ul style="color: var(--text-muted); line-height: 2.0; margin-bottom: 24px; padding-left: 20px;">
+      <li><strong>Metformin</strong> – Common diabetes medication</li>
+      <li><strong>Atorvastatin</strong> – Cholesterol management</li>
+      <li><strong>Lisinopril</strong> – Blood pressure control</li>
+      <li><strong>Amoxicillin</strong> – High-use antibiotic</li>
+      <li><strong>Omeprazole</strong> – Heartburn and acid reflux</li>
+    </ul>
+    <p style="color: var(--text-h); font-weight: 600;">👉 Use the search tool above to find the best price for your medication instantly.</p>
+  </section>
+
+  <!-- ── INTERNAL LINKING ── -->
+  <section class="container" style="padding: 24px 0; text-align: center;">
+    <h3 style="margin-bottom: 16px;">Take Action on Your Medical Bills:</h3>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px;">
+      <a href="/audit" style="color:var(--accent); font-weight:700; text-decoration:none; padding:10px 20px; border:1px solid var(--border); border-radius:12px; background:var(--bg-card);">👉 Audit your medical bill for errors</a>
+      <a href="/cpt-code-search" style="color:var(--accent); font-weight:700; text-decoration:none; padding:10px 20px; border:1px solid var(--border); border-radius:12px; background:var(--bg-card);">👉 Verify charges using CPT lookup</a>
+      <a href="/claim-denial-codes" style="color:var(--accent); font-weight:700; text-decoration:none; padding:10px 20px; border:1px solid var(--border); border-radius:12px; background:var(--bg-card);">👉 Understand claim denial codes</a>
+    </div>
+  </section>
+
   <!-- ── FAQ ── -->
   <section class="faq-section">
     <div class="container">
-      <div class="section-label">Rx Savings FAQ</div>
-      <h2 class="section-title">Common Questions</h2>
+      <div class="section-label">Prescription FAQ</div>
+      <h2 class="section-title">Prescription Savings FAQs</h2>
       <div class="faq-grid" id="faq-rx"></div>
     </div>
+  </section>
+
+  <!-- ── FINAL CTA ── -->
+  <section class="container" style="padding: 80px 0; text-align: center;">
+    <h2 style="margin-bottom: 12px;">Compare Drug Prices Now and Save Money</h2>
+    <p style="color: var(--text-muted); margin-bottom: 32px;">Stop overpaying for your medications. Get clear pricing answers today.</p>
+    <button class="btn btn-primary" style="padding: 18px 48px; font-size: 16px; font-weight:900;" onclick="document.getElementById('rx-search-input').focus();">👉 Search Drug Prices</button>
   </section>
 
   <!-- ── FOOTER ── -->
@@ -153,10 +235,11 @@
   <script src="tabs/rxscout/rxscout.js"></script>
   <script>
     const rxFaqs = [
-      { q: 'How does the Rx savings search work?', a: 'MediHelp use the National Library of Medicine (RxNav) to match your medication and then provides direct links to transparency platforms like GoodRx and Cost Plus Drugs to help you compare the lowest available prices.' },
-      { q: 'Is this tool free?', a: 'Yes. MediHelp offers this tool for free to help patients find the most affordable way to fulfill their prescriptions.' },
-      { q: 'Can I use these discounts with insurance?', a: 'Often, the cash prices found through these tools are lower than an insurance co-pay. However, you typically cannot use a discount coupon *and* your insurance together; you must choose the lower cost option at the pharmacy counter.' },
-      { q: 'What is Cost Plus Drugs?', a: 'Mark Cuban Cost Plus Drug Company sells generic medications at a transparent, fixed markup (15%) plus pharmacy fees, often significantly cheaper than traditional retail pharmacies.' }
+      { q: 'Why are drug prices different at pharmacies?', a: 'Pharmacies set their own prices based on business costs, PBM contracts, and profit margins, leading to significant variations even for the same drug.' },
+      { q: 'How can I get cheaper prescriptions?', a: 'To get cheaper prescriptions, compare cash prices across pharmacies, use discount coupons, or switch to FDA-approved generic alternatives.' },
+      { q: 'Are generic drugs cheaper?', a: 'Yes. Generic drugs use the same active ingredients but cost 80–85% less on average because they don’t require the same high development and marketing costs as brand names.' },
+      { q: 'Can I use discount cards for prescriptions?', a: 'Yes. Often, discount cards or cash-pay platforms (like Mark Cuban Cost Plus) offer lower prices than your insurance co-pay.' },
+      { q: 'Is it safe to compare drug prices online?', a: 'Yes, as long as you are using a reputable aggregator or direct-to-pharmacy site. MediHelp links only to verified, high-trust transparency platforms.' }
     ];
     if (window.renderFAQ) renderFAQ('faq-rx', rxFaqs);
   </script>

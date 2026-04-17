@@ -3,20 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediHelp | Medical Billing Blog — Insights & Advocacy</title>
-  <meta name="description" content="Read MediHelp articles on medical billing, coding integrity, denial trends, patient advocacy, and dispute strategy.">
+  <title>Medical Billing Blog | Save Money on Healthcare & Understand Bills</title>
+  <meta name="description" content="Learn how to reduce medical bills, understand CPT codes, avoid billing errors, and handle insurance claim denials with MediHelp guides." />
   <link rel="canonical" href="https://www.medihelp.live/blog">
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MediHelp">
-  <meta property="og:title" content="MediHelp Blog | Medical Billing Insights">
-  <meta property="og:description" content="Evidence-based billing insights, denial guidance, and patient advocacy articles.">
+  <meta property="og:title" content="Medical Billing Blog & Healthcare Cost Guides | MediHelp">
+  <meta property="og:description" content="Practical guides on reducing hospital bills, understanding CPT codes, and navigating claim denials.">
   <meta property="og:url" content="https://www.medihelp.live/blog">
   <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="MediHelp Blog | Medical Billing Insights">
-  <meta name="twitter:description" content="Explore practical guides and updates for navigating medical bills.">
-  <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "MediHelp Medical Billing Blog",
+    "url": "https://www.medihelp.live/blog"
+  }
+  </script>
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
@@ -87,8 +93,8 @@
   </nav>
 
   <div class="dispatch-header container">
-    <div class="dispatch-title">The Blog.</div>
-    <p class="dispatch-subtitle">Global health insights, medical billing trends, and clinical breakthroughs.</p>
+    <h1 class="dispatch-title">Medical Billing Blog & Healthcare Cost Guides</h1>
+    <p class="dispatch-subtitle">Learn how to reduce medical bills, understand CPT codes, avoid billing errors, and handle insurance claim denials with practical guides from MediHelp.</p>
   </div>
 
   <!-- Loading Skeletons -->
@@ -104,9 +110,43 @@
   <!-- Most Recent Hero -->
   <div class="container" id="blog-hero-container" style="display:none;"></div>
 
+  <!-- Internal Linking Block (Shown after hero) -->
+  <div class="container" style="margin-bottom: 60px; padding: 24px; background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border); text-align: center;">
+    <p style="color: var(--text-h); font-weight: 600; margin-bottom: 16px;">Take Action with MediHelp Tools:</p>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px;">
+      <a href="/audit" style="color:var(--accent); font-weight:700; text-decoration:none;">👉 Audit your medical bill for errors</a>
+      <a href="/cpt-code-search" style="color:var(--accent); font-weight:700; text-decoration:none;">👉 Check CPT codes instantly</a>
+      <a href="/claim-denial-codes" style="color:var(--accent); font-weight:700; text-decoration:none;">👉 Understand claim denial codes</a>
+    </div>
+  </div>
+
+  <!-- Category SEO Block -->
+  <section class="container" style="margin-bottom: 80px;">
+    <h2 style="margin-bottom: 24px;">Explore Medical Billing Topics</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+      <div style="padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
+        <h3 style="font-size: 18px; margin-bottom: 8px;">Medical Billing Errors</h3>
+        <p style="font-size: 14px; color: var(--text-muted);">Identify common mistakes that lead to overcharges.</p>
+      </div>
+      <div style="padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
+        <h3 style="font-size: 18px; margin-bottom: 8px;">CPT Codes & Procedures</h3>
+        <p style="font-size: 14px; color: var(--text-muted);">Guidelines for procedure identification and verification.</p>
+      </div>
+      <div style="padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
+        <h3 style="font-size: 18px; margin-bottom: 8px;">Claim Denials</h3>
+        <p style="font-size: 14px; color: var(--text-muted);">Strategies for navigating and appealing insurance issues.</p>
+      </div>
+      <div style="padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
+        <h3 style="font-size: 18px; margin-bottom: 8px;">Healthcare Cost Saving</h3>
+        <p style="font-size: 14px; color: var(--text-muted);">Practical tips for reducing out-of-pocket medical expenses.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- Previous Posts Grid -->
   <div class="container" id="blog-grid-container" style="display:none;">
-    <div class="section-label" style="margin-bottom:24px;">Previous Posts</div>
+    <h2 style="margin-bottom: 12px;">Latest Medical Billing Guides</h2>
+    <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 600px;">Our latest articles cover how to check hospital bills, understand CPT codes, avoid overcharges, and reduce medical expenses.</p>
     <div class="blog-grid" id="blog-grid"></div>
   </div>
 
