@@ -250,7 +250,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/core.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
   <script src="/tabs/medbill/constants.js?v=8.0"></script>
@@ -288,79 +287,7 @@
   <div class="container" style="margin-bottom: 80px; max-width: 1280px;">
       <!-- Tab Navigation -->
       <div class="audit-guidance-note">
-        <strong>Before you begin:</strong> Use an itemized bill (UB-04/HCFA-1500 format where possible) for the most accurate findings.
-        For PDF extraction, text-based PDFs provide significantly better parsing quality than scanned photo PDFs.
-      </div>
-      <div style="display: flex; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
-        <button id="tab-btn-manual" onclick="switchAuditTab('manual')" class="btn" style="background: var(--accent); color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; border: none; cursor: pointer;">Manual Line Entry</button>
-        <button id="tab-btn-pdf" onclick="switchAuditTab('pdf')" class="btn btn-ghost" style="background: transparent; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; color: var(--text-muted); border: 1px solid transparent;">Smart PDF Extraction</button>
-      </div>
-
-      <!-- PDF Extraction Tab -->
-      <div id="tab-content-pdf" style="display: none; margin-bottom: 30px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);">
-         <h3 style="font-size: 16px; margin: 0; color: var(--text-h); margin-bottom: 8px;">Upload Medical Bill</h3>
-         <p style="margin:0 0 16px; font-size: 12px; color: var(--text-muted);">Upload a PDF or Image. AWS Textract will securely extract the billing grid structure.</p>
-         
-         <div id="pdf-dropzone" style="border: 2px dashed var(--border); border-radius: 8px; padding: 40px; text-align: center; cursor: pointer; transition: border-color 0.2s; background: rgba(0,0,0,0.02);" onclick="document.getElementById('pdf-file-input').click()" ondragover="event.preventDefault(); this.style.borderColor='var(--accent)';" ondragleave="this.style.borderColor='var(--border)';" ondrop="event.preventDefault(); this.style.borderColor='var(--border)'; handlePdfSelect({target: {files: event.dataTransfer.files}});">
-            <div id="pdf-dropzone-icon" style="margin-bottom: 12px;">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-            </div>
-            <p id="pdf-dropzone-text" style="font-size: 14px; color: var(--text-h); margin: 0; font-weight: 600;">Click or Drag PDF/Image here</p>
-            <input type="file" id="pdf-file-input" accept="application/pdf,image/png,image/jpeg" style="display: none;" onchange="handlePdfSelect(event)">
-         </div>
-         <div id="pdf-loading-state" style="display: none; margin-top: 24px; text-align: center; font-size: 13px; color: var(--text-main);">
-            <div style="width: 24px; height: 24px; border: 3px solid rgba(6,182,212,0.2); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s infinite linear; margin: 0 auto 12px;"></div>
-            Processing document via AWS Textract. This may take 5-10 seconds...
-         </div>
-
-         <div id="extraction-verify-gate" style="display:none; margin-top:16px; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; background:rgba(16,185,129,0.06);">
-          <h3 style="margin:0 0 8px; font-size:14px; color:#22c55e;">Review & Confirm Extraction</h3>
-          <p id="extraction-verify-summary" style="font-size:12px; color:var(--text-main); margin:0 0 10px;"></p>
-          <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:var(--text-main); margin-bottom:10px;">
-            <input type="checkbox" id="extraction-verify-check">
-            <span>I have reviewed the extracted data and confirm only verified rows should be added to the audit grid.</span>
-          </label>
-          <button type="button" onclick="confirmExtractionImport()" class="btn btn-primary" style="padding:8px 14px; font-size:12px;">Add Verified Rows to Line Items Tab</button>
-        </div>
-        <div id="extraction-telemetry-panel" style="display:none; margin-top:12px; border:1px solid rgba(148,163,184,0.35); border-radius:10px; padding:12px; background:rgba(15,23,42,0.45);">
-          <h4 style="margin:0 0 6px; font-size:12px; color:var(--text-h);">Extraction Quality Telemetry</h4>
-          <p id="extraction-telemetry-text" style="margin:0; font-size:11px; color:var(--text-muted); line-height:1.6;"></p>
-        </div>
-        <div id="review-prompt-area" style="display:none; margin-top:12px; border:2px solid #f59e0b; border-radius:12px; padding:16px; background:rgba(245,158,11,0.02);">
-          <h3 style="margin-top:0; font-size:14px; color:#b45309; display:flex; align-items:center; gap:8px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            Review Required: Ambiguous Data Detected
-          </h3>
-          <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">The following items were extracted with low confidence or invalid formats. Please verify and correct them before adding to line items.</p>
-          <div id="review-items-list"></div>
-        </div>
-
-        <!-- PDF Specific Live Result Section -->
-        <div id="pdf-live-results-section" style="display:none; margin-top: 30px;">
-          <h3 style="font-size: 16px; margin: 0 0 15px; color: var(--text-h); padding-bottom: 10px; border-bottom: 1px solid var(--border);">Extraction Audit Results</h3>
-          <div id="pdf-result-cards-container" style="display: flex; flex-direction: column; gap: 12px;">
-            <!-- Real-time Summary Header (v8.5) -->
-            <div id="pdf-audit-summary-overlay" class="audit-summary-header" style="display: none;">
-              <div class="audit-stat-group">
-                <div class="audit-stat">
-                  <span class="audit-stat-label">Total Billed</span>
-                  <span id="pdf-stat-total-billed" class="audit-stat-value">$0.00</span>
-                </div>
-                <div class="audit-stat">
-                  <span class="audit-stat-label">Potential Savings</span>
-                  <span id="pdf-stat-total-savings" class="audit-stat-value savings">$0.00</span>
-                </div>
-              </div>
-              <button class="generate-case-btn" onclick="handleAuditExport('dispute')">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                Generate Dispute Letter
-              </button>
-            </div>
-            <div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 13px;">Extracting document...</div>
-          </div>
-        </div>
-        <div id="pdf-audit-results" class="audit-results" style="display:none; margin-top:20px;"></div>
-
+        <strong>Before you begin:</strong> Use an itemized bill (UB-04/HCFA-1500 format where possible) for the most accurate manual entry.
       </div>
 
       <!-- Manual Data Entry Form -->

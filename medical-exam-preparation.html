@@ -498,10 +498,10 @@
         
         if (matches.length > 0) {
           resultsContainer.innerHTML = matches.map(t => `
-            <div class="search-item" onclick="navigateToTopic('${t.id}', '${escapeJs(t.title)}', ${t.semester_id})">
+            <a class="search-item" href="?topic_id=${t.id}" style="text-decoration:none;">
               <span class="search-item-title">${escapeHtml(t.title)}</span>
               <span class="search-item-sem">Semester ${t.semester_id}</span>
-            </div>
+            </a>
           `).join('');
           resultsContainer.classList.add('visible');
         } else {
@@ -516,14 +516,6 @@
           resultsContainer.classList.remove('visible');
         }
       });
-    }
-
-    function navigateToTopic(topicId, title, semId) {
-      document.getElementById('topic-search').value = '';
-      document.getElementById('search-results').classList.remove('visible');
-      
-      switchSemester(semId);
-      startQuiz(topicId, title);
     }
 
     function escapeJs(str) {
@@ -594,9 +586,10 @@
         const totalCorrect = Object.values(topicProg).filter(v => v.correct).length;
         const percent = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
 
-        const card = document.createElement('div');
+        const card = document.createElement('a');
         card.className = 'topic-card';
-        card.onclick = () => startQuiz(topic.id, topic.title);
+        card.href = `?topic_id=${topic.id}`;
+        card.style.textDecoration = 'none';
         card.innerHTML = `
           <div>
             <h3 style="margin-bottom: 8px;">${escapeHtml(topic.title)} Anatomy MCQs (USMLE & MBBS Preparation)</h3>
@@ -673,9 +666,7 @@
     }
 
     function showDashboard() {
-      document.getElementById('mcq-view').classList.add('hidden');
-      document.getElementById('dashboard-view').classList.remove('hidden');
-      loadTopics(currentSemester);
+      window.location.href = window.location.pathname;
     }
 
     async function loadMcqs(topicId) {
@@ -737,6 +728,39 @@
         });
       }
       
+      // NEXT TOPIC LINK GENERATION
+      try {
+        const { data: currTop } = await window.dbClient.from('topics').select('semester_id, order').eq('id', topicId).single();
+        if (currTop) {
+          const { data: nextTop, error: nextErr } = await window.dbClient.from('topics')
+            .select('id, title')
+            .eq('semester_id', currTop.semester_id)
+            .gt('order', currTop.order)
+            .order('order', { ascending: true })
+            .limit(1)
+            .single();
+            
+          const endDiv = document.createElement('div');
+          endDiv.style.marginTop = '40px';
+          endDiv.style.textAlign = 'center';
+          endDiv.style.borderTop = '1px dashed var(--border)';
+          endDiv.style.paddingTop = '30px';
+          
+          if (nextTop && !nextErr) {
+            endDiv.innerHTML = `
+              <a href="?topic_id=${nextTop.id}" class="btn btn-primary" style="display:inline-block; padding:16px 32px; font-size:16px; font-weight:800; text-decoration:none;">
+                Proceed to Next Topic: ${escapeHtml(nextTop.title)}
+              </a>
+            `;
+          } else {
+             endDiv.innerHTML = `<p style="color:var(--text-muted); font-weight:600;">You have completed all topics in this semester.</p>`;
+          }
+          list.appendChild(endDiv);
+        }
+      } catch (err) {
+        console.error('Error loading next topic:', err);
+      }
+
       updateQuizHeader();
     }
 
@@ -892,14 +916,27 @@
     });
 
     // Init
-    document.addEventListener('DOMContentLoaded', () => {
-      initSemesters();
+    document.addEventListener('DOMContentLoaded', async () => {
       initSearch();
       
       // Auto-unlock if coming back from Gumroad with a success param
       if (window.location.search.includes('paid=true')) {
         localStorage.setItem('medi_premium_active', 'true');
         showToast('Payment Successful! Premium Access Unlocked.', 'success');
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialTopicId = urlParams.get('topic_id');
+      
+      if (initialTopicId) {
+        const { data, error } = await window.dbClient.from('topics').select('title').eq('id', initialTopicId).single();
+        if (data) {
+           startQuiz(initialTopicId, data.title);
+        } else {
+           initSemesters();
+        }
+      } else {
+        initSemesters();
       }
     });
   </script>
