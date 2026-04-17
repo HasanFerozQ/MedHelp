@@ -63,7 +63,9 @@
       </a>
       <div class="nav-links">
         <a href="/" class="active">Home</a>
-        <a href="/audit">Bill Audit</a>
+        <a href="/cpt-code-search">CPT Code Search</a>
+        <a href="/claim-denial-codes">Claim Denial Codes</a>
+        <a href="/audit">Medical Bill Audit</a>
         <a href="/providers">National Provider Search</a>
         <a href="/blog">Blog</a>
       </div>
@@ -82,103 +84,46 @@
   <section class="hero container">
     <div class="hero-eyebrow">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-      Global Medical Billing Suite
+      Free Medical Billing Tools
     </div>
-    <h1>The Operating System<br>for <span class="grad">Medical Billing.</span></h1>
-    <p>Instantly decode denials, search 74,000+ codes across US, UK & Middle East, and audit bills — all free.</p>
+    <h1>Audit Your Medical Bill &amp; Find Hidden Errors <span class="grad">in Seconds.</span></h1>
+    <p>Learn how to audit medical bills independently, use our CPT code lookup free tools, and figure out exactly why a claim was denied using our CARC code database.</p>
     <div class="hero-cta">
       <a href="/audit" class="btn btn-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Start Free Audit
+        Medical Bill Audit Tool
       </a>
-      <a href="/providers" class="btn btn-ghost">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        National Provider Search
+      <a href="/cpt-code-search" class="btn btn-ghost">
+        CPT Code Lookup Free
+      </a>
+      <a href="/claim-denial-codes" class="btn btn-ghost" style="margin-left:8px;">
+        Why Claim Denied CARC Code
       </a>
     </div>
   </section>
 
-  <!-- ── TOOL SUITE ── -->
-  <section id="suite" class="container" style="margin-bottom: 0;">
-    <div class="suite-wrapper">
-
-      <div class="tab-bar">
-        <button class="tab-btn active" onclick="switchTab('codes', this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"/></svg>
-          Code Lookup
-        </button>
-        <button class="tab-btn" onclick="switchTab('denials', this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Claim Denials
-        </button>
-        <button class="tab-btn" onclick="switchTab('rx', this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Rx Savings
-        </button>
-      </div>
-
-      <!-- CODE LOOKUP PANEL -->
-      <div id="codes" class="tab-panel active">
-        <div class="region-bar">
-          <label>Region:</label>
-          <div class="region-pills">
-            <button class="region-pill active" data-region="US">US (ICD-10-CM)</button>
-            <button class="region-pill" data-region="UK">UK (ICD-10 WHO)</button>
-            <button class="region-pill" data-region="ME">Middle East (WHO)</button>
-          </div>
-        </div>
-        <div class="search-box">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="code-search-input" class="search-input" placeholder="e.g. J45.50 or 'Asthma' or 'Chest Pain'...">
-        </div>
-        <div id="search-results-list" class="results-area">
-          <p class="status-msg">Start typing to search 74,000+ medical codes.</p>
-        </div>
-      </div>
-
-      <!-- DENIAL CODES PANEL -->
-      <div id="denials" class="tab-panel">
-        <div class="search-box">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="denial-search-input" class="search-input" placeholder="e.g. CO-45, N362, or 'timely filing'..." autocomplete="off">
-          <div id="denial-suggestions" class="suggestions-list"></div>
-        </div>
-        <div id="denial-results" class="results-area">
-          <p class="status-msg">Search CARC and RARC denial codes.</p>
-        </div>
-      </div>
-
-      <!-- RX SAVINGS PANEL -->
-      <div id="rx" class="tab-panel">
-        <div class="rx-search">
-          <div class="search-box" style="flex:1; margin-bottom:0;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="rx-search-input" class="search-input" placeholder="Search a drug name (e.g. Amoxicillin, Lisinopril)..." autocomplete="off">
-            <div id="rx-suggestions" class="suggestions-list"></div>
-          </div>
-        </div>
-        <div id="rx-results" class="results-area">
-          <p class="status-msg" style="text-align:left; padding:0 0 20px; font-weight:700; color:var(--text-h);">Compare Free Prices</p>
-          <div class="rx-vertical-stack">
-            <a href="https://www.goodrx.com" target="_blank" rel="noopener" class="rx-btn brand-goodrx">
-              GoodRx ↗
-            </a>
-            <a href="https://costplusdrugs.com" target="_blank" rel="noopener" class="rx-btn brand-costplus">
-              Cost Plus Drugs ↗
-            </a>
-            <a href="https://www.amazon.com/pharmacy" target="_blank" rel="noopener" class="rx-btn brand-amazon">
-              Amazon Pharmacy ↗
-            </a>
-            <a href="https://www.singlecare.com" target="_blank" rel="noopener" class="rx-btn brand-singlecare">
-              SingleCare ↗
-            </a>
-            <a href="https://www.drugs.com" target="_blank" rel="noopener" class="rx-btn brand-drugs">
-              Drugs.com ↗
-            </a>
-          </div>
-        </div>
-      </div>
-
+  <section id="features" class="container">
+    <div class="faq-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+       <div class="faq-card" style="padding: 24px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
+         <h3 style="font-weight: 800; font-size: 18px; margin-bottom: 12px; color: var(--accent);">How to Audit Medical Bill</h3>
+         <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+           Medical bills are notorious for unbundling and upcoding errors. Our tool allows you to plug your CPT codes and prices in to check against Medicare benchmarks effortlessly.
+         </p>
+         <a href="/audit" class="btn" style="background: rgba(34,211,238,0.1); color: var(--accent); font-size: 13px; font-weight: 700; border: 1px solid rgba(34,211,238,0.3);">Run an Audit</a>
+       </div>
+       <div class="faq-card" style="padding: 24px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
+         <h3 style="font-weight: 800; font-size: 18px; margin-bottom: 12px; color: #22c55e;">CPT Code Lookup Free</h3>
+         <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+           Stop guessing what your procedures mean. Access our localized database of 74,000+ codes (US, UK, Middle East) to decode complex hospital language and protect your wallet.
+         </p>
+         <a href="/cpt-code-search" class="btn" style="background: rgba(34,197,94,0.1); color: #22c55e; font-size: 13px; font-weight: 700; border: 1px solid rgba(34,197,94,0.3);">Search Codes</a>
+       </div>
+       <div class="faq-card" style="padding: 24px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
+         <h3 style="font-weight: 800; font-size: 18px; margin-bottom: 12px; color: #f59e0b;">Why Claim Denied CARC</h3>
+         <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+           Did your insurance deny coverage? We can tell you why. Simply input the CARC or RARC denial code listed on your EOB (Explanation of Benefits) to find specific appeal advice.
+         </p>
+         <a href="/claim-denial-codes" class="btn" style="background: rgba(245,158,11,0.1); color: #f59e0b; font-size: 13px; font-weight: 700; border: 1px solid rgba(245,158,11,0.3);">Denial Search</a>
+       </div>
     </div>
   </section>
 
@@ -202,11 +147,11 @@
         <div class="footer-col">
           <h4>Tools</h4>
           <ul>
-            <li><a href="/#suite">Code Search</a></li>
-            <li><a href="/#suite">Claim Denials</a></li>
-            <li><a href="/#suite">Rx Savings</a></li>
+            <li><a href="/cpt-code-search">CPT Code Search</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/cpt-code-search">Rx Savings</a></li>
             <li><a href="/providers">National Provider Search</a></li>
-            <li><a href="/audit">Bill Audit</a></li>
+            <li><a href="/audit">Medical Bill Audit</a></li>
             <li><a href="/blog">Blog</a></li>
           </ul>
         </div>
@@ -238,9 +183,7 @@
     </div>
   </footer>
 
-  <script src="tabs/codesearch/codesearch.js"></script>
-  <script src="tabs/denials/denials.js"></script>
-  <script src="tabs/rxscout/rxscout.js"></script>
+
   <script>
     // Render Home FAQs
     const homeFaqs = [

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta name="google-site-verification" content="5qSgIce5-N4XK8YJHpfBOtlbj-VfyJCvTbiZEsDy7VM" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free CPT Code Lookup Tool | MediHelp</title>
+  <meta name="description" content="MediHelp is your free, clinical partner in medical billing accuracy. Audit bills, search provider specialties, and find Rx savings in your browser.">
+  <link rel="canonical" href="https://www.medihelp.live/">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MediHelp">
+  <meta property="og:title" content="MediHelp | Medical Billing Transparency Tools">
+  <meta property="og:description" content="Audit medical bills, verify providers, decode denials, and explore billing insights with MediHelp.">
+  <meta property="og:url" content="https://www.medihelp.live/">
+  <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MediHelp | Medical Billing Transparency Tools">
+  <meta name="twitter:description" content="Free patient-first tools for bill audits, provider verification, and billing education.">
+  <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Is MediHelp truly free for patient use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. MediHelp core tools are free for patients, including Bill Audit, Provider Search, and education resources for disputes."
+      }
+    }, {
+      "@type": "Question",
+      "name": "How is my medical data and HIPAA privacy protected?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MediHelp uses a privacy-first approach. Most audit workflows run in-browser, and we avoid storing sensitive bill data unless users opt into managed advocacy workflows."
+      }
+    }, {
+      "@type": "Question",
+      "name": "What can MediHelp help me do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MediHelp helps you audit bills for coding and pricing anomalies, verify providers by NPI, and learn how to prepare stronger billing disputes."
+      }
+    }]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png?v=1.1" alt="MediHelp">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/cpt-code-search" class="active">CPT Code Search</a>
+        <a href="/claim-denial-codes">Claim Denial Codes</a>
+        <a href="/audit">Medical Bill Audit</a>
+        <a href="/providers">National Provider Search</a>
+        <a href="/blog">Blog</a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" style="margin-right: 20px;">🌙</button>
+        <div class="nav-toggle" onclick="MediHelp.toggleMobileMenu()" style="margin-left: 20px;">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero container">
+    <div class="hero-eyebrow">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+      Global Medical Billing Suite
+    </div>
+    <h1>Free CPT Code<br><span class="grad">Lookup Tool.</span></h1>
+    <p>Search 74,000+ medical codes and explore Rx Savings across the US, UK & Middle East — all free.</p>
+    <div class="hero-cta">
+      <a href="/audit" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Start Free Audit
+      </a>
+      <a href="/providers" class="btn btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        National Provider Search
+      </a>
+    </div>
+  </section>
+
+  <!-- ── TOOL SUITE ── -->
+  <section id="suite" class="container" style="margin-bottom: 0;">
+    <div class="suite-wrapper">
+
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('codes', this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"/></svg>
+          Code Lookup
+        </button>
+
+        <button class="tab-btn" onclick="switchTab('rx', this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Rx Savings
+        </button>
+      </div>
+
+      <!-- CODE LOOKUP PANEL -->
+      <div id="codes" class="tab-panel active">
+        <div class="region-bar">
+          <label>Region:</label>
+          <div class="region-pills">
+            <button class="region-pill active" data-region="US">US (ICD-10-CM)</button>
+            <button class="region-pill" data-region="UK">UK (ICD-10 WHO)</button>
+            <button class="region-pill" data-region="ME">Middle East (WHO)</button>
+          </div>
+        </div>
+        <div class="search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="code-search-input" class="search-input" placeholder="e.g. J45.50 or 'Asthma' or 'Chest Pain'...">
+        </div>
+        <div id="search-results-list" class="results-area">
+          <p class="status-msg">Start typing to search 74,000+ medical codes.</p>
+        </div>
+      </div>
+
+
+
+      <!-- RX SAVINGS PANEL -->
+      <div id="rx" class="tab-panel">
+        <div class="rx-search">
+          <div class="search-box" style="flex:1; margin-bottom:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="rx-search-input" class="search-input" placeholder="Search a drug name (e.g. Amoxicillin, Lisinopril)..." autocomplete="off">
+            <div id="rx-suggestions" class="suggestions-list"></div>
+          </div>
+        </div>
+        <div id="rx-results" class="results-area">
+          <p class="status-msg" style="text-align:left; padding:0 0 20px; font-weight:700; color:var(--text-h);">Compare Free Prices</p>
+          <div class="rx-vertical-stack">
+            <a href="https://www.goodrx.com" target="_blank" rel="noopener" class="rx-btn brand-goodrx">
+              GoodRx ↗
+            </a>
+            <a href="https://costplusdrugs.com" target="_blank" rel="noopener" class="rx-btn brand-costplus">
+              Cost Plus Drugs ↗
+            </a>
+            <a href="https://www.amazon.com/pharmacy" target="_blank" rel="noopener" class="rx-btn brand-amazon">
+              Amazon Pharmacy ↗
+            </a>
+            <a href="https://www.singlecare.com" target="_blank" rel="noopener" class="rx-btn brand-singlecare">
+              SingleCare ↗
+            </a>
+            <a href="https://www.drugs.com" target="_blank" rel="noopener" class="rx-btn brand-drugs">
+              Drugs.com ↗
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-label">Got Questions?</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-grid" id="faq-home"></div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Your free, global partner in medical billing accuracy, claim transparency, and code intelligence.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="/cpt-code-search">CPT Code Search</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/cpt-code-search">Rx Savings</a></li>
+            <li><a href="/providers">National Provider Search</a></li>
+            <li><a href="/audit">Medical Bill Audit</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Global</h4>
+          <ul>
+            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">US (ICD-10-CM)</li>
+            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">UK (NHS / OPCS-4)</li>
+            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">Middle East (WHO)</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content: center; border-top: 1px solid var(--border); padding-top: 40px; flex-direction: column; gap: 10px; align-items: center;">
+        <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size: 11px; opacity: 0.7;">Informational only. Not medical/legal advice. <a href="/terms" style="color: var(--accent); text-decoration: none; font-weight: 700;">Terms & Disclaimer</a></span>
+        <span style="display:block; font-size: 10px; opacity: 0.5;">Support: supportdesk@medihelp.live</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="tabs/codesearch/codesearch.js"></script>
+
+  <script src="tabs/rxscout/rxscout.js"></script>
+  <script>
+    // Render Home FAQs
+    const homeFaqs = [
+      { q: 'Is MediHelp free to use?', a: 'Yes. Core tools are free, including Bill Audit, Provider Search, and educational resources for appeal preparation.' },
+      { q: 'What can I do on MediHelp?', a: 'You can audit line-item bills, validate CPT/HCPCS context, check provider credentials by NPI, and review dispute guidance before contacting providers or payers.' },
+      { q: 'How is my data handled?', a: 'MediHelp follows a privacy-first model. Most audit workflows run in-browser, and sensitive records are not retained unless needed for optional managed advocacy.' },
+      { q: 'Can MediHelp replace legal or medical advice?', a: 'No. MediHelp provides informational and technical billing support only. Always confirm decisions with licensed professionals and your insurer.' },
+      { q: 'Which bill formats are supported?', a: 'The audit workflow supports manual entry and PDF extraction for common itemized bills using CPT, HCPCS, ICD-10, and payer adjustment references.' },
+      { q: 'Do you offer human support for difficult cases?', a: 'Yes. Managed advocacy services are available for users who want expert help after initial technical findings are reviewed.' },
+    ];
+    if (window.renderFAQ) renderFAQ('faq-home', homeFaqs);
+  </script>
+</body>
+</html>
