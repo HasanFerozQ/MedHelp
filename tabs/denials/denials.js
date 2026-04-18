@@ -7,6 +7,42 @@ let denialTimeout = null;
 let currentDenialSearchId = 0;
 
 // Event Delegation for Copy Buttons
+// [New] Search Optimization Helpers
+const SYNONYMS = {
+  'DED': 'DEDUCTIBLE',
+  'DEDUCT': 'DEDUCTIBLE',
+  'BAL': 'BALANCE',
+  'DUP': 'DUPLICATE',
+  'PROC': 'PROCEDURE',
+  'SERV': 'SERVICE',
+  'AUTH': 'AUTHORIZATION',
+  'PRE': 'PREAUTHORIZATION',
+  'REJ': 'REJECTED',
+  'AMT': 'AMOUNT',
+  'PAYM': 'PAYMENT',
+  'ADJ': 'ADJUSTMENT'
+};
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function highlightText(text, tokens) {
+  if (!tokens || tokens.length === 0) return escapeHtml(text);
+  
+  // Sort tokens by length (descending) to avoid partial matches breaking longer ones
+  const sortedTokens = [...tokens].sort((a, b) => b.length - a.length);
+  let highlighted = escapeHtml(text);
+  
+  sortedTokens.forEach(token => {
+    if (token.length < 2) return;
+    const safeToken = escapeRegExp(escapeHtml(token));
+    const re = new RegExp(`(${safeToken})`, 'gi');
+    highlighted = highlighted.replace(re, '<mark>$1</mark>');
+  });
+  return highlighted;
+}
+
 denialResults.addEventListener('click', (e) => {
   const btn = e.target.closest('.copy-btn');
   if (!btn) return;
@@ -22,7 +58,7 @@ denialResults.addEventListener('click', (e) => {
 });
 
 denialInput.addEventListener('input', (e) => {
-  const query = e.target.value.trim().toUpperCase();
+  const query = e.target.value.trim();
   clearTimeout(denialTimeout);
   
   if (query.length < 1) {
@@ -45,24 +81,19 @@ denialInput.addEventListener('input', (e) => {
 async function showSuggestions(q) {
   if (!window.dbClient) return;
 
-  // Strip hyphens, spaces, dots, commas, and quotes to prevent parser crash and find matches easily
   const cleanQ = q.replace(/[\-\s\.\,"']/g, '').toUpperCase();
   const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
   const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; 
-  
-  // Strip double quotes to prevent API string breaks
   const safeDescQ = q.replace(/"/g, '').trim(); 
   
   const searchId = ++currentDenialSearchId; 
   try {
-    // Wrap inside double quotes to protect PostgREST from 500 errors
     const { data } = await window.dbClient
       .from('carc_codes')
       .select('code, description')
       .or(`code.ilike."${normQ}%",code.ilike."${cleanQ}%",description.ilike."%${safeDescQ}%"`)
       .limit(3);
 
-    // [High] Race Condition Guard: If a newer search has started, discard this result
     if (searchId !== currentDenialSearchId) return;
 
     if (!data || data.length === 0) {
@@ -77,7 +108,6 @@ async function showSuggestions(q) {
       </div>
     `).join('');
 
-    // [Low] Suggestion Pill Event Delegation
     denialSuggest.onclick = (e) => {
       const pill = e.target.closest('.suggestion-pill');
       if (pill) {
@@ -98,24 +128,38 @@ async function searchDenials(query) {
   }
 
   const qUpper = query.toUpperCase();
-  const cleanQ = qUpper.replace(/[\-\s\.\,"']/g, '');
-  const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
-  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; 
-  
-  // Strip double quotes to prevent API string breaks
-  const safeDescQ = query.replace(/"/g, '').trim(); 
-  
+  const tokens = query.split(/\s+/).filter(t => t.length >= 2);
   const searchId = ++currentDenialSearchId; 
+  
   denialResults.innerHTML = '<div class="empty-state">Decoding Registry...</div>';
 
   try {
-    // [High] Robust matching: Wrapped in double quotes to prevent API crashes on commas/spaces
+    // [Smart] Code detection
+    const cleanQ = qUpper.replace(/[\-\s\.\,"']/g, '');
+    const codeMatch = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
+    const normQ = codeMatch ? `${codeMatch[1]}-${codeMatch[2]}` : cleanQ; 
+
+    // Build the query
+    let dbQueryCarc = window.dbClient.from('carc_codes').select('*');
+    let dbQueryRarc = window.dbClient.from('rarc_codes').select('*');
+
+    // Cross-field OR logic for all tokens + code variants
+    const allOrs = new Set([`code.ilike."${normQ}%"`, `code.ilike."${cleanQ}%"`]);
+    
+    tokens.forEach(tok => {
+      const t = tok.toUpperCase();
+      allOrs.add(`description.ilike."%${tok}%"`);
+      if (SYNONYMS[t]) allOrs.add(`description.ilike."%${SYNONYMS[t]}%"`);
+    });
+
+    const orCondition = Array.from(allOrs).join(',');
+
     const [carcRes, rarcRes] = await Promise.all([
-      window.dbClient.from('carc_codes').select('*').or(`code.ilike."${normQ}%",code.ilike."${cleanQ}%",description.ilike."%${safeDescQ}%"`).limit(50),
-      window.dbClient.from('rarc_codes').select('*').or(`code.ilike."${normQ}%",code.ilike."${cleanQ}%",description.ilike."%${safeDescQ}%"`).limit(50)
+      dbQueryCarc.or(orCondition).limit(100),
+      dbQueryRarc.or(orCondition).limit(100)
     ]);
 
-    if (searchId !== currentDenialSearchId) return; // Race condition guard
+    if (searchId !== currentDenialSearchId) return;
 
     const merged = [
       ...(carcRes.data || []).map(d => ({...d, type: 'CARC'})),
@@ -127,24 +171,38 @@ async function searchDenials(query) {
       return;
     }
 
-    // Sort: Exact matches first
+    // [Smart] Hybrid Ranking
     merged.sort((a, b) => {
+      // 1. Exact Code Match
       const aExact = a.code === normQ || a.code === cleanQ;
       const bExact = b.code === normQ || b.code === cleanQ;
       if (aExact && !bExact) return -1;
       if (bExact && !aExact) return 1;
+
+      // 2. Multi-token "AND" match (All tokens present in description)
+      const aDesc = a.description.toUpperCase();
+      const bDesc = b.description.toUpperCase();
+      const aMatchesAll = tokens.every(t => aDesc.includes(t.toUpperCase()));
+      const bMatchesAll = tokens.every(t => bDesc.includes(t.toUpperCase()));
+      if (aMatchesAll && !bMatchesAll) return -1;
+      if (bMatchesAll && !aMatchesAll) return 1;
+
+      // 3. Number of matching tokens
+      const aTokenCount = tokens.filter(t => aDesc.includes(t.toUpperCase())).length;
+      const bTokenCount = tokens.filter(t => bDesc.includes(t.toUpperCase())).length;
+      if (aTokenCount !== bTokenCount) return bTokenCount - aTokenCount;
+
       return a.code.localeCompare(b.code);
     });
 
-    displayDenials(merged, normQ, cleanQ);
+    displayDenials(merged, tokens);
   } catch (err) {
     console.error(err);
     denialResults.innerHTML = '<div class="empty-state" style="color:var(--text-danger)">Error searching database.</div>';
   }
 }
 
-function displayDenials(results, normQ, cleanQ) {
-  // [Low] Show result count based on raw merged list
+function displayDenials(results, tokens) {
   const count = results.length;
   let html = `<div class="results-count" style="margin-left:2px; margin-bottom:12px; font-size:13px; color:var(--text-muted); font-weight:500;">
                 Showing <b>${count}</b> matching denial codes
@@ -152,12 +210,12 @@ function displayDenials(results, normQ, cleanQ) {
 
   html += results.map(item => {
     const isCarc = item.type === 'CARC';
-    const tagClass = item.type; // "CARC" or "RARC"
-    
-    // Escape all data components
+    const tagClass = item.type;
     const safeCode = escapeHtml(item.code);
     const safeType = escapeHtml(item.type);
-    const safeDesc = escapeHtml(item.description);
+    
+    // Highlight the description based on query tokens
+    const highlightedDesc = highlightText(item.description, tokens);
     const safeDate = item.effective_date ? new Date(item.effective_date).getFullYear() : null;
 
     return `
@@ -186,7 +244,7 @@ function displayDenials(results, normQ, cleanQ) {
              }
            </div>
            <div style="font-size: 14.5px; line-height: 1.5; color: var(--text-body);">
-             ${safeDesc}
+             ${highlightedDesc}
            </div>
         </div>
       </div>
@@ -195,3 +253,4 @@ function displayDenials(results, normQ, cleanQ) {
   
   denialResults.innerHTML = html;
 }
+
