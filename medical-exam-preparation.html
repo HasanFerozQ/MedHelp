@@ -1013,7 +1013,13 @@
 
       const urlParams = new URLSearchParams(window.location.search);
       const initialTopicId = urlParams.get('topic_id');
-      const slug = urlParams.get('slug');
+      let slug = urlParams.get('slug');
+      
+      // Support Clean URLs (e.g., /medical-exam-preparation/abdomen)
+      const pathParts = window.location.pathname.split('/').filter(p => p);
+      if (!slug && pathParts.length >= 2 && pathParts[0] === 'medical-exam-preparation') {
+        slug = pathParts[1];
+      }
       
       if (initialTopicId || slug) {
         let query = window.dbClient.from('topics').select('id, title');

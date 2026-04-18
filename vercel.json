@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/medical-exam-preparation/:slug",
-      "destination": "/medical-exam-preparation.html?slug=:slug"
+      "destination": "/medical-exam-preparation.html"
     }
   ],
   "functions": {
