@@ -351,10 +351,10 @@
       document.getElementById('stat-time').textContent = `⏱ ${mins} min read`;
 
       // Read count
-      const count = await MediHelp.incrementReadCount(post.slug, SUPABASE_URL, SUPABASE_ANON_KEY);
+      const count = await MediHelp.incrementReadCount(post.slug);
       document.getElementById('stat-reads').textContent = `👁 ${count} reads`;
 
-      // Sidebar: 3 suggested posts (excluding current)
+      // Sidebar: 3 suggested posts
       const suggested = posts.filter(p => p.slug !== post.slug).slice(0, 3);
       document.getElementById('sidebar-suggested').innerHTML = suggested.length > 0
         ? suggested.map(s => `
@@ -367,8 +367,94 @@
           </a>`).join('')
         : '<p style="font-size:13px;color:var(--text-muted);">No other posts yet.</p>';
 
-      // Initialize Sharing
+      // Initialize Sharing and Technical SEO
       initSharing(post);
+      injectDynamicSchema(post);
+    }
+
+    /**
+     * Technical SEO: Dynamic Schema Injection
+     * Extracts FAQs and How-To steps from rendered markdown to generate JSON-LD.
+     */
+    function injectDynamicSchema(post) {
+      const body = document.getElementById('post-body');
+      const schemas = [];
+
+      // 1. Article Schema
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "image": post.thumbnail || 'https://www.medihelp.live/icons/logo.png?v=1.1',
+        "datePublished": post.date,
+        "author": { "@type": "Organization", "name": "MediHelp" },
+        "description": post.summary
+      });
+
+      // 2. FAQ Schema Extraction
+      const faqHeader = Array.from(body.querySelectorAll('h2, h3')).find(h => 
+        h.innerText.toLowerCase().includes('frequently asked questions') || 
+        h.innerText.toLowerCase().includes('faq') ||
+        h.innerText.toLowerCase().includes('common questions')
+      );
+      if (faqHeader) {
+        const faqs = [];
+        let cur = faqHeader.nextElementSibling;
+        while (cur && !['H2', 'H3'].includes(cur.tagName)) {
+          // If the element itself contains a bold question and the answer follows
+          const strong = cur.querySelector('strong');
+          if (strong && (cur.innerText.startsWith('**') || cur.innerHTML.startsWith('<strong>'))) {
+             const q = strong.innerText.trim();
+             // The answer might be in the same paragraph after the strong, or in the next paragraph
+             let a = cur.innerText.replace(q, '').trim();
+             if (!a && cur.nextElementSibling && cur.nextElementSibling.tagName === 'P') {
+               a = cur.nextElementSibling.innerText.trim();
+             }
+             if (q && a) faqs.push({ "@type": "Question", "name": q, "acceptedAnswer": { "@type": "Answer", "text": a } });
+          }
+          cur = cur.nextElementSibling;
+        }
+        if (faqs.length > 0) {
+          schemas.push({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqs });
+        }
+      }
+
+      // 3. How-To Schema Extraction (Step-by-Step)
+      const howToHeader = Array.from(body.querySelectorAll('h2, h3')).find(h => h.innerText.toLowerCase().includes('step-by-step'));
+      if (howToHeader) {
+        const steps = [];
+        let list = howToHeader.nextElementSibling;
+        // Skip intro paragraphs to find the list
+        while (list && !['OL', 'UL', 'H2', 'H3'].includes(list.tagName)) {
+          list = list.nextElementSibling;
+        }
+        
+        if (list && (list.tagName === 'OL' || list.tagName === 'UL')) {
+          Array.from(list.querySelectorAll('li')).forEach((li, idx) => {
+            steps.push({
+              "@type": "HowToStep",
+              "url": window.location.href + "#step-" + (idx + 1),
+              "name": li.innerText.split(':')[0].trim() || "Step " + (idx + 1),
+              "itemListElement": [{ "@type": "HowToDirection", "text": li.innerText.trim() }]
+            });
+          });
+          schemas.push({
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": post.title,
+            "step": steps
+          });
+        }
+      }
+
+      // Inject all schemas
+      schemas.forEach(s => {
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(s);
+        document.head.appendChild(script);
+      });
+      console.log('MediHelp SEO: Dynamic schemas injected', schemas.length);
     }
 
     function setMeta(selector, attr, value) {
