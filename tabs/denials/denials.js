@@ -173,23 +173,28 @@ async function searchDenials(query) {
 
     // [Smart] Hybrid Ranking
     merged.sort((a, b) => {
+      const aCode = a.code.toUpperCase();
+      const bCode = b.code.toUpperCase();
+      const aDesc = a.description.toUpperCase();
+      const bDesc = b.description.toUpperCase();
+      const aCombined = `${aCode} ${aDesc}`;
+      const bCombined = `${bCode} ${bDesc}`;
+
       // 1. Exact Code Match
       const aExact = a.code === normQ || a.code === cleanQ;
       const bExact = b.code === normQ || b.code === cleanQ;
       if (aExact && !bExact) return -1;
       if (bExact && !aExact) return 1;
 
-      // 2. Multi-token "AND" match (All tokens present in description)
-      const aDesc = a.description.toUpperCase();
-      const bDesc = b.description.toUpperCase();
-      const aMatchesAll = tokens.every(t => aDesc.includes(t.toUpperCase()));
-      const bMatchesAll = tokens.every(t => bDesc.includes(t.toUpperCase()));
+      // 2. Multi-token "AND" match (All tokens present in COMBINED Code + Desc)
+      const aMatchesAll = tokens.every(t => aCombined.includes(t.toUpperCase()));
+      const bMatchesAll = tokens.every(t => bCombined.includes(t.toUpperCase()));
       if (aMatchesAll && !bMatchesAll) return -1;
       if (bMatchesAll && !aMatchesAll) return 1;
 
-      // 3. Number of matching tokens
-      const aTokenCount = tokens.filter(t => aDesc.includes(t.toUpperCase())).length;
-      const bTokenCount = tokens.filter(t => bDesc.includes(t.toUpperCase())).length;
+      // 3. Number of matching tokens in COMBINED
+      const aTokenCount = tokens.filter(t => aCombined.includes(t.toUpperCase())).length;
+      const bTokenCount = tokens.filter(t => bCombined.includes(t.toUpperCase())).length;
       if (aTokenCount !== bTokenCount) return bTokenCount - aTokenCount;
 
       return a.code.localeCompare(b.code);
@@ -214,14 +219,15 @@ function displayDenials(results, tokens) {
     const safeCode = escapeHtml(item.code);
     const safeType = escapeHtml(item.type);
     
-    // Highlight the description based on query tokens
+    // Highlight the code and description based on query tokens
+    const highlightedCode = highlightText(item.code, tokens);
     const highlightedDesc = highlightText(item.description, tokens);
     const safeDate = item.effective_date ? new Date(item.effective_date).getFullYear() : null;
 
     return `
       <div class="result-card">
         <div class="result-header">
-          <span class="code-val">${safeCode}</span>
+          <span class="code-val">${highlightedCode}</span>
           <span class="code-tag tag-${tagClass}">${safeType}</span>
           
           <div class="region-badges">
