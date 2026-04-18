@@ -23,6 +23,37 @@ const SYNONYMS = {
   'ADJ': 'ADJUSTMENT'
 };
 
+const DENIAL_INSIGHTS = {
+  'CO-1': {
+    plain: "This is your annual deductible. You are responsible for this amount until your yearly limit is met.",
+    step: "Verify this amount against your insurance portal's 'Deductible Tracker'."
+  },
+  'PR-1': {
+    plain: "Part of your deductible. Same as CO-1 but explicitly assigned to you by the provider.",
+    step: "Check if you have reached your out-of-pocket maximum for the year."
+  },
+  'CO-45': {
+    plain: "Contractual Adjustment. This is a pre-negotiated discount between your doctor and insurance.",
+    step: "You DO NOT owe this amount. If the doctor bills you for this, it is called 'Balance Billing' and is often illegal."
+  },
+  'CO-16': {
+    plain: "Missing Information. The insurance company needs more data from the doctor to process the payment.",
+    step: "Contact the billing department of the provider and ask them to 'Identify and resubmit missing claim data'."
+  },
+  'CO-97': {
+    plain: "Bundled Service. This procedure is considered part of another service performed on the same day.",
+    step: "The doctor should not bill you separately for this. It is included in the main procedure fee."
+  },
+  'CO-18': {
+    plain: "Duplicate Claim. This service was already submitted and processed under a different claim number.",
+    step: "Ignore this if the first claim was paid. If both were denied, the doctor needs to reconcile their records."
+  },
+  'MA01': {
+    plain: "Primary Insurance. This claim was processed as your primary coverage.",
+    step: "If you have a secondary plan (like AARP or a spouse's plan), give them this EOB to pay the remaining balance."
+  }
+};
+
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -223,6 +254,9 @@ function displayDenials(results, tokens) {
     const highlightedCode = highlightText(item.code, tokens);
     const highlightedDesc = highlightText(item.description, tokens);
     const safeDate = item.effective_date ? new Date(item.effective_date).getFullYear() : null;
+    
+    // Check for "Smart" Insights
+    const insight = DENIAL_INSIGHTS[item.code] || null;
 
     return `
       <div class="result-card">
@@ -253,6 +287,20 @@ function displayDenials(results, tokens) {
              ${highlightedDesc}
            </div>
         </div>
+
+        ${insight ? `
+        <div class="insight-box">
+          <div class="insight-icon">💡</div>
+          <div class="insight-content">
+            <h4>MediHelp Insight</h4>
+            <p>${insight.plain}</p>
+            <div class="next-step">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              NEXT STEP: ${insight.step}
+            </div>
+          </div>
+        </div>
+        ` : ''}
       </div>
     `;
   }).join('');
