@@ -32,11 +32,11 @@
   --warning: #f59e0b;
   --danger: #ef4444;
 
-  /* Text — No white-on-white issues */
-  --text-h: #f0fdf9;
-  --text-body: #94a3b8;
-  --text-muted: #475569;
-  --text-main: #94a3b8;
+  /* Text — Lighter for better readability */
+  --text-h: #ffffff;
+  --text-body: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-main: #cbd5e1;
 
   /* Borders */
   --border: rgba(255,255,255,0.07);
