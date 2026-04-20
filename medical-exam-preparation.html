@@ -1030,6 +1030,16 @@
 
     // Init
     document.addEventListener('DOMContentLoaded', async () => {
+      // Detect if Quiz Header is stuck
+      window.addEventListener('scroll', () => {
+        const header = document.querySelector('.quiz-header');
+        if (!header) return;
+        
+        // Sticky trigger: If top of header reaches sticky threshold (72px)
+        const isStuck = header.getBoundingClientRect().top <= 72;
+        header.classList.toggle('stuck', isStuck && window.scrollY > 100);
+      }, { passive: true });
+
       initSearch();
       
       // Auto-unlock if coming back from Gumroad with a success param
