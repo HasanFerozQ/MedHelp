@@ -27,8 +27,11 @@ CREATE TABLE IF NOT EXISTS public.topics (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     semester_id INTEGER REFERENCES public.semesters(id) ON DELETE CASCADE,
     title TEXT NOT NULL,
+    slug TEXT NOT NULL,
     "order" INTEGER NOT NULL DEFAULT 0,
-    created_at TIMESTAMPTZ DEFAULT now()
+    created_at TIMESTAMPTZ DEFAULT now(),
+    UNIQUE(semester_id, title),
+    UNIQUE(semester_id, slug)
 );
 
 -- 3. MCQs

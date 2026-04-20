@@ -3,973 +3,480 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Management Education | MediHelp Admin</title>
+  <title>Safe Admin Hub | MediHelp Management</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
   <style>
-    .admin-container { padding-top: 40px; padding-bottom: 80px; }
-    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 32px; }
-    .card-title { font-size: 20px; font-weight: 800; color: var(--text-h); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .full-width { grid-column: span 2; }
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .form-input, .form-select, .form-textarea {
-      width: 100%; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
-      padding: 12px 16px; color: var(--text-h); font-family: var(--font-main); font-size: 15px; outline: none; transition: var(--transition);
+    :root {
+      --admin-primary: #6366f1;
+      --admin-primary-dark: #4f46e5;
+      --admin-glow: rgba(99, 102, 241, 0.2);
     }
-    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-    .btn-row { display: flex; gap: 12px; margin-top: 10px; }
-    
-    /* Login Overlay */
-    #auth-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; visibility: hidden; opacity: 0; transition: var(--transition); }
+
+    body { font-family: 'Inter', sans-serif; background-color: #0b0b0d; }
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; letter-spacing: -0.02em; }
+
+    .admin-layout { padding: 40px 20px 100px; max-width: 1200px; margin: 0 auto; opacity: 0; transition: opacity 0.5s ease; }
+    .admin-layout.ready { opacity: 1; }
+
+    /* Glass Cards */
+    .g-card { 
+      background: var(--bg-card); 
+      border: 1px solid var(--border); 
+      border-radius: 20px; 
+      padding: 32px; 
+      margin-bottom: 40px; 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .g-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+    .g-card-title { font-size: 20px; font-weight: 800; color: var(--text-h); display: flex; align-items: center; gap: 12px; }
+    .g-card-title svg { color: var(--admin-primary); }
+
+    /* Initializing Overlay */
+    #loading-overlay { position: fixed; inset: 0; background: #0b0b0d; z-index: 10001; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.5s ease; }
+    #loading-overlay.fade { opacity: 0; pointer-events: none; }
+    .spinner { width: 40px; height: 40px; border: 4px solid var(--border); border-top-color: var(--admin-primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Auth State */
+    #auth-overlay { position: fixed; inset: 0; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(10px); z-index: 10000; display: flex; align-items: center; justify-content: center; visibility: hidden; opacity: 0; transition: 0.4s ease; }
     #auth-overlay.visible { visibility: visible; opacity: 1; }
-    .login-card { width: 100%; max-width: 400px; text-align: center; }
+    .login-box { width: 100%; max-width: 400px; padding: 20px; }
 
-    /* Management Table */
-    .mgmt-table-wrapper { overflow-x: auto; margin-top: 20px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
-    .mgmt-table { width: 100%; border-collapse: collapse; background: var(--bg-elevated); font-size: 14px; }
-    .mgmt-table th, .mgmt-table td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border); }
-    .mgmt-table th { background: var(--bg-card); color: var(--text-muted); text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em; }
-    .mgmt-table tr:last-child td { border-bottom: none; }
-    .mgmt-table tr:hover td { background: var(--bg-card-hover); }
-    .btn-delete { color: var(--danger); background: none; border: none; cursor: pointer; font-weight: 700; padding: 4px 8px; border-radius: 4px; transition: var(--transition); }
-    .btn-delete:hover { background: rgba(239, 68, 68, 0.1); }
+    /* Forms */
+    .f-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .f-full { grid-column: 1 / -1; }
+    .f-group label { display: block; font-size: 11px; font-weight: 800; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
+    .f-input, .f-select, .f-textarea { 
+      width: 100%; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px 18px; color: var(--text-h); font-size: 15px; outline: none; transition: 0.2s ease;
+    }
+    .f-input:focus, .f-select:focus, .f-textarea:focus { border-color: var(--admin-primary); box-shadow: 0 0 0 4px var(--admin-glow); background: var(--bg-card); }
 
-    .img-preview { max-width: 100px; max-height: 60px; border-radius: 4px; object-fit: cover; border: 1px solid var(--border); }
+    .btn-submit {
+      background: var(--admin-primary); color: white; border: none; padding: 16px 32px; border-radius: 12px;
+      font-weight: 700; font-family: 'Outfit'; cursor: pointer; transition: 0.3s; width: 100%;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--admin-primary-dark); transform: translateY(-2px); box-shadow: 0 5px 15px var(--admin-glow); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Data List */
+    .data-row { display: flex; align-items: center; justify-content: space-between; padding: 15px; border-radius: 12px; background: rgba(255,255,255,0.02); margin-bottom: 10px; border: 1px solid var(--border); }
+    .data-info h4 { font-size: 15px; margin-bottom: 4px; }
+    .data-info p { font-size: 12px; color: var(--text-muted); }
     
-    .hidden { display: none; }
-    .toggle-group { display: flex; gap: 20px; margin-bottom: 10px; }
-    .toggle-item { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; }
-    
-    #loading-state { text-align: center; padding: 40px; color: var(--text-muted); }
-
-    /* Toast Notification */
-    #toast {
-      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
-      background: var(--bg-card); border: 1px solid var(--accent); color: var(--text-h);
-      padding: 12px 24px; border-radius: 100px; font-weight: 700; font-size: 14px;
-      z-index: 10000; box-shadow: var(--shadow-accent); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      display: flex; align-items: center; gap: 10px; pointer-events: none;
+    /* Toast */
+    #m-toast {
+      position: fixed; bottom: 40px; right: 40px; transform: translateX(150%);
+      background: var(--bg-card); border: 1px solid var(--border); padding: 18px 28px; border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-left: 5px solid var(--admin-primary); z-index: 10002;
+      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 12px;
     }
-    #toast.visible { transform: translateX(-50%) translateY(0); }
-    #toast.error { border-color: var(--danger); box-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
-
-    /* Custom Confirmation Modal */
-    #confirm-modal {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
-      z-index: 10000; display: flex; align-items: center; justify-content: center;
-      visibility: hidden; opacity: 0; transition: 0.3s ease;
-    }
-    #confirm-modal.visible { visibility: visible; opacity: 1; }
-    .confirm-card {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
-      padding: 32px; max-width: 400px; width: 90%; text-align: center; box-shadow: var(--shadow-accent);
-      transform: scale(0.9); transition: 0.3s ease;
-    }
-    #confirm-modal.visible .confirm-card { transform: scale(1); }
-    .confirm-title { font-size: 18px; font-weight: 800; color: var(--text-h); margin-bottom: 12px; }
-    .confirm-text { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
-    .confirm-btns { display: flex; gap: 12px; justify-content: center; }
-
-    /* Auth Error Banner */
-    #auth-error-banner {
-      background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger);
-      color: var(--danger); padding: 12px; border-radius: 8px; font-size: 13px;
-      margin-bottom: 20px; text-align: center; display: none;
-      font-weight: 600;
-    }
+    #m-toast.on { transform: translateX(0); }
+    #m-toast.error { border-left-color: var(--danger); }
   </style>
 </head>
 <body>
 
-  <!-- Custom Confirm Modal -->
-  <div id="confirm-modal">
-    <div class="confirm-card">
-      <div class="confirm-title">Are you sure?</div>
-      <div class="confirm-text" id="confirm-msg">This action cannot be undone.</div>
-      <div class="confirm-btns">
-        <button id="confirm-cancel" class="btn btn-ghost">Cancel</button>
-        <button id="confirm-yes" class="btn btn-primary" style="background: var(--danger);">Yes, Proceed</button>
+  <!-- System Elements -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <div style="font-weight: 800; font-family: 'Outfit'; font-size: 14px; letter-spacing: 0.05em; color: var(--text-muted);">CONNECTING TO SECURE CORE...</div>
+  </div>
+
+  <div id="m-toast"><span id="m-toast-icon">✅</span> <span id="m-toast-msg">Database Synced</span></div>
+
+  <div id="auth-overlay">
+    <div class="login-box">
+      <div class="g-card" style="text-align: center;">
+        <img src="icons/logo.png" style="width: 50px; margin-bottom: 20px;">
+        <h2 style="margin-bottom: 10px;">Security Verification</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 32px;">Access restricted to authorized administrators.</p>
+        <form id="safe-login-form" style="text-align: left;">
+          <div class="f-group" style="margin-bottom: 20px;">
+            <label>Admin Email</label>
+            <input type="email" id="l-email" class="f-input" placeholder="admin@medihelp.live" required>
+          </div>
+          <div class="f-group" style="margin-bottom: 32px;">
+            <label>Management Key</label>
+            <input type="password" id="l-pass" class="f-input" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-submit">Authorize Session</button>
+        </form>
       </div>
     </div>
   </div>
 
-  <!-- Toast Element -->
-  <div id="toast">
-    <span id="toast-icon">🚀</span>
-    <span id="toast-msg">Action Successful</span>
-  </div>
-
-  <!-- ── NAV ── -->
-  <nav class="navbar">
-    <div class="container nav-content">
+  <!-- App Header -->
+  <nav class="navbar" style="border-bottom: 1px solid var(--border); background: rgba(11, 11, 13, 0.8); backdrop-filter: blur(20px);">
+    <div class="container nav-content" style="max-width: 1200px;">
       <a href="/" class="nav-brand">
-        <img src="icons/logo.png?v=1.1" alt="MediHelp">
-        MediHelp Admin
+        <img src="icons/logo.png" alt="MediHelp">
+        <span style="font-family: 'Outfit'; font-weight: 900; letter-spacing: -0.5px;">MEDIHELP <span style="color: var(--admin-primary);">MASTER</span></span>
       </a>
-            <div class="nav-actions">
-        <a href="/pricing" class="btn btn-ghost" style="padding:8px 18px; font-size:14px; border-radius:10px;">Expert Help</a>
-        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
-        <div class="nav-toggle" onclick="MediHelp.toggleMobileMenu()">
-          <span></span><span></span><span></span>
-        </div>
-      </div>
+      <button onclick="AdminApp.logout()" class="btn btn-ghost" style="color: var(--danger); font-size: 13px;">End Session</button>
     </div>
   </nav>
 
-  <main class="container admin-container">
-    
-    <!-- DASHBOARD HEADER -->
-    <header style="margin-bottom: 40px;">
-      <h1 style="font-size: 32px; font-weight: 900; color: var(--text-h); letter-spacing: -1px; margin-bottom: 8px;">Management Education Portal</h1>
-      <p style="color: var(--text-muted);">Manage Semesters, Topics, and MCQs for the Medical Exam Preparation platform.</p>
+  <main class="admin-layout" id="main-layout">
+    <header style="margin-bottom: 50px;">
+      <h1 style="font-size: 40px; font-weight: 900; margin-bottom: 10px;">Content Dashboard</h1>
+      <p style="color: var(--text-muted);">Secure interface for managing medical education modules and clinical datasets.</p>
     </header>
 
-    <div id="content-area">
-      <!-- 1. TOPIC CREATION -->
-      <section class="card">
-        <h2 class="card-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-          Create New Topic
+    <!-- MODULE 1: TOPICS -->
+    <section class="g-card">
+      <div class="g-card-header">
+        <h2 class="g-card-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          Initialize New Topic
         </h2>
-        <form id="topic-form" class="form-grid">
-          <div class="form-group">
+      </div>
+      <form id="f-topic" class="f-grid">
+        <div class="f-group">
+          <label>Semester Assignment</label>
+          <select id="t-sem" class="f-select" required>
+            <option value="">Choose Semester...</option>
+            <option value="1">Semester 1</option><option value="2">Semester 2</option>
+            <option value="3">Semester 3</option><option value="4">Semester 4</option>
+            <option value="5">Semester 5</option><option value="6">Semester 6</option>
+            <option value="7">Semester 7</option><option value="8">Semester 8</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label>Topic Title</label>
+          <input type="text" id="t-title" class="f-input" placeholder="e.g. Molecular Biology" required>
+        </div>
+        <div class="f-full">
+          <button type="submit" class="btn-submit">Deploy Topic to Cloud</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- MODULE 2: MCQS -->
+    <section class="g-card">
+      <div class="g-card-header">
+        <h2 class="g-card-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Clinical MCQ Entry
+        </h2>
+      </div>
+      <form id="f-mcq" class="f-grid">
+        <div class="f-group">
+          <label>Semester Filter</label>
+          <select id="m-sem" class="f-select" required onchange="AdminApp.loadTopics(this.value, 'm-topic')">
+            <option value="">Select Semester...</option>
+            <option value="1">Semester 1</option><option value="2">Semester 2</option><option value="3">Semester 3</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label>Target Topic</label>
+          <select id="m-topic" class="f-select" required disabled><option value="">Select Topic...</option></select>
+        </div>
+        <div class="f-full">
+          <label>Medical Question Stem</label>
+          <textarea id="m-q" class="f-textarea" rows="3" required></textarea>
+        </div>
+        <div class="f-full" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <input type="text" id="m-opt-0" class="f-input" placeholder="Answer A" required>
+          <input type="text" id="m-opt-1" class="f-input" placeholder="Answer B" required>
+          <input type="text" id="m-opt-2" class="f-input" placeholder="Answer C" required>
+          <input type="text" id="m-opt-3" class="f-input" placeholder="Answer D" required>
+        </div>
+        <div class="f-group">
+          <label>Correct Index</label>
+          <select id="m-correct" class="f-select" required>
+            <option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label>Clinical Explanation</label>
+          <input type="text" id="m-exp" class="f-input">
+        </div>
+        <div class="f-full">
+          <button type="submit" class="btn-submit">Publish MCQ</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- MODULE 3: CASE STUDIES -->
+    <section class="g-card">
+      <div class="g-card-header">
+        <h2 class="g-card-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+          Case Study Systems
+        </h2>
+      </div>
+      
+      <div style="background: rgba(255,255,255,0.02); padding: 25px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 30px;">
+        <h3 style="font-size: 13px; color: var(--admin-primary); margin-bottom: 20px; font-weight: 800; text-transform: uppercase;">Step 1: Clinical Scenario</h3>
+        <form id="f-case" class="f-grid">
+           <div class="f-group">
             <label>Semester</label>
-            <select id="topic-semester" class="form-select" required>
-              <option value="">Select Semester...</option>
-              <option value="1">Semester 1</option>
-              <option value="2">Semester 2</option>
-              <option value="3">Semester 3</option>
-              <option value="4">Semester 4</option>
-              <option value="5">Semester 5</option>
-              <option value="6">Semester 6</option>
-              <option value="7">Semester 7</option>
-              <option value="8">Semester 8</option>
+            <select id="c-sem" class="f-select" required onchange="AdminApp.loadTopics(this.value, 'c-topic')">
+              <option value="">Select...</option><option value="1">Sem 1</option><option value="2">Sem 2</option>
             </select>
           </div>
-          <div class="form-group">
-            <label>Topic Title</label>
-            <input type="text" id="topic-title" class="form-input" placeholder="e.g. Cardiovascular Physiology" required>
+          <div class="f-group">
+            <label>Topic</label>
+            <select id="c-topic" class="f-select" required disabled><option value="">Select...</option></select>
           </div>
-          <div class="full-width">
-            <button type="submit" class="btn btn-primary">Create Topic</button>
+          <div class="f-full">
+            <label>Case Title</label>
+            <input type="text" id="c-title" class="f-input" placeholder="e.g. Case #1: Heart Failure Management" required>
           </div>
+          <div class="f-full">
+            <label>Scenario Detail</label>
+            <textarea id="c-scene" class="f-textarea" rows="4" required></textarea>
+          </div>
+          <div class="f-full"><button type="submit" class="btn-submit" style="background:transparent; border:1px solid var(--admin-primary); color:var(--admin-primary);">Generate Case Profile</button></div>
         </form>
-      </section>
+      </div>
 
-      <!-- 2. MCQ UPLOADER -->
-      <section class="card">
-        <h2 class="card-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Upload Standalone MCQ
-        </h2>
-        <form id="mcq-form">
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Semester</label>
-              <select id="mcq-semester" class="form-select" required onchange="loadTopicsBySemester(this.value, 'mcq-topic')">
-                <option value="">Select Semester...</option>
-                <option value="1">Semester 1</option>
-                <option value="2">Semester 2</option>
-                <option value="3">Semester 3</option>
-                <option value="4">Semester 4</option>
-                <option value="5">Semester 5</option>
-                <option value="6">Semester 6</option>
-                <option value="7">Semester 7</option>
-                <option value="8">Semester 8</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Topic</label>
-              <select id="mcq-topic" class="form-select" required disabled>
-                <option value="">Select Topic...</option>
-              </select>
-            </div>
-            
-            <div class="form-group full-width">
-              <label>Question</label>
-              <textarea id="mcq-question" class="form-textarea" rows="3" placeholder="Enter the MCQ question here..." required></textarea>
-            </div>
-
-            <!-- Image Handling omitted for brevity - same as before -->
-            <div class="form-group full-width">
-              <label>Image (Optional)</label>
-              <div class="toggle-group">
-                <label class="toggle-item"><input type="radio" name="img-type" value="none" checked onchange="toggleImgInput('none')"> None</label>
-                <label class="toggle-item"><input type="radio" name="img-type" value="url" onchange="toggleImgInput('url')"> External URL</label>
-                <label class="toggle-item"><input type="radio" name="img-type" value="file" onchange="toggleImgInput('file')"> Local Upload</label>
-              </div>
-              <div id="img-input-url" class="hidden">
-                 <input type="url" id="mcq-img-url" class="form-input" placeholder="https://example.com/image.jpg">
-              </div>
-              <div id="img-input-file" class="hidden">
-                 <input type="file" id="mcq-img-file" class="form-input" accept="image/*">
-                 <p style="font-size:11px; color:var(--text-muted); margin-top:5px;">Max 5MB. Will be automatically resized.</p>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Option A</label>
-              <input type="text" id="mcq-opt-0" class="form-input" required>
-            </div>
-            <div class="form-group">
-              <label>Option B</label>
-              <input type="text" id="mcq-opt-1" class="form-input" required>
-            </div>
-            <div class="form-group">
-              <label>Option C</label>
-              <input type="text" id="mcq-opt-2" class="form-input" required>
-            </div>
-            <div class="form-group">
-              <label>Option D</label>
-              <input type="text" id="mcq-opt-3" class="form-input" required>
-            </div>
-
-            <div class="form-group">
-              <label>Correct Answer</label>
-              <select id="mcq-correct" class="form-select" required>
-                <option value="0">Option A</option>
-                <option value="1">Option B</option>
-                <option value="2">Option C</option>
-                <option value="3">Option D</option>
-              </select>
-            </div>
-
-            <div class="form-group full-width">
-              <label>Explanation / Definition</label>
-              <textarea id="mcq-explanation" class="form-textarea" rows="2" placeholder="Explain why the answer is correct..."></textarea>
-            </div>
-
-            <div class="full-width">
-              <button type="submit" id="submit-mcq" class="btn btn-primary" style="width: 100%;">Upload Standalone MCQ</button>
-              <button type="button" id="cancel-edit" class="btn btn-ghost hidden" style="width: 100%; margin-top: 10px;">Cancel Editing</button>
-            </div>
+      <div style="background: rgba(255,255,255,0.02); padding: 25px; border-radius: 16px; border: 1px solid var(--border);">
+        <h3 style="font-size: 13px; color: var(--admin-primary); margin-bottom: 20px; font-weight: 800; text-transform: uppercase;">Step 2: Sub-Questions</h3>
+        <form id="f-case-question" class="f-grid">
+          <div class="f-full">
+            <label>Parent Case</label>
+            <select id="c-selector" class="f-select" required><option value="">Awaiting Sync...</option></select>
           </div>
+          <div class="f-full"><label>Question</label><input type="text" id="cq-q" class="f-input" required></div>
+          <div class="f-full" style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+            <input type="text" id="cq-0" class="f-input" placeholder="A" required>
+            <input type="text" id="cq-1" class="f-input" placeholder="B" required>
+            <input type="text" id="cq-2" class="f-input" placeholder="C" required>
+            <input type="text" id="cq-3" class="f-input" placeholder="D" required>
+          </div>
+          <div class="f-group">
+            <label>Correct Choice</label>
+            <select id="cq-cor" class="f-select" required><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+          </div>
+          <div class="f-full"><button type="submit" class="btn-submit">Attach to Case</button></div>
         </form>
-      </section>
+      </div>
+    </section>
 
-      <!-- 4. CASE STUDY CREATOR -->
-      <section class="card">
-        <h2 class="card-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
-          Clinical Case Study Dashboard
-        </h2>
-        
-        <!-- Part A: Create Case -->
-        <div style="border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 24px;">
-          <h3 style="font-size: 14px; text-transform: uppercase; color:var(--text-muted); margin-bottom:15px;">Stage 1: Create Case Scenario</h3>
-          <form id="case-form" class="form-grid">
-            <div class="form-group">
-              <label>Semester</label>
-              <select id="case-semester" class="form-select" required onchange="loadTopicsBySemester(this.value, 'case-topic')">
-                <option value="">Select Semester...</option>
-                <option value="1">Semester 1</option>
-                <option value="2">Semester 2</option>
-                <option value="3">Semester 3</option>
-                <option value="4">Semester 4</option>
-                <option value="5">Semester 5</option>
-                <option value="6">Semester 6</option>
-                <option value="7">Semester 7</option>
-                <option value="8">Semester 8</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Topic</label>
-              <select id="case-topic" class="form-select" required disabled>
-                <option value="">Select Topic...</option>
-              </select>
-            </div>
-            <div class="form-group full-width">
-              <label>Case Title</label>
-              <input type="text" id="case-title" class="form-input" placeholder="e.g. CASE 1: Chest Trauma" required>
-            </div>
-            <div class="form-group full-width">
-              <label>Scenario / Clinical Stem</label>
-              <textarea id="case-scenario" class="form-textarea" rows="4" placeholder="Enter the full clinical story here..." required></textarea>
-            </div>
-            <div class="full-width">
-              <button type="submit" class="btn btn-accent" style="width:100%">Create Clinical Case</button>
-            </div>
-          </form>
-        </div>
-
-        <!-- Part B: Add Question to Case -->
-        <div>
-          <h3 style="font-size: 14px; text-transform: uppercase; color:var(--text-muted); margin-bottom:15px;">Stage 2: Add Questions to Case</h3>
-          <form id="case-question-form" class="form-grid">
-             <div class="form-group">
-              <label>Select Parent Case</label>
-              <select id="case-selector" class="form-select" required>
-                <option value="">Fetch cases first...</option>
-              </select>
-            </div>
-            <div class="form-group" style="display:flex; align-items:flex-end;">
-              <button type="button" onclick="refreshCaseSelector()" class="btn btn-ghost" style="font-size:12px;">🔄 Refresh Cases</button>
-            </div>
-
-            <div class="form-group full-width">
-              <label>Question</label>
-              <input type="text" id="cq-question" class="form-input" placeholder="Question related to the case..." required>
-            </div>
-
-            <div class="form-group"><label>Option A</label><input type="text" id="cq-opt-0" class="form-input" required></div>
-            <div class="form-group"><label>Option B</label><input type="text" id="cq-opt-1" class="form-input" required></div>
-            <div class="form-group"><label>Option C</label><input type="text" id="cq-opt-2" class="form-input" required></div>
-            <div class="form-group"><label>Option D</label><input type="text" id="cq-opt-3" class="form-input" required></div>
-
-            <div class="form-group">
-              <label>Correct Answer</label>
-              <select id="cq-correct" class="form-select" required>
-                <option value="0">Option A</option>
-                <option value="1">Option B</option>
-                <option value="2">Option C</option>
-                <option value="3">Option D</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Explanation</label>
-              <input type="text" id="cq-explanation" class="form-input" placeholder="Explain the clinical logic...">
-            </div>
-
-            <div class="full-width">
-              <button type="submit" class="btn btn-primary" style="width: 100%;">Add Question to Case</button>
-            </div>
-          </form>
-        </div>
-      </section>
-
-      <!-- 3. MCQ MANAGEMENT (LIST / DELETE) -->
-      <section class="card">
-        <h2 class="card-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Manage & Delete Questions
-        </h2>
-        
-        <div class="form-grid" style="margin-bottom: 24px;">
-          <div class="form-group">
-            <label>Filter Semester</label>
-            <select id="filter-semester" class="form-select" onchange="loadTopicsBySemester(this.value, 'filter-topic'); refreshMcqList();">
-              <option value="">All Semesters</option>
-              <option value="1">Semester 1</option>
-              <option value="2">Semester 2</option>
-              <option value="3">Semester 3</option>
-              <option value="4">Semester 4</option>
-              <option value="5">Semester 5</option>
-              <option value="6">Semester 6</option>
-              <option value="7">Semester 7</option>
-              <option value="8">Semester 8</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Filter Topic</label>
-            <select id="filter-topic" class="form-select" onchange="refreshMcqList()">
-              <option value="">All Topics</option>
-            </select>
-          </div>
-        </div>
-
-        <div id="loading-mcqs" class="hidden">Loading MCQs...</div>
-        
-        <div class="mgmt-table-wrapper">
-          <table class="mgmt-table">
-            <thead>
-              <tr>
-                <th>Preview</th>
-                <th>Question</th>
-                <th>Topic</th>
-                <th style="text-align:right;">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="mcq-list-body">
-              <!-- Rows injected here -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
+    <!-- LIVE LOGS -->
+    <section class="g-card">
+      <h2 class="g-card-title">Live Repository (Recent)</h2>
+      <div id="repo-list" style="margin-top:20px;">
+        <!-- Data here -->
+      </div>
+    </section>
   </main>
 
-  <!-- AUTH OVERLAY -->
-  <div id="auth-overlay">
-    <div class="card login-card">
-      <h2 class="card-title" style="justify-content: center;">Admin Login</h2>
-      <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 24px;">MediHelp Internal Management Access Only</p>
-      <div id="auth-error-banner">Unauthorized Access Restricted</div>
-      <form id="login-form">
-        <div class="form-group" style="text-align: left;">
-          <label>Email</label>
-          <input type="email" id="login-email" class="form-input" required>
-        </div>
-        <div class="form-group" style="text-align: left;">
-          <label>Password</label>
-          <input type="password" id="login-password" class="form-input" required>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
-      </form>
-
-      <div style="margin: 20px 0; display: flex; align-items: center; gap: 10px; color: var(--text-muted); font-size: 12px; font-weight: 700; text-transform: uppercase;">
-        <div style="flex:1; height: 1px; background: var(--border);"></div>
-        <span>Or continue with</span>
-        <div style="flex:1; height: 1px; background: var(--border);"></div>
-      </div>
-
-      <button id="google-login-btn" class="btn btn-ghost" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-        </svg>
-        Sign in with Google
-      </button>
-    </div>
-  </div>
-
   <script>
-    // --- UTILS ---
-    let confirmCallback = null;
-    function showConfirm(msg, callback) {
-      document.getElementById('confirm-msg').textContent = msg;
-      confirmCallback = callback;
-      document.getElementById('confirm-modal').classList.add('visible');
-    }
+    const ADMIN_UID = '0fcd3894-4ca1-4538-9f45-b0334ee65407';
 
-    document.getElementById('confirm-cancel').addEventListener('click', () => {
-      document.getElementById('confirm-modal').classList.remove('visible');
-    });
+    const AdminApp = {
+      init: async function() {
+        console.log('AdminApp: Initializing Safe Core...');
+        this.checkReady();
+      },
 
-    document.getElementById('confirm-yes').addEventListener('click', () => {
-      if (confirmCallback) confirmCallback();
-      document.getElementById('confirm-modal').classList.remove('visible');
-    });
+      checkReady: async function() {
+        if (!window.dbClient) return setTimeout(() => this.checkReady(), 100);
+        
+        // Remove overlay once client is ready
+        document.getElementById('loading-overlay').classList.add('fade');
+        document.getElementById('main-layout').classList.add('ready');
 
-    function showToast(msg, type = 'success') {
-      const toast = document.getElementById('toast');
-      const toastMsg = document.getElementById('toast-msg');
-      const toastIcon = document.getElementById('toast-icon');
-      
-      toastMsg.textContent = msg;
-      toastIcon.textContent = type === 'error' ? '❌' : '✅';
-      toast.className = type === 'error' ? 'error visible' : 'visible';
-      
-      setTimeout(() => {
-        toast.classList.remove('visible');
-      }, 3000);
-    }
-
-    // --- AUTH LOGIC ---
-    const authOverlay = document.getElementById('auth-overlay');
-    
-    async function checkUser() {
-      const { data: { user } } = await window.dbClient.auth.getUser();
-      const ADMIN_UID = '0fcd3894-4ca1-4538-9f45-b0334ee65407';
-      const errorBanner = document.getElementById('auth-error-banner');
-
-      if (!user) {
-        authOverlay.classList.add('visible');
-        errorBanner.style.display = 'none';
-      } else if (user.id !== ADMIN_UID) {
-        errorBanner.textContent = 'Unauthorized: Only designated Admins can access this portal.';
-        errorBanner.style.display = 'block';
-        await window.dbClient.auth.signOut();
-        authOverlay.classList.add('visible');
-      } else {
-        authOverlay.classList.remove('visible');
-        errorBanner.style.display = 'none';
-        refreshMcqList();
-      }
-    }
-
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-      const btn = e.target.querySelector('button');
-      
-      btn.disabled = true;
-      btn.textContent = 'Verifying...';
-
-      const { error } = await window.dbClient.auth.signInWithPassword({ email, password });
-      
-      if (error) {
-        showToast('Access Denied: ' + error.message, 'error');
-        btn.disabled = false;
-        btn.textContent = 'Sign In';
-      } else {
-        checkUser();
-      }
-    });
-
-    document.getElementById('google-login-btn').addEventListener('click', async () => {
-      const { error } = await window.dbClient.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: window.location.origin + window.location.pathname
-        }
-      });
-      if (error) showToast('Google Sign-In Error: ' + error.message, 'error');
-    });
-
-    document.getElementById('logout-btn').addEventListener('click', async () => {
-      await window.dbClient.auth.signOut();
-      checkUser();
-    });
-
-    // --- SHARED DATA LOGIC ---
-    async function loadTopicsBySemester(semId, targetSelectId) {
-      const target = document.getElementById(targetSelectId);
-      target.innerHTML = `<option value="">Select Topic...</option>`;
-      
-      if (!semId) {
-        target.disabled = true;
-        return;
-      }
-
-      const { data, error } = await window.dbClient
-        .from('topics')
-        .select('*')
-        .eq('semester_id', semId)
-        .order('order', { ascending: true });
-
-      if (error) {
-        console.error('Error fetching topics:', error);
-        return;
-      }
-
-      data.forEach(t => {
-        const opt = document.createElement('option');
-        opt.value = t.id;
-        opt.textContent = t.title;
-        target.appendChild(opt);
-      });
-      
-      target.disabled = false;
-    }
-
-    // --- TOPIC CREATION ---
-    document.getElementById('topic-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const semId = document.getElementById('topic-semester').value;
-      const title = document.getElementById('topic-title').value;
-      const btn = e.target.querySelector('button');
-
-      btn.disabled = true;
-      
-      const { error } = await window.dbClient
-        .from('topics')
-        .insert([{ semester_id: semId, title: title }]);
-
-      if (error) {
-        showToast('Error creating topic: ' + error.message, 'error');
-      } else {
-        showToast('Topic created successfully!');
-        e.target.reset();
-        // Refresh dropdowns if necessary
-        loadTopicsBySemester(document.getElementById('mcq-semester').value, 'mcq-topic');
-      }
-      btn.disabled = false;
-    });
-
-    // --- MCQ UPLOADER ---
-    let editingMcqId = null;
-
-    function toggleImgInput(type) {
-      document.getElementById('img-input-url').classList.add('hidden');
-      document.getElementById('img-input-file').classList.add('hidden');
-      if (type === 'url') document.getElementById('img-input-url').classList.remove('hidden');
-      if (type === 'file') document.getElementById('img-input-file').classList.remove('hidden');
-    }
-
-    document.getElementById('mcq-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const topicId = document.getElementById('mcq-topic').value;
-      const question = document.getElementById('mcq-question').value;
-      const explanation = document.getElementById('mcq-explanation').value;
-      const correctIndex = document.getElementById('mcq-correct').value;
-      const options = [
-        document.getElementById('mcq-opt-0').value,
-        document.getElementById('mcq-opt-1').value,
-        document.getElementById('mcq-opt-2').value,
-        document.getElementById('mcq-opt-3').value
-      ];
-
-      const btn = document.getElementById('submit-mcq');
-      const originalBtnText = btn.textContent;
-      btn.disabled = true;
-      btn.textContent = editingMcqId ? 'Updating...' : 'Uploading...';
-
-      let imageUrl = null;
-      // If editing, default to the existing image unless changed
-      if (editingMcqId) {
-        imageUrl = window.currentEditingImageUrl;
-      }
-
-      const typeInput = document.querySelector('input[name="img-type"]:checked');
-      const type = typeInput ? typeInput.value : 'none';
-
-      try {
-        if (type === 'url') {
-          imageUrl = document.getElementById('mcq-img-url').value;
-        } else if (type === 'file') {
-          const file = document.getElementById('mcq-img-file').files[0];
-          if (file) {
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
-            const filePath = `mcqs/${fileName}`;
-
-            const { data, error: uploadError } = await window.dbClient.storage
-              .from('mcq-images')
-              .upload(filePath, file);
-
-            if (uploadError) throw uploadError;
-            
-            const { data: { publicUrl } } = window.dbClient.storage
-              .from('mcq-images')
-              .getPublicUrl(filePath);
-            
-            imageUrl = publicUrl;
-          }
-        }
-
-        const mcqData = {
-          topic_id: topicId,
-          question,
-          image_url: imageUrl,
-          options,
-          correct_index: parseInt(correctIndex),
-          explanation
-        };
-
-        if (editingMcqId) {
-          const { error } = await window.dbClient
-            .from('mcqs')
-            .update(mcqData)
-            .eq('id', editingMcqId);
-          if (error) throw error;
-          showToast('MCQ updated successfully!');
-          cancelEditing();
+        // Check Auth
+        const { data: { user } } = await window.dbClient.auth.getUser();
+        if (!user || user.id !== ADMIN_UID) {
+          document.getElementById('auth-overlay').classList.add('visible');
         } else {
-          const { error: insertError } = await window.dbClient
-            .from('mcqs')
-            .insert([mcqData]);
-          if (insertError) throw insertError;
-          showToast('MCQ uploaded successfully!');
-          resetMcqFormFields(); // Keep Semester/Topic selected
+          this.refreshAll();
         }
+      },
 
-        refreshMcqList();
-      } catch (err) {
-        showToast('Operation failed: ' + err.message, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = editingMcqId ? 'Update MCQ' : 'Upload MCQ';
+      toast: function(msg, isError = false) {
+        const t = document.getElementById('m-toast');
+        t.querySelector('#m-toast-msg').textContent = msg;
+        t.querySelector('#m-toast-icon').textContent = isError ? '❌' : '✅';
+        t.className = isError ? 'on error' : 'on';
+        setTimeout(() => t.classList.remove('on'), 4000);
+      },
+
+      logout: async function() {
+        await window.dbClient.auth.signOut();
+        window.location.reload();
+      },
+
+      refreshAll: function() {
+        this.loadRecentRepo();
+        this.refreshCaseList();
+      },
+
+      loadTopics: async function(semId, targetId) {
+        const sel = document.getElementById(targetId);
+        sel.disabled = true;
+        sel.innerHTML = '<option>Loading...</option>';
+        
+        const { data } = await window.dbClient.from('topics').select('*').eq('semester_id', semId).order('title');
+        sel.innerHTML = '<option value="">Select Topic...</option>';
+        if (data) data.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t.id; opt.textContent = t.title; sel.appendChild(opt);
+        });
+        sel.disabled = false;
+      },
+
+      refreshCaseList: async function() {
+        const { data } = await window.dbClient.from('case_studies').select('id, title').order('created_at', { ascending: false });
+        const sel = document.getElementById('c-selector');
+        sel.innerHTML = '<option value="">Select Case Study...</option>';
+        if (data) data.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c.id; opt.textContent = c.title; sel.appendChild(opt);
+        });
+      },
+
+      loadRecentRepo: async function() {
+        const container = document.getElementById('repo-list');
+        container.innerHTML = '<p style="color:var(--text-muted);">Syncing live data...</p>';
+
+        const { data, error } = await window.dbClient.from('mcqs').select('*, topics(title)').order('created_at', { ascending: false }).limit(10);
+        
+        if (error) return container.innerHTML = '<p style="color:var(--danger);">Error syncing repo.</p>';
+        container.innerHTML = '';
+        if (data) data.forEach(item => {
+           const div = document.createElement('div');
+           div.className = 'data-row';
+           div.innerHTML = `
+             <div class="data-info">
+               <h4>${item.question.substring(0, 80)}...</h4>
+               <p>${item.topics?.title || 'System'} • ${new Date(item.created_at).toLocaleDateString()}</p>
+             </div>
+             <button onclick="AdminApp.deleteItem('mcqs', '${item.id}')" style="background:none; border:none; color:var(--danger); cursor:pointer; font-weight:700;">Delete</button>
+           `;
+           container.appendChild(div);
+        });
+      },
+
+      deleteItem: async function(table, id) {
+        if (!confirm('Permanent deletion requested. Proceed?')) return;
+        const { error } = await window.dbClient.from(table).delete().eq('id', id);
+        if (error) this.toast(error.message, true);
+        else { this.toast('Security Purge Complete'); this.refreshAll(); }
       }
-    });
+    };
 
-    function resetMcqFormFields() {
-      // Manual reset of question fields only, keeping Semester & Topic
-      document.getElementById('mcq-question').value = '';
-      document.getElementById('mcq-explanation').value = '';
-      document.getElementById('mcq-correct').value = '0';
-      document.getElementById('mcq-opt-0').value = '';
-      document.getElementById('mcq-opt-1').value = '';
-      document.getElementById('mcq-opt-2').value = '';
-      document.getElementById('mcq-opt-3').value = '';
-      document.getElementById('mcq-img-url').value = '';
-      document.getElementById('mcq-img-file').value = '';
-      document.querySelector('input[name="img-type"][value="none"]').checked = true;
-      toggleImgInput('none');
-    }
+    // FORM HANDLERS - ROBUST WRAPPERS
+    function setupForms() {
+      // 1. LOGIN
+      document.getElementById('safe-login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.disabled = true; btn.textContent = 'Verifying Credentials...';
 
-    function editMcq(id, dataStr) {
-      const q = JSON.parse(decodeURIComponent(dataStr));
-      editingMcqId = id;
-      window.currentEditingImageUrl = q.image_url;
-
-      // Fill form
-      document.getElementById('mcq-semester').value = q.topics.semester_id;
-      loadTopicsBySemester(q.topics.semester_id, 'mcq-topic').then(() => {
-        document.getElementById('mcq-topic').value = q.topic_id;
-      });
-
-      document.getElementById('mcq-question').value = q.question;
-      document.getElementById('mcq-explanation').value = q.explanation;
-      document.getElementById('mcq-correct').value = q.correct_index;
-      document.getElementById('mcq-opt-0').value = q.options[0];
-      document.getElementById('mcq-opt-1').value = q.options[1];
-      document.getElementById('mcq-opt-2').value = q.options[2];
-      document.getElementById('mcq-opt-3').value = q.options[3];
-
-      if (q.image_url) {
-        document.querySelector('input[name="img-type"][value="url"]').checked = true;
-        toggleImgInput('url');
-        document.getElementById('mcq-img-url').value = q.image_url;
-      } else {
-        document.querySelector('input[name="img-type"][value="none"]').checked = true;
-        toggleImgInput('none');
-      }
-
-      document.getElementById('submit-mcq').textContent = 'Update MCQ';
-      document.getElementById('cancel-edit').classList.remove('hidden');
-      window.scrollTo({ top: document.getElementById('mcq-form').offsetTop - 100, behavior: 'smooth' });
-    }
-
-    function cancelEditing() {
-      editingMcqId = null;
-      window.currentEditingImageUrl = null;
-      document.getElementById('submit-mcq').textContent = 'Upload MCQ';
-      document.getElementById('cancel-edit').classList.add('hidden');
-      resetMcqFormFields();
-    }
-
-    document.getElementById('cancel-edit').addEventListener('click', cancelEditing);
-
-    // --- MANAGEMENT AREA ---
-    async function refreshMcqList() {
-      const semId = document.getElementById('filter-semester').value;
-      const topicId = document.getElementById('filter-topic').value;
-      const tbody = document.getElementById('mcq-list-body');
-      
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Fetching questions...</td></tr>';
-
-      let query = window.dbClient
-        .from('mcqs')
-        .select('*, topics!inner(id, title, semester_id)');
-
-      if (topicId) {
-        query = query.eq('topic_id', topicId);
-      } else if (semId) {
-        query = query.eq('topics.semester_id', semId);
-      }
-
-      const { data, error } = await query.order('created_at', { ascending: false }).limit(50);
-
-      if (error) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--danger);">Error: ${error.message}</td></tr>`;
-        return;
-      }
-
-      if (data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No questions found for this filter.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = '';
-      data.forEach(q => {
-        const tr = document.createElement('tr');
-        // Encode data for the edit button
-        const dataStr = encodeURIComponent(JSON.stringify(q));
-        tr.innerHTML = `
-          <td>
-            ${q.image_url ? `<img src="${q.image_url}" class="img-preview">` : `<span style="font-size:10px; color:var(--text-muted);">No Img</span>`}
-          </td>
-          <td style="max-width:300px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtml(q.question)}">
-            ${escapeHtml(q.question)}
-          </td>
-          <td style="color:var(--text-muted); font-size:12px;">${escapeHtml(q.topics.title)}</td>
-          <td style="text-align:right; white-space:nowrap;">
-            <button class="btn-ghost" style="padding:4px 8px; font-size:12px; margin-right:5px;" onclick="editMcq('${q.id}', '${dataStr}')">Edit</button>
-            <button class="btn-delete" onclick="deleteMcq('${q.id}', '${q.image_url}')">Delete</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    async function deleteMcq(id, imgUrl) {
-      showConfirm('Are you sure you want to delete this question?', async () => {
-        const { error } = await window.dbClient
-          .from('mcqs')
-          .delete()
-          .eq('id', id);
+        const { data, error } = await window.dbClient.auth.signInWithPassword({
+          email: document.getElementById('l-email').value,
+          password: document.getElementById('l-pass').value
+        });
 
         if (error) {
-          showToast('Delete failed: ' + error.message, 'error');
+          AdminApp.toast(error.message, true);
+          btn.disabled = false; btn.textContent = 'Authorize Session';
+        } else if (data.user.id !== ADMIN_UID) {
+          AdminApp.toast('Unauthorized Portal Request', true);
+          await window.dbClient.auth.signOut();
+          btn.disabled = false; btn.textContent = 'Authorize Session';
         } else {
-          showToast('Question deleted');
-          // Attempt to delete image from storage if it was a storage URL
-          if (imgUrl && imgUrl.includes('/mcq-images/')) {
-            const path = imgUrl.split('/mcq-images/')[1].split('?')[0]; // Extract relative path
-            await window.dbClient.storage.from('mcq-images').remove([decodeURIComponent(path)]);
-          }
-          refreshMcqList();
+          AdminApp.checkReady();
         }
       });
-    }
 
-    // --- CASE STUDIES LOGIC ---
-    document.getElementById('case-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const topicId = document.getElementById('case-topic').value;
-      const title = document.getElementById('case-title').value;
-      const scenario = document.getElementById('case-scenario').value;
-      const btn = e.target.querySelector('button');
+      // 2. TOPIC
+      document.getElementById('f-topic').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const semId = parseInt(document.getElementById('t-sem').value);
+        const title = document.getElementById('t-title').value.trim();
+        
+        if (!semId || !title) return AdminApp.toast('Invalid Inputs', true);
+        
+        btn.disabled = true;
+        const slug = title.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-');
+        
+        const { error } = await window.dbClient.from('topics').insert([{ semester_id: semId, title, slug }]);
+        if (error) AdminApp.toast(error.message, true);
+        else { AdminApp.toast('Topic Deployed'); e.target.reset(); }
+        btn.disabled = false;
+      });
 
-      btn.disabled = true;
-      const { error } = await window.dbClient
-        .from('case_studies')
-        .insert([{ topic_id: topicId, title, scenario }]);
+      // 3. MCQS
+      document.getElementById('f-mcq').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.disabled = true;
 
-      if (error) {
-        showToast('Error creating case: ' + error.message, 'error');
-      } else {
-        showToast('Case Study created!');
-        e.target.reset();
-        refreshCaseSelector();
-        refreshCaseList();
-      }
-      btn.disabled = false;
-    });
+        const data = {
+          topic_id: document.getElementById('m-topic').value,
+          question: document.getElementById('m-q').value,
+          options: [
+            document.getElementById('m-opt-0').value, document.getElementById('m-opt-1').value,
+            document.getElementById('m-opt-2').value, document.getElementById('m-opt-3').value
+          ],
+          correct_index: parseInt(document.getElementById('m-correct').value),
+          explanation: document.getElementById('m-exp').value
+        };
 
-    async function refreshCaseSelector() {
-      const { data, error } = await window.dbClient
-        .from('case_studies')
-        .select('id, title')
-        .order('created_at', { ascending: false });
+        const { error } = await window.dbClient.from('mcqs').insert([data]);
+        if (error) AdminApp.toast(error.message, true);
+        else { AdminApp.toast('MCQ Ingested'); e.target.reset(); AdminApp.refreshAll(); }
+        btn.disabled = false;
+      });
 
-      const selector = document.getElementById('case-selector');
-      selector.innerHTML = '<option value="">Select Case Study...</option>';
-      if (data) {
-        data.forEach(c => {
-          const opt = document.createElement('option');
-          opt.value = c.id;
-          opt.textContent = c.title;
-          selector.appendChild(opt);
-        });
-      }
-    }
+      // 4. CASE
+      document.getElementById('f-case').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.disabled = true;
 
-    document.getElementById('case-question-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const caseId = document.getElementById('case-selector').value;
-      const question = document.getElementById('cq-question').value;
-      const options = [
-        document.getElementById('cq-opt-0').value,
-        document.getElementById('cq-opt-1').value,
-        document.getElementById('cq-opt-2').value,
-        document.getElementById('cq-opt-3').value
-      ];
-      const correctIndex = parseInt(document.getElementById('cq-correct').value);
-      const explanation = document.getElementById('cq-explanation').value;
+        const { error } = await window.dbClient.from('case_studies').insert([{
+           topic_id: document.getElementById('c-topic').value,
+           title: document.getElementById('c-title').value,
+           scenario: document.getElementById('c-scene').value
+        }]);
 
-      const btn = e.target.querySelector('button');
-      btn.disabled = true;
+        if (error) AdminApp.toast(error.message, true);
+        else { AdminApp.toast('Case Profile Generated'); e.target.reset(); AdminApp.refreshCaseList(); }
+        btn.disabled = false;
+      });
 
-      const { error } = await window.dbClient
-        .from('case_questions')
-        .insert([{ case_id: caseId, question, options, correct_index: correctIndex, explanation }]);
+      // 5. CASE QUESTION
+      document.getElementById('f-case-question').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.disabled = true;
 
-      if (error) {
-        showToast('Error adding question: ' + error.message, 'error');
-      } else {
-        showToast('Question linked to case!');
-        // Reset only question specific fields
-        document.getElementById('cq-question').value = '';
-        document.getElementById('cq-explanation').value = '';
-        document.getElementById('cq-opt-0').value = '';
-        document.getElementById('cq-opt-1').value = '';
-        document.getElementById('cq-opt-2').value = '';
-        document.getElementById('cq-opt-3').value = '';
-        refreshCaseList();
-      }
-      btn.disabled = false;
-    });
+        const data = {
+          case_id: document.getElementById('c-selector').value,
+          question: document.getElementById('cq-q').value,
+          options: [
+            document.getElementById('cq-0').value, document.getElementById('cq-1').value,
+            document.getElementById('cq-2').value, document.getElementById('cq-3').value
+          ],
+          correct_index: parseInt(document.getElementById('cq-cor').value)
+        };
 
-    async function refreshCaseList() {
-      const tbody = document.getElementById('case-list-body');
-      tbody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
-
-      const { data, error } = await window.dbClient
-        .from('case_studies')
-        .select('*, topics(title), case_questions(id)');
-
-      if (error) {
-        tbody.innerHTML = '<tr><td colspan="4">Error loading cases</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = '';
-      data.forEach(c => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><strong>${escapeHtml(c.title)}</strong></td>
-          <td>${escapeHtml(c.topics.title)}</td>
-          <td>${c.case_questions.length} Questions</td>
-          <td style="text-align:right;">
-            <button class="btn-delete" onclick="deleteCase('${c.id}')">Delete Case</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
+        const { error } = await window.dbClient.from('case_questions').insert([data]);
+        if (error) AdminApp.toast(error.message, true);
+        else { AdminApp.toast('Data Linked to Case'); e.target.reset(); }
+        btn.disabled = false;
       });
     }
 
-    async function deleteCase(id) {
-      showConfirm('Delete this case and ALL its questions?', async () => {
-        const { error } = await window.dbClient.from('case_studies').delete().eq('id', id);
-        if (error) showToast('Delete failed: ' + error.message, 'error');
-        else {
-          showToast('Case Study deleted');
-          refreshCaseList();
-          refreshCaseSelector();
-        }
-      });
-    }
-
-    // Init
     document.addEventListener('DOMContentLoaded', () => {
-      checkUser();
-      refreshCaseSelector();
-      refreshCaseList();
+      setupForms();
+      AdminApp.init();
     });
   </script>
-
-  <!-- ── FOOTER ── -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h3>MediHelp</h3>
-          <p>Your free, global partner in medical billing accuracy, claim transparency, and code intelligence.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Tools</h4>
-          <ul>
-            <li><a href="/cpt-code-search">CPT Code Search</a></li>
-            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
-            <li><a href="/cpt-code-search">Rx Savings</a></li>
-            <li><a href="/providers">National Provider Search</a></li>
-            <li><a href="/audit">Medical Bill Audit</a></li>
-            <li><a href="/blog">Blog</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Global</h4>
-          <ul>
-            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">US (ICD-10-CM)</li>
-            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">UK (NHS / OPCS-4)</li>
-            <li style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:8px;">Middle East (WHO)</li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Legal</h4>
-          <ul>
-            <li><a href="/privacy">Privacy Policy</a></li>
-            <li><a href="/terms">Terms of Service</a></li>
-            <li><a href="/refund">Refund Policy</a></li>
-            <li><a href="/pricing">Pricing</a></li>
-            <li><a href="/contact">Contact Us</a></li>
-            <li><a href="sitemap.xml">Sitemap</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom" style="justify-content: center; border-top: 1px solid var(--border); padding-top: 40px; flex-direction: column; gap: 10px; align-items: center;">
-        <span>&copy; 2026 MediHelp. All Rights Reserved.</span>
-        <span style="font-size: 11px; opacity: 0.7;">Informational only. Not medical/legal advice. <a href="/terms" style="color: var(--accent); text-decoration: none; font-weight: 700;">Terms & Disclaimer</a></span>
-        <span style="display:block; font-size: 10px; opacity: 0.5;">Support: supportdesk@medihelp.live</span>
-      </div>
-    </div>
-  </footer>
 </body>
 </html>
