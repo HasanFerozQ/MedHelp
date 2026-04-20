@@ -2248,6 +2248,29 @@ a:hover {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.console-settings {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.console-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--bg-elevated);
+}
+
 /* ============================================================
    RESPONSIVE & PREMIUM NAVIGATION (v5.0)
    ============================================================ */
@@ -2348,9 +2371,15 @@ a:hover {
   .hero-cta { flex-direction: column; width: 100%; }
   .hero-cta .btn { width: 100%; }
   
-  .tools-grid, .stats-grid, .why-grid, .blog-grid {
+  .tools-grid, .stats-grid, .why-grid, .blog-grid, .form-row, .footer-grid, .console-grid {
     grid-template-columns: 1fr !important;
     gap: 16px;
+  }
+
+  .console-settings, .tool-toggle-group, .audit-stat-group {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
   }
 
   .container { padding: 0 20px; }
@@ -2358,6 +2387,8 @@ a:hover {
   
   .nav-brand { font-size: 1.1rem; }
   .nav-actions .btn-ghost { display: none; } /* Hide expert help in actions on tiny screens */
+  
+  .footer-brand p { max-width: 100%; }
 }
 
 
