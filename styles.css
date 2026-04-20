@@ -271,6 +271,19 @@ body {
   animation: fadeInUp 0.7s 0.3s ease both;
 }
 
+@media (max-width: 600px) {
+  .hero-cta-cluster, .hero-cta {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+  .hero-cta-cluster a, .hero-cta-cluster button,
+  .hero-cta a, .hero-cta button {
+    width: 100% !important;
+    justify-content: center;
+  }
+}
+
 .btn-hero-primary {
   display: inline-flex;
   align-items: center;
@@ -2255,6 +2268,19 @@ a:hover {
   margin-bottom: 10px;
 }
 
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+  .form-row, .form-grid, .grid-stack-mobile {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 .console-settings {
   display: flex;
   gap: 24px;
@@ -2322,7 +2348,10 @@ a:hover {
   .nav-links {
     position: fixed;
     top: 0;
-    right: -300px; /* Drawer hidden on the right */
+    right: 0;
+    transform: translateX(100%);
+    visibility: hidden;
+    pointer-events: none;
     width: 280px;
     height: 100vh;
     background: var(--bg-card);
@@ -2339,7 +2368,9 @@ a:hover {
   }
 
   .nav-links.active {
-    right: 0;
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .nav-links a {
@@ -2367,6 +2398,9 @@ a:hover {
 }
 
 @media (max-width: 600px) {
+  h1 { font-size: 28px !important; line-height: 1.1; }
+  h2 { font-size: 24px !important; line-height: 1.2; }
+
   .hero h1 { font-size: 32px; line-height: 1.1; }
   .hero-cta { flex-direction: column; width: 100%; }
   .hero-cta .btn { width: 100%; }
@@ -2392,8 +2426,9 @@ a:hover {
 }
 
 
-body {
+html, body {
   overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* ============================================================
