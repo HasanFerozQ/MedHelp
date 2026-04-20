@@ -61,10 +61,19 @@
     /* MCQ AREA */
     #mcq-container { display: none; }
     .quiz-header { 
-      position: sticky; top: 72px; z-index: 100; background: var(--bg-glass); backdrop-filter: blur(20px); 
+      position: sticky; top: 72px; z-index: 100; background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       padding: 16px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 30px;
-      display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow);
-      transition: top 0.3s ease;
+      display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-lg);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .quiz-header.stuck {
+      top: 64px;
+      padding: 12px 20px;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      margin: 0 -20px 30px;
+      border-left: none;
+      border-right: none;
     }
     .mcq-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 24px; transition: var(--transition); }
     .mcq-image { width: 100%; max-height: 400px; object-fit: contain; border-radius: var(--radius-sm); margin-bottom: 24px; background: #000; border: 1px solid var(--border); }
