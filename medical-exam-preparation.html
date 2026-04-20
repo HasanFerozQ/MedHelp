@@ -87,7 +87,11 @@
     .explanation-box h4 { font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
     .explanation-box p { font-size: 14px; color: var(--text-body); line-height: 1.6; }
 
-    .score-badge { background: var(--bg-card); color: var(--text-h); padding: 8px 16px; border-radius: 12px; font-weight: 800; font-size: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); display: flex; align-items: center; gap: 8px; }
+    .score-badge { 
+      background: var(--bg-card); color: var(--text-h); padding: 8px 16px; border-radius: 12px; 
+      font-weight: 800; font-size: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); 
+      display: flex; align-items: center; gap: 8px; white-space: nowrap;
+    }
     .score-badge.mcq { border-left: 4px solid var(--success); }
     .score-badge.case { border-left: 4px solid #a855f7; }
     
@@ -165,11 +169,11 @@
     /* MOBILE RESPONSIVENESS */
     @media (max-width: 768px) {
       .prep-hero { padding: 30px 0; margin-bottom: 20px; }
-      .prep-hero h1 { font-size: 28px !important; }
-      .prep-hero p { font-size: 15px !important; }
+      .prep-hero h1 { font-size: 26px !important; }
+      .prep-hero p { font-size: 14px !important; }
       
       .semester-nav { padding: 5px 0; margin-bottom: 20px; }
-      .semester-tab { padding: 10px 18px; font-size: 13px; }
+      .semester-tab { padding: 10px 18px; font-size: 12px; }
       
       .topic-grid { grid-template-columns: 1fr; gap: 16px; }
       .topic-card { padding: 20px; }
@@ -177,17 +181,22 @@
       .quiz-header { 
         position: fixed; top: 60px; left: 0; right: 0; 
         border-radius: 0; border-left: none; border-right: none; margin-bottom: 0;
-        padding: 12px 16px;
+        padding: 12px 16px; flex-direction: column; align-items: stretch; gap: 12px;
+        background: var(--bg-elevated); border-bottom: 1px solid var(--border-accent);
       }
-      #mcq-list { margin-top: 100px; }
+      .quiz-header > div { width: 100%; justify-content: space-between; }
       
-      .mcq-card { padding: 20px; border-radius: var(--radius-sm); }
-      .mcq-question { font-size: 17px; }
-      .option-btn { padding: 14px 16px; font-size: 14px; }
+      #mcq-list { margin-top: 140px; }
+      
+      .mcq-card { padding: 20px 16px; border-radius: var(--radius-sm); }
+      .mcq-question { font-size: 16px; }
+      .option-btn { padding: 12px 14px; font-size: 13px; gap: 10px; }
+      
+      .score-badge { padding: 6px 10px; font-size: 11px; border-radius: 8px; }
       
       .case-box { padding: 20px; }
-      .case-title { font-size: 18px; }
-      .case-scenario { font-size: 14px; }
+      .case-title { font-size: 17px; }
+      .case-scenario { font-size: 13px; line-height: 1.6; }
     }
 
     /* FAQ SECTION STYLES */
