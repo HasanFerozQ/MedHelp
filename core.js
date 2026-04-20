@@ -156,8 +156,41 @@ const MediHelp = {
   toggleMobileMenu: function() {
     const nav = document.querySelector('.nav-links');
     const toggle = document.querySelector('.nav-toggle');
-    if (nav) nav.classList.toggle('active');
-    if (toggle) toggle.classList.toggle('active');
+    const body = document.body;
+    
+    // Create backdrop if it doesn't exist
+    let backdrop = document.querySelector('.nav-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'nav-backdrop';
+      document.body.appendChild(backdrop);
+      backdrop.onclick = () => MediHelp.toggleMobileMenu();
+    }
+
+    const isActive = nav.classList.contains('active');
+    
+    if (!isActive) {
+      nav.classList.add('active');
+      toggle.classList.add('active');
+      backdrop.classList.add('active');
+      body.style.overflow = 'hidden';
+    } else {
+      nav.classList.remove('active');
+      toggle.classList.remove('active');
+      backdrop.classList.remove('active');
+      body.style.overflow = '';
+    }
+
+    // Close menu when clicking links
+    const navLinks = nav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.onclick = () => {
+        nav.classList.remove('active');
+        toggle.classList.remove('active');
+        backdrop.classList.remove('active');
+        body.style.overflow = '';
+      };
+    });
   },
 
   initFeedbackWidget: function() {
