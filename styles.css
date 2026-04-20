@@ -2201,12 +2201,12 @@ a:hover {
 .footer-brand p  { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 280px; }
 
 .footer-col h4 {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 20px;
+  color: var(--text-h);
+  margin-bottom: 24px;
 }
 
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
@@ -2407,7 +2407,7 @@ a:hover {
   
   .tools-grid, .stats-grid, .why-grid, .blog-grid, .form-row, .footer-grid, .console-grid {
     grid-template-columns: 1fr !important;
-    gap: 16px;
+    gap: 32px;
   }
 
   .console-settings, .tool-toggle-group, .audit-stat-group {
@@ -2423,6 +2423,8 @@ a:hover {
   .nav-actions .btn-ghost { display: none; } /* Hide expert help in actions on tiny screens */
   
   .footer-brand p { max-width: 100%; }
+  
+  .tool-card { padding: 24px 20px !important; }
 }
 
 

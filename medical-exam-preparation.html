@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Medical Exam Preparation Guide for Doctors (USMLE, PLAB, AMC, MRCP) | MediHelp</title>
-  <meta name="description" content="Prepare for USMLE, PLAB, AMC, and MRCP with MediHelp’s comprehensive medical exam preparation guide. High-yield MCQs, case scenarios, and licensing exam study plans." />
-  <meta name="keywords" content="medical exam preparation, USMLE preparation guide, PLAB preparation tips, how to pass medical exams, medical licensing exam study plan" />
+  <title>Medical Exam Preparation Guide for Doctors (USMLE, MBBS, & US MD) | MediHelp</title>
+  <meta name="description" content="Prepare for USMLE, MBBS, and US MD exams with MediHelp’s comprehensive medical exam preparation guide. High-yield MCQs, case scenarios, and licensing exam study plans." />
+  <meta name="keywords" content="medical exam preparation, USMLE preparation guide, MBBS exam questions, US MD boards preparation, medical licensing exam study plan" />
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
@@ -32,7 +32,11 @@
   }
   </script>
   <style>
-    .prep-hero { padding: 40px 0; border-bottom: 1px solid var(--border); background: var(--bg-elevated); margin-bottom: 40px; }
+    .prep-hero { padding: 40px 20px; border-bottom: 1px solid var(--border); background: var(--bg-elevated); margin-bottom: 40px; }
+    @media (max-width: 600px) {
+      .prep-hero { padding: 40px 20px; }
+      .semester-nav { padding: 10px 20px; }
+    }
     .semester-nav { display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 10px 0; margin-bottom: 30px; scrollbar-width: none; border-bottom: 1px solid var(--border); }
     .semester-tab { 
       padding: 12px 24px; color: var(--text-muted); font-weight: 700; font-size: 14px; 
@@ -57,7 +61,7 @@
     /* MCQ AREA */
     #mcq-container { display: none; }
     .quiz-header { 
-      position: sticky; top: 124px; z-index: 100; background: var(--bg-glass); backdrop-filter: blur(20px); 
+      position: sticky; top: 80px; z-index: 100; background: var(--bg-glass); backdrop-filter: blur(20px); 
       padding: 16px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 30px;
       display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow);
     }
@@ -338,7 +342,7 @@
           </li>
           <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--text-h);">
             <span style="color: var(--success); font-weight: 900;">✔</span>
-            <span><strong>Global coverage</strong> – Targeted prep for multiple exams including USMLE, PLAB, AMC, and MRCP.</span>
+            <span><strong>Global coverage</strong> – Targeted prep for multiple exams including USMLE, US MD, and MBBS.</span>
           </li>
           <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--text-h);">
             <span style="color: var(--success); font-weight: 900;">✔</span>
@@ -371,8 +375,8 @@
           <h2 style="font-size: 24px; color: var(--text-h); margin-top: 16px;">Best Study Plan for Medical Licensing Exams</h2>
           <p>The most effective study plans are built on three pillars: active recall, spaced repetition, and pattern recognition. Start early, focus on high-yield organ systems, and integrate clinical case studies into your daily routine. Our <strong>medical licensing exam study plan</strong> is designed to help you navigate these pillars efficiently.</p>
 
-          <h2 style="font-size: 24px; color: var(--text-h); margin-top: 16px;">Common Medical Exams Explained (USMLE, PLAB, AMC, MRCP)</h2>
-          <p>Different regions have different requirements. The **USMLE** is for the United States, **PLAB** for the United Kingdom, **AMC** for Australia, and **MRCP** for specialist physicians in the UK/Commonwealth. While the administrative details vary, the underlying medical knowledge required to pass remains fundamentally similar—focusing on clinical excellence and patient safety.</p>
+          <h2 style="font-size: 24px; color: var(--text-h); margin-top: 16px;">Common Medical Exams Explained (USMLE, MBBS, US MD)</h2>
+          <p>Different regions have different requirements. The **USMLE** is for the United States residency, **MBBS** for international medical graduates, and **US MD** for local medical students. While the administrative details vary, the underlying medical knowledge required to pass remains fundamentally similar—focusing on clinical excellence and patient safety.</p>
 
           <h2 style="font-size: 24px; color: var(--text-h); margin-top: 16px;">Top Mistakes Medical Students Make During Preparation</h2>
           <p>Many students fall into the trap of "passive review"—reading the same textbook over and over without testing themselves. Another common error is neglecting the "Why" behind a diagnosis. Our <strong>USMLE preparation guide</strong> emphasizes understanding pathophysiology rather than rote memorization.</p>
@@ -397,7 +401,7 @@
           </div>
           
           <h2 style="font-size: 24px; color: var(--text-h); margin-top: 32px;">Final Tips for Medical Exam Success</h2>
-          <p>Don't ignore mental health. Take breaks, stay hydrated, and remember that medical exam preparation is a marathon, not a sprint. Trust your preparation, use focused <strong>PLAB preparation tips</strong>, and go into the exam hall with confidence.</p>
+          <p>Don't ignore mental health. Take breaks, stay hydrated, and remember that medical exam preparation is a marathon, not a sprint. Trust your preparation, use focused <strong>study plans</strong>, and go into the exam hall with confidence.</p>
         </div>
       </section>
 
@@ -415,7 +419,7 @@
           </div>
           <div class="faq-item">
             <h3>Which exam is hardest for doctors?</h3>
-            <p>The USMLE Step 1 is widely considered one of the most challenging due to the depth of basic science required. However, clinical exams like the MRCP Part 1 are also notoriously difficult due to their strict curriculum and low pass rates.</p>
+            <p>The USMLE Step 1 is widely considered one of the most challenging due to the depth of basic science required. However, clinical exams and university professional exams are also notoriously difficult due to their strict curriculum and high stakes.</p>
           </div>
           <div class="faq-item">
             <h3>Can I prepare for medical exams without coaching?</h3>
