@@ -61,9 +61,10 @@
     /* MCQ AREA */
     #mcq-container { display: none; }
     .quiz-header { 
-      position: sticky; top: 80px; z-index: 100; background: var(--bg-glass); backdrop-filter: blur(20px); 
+      position: sticky; top: 72px; z-index: 100; background: var(--bg-glass); backdrop-filter: blur(20px); 
       padding: 16px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 30px;
       display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow);
+      transition: top 0.3s ease;
     }
     .mcq-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 24px; transition: var(--transition); }
     .mcq-image { width: 100%; max-height: 400px; object-fit: contain; border-radius: var(--radius-sm); margin-bottom: 24px; background: #000; border: 1px solid var(--border); }
