@@ -1,5 +1,2 @@
 User-agent: *
-Allow: /
-Disallow: /management-education
-Disallow: /medical-exam-preparation
-Sitemap: https://www.medihelp.live/sitemap.xml
+Disallow: /medical-exam-preparation.html
