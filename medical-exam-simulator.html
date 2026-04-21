@@ -55,25 +55,31 @@
     
     .question-nav {
       display: grid;
-      grid-template-columns: repeat(10, 1fr);
-      gap: 8px;
-      margin-bottom: 30px;
+      grid-template-columns: repeat(14, 1fr);
+      gap: 6px;
+      margin-bottom: 24px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .q-btn {
-      aspect-ratio: 1;
+      width: 36px;
+      height: 36px;
       border: 1px solid #374151;
       background: #1f2937;
       color: #9ca3af;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       border-radius: 4px;
+      transition: all 0.2s;
     }
-    .q-btn.current { border-color: #a855f7; color: white; background: rgba(168,85,247,0.1); }
+    .q-btn.current { border-color: #a855f7; color: white; background: rgba(168,85,247,0.1); box-shadow: 0 0 10px rgba(168,85,247,0.3); }
     .q-btn.answered { background: #10b981; color: #0a0f18; border-color: #10b981; }
+    .q-btn.unanswered { background: #dc2626; color: white; border-color: #ef4444; }
     .q-btn.marked { border-color: #f59e0b; color: #f59e0b; position: relative; }
     .q-btn.marked::after { content: '★'; position: absolute; top: -5px; right: -5px; font-size: 8px; }
 
@@ -119,6 +125,7 @@
       text-align: center;
       padding: 60px 20px;
     }
+    .report-view.visible { display: block !important; }
     .report-card {
       background: #111827;
       border: 1px solid #374151;
@@ -141,8 +148,9 @@
         <!-- 7 dots -->
       </div>
       <div style="text-align: center;">
-        <div style="font-size: 10px; color: #9ca3af; font-weight: 800; text-transform: uppercase;">Time Remaining (Current Block)</div>
+        <div id="block-tracker-text" style="font-size: 10px; color: #a855f7; font-weight: 800; text-transform: uppercase; margin-bottom: 4px;">Block 1 of 7</div>
         <div class="timer-pill" id="block-timer">60:00</div>
+        <div style="font-size: 9px; color: #9ca3af; margin-top: 4px; font-weight: 700;">TIME REMAINING</div>
       </div>
       <div style="text-align: right;">
         <div style="font-size: 10px; color: #9ca3af; font-weight: 800; text-transform: uppercase;">Total Exam Clock</div>
@@ -383,12 +391,21 @@
         const btn = document.createElement('div');
         const globalIdx = state.currentBlock * Q_PER_BLOCK + i;
         btn.className = `q-btn ${i === state.currentQ ? 'current' : ''}`;
-        if (state.answers[globalIdx] !== undefined) btn.classList.add('answered');
+        
+        if (state.answers[globalIdx] !== undefined) {
+          btn.classList.add('answered');
+        } else if (!state.isReview) {
+          btn.classList.add('unanswered');
+        }
+
         if (state.marked.has(globalIdx)) btn.classList.add('marked');
         btn.textContent = i + 1;
         btn.onclick = () => jumpToQ(i);
         qNav.appendChild(btn);
       }
+      
+      const tracker = document.getElementById('block-tracker-text');
+      if (tracker) tracker.textContent = state.isReview ? "EXAM REVIEW" : `BLOCK ${state.currentBlock + 1} OF ${TOTAL_BLOCKS}`;
       
       renderQuestion();
     }
@@ -489,7 +506,21 @@
     }
 
     function submitBlock(isAuto = false) {
-      if (!isAuto && !confirm('Are you sure you want to end this block? You cannot return to these questions later.')) return;
+      if (!isAuto) {
+        // Enforce full completion
+        const startIdx = state.currentBlock * Q_PER_BLOCK;
+        let missing = 0;
+        for (let i = 0; i < Q_PER_BLOCK; i++) {
+          if (state.answers[startIdx + i] === undefined) missing++;
+        }
+
+        if (missing > 0) {
+          alert(`CRITICAL: You have ${missing} unanswered questions in this block. You MUST attempt all questions before the simulator allows you to end the block.`);
+          return;
+        }
+
+        if (!confirm('Are you sure you want to end this block? You cannot return to these questions later.')) return;
+      }
       
       state.isBreak = true;
       state.currentBlock++;
