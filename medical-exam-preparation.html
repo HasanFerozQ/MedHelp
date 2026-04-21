@@ -61,10 +61,11 @@
     /* MCQ AREA */
     #mcq-container { display: none; }    .quiz-header { 
       position: sticky; top: 71px; z-index: 100; background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      padding: 12px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 30px;
+      padding: 12px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin: 0 0 30px;
       display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-lg);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border-top: 1px solid rgba(255,255,255,0.05);
+      gap: 16px;
     }
     .quiz-header.stuck {
       top: 0;
@@ -76,6 +77,12 @@
       background: rgba(7, 18, 34, 0.95);
       border-bottom: 2px solid var(--accent);
     }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .header-title-group h2 { margin:0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-h); }
+    .header-title-group div { font-size: 11px; color: var(--text-muted); font-weight: 700; }
+    .reset-btn { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.2); font-size: 11px; padding: 6px 12px; }
+    .reset-btn:hover { background: rgba(239, 68, 68, 0.2); }
 
     .mcq-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 24px; transition: var(--transition); }
     .mcq-image { width: 100%; max-height: 400px; object-fit: contain; border-radius: var(--radius-sm); margin-bottom: 24px; background: #000; border: 1px solid var(--border); }
@@ -191,14 +198,20 @@
       
       .quiz-header { 
         position: sticky; top: 0px; left: 0; right: 0; 
-        border-radius: 0; border-left: none; border-right: none; margin-bottom: 20px;
-        padding: 10px 16px; flex-direction: column; align-items: stretch; gap: 8px;
+        border-radius: 0; border-left: none; border-right: none; margin: 0 -20px 20px;
+        padding: 8px 12px; flex-direction: row; justify-content: space-between; align-items: center; gap: 8px;
         background: var(--bg-elevated); border-bottom: 1px solid var(--border-accent);
-        margin: 0 -20px 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000;
+        width: calc(100% + 40px);
       }
-      .quiz-header .header-top-row { display: flex; justify-content: space-between; align-items: center; }
-      .quiz-header .header-stats-row { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
-      .quiz-header .header-stats-row .stats-group { display: flex; gap: 6px; }
+      .header-left { gap: 8px; }
+      .header-right { gap: 6px; }
+      .header-title-group h2 { font-size: 14px; letter-spacing: 0.5px; }
+      .header-title-group div { font-size: 9px; }
+      .score-badge { padding: 4px 8px; font-size: 10px; border-radius: 6px; }
+      .reset-btn { padding: 4px 8px; font-size: 9px; }
+      .quiz-header .btn-secondary { padding: 8px 10px; font-size: 11px; }
+      .quiz-header .btn-secondary span { display: none; } /* Show only icon on small mobile */
       
       #mcq-list { margin-top: 0; }
       
@@ -505,27 +518,23 @@
     <div id="mcq-view" class="hidden">
       <!-- Sticky Header -->
       <div class="quiz-header">
-        <div class="header-top-row">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <button class="btn btn-secondary" onclick="backToTopics()" style="padding: 10px 16px; min-width: auto;">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-              <span>Back</span>
-            </button>
-            <div>
-              <h2 id="current-topic-title" style="margin:0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px;">Topic</h2>
-              <div id="stats-total" style="font-size: 11px; color: var(--text-muted); font-weight: 700;">0 / 0 Questions Completed</div>
-            </div>
-          </div>
-          <button class="btn" style="background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.2); font-size: 11px; padding: 6px 12px;" onclick="resetTopic()">
-            Reset Progress
+        <div class="header-left">
+          <button class="btn btn-secondary" onclick="backToTopics()" style="padding: 10px 16px; min-width: auto;">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            <span>Back</span>
           </button>
+          <div class="header-title-group">
+            <h2 id="current-topic-title">Topic</h2>
+            <div id="stats-total">0 / 0 Questions Completed</div>
+          </div>
         </div>
         
-        <div class="header-stats-row">
-          <div class="stats-group">
-            <div id="mcq-live-score" class="score-badge mcq" style="padding: 6px 12px; font-size: 12px;">MCQ: 0/0</div>
-            <div id="case-live-score" class="score-badge case" style="padding: 6px 12px; font-size: 12px;">Case: 0/0</div>
-          </div>
+        <div class="header-right">
+          <div id="mcq-live-score" class="score-badge mcq">MCQ: 0/0</div>
+          <div id="case-live-score" class="score-badge case">Case: 0/0</div>
+          <button class="btn reset-btn" onclick="resetTopic()">
+            Reset Progress
+          </button>
         </div>
       </div>
 
