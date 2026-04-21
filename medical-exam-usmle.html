@@ -158,9 +158,17 @@
       loader.classList.remove('hidden');
 
       // Fetch topics where usmle_step == stepId (Exclude internal mock pool)
+      // We explicitly fetch counts for both standalone MCQs and nested Case Questions
       const { data, error } = await window.dbClient
         .from('topics')
-        .select('*, mcqs(id)')
+        .select(`
+          *, 
+          mcqs(id),
+          case_studies(
+            id,
+            case_questions(id)
+          )
+        `)
         .eq('usmle_step', stepId)
         .neq('slug', 'usmle-1-mock-pool-hidden')
         .order('order', { ascending: true });
@@ -175,7 +183,18 @@
       }
 
       data.forEach(topic => {
-        const totalMcqs = topic.mcqs.length;
+        // Calculate total questions: Standalone MCQs + All questions inside Case Studies
+        let caseQuestionCount = 0;
+        if (topic.case_studies) {
+          topic.case_studies.forEach(cs => {
+            if (cs.case_questions) {
+              caseQuestionCount += cs.case_questions.length;
+            }
+          });
+        }
+        
+        const totalQuestions = (topic.mcqs ? topic.mcqs.length : 0) + caseQuestionCount;
+        
         const card = document.createElement('div');
         card.className = 'topic-card';
         card.innerHTML = `
@@ -183,7 +202,7 @@
             <h3>${topic.title}</h3>
             <p style="font-size: 13px; color: var(--text-muted);">Master high-yield concepts for ${topic.title}.</p>
           </div>
-          <div style="font-size: 12px; font-weight: 800; color: #a855f7;">${totalMcqs} Questions Available</div>
+          <div style="font-size: 12px; font-weight: 800; color: #a855f7;">${totalQuestions} Questions Available</div>
         `;
         card.onclick = () => {
            // Redirect to a specialized USMLE quiz page or use the existing one if adapted
