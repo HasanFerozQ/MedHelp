@@ -8,6 +8,8 @@ const corsHeaders = {
 };
 
 Deno.serve(async (req: Request) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  
   // 1. Handle CORS Preflight
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
