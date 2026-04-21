@@ -332,6 +332,27 @@
     function initUI() {
       if (!state.questions.length) return;
 
+      // Sync visibility
+      if (state.isReview) {
+        // Handled by finishExam/enterReviewMode transition
+        // But for direct reload:
+        document.getElementById('sim-ui').classList.remove('hidden');
+        document.getElementById('break-ui').classList.add('hidden');
+        document.getElementById('report-ui').classList.remove('visible');
+        document.getElementById('end-block-btn').classList.add('hidden');
+        document.getElementById('exit-review-btn').classList.remove('hidden');
+        document.getElementById('block-timer').textContent = "REVIEW";
+        document.getElementById('global-timer').textContent = "COMPLETE";
+      } else if (state.isBreak) {
+        document.getElementById('sim-ui').classList.add('hidden');
+        document.getElementById('break-ui').classList.remove('hidden');
+        document.getElementById('report-ui').classList.remove('visible');
+      } else {
+        document.getElementById('sim-ui').classList.remove('hidden');
+        document.getElementById('break-ui').classList.add('hidden');
+        document.getElementById('report-ui').classList.remove('visible');
+      }
+
       const dots = document.getElementById('block-dots');
       dots.innerHTML = '';
       for (let i = 0; i < TOTAL_BLOCKS; i++) {
