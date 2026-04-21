@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USMLE Step 1 Simulator | MediHelp</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+  <style>
+    body { background: #0a0f18; }
+    .sim-header {
+      background: #111827;
+      border-bottom: 2px solid #374151;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .timer-pill {
+      background: #000;
+      border: 1px solid #4b5563;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #10b981;
+    }
+    .timer-pill.warning { color: #f59e0b; border-color: #f59e0b; }
+    .timer-pill.danger { color: #ef4444; border-color: #ef4444; }
+
+    .block-status {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .block-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #374151;
+    }
+    .block-dot.active { background: #a855f7; box-shadow: 0 0 10px #a855f7; }
+    .block-dot.done { background: #10b981; }
+
+    .sim-main {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    .question-nav {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 8px;
+      margin-bottom: 30px;
+    }
+    .q-btn {
+      aspect-ratio: 1;
+      border: 1px solid #374151;
+      background: #1f2937;
+      color: #9ca3af;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .q-btn.current { border-color: #a855f7; color: white; background: rgba(168,85,247,0.1); }
+    .q-btn.answered { background: #10b981; color: #0a0f18; border-color: #10b981; }
+    .q-btn.marked { border-color: #f59e0b; color: #f59e0b; position: relative; }
+    .q-btn.marked::after { content: '★'; position: absolute; top: -5px; right: -5px; font-size: 8px; }
+
+    .mcq-area {
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 12px;
+      padding: 40px;
+      min-height: 400px;
+      position: relative;
+    }
+    
+    .option-row {
+      display: flex;
+      gap: 16px;
+      padding: 16px;
+      background: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .option-row:hover { background: #374151; }
+    .option-row.selected { border-color: #a855f7; background: rgba(168,85,247,0.1); }
+    .opt-letter { font-weight: 900; color: #a855f7; }
+
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #111827;
+      border-top: 1px solid #374151;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .report-view {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .report-card {
+      background: #111827;
+      border: 1px solid #374151;
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIMULATOR UI -->
+  <div id="sim-ui">
+    <header class="sim-header">
+      <div class="block-status" id="block-dots">
+        <!-- 7 dots -->
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 10px; color: #9ca3af; font-weight: 800; text-transform: uppercase;">Time Remaining (Current Block)</div>
+        <div class="timer-pill" id="block-timer">60:00</div>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 10px; color: #9ca3af; font-weight: 800; text-transform: uppercase;">Total Exam Clock</div>
+        <div class="timer-pill" id="global-timer" style="color: #60a5fa;">08:00:00</div>
+      </div>
+    </header>
+
+    <main class="sim-main">
+      <div class="question-nav" id="q-nav">
+        <!-- 40 buttons -->
+      </div>
+
+      <div class="mcq-area" id="mcq-area">
+        <div id="loading-msg">Initializing Board Simulation...</div>
+        <div id="mcq-content" class="hidden">
+           <div id="q-text" class="mcq-question">Loading question...</div>
+           <div id="options-list" class="mcq-options" style="margin-top: 24px;"></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bottom-bar">
+      <div>
+        <button class="btn btn-ghost" id="mark-btn" onclick="toggleMark()">★ Mark for Review</button>
+      </div>
+      <div style="display: flex; gap: 12px;">
+        <button class="btn btn-secondary" onclick="prevQ()">Previous</button>
+        <button class="btn btn-primary" onclick="nextQ()" id="next-btn">Next Question</button>
+      </div>
+      <div>
+        <button class="btn btn-danger" onclick="submitBlock()" style="background: #dc2626;">End Block</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- BREAK VIEW -->
+  <div id="break-ui" class="hidden" style="text-align: center; padding: 100px 20px;">
+    <h1 style="font-size: 48px; color: #a855f7; margin-bottom: 24px;">Optional Break</h1>
+    <p style="color: var(--text-muted); font-size: 18px; margin-bottom: 40px;">Block submitted successfully. Your total exam clock is still running.</p>
+    <div class="timer-pill" id="global-timer-break" style="display:inline-block; font-size: 48px; padding: 20px 40px;">00:00:00</div>
+    <div style="margin-top: 60px;">
+      <button class="btn btn-primary" onclick="startNextBlock()" style="padding: 20px 40px; font-size: 20px;">Resume Exam: Start Next Block →</button>
+    </div>
+  </div>
+
+  <!-- REPORT VIEW -->
+  <div id="report-ui" class="report-view">
+    <h1 style="font-size: 48px; color: #10b981;">Exam Complete</h1>
+    <div class="report-card">
+      <div id="report-stats">
+        <!-- Stats injected here -->
+      </div>
+      <button class="btn btn-primary" onclick="window.location.href='medical-exam-usmle.html'" style="margin-top: 40px; width: 100%;">Return to Dashboard</button>
+    </div>
+  </div>
+
+  <script>
+    // --- ENGINE STATE ---
+    const TOTAL_BLOCKS = 7;
+    const Q_PER_BLOCK = 40;
+    const TOTAL_TIME = 8 * 60 * 60 * 1000; // 8 hours in ms
+    const BLOCK_TIME = 60 * 60 * 1000; // 60 mins in ms
+    
+    let state = {
+      examStartedAt: null,
+      currentBlock: 0,
+      currentQ: 0,
+      answers: {}, // { qId: index }
+      marked: new Set(),
+      blockStates: [], // { completed: bool, score: int, timeSpent: int }
+      isBreak: false
+    };
+
+    function loadState() {
+      const saved = localStorage.getItem('mh_sim_state');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        state = { ...parsed, marked: new Set(parsed.marked) };
+      } else {
+        state.examStartedAt = Date.now();
+        saveState();
+      }
+    }
+
+    function saveState() {
+      const toSave = { ...state, marked: Array.from(state.marked) };
+      localStorage.setItem('mh_sim_state', JSON.stringify(toSave));
+    }
+
+    // --- TIMERS ---
+    function updateTimers() {
+      const now = Date.now();
+      
+      // Global Timer
+      const elapsedTotal = now - state.examStartedAt;
+      const remainingTotal = Math.max(0, TOTAL_TIME - elapsedTotal);
+      document.getElementById('global-timer').textContent = formatTimeLong(remainingTotal);
+      if (document.getElementById('global-timer-break')) {
+        document.getElementById('global-timer-break').textContent = formatTimeLong(remainingTotal);
+      }
+
+      if (remainingTotal <= 0) {
+        finishExam();
+        return;
+      }
+
+      // Block Timer (Only if not in break)
+      if (!state.isBreak) {
+        // We'll track block start time individually for better accuracy
+        const blockStart = state.blockStartTimes ? state.blockStartTimes[state.currentBlock] : state.examStartedAt; 
+        const elapsedBlock = now - (blockStart || now);
+        const remainingBlock = Math.max(0, BLOCK_TIME - elapsedBlock);
+        
+        const timerEl = document.getElementById('block-timer');
+        timerEl.textContent = formatTimeShort(remainingBlock);
+        
+        if (remainingBlock < 300000) timerEl.className = 'timer-pill danger';
+        else if (remainingBlock < 600000) timerEl.className = 'timer-pill warning';
+        else timerEl.className = 'timer-pill';
+
+        if (remainingBlock <= 0) submitBlock(true);
+      }
+    }
+
+    function formatTimeLong(ms) {
+      const s = Math.floor(ms / 1000);
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const rs = s % 60;
+      return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${rs.toString().padStart(2,'0')}`;
+    }
+
+    function formatTimeShort(ms) {
+      const s = Math.floor(ms / 1000);
+      const m = Math.floor(s / 60);
+      const rs = s % 60;
+      return `${m.toString().padStart(2,'0')}:${rs.toString().padStart(2,'0')}`;
+    }
+
+    // --- UI RENDER ---
+    function initUI() {
+      const dots = document.getElementById('block-dots');
+      dots.innerHTML = '';
+      for (let i = 0; i < TOTAL_BLOCKS; i++) {
+        const dot = document.createElement('div');
+        dot.className = `block-dot ${i === state.currentBlock ? 'active' : (i < state.currentBlock ? 'done' : '')}`;
+        dots.appendChild(dot);
+      }
+
+      const qNav = document.getElementById('q-nav');
+      qNav.innerHTML = '';
+      for (let i = 0; i < Q_PER_BLOCK; i++) {
+        const btn = document.createElement('div');
+        const qIdx = state.currentBlock * Q_PER_BLOCK + i;
+        btn.className = `q-btn ${i === state.currentQ ? 'current' : ''}`;
+        if (state.answers[qIdx] !== undefined) btn.classList.add('answered');
+        if (state.marked.has(qIdx)) btn.classList.add('marked');
+        btn.textContent = i + 1;
+        btn.onclick = () => jumpToQ(i);
+        qNav.appendChild(btn);
+      }
+      
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+       const qIdx = state.currentBlock * Q_PER_BLOCK + state.currentQ;
+       const qTextEl = document.getElementById('q-text');
+       const optionsEl = document.getElementById('options-list');
+       
+       document.getElementById('loading-msg').classList.add('hidden');
+       document.getElementById('mcq-content').classList.remove('hidden');
+
+       // Placeholder for real question fetching
+       qTextEl.textContent = `[Question ${state.currentQ + 1} of Block ${state.currentBlock + 1}] This is a high-yield board-style question placeholder.`;
+       
+       const options = ["Option A", "Option B", "Option C", "Option D", "Option E"];
+       optionsEl.innerHTML = options.map((opt, i) => `
+          <div class="option-row ${state.answers[qIdx] === i ? 'selected' : ''}" onclick="selectOption(${i})">
+            <span class="opt-letter">${String.fromCharCode(65 + i)})</span>
+            <span>${opt}</span>
+          </div>
+       `).join('');
+       
+       document.getElementById('mark-btn').style.color = state.marked.has(qIdx) ? '#f59e0b' : '';
+    }
+
+    function selectOption(idx) {
+      const qIdx = state.currentBlock * Q_PER_BLOCK + state.currentQ;
+      state.answers[qIdx] = idx;
+      saveState();
+      initUI();
+    }
+
+    function toggleMark() {
+      const qIdx = state.currentBlock * Q_PER_BLOCK + state.currentQ;
+      if (state.marked.has(qIdx)) state.marked.delete(qIdx);
+      else state.marked.add(qIdx);
+      saveState();
+      initUI();
+    }
+
+    function jumpToQ(i) {
+      state.currentQ = i;
+      saveState();
+      initUI();
+    }
+
+    function nextQ() {
+      if (state.currentQ < Q_PER_BLOCK - 1) {
+        state.currentQ++;
+        saveState();
+        initUI();
+      }
+    }
+
+    function prevQ() {
+      if (state.currentQ > 0) {
+        state.currentQ--;
+        saveState();
+        initUI();
+      }
+    }
+
+    function submitBlock(isAuto = false) {
+      if (!isAuto && !confirm('Are you sure you want to end this block? You cannot return to these questions later.')) return;
+      
+      state.isBreak = true;
+      state.currentBlock++;
+      state.currentQ = 0;
+      
+      if (state.currentBlock >= TOTAL_BLOCKS) {
+        finishExam();
+      } else {
+        document.getElementById('sim-ui').classList.add('hidden');
+        document.getElementById('break-ui').classList.remove('hidden');
+        saveState();
+      }
+    }
+
+    function startNextBlock() {
+       state.isBreak = false;
+       state.blockStartTimes = state.blockStartTimes || {};
+       state.blockStartTimes[state.currentBlock] = Date.now();
+       document.getElementById('sim-ui').classList.remove('hidden');
+       document.getElementById('break-ui').classList.add('hidden');
+       saveState();
+       initUI();
+    }
+
+    function finishExam() {
+      document.getElementById('sim-ui').classList.add('hidden');
+      document.getElementById('break-ui').classList.add('hidden');
+      document.getElementById('report-ui').classList.add('visible');
+      
+      // Calculate Score
+      const totalAnswered = Object.keys(state.answers).length;
+      const totalQ = TOTAL_BLOCKS * Q_PER_BLOCK;
+      
+      document.getElementById('report-stats').innerHTML = `
+        <div style="font-size: 64px; font-weight: 900; color: #10b981; margin-bottom: 10px;">PROVISIONAL</div>
+        <div style="color: var(--text-muted); margin-bottom: 40px;">Final score report will be available once real data is processed.</div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div style="background: #1f2937; padding: 20px; border-radius: 12px;">
+             <div style="font-size: 24px; font-weight: 900;">${totalAnswered} / ${totalQ}</div>
+             <div style="font-size: 11px; color: #9ca3af; text-transform: uppercase;">Questions Attempted</div>
+          </div>
+          <div style="background: #1f2937; padding: 20px; border-radius: 12px;">
+             <div style="font-size: 24px; font-weight: 900;">${formatTimeLong(Date.now() - state.examStartedAt)}</div>
+             <div style="font-size: 11px; color: #9ca3af; text-transform: uppercase;">Total Time Taken</div>
+          </div>
+        </div>
+      `;
+      
+      localStorage.removeItem('mh_sim_state'); // Clear for next time
+    }
+
+    // --- INITIALIZE ---
+    loadState();
+    initUI();
+    setInterval(updateTimers, 1000);
+
+    // Theme toggle
+    if (window.MediHelp) MediHelp.initTheme();
+  </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USMLE Mock Exam Lobby | MediHelp</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="core.js"></script>
+  <style>
+    .mock-lobby { padding: 40px 0; }
+    .mock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .mock-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .mock-card:hover {
+      border-color: #a855f7;
+      transform: translateY(-4px);
+    }
+    .mock-card h3 { font-size: 20px; font-weight: 900; margin-bottom: 12px; color: var(--text-h); }
+    .mock-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(168,85,247,0.1);
+      color: #a855f7;
+      margin-bottom: 16px;
+    }
+    .mock-stat {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .btn-start-mock {
+      width: 100%;
+      margin-top: 24px;
+      background: #a855f7;
+      color: white;
+      font-weight: 800;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-start-mock:hover { background: #7e22ce; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png" alt="MediHelp">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="medical-exam-preparation.html">Medical Exams</a>
+        <a href="medical-exam-usmle.html" class="active">USMLE Prep</a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-btn">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mock-lobby">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 40px;">
+      <a href="medical-exam-usmle.html" style="color: var(--text-muted); text-decoration: none; font-weight: 700;">← Back to Dash</a>
+    </div>
+    
+    <h1 class="hero-h1" style="text-align: left;">Full-Length <span style="color: #a855f7;">Mock Exams</span></h1>
+    <p class="hero-sub" style="margin: 0; text-align: left;">Standardized simulations replicating the real board exam environment.</p>
+
+    <div class="mock-grid">
+      <!-- Mock Exam Card 1 -->
+      <div class="mock-card">
+        <div class="mock-badge">STEP 1 - MOST POPULAR</div>
+        <h3>USMLE Step 1 Mock #1</h3>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Complete 280-question simulation across 7 core medical blocks.</p>
+        
+        <div class="mock-stat">
+          <span>Questions</span>
+          <span style="color: var(--text-h); font-weight: 700;">280 MCQs</span>
+        </div>
+        <div class="mock-stat">
+          <span>Total Time</span>
+          <span style="color: var(--text-h); font-weight: 700;">8 Hours</span>
+        </div>
+        <div class="mock-stat">
+          <span>Format</span>
+          <span style="color: var(--text-h); font-weight: 700;">7 Blocks / 60m ea.</span>
+        </div>
+
+        <button class="btn-start-mock" onclick="startExam('step1-mock1')">Start Simulation</button>
+      </div>
+
+       <!-- Mock Exam Card 2 -->
+       <div class="mock-card">
+        <div class="mock-badge">STEP 2 CK</div>
+        <h3>USMLE Step 2 Mock #1</h3>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Clinical knowledge assessment focusing on diagnosis and management.</p>
+        
+        <div class="mock-stat">
+          <span>Questions</span>
+          <span style="color: var(--text-h); font-weight: 700;">318 MCQs</span>
+        </div>
+        <div class="mock-stat">
+          <span>Total Time</span>
+          <span style="color: var(--text-h); font-weight: 700;">9 Hours</span>
+        </div>
+
+        <button class="btn-start-mock" style="background: var(--border); cursor: not-allowed; color: var(--text-muted);">Coming Soon</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function startExam(id) {
+      if (confirm('Are you ready to start the 8-hour simulation? The clock will run in real-time once you begin.')) {
+        window.location.href = `medical-exam-simulator.html?exam_id=${id}`;
+      }
+    }
+  </script>
+</body>
+</html>
