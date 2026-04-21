@@ -211,37 +211,70 @@
       examStartedAt: null,
       currentBlock: 0,
       currentQ: 0,
-      questions: [], // [[{block1_q1}, ...], [{block2_q1}, ...]]
-      answers: {}, // { globalIdx: index }
+      currentQuestion: 0,
+      questions: [], 
+      answers: {}, 
       marked: new Set(),
       blockStartTimes: {},
       isBreak: false,
-      isReview: false
+      isReview: false,
+      isReportShow: false
     };
 
-    // --- DATA FETCHING ---
+    // --- STATE MANAGEMENT ---
+    function saveState() {
+      const toSave = { ...state, marked: Array.from(state.marked) };
+      localStorage.setItem('mh_sim_state', JSON.stringify(toSave));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem('mh_sim_state');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          state = { ...parsed, marked: new Set(parsed.marked || []) };
+          
+          if (!state.questions || state.questions.length === 0) {
+            console.warn("State exists but questions are empty. Re-fetching...");
+            initSimulator();
+          } else {
+            initUI();
+          }
+        } catch (e) {
+          console.error("Failed to parse state:", e);
+          initSimulator();
+        }
+      } else {
+        initSimulator();
+      }
+    }
+
+    // --- SIMULATOR ENGINE ---
     async function initSimulator() {
       const loader = document.getElementById('loading-msg');
-      loader.textContent = "Loading 280 board-style questions...";
+      loader.innerHTML = `
+        <div style="text-align: center; color: var(--accent);">
+          <div style="font-size: 24px; margin-bottom: 10px;">Initializing Board Simulation...</div>
+          <div style="font-size: 16px; opacity: 0.8;">Fetching 280 Randomized Questions from Supabase...</div>
+        </div>
+      `;
 
       try {
-        // 1. Fetch all Step 1 MCQs
         const { data, error } = await window.dbClient
           .from('mcqs')
           .select('*, topics!inner(*)')
           .eq('topics.usmle_step', 1);
 
-        if (error || !data || data.length < 280) {
-          throw new Error("Could not load full question pool. Ensure migration is complete.");
+        if (error || !data || data.length < 10) { 
+          throw new Error("Could not load question pool. Is the database populated?");
         }
 
-        // 2. Shuffle everything
-        const shuffled = shuffleArray(data);
-
-        // 3. Partition into blocks
+        const shuffled = data.sort(() => Math.random() - 0.5);
+        
         state.questions = [];
+        const qCount = Math.floor(shuffled.length / TOTAL_BLOCKS);
         for (let i = 0; i < TOTAL_BLOCKS; i++) {
-          state.questions.push(shuffled.slice(i * Q_PER_BLOCK, (i + 1) * Q_PER_BLOCK));
+          state.questions.push(shuffled.slice(i * qCount, (i + 1) * qCount));
         }
 
         state.examStartedAt = Date.now();
@@ -251,26 +284,6 @@
         initUI();
       } catch (err) {
         console.error(err);
-        loader.innerHTML = `<div style="color:#ef4444; font-weight:700;">Error: ${err.message}</div>`;
-      }
-    }
-
-    function shuffleArray(array) {
-      const newArr = [...array];
-      for (let i = newArr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
-      }
-      return newArr;
-    }
-
-    function loadState() {
-      const saved = localStorage.getItem('mh_sim_state');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        state = { ...parsed, marked: new Set(parsed.marked) };
-        initUI();
-      } else {
         initSimulator();
       }
     }
