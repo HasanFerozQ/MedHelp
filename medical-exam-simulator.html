@@ -170,7 +170,8 @@
         <button class="btn btn-primary" onclick="nextQ()" id="next-btn">Next Question</button>
       </div>
       <div>
-        <button class="btn btn-danger" onclick="submitBlock()" style="background: #dc2626;">End Block</button>
+        <button class="btn btn-danger" id="end-block-btn" onclick="submitBlock()" style="background: #dc2626;">End Block</button>
+        <button class="btn btn-secondary hidden" id="exit-review-btn" onclick="exitSimulator()">Exit Review</button>
       </div>
     </footer>
   </div>
@@ -192,7 +193,7 @@
       <div id="report-stats">
         <!-- Stats injected here -->
       </div>
-      <button class="btn btn-primary" onclick="window.location.href='medical-exam-usmle.html'" style="margin-top: 40px; width: 100%;">Return to Dashboard</button>
+      <button class="btn btn-primary" onclick="exitSimulator()" style="margin-top: 40px; width: 100%; height: auto; padding: 16px;">Return to Dashboard</button>
     </div>
   </div>
 
@@ -207,20 +208,67 @@
       examStartedAt: null,
       currentBlock: 0,
       currentQ: 0,
-      answers: {}, // { qId: index }
+      questions: [], // [[{block1_q1}, ...], [{block2_q1}, ...]]
+      answers: {}, // { globalIdx: index }
       marked: new Set(),
-      blockStates: [], // { completed: bool, score: int, timeSpent: int }
-      isBreak: false
+      blockStartTimes: {},
+      isBreak: false,
+      isReview: false
     };
+
+    // --- DATA FETCHING ---
+    async function initSimulator() {
+      const loader = document.getElementById('loading-msg');
+      loader.textContent = "Loading 280 board-style questions...";
+
+      try {
+        // 1. Fetch all Step 1 MCQs
+        const { data, error } = await window.dbClient
+          .from('mcqs')
+          .select('*, topics!inner(*)')
+          .eq('topics.usmle_step', 1);
+
+        if (error || !data || data.length < 280) {
+          throw new Error("Could not load full question pool. Ensure migration is complete.");
+        }
+
+        // 2. Shuffle everything
+        const shuffled = shuffleArray(data);
+
+        // 3. Partition into blocks
+        state.questions = [];
+        for (let i = 0; i < TOTAL_BLOCKS; i++) {
+          state.questions.push(shuffled.slice(i * Q_PER_BLOCK, (i + 1) * Q_PER_BLOCK));
+        }
+
+        state.examStartedAt = Date.now();
+        state.blockStartTimes[0] = Date.now();
+        
+        saveState();
+        initUI();
+      } catch (err) {
+        console.error(err);
+        loader.innerHTML = `<div style="color:#ef4444; font-weight:700;">Error: ${err.message}</div>`;
+      }
+    }
+
+    function shuffleArray(array) {
+      const newArr = [...array];
+      for (let i = newArr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+      }
+      return newArr;
+    }
 
     function loadState() {
       const saved = localStorage.getItem('mh_sim_state');
       if (saved) {
         const parsed = JSON.parse(saved);
         state = { ...parsed, marked: new Set(parsed.marked) };
+        initUI();
       } else {
-        state.examStartedAt = Date.now();
-        saveState();
+        initSimulator();
       }
     }
 
@@ -231,6 +279,8 @@
 
     // --- TIMERS ---
     function updateTimers() {
+      if (!state.examStartedAt || state.isReview) return;
+      
       const now = Date.now();
       
       // Global Timer
@@ -248,9 +298,8 @@
 
       // Block Timer (Only if not in break)
       if (!state.isBreak) {
-        // We'll track block start time individually for better accuracy
-        const blockStart = state.blockStartTimes ? state.blockStartTimes[state.currentBlock] : state.examStartedAt; 
-        const elapsedBlock = now - (blockStart || now);
+        const blockStart = state.blockStartTimes[state.currentBlock] || state.examStartedAt; 
+        const elapsedBlock = now - blockStart;
         const remainingBlock = Math.max(0, BLOCK_TIME - elapsedBlock);
         
         const timerEl = document.getElementById('block-timer');
@@ -281,6 +330,8 @@
 
     // --- UI RENDER ---
     function initUI() {
+      if (!state.questions.length) return;
+
       const dots = document.getElementById('block-dots');
       dots.innerHTML = '';
       for (let i = 0; i < TOTAL_BLOCKS; i++) {
@@ -293,10 +344,10 @@
       qNav.innerHTML = '';
       for (let i = 0; i < Q_PER_BLOCK; i++) {
         const btn = document.createElement('div');
-        const qIdx = state.currentBlock * Q_PER_BLOCK + i;
+        const globalIdx = state.currentBlock * Q_PER_BLOCK + i;
         btn.className = `q-btn ${i === state.currentQ ? 'current' : ''}`;
-        if (state.answers[qIdx] !== undefined) btn.classList.add('answered');
-        if (state.marked.has(qIdx)) btn.classList.add('marked');
+        if (state.answers[globalIdx] !== undefined) btn.classList.add('answered');
+        if (state.marked.has(globalIdx)) btn.classList.add('marked');
         btn.textContent = i + 1;
         btn.onclick = () => jumpToQ(i);
         qNav.appendChild(btn);
@@ -306,38 +357,74 @@
     }
 
     function renderQuestion() {
-       const qIdx = state.currentBlock * Q_PER_BLOCK + state.currentQ;
+       const globalIdx = state.currentBlock * Q_PER_BLOCK + state.currentQ;
+       const q = state.questions[state.currentBlock][state.currentQ];
        const qTextEl = document.getElementById('q-text');
        const optionsEl = document.getElementById('options-list');
+       const mcqArea = document.getElementById('mcq-area');
        
        document.getElementById('loading-msg').classList.add('hidden');
        document.getElementById('mcq-content').classList.remove('hidden');
 
-       // Placeholder for real question fetching
-       qTextEl.textContent = `[Question ${state.currentQ + 1} of Block ${state.currentBlock + 1}] This is a high-yield board-style question placeholder.`;
+       // Header & Image
+       const imgHtml = q.image_url ? `<img src="${q.image_url}" class="mcq-image" style="width:100%; max-height:300px; object-fit:contain; border-radius:8px; margin-bottom:20px; border:1px solid #374151;">` : '';
        
-       const options = ["Option A", "Option B", "Option C", "Option D", "Option E"];
-       optionsEl.innerHTML = options.map((opt, i) => `
-          <div class="option-row ${state.answers[qIdx] === i ? 'selected' : ''}" onclick="selectOption(${i})">
-            <span class="opt-letter">${String.fromCharCode(65 + i)})</span>
-            <span>${opt}</span>
-          </div>
-       `).join('');
+       qTextEl.innerHTML = `
+         <div style="font-size:11px; color:#9ca3af; margin-bottom:10px; font-weight:800; text-transform:uppercase;">Block ${state.currentBlock + 1} | Question ${state.currentQ + 1} of ${Q_PER_BLOCK}</div>
+         ${imgHtml}
+         <div style="line-height:1.6; font-size:18px;">${escapeHtml(q.question)}</div>
+       `;
        
-       document.getElementById('mark-btn').style.color = state.marked.has(qIdx) ? '#f59e0b' : '';
+       const options = Array.isArray(q.options) ? q.options : JSON.parse(q.options);
+       optionsEl.innerHTML = options.map((opt, i) => {
+          let className = `option-row ${state.answers[globalIdx] === i ? 'selected' : ''}`;
+          if (state.isReview) {
+            if (i === q.correct_index) className += ' correct-answer'; // CSS to be added or inline
+            if (state.answers[globalIdx] === i && i !== q.correct_index) className += ' wrong-answer';
+          }
+
+          return `
+            <div class="${className}" onclick="${state.isReview ? '' : `selectOption(${i})`}" style="${state.isReview && i === q.correct_index ? 'border-color:#10b981; background:rgba(16,185,129,0.1);' : ''} ${state.isReview && state.answers[globalIdx] === i && i !== q.correct_index ? 'border-color:#ef4444; background:rgba(239,68,68,0.1);' : ''}">
+              <span class="opt-letter" style="${state.isReview && i === q.correct_index ? 'color:#10b981;' : ''} ${state.isReview && state.answers[globalIdx] === i && i !== q.correct_index ? 'color:#ef4444;' : ''}">${String.fromCharCode(65 + i)})</span>
+              <span>${escapeHtml(opt)}</span>
+            </div>
+          `;
+       }).join('');
+
+       // Explanation (Only in Review)
+       const existingExp = document.getElementById('review-explanation');
+       if (existingExp) existingExp.remove();
+       
+       if (state.isReview) {
+         const expDiv = document.createElement('div');
+         expDiv.id = 'review-explanation';
+         expDiv.style.marginTop = '30px';
+         expDiv.style.padding = '24px';
+         expDiv.style.background = '#1f2937';
+         expDiv.style.borderRadius = '8px';
+         expDiv.style.borderLeft = '4px solid #10b981';
+         expDiv.innerHTML = `
+           <h4 style="color:#10b981; margin:0 0 10px; font-size:14px; text-transform:uppercase; font-weight:900;">Learning Note</h4>
+           <p style="margin:0; line-height:1.6; color:#d1d5db; font-size:15px;">${escapeHtml(q.explanation || 'No explanation available.')}</p>
+         `;
+         optionsEl.after(expDiv);
+       }
+       
+       document.getElementById('mark-btn').style.color = state.marked.has(globalIdx) ? '#f59e0b' : '';
     }
 
     function selectOption(idx) {
-      const qIdx = state.currentBlock * Q_PER_BLOCK + state.currentQ;
-      state.answers[qIdx] = idx;
+      if (state.isReview) return;
+      const globalIdx = state.currentBlock * Q_PER_BLOCK + state.currentQ;
+      state.answers[globalIdx] = idx;
       saveState();
       initUI();
     }
 
     function toggleMark() {
-      const qIdx = state.currentBlock * Q_PER_BLOCK + state.currentQ;
-      if (state.marked.has(qIdx)) state.marked.delete(qIdx);
-      else state.marked.add(qIdx);
+      const globalIdx = state.currentBlock * Q_PER_BLOCK + state.currentQ;
+      if (state.marked.has(globalIdx)) state.marked.delete(globalIdx);
+      else state.marked.add(globalIdx);
       saveState();
       initUI();
     }
@@ -382,7 +469,6 @@
 
     function startNextBlock() {
        state.isBreak = false;
-       state.blockStartTimes = state.blockStartTimes || {};
        state.blockStartTimes[state.currentBlock] = Date.now();
        document.getElementById('sim-ui').classList.remove('hidden');
        document.getElementById('break-ui').classList.add('hidden');
@@ -391,36 +477,73 @@
     }
 
     function finishExam() {
+      state.isReview = true; // Flag for later review
       document.getElementById('sim-ui').classList.add('hidden');
       document.getElementById('break-ui').classList.add('hidden');
       document.getElementById('report-ui').classList.add('visible');
       
       // Calculate Score
+      let correct = 0;
+      let globalIdx = 0;
+      for (let b = 0; b < TOTAL_BLOCKS; b++) {
+        for (let q = 0; q < Q_PER_BLOCK; q++) {
+          const question = state.questions[b][q];
+          if (state.answers[globalIdx] === question.correct_index) {
+            correct++;
+          }
+          globalIdx++;
+        }
+      }
+
       const totalAnswered = Object.keys(state.answers).length;
       const totalQ = TOTAL_BLOCKS * Q_PER_BLOCK;
+      const scorePct = Math.round((correct / totalQ) * 100);
       
       document.getElementById('report-stats').innerHTML = `
-        <div style="font-size: 64px; font-weight: 900; color: #10b981; margin-bottom: 10px;">PROVISIONAL</div>
-        <div style="color: var(--text-muted); margin-bottom: 40px;">Final score report will be available once real data is processed.</div>
+        <div style="font-size: 64px; font-weight: 900; color: #10b981; margin-bottom: 10px;">${scorePct}%</div>
+        <div style="color: var(--text-muted); margin-bottom: 40px; font-weight:700;">PROVISIONAL PERFORMANCE REPORT</div>
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-          <div style="background: #1f2937; padding: 20px; border-radius: 12px;">
-             <div style="font-size: 24px; font-weight: 900;">${totalAnswered} / ${totalQ}</div>
-             <div style="font-size: 11px; color: #9ca3af; text-transform: uppercase;">Questions Attempted</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom:30px;">
+          <div style="background: #1f2937; padding: 20px; border-radius: 12px; border:1px solid #374151;">
+             <div style="font-size: 24px; font-weight: 900;">${correct} / ${totalQ}</div>
+             <div style="font-size: 11px; color: #9ca3af; text-transform: uppercase; font-weight:800;">Correct Answers</div>
           </div>
-          <div style="background: #1f2937; padding: 20px; border-radius: 12px;">
-             <div style="font-size: 24px; font-weight: 900;">${formatTimeLong(Date.now() - state.examStartedAt)}</div>
-             <div style="font-size: 11px; color: #9ca3af; text-transform: uppercase;">Total Time Taken</div>
+          <div style="background: #1f2937; padding: 20px; border-radius: 12px; border:1px solid #374151;">
+             <div style="font-size: 24px; font-weight: 900;">${totalAnswered}</div>
+             <div style="font-size: 11px; color: #9ca3af; text-transform: uppercase; font-weight:800;">Questions Attempted</div>
           </div>
         </div>
+
+        <button class="btn btn-primary" onclick="enterReviewMode()" style="background:#a855f7; width:100%; margin-bottom:12px;">Review All Questions</button>
       `;
       
-      localStorage.removeItem('mh_sim_state'); // Clear for next time
+      // We keep state for review, but will clear on final exit
+    }
+
+    function enterReviewMode() {
+      state.currentBlock = 0;
+      state.currentQ = 0;
+      state.isReview = true;
+      state.isBreak = false;
+      document.getElementById('report-ui').classList.remove('visible');
+      document.getElementById('sim-ui').classList.remove('hidden');
+      document.getElementById('block-timer').textContent = "REVIEW";
+      document.getElementById('global-timer').textContent = "COMPLETE";
+      
+      // Toggle buttons for review
+      document.getElementById('end-block-btn').classList.add('hidden');
+      document.getElementById('exit-review-btn').classList.remove('hidden');
+      
+      initUI();
+    }
+
+    function exitSimulator() {
+      localStorage.removeItem('mh_sim_state');
+      window.location.href = 'medical-exam-usmle.html';
     }
 
     // --- INITIALIZE ---
     loadState();
-    initUI();
     setInterval(updateTimers, 1000);
 
     // Theme toggle

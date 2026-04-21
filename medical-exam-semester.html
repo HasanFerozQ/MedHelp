@@ -707,13 +707,13 @@
         const mcqIds = topic.mcqs.map(m => m.id);
         const progressMcqs = mcqIds.filter(id => topicProg[id]).length;
         
-        // Case Progress (Scenarios)
+        // Case Progress (Scenarios) - Count as attempted if at least one question is answered
         const totalCases = topic.case_studies.length;
-        let completedCases = 0;
+        let attemptedCases = 0;
         topic.case_studies.forEach(cs => {
           const qIds = cs.case_questions.map(q => q.id);
-          const correct = qIds.filter(id => topicProg[id] && topicProg[id].correct).length;
-          if (qIds.length > 0 && correct === qIds.length) completedCases++;
+          const answered = qIds.filter(id => topicProg[id]).length;
+          if (qIds.length > 0 && answered > 0) attemptedCases++;
         });
 
         const totalQ = totalMcqs + topic.case_studies.flatMap(cs => cs.case_questions).length;
@@ -738,7 +738,7 @@
             </div>
             ${totalCases > 0 ? `
             <div class="topic-stats-row">
-              <span style="color:#a855f7">• ${completedCases} / ${totalCases} Cases</span>
+              <span style="color:#a855f7">• ${attemptedCases} / ${totalCases} Cases</span>
             </div>
             ` : ''}
             <div class="progress-bar-bg">
@@ -1002,23 +1002,24 @@
       
       const caseAnswered = currentCaseQuestionIds.filter(id => topicProgress[id]);
       
-      // Calculate completed scenarios (where all questions for that scenario are correct)
-      let casesCompletedCount = 0;
+      // Calculate attempted scenarios (where at least one question for that scenario is answered)
+      let casesAttemptedCount = 0;
       currentLoadedCases.forEach(cs => {
         const scenarioQuestions = cs.case_questions.map(q => q.id);
-        const correctInScenario = scenarioQuestions.filter(id => topicProgress[id] && topicProgress[id].correct).length;
-        if (scenarioQuestions.length > 0 && correctInScenario === scenarioQuestions.length) {
-          casesCompletedCount++;
+        const answeredInScenario = scenarioQuestions.filter(id => topicProgress[id]).length;
+        if (scenarioQuestions.length > 0 && answeredInScenario > 0) {
+          casesAttemptedCount++;
         }
       });
       
       const totalAnswered = mcqAnswered.length + caseAnswered.length;
       const totalPossible = currentStandaloneIds.length + currentCaseQuestionIds.length;
 
-      document.getElementById('topic-stats').textContent = `${totalAnswered} / ${totalPossible} Questions Completed`;
+      const statsEl = document.getElementById('stats-total') || document.getElementById('topic-stats');
+      if (statsEl) statsEl.textContent = `${totalAnswered} / ${totalPossible} Questions Completed`;
       
-      document.getElementById('mcq-live-score').textContent = `MCQ: ${mcqCorrect} / ${currentStandaloneIds.length}`;
-      document.getElementById('case-live-score').textContent = `Case: ${casesCompletedCount} / ${currentLoadedCases.length}`;
+      document.getElementById('mcq-live-score').textContent = `MCQ: ${mcqAnswered.length} / ${currentStandaloneIds.length}`;
+      document.getElementById('case-live-score').textContent = `Case: ${casesAttemptedCount} / ${currentLoadedCases.length}`;
       
       // Hide case score if no cases exist
       document.getElementById('case-live-score').style.display = currentCaseQuestionIds.length ? 'block' : 'none';

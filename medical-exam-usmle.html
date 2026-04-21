@@ -156,11 +156,12 @@
       grid.innerHTML = '';
       loader.classList.remove('hidden');
 
-      // Fetch topics where usmle_step == stepId
+      // Fetch topics where usmle_step == stepId (Exclude internal mock pool)
       const { data, error } = await window.dbClient
         .from('topics')
         .select('*, mcqs(id)')
         .eq('usmle_step', stepId)
+        .neq('slug', 'usmle-1-mock-pool-hidden')
         .order('order', { ascending: true });
 
       loader.classList.add('hidden');
