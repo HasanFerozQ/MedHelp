@@ -149,9 +149,13 @@ select option {
 /* --- Reset --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Global Hover Outline Reset */
-a:hover, button:hover, [role="button"]:hover, select:hover, input:hover, textarea:hover {
+/* Global Hover & Focus Reset — Clean premium feel */
+a:hover, button:hover, [role="button"]:hover, select:hover, input:hover, textarea:hover,
+a:focus, button:focus, [role="button"]:focus, select:focus, input:focus, textarea:focus,
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible,
+a:active, button:active {
   outline: none !important;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html { scroll-behavior: smooth; }
@@ -523,7 +527,6 @@ body {
 }
 
 .tool-card-premium:hover {
-  border-color: var(--border-accent);
   transform: translateY(-5px);
   box-shadow: var(--shadow-accent);
   color: inherit;
@@ -796,8 +799,8 @@ body {
 }
 
 .why-card:hover {
-  border-color: var(--border-accent);
   transform: translateY(-3px);
+  box-shadow: var(--shadow-accent);
 }
 
 .why-icon {
@@ -1709,7 +1712,9 @@ a:hover {
   transition: var(--transition);
 }
 
-.faq-item:hover { border-color: var(--border-accent); }
+.faq-item:hover {
+  background: var(--bg-card-hover);
+}
 
 .faq-item.open { border-color: var(--border-accent); }
 
@@ -2053,7 +2058,10 @@ a:hover {
   transition: var(--transition);
 }
 
-.blog-hero-post:hover { border-color: var(--border-accent); transform: translateY(-4px); box-shadow: var(--shadow-accent); }
+.blog-hero-post:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-accent);
+}
 
 .blog-hero-img {
   width: 100%;
@@ -2117,7 +2125,10 @@ a:hover {
   display: block;
 }
 
-.blog-card:hover { border-color: var(--border-accent); transform: translateY(-5px); box-shadow: var(--shadow-accent); }
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-accent);
+}
 
 .blog-card-img {
   width: 100%;
