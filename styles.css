@@ -155,6 +155,7 @@ a:focus, button:focus, [role="button"]:focus, select:focus, input:focus, textare
 a:focus-visible, button:focus-visible, [role="button"]:focus-visible,
 a:active, button:active {
   outline: none !important;
+  text-decoration: none !important;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -937,7 +938,7 @@ a {
   transition: var(--transition);
 }
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* --- Problem Box --- */
