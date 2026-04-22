@@ -764,6 +764,11 @@
       window.location.href = 'medical-exam-usmle.html';
     }
 
+    // Auto-unlock if coming back from Gumroad with a success param
+    if (window.location.search.includes('paid=true')) {
+      MediHelp.License.activate();
+    }
+
     // --- INITIALIZE ---
     loadState();
     setInterval(updateTimers, 1000);

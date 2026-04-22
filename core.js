@@ -352,11 +352,14 @@ const MediHelp = {
         }
 
         const data = await response.json();
-        if (data.success) {
+        if (data && data.success) {
           this.activate();
+          console.log("MediHelp License: Activation successful.");
           return true;
         }
-        return false;
+        
+        // If we got here, success was false or data was missing
+        throw new Error(data.message || "INVALID_KEY");
       } catch (e) {
         console.error("MediHelp License: Verification failed", e);
         throw e;
