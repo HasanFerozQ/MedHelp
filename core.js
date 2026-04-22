@@ -9,6 +9,23 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 if (window.supabase) {
   window.dbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  
+  // Listen for Auth changes for persistence
+  window.dbClient.auth.onAuthStateChange(async (event, session) => {
+    console.log(`MediHelp Auth: ${event}`, session?.user?.email);
+    if (session?.user) {
+      // Sync license from user metadata if not already active locally
+      const userLicense = session.user.user_metadata?.mh_license_key;
+      if (userLicense && !MediHelp.License.isActivated()) {
+         console.log("MediHelp: Syncing license from user profile...");
+         try {
+           await MediHelp.License.verify(userLicense, session.user.email);
+         } catch (e) {
+           console.warn("MediHelp: Auth-based license sync failed.");
+         }
+      }
+    }
+  });
 }
 
 // 2. Global Theme (Dark/Light) Logic
@@ -316,14 +333,34 @@ const MediHelp = {
   // 7. Global Licensing Logic (Gumroad)
   License: {
     STORAGE_KEY: 'mh_license_active',
+    DATA_KEY: 'mh_license_data', // Stores {key, email}
     
     isActivated: function() {
-      // Check if license is active in localStorage
       return localStorage.getItem(this.STORAGE_KEY) === 'true';
     },
 
-    activate: function() {
+    activate: async function(key, email) {
       localStorage.setItem(this.STORAGE_KEY, 'true');
+      if (key && email) {
+        localStorage.setItem(this.DATA_KEY, JSON.stringify({ key, email }));
+        
+        // If user is logged in, sync to Supabase metadata
+        if (window.dbClient) {
+          const { data: { user } } = await window.dbClient.auth.getUser();
+          if (user) {
+            await window.dbClient.auth.updateUser({
+              data: { mh_license_key: key }
+            });
+          }
+        }
+      }
+    },
+
+    restore: async function() {
+      const data = localStorage.getItem(this.DATA_KEY);
+      if (!data) throw new Error("No license data found on this device.");
+      const { key, email } = JSON.parse(data);
+      return this.verify(key, email);
     },
 
     verify: async function(key, email) {
@@ -353,7 +390,7 @@ const MediHelp = {
 
         const data = await response.json();
         if (data && data.success) {
-          this.activate();
+          await this.activate(key, email);
           console.log("MediHelp License: Activation successful.");
           return true;
         }

@@ -215,6 +215,7 @@
         <button id="unlock-btn" class="paywall-btn" onclick="validateLicense()" style="display: flex; align-items: center; justify-content: center; gap: 10px;">Unlock Simulator <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
         
         <div id="paywall-error" style="color: #ef4444; font-size: 13px; margin-top: 16px; font-weight: 700;" class="hidden"></div>
+        <button id="restore-btn" class="paywall-btn" style="margin-top: 10px; background: transparent; border: 1px dashed #4b5563; color: #9ca3af; font-size: 12px;" onclick="restorePurchase()">Restore Purchase on this Device</button>
       </div>
 
       <div style="margin-top: 32px; border-top: 1px solid #374151; padding-top: 24px;">
@@ -759,15 +760,27 @@
       }
     }
 
+    async function restorePurchase() {
+      const btn = document.getElementById('restore-btn');
+      btn.disabled = true;
+      btn.textContent = 'Restoring...';
+      try {
+        await MediHelp.License.restore();
+        alert('Access Restored Successfully!');
+        location.reload();
+      } catch (e) {
+        alert(e.message || 'No saved license found on this device.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Restore Purchase on this Device';
+      }
+    }
+
     function exitSimulator() {
       localStorage.removeItem('mh_sim_state');
       window.location.href = 'medical-exam-usmle.html';
     }
 
-    // Auto-unlock if coming back from Gumroad with a success param
-    if (window.location.search.includes('paid=true')) {
-      MediHelp.License.activate();
-    }
 
     // --- INITIALIZE ---
     loadState();

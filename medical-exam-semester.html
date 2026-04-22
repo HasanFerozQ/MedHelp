@@ -383,7 +383,7 @@
           </li>
           <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--text-h);">
             <span style="color: var(--success); font-weight: 900;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg></span>
-            <span><strong>Affordable Excellence</strong> – High-quality board prep for only $20/year.</span>
+            <span><strong>Affordable Excellence</strong> – High-quality board prep for only $24.99/year.</span>
           </li>
         </ul>
       </div>
@@ -507,6 +507,7 @@
           <input type="text" id="access-key-input" class="unlock-input" placeholder="Gumroad License Key">
           <input type="email" id="access-email-input" class="unlock-input" placeholder="Purchase Email">
           <button id="verify-btn" class="secondary-btn" onclick="verifyAccessKey()">Unlock Now</button>
+          <button id="restore-btn" class="secondary-btn" style="margin-top: 10px; border-style: dotted;" onclick="restorePurchase()">Restore Purchase on this Device</button>
         </div>
 
         <button class="secondary-btn" style="border:none; margin-top:20px;" onclick="closePremiumModal()">Maybe Later</button>
@@ -817,6 +818,23 @@
       }
     }
 
+    async function restorePurchase() {
+      const btn = document.getElementById('restore-btn');
+      btn.disabled = true;
+      btn.textContent = 'Restoring...';
+      try {
+        await MediHelp.License.restore();
+        showToast('Access Restored Successfully!', 'success');
+        closePremiumModal();
+        if (currentTopicId) startQuiz(currentTopicId, document.getElementById('current-topic-title').textContent);
+      } catch (e) {
+        showToast(e.message || 'No saved license found.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Restore Purchase on this Device';
+      }
+    }
+
     function backToTopics() {
       const urlParams = new URLSearchParams(window.location.search);
       const isUsmle = urlParams.get('usmle') === 'true';
@@ -1088,11 +1106,6 @@
 
       initSearch();
       
-      // Auto-unlock if coming back from Gumroad with a success param
-      if (window.location.search.includes('paid=true')) {
-        MediHelp.License.activate();
-        showToast('Payment Successful! Premium Access Unlocked.', 'success');
-      }
 
       const urlParams = new URLSearchParams(window.location.search);
       const initialTopicId = urlParams.get('topic_id');
