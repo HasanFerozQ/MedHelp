@@ -1,7 +1,7 @@
 ---
 title: The Diabetes Drug That Mimics Exercise — What GLP-1 & Metformin Mean for Your Health in 2026
 date: 2026-04-22
-thumbnail: https://images.unsplash.com/photo-1584362946043-121f5999073c?w=1400&q=80&auto=format&fit=crop
+thumbnail: https://plus.unsplash.com/premium_photo-1716834533312-fff5dc5df040?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 category: Metabolic Health
 summary: Scientists discover common diabetes drugs like metformin and GLP-1s mimic the cellular effects of exercise. Learn how these medications impact heart health, cancer risk, and weight loss in 2026.
 ---

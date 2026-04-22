@@ -1,7 +1,7 @@
 ---
 title: How Low Should Your Blood Pressure Go? New 2026 Science Has a Surprising Answer
 date: 2026-04-22
-thumbnail: https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&q=80&auto=format&fit=crop
+thumbnail: https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 category: Heart Health
 summary: New 2026 research reveals the optimal blood pressure target may be lower than 120/80. Discover what systolic BP below 120 mmHg means for heart health and how to get there naturally.
 ---
@@ -76,7 +76,7 @@ A Vanderbilt University study tracking over 6,000 people found that participants
 ### ✅ Cut Sodium Aggressively
 Most sodium in our diet doesn't come from the salt shaker — it comes from processed and packaged foods. Swapping processed foods for whole foods and using herbs and spices for flavor instead of salt is one of the fastest ways to drop BP.
 
-![Healthy DASH diet foods](https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80&auto=format&fit=crop)
+![Healthy DASH diet foods](https://images.unsplash.com/photo-1493770348161-369560ae357d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
 
 ### ✅ Lose Even a Small Amount of Weight
 Research confirms that for every kilogram of body weight lost, systolic blood pressure drops by approximately 1 mmHg. Losing 10 kg (about 22 lbs) can reduce systolic BP by 5–10 points — enough to move from Stage 1 hypertension to optimal range.
