@@ -209,7 +209,7 @@ const MediHelp = {
     modal.className = 'feedback-modal';
     modal.innerHTML = `
       <div class="feedback-content">
-        <button class="close-feedback">&times;</button>
+        <button class="close-feedback" style="display: flex; align-items: center; justify-content: center; padding: 4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
         <div class="feedback-header">
           <h3>Share Feedback</h3>
           <p>Encountered a bug or have a suggestion? Let us know below.</p>
