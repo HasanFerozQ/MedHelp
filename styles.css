@@ -149,6 +149,11 @@ select option {
 /* --- Reset --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Global Hover Outline Reset */
+a:hover, button:hover, [role="button"]:hover, select:hover, input:hover, textarea:hover {
+  outline: none !important;
+}
+
 html { scroll-behavior: smooth; }
 
 body {
