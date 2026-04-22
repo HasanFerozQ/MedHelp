@@ -311,6 +311,57 @@ const MediHelp = {
       </div>
     `;
     footer.parentNode.insertBefore(wrap, footer);
+  },
+
+  // 7. Global Licensing Logic (Gumroad)
+  License: {
+    STORAGE_KEY: 'mh_license_active',
+    
+    isActivated: function() {
+      // Check if license is active in localStorage
+      return localStorage.getItem(this.STORAGE_KEY) === 'true';
+    },
+
+    activate: function() {
+      localStorage.setItem(this.STORAGE_KEY, 'true');
+    },
+
+    verify: async function(key, email) {
+      if (!key || !email) throw new Error("License key and email are required.");
+
+      try {
+        const response = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/verify-license', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({ license_key: key, email: email })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          if (response.status === 403 || (errorData && errorData.message === "LICENSE_LIMIT_REACHED")) {
+            throw new Error("LICENSE_LIMIT_REACHED");
+          } else if (response.status === 401) {
+            throw new Error("INVALID_KEY");
+          } else {
+            throw new Error(errorData.message || "SERVER_ERROR");
+          }
+        }
+
+        const data = await response.json();
+        if (data.success) {
+          this.activate();
+          return true;
+        }
+        return false;
+      } catch (e) {
+        console.error("MediHelp License: Verification failed", e);
+        throw e;
+      }
+    }
   }
 };
 

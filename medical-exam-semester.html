@@ -503,9 +503,10 @@
         <a class="gumroad-button premium-btn" href="https://medihelp.gumroad.com/l/xGFFO4xgo4rpezVD6BupmA==">Purchase Yearly Access</a>
         
         <div class="unlock-section">
-          <p style="font-size: 12px; margin-bottom: 10px;">Already purchased? Enter your access key below:</p>
-          <input type="text" id="access-key-input" class="unlock-input" placeholder="MED-XXXX-XXXX">
-          <button class="secondary-btn" onclick="verifyAccessKey()">Unlock Now</button>
+          <p style="font-size: 12px; margin-bottom: 10px;">Already purchased? Enter your access key and email below:</p>
+          <input type="text" id="access-key-input" class="unlock-input" placeholder="Gumroad License Key">
+          <input type="email" id="access-email-input" class="unlock-input" placeholder="Purchase Email">
+          <button id="verify-btn" class="secondary-btn" onclick="verifyAccessKey()">Unlock Now</button>
         </div>
 
         <button class="secondary-btn" style="border:none; margin-top:20px;" onclick="closePremiumModal()">Maybe Later</button>
@@ -765,11 +766,7 @@
     }
 
     function isPremium() {
-      // Free for now: only thorax is free, or if premium flag is set
-      if (localStorage.getItem('medi_premium_active') === 'true') return true;
-      // You can decide if some content is free, e.g., THORAX
-      // if (currentTopicId === 'thorax-id') return true;
-      return false;
+      return MediHelp.License.isActivated();
     }
 
     function openPremiumModal() {
@@ -787,15 +784,36 @@
       setTimeout(() => t.classList.remove('visible'), 3000);
     }
 
-    function verifyAccessKey() {
-      const key = document.getElementById('access-key-input').value.trim().toUpperCase();
-      if (key === 'MEDMASTER2026') {
-        localStorage.setItem('medi_premium_active', 'true');
+    async function verifyAccessKey() {
+      const key = document.getElementById('access-key-input').value.trim();
+      const email = document.getElementById('access-email-input').value.trim();
+      const btn = document.getElementById('verify-btn');
+
+      if (!key || !email) {
+        showToast('Please enter both license key and email.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Verifying...';
+
+      try {
+        await MediHelp.License.verify(key, email);
         showToast('Premium Access Activated!', 'success');
         closePremiumModal();
         if (currentTopicId) startQuiz(currentTopicId, document.getElementById('current-topic-title').textContent);
-      } else {
-        showToast('Invalid Access Key. Please check your receipt.', 'error');
+      } catch (e) {
+        console.error("License Verification Error:", e.message);
+        if (e.message === "LICENSE_LIMIT_REACHED") {
+          showToast('License limit reached (3 devices max).', 'error');
+        } else if (e.message === "INVALID_KEY") {
+          showToast('Invalid license key or email.', 'error');
+        } else {
+          showToast('Connection error. Please try again.', 'error');
+        }
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Unlock Now';
       }
     }
 
@@ -1072,7 +1090,7 @@
       
       // Auto-unlock if coming back from Gumroad with a success param
       if (window.location.search.includes('paid=true')) {
-        localStorage.setItem('medi_premium_active', 'true');
+        MediHelp.License.activate();
         showToast('Payment Successful! Premium Access Unlocked.', 'success');
       }
 
