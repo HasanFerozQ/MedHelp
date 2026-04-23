@@ -37,14 +37,14 @@
       .prep-hero { padding: 40px 20px; }
       .semester-nav { padding: 10px 20px; }
     }
-    .semester-nav { display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 10px 0; margin-bottom: 30px; scrollbar-width: none; border-bottom: 1px solid var(--border); }
-    .semester-tab { 
-      padding: 12px 24px; color: var(--text-muted); font-weight: 700; font-size: 14px; 
+    .year-nav { display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 10px 0; margin-bottom: 30px; scrollbar-width: none; border-bottom: 1px solid var(--border); }
+    .year-tab { 
+      padding: 12px 28px; color: var(--text-muted); font-weight: 800; font-size: 14px; 
       cursor: pointer; border-radius: var(--radius-sm); white-space: nowrap; transition: var(--transition);
-      border: 1px solid transparent;
+      border: 1px solid transparent; letter-spacing: 0.5px;
     }
-    .semester-tab:hover { color: var(--text-h); background: var(--bg-card); }
-    .semester-tab.active { color: var(--accent); background: var(--accent-glow); border-color: var(--border-accent); }
+    .year-tab:hover { color: var(--text-h); background: var(--bg-card); }
+    .year-tab.active { color: var(--accent); background: var(--accent-glow); border-color: var(--border-accent); }
 
     .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
     .topic-card { 
@@ -190,8 +190,8 @@
       .prep-hero h1 { font-size: 26px !important; }
       .prep-hero p { font-size: 14px !important; }
       
-      .semester-nav { padding: 5px 0; margin-bottom: 20px; }
-      .semester-tab { padding: 10px 18px; font-size: 12px; }
+      .year-nav { padding: 5px 0; margin-bottom: 20px; }
+      .year-tab { padding: 10px 18px; font-size: 12px; }
       
       .topic-grid { grid-template-columns: 1fr; gap: 16px; }
       .topic-card { padding: 20px; }
@@ -354,7 +354,7 @@
       <div class="search-container">
         <div class="search-input-wrapper">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <input type="text" id="topic-search" class="search-input" placeholder="Search topics across all semesters..." autocomplete="off">
+          <input type="text" id="topic-search" class="search-input" placeholder="Search topics across all years..." autocomplete="off">
         </div>
         <div id="search-results" class="search-results">
           <!-- Results injected here -->
@@ -394,8 +394,8 @@
     
     <!-- DASHBOARD VIEW -->
     <div id="dashboard-view">
-      <div class="semester-nav" id="semester-bar">
-        <!-- Injected Semesters -->
+      <div class="year-nav" id="year-bar">
+        <!-- Injected Years -->
       </div>
 
       <div id="topic-loading" style="text-align:center; padding: 40px; color: var(--text-muted);">Loading topics...</div>
@@ -496,7 +496,7 @@
           </div>
           <div class="feature-item">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-            Full Semester 1-8 Coverage (USMLE Standard)
+            Full 4-Year Curriculum Coverage (USMLE Standard)
           </div>
         </div>
 
@@ -597,7 +597,7 @@
 
   <script>
     // --- STATE MANAGEMENT ---
-    let currentSemester = 1;
+    let currentYear = 1;
     let currentTopicId = null;
     let userProgress = JSON.parse(localStorage.getItem('mh_prep_progress') || '{}');
     let allTopicsIndex = [];
@@ -615,7 +615,7 @@
     async function initSearch() {
       const { data, error } = await window.dbClient
         .from('topics')
-        .select('id, title, semester_id, slug')
+        .select('id, title, year_id, slug')
         .order('title', { ascending: true });
 
       if (data) allTopicsIndex = data;
@@ -636,7 +636,7 @@
           resultsContainer.innerHTML = matches.map(t => `
             <a class="search-item" href="?topic_id=${t.id}" style="text-decoration:none;">
               <span class="search-item-title">${escapeHtml(t.title)}</span>
-              <span class="search-item-sem">Semester ${t.semester_id}</span>
+              <span class="search-item-sem">${t.year_id ? t.year_id + getYearSuffix(t.year_id) + ' Year' : 'General'}</span>
             </a>
           `).join('');
           resultsContainer.classList.add('visible');
@@ -659,29 +659,39 @@
     }
 
     // --- DASHBOARD LOGIC ---
-    async function initSemesters() {
-      const bar = document.getElementById('semester-bar');
-      bar.innerHTML = '';
-      
-      for (let i = 1; i <= 8; i++) {
-        const tab = document.createElement('div');
-        tab.className = `semester-tab ${i === currentSemester ? 'active' : ''}`;
-        tab.textContent = `Semester ${i}`;
-        tab.onclick = () => switchSemester(i);
-        bar.appendChild(tab);
-      }
-      loadTopics(currentSemester);
+    const YEAR_LABELS = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
+
+    function getYearSuffix(n) {
+      const s = ['th','st','nd','rd'];
+      const v = n % 100;
+      return s[(v - 20) % 10] || s[v] || s[0];
     }
 
-    function switchSemester(id) {
-      currentSemester = id;
-      document.querySelectorAll('.semester-tab').forEach((t, i) => {
-        t.classList.toggle('active', (i + 1) === id);
+    async function initYears() {
+      const bar = document.getElementById('year-bar');
+      bar.innerHTML = '';
+      
+      YEAR_LABELS.forEach((label, idx) => {
+        const yearNum = idx + 1;
+        const tab = document.createElement('div');
+        tab.className = `year-tab ${yearNum === currentYear ? 'active' : ''}`;
+        tab.textContent = label;
+        tab.dataset.year = yearNum;
+        tab.onclick = () => switchYear(yearNum);
+        bar.appendChild(tab);
+      });
+      loadTopics(currentYear);
+    }
+
+    function switchYear(id) {
+      currentYear = id;
+      document.querySelectorAll('.year-tab').forEach(t => {
+        t.classList.toggle('active', parseInt(t.dataset.year) === id);
       });
       loadTopics(id);
     }
 
-    async function loadTopics(semId) {
+    async function loadTopics(yearId) {
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
       
@@ -691,14 +701,14 @@
       const { data, error } = await window.dbClient
         .from('topics')
         .select('*, mcqs(id), case_studies(id, case_questions(id)), slug')
-        .eq('semester_id', semId)
+        .eq('year_id', yearId)
         .is('usmle_step', null)
         .order('order', { ascending: true });
 
       loader.classList.add('hidden');
 
-      if (error || !data.length) {
-        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this semester yet.</p>';
+      if (error || !data || !data.length) {
+        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
         return;
       }
 
@@ -1127,10 +1137,10 @@
         if (data) {
            startQuiz(data.id, data.title);
         } else {
-           initSemesters();
+           initYears();
         }
       } else {
-        initSemesters();
+        initYears();
       }
     });
   </script>

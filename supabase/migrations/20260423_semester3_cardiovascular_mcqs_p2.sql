@@ -1,0 +1,122 @@
+-- Migration: Semester 3 - Cardiovascular MCQ Bank (PART 2: 101-200) - REPAIRED
+-- Date: 2026-04-23
+
+BEGIN;
+
+DO $$ 
+DECLARE 
+    v_topic_id UUID;
+BEGIN
+    SELECT id INTO v_topic_id FROM topics WHERE slug = 'cardiovascular' LIMIT 1;
+
+    IF v_topic_id IS NULL THEN
+        RAISE EXCEPTION 'Topic "cardiovascular" not found. Please run Part 1 first.';
+    END IF;
+
+    -- SECTION 21-40: 100 MCQs (Questions 101-200)
+    INSERT INTO mcqs (topic_id, question, options, correct_index, explanation) VALUES
+    (v_topic_id, 'ECG: Peaked T waves, widened QRS, "sine wave" appearance. Electrolyte?', '["HypoK", "Hyperkalemia", "HypoCa", "HyperCa"]', 1, 'Hyperkalemia progresses from peaked T waves to QRS widening and sine waves.'),
+    (v_topic_id, 'Shortened QT interval on ECG likely:', '["HypoCa", "Hypercalcemia", "HypoMg", "HyperMg"]', 1, 'Short QT = Hypercalcemia; Long QT = Hypocalcemia.'),
+    (v_topic_id, 'U waves (small wave after T wave) characteristic of:', '["HyperK", "Hypokalemia", "Digitalis", "Ischemia"]', 1, 'Hypokalemia causes flat T waves and U waves.'),
+    (v_topic_id, 'First-line treatment for Torsades de Pointes?', '["Potassium", "Calcium", "Magnesium sulfate", "Bicarb"]', 2, 'IV Magnesium stabilizes the cardiac membrane.'),
+    (v_topic_id, 'Digoxin toxicity hyperkalemia mechanism?', '["Renal", "Inhibition of Na+/K+ ATPase pumps worldwide", "Lysis", "Bone"]', 1, 'Pump inhibition prevents K+ uptake, causing extracellular hyperK.'),
+    (v_topic_id, 'Smooth part of Right Atrium (sinus venarum) derived from:', '["Primitive atrium", "Sinus venosus", "Bulbus cordis", "Truncus"]', 1, 'Right horn of sinus venosus becomes the smooth RA.'),
+    (v_topic_id, 'Smooth part of Ventricles (outflow tracts) derived from:', '["Primitive ventricle", "Bulbus cordis", "Cushions", "Atrium"]', 1, 'Bulbus cordis forms the smooth outflow tracts.'),
+    (v_topic_id, 'Hepatic segment of IVC derived from:', '["Vitelline veins", "Renal segment", "Suprarenal", "Infrarenal"]', 0, 'Derived from the right vitelline vein.'),
+    (v_topic_id, 'Gives rise to Ascending Aorta and Pulmonary Trunk:', '["Bulbus", "Truncus arteriosus", "Primitive ventricle", "3rd arch"]', 1, 'Truncus arteriosus divides to form the great vessels.'),
+    (v_topic_id, 'Failure of septum primum and secundum to fuse post-birth:', '["Primum ASD", "Secundum ASD", "Patent Foramen Ovale (PFO)", "VSD"]', 2, 'PFO is a trap-door failure of fusion.'),
+    (v_topic_id, 'Pure Alpha-1 agonist used to increase BP:', '["Isoproterenol", "Phenylephrine", "Clonidine", "Dobutamine"]', 1, 'Increases SVR; can cause reflex bradycardia.'),
+    (v_topic_id, 'Neprilysin inhibitor (Sacubitril) mechanism?', '["Low Ang II", "High Natriuretic Peptides (ANP/BNP)", "Beta-block", "Aldo inhibition"]', 1, 'Prevents ANP/BNP breakdown, promoting vasodilation.'),
+    (v_topic_id, 'Beta-blocker with Alpha-1 blocking activity (used in emergencies)?', '["Atenolol", "Labetalol", "Metoprolol", "Esmolol"]', 1, 'Labetalol and Carvedilol provide mixed blockade.'),
+    (v_topic_id, 'Sodium Nitroprusside toxicity risk?', '["MetHb", "Cyanide poisoning", "Iron", "Hyperthyroid"]', 1, 'Cyanide groups released; treat with Thiosulfate.'),
+    (v_topic_id, 'Treatment for Beta-blocker overdose?', '["Atropine", "Glucagon", "Flumazenil", "Naloxone"]', 1, 'Increases cAMP via non-Beta receptor mechanism.'),
+    (v_topic_id, 'Low BP, high JVP, cool extremities, high PCWP. Shock type?', '["Hypovolemic", "Septic", "Cardiogenic", "Obstructive"]', 2, 'High PCWP indicates failure originating in the left heart.'),
+    (v_topic_id, 'Septic Shock primary hemodynamic change?', '["High SVR", "Decreased SVR", "High PCWP", "Low CO"]', 1, 'Massive NO-mediated peripheral vasodilation drops SVR.'),
+    (v_topic_id, 'Oxygen saturation "step-up" from RA to RV:', '["ASD", "VSD", "PDA", "TR"]', 1, 'Oxygenated blood shunts from LV to RV.'),
+    (v_topic_id, 'PCWP is a proxy for:', '["RA pressure", "RVEDP", "Left Atrial Pressure", "MAP"]', 2, 'Measures pressure downstream from capillaries (LAP).'),
+    (v_topic_id, 'Shock with low PCWP and high SVR:', '["Cardiogenic", "Hypovolemic", "Septic", "Neurogenic"]', 1, 'Low volume triggers compensatory sympathetic resistance.'),
+    (v_topic_id, 'Aggressive myocarditis with multinucleated giant cells:', '["Viral", "Giant cell myocarditis", "Hypersensitivity", "Chagas"]', 1, 'Rapidly fatal; often requires transplant.'),
+    (v_topic_id, 'Behcet''s disease cardiac complication?', '["MS", "Coronary artery aneurysms and vasculitis", "Dissection", "Pericarditis"]', 1, 'Vasculitis affecting vessels of all sizes.'),
+    (v_topic_id, 'Dose-dependent dilated cardiomyopathy drug?', '["Cyclophosphamide", "Doxorubicin (Adriamycin)", "Bleomycin", "Cisplatin"]', 1, 'Anthracyclines cause oxidative stress (prevent with Dexrazoxane).'),
+    (v_topic_id, 'Tako-tsubo cardiomyopathy hallmark:', '["Hypertrophy", "Apical ballooning (emotional stress)", "Amyloid", "Viral"]', 1, 'Broken heart syndrome from catecholamine surge.'),
+    (v_topic_id, 'Pompe disease (Type II GSD) cardiac finding?', '["Hurler", "Severe hypertrophic cardiomyopathy", "Von Gierke", "Tay-Sachs"]', 1, 'Pompe trashes the Pump (glycogen accumulation).'),
+    (v_topic_id, 'Murmur decreasing with Squatting?', '["AS", "MR", "Hypertrophic Cardiomyopathy (HOCM)", "MS"]', 2, 'Preload/afterload increase LV volume, reducing HOCM obstruction.'),
+    (v_topic_id, 'Handgrip (high afterload) makes which murmur LOUDER?', '["AS", "HOCM", "Mitral Regurgitation", "PS"]', 2, 'High afterload forces more blood back through leaky mitral valve.'),
+    (v_topic_id, 'Inspiration makes which murmurs louder?', '["Left", "Right-sided murmurs", "All systolic", "None"]', 1, 'Increased venous return to right heart.'),
+    (v_topic_id, 'Valsalva (low preload) makes which murmur LOUDER?', '["AR", "VSD", "HOCM", "MR"]', 2, 'Less blood allows septum/valve to obstruct outflow easier.'),
+    (v_topic_id, 'Carvallo sign inspiration increase in:', '["MR", "Tricuspid Regurgitation", "AS", "PDA"]', 1, 'Differentiates TR from MR.'),
+    (v_topic_id, 'Most specific physical finding for HF?', '["Edema", "Hepatomegaly", "Paroxysmal Nocturnal Dyspnea (PND)", "Orthopnea"]', 2, 'PND results from edema redistribution when flat.'),
+    (v_topic_id, 'Pulsus alternans sign of:', '["Tamponade", "Severe LV Systolic Dysfunction", "AS", "Asthma"]', 1, 'Failing myocardium cannot recover contractility every other beat.'),
+    (v_topic_id, 'Peptide used to rule out HF in ER?', '["ANP", "BNP", "Troponin", "Renin"]', 1, 'B-type Natriuretic Peptide is sensitive for ventricular strain.'),
+    (v_topic_id, 'Avoided in acute decompensated "wet" HF?', '["Furosemide", "Nitroglycerin", "Metoprolol", "Dobutamine"]', 2, 'Beta-blockers can worsen acute failure by lowering contractility.'),
+    (v_topic_id, 'High-output heart failure cause?', '["Hypothyroid", "Wet Beriberi (B1 deficiency)", "Amyloid", "Hemochromatosis"]', 1, 'Beriberi, hyperthyroid, and AV fistulas cause high-output.'),
+    (v_topic_id, 'Vein running alongside LAD artery?', '["Small", "Middle", "Great cardiac vein", "Anterior"]', 2, 'LAD + Great Cardiac; PDA + Middle Cardiac; RCA + Small.'),
+    (v_topic_id, 'Crux of the heart location:', '["LAD/Circumflex", "AV junction posteriorly", "SVC/RA", "IVC/LA"]', 1, 'Intersection of AV and posterior interventricular grooves.'),
+    (v_topic_id, 'SA node location?', '["Septum", "Junction of SVC and Right Atrium", "Tricuspid", "LA"]', 1, 'Primary pacemaker in the upper right atrium.'),
+    (v_topic_id, 'Primary blood supply to Bundle of His?', '["LAD", "RCA", "LCX", "PDA"]', 0, 'Supplies anterior 2/3 of septum.'),
+    (v_topic_id, 'AFib ectopic foci location?', '["SVC", "Pulmonary Veins", "Coronary Sinus", "LA Appendage"]', 1, 'Ablation targets pulmonary vein ostia.'),
+    (v_topic_id, 'Strawberry hemangiomas in infants typically:', '["Surgery", "Grow then regress by age 5-8", "Malignancy", "Permanent"]', 1, 'Benign and usually involute spontaneously.'),
+    (v_topic_id, 'Glomus tumor location?', '["Liver", "Under fingernails", "Brain", "Heart"]', 1, 'Painful red-blue tumor under nail bed (thermoregulatory glomus).'),
+    (v_topic_id, 'Bacillary angiomatosis (B. henselae) confused with:', '["Kaposi Sarcoma", "Angiosarcoma", "Granuloma", "Cherry"]', 0, 'Both present as red/purple lesions in HIV.'),
+    (v_topic_id, 'Chronic lymphedema (post-mastectomy) risk?', '["Squamous", "Angiosarcoma (Stewart-Treves)", "Basal", "Melanoma"]', 1, 'Long-standing lymphostasis can lead to malignant lymph vessels.'),
+    (v_topic_id, 'Trousseau sign (migratory thrombophlebitis) association?', '["Buerger", "Pancreatic Adenocarcinoma", "DVT", "Varicose"]', 1, 'Paraneoplastic syndrome.'),
+    (v_topic_id, 'Amiodarone side effect?', '["Halos", "Corneal microdeposits/Blue-gray skin", "Edema", "Lupus"]', 1, 'Notorious for iodine deposits in skin and cornea.'),
+    (v_topic_id, 'Eisenmenger PDA cyanosis pattern?', '["Upper", "Lower extremities (differential)", "Generalized", "None"]', 1, 'Blue toes but pink fingers.'),
+    (v_topic_id, 'Valve most susceptible to blunt chest trauma (steering wheel)?', '["Mitral", "Aortic", "Tricuspid", "Pulmonary"]', 1, 'Aortic valve is most commonly injured in blunt trauma.'),
+    (v_topic_id, '#1 pediatric primary cardiac tumor?', '["Myxoma", "Rhabdomyoma", "Fibroma", "Sarcoma"]', 1, 'Highly associated with Tuberous Sclerosis.'),
+    (v_topic_id, 'Water-bottle heart shadow on X-ray:', '["CHF", "Pericardial Effusion", "HOCM", "MS"]', 1, 'Large effusion causes the sac to sag.'),
+    (v_topic_id, 'Primary PAH mutation gene?', '["NOTCH1", "BMPR2", "FBN1", "COL1A1"]', 1, 'BMPR2 mutation leads to pro-proliferative signaling in smooth muscle.'),
+    (v_topic_id, 'Bosentan mechanism for PAH?', '["Prostacyclin", "Endothelin-1 receptor antagonist", "PDE-5", "Guanylate cyclase"]', 1, 'Blocks potent vasoconstrictor Endothelin-1 receptors.'),
+    (v_topic_id, 'PAH definitive diagnosis test?', '["Echo", "Right heart catheterization", "CT", "PFT"]', 1, 'Gold standard to measure mPAP (>20 mmHg).'),
+    (v_topic_id, 'Loud heart sound in PAH?', '["S1", "S3", "P2", "A2"]', 2, 'Pulmonic valve slams shut forcefully due to high pressure.'),
+    (v_topic_id, 'Cor Pulmonale definition?', '["Left HF", "Isolated RV failure due to lung disease", "Biventricular", "High output"]', 1, 'RV hypertrophy/failure resulting from lung disease.'),
+    (v_topic_id, 'Bisferiens pulse (two systolic peaks) seen in:', '["AS", "Aortic Regurgitation + Aortic Stenosis", "MS", "Tamponade"]', 1, 'Classic for severe AR or combined AR/AS.'),
+    (v_topic_id, 'JVP y-descent represents:', '["Atrial contraction", "RV contraction", "Emptying of atrium into ventricle", "Tricuspid closure"]', 2, 'Occurs during early diastole when tricuspid opens.'),
+    (v_topic_id, 'Prominent v-wave in JVP pathognomonic for:', '["Tricuspid Stenosis", "Tricuspid Regurgitation", "AFib", "Pericarditis"]', 1, 'Backward pump into atrium during systole in TR.'),
+    (v_topic_id, 'Cannon a-waves seen in:', '["AFib", "3rd degree Heart Block", "MR", "ASD"]', 1, 'Atrium contracts against closed tricuspid in AV dissociation.'),
+    (v_topic_id, 'Sharp y-descent (Friedreich sign) find in:', '["Tamponade", "Constrictive Pericarditis", "Shock", "Dissection"]', 1, 'Ventricle fills rapidly until rigid pericardium limit (absent in tamponade).'),
+    (v_topic_id, 'Amiodarone discoloration skin color?', '["Yellow", "Gray-Blue", "Red", "Green"]', 1, 'Iodine-rich deposits cause blue-gray skin.'),
+    (v_topic_id, 'Ivabradine mechanism?', '["Na+/K+ pump", "Inhibits funny current (If) in SA node", "Beta-2", "Calcium"]', 1, 'Slows HR without affecting contractility.'),
+    (v_topic_id, 'Warfarin INR 7.0, no bleeding. Management?', '["Protamine", "Give Vitamin K and hold Warfarin", "FFP", "Wait"]', 1, 'Vitamin K is for high INR without bleeding; FFP for active bleed.'),
+    (v_topic_id, 'Heparin mechanism?', '["Thrombin", "Activates Antithrombin III", "Vit K", "ADP"]', 1, 'Cofactor increasing ATIII activity 1000x.'),
+    (v_topic_id, 'Argatroban use in HIT?', '["Fondaparinux", "Argatroban", "Enoxaparin", "Rivaroxaban"]', 1, 'Direct Thrombin Inhibitor preferred when heparin is contraindicated.'),
+    (v_topic_id, 'ST depression in V1-V3 likely represents:', '["Anterior MI", "Posterior MI", "RV MI", "Pericarditis"]', 1, 'Reciprocal change for Acute Posterior MI.'),
+    (v_topic_id, 'Caution with Nitroglycerin in Inferior MI because:', '["Stroke", "Risk of hypotension due to RV involvement", "HTN", "Block"]', 1, 'RV is preload-dependent; nitrates can tank CO.'),
+    (v_topic_id, '#1 cause of sudden death in general population?', '["Dissection", "CAD leading to VFib", "HOCM", "PE"]', 1, 'CAD remains the leading cause of lethal arrhythmias.'),
+    (v_topic_id, 'HFpEF primary pathophysiology?', '["Contractility", "Diastolic dysfunction", "Volume", "MR"]', 1, 'Stiff hearts (impaired relaxation) common in elderly/HTN.'),
+    (v_topic_id, 'Drugs improving remodeling post-MI?', '["ACEi and Beta-blockers", "Diuretics", "CCBs", "Statins"]', 0, 'Cornerstones of post-MI survival.'),
+    (v_topic_id, 'Continuous murmur heard in:', '["VSD", "ASD", "PDA", "Coarctation"]', 2, 'Aortic pressure exceeds pulmonary in both systole/diastole.'),
+    (v_topic_id, 'Paradoxical Embolism mechanism:', '["VSD", "Patent Foramen Ovale (PFO)", "PDA", "MS"]', 1, 'Venous clot crosses to LA via PFO during RA pressure spikes.'),
+    (v_topic_id, 'Rib notching X-ray association?', '["TOF", "Coarctation", "TGA", "Truncus"]', 1, 'Collateral intercostal circulation erosions.'),
+    (v_topic_id, 'NOT a component of Tetralogy of Fallot?', '["VSD", "Overriding Aorta", "RVH", "ASD"]', 3, 'Components are VSD, RVH, Overriding Aorta, Pulmonic Stenosis.'),
+    (v_topic_id, 'TAPVR survival requirement?', '["PDA", "Right-to-left shunt (ASD/PFO)", "VSD", "Coarctation"]', 1, 'Necessary to get blood to the left side of the heart.'),
+    (v_topic_id, 'Emergency surgery Aortic Dissection type?', '["Type A", "Type B", "Type C", "Type I"]', 0, 'Stanford Type A involves ascending aorta.'),
+    (v_topic_id, 'Claudication 1st line diagnostic?', '["CT", "Ankle-Brachial Index (ABI)", "Ultrasound", "Stress"]', 1, 'ABI <0.9 is diagnostic for PAD.'),
+    (v_topic_id, '#1 site for AAA?', '["Suprarenal", "Infrarenal", "Thoracic", "Iliac"]', 1, 'Most occur between renal arteries and bifurcation.'),
+    (v_topic_id, 'Blue toe syndrome likely cause?', '["DVT", "Atheroembolism", "Raynaud''s", "Buerger"]', 1, 'Cholesterol crystals lodging in small distal vessels.'),
+    (v_topic_id, 'Leriche Syndrome occlusion location?', '["Femoral", "Popliteal", "Aortoiliac bifurcation", "Iliac"]', 2, 'Claudication, impotence, low femoral pulses triad.'),
+    (v_topic_id, 'Opening Snap followed by diastolic rumble:', '["AS", "Mitral Stenosis", "TR", "PR"]', 1, 'Snap occurs when stenotic mitral valve limits opening.'),
+    (v_topic_id, 'Makes Aortic Stenosis murmur SOFTER?', '["Squatting", "Leg raise", "Valsalva maneuver", "Handgrip"]', 2, 'Lowers venous return, reducing flow across stenotic valve.'),
+    (v_topic_id, 'Holosystolic apex murmur radiating to axilla:', '["Mitral Regurgitation", "TR", "VSD", "AS"]', 0, 'Classic radiation for MR.'),
+    (v_topic_id, 'Graham Steell murmur finding:', '["Mitral Stenosis with Pulmonary HTN", "MI", "Rheumatic", "Dissection"]', 0, 'Pulmonic regurgitation from high PA pressures.'),
+    (v_topic_id, 'Sloshing S3 heart sound phase?', '["S1", "S2", "S3", "S4"]', 2, 'Ventricular gallop during rapid filling phase of diastole.'),
+    (v_topic_id, 'Tree-barking of aorta gross sign of:', '["Athero", "Syphilitic Aortitis", "Marfan", "Takayasu"]', 1, 'Endarteritis of vasa vasorum leading to media ischemia/scarring.'),
+    (v_topic_id, 'Libman-Sacks endocarditis associated condition?', '["RA", "Systemic Lupus Erythematosus (SLE)", "Scleroderma", "Dermato"]', 1, 'Sterile vegetations on both sides of valves.'),
+    (v_topic_id, 'High propensity to metastasize to heart myocardium?', '["Breast", "Lung", "Melanoma", "Colon"]', 2, 'Melanoma has high cardiac tropism.'),
+    (v_topic_id, 'Sarcoidosis heart block mechanism?', '["Amyloid", "Granulomas in conduction system", "Viral", "Iron"]', 1, 'Non-caseating granulomatous infiltration.'),
+    (v_topic_id, 'Low voltage ECG but thick walls on Echo:', '["HOCM", "Amyloidosis", "Athlete", "HTN"]', 1, 'Amyloid takes up space (thick) but conducts poorly (low voltage).'),
+    (v_topic_id, '#1 Myxoma location?', '["RA", "Left Atrium", "LV", "RV"]', 1, '75% occur in the Left Atrium.'),
+    (v_topic_id, 'Close PDA in infant?', '["PGE1", "Indomethacin", "Aspirin", "Acetaminophen"]', 1, 'COX inhibitors block PGE synthesis, leading to closure.'),
+    (v_topic_id, 'Delta wave ECG indicates:', '["Flutter", "Wolff-Parkinson-White", "HyperK", "PE"]', 1, 'Slurred upstroke of QRS due to pre-excitation.'),
+    (v_topic_id, 'Fibrinolytics MI time window (no PCI)?', '["1 hr", "12 hours", "24 hrs", "48 hrs"]', 1, 'Generally used within 12 hours of onset.'),
+    (v_topic_id, 'Valvular lesion causing hemoptysis?', '["AS", "Mitral Stenosis", "MR", "TS"]', 1, 'High pulmonary vein pressure ruptures bronchial veins.'),
+    (v_topic_id, 'Frank-Starling curve shifts Upward/Left with:', '["Beta-blocker", "HF", "Positive Inotropes (Digoxin)", "Hemorrhage"]', 2, 'Increases SV for any given EDV.'),
+    (v_topic_id, 'Widow Maker artery?', '["RCA", "LAD", "LCX", "Left Main"]', 1, 'Proximal LAD occlusion wipes out most of LV mass.'),
+    (v_topic_id, 'Fixed Split S2 finding for:', '["VSD", "ASD", "PDA", "MS"]', 1, 'Increased RV volume keeps pulmonic valve open regardless of respiration.'),
+    (v_topic_id, 'Spironolactone male side effect?', '["Voice", "Gynecomastia", "Hirsutism", "Weight"]', 1, 'Anti-androgenic effects causing painful breast tissue enlargement.'),
+    (v_topic_id, 'Aortic Dissection triad?', '["Hypotension/Sounds/JVD", "Pain, Mediastinal widen, Pulse asymmetry", "Fever/Murmur/Splinter", "SAD"]', 1, 'Hallmark clinical diagnosis triad.');
+
+    RAISE NOTICE 'SUCCESS: Cardiovascular MCQ Part 2 (101-200) registered.';
+END $$;
+
+COMMIT;
