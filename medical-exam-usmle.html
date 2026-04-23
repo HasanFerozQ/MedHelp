@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>USMLE Board Preparation Dashboard | MediHelp</title>
-  <meta name="description" content="High-yield USMLE Step 1, Step 2, and Step 3 preparation. Master clinical concepts with our board-style MCQs and Mock Exams." />
+  <meta name="description" content="High-yield USMLE Step 1 preparation. Master clinical concepts with our board-style MCQs and Mock Exams." />
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
@@ -117,10 +117,8 @@
   </header>
 
   <main class="container" style="padding-bottom: 100px;">
-    <div class="step-nav" id="step-nav">
+    <div class="step-nav" id="step-nav" style="display: none;">
       <div class="step-tab active" data-step="1">USMLE Step 1</div>
-      <div class="step-tab" data-step="2">USMLE Step 2 CK</div>
-      <div class="step-tab" data-step="3">USMLE Step 3</div>
     </div>
 
     <div id="topic-loading" style="text-align:center; padding: 40px; color: var(--text-muted);">Loading topics...</div>
@@ -177,7 +175,7 @@
 
       if (error || !data || !data.length) {
         grid.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">
-          No topics found for Step ${stepId} yet. Placeholders will appear once matching the database.
+          No topics found for Step 1 yet. Placeholders will appear once matching the database.
         </p>`;
         return;
       }
