@@ -692,6 +692,7 @@
         .from('topics')
         .select('*, mcqs(id), case_studies(id, case_questions(id)), slug')
         .eq('semester_id', semId)
+        .is('usmle_step', null)
         .order('order', { ascending: true });
 
       loader.classList.add('hidden');
