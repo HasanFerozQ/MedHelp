@@ -692,6 +692,7 @@
     }
 
     async function loadTopics(yearId) {
+      console.log('Loading topics for Year:', yearId);
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
       
@@ -704,6 +705,9 @@
         .eq('year_id', yearId)
         .is('usmle_step', null)
         .order('order', { ascending: true });
+
+      console.log('Supabase Data:', data);
+      if (error) console.error('Supabase Error:', error);
 
       loader.classList.add('hidden');
 

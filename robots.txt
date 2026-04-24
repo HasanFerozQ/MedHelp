@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /medical-exam-preparation.html
+
+Sitemap: https://www.medihelp.live/sitemap.xml
