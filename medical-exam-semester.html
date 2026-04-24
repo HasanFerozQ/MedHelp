@@ -873,6 +873,17 @@
         .eq('topic_id', topicId)
         .order('created_at', { ascending: true });
 
+      // Sort by explicitly numbering in the string to fix batch insert randomization
+      if (mcqs && mcqs.length > 0) {
+        mcqs.sort((a, b) => {
+          const numA = parseInt(a.question.match(/^\d+/)?.[0] || 0, 10);
+          const numB = parseInt(b.question.match(/^\d+/)?.[0] || 0, 10);
+          // Only sort if both have numbers, otherwise keep original order
+          if (numA && numB) return numA - numB;
+          return 0;
+        });
+      }
+
       // 2. Fetch Clinical Case Studies
       const { data: cases, error: cError } = await window.dbClient
         .from('case_studies')
@@ -983,10 +994,13 @@
       const answered = userProgress[currentTopicId] && userProgress[currentTopicId][mcq.id];
       const qPrefix = type === 'case' ? `Case Question ${index + 1}` : `Question ${index + 1}`;
       
+      // Strip any baked-in number prefix from the DB (e.g., "1. What is..." -> "What is...")
+      const cleanQuestion = mcq.question.replace(/^\d+\.\s*/, '');
+      
       card.innerHTML = `
         <div style="font-size:12px; color:var(--text-muted); margin-bottom:12px; font-weight:700;">${qPrefix}</div>
         ${mcq.image_url ? `<img src="${mcq.image_url}" class="mcq-image" loading="lazy">` : ''}
-        <div class="mcq-question">${escapeHtml(mcq.question)}</div>
+        <div class="mcq-question">${escapeHtml(cleanQuestion)}</div>
         <div class="mcq-options">
           ${mcq.options.map((opt, i) => `
             <button class="option-btn ${answered ? 'locked' : ''} ${answered && answered.choice === i ? (i === mcq.correct_index ? 'correct' : 'incorrect') : ''} ${answered && i === mcq.correct_index ? 'correct' : ''}" 
