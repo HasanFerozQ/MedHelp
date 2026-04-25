@@ -306,6 +306,9 @@
       const slug = new URLSearchParams(window.location.search).get('slug');
       if (!slug) { window.location.href = 'blog.html'; return; }
 
+      // 1. Automatically track the view in the background
+      MediHelp.trackBlogView(slug);
+
       const posts = await MediHelp.fetchBlogs();
       const post = posts.find(p => p.slug === decodeURIComponent(slug));
 

@@ -164,24 +164,34 @@ const MediHelp = {
     }
   },
 
-  incrementReadCount: async function(slug) {
-    console.log(`MediHelp: Updating live read count for ${slug}...`);
-    
-    if (window.dbClient) {
-      try {
-        // 1. Call the Atomic Increment RPC
-        const { data, error } = await window.dbClient.rpc('increment_blog_view', { blog_slug: slug });
-        
-        if (!error && data !== null) {
-          return data; // Return true live count
-        }
-        console.warn('MediHelp Analytics: RPC Error', error);
-      } catch (e) {
-        console.error('MediHelp Analytics: Live tracking failed', e);
-      }
+  // 6.1 Live Read Count Tracking
+  trackBlogView: async function(slug) {
+    if (!slug || !window.dbClient) return;
+    try {
+      await window.dbClient.rpc('increment_blog_view', { blog_slug: slug });
+      console.log(`MediHelp: View tracked for ${slug}`);
+    } catch (e) {
+      console.warn('MediHelp: Tracking failed', e);
     }
+  },
 
-    // 2. Fallback to smart simulation if DB is unreachable
+  fetchReadCount: async function(slug) {
+    if (!slug || !window.dbClient) return this.getSimulatedCount(slug);
+    try {
+      const { data, error } = await window.dbClient
+        .from('blog_analytics')
+        .select('view_count')
+        .eq('slug', slug)
+        .single();
+      
+      if (error || !data) return this.getSimulatedCount(slug);
+      return data.view_count;
+    } catch (e) {
+      return this.getSimulatedCount(slug);
+    }
+  },
+
+  getSimulatedCount: function(slug) {
     let hash = 0;
     for (let i = 0; i < slug.length; i++) {
       hash = ((hash << 5) - hash) + slug.charCodeAt(i);
@@ -203,7 +213,7 @@ const MediHelp = {
       countSpan.textContent = '...';
       countSpan.style.display = 'inline';
       try {
-        const count = await this.incrementReadCount(slug);
+        const count = await this.fetchReadCount(slug);
         countSpan.textContent = `${count} reads`;
       } catch (e) {
         countSpan.textContent = 'Error';
