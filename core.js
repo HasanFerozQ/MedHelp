@@ -165,15 +165,29 @@ const MediHelp = {
   },
 
   incrementReadCount: async function(slug) {
-    // Simulated read count based on slug hash for consistency
+    console.log(`MediHelp: Updating live read count for ${slug}...`);
+    
+    if (window.dbClient) {
+      try {
+        // 1. Call the Atomic Increment RPC
+        const { data, error } = await window.dbClient.rpc('increment_blog_view', { blog_slug: slug });
+        
+        if (!error && data !== null) {
+          return data; // Return true live count
+        }
+        console.warn('MediHelp Analytics: RPC Error', error);
+      } catch (e) {
+        console.error('MediHelp Analytics: Live tracking failed', e);
+      }
+    }
+
+    // 2. Fallback to smart simulation if DB is unreachable
     let hash = 0;
     for (let i = 0; i < slug.length; i++) {
       hash = ((hash << 5) - hash) + slug.charCodeAt(i);
       hash |= 0; 
     }
-    const count = Math.abs(hash % 1000) + 150;
-    console.log(`MediHelp: Read count for ${slug}: ${count}`);
-    return count;
+    return Math.abs(hash % 1000) + 150;
   },
 
   revealReadCount: async function(event, element, slug) {
