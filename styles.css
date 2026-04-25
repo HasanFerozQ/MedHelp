@@ -3533,3 +3533,42 @@ html, body {
 .lifestyle-item:hover { border-color: var(--accent-glow); background: var(--bg-card-hover); }
 .lifestyle-item h4 { color: var(--text-h) !important; margin-bottom: 8px !important; font-size: 16px !important; font-weight: 700; }
 .lifestyle-item p { font-size: 14px; margin: 0; color: var(--text-muted); line-height: 1.6; }
+
+/* --- Blog Read Count Reveal --- */
+.blog-read-reveal {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  transition: var(--transition);
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.blog-read-reveal:hover {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent);
+}
+
+.read-count-value {
+  font-size: 12px;
+  font-weight: 700;
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.eye-icon {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.blog-read-reveal:active .eye-icon {
+  transform: scale(0.8);
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-5px); }
+  to { opacity: 1; transform: translateX(0); }
+}

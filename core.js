@@ -165,9 +165,38 @@ const MediHelp = {
   },
 
   incrementReadCount: async function(slug) {
-    // Mock for now to prevent crashes. In v5.0 this will hit Supabase RPC
-    console.log(`MediHelp: Read count incremented for ${slug}`);
-    return Math.floor(Math.random() * 500) + 100; 
+    // Simulated read count based on slug hash for consistency
+    let hash = 0;
+    for (let i = 0; i < slug.length; i++) {
+      hash = ((hash << 5) - hash) + slug.charCodeAt(i);
+      hash |= 0; 
+    }
+    const count = Math.abs(hash % 1000) + 150;
+    console.log(`MediHelp: Read count for ${slug}: ${count}`);
+    return count;
+  },
+
+  revealReadCount: async function(event, element, slug) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    
+    const countSpan = element.querySelector('.read-count-value');
+    if (!countSpan) return;
+
+    if (countSpan.style.display === 'none') {
+      countSpan.textContent = '...';
+      countSpan.style.display = 'inline';
+      try {
+        const count = await this.incrementReadCount(slug);
+        countSpan.textContent = `${count} reads`;
+      } catch (e) {
+        countSpan.textContent = 'Error';
+      }
+    } else {
+      countSpan.style.display = 'none';
+    }
   },
 
   toggleMobileMenu: function() {
