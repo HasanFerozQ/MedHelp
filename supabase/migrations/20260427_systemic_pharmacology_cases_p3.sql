@@ -11,6 +11,10 @@ DECLARE
 BEGIN
     SELECT id INTO v_topic_id FROM topics WHERE slug = 'systemic-pharmacology' LIMIT 1;
 
+    -- DELETE existing cases for this range to prevent duplicates on re-run
+    DELETE FROM case_questions WHERE case_id IN (SELECT id FROM case_studies WHERE topic_id = v_topic_id AND "order" BETWEEN 21 AND 30);
+    DELETE FROM case_studies WHERE topic_id = v_topic_id AND "order" BETWEEN 21 AND 30;
+
     -- CASE 21: Diabetes Type 1 & Insulins
     INSERT INTO case_studies (topic_id, title, scenario, "order") VALUES
     (v_topic_id, 'Kussmaul Respirations', 'A 19-year-old male with Type 1 Diabetes Mellitus presents with a blood glucose of 450 mg/dL, deep and rapid breathing (Kussmaul respirations), and fruity-smelling breath. He is diagnosed with Diabetic Ketoacidosis (DKA).', 21)

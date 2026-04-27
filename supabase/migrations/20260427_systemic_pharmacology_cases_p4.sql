@@ -11,6 +11,10 @@ DECLARE
 BEGIN
     SELECT id INTO v_topic_id FROM topics WHERE slug = 'systemic-pharmacology' LIMIT 1;
 
+    -- DELETE existing cases for this range to prevent duplicates on re-run
+    DELETE FROM case_questions WHERE case_id IN (SELECT id FROM case_studies WHERE topic_id = v_topic_id AND "order" BETWEEN 31 AND 40);
+    DELETE FROM case_studies WHERE topic_id = v_topic_id AND "order" BETWEEN 31 AND 40;
+
     -- CASE 31: Beta-Lactam Antibiotics
     INSERT INTO case_studies (topic_id, title, scenario, "order") VALUES
     (v_topic_id, 'Uncomplicated UTI', 'A 24-year-old woman presents with burning on urination and frequency. She is diagnosed with an uncomplicated urinary tract infection (UTI) and prescribed Amoxicillin/Clavulanate.', 31)

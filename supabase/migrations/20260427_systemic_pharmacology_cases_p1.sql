@@ -16,9 +16,9 @@ DECLARE
 BEGIN
     SELECT id INTO v_topic_id FROM topics WHERE slug = 'systemic-pharmacology' LIMIT 1;
 
-    -- DELETE EXISTING to avoid duplicates
-    DELETE FROM case_questions WHERE case_id IN (SELECT id FROM case_studies WHERE topic_id = v_topic_id);
-    DELETE FROM case_studies WHERE topic_id = v_topic_id;
+    -- DELETE existing cases for this range to prevent duplicates on re-run
+    DELETE FROM case_questions WHERE case_id IN (SELECT id FROM case_studies WHERE topic_id = v_topic_id AND "order" BETWEEN 1 AND 10);
+    DELETE FROM case_studies WHERE topic_id = v_topic_id AND "order" BETWEEN 1 AND 10;
 
     -- CASE 01: Cholinergic Agonists (Pilocarpine/Glaucoma)
     INSERT INTO case_studies (topic_id, title, scenario, "order") VALUES
