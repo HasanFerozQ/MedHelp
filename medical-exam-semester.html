@@ -500,7 +500,7 @@
           </div>
         </div>
 
-        <a class="gumroad-button premium-btn" href="https://medihelp.gumroad.com/l/xGFFO4xgo4rpezVD6BupmA==" data-gumroad-single-product="true">Purchase Yearly Access</a>
+        <a class="gumroad-button premium-btn" href="https://medihelp.gumroad.com/l/medical-exam-mastery">Purchase Yearly Access</a>
         
         <div class="unlock-section">
           <p style="font-size: 12px; margin-bottom: 10px;">Already purchased? Enter your access key and email below:</p>
@@ -704,7 +704,7 @@
         .select('*, mcqs(id), case_studies(id, case_questions(id)), slug')
         .eq('year_id', yearId)
         .is('usmle_step', null)
-        .order('order', { ascending: true });
+        .order('created_at', { ascending: true });
 
       console.log('Supabase Data:', data);
       if (error) console.error('Supabase Error:', error);
@@ -821,7 +821,7 @@
       } catch (e) {
         console.error("License Verification Error:", e.message);
         if (e.message === "LICENSE_LIMIT_REACHED") {
-          showToast('License limit reached (3 devices max).', 'error');
+          showToast('License limit reached (5 devices max).', 'error');
         } else if (e.message === "INVALID_KEY") {
           showToast('Invalid license key or email.', 'error');
         } else {
@@ -932,13 +932,13 @@
       
       // NEXT TOPIC LINK GENERATION
       try {
-        const { data: currTop } = await window.dbClient.from('topics').select('semester_id, order').eq('id', topicId).single();
+        const { data: currTop } = await window.dbClient.from('topics').select('semester_id, created_at').eq('id', topicId).single();
         if (currTop) {
           const { data: nextTop, error: nextErr } = await window.dbClient.from('topics')
             .select('id, title, slug')
             .eq('semester_id', currTop.semester_id)
-            .gt('order', currTop.order)
-            .order('order', { ascending: true })
+            .gt('created_at', currTop.created_at)
+            .order('created_at', { ascending: true })
             .limit(1)
             .single();
             

@@ -44,9 +44,9 @@ Deno.serve(async (req: Request) => {
 
     const data = await gumroadRes.json();
 
-    // 4. Custom Logic Check (device limit = 3)
+    // 4. Custom Logic Check (device limit = 5)
     if (data.success) {
-      if (data.uses > 3) {
+      if (data.uses > 5) {
         return new Response(
           JSON.stringify({ success: false, message: "LICENSE_LIMIT_REACHED" }),
           { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 403 }

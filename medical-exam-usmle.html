@@ -169,7 +169,7 @@
         `)
         .eq('usmle_step', stepId)
         .neq('slug', 'usmle-1-mock-pool-hidden')
-        .order('order', { ascending: true });
+        .order('created_at', { ascending: true });
 
       loader.classList.add('hidden');
 
