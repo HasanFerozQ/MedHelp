@@ -180,7 +180,8 @@
         return;
       }
 
-      data.forEach(topic => {
+      data.forEach((topic, index) => {
+        const isFreeDemo = (index === 0);
         // Calculate total questions: Standalone MCQs + All questions inside Case Studies
         let caseQuestionCount = 0;
         if (topic.case_studies) {
@@ -197,6 +198,7 @@
         card.className = 'topic-card';
         card.innerHTML = `
           <div>
+            ${isFreeDemo ? '<div style="display: inline-block; padding: 2px 8px; background: #a855f7; color: white; border-radius: 4px; font-size: 10px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Free Demo</div>' : ''}
             <h3>${topic.title}</h3>
             <p style="font-size: 13px; color: var(--text-muted);">Master high-yield concepts for ${topic.title}.</p>
           </div>
@@ -204,7 +206,7 @@
         `;
         card.onclick = () => {
            // Redirect to a specialized USMLE quiz page or use the existing one if adapted
-           window.location.href = `medical-exam-semester.html?topic_id=${topic.id}&usmle=true`;
+           window.location.href = `medical-exam-semester.html?topic_id=${topic.id}&usmle=true&free=${isFreeDemo}`;
         };
         grid.appendChild(card);
       });

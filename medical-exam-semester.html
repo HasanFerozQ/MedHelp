@@ -1149,21 +1149,24 @@
       }
       
       if (initialTopicId || slug) {
-        let query = window.dbClient.from('topics').select('id, title, year_id');
+        let query = window.dbClient.from('topics').select('id, title, year_id, usmle_step');
         if (initialTopicId) query = query.eq('id', initialTopicId);
         else query = query.eq('slug', slug);
         
         const { data, error } = await query.single();
         if (data) {
-           let isFreeDemo = false;
-           if (data.year_id) {
-             const { data: yearTopics } = await window.dbClient.from('topics')
-               .select('id')
-               .eq('year_id', data.year_id)
-               .is('usmle_step', null)
-               .order('created_at', { ascending: true })
-               .limit(1);
-             if (yearTopics && yearTopics.length > 0 && yearTopics[0].id === data.id) {
+           let isFreeDemo = (urlParams.get('free') === 'true');
+           
+           if (!isFreeDemo && (data.year_id || data.usmle_step)) {
+             let checkQuery = window.dbClient.from('topics').select('id').order('created_at', { ascending: true }).limit(1);
+             if (data.year_id) {
+               checkQuery = checkQuery.eq('year_id', data.year_id).is('usmle_step', null);
+             } else {
+               checkQuery = checkQuery.eq('usmle_step', data.usmle_step);
+             }
+             
+             const { data: oldestTopics } = await checkQuery;
+             if (oldestTopics && oldestTopics.length > 0 && oldestTopics[0].id === data.id) {
                isFreeDemo = true;
              }
            }
