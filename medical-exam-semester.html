@@ -1155,9 +1155,9 @@
         
         const { data, error } = await query.single();
         if (data) {
-           let isFreeDemo = (urlParams.get('free') === 'true');
+           let isFreeDemo = false;
            
-           if (!isFreeDemo && (data.year_id || data.usmle_step)) {
+           if (data.year_id || data.usmle_step) {
              let checkQuery = window.dbClient.from('topics').select('id').order('created_at', { ascending: true }).limit(1);
              if (data.year_id) {
                checkQuery = checkQuery.eq('year_id', data.year_id).is('usmle_step', null);
