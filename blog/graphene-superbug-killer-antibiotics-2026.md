@@ -1,7 +1,7 @@
 ---
 title: Graphene - The Microscopic Superbug Killer That Could Replace Antibiotics Forever
 date: 2026-04-27
-thumbnail: https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1400&q=80&auto=format&fit=crop
+thumbnail: https://plus.unsplash.com/premium_photo-1669700572184-edbb6d28b452?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 category: Medical Technology
 summary: Scientists just figured out exactly how graphene kills superbugs without touching human cells. It targets a specific molecule in bacteria and could replace antibiotics forever.
 ---
@@ -34,7 +34,7 @@ But its medical applications? That's where things get genuinely exciting.
 
 **Graphene oxide (GO)** is a modified version of graphene that dissolves easily in water — making it far more practical for biological use. And it's this version that, according to the new KAIST research, operates like a precision-guided missile against bacteria.
 
-![Abstract scientific concept](https://images.unsplash.com/photo-1614935151651-0bea6508ab6b?w=900&q=80)
+![Abstract scientific concept](https://plus.unsplash.com/premium_photo-1669700572184-edbb6d28b452?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
 
 ---
 

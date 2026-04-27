@@ -716,7 +716,8 @@
         return;
       }
 
-      data.forEach(topic => {
+      data.forEach((topic, index) => {
+        const isFreeDemo = (index === 0);
         const totalMcqs = topic.mcqs.length;
         const topicProg = userProgress[topic.id] || {};
         
@@ -743,6 +744,7 @@
         card.style.textDecoration = 'none';
         card.innerHTML = `
           <div>
+            ${isFreeDemo ? '<span style="display:inline-block; background:var(--accent); color:#fff; font-size:10px; font-weight:800; padding:2px 8px; border-radius:4px; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">Free Demo</span>' : ''}
             <h3 style="margin-bottom: 8px;">${escapeHtml(topic.title)} Anatomy MCQs (USMLE & MBBS Preparation)</h3>
             <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px;">
               Practice high-yield <strong>${escapeHtml(topic.title)}</strong> anatomy questions with clinical relevance for your medical boards.
@@ -768,8 +770,8 @@
     }
 
     // --- QUIZ LOGIC ---
-    async function startQuiz(topicId, title) {
-      if (!isPremium()) {
+    async function startQuiz(topicId, title, isFreeDemo = false) {
+      if (!isFreeDemo && !isPremium()) {
         openPremiumModal();
         return;
       }
@@ -1147,13 +1149,25 @@
       }
       
       if (initialTopicId || slug) {
-        let query = window.dbClient.from('topics').select('id, title');
+        let query = window.dbClient.from('topics').select('id, title, year_id');
         if (initialTopicId) query = query.eq('id', initialTopicId);
         else query = query.eq('slug', slug);
         
         const { data, error } = await query.single();
         if (data) {
-           startQuiz(data.id, data.title);
+           let isFreeDemo = false;
+           if (data.year_id) {
+             const { data: yearTopics } = await window.dbClient.from('topics')
+               .select('id')
+               .eq('year_id', data.year_id)
+               .is('usmle_step', null)
+               .order('created_at', { ascending: true })
+               .limit(1);
+             if (yearTopics && yearTopics.length > 0 && yearTopics[0].id === data.id) {
+               isFreeDemo = true;
+             }
+           }
+           startQuiz(data.id, data.title, isFreeDemo);
         } else {
            initYears();
         }

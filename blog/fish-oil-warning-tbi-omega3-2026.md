@@ -1,7 +1,7 @@
 ---
 title: The Fish Oil Warning That Has Scientists Rethinking Everything - What You Must Know If You've Ever Had a Head Injury
 date: 2026-04-27
-thumbnail: https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=1400&q=80&auto=format&fit=crop
+thumbnail: https://images.unsplash.com/photo-1624362772755-4d5843e67047?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8RmlzaCUyMG9pbHxlbnwwfHwwfHx8MA%3D%3D
 category: Neurology
 summary: Millions take fish oil daily, but a groundbreaking new study reveals that EPA might actually hinder brain repair after repeated head injuries.
 ---
@@ -46,7 +46,7 @@ Here's the part of the fish oil story that most people — and many supplement l
 
 EPA is less incorporated into brain structures. Its biological role in the brain is more variable — and according to this new research, highly context-dependent. Under normal circumstances, EPA isn't causing harm. But in a brain that has experienced repeated trauma, the situation changes.
 
-![Fish Oil Supplements](https://images.unsplash.com/photo-1585435557343-3b092031a831?w=900&q=80)
+![Fish Oil Supplements](https://plus.unsplash.com/premium_photo-1692214360485-2364caf5114c?q=80&w=1183&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
 
 ---
 
