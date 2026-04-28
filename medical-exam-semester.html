@@ -812,6 +812,13 @@
               </div>
             </div>
           `;
+          card.onclick = (e) => {
+            e.preventDefault();
+            // Update URL without reload
+            const newUrl = window.location.pathname + `?topic_id=${topic.id}`;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            startQuiz(topic.id, topic.title, isFreeDemo);
+          };
           grid.appendChild(card);
         });
       }
@@ -1226,7 +1233,7 @@
            let isFreeDemo = false;
            
            if (data.year_id || data.usmle_step) {
-             let checkQuery = window.dbClient.from('topics').select('id').order('created_at', { ascending: true }).limit(1);
+             let checkQuery = window.dbClient.from('topics').select('id').order('order', { ascending: true }).limit(1);
              if (data.year_id) {
                checkQuery = checkQuery.eq('year_id', data.year_id).is('usmle_step', null);
              } else {
