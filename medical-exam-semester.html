@@ -721,7 +721,7 @@
 
       const { data, error } = await window.dbClient
         .from('topics')
-        .select('*, mcqs(id), case_studies(id, case_questions(id)), slug')
+        .select('*, mcqs(id, type), case_studies(id, case_questions(id)), slug')
         .eq('year_id', yearId)
         .is('usmle_step', null)
         .order('order', { ascending: true });
@@ -758,15 +758,17 @@
           const isFreeDemo = (globalIndex === 0); // The first topic of any year is the free demo
           globalIndex++;
 
-          const totalMcqs = topic.mcqs.length;
+          const allMcqs = topic.mcqs || [];
+          const mcqList = allMcqs.filter(m => m.type === 'MCQ');
+          const bcqList = allMcqs.filter(m => m.type === 'BCQ');
+          const totalCases = topic.case_studies.length;
+
           const topicProg = userProgress[topic.id] || {};
           
-          // MCQ Progress
-          const mcqIds = topic.mcqs.map(m => m.id);
-          const progressMcqs = mcqIds.filter(id => topicProg[id]).length;
+          // Progress
+          const progMcqCount = mcqList.filter(m => topicProg[m.id]).length;
+          const progBcqCount = bcqList.filter(m => topicProg[m.id]).length;
           
-          // Case Progress
-          const totalCases = topic.case_studies.length;
           let attemptedCases = 0;
           topic.case_studies.forEach(cs => {
             const qIds = cs.case_questions.map(q => q.id);
@@ -774,7 +776,7 @@
             if (qIds.length > 0 && answered > 0) attemptedCases++;
           });
 
-          const totalQ = totalMcqs + topic.case_studies.flatMap(cs => cs.case_questions).length;
+          const totalQ = allMcqs.length + topic.case_studies.flatMap(cs => cs.case_questions).length;
           const totalCorrect = Object.values(topicProg).filter(v => v.correct).length;
           const percent = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
 
@@ -792,9 +794,14 @@
             </div>
             <div class="topic-progress">
               <div class="topic-stats-row">
-                <span style="color:var(--success)">• ${progressMcqs} / ${totalMcqs} MCQs</span>
+                <span style="color:var(--success)">• ${progMcqCount} / ${mcqList.length} MCQs</span>
                 <span>${percent}%</span>
               </div>
+              ${bcqList.length > 0 ? `
+              <div class="topic-stats-row">
+                <span style="color:#0ea5e9">• ${progBcqCount} / ${bcqList.length} BCQs</span>
+              </div>
+              ` : ''}
               ${totalCases > 0 ? `
               <div class="topic-stats-row">
                 <span style="color:#a855f7">• ${attemptedCases} / ${totalCases} Cases</span>
@@ -946,16 +953,34 @@
         return;
       }
 
+      // Render sections
+      const mcqItems = mcqs.filter(m => m.type === 'MCQ');
+      const bcqItems = mcqs.filter(m => m.type === 'BCQ');
+
       // Render Standalone MCQs
-      if (mcqs && mcqs.length > 0) {
-        currentStandaloneIds = mcqs.map(m => m.id);
+      if (mcqItems.length > 0) {
+        currentStandaloneIds.push(...mcqItems.map(m => m.id));
         const header = document.createElement('div');
         header.className = 'section-divider';
         header.textContent = 'High-Yield MCQs';
         list.appendChild(header);
         
-        mcqs.forEach((mcq, idx) => {
+        mcqItems.forEach((mcq, idx) => {
           list.appendChild(renderMcqCard(mcq, idx, 'mcq'));
+        });
+      }
+
+      // Render BCQs
+      if (bcqItems.length > 0) {
+        currentStandaloneIds.push(...bcqItems.map(m => m.id));
+        const header = document.createElement('div');
+        header.className = 'section-divider';
+        header.style.color = '#0ea5e9';
+        header.textContent = 'Best Choice Questions (BCQs)';
+        list.appendChild(header);
+        
+        bcqItems.forEach((mcq, idx) => {
+          list.appendChild(renderMcqCard(mcq, idx, 'bcq'));
         });
       }
 
@@ -1035,7 +1060,9 @@
       card.id = `mcq-${mcq.id}`;
       
       const answered = userProgress[currentTopicId] && userProgress[currentTopicId][mcq.id];
-      const qPrefix = type === 'case' ? `Case Question ${index + 1}` : `Question ${index + 1}`;
+      let qPrefix = `Question ${index + 1}`;
+      if (type === 'case') qPrefix = `Case Question ${index + 1}`;
+      if (type === 'bcq') qPrefix = `BCQ ${index + 1}`;
       
       // Strip any baked-in number prefix from the DB (e.g., "1. What is..." -> "What is...")
       const cleanQuestion = mcq.question.replace(/^\d+\.\s*/, '');
