@@ -617,7 +617,7 @@
 
   <script>
     // --- STATE MANAGEMENT ---
-    let currentYear = 1;
+    let currentYear = parseInt(localStorage.getItem('mh_prep_current_year') || '1');
     let currentTopicId = null;
     let userProgress = JSON.parse(localStorage.getItem('mh_prep_progress') || '{}');
     let allTopicsIndex = [];
@@ -705,6 +705,7 @@
 
     function switchYear(id) {
       currentYear = id;
+      localStorage.setItem('mh_prep_current_year', id);
       document.querySelectorAll('.year-tab').forEach(t => {
         t.classList.toggle('active', parseInt(t.dataset.year) === id);
       });
