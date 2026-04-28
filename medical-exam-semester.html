@@ -755,7 +755,7 @@
         }
 
         topics.forEach((topic) => {
-          const isFreeDemo = (globalIndex === 0 && yearId === 1); // Only 1st Year 1st Topic is demo usually
+          const isFreeDemo = (globalIndex === 0); // The first topic of any year is the free demo
           globalIndex++;
 
           const totalMcqs = topic.mcqs.length;
