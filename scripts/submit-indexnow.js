@@ -46,6 +46,8 @@ async function submitToIndexNow() {
       urlList: uniqueUrls,
     });
 
+    console.log('Request Body:', data);
+
     const options = {
       hostname: 'api.indexnow.org',
       port: 443,
