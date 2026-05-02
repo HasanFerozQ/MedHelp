@@ -2,7 +2,11 @@ const fs = require('fs');
 const https = require('https');
 const path = require('path');
 
-require('dotenv').config();
+try {
+  require('dotenv').config();
+} catch (e) {
+  // dotenv not found, skipping
+}
 
 const API_KEY = process.env.INDEXNOW_KEY || '60d19d6ca538448995707da3c61b8e6f';
 const HOST = process.env.SITE_HOST || 'www.medihelp.live';
