@@ -3,8 +3,8 @@ const https = require('https');
 const path = require('path');
 
 const API_KEY = '60d19d6ca538448995707da3c61b8e6f';
-const HOST = 'www.medihelp.live';
-const KEY_LOCATION = `https://${HOST}/${API_KEY}.txt`;
+const HOST = 'medihelp.live';
+const KEY_LOCATION = `https://www.medihelp.live/${API_KEY}.txt`;
 const SITEMAP_PATH = path.join(__dirname, '../sitemap.xml');
 
 async function submitToIndexNow() {
@@ -41,9 +41,9 @@ async function submitToIndexNow() {
     });
 
     const options = {
-      hostname: 'api.indexnow.org',
+      hostname: 'www.bing.com',
       port: 443,
-      path: '/IndexNow',
+      path: '/indexnow',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -65,6 +65,7 @@ async function submitToIndexNow() {
         } else {
           console.error(`Error: Received status code ${res.statusCode}`);
           console.error('Response:', responseBody);
+          console.log('\nTip: If you just deployed, wait 2-3 minutes for the verification file to be indexed by search engines.');
         }
       });
     });

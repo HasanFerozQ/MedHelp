@@ -23,7 +23,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'Septic Shock', 'A 70-year-old female with a UTI becomes hypotensive and confused. ABG: pH 7.25, PaCO2 30 mmHg, HCO3 14 mEq/L. Serum lactate is 6.0 mmol/L.', 16) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Septic Shock', "order" = 16 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 70-year-old female with a UTI becomes hypotensive and confused. ABG: pH 7.25, PaCO2 30 mmHg, HCO3 14 mEq/L. Serum lactate is 6.0 mmol/L.', "order" = 16 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -40,7 +40,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'End-Stage Renal Disease', 'A patient with ESRD has missed several dialysis sessions. ABG: pH 7.20, PaCO2 28 mmHg, HCO3 11 mEq/L. BUN is 120, Creatinine is 10.', 17) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'End-Stage Renal Disease', "order" = 17 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A patient with ESRD has missed several dialysis sessions. ABG: pH 7.20, PaCO2 28 mmHg, HCO3 11 mEq/L. BUN is 120, Creatinine is 10.', "order" = 17 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -57,7 +57,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'Hypertension and Hypokalemia', 'A 40-year-old with resistant hypertension has a serum potassium of 2.8. ABG shows: pH 7.49, PaCO2 42, HCO3 30.', 18) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Hypertension and Hypokalemia', "order" = 18 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 40-year-old with resistant hypertension has a serum potassium of 2.8. ABG shows: pH 7.49, PaCO2 42, HCO3 30.', "order" = 18 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -74,7 +74,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'Climbing Mt. Everest', 'A climber at high altitude feels lightheaded. ABG: pH 7.46, PaCO2 28 mmHg, PaO2 50 mmHg, HCO3 19 mEq/L.', 19) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Climbing Mt. Everest', "order" = 19 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A climber at high altitude feels lightheaded. ABG: pH 7.46, PaCO2 28 mmHg, PaO2 50 mmHg, HCO3 19 mEq/L.', "order" = 19 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -91,7 +91,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'Shortness of Breath in Pregnancy', 'A healthy pregnant woman in her third trimester has a routine ABG. pH 7.44, PaCO2 30 mmHg, HCO3 20 mEq/L.', 20) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Shortness of Breath in Pregnancy', "order" = 20 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A healthy pregnant woman in her third trimester has a routine ABG. pH 7.44, PaCO2 30 mmHg, HCO3 20 mEq/L.', "order" = 20 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -108,7 +108,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'House Fire Victim', 'A patient rescued from a house fire is confused. Pulse oximetry (SpO2) is 98% on room air. ABG: pH 7.30, PaO2 95 mmHg, SaO2 (calculated from PaO2) is 97%. Co-oximetry shows carboxyhemoglobin of 30%.', 21) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'House Fire Victim', "order" = 21 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A patient rescued from a house fire is confused. Pulse oximetry (SpO2) is 98% on room air. ABG: pH 7.30, PaO2 95 mmHg, SaO2 (calculated from PaO2) is 97%. Co-oximetry shows carboxyhemoglobin of 30%.', "order" = 21 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -125,7 +125,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'The Snowstorm Vision', 'A patient who drinks "moonshine" presents with blurry vision and severe abdominal pain. ABG: pH 7.05, PaCO2 20 mmHg, HCO3 6 mEq/L. AG is 35.', 22) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'The Snowstorm Vision', "order" = 22 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A patient who drinks "moonshine" presents with blurry vision and severe abdominal pain. ABG: pH 7.05, PaCO2 20 mmHg, HCO3 6 mEq/L. AG is 35.', "order" = 22 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -142,7 +142,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'Pediatric Ingestion', 'A 2-year-old ate a bottle of prenatal vitamins. She has bloody vomiting and severe acidosis. AG is 25.', 23) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Pediatric Ingestion', "order" = 23 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 2-year-old ate a bottle of prenatal vitamins. She has bloody vomiting and severe acidosis. AG is 25.', "order" = 23 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -159,7 +159,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'The NAGMA Dilemma', 'A patient has a Normal Anion Gap Metabolic Acidosis. Urine electrolytes: Na 40, K 20, Cl 80.', 24) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'The NAGMA Dilemma', "order" = 24 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A patient has a Normal Anion Gap Metabolic Acidosis. Urine electrolytes: Na 40, K 20, Cl 80.', "order" = 24 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -176,7 +176,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'Diabetes and High Potassium', 'A diabetic patient with mild CKD is started on an ACE inhibitor. Their potassium rises to 5.8 and they have a persistent NAGMA.', 25) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Diabetes and High Potassium', "order" = 25 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A diabetic patient with mild CKD is started on an ACE inhibitor. Their potassium rises to 5.8 and they have a persistent NAGMA.', "order" = 25 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -193,7 +193,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'Ringing in the Ears', 'A patient presents with tinnitus, nausea, and rapid breathing after an overdose. ABG shows pH 7.45, PaCO2 25, HCO3 17.', 26) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Ringing in the Ears', "order" = 26 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A patient presents with tinnitus, nausea, and rapid breathing after an overdose. ABG shows pH 7.45, PaCO2 25, HCO3 17.', "order" = 26 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -210,7 +210,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'Weakness and Alkalosis', 'A patient has profound metabolic alkalosis (HCO3 45) and a serum potassium of 2.2.', 27) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Weakness and Alkalosis', "order" = 27 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A patient has profound metabolic alkalosis (HCO3 45) and a serum potassium of 2.2.', "order" = 27 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -227,7 +227,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'The COPD Flare', 'A patient with known chronic CO2 retention (baseline PaCO2 55, pH 7.36) presents with a pneumonia. New ABG: pH 7.22, PaCO2 75, HCO3 30.', 28) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'The COPD Flare', "order" = 28 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A patient with known chronic CO2 retention (baseline PaCO2 55, pH 7.36) presents with a pneumonia. New ABG: pH 7.22, PaCO2 75, HCO3 30.', "order" = 28 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -244,7 +244,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'Anxious and Wet Lungs', 'A patient in early congestive heart failure presents with mild dyspnea. ABG: pH 7.48, PaCO2 32, PaO2 70, HCO3 23.', 29) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Anxious and Wet Lungs', "order" = 29 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A patient in early congestive heart failure presents with mild dyspnea. ABG: pH 7.48, PaCO2 32, PaO2 70, HCO3 23.', "order" = 29 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -261,7 +261,7 @@ BEGIN
         INSERT INTO case_studies (topic_id, title, scenario, "order")
         VALUES (v_topic_id, 'The Complex ABG', 'A patient with sepsis (Lactate 10) is also on a ventilator (set rate 28) and has been vomiting. ABG: pH 7.40, PaCO2 25, HCO3 15. AG is 30.', 30) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'The Complex ABG', "order" = 30 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A patient with sepsis (Lactate 10) is also on a ventilator (set rate 28) and has been vomiting. ABG: pH 7.40, PaCO2 25, HCO3 15. AG is 30.', "order" = 30 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
