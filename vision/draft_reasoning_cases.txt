@@ -1,0 +1,631 @@
+CASE 31: Anchoring Bias in Chest Pain
+Scenario: A 55-year-old male smoker with a history of GERD presents with epigastric burning. The triage note says "GERD flare." He is given an antacid, and his pain improves slightly. Two hours later, he becomes diaphoretic.
+Q1: Which cognitive bias is demonstrated by the initial physician sticking to the "GERD" diagnosis?
+A. Availability bias
+B. Anchoring bias
+C. Framing effect
+D. Blind spot bias
+Answer: B (Anchoring to the initial impression/triage note)
+Q2: What is the "Big 5" must-not-miss differential for chest pain in this patient?
+A. GERD, Gastritis, Esophagitis, Gallstones, Peptic ulcer
+B. ACS, PE, Aortic Dissection, Tension Pneumothorax, Esophageal Rupture
+C. Pneumonia, Bronchitis, Pleurisy, Musculoskeletal pain, Anxiety
+D. Stable Angina, Pericarditis, Mitral Valve Prolapse, Costochondritis, GERD
+Answer: B
+Q3: The slight improvement with an antacid (the "GI cocktail") is known to be:
+A. Diagnostic of a GI cause
+B. Non-specific and can occur in ACS
+C. A reason to discharge the patient
+D. Diagnostic of esophageal spasm
+Answer: B
+
+CASE 32: Availability Bias during Flu Season
+Scenario: During a peak influenza outbreak, a 70-year-old female presents with fever, cough, and myalgia. The intern diagnoses "Flu" without a full exam. The patient actually has an early murmur and splinter hemorrhages.
+Q1: The tendency to over-diagnose a common condition because it is "top of mind" is:
+A. Confirmation bias
+B. Availability bias
+C. Representativeness heuristic
+D. Sunk cost fallacy
+Answer: B
+Q2: What is the most critical "must-not-miss" diagnosis for this patient with a new murmur and fever?
+A. Secondary bacterial pneumonia
+B. Acute Endocarditis
+C. Heart failure
+D. COPD exacerbation
+Answer: B
+Q3: What physical exam finding from Bates would most strongly suggest an alternative to influenza?
+A. Rhonchi
+B. Splinter hemorrhages and Janeway lesions
+C. Wheezing
+D. Tachypnea
+Answer: B
+
+CASE 33: Premature Closure in the Elderly
+Scenario: An 80-year-old male is admitted for a hip fracture. On day 2, he becomes confused. The team diagnoses "Surgical Delirium" and orders haloperidol. They miss his new-onset hypoxia and tachycardia.
+Q1: Stopping the diagnostic workup once a plausible explanation is found is called:
+A. Premature closure
+B. Hindsight bias
+C. Commission bias
+D. Omission bias
+Answer: A
+Q2: According to the "On Call" protocol, what is the first step in managing a new change in mental status?
+A. Order a head CT
+B. Check ABCs and Vital Signs (including SpO2 and Fingerstick Glucose)
+C. Administer sedation
+D. Call psychiatry
+Answer: B
+Q3: In an elderly post-op patient, what is the most common "silent" cause of new-onset confusion?
+A. Stroke
+B. Hypoxia/PE or Occult Infection (UTI/Pneumonia)
+C. Alzheimer's disease
+D. Schizophrenia
+Answer: B
+
+CASE 34: Framing Effect in Risk Communication
+Scenario: A surgeon tells a patient, "There is a 90% chance you will survive this procedure." Another surgeon tells the patient, "There is a 10% chance you will die."
+Q1: The patient is more likely to consent to the first surgeon. This is an example of:
+A. Base rate neglect
+B. Framing effect
+C. Authority bias
+D. Outcome bias
+Answer: B
+Q2: Which reasoning process is most prone to these types of biases?
+A. System 1 (Intuitive/Fast)
+B. System 2 (Analytical/Slow)
+C. Bayesian reasoning
+D. Deductive logic
+Answer: A
+Q3: How can a clinician best mitigate the framing effect?
+A. Only use System 1
+B. Present data in both positive and negative frames (e.g., "90% survive, 10% do not")
+C. Use less data
+D. Let the patient decide without information
+Answer: B
+
+CASE 35: Bayesian Reasoning - The "SpPins" and "SnNouts"
+Scenario: You are evaluating a test for a rare disease. The test has 99% Sensitivity and 99% Specificity. The disease prevalence is 1 in 10,000.
+Q1: If the patient tests positive, is it more likely they have the disease or that the result is a false positive?
+A. More likely they have the disease
+B. More likely it is a false positive
+C. 50/50 chance
+D. Impossible to tell
+Answer: B (Due to the very low pre-test probability/prevalence)
+Q2: A high SENSITIVITY test is most useful for:
+A. Confirming a diagnosis (SpPin)
+B. Ruling out a diagnosis (SnNout)
+C. Identifying the cause
+D. Monitoring treatment
+Answer: B
+Q3: What value remains stable regardless of the disease prevalence in a population?
+A. Positive Predictive Value (PPV)
+B. Negative Predictive Value (NPV)
+C. Likelihood Ratio (LR)
+D. Accuracy
+Answer: C
+
+CASE 36: Syncope Reasoning - "The Big 3"
+Scenario: A 25-year-old athlete faints while running. He recovers immediately. No prodrome.
+Q1: What are the three broad categories of syncope reasoning?
+A. Neurological, Psychological, Idiopathic
+B. Reflex (Vasovagal), Orthostatic, Cardiac
+C. Hypoglycemic, Hypoxic, Hypercapnic
+D. Seizure, Stroke, TIA
+Answer: B
+Q2: Sudden syncope during exertion without a prodrome strongly suggests:
+A. Vasovagal syncope
+B. Orthostatic hypotension
+C. Cardiac syncope (Arrhythmia or Structural)
+D. Micturition syncope
+Answer: C
+Q3: What EKG finding from First Aid should you look for in this young athlete?
+A. Right bundle branch block
+B. Delta wave (WPW) or HOCM (deep Q waves in lateral leads)
+C. Sinus bradycardia
+D. Normal EKG
+Answer: B
+
+CASE 37: Acute SOB - The Differentiating Exam
+Scenario: A 60-year-old with a history of both HF and COPD presents with worsening SOB. He has wheezing and elevated JVP.
+Q1: What lab test is the most useful "reasoning tool" to differentiate HF from COPD in the ER?
+A. Troponin
+B. BNP (B-type Natriuretic Peptide)
+C. D-dimer
+D. CRP
+Answer: B
+Q2: If the BNP is < 100, the cause of SOB is very unlikely to be:
+A. COPD
+B. Heart Failure
+C. Pneumonia
+D. Pulmonary Embolism
+Answer: B
+Q3: According to Learning Radiology, what finding on CXR would most support HF over COPD?
+A. Hyperinflation and flattened diaphragms
+B. Cephalization of vessels and Kerley B lines
+C. Patchy consolidation
+D. Clear lung fields
+Answer: B
+
+CASE 38: Abdominal Pain - Reasoning by Location
+Scenario: A 22-year-old female presents with sudden onset severe RLQ pain.
+Q1: What is the first "must-rule-out" in any female of childbearing age with abdominal pain?
+A. Appendicitis
+B. Ectopic pregnancy
+C. Ovarian torsion
+D. UTI
+Answer: B (Pregnancy test is the "On Call" gold standard)
+Q2: Pain that starts in the periumbilical region and migrates to the RLQ is classic for:
+A. Cholecystitis
+B. Appendicitis
+C. Diverticulitis
+D. Mesenteric ischemia
+Answer: B
+Q3: What physical exam sign involves pain in the RLQ when the LLQ is palpated?
+A. McBurney's sign
+B. Rovsing's sign
+C. Psoas sign
+D. Obturator sign
+Answer: B
+
+CASE 39: AMS - The "MIST" Mnemonic
+Scenario: A 50-year-old diabetic is brought in with "altered mental status."
+Q1: What is the mnemonic "MIST" used for in differential diagnosis of AMS?
+A. Metabolic, Infectious, Structural, Toxins
+B. Meningitis, Insulin, Stroke, Trauma
+C. Memory, Intellect, Speech, Thought
+D. Muscle, Immune, Skin, Tendons
+Answer: A
+Q2: What is the most immediate, life-saving lab to check in any AMS patient?
+A. Head CT
+B. Fingerstick Glucose
+C. Ethanol level
+D. Lumbar puncture
+Answer: B
+Q3: A patient with AMS and "pinpoint pupils" suggests:
+A. Cocaine use
+B. Opioid toxicity
+C. Anticholinergic toxicity
+D. Hypoglycemia
+Answer: B
+
+CASE 40: Fever of Unknown Origin (FUO) Reasoning
+Scenario: A 35-year-old has had a fever for 4 weeks. Extensive initial labs (CBC, UA, CXR) are negative.
+Q1: What is the classic definition of FUO?
+A. Fever > 101F for 1 week
+B. Fever > 101F on several occasions for > 3 weeks, with 1 week of inpatient workup (or 3 outpatient visits)
+C. Fever > 100F for 1 month
+D. Any fever that doesn't respond to Tylenol
+Answer: B
+Q2: What are the three most common categories for FUO in adults?
+A. Viral, Bacterial, Fungal
+B. Infection, Malignancy, Autoimmune/Connective Tissue Disease
+C. Stress, Dehydration, Exercise
+D. Drug fever, Factitious fever, Teething
+Answer: B
+Q3: A "Relative Bradycardia" (high fever but pulse is not high) suggests:
+A. Sepsis
+B. Intracellular pathogens (Legionella, Typhoid) or Factitious fever
+C. Heart block
+D. Normal response
+Answer: B
+
+CASE 41: Confirmation Bias in Imaging
+Scenario: A physician is convinced a patient has a PE. The V/Q scan comes back "Low Probability." The physician says, "The scan is wrong, look at how tachypneic she is!" and orders a CTPA anyway.
+Q1: Seeking only evidence that supports your existing belief and ignoring contradictory data is:
+A. Outcome bias
+B. Confirmation bias
+C. Hindsight bias
+D. Base rate neglect
+Answer: B
+Q2: If the pre-test probability (Wells Score) was "High," a "Low Probability" V/Q scan:
+A. Rules out PE
+B. Is non-diagnostic and requires further testing
+C. Confirms PE
+D. Should be ignored
+Answer: B (Bayesian reasoning: discordant results in high-risk patients need more data)
+Q3: What is the "Gold Standard" reasoning tool for PE risk stratification?
+A. Physician intuition
+B. Wells Criteria or PERC Rule
+C. D-dimer for everyone
+D. Immediate CT for everyone
+Answer: B
+
+CASE 42: Headache "Red Flags" (SNOOP)
+Scenario: A 50-year-old presents with the "worst headache of my life" that started suddenly while lifting a box.
+Q1: What mnemonic is used for headache "red flags"?
+A. FAST
+B. SNOOP (Systemic, Neuro, Onset, Older, Progression)
+C. SOCRATES
+D. OPQRST
+Answer: B
+Q2: The "Thunderclap" onset (peak intensity in seconds) is most characteristic of:
+A. Migraine
+B. Subarachnoid Hemorrhage
+C. Tension headache
+D. Cluster headache
+Answer: B
+Q3: What is the next best reasoning step if a Head CT is negative in a patient with a suspected "Thunderclap" headache?
+A. Discharge home
+B. Lumbar Puncture (to look for xanthochromia)
+C. Start Migraine meds
+D. Repeat CT in 24 hours
+Answer: B
+
+CASE 43: Joint Pain Differential - Mono vs Poly
+Scenario: A 60-year-old presents with a single hot, swollen, painful toe.
+Q1: What is the first branch point in the differential diagnosis of joint pain?
+A. Acute vs Chronic
+B. Monoarticular (1) vs Polyarticular (>3)
+C. Inflammatory vs Non-inflammatory
+D. Upper vs Lower limb
+Answer: B
+Q2: What is the "must-rule-out" diagnosis for an acute monoarthritis?
+A. Gout
+B. Septic Arthritis
+C. Osteoarthritis
+D. Rheumatoid Arthritis
+Answer: B
+Q3: In a polyarticular, symmetric, small-joint inflammatory pattern, the most likely reasoning is:
+A. Gout
+B. Rheumatoid Arthritis
+C. Lupus
+D. Osteoarthritis
+Answer: B
+
+CASE 44: Hypotension On Call - The "SHOCK" Approach
+Scenario: A post-op patient's blood pressure drops to 80/40.
+Q1: What is the most immediate reasoning priority in an "On Call" hypotension scenario?
+A. Find the cause
+B. Assess perfusion (Mentation, Urine output, Skin temp) and stabilize ABCs
+C. Call the family
+D. Start long-term antihypertensives
+Answer: B
+Q2: A patient with hypotension, high JVP, and clear lungs likely has:
+A. Hypovolemic shock
+B. Cardiogenic shock or Obstructive shock (PE/Tamponade)
+C. Septic shock
+D. Neurogenic shock
+Answer: B
+Q3: What is the first-line reasoning tool (and treatment) for suspected hypovolemic shock?
+A. Vasopressors
+B. Fluid bolus (e.g., 500-1000mL NS)
+C. Antibiotics
+D. Head CT
+Answer: B
+
+CASE 45: Jaundice Reasoning - Pre, Intra, and Post
+Scenario: A patient has yellow eyes and dark urine. Direct Bilirubin is 5.0 (High). AST/ALT are normal. Alk Phos is 500 (High).
+Q1: This pattern of lab findings is:
+A. Pre-hepatic
+B. Intra-hepatic
+C. Post-hepatic (Obstructive)
+D. Hemolytic
+Answer: C
+Q2: Dark urine in a jaundiced patient indicates:
+A. Unconjugated hyperbilirubinemia
+B. Conjugated hyperbilirubinemia (Direct bili is water soluble and spills into urine)
+C. Hemolysis
+D. Dehydration
+Answer: B
+Q3: What is the most common "painless" cause of post-hepatic jaundice in an elderly patient?
+A. Gallstones
+B. Pancreatic cancer
+C. Hepatitis A
+D. Gilbert syndrome
+Answer: B
+
+CASE 46: Reasoning through Weight Loss
+Scenario: A 65-year-old male smoker reports losing 20 lbs unintentionally over 3 months.
+Q1: What is the "Rule of 10" for significant unintentional weight loss?
+A. 10 lbs in 1 year
+B. > 10% of body weight in 6-12 months
+C. 5% in 1 month
+D. 2 lbs per week
+Answer: B
+Q2: What are the "Big 3" categories of unintentional weight loss reasoning?
+A. Diet, Exercise, Sleep
+B. Malignancy, Chronic Infection (TB/HIV), and Hyperthyroidism/Diabetes
+C. Depression, Poverty, Smoking
+D. Liver, Kidney, Heart failure
+Answer: B
+Q3: In an elderly smoker with weight loss and new-onset cough, the reasoning points strongly to:
+A. Tuberculosis
+B. Lung Cancer
+C. COPD
+D. Depression
+Answer: B
+
+CASE 47: The Weakness Differential - Localization
+Scenario: A 40-year-old female presents with bilateral leg weakness and a "level" of numbness at the mid-chest.
+Q1: What is the first priority in neuro reasoning for weakness?
+A. Upper Motor Neuron (UMN) vs Lower Motor Neuron (LMN)
+B. Localization (Brain, Cord, Peripheral Nerve, NMJ, Muscle)
+C. Vascular vs Inflammatory
+D. Left vs Right
+Answer: B
+Q2: A "sensory level" (numbness below a certain point) strongly localizes the lesion to the:
+A. Brain
+B. Spinal Cord
+C. Nerve Roots
+D. Peripheral nerves
+Answer: B
+Q3: Which finding from Bates characterizes an UMN lesion?
+A. Fasciculations
+B. Atrophy
+C. Spasticity and Hyperreflexia (positive Babinski)
+D. Flaccidity
+Answer: C
+
+CASE 48: Edema Reasoning - Local vs Systemic
+Scenario: A patient presents with swelling of the right leg only.
+Q1: The first reasoning step for edema is:
+A. Pitting vs Non-pitting
+B. Unilateral vs Bilateral
+C. Acute vs Chronic
+D. Cardiac vs Renal
+Answer: B
+Q2: Unilateral leg swelling in a hospitalized patient is:
+A. Heart Failure until proven otherwise
+B. DVT until proven otherwise
+C. Cirrhosis until proven otherwise
+D. Lymphedema
+Answer: B
+Q3: Bilateral leg swelling with high JVP points to:
+A. Renal failure
+B. Heart failure
+C. Liver failure
+D. Malnutrition
+Answer: B
+
+CASE 49: The "Sick Patient" - Triage Reasoning
+Scenario: You are called to see four patients.
+Patient A: BP 90/60, HR 110, T 102.
+Patient B: BP 140/90, HR 80, complaining of a sore throat.
+Patient C: BP 110/70, HR 70, new-onset "worst headache."
+Patient D: BP 130/80, HR 100, SpO2 88% on room air.
+Q1: Which two patients require immediate evaluation based on "On Call" priorities?
+A. A and B
+B. A and D (Abnormal vitals/Hypoxia)
+C. B and C
+D. C and D
+Answer: B (Vitals take priority over complaints)
+Q2: Patient C (Headache) might have a "Must-not-miss" diagnosis. Which one?
+A. Migraine
+B. Subarachnoid Hemorrhage
+C. Tension headache
+D. Sinusitis
+Answer: B
+Q3: What is the reasoning principle of "Triage"?
+A. See the easiest patient first
+B. See the most complex patient first
+C. Allocate resources based on severity/urgency to maximize survival
+D. See patients in alphabetical order
+Answer: C
+
+CASE 50: Diagnostic Error - The "Why"
+Scenario: A doctor misses a PE because she thought the patient was "too young and fit" to have one.
+Q1: This is an example of which heuristic?
+A. Representativeness (The patient didn't "look like" the classic PE patient)
+B. Availability
+C. Sunk cost
+D. Gambler's fallacy
+Answer: A
+Q2: What is the most effective way to reduce diagnostic errors in a busy clinical environment?
+A. Work faster
+B. Use cognitive "checklists" and clinical decision rules (e.g., Wells score)
+C. Memorize more facts
+D. Trust your gut
+Answer: B
+Q3: What is "Hindsight Bias" in clinical reasoning?
+A. Predicting the future correctly
+B. The tendency to see an event as having been predictable after it has occurred
+C. Looking at old records
+D. Learning from mistakes
+Answer: B
+
+CASE 51: Hypokalemia Reasoning - Renal vs GI loss
+Scenario: A patient has a K of 2.5. Urine K is 40 mEq/L (High).
+Q1: A high urine potassium in the setting of serum hypokalemia indicates:
+A. GI loss (Diarrhea)
+B. Renal loss
+C. Inadequate intake
+D. Shifting into cells
+Answer: B
+Q2: Which condition causes RENAL potassium loss?
+A. Diarrhea
+B. Laxative abuse
+C. Diuretic use or Hyperaldosteronism
+D. Insulin overdose
+Answer: C
+Q3: What acid-base state is most commonly associated with diuretic-induced hypokalemia?
+A. Metabolic Acidosis
+B. Metabolic Alkalosis
+C. Respiratory Acidosis
+D. Respiratory Alkalosis
+Answer: B
+
+CASE 52: Reasoning through Palpitations
+Scenario: A 25-year-old student feels "skipped beats" while studying for exams. Pulse is regular.
+Q1: What is the most common cause of palpitations in a healthy young person?
+A. WPW syndrome
+B. PVCs/PACs (Premature beats) often triggered by stress/caffeine
+C. Atrial Fibrillation
+D. Ventricular Tachycardia
+Answer: B
+Q2: What "Red Flag" symptom should prompt immediate cardiac workup for palpitations?
+A. Anxiety
+B. Syncope or near-syncope
+C. Chest tightness after 2 cups of coffee
+D. Sweating
+Answer: B
+Q3: An "irregularly irregular" rhythm on exam is classic for:
+A. Sinus rhythm
+B. Atrial Fibrillation
+C. Mobitz II
+D. PVCs
+Answer: B
+
+CASE 53: Reasoning through Cough - Acute vs Chronic
+Scenario: A 45-year-old non-smoker has had a dry cough for 10 weeks. CXR is normal.
+Q1: A cough lasting > 8 weeks is defined as:
+A. Acute
+B. Subacute
+C. Chronic
+D. Irritating
+Answer: C
+Q2: What are the "Big 3" causes of chronic cough in a non-smoker with a normal CXR?
+A. Lung cancer, TB, Sarcoid
+B. GERD, Asthma, Post-nasal drip (UACS)
+C. Heart failure, PE, Pneumonia
+D. ACE inhibitor, Smoking, Anxiety
+Answer: B
+Q3: Which medication is a classic cause of dry chronic cough?
+A. Beta-blockers
+B. ACE inhibitors
+C. Calcium channel blockers
+D. Statins
+Answer: B
+
+CASE 54: Reasoning through Anemia - The Retic Count
+Scenario: A patient has a Hemoglobin of 8.0. Reticulocyte count is 0.5% (Low).
+Q1: What does a low reticulocyte count indicate in an anemic patient?
+A. Excessive destruction (Hemolysis)
+B. Inadequate production by the bone marrow
+C. Acute blood loss
+D. Normal response
+Answer: B
+Q2: If the retic count was 5% (High), what would be the reasoning?
+A. Bone marrow failure
+B. Hemolysis or acute blood loss response
+C. Iron deficiency
+D. Vitamin B12 deficiency
+Answer: B
+Q3: In a microcytic anemia with a LOW retic count, the next reasoning step is to check:
+A. Bilirubin
+B. Iron studies (Ferritin)
+C. LDH
+D. B12 level
+Answer: B
+
+CASE 55: The "Negative" Test - Reasoning through D-dimer
+Scenario: A 70-year-old smoker with a swollen calf and SOB has a negative D-dimer.
+Q1: Can a negative D-dimer rule out PE in this HIGH-risk patient?
+A. Yes
+B. No
+Answer: B (D-dimer has high negative predictive value ONLY in low/moderate risk patients)
+Q2: This scenario is an example of why we must consider:
+A. Only the test result
+B. Pre-test probability (Bayesian reasoning)
+C. The patient's age
+D. Cost of testing
+Answer: B
+Q3: What is the "next step" in reasoning for this patient?
+A. Discharge home
+B. Immediate imaging (CTPA or Leg Ultrasound)
+C. Repeat D-dimer in 2 hours
+D. Start antibiotics
+Answer: B
+
+CASE 56: Reasoning through Delirium vs Dementia
+Scenario: An 80-year-old with known Alzheimer's is brought in with sudden onset combativeness and "seeing bugs."
+Q1: What is the hallmark of Delirium that distinguishes it from Dementia?
+A. Memory loss
+B. Acute onset and fluctuating level of consciousness/attention
+C. Presence of hallucinations
+D. Advanced age
+Answer: B
+Q2: What is the most common cause of delirium in the elderly?
+A. Progression of dementia
+B. Underlying medical illness (Infection, Drug side effect, Metabolic derangement)
+C. New environment
+D. Lack of sleep
+Answer: B
+Q3: The "Confusion Assessment Method" (CAM) is a reasoning tool for:
+A. Alzheimer's
+B. Delirium
+C. Stroke
+D. Depression
+Answer: B
+
+CASE 57: Reasoning through Dysphagia - Solids vs Liquids
+Scenario: A patient feels food "sticking" in their mid-chest.
+Q1: If the patient has trouble with SOLIDS only, the reasoning points to:
+A. Motility disorder (Achalasia/Scleroderma)
+B. Mechanical obstruction (Stricture/Cancer)
+C. Neurological disorder
+D. Anxiety
+Answer: B
+Q2: Trouble with both SOLIDS and LIQUIDS from the start points to:
+A. Mechanical obstruction
+B. Motility disorder
+C. GERD
+D. Esophagitis
+Answer: B
+Q3: Dysphagia localized to the NECK (difficulty initiating swallow) is:
+A. Esophageal dysphagia
+B. Oropharyngeal dysphagia
+C. Globus sensation
+D. Reflux
+Answer: B
+
+CASE 58: Reasoning through Heart Murmurs
+Scenario: A 75-year-old has a harsh systolic crescendo-decrescendo murmur at the right upper sternal border.
+Q1: This murmur is most classic for:
+A. Mitral Regurgitation
+B. Aortic Stenosis
+C. Tricuspid Regurgitation
+D. Pulmonic Stenosis
+Answer: B
+Q2: What symptom "triad" (SAD) suggests severe Aortic Stenosis reasoning?
+A. Syncope, Angina, Dyspnea
+B. Seizures, Asthma, Diarrhea
+C. Stroke, Arrhythmia, Death
+D. Swelling, Ascites, Distension
+Answer: A
+Q3: A murmur that gets LOUDER with Valsalva (decreased preload) in a young person is:
+A. Aortic Stenosis
+B. HOCM (Hypertrophic Obstructive Cardiomyopathy)
+C. Mitral Valve Prolapse
+D. Normal
+Answer: B
+
+CASE 59: Reasoning through Skin Rashes - Categorization
+Scenario: A child presents with a "slapped cheek" rash and lacy body rash.
+Q1: What is the first branch point in pediatric rash reasoning?
+A. Itchy vs Not itchy
+B. Viral Exanthem vs Other
+C. Local vs Systemic
+D. Face vs Body
+Answer: B
+Q2: This "slapped cheek" appearance is classic for:
+A. Measles
+B. Erythema Infectiosum (Fifth Disease - Parvovirus B19)
+C. Rubella
+D. Roseola
+Answer: B
+Q3: A "non-blanching" petechial rash in a febrile child is:
+A. A viral exanthem
+B. A medical emergency (potential Meningococcemia)
+C. Heat rash
+D. Eczema
+Answer: B
+
+CASE 60: Reasoning through AKI - The "Prerenal" vs "ATN"
+Scenario: A patient's Creatinine rises from 1.0 to 3.0. Urine Na is 10.
+Q1: A Urine Sodium < 20 mEq/L and FeNa < 1% points to:
+A. Prerenal Azotemia
+B. Acute Tubular Necrosis (ATN)
+C. AIN
+D. Obstruction
+Answer: A
+Q2: What is the "On Call" reasoning for a new rise in Creatinine?
+A. Give fluids immediately to everyone
+B. Use the "Pre, Intra, Post" framework
+C. Order a biopsy
+D. Wait and see
+Answer: B
+Q3: If the patient had "muddy brown" casts on UA, the reasoning would shift to:
+A. Prerenal
+B. ATN (Intrinsic)
+C. Glomerulonephritis
+D. Normal
+Answer: B
