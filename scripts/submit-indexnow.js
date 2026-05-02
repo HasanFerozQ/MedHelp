@@ -9,8 +9,8 @@ try {
 }
 
 const API_KEY = process.env.INDEXNOW_KEY || '60d19d6ca538448995707da3c61b8e6f';
-const HOST = process.env.SITE_HOST || 'www.medihelp.live';
-const KEY_LOCATION = `https://${HOST}/${API_KEY}.txt`;
+const HOST = process.env.SITE_HOST || 'medihelp.live';
+const KEY_LOCATION = `https://www.medihelp.live/${API_KEY}.txt`;
 const SITEMAP_PATH = path.join(__dirname, '../sitemap.xml');
 
 async function submitToIndexNow() {
@@ -34,24 +34,29 @@ async function submitToIndexNow() {
       return;
     }
 
-    // Filter out potential duplicates and ensure unique URLs
-    const uniqueUrls = [...new Set(urls)];
+    // Standardize URLs and Host to match the redirected domain (www.medihelp.live)
+    const normalizedHost = 'www.medihelp.live';
+    const uniqueUrls = [...new Set(urls)].map(url => {
+      if (!url.startsWith('https://www.medihelp.live')) {
+        return url.replace('https://medihelp.live', 'https://www.medihelp.live');
+      }
+      return url;
+    });
 
     console.log(`Found ${uniqueUrls.length} unique URLs. Submitting to IndexNow...`);
 
     const data = JSON.stringify({
-      host: HOST,
+      host: normalizedHost,
       key: API_KEY,
-      keyLocation: KEY_LOCATION,
       urlList: uniqueUrls,
     });
 
     console.log('Request Body:', data);
 
     const options = {
-      hostname: 'api.indexnow.org',
+      hostname: 'www.bing.com',
       port: 443,
-      path: '/IndexNow',
+      path: '/indexnow',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',

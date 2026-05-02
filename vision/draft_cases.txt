@@ -1,0 +1,629 @@
+CASE 01: Hyponatremia & Hyperglycemia
+Scenario: A 65-year-old male with Type 2 DM presents with confusion. Labs: Na 128 mEq/L, Glucose 900 mg/dL, K 4.2 mEq/L.
+Q1: What is the corrected sodium level? (Formula: Na + 1.6 * (Glucose - 100) / 100)
+A. 128
+B. 140.8
+C. 135
+D. 145
+Answer: B (128 + 1.6 * 8 = 128 + 12.8 = 140.8)
+Q2: This condition is known as:
+A. SIADH
+B. Pseudohyponatremia
+C. Hypertonic hyponatremia
+D. Hypovolemic hyponatremia
+Answer: C
+Q3: What is the primary initial treatment for the confusion?
+A. 3% Saline
+B. Fluid restriction
+C. Insulin and normal saline
+D. Tolvaptan
+Answer: C
+
+CASE 02: Hypernatremia & Polyuria
+Scenario: A 40-year-old female with bipolar disorder on lithium presents with extreme thirst and high urine output. Na 150, Urine Osm 150 (Low).
+Q1: Most likely diagnosis?
+A. Central Diabetes Insipidus
+B. Nephrogenic Diabetes Insipidus
+C. Primary Polydipsia
+D. SIADH
+Answer: B (Lithium is a classic cause of NDI)
+Q2: What test would distinguish Central from Nephrogenic DI?
+A. Water deprivation followed by Desmopressin
+B. Salt loading
+C. Glucose tolerance test
+D. 24-hour urine collection
+Answer: A
+Q3: If desmopressin is given and urine Osm remains < 300, the diagnosis is:
+A. Central DI
+B. Nephrogenic DI
+C. Normal
+D. Primary Polydipsia
+Answer: B
+
+CASE 03: Refractory Hypokalemia
+Scenario: A 55-year-old male with chronic alcoholism is admitted for diarrhea. K is 2.8. Despite 80 mEq of KCl over 24 hours, the K only rises to 2.9.
+Q1: What additional lab should be checked?
+A. Sodium
+B. Calcium
+C. Magnesium
+D. Phosphorus
+Answer: C
+Q2: Why does low Magnesium cause low Potassium?
+A. It inhibits K+ reabsorption in the distal tubule (ROMK channels)
+B. It causes diarrhea
+C. it inhibits insulin
+D. it causes renal failure
+Answer: A (Low Mg leads to increased K+ secretion)
+Q3: Initial step in correcting the K?
+A. Give more K
+B. Give IV Magnesium
+C. Give Bicarbonate
+D. Give Spironolactone
+Answer: B
+
+CASE 04: Hypocalcemia & Albumin
+Scenario: A patient with cirrhosis has a total calcium of 7.5 mg/dL. Albumin is 2.0 g/dL.
+Q1: What is the corrected calcium?
+A. 7.5
+B. 8.3
+C. 9.1
+D. 10.0
+Answer: C (7.5 + 0.8*(4-2) = 7.5 + 1.6 = 9.1)
+Q2: This patient's ionized calcium is most likely:
+A. Low
+B. High
+C. Normal
+D. Undetectable
+Answer: C
+Q3: Which physical sign is most specific for symptomatic hypocalcemia?
+A. Asterixis
+B. Trousseau sign
+C. Jaundice
+D. Spider angioma
+Answer: B
+
+CASE 05: NAGMA & Urine Anion Gap
+Scenario: A patient has a pH of 7.30, HCO3 15, Cl 115, Na 140. Urine labs: Na 40, K 20, Cl 20.
+Q1: Calculate the serum anion gap.
+A. 5
+B. 10
+C. 15
+D. 20
+Answer: B (140 - (115+15) = 10. Normal gap.)
+Q2: Calculate the Urine Anion Gap (UAG = Na + K - Cl).
+A. -20
+B. 0
+C. +40
+D. +60
+Answer: C (40 + 20 - 20 = 40)
+Q3: A positive UAG in the setting of NAGMA suggests:
+A. Diarrhea
+B. Renal Tubular Acidosis (RTA)
+C. Addison's disease
+D. Lactic acidosis
+Answer: B (Negative UAG = Diarrhea; Positive UAG = RTA)
+
+CASE 06: Toxic Alcohol Ingestion
+Scenario: A 45-year-old male is found unresponsive. Labs: pH 7.10, HCO3 8, AG 30. Measured Serum Osm 340, Na 140, Glucose 100, BUN 28.
+Q1: Calculate the calculated osmolality (2*Na + Glucose/18 + BUN/2.8).
+A. 280
+B. 295
+C. 310
+D. 330
+Answer: B (280 + 5.5 + 10 = 295.5)
+Q2: What is the Osmolar Gap?
+A. 10
+B. 20
+C. 45
+D. 60
+Answer: C (340 - 295 = 45)
+Q3: High AG + High Osmolar Gap + Envelope crystals in urine suggests:
+A. Methanol
+B. Ethylene Glycol
+C. Isopropyl Alcohol
+D. Aspirin
+Answer: B
+
+CASE 07: Salicylate Toxicity
+Scenario: A patient presents with tinnitus and tachypnea. ABG: pH 7.45, PaCO2 20, HCO3 14. AG is 24.
+Q1: What is the acid-base diagnosis?
+A. Metabolic acidosis only
+B. Respiratory alkalosis only
+C. Mixed respiratory alkalosis and HAGMA
+D. Compensated metabolic acidosis
+Answer: C
+Q2: Winters' Formula (Expected PaCO2 = 1.5 * 14 + 8 = 29 +/- 2). Since actual PaCO2 is 20, there is:
+A. Appropriate compensation
+B. Concomitant respiratory alkalosis
+C. Concomitant respiratory acidosis
+D. Metabolic alkalosis
+Answer: B
+Q3: Treatment to enhance salicylate elimination?
+A. Acidify the urine
+B. Alkalinize the urine with NaHCO3
+C. Dialysis only
+D. Activated charcoal only
+Answer: B
+
+CASE 08: Metabolic Alkalosis & Urine Chloride
+Scenario: A patient presents with vomiting. Labs: pH 7.52, HCO3 34, Cl 90. Urine Cl is 5 mEq/L.
+Q1: This metabolic alkalosis is classified as:
+A. Saline-responsive
+B. Saline-resistant
+C. High anion gap
+D. Normal anion gap
+Answer: A (Urine Cl < 20 = Saline responsive)
+Q2: Which condition causes saline-RESISTANT metabolic alkalosis (Urine Cl > 20)?
+A. Vomiting
+B. Diuretic use (remote)
+C. Conn's Syndrome (Primary Hyperaldosteronism)
+D. Nasogastric suction
+Answer: C
+Q3: What electrolyte is typically LOW in this patient?
+A. Potassium
+B. Sodium
+C. Magnesium
+D. Phosphorus
+Answer: A (H+ loss often leads to K+ loss)
+
+CASE 09: Anemia of Chronic Disease
+Scenario: A patient with rheumatoid arthritis has Hb 10.2. Iron 40 (Low), TIBC 200 (Low), Ferritin 300 (High).
+Q1: Most likely diagnosis?
+A. Iron deficiency
+B. Anemia of Chronic Disease
+C. Thalassemia
+D. Sideroblastic anemia
+Answer: B
+Q2: What protein is upregulated in inflammation and blocks iron release from macrophages?
+A. Ferritin
+B. Transferrin
+C. Hepcidin
+D. Erythropoietin
+Answer: C
+Q3: What is the MCV typically in this condition?
+A. < 70
+B. 80-100 (but can be microcytic later)
+C. > 110
+D. 120
+Answer: B
+
+CASE 10: Sideroblastic Anemia
+Scenario: A patient on Isoniazid for TB presents with fatigue. Labs show a microcytic anemia with HIGH serum iron and HIGH ferritin.
+Q1: Most likely diagnosis?
+A. Iron deficiency
+B. Lead poisoning
+C. Sideroblastic anemia
+D. Folate deficiency
+Answer: C
+Q2: What finding is seen on the bone marrow aspirate (Prussian blue stain)?
+A. Hypercellularity
+B. Ringed sideroblasts
+C. Megaloblasts
+D. Auer rods
+Answer: B
+Q3: Deficiency of which vitamin often contributes to this condition in patients on INH?
+A. B12
+B. Folate
+C. B6 (Pyridoxine)
+D. C
+Answer: C
+
+CASE 11: G6PD Deficiency
+Scenario: A 22-year-old male eats fava beans and develops dark urine. Labs: Hb 9, Retics 6%, indirect bili 3.0. Peripheral smear shows "bite cells".
+Q1: Most likely diagnosis?
+A. Hereditary Spherocytosis
+B. G6PD deficiency
+C. Sickle cell anemia
+D. AIHA
+Answer: B
+Q2: What are the inclusions seen in RBCs on crystal violet stain?
+A. Howell-Jolly bodies
+B. Heinz bodies
+C. Pappenheimer bodies
+D. Basophilic stippling
+Answer: B (Denatured hemoglobin)
+Q3: Mode of inheritance?
+A. Autosomal dominant
+B. Autosomal recessive
+C. X-linked recessive
+D. Mitochondrial
+Answer: C
+
+CASE 12: AIHA (Warm vs. Cold)
+Scenario: A 60-year-old with CLL presents with jaundice. Direct Coombs test is positive for IgG.
+Q1: Most likely type of AIHA?
+A. Warm AIHA
+B. Cold AIHA
+C. Paroxysmal Nocturnal Hemoglobinuria
+D. G6PD deficiency
+Answer: A (IgG = Warm; IgM = Cold)
+Q2: What is the characteristic RBC shape seen on smear?
+A. Schistocytes
+B. Spherocytes
+C. Target cells
+D. Burr cells
+Answer: B
+Q3: Cold AIHA (IgM) is classically associated with which infection?
+A. Strep throat
+B. Mycoplasma pneumoniae
+C. Hepatitis B
+D. Malaria
+Answer: B
+
+CASE 13: TTP/HUS
+Scenario: A 30-year-old female presents with fever, confusion, and petechiae. Labs: Platelets 20k, Hb 8, Creatinine 2.5. Smear shows schistocytes. PT/PTT are normal.
+Q1: Most likely diagnosis?
+A. DIC
+B. ITP
+C. TTP (Thrombotic Thrombocytopenic Purpura)
+D. HUS
+Answer: C
+Q2: Deficiency of which enzyme causes TTP?
+A. G6PD
+B. ADAMTS13
+C. Factor VIII
+D. Pyruvate kinase
+Answer: B
+Q3: Why are PT/PTT normal in TTP/HUS but prolonged in DIC?
+A. TTP involves platelets only; DIC involves clotting factors
+B. TTP is an autoimmune disease
+C. DIC is a liver disease
+D. Laboratory error
+Answer: A
+
+CASE 14: CML vs. Leukemoid Reaction
+Scenario: A patient has a WBC of 50,000 with a left shift. Splenomegaly is present.
+Q1: What lab test can distinguish CML from a leukemoid reaction?
+A. ESR
+B. Leukocyte Alkaline Phosphatase (LAP) score
+C. CRP
+D. Ferritin
+Answer: B
+Q2: In CML, the LAP score is:
+A. High
+B. Low
+C. Normal
+D. Undetectable
+Answer: B (High in leukemoid reaction/infection)
+Q3: What cytogenetic abnormality is diagnostic for CML?
+A. t(8;14)
+B. t(9;22)
+C. t(15;17)
+D. t(11;14)
+Answer: B (Philadelphia chromosome)
+
+CASE 15: Infiltrative LFT Pattern
+Scenario: A patient with sarcoidosis has labs: AST 40, ALT 45, Alk Phos 450, GGT 500, Bilirubin 1.1.
+Q1: This pattern is known as:
+A. Hepatocellular
+B. Cholestatic
+C. Infiltrative
+D. Isolated hyperbilirubinemia
+Answer: C (Very high Alk Phos with near normal Bili and AST/ALT)
+Q2: What other condition commonly causes an infiltrative pattern?
+A. Tylenol overdose
+B. Tuberculosis
+C. Viral hepatitis
+D. Alcohol
+Answer: B
+Q3: Next best imaging step to evaluate the biliary tree?
+A. CT abdomen
+B. RUQ Ultrasound
+C. ERCP
+D. HIDA scan
+Answer: B
+
+CASE 16: Gilbert Syndrome
+Scenario: A 19-year-old student has mild jaundice during finals week. Labs: Total Bili 2.5, Direct Bili 0.2. AST/ALT/Alk Phos are normal.
+Q1: Most likely diagnosis?
+A. Dubin-Johnson
+B. Gilbert Syndrome
+C. Crigler-Najjar Type 1
+D. Viral hepatitis
+Answer: B
+Q2: The hyperbilirubinemia is:
+A. Conjugated
+B. Unconjugated
+C. Both
+D. Delta-bilirubin
+Answer: B
+Q3: Mechanism?
+A. Absent UGT1A1 enzyme
+B. Reduced activity of UGT1A1 enzyme
+C. Defect in biliary excretion
+D. Hemolysis
+Answer: B
+
+CASE 17: Wilson Disease
+Scenario: A 25-year-old has tremors and elevated LFTs. Eye exam shows brownish rings around the cornea.
+Q1: What lab finding is classic for this disease?
+A. High ceruloplasmin
+B. Low ceruloplasmin
+C. Low urinary copper
+D. High iron
+Answer: B
+Q2: These rings are called:
+A. Kayser-Fleischer rings
+B. Lisch nodules
+C. Bitot spots
+D. Arcus senilis
+Answer: A
+Q3: Inheritance pattern?
+A. Autosomal dominant
+B. Autosomal recessive
+C. X-linked
+D. Mitochondrial
+Answer: B
+
+CASE 18: Hemochromatosis
+Scenario: A 50-year-old male presents with joint pain and "bronze" skin. Labs: Iron 200, Ferritin 2000, Transferrin Saturation 80%.
+Q1: Most likely diagnosis?
+A. Wilson Disease
+B. Hereditary Hemochromatosis
+C. Alpha-1 antitrypsin deficiency
+D. Primary Biliary Cholangitis
+Answer: B
+Q2: What is the most common gene mutation involved?
+A. ATP7B
+B. HFE (C282Y)
+C. SERPINA1
+D. CFTR
+Answer: B
+Q3: Treatment of choice?
+A. Phlebotomy
+B. Penicillamine
+C. Ursodeoxycholic acid
+D. Steroids
+Answer: A
+
+CASE 19: BUN/Cr Ratio in GI Bleed
+Scenario: A patient with dark stools has a BUN of 45 and Creatinine of 1.0.
+Q1: BUN:Cr ratio?
+A. 15:1
+B. 25:1
+C. 45:1
+D. 10:1
+Answer: C
+Q2: Why is the BUN elevated in Upper GI bleeding?
+A. Renal failure
+B. Digestion of blood (protein) and absorption of urea
+C. Liver failure
+D. Dehydration only
+Answer: B
+Q3: This finding is more common in:
+A. Upper GI bleed
+B. Lower GI bleed
+C. Hemorrhoids
+D. Colon cancer
+Answer: A
+
+CASE 20: FeUrea on Diuretics
+Scenario: A patient on furosemide for CHF has AKI. FeNa is 2.5% (High). BUN:Cr is 25:1.
+Q1: Can FeNa reliably distinguish prerenal from intrinsic AKI in this patient?
+A. Yes
+B. No, because diuretics increase Na excretion
+C. Yes, if K is normal
+D. No, because of CHF
+Answer: B
+Q2: What is a better test to evaluate for prerenal azotemia in a patient on diuretics?
+A. FeK
+B. FeUrea
+C. Urine Osm
+D. Creatinine clearance
+Answer: B (FeUrea < 35% suggests prerenal)
+Q3: Mechanism of prerenal AKI in CHF?
+A. Direct toxic effect of BNP
+B. Decreased effective circulating volume
+C. Afferent arteriole constriction
+D. Efferent arteriole dilation
+Answer: B
+
+CASE 21: Nephrotic Syndrome
+Scenario: A 40-year-old with HBV has severe edema. Labs: 4+ protein in urine, Albumin 1.8, Cholesterol 350.
+Q1: Most likely diagnosis?
+A. Minimal Change Disease
+B. Membranous Nephropathy
+C. FSGS
+D. IgA Nephropathy
+Answer: B (HBV is strongly associated with Membranous)
+Q2: What antibody is often positive in primary Membranous Nephropathy?
+A. ANA
+B. anti-PLA2R
+C. anti-dsDNA
+D. c-ANCA
+Answer: B
+Q3: Why is there hyperlipidemia in nephrotic syndrome?
+A. High fat diet
+B. Liver increases lipoprotein synthesis to compensate for low oncotic pressure
+C. Kidney cannot filter fats
+D. Lack of exercise
+Answer: B
+
+CASE 22: Contrast Nephropathy vs. AIN
+Scenario: A patient gets a CT with contrast. 48 hours later, Creatinine rises from 1.0 to 2.2.
+Q1: Most likely cause of AKI?
+A. Acute Interstitial Nephritis (AIN)
+B. Contrast-induced Nephropathy (CIN)
+C. Post-streptococcal GN
+D. Prerenal azotemia
+Answer: B
+Q2: AIN (from drugs like NSAIDs/PCN) would typically show what in the urine?
+A. RBC casts
+B. WBC casts and Eosinophils
+C. Fatty casts
+D. Granular "muddy brown" casts
+Answer: B
+Q3: "Muddy brown" granular casts suggest:
+A. AIN
+B. Acute Tubular Necrosis (ATN)
+C. Glomerulonephritis
+D. Normal finding
+Answer: B
+
+CASE 23: CSF Albuminocytologic Dissociation
+Scenario: A patient with ascending paralysis has a lumbar puncture. CSF: Protein 150, WBC 2.
+Q1: This finding is known as:
+A. Bacterial meningitis
+B. Albuminocytologic dissociation
+C. Viral meningitis
+D. Subarachnoid hemorrhage
+Answer: B
+Q2: Most likely diagnosis?
+A. Multiple Sclerosis
+B. Guillain-Barré Syndrome
+C. Polio
+D. Botulism
+Answer: B
+Q3: MS would classically show which CSF finding?
+A. High WBC
+B. Oligoclonal bands
+C. Low glucose
+D. RBCs
+Answer: B
+
+CASE 24: Ascitic Fluid SAAG
+Scenario: A cirrhotic patient has ascites. Peritoneal fluid Albumin is 1.0. Serum Albumin is 2.5.
+Q1: Calculate the Serum-Ascites Albumin Gradient (SAAG).
+A. 0.5
+B. 1.0
+C. 1.5
+D. 3.5
+Answer: C (2.5 - 1.0 = 1.5)
+Q2: A SAAG > 1.1 indicates:
+A. Portal hypertension
+B. Malignancy
+C. Tuberculosis
+D. Pancreatitis
+Answer: A
+Q3: What finding on ascitic fluid would diagnose Spontaneous Bacterial Peritonitis (SBP)?
+A. Positive culture only
+B. PMNs > 250/mm³
+C. Protein > 2.5
+D. Glucose < 60
+Answer: B
+
+CASE 25: Light''s Criteria in CHF with Diuresis
+Scenario: A CHF patient on Lasix has a pleural effusion. Fluid Protein/Serum Protein = 0.52.
+Q1: Based on Light''s criteria, this is:
+A. Transudate
+B. Exudate
+C. Hemorrhagic
+D. Chylous
+Answer: B (Ratio > 0.5)
+Q2: Why might a CHF effusion (normally a transudate) look like an exudate after diuresis?
+A. Diuresis concentrates the protein in the pleural space
+B. CHF causes inflammation
+C. Lasix causes lung damage
+D. Patient has pneumonia
+Answer: A (Pseudoexudate)
+Q3: What additional test can help clarify if it's actually a transudate?
+A. Fluid-Serum Protein Gradient > 3.1
+B. pH
+C. Glucose
+D. Amylase
+Answer: A
+
+CASE 26: Hemophilia vs. vWD
+Scenario: A boy has a swollen knee after a minor fall. PTT is prolonged, PT is normal.
+Q1: Most likely diagnosis?
+A. Hemophilia A or B
+B. vWD
+C. Vitamin K deficiency
+D. Liver disease
+Answer: A
+Q2: What is the primary defect in von Willebrand Disease (vWD)?
+A. Factor VIII deficiency
+B. Platelet adhesion defect
+C. Intrinsic pathway failure
+D. Fibrinogen deficiency
+Answer: B
+Q3: Bleeding time is prolonged in:
+A. Hemophilia A
+B. vWD
+C. Hemophilia B
+D. Factor XI deficiency
+Answer: B (vWD affects platelets; Hemophilia does not)
+
+CASE 27: HIT Type II
+Scenario: A patient on heparin for 5 days has a platelet count drop from 200k to 80k.
+Q1: Most likely diagnosis?
+A. ITP
+B. Heparin-Induced Thrombocytopenia (HIT)
+C. TTP
+D. DIC
+Answer: B
+Q2: What is the pathogenetic mechanism?
+A. Direct toxic effect of heparin
+B. Antibodies against Platelet Factor 4 (PF4)-Heparin complexes
+C. Platelet consumption in clots
+D. Bone marrow suppression
+Answer: B
+Q3: Immediate next step?
+A. Stop heparin and start Warfarin
+B. Stop heparin and start a direct thrombin inhibitor (e.g., Argatroban)
+C. Give a platelet transfusion
+D. Observe and repeat labs
+Answer: B (Warfarin is contraindicated initially in HIT)
+
+CASE 28: DIC Labs
+Scenario: A septic patient is bleeding from IV sites. Labs: Platelets 40k, PT 25, PTT 60, Fibrinogen 100 (Low), D-dimer 5000 (High).
+Q1: Most likely diagnosis?
+A. TTP
+B. DIC (Disseminated Intravascular Coagulation)
+C. Liver failure
+D. ITP
+Answer: B
+Q2: Why is Fibrinogen low in DIC?
+A. Liver stops making it
+B. It is consumed in widespread clot formation
+C. It is lost in urine
+D. Sepsis inhibits it
+Answer: B
+Q3: Finding on peripheral smear?
+A. Target cells
+B. Schistocytes
+C. Bite cells
+D. Burr cells
+Answer: B
+
+CASE 29: Procalcitonin Use
+Scenario: A patient with COPD has increased cough. Procalcitonin is 0.05. CXR is clear.
+Q1: What does the low procalcitonin suggest?
+A. Severe bacterial pneumonia
+B. Viral infection or non-infectious flare
+C. Needs ICU admission
+D. Laboratory error
+Answer: B
+Q2: Procalcitonin is primarily used to guide:
+A. Oxygen therapy
+B. Antibiotic initiation/duration
+C. Steroid dosing
+D. Inhaler choice
+Answer: B
+Q3: What cytokine suppresses procalcitonin in viral infections?
+A. TNF-alpha
+B. IL-6
+C. Interferon-gamma
+D. IL-1
+Answer: C
+
+CASE 30: Troponin in Chronic Renal Failure
+Scenario: A patient with ESRD has a stable troponin I of 0.08 (Elevated). He has no chest pain.
+Q1: Why is the troponin chronically elevated?
+A. He is having a slow heart attack
+B. Decreased renal clearance and chronic myocardial strain
+C. Laboratory error
+D. It's a normal finding in everyone over 60
+Answer: B
+Q2: What is the most important way to diagnose an acute MI in this patient?
+A. A single high troponin
+B. Serial troponins showing a rise and/or fall (delta)
+C. EKG only
+D. Stress test only
+Answer: B
+Q3: Trop T vs Trop I: Which is more frequently elevated in stable ESRD?
+A. Trop T
+B. Trop I
+C. Both equally
+D. Neither
+Answer: A (Trop T is more commonly elevated in stable ESRD)
