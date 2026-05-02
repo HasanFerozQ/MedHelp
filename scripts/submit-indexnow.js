@@ -2,9 +2,11 @@ const fs = require('fs');
 const https = require('https');
 const path = require('path');
 
-const API_KEY = '60d19d6ca538448995707da3c61b8e6f';
-const HOST = 'medihelp.live';
-const KEY_LOCATION = `https://www.medihelp.live/${API_KEY}.txt`;
+require('dotenv').config();
+
+const API_KEY = process.env.INDEXNOW_KEY || '60d19d6ca538448995707da3c61b8e6f';
+const HOST = process.env.SITE_HOST || 'www.medihelp.live';
+const KEY_LOCATION = `https://${HOST}/${API_KEY}.txt`;
 const SITEMAP_PATH = path.join(__dirname, '../sitemap.xml');
 
 async function submitToIndexNow() {
@@ -41,9 +43,9 @@ async function submitToIndexNow() {
     });
 
     const options = {
-      hostname: 'www.bing.com',
+      hostname: 'api.indexnow.org',
       port: 443,
-      path: '/indexnow',
+      path: '/IndexNow',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
