@@ -3024,3 +3024,1593 @@ Reasoning: This is polycystic ovary syndrome (PCOS), diagnosed by Rotterdam crit
 
 
 
+====================================================================================================
+
+
+Vignette
+
+A 68-year-old male retired construction worker presents with progressive shortness of breath for 3 months. He reports orthopnea and swelling in his legs. Past medical history includes hypertension and prior myocardial infarction 5 years ago.
+
+Physical Exam
+BP: 150/95 mmHg
+HR: 98/min
+RR: 20/min
+Temp: 36.8°C
+SpO₂: 92% on room air
+Cardiac: S3 gallop present
+Lungs: Bibasilar crackles
+Extremities: 2+ pitting edema
+Labs
+BNP: 820 pg/mL (↑)
+Creatinine: 1.3 mg/dL
+Na⁺: 132 mEq/L
+Question
+
+Which of the following best explains the mechanism leading to his decreased cardiac output?
+
+Choices
+
+A. Increased afterload shifting the curve downward
+B. Decreased preload reducing stroke volume
+C. Impaired contractility shifting Frank-Starling curve downward
+D. Increased heart rate decreasing diastolic filling time
+E. Increased venous return increasing stroke volume
+
+Answer: C
+Explanation
+
+Heart failure with reduced ejection fraction causes decreased contractility, shifting the Frank-Starling curve downward → reduced stroke volume at any preload.
+
+Incorrect Answers
+A: Afterload contributes but primary issue is contractility
+B: Preload is actually increased (fluid retention)
+D: HR mildly elevated but not primary mechanism
+E: Venous return is increased but ineffective due to weak heart
+Question 2: Renal Physiology (GFR Regulation)
+Vignette
+
+A 45-year-old woman presents with dehydration after 3 days of vomiting due to gastroenteritis.
+
+Physical Exam
+BP: 90/60 mmHg
+HR: 112/min
+RR: 18/min
+Temp: 37.1°C
+Dry mucous membranes
+Labs
+BUN: 38 mg/dL
+Creatinine: 1.5 mg/dL
+Urine Na⁺: 8 mEq/L
+Question
+
+Which mechanism is primarily responsible for maintaining GFR in this patient?
+
+Choices
+
+A. Constriction of afferent arteriole
+B. Constriction of efferent arteriole
+C. Increased Bowman capsule pressure
+D. Decreased plasma oncotic pressure
+E. Increased renal blood flow
+
+Answer: B
+Explanation
+
+Volume depletion activates RAAS → efferent arteriole constriction, maintaining GFR despite low renal perfusion.
+
+Incorrect Answers
+A: Would decrease GFR
+C: Would reduce filtration
+D: Would increase GFR but not relevant here
+E: RBF is decreased, not increased
+Question 3: Pulmonary Physiology (V/Q Mismatch)
+Vignette
+
+A 60-year-old smoker presents with progressive dyspnea.
+
+Physical Exam
+BP: 130/80 mmHg
+HR: 88/min
+RR: 22/min
+SpO₂: 88%
+Lungs: Decreased breath sounds, hyperresonance
+Labs
+ABG:
+PaO₂: 60 mmHg
+PaCO₂: 50 mmHg
+Question
+
+Which of the following best describes the primary physiologic abnormality?
+
+Choices
+
+A. Increased V/Q ratio (dead space)
+B. Decreased V/Q ratio (shunt-like state)
+C. Decreased diffusion capacity only
+D. Increased lung compliance only
+E. Decreased alveolar ventilation only
+
+Answer: A
+Explanation
+
+Emphysema → alveolar destruction → ventilation without perfusion → high V/Q (dead space).
+
+Incorrect Answers
+B: Seen in pneumonia/shunt
+C: Diffusion affected but not primary
+D: Compliance increased but not main defect
+E: Ventilation is not the main issue
+Question 4: Acid-Base Physiology
+Vignette
+
+A 25-year-old woman presents after a panic attack.
+
+Physical Exam
+BP: 120/75 mmHg
+HR: 110/min
+RR: 32/min
+SpO₂: 99%
+Labs (ABG)
+pH: 7.55
+PaCO₂: 25 mmHg
+HCO₃⁻: 22 mEq/L
+Question
+
+What is the primary disorder?
+
+Choices
+
+A. Metabolic alkalosis
+B. Respiratory alkalosis
+C. Metabolic acidosis
+D. Respiratory acidosis
+E. Mixed disorder
+
+Answer: B
+Explanation
+
+Hyperventilation → ↓ CO₂ → respiratory alkalosis
+
+Incorrect Answers
+A: HCO₃ not elevated
+C/D: Opposite pH direction
+E: No evidence of mixed disorder
+Question 5: Endocrine Physiology (Insulin Action)
+Vignette
+
+A 50-year-old obese man presents with fatigue and polyuria.
+
+Physical Exam
+BP: 140/90 mmHg
+BMI: 32
+Labs
+Fasting glucose: 180 mg/dL
+HbA1c: 8.5%
+Question
+
+Which cellular process is impaired?
+
+Choices
+
+A. GLUT1 transport
+B. GLUT4 translocation
+C. Sodium-glucose cotransport
+D. Glycogenolysis inhibition
+E. Lipolysis activation
+
+Answer: B
+Explanation
+
+Type 2 diabetes → insulin resistance → impaired GLUT4 translocation in muscle/adipose.
+
+Incorrect Answers
+A: GLUT1 is insulin-independent
+C: Renal process
+D/E: Secondary effects
+Question 6: Neurophysiology (Action Potential)
+Vignette
+
+A 30-year-old man is given lidocaine for a procedure.
+
+Physical Exam
+
+Normal vitals
+
+Question
+
+What is the primary mechanism of lidocaine?
+
+Choices
+
+A. Blocks potassium channels
+B. Blocks sodium channels
+C. Increases calcium influx
+D. Inhibits Na⁺/K⁺ ATPase
+E. Enhances chloride conductance
+
+Answer: B
+Explanation
+
+Lidocaine blocks voltage-gated Na⁺ channels, preventing depolarization.
+
+Incorrect Answers
+A: K⁺ affects repolarization
+C: Calcium relates to neurotransmitter release
+D: Pump not primary target
+E: GABA-related
+Question 7: GI Physiology (Secretin Function)
+Vignette
+
+A patient with duodenal ulcer has increased acid entering the duodenum.
+
+Physical Exam
+
+Normal
+
+Question
+
+Which hormone is released in response?
+
+Choices
+
+A. Gastrin
+B. Secretin
+C. Cholecystokinin
+D. Motilin
+E. Somatostatin
+
+Answer: B
+Explanation
+
+Acid in duodenum → secretin release → ↑ bicarbonate from pancreas
+
+Incorrect Answers
+A: Stimulates acid
+C: Fat digestion
+D: Motility
+E: Inhibitory but not primary
+Question 8: Hematology Physiology (Oxygen Dissociation Curve)
+Vignette
+
+A mountain climber ascends rapidly to high altitude.
+
+Physical Exam
+SpO₂: 85%
+Labs
+Increased 2,3-BPG
+Question
+
+What happens to the oxygen dissociation curve?
+
+Choices
+
+A. Left shift
+B. Right shift
+C. No change
+D. Increased affinity only in lungs
+E. Decreased CO₂ binding
+
+Answer: B
+Explanation
+
+↑ 2,3-BPG → right shift → promotes oxygen unloading.
+
+Incorrect Answers
+A: Opposite
+C: Incorrect
+D/E: Not main effect
+Question 9: Muscle Physiology
+Vignette
+
+A patient is given a neuromuscular blocker.
+
+Question
+
+Which step is directly inhibited?
+
+Choices
+
+A. Calcium release from SR
+B. Actin-myosin cross-bridge formation
+C. Acetylcholine receptor activation
+D. ATP binding to myosin
+E. Troponin binding calcium
+
+Answer: C
+Explanation
+
+Nondepolarizing blockers inhibit ACh receptors at NMJ
+
+Incorrect Answers
+Others occur downstream
+Question 10: Renal Physiology (Tubular Function)
+Vignette
+
+A patient is started on a loop diuretic.
+
+Physical Exam
+BP: 130/80
+Labs
+Increased urine output
+Hypokalemia
+Question
+
+Where is the drug acting?
+
+Choices
+
+A. Proximal tubule
+B. Thin descending limb
+C. Thick ascending limb
+D. Distal convoluted tubule
+E. Collecting duct
+
+Answer: C
+Explanation
+
+Loop diuretics inhibit Na⁺-K⁺-2Cl⁻ transporter in thick ascending limb
+
+Incorrect Answers
+A: Carbonic anhydrase inhibitors
+B: Water only
+D: Thiazides
+E: Aldosterone/ADH effects
+
+
+
+
+Vignette
+
+A 22-year-old male medical student participates in a physiology experiment involving transient increase in venous return via rapid saline infusion.
+
+Physical Exam
+BP: 120/75 mmHg
+HR: 72/min
+RR: 14/min
+Temp: 36.7°C
+Normal cardiac exam
+Labs
+Hemoglobin: 14 g/dL
+Question
+
+What change occurs in the left ventricular pressure-volume loop?
+
+Choices
+
+A. Decreased end-diastolic volume
+B. Increased stroke volume
+C. Decreased ejection fraction
+D. Increased end-systolic volume
+E. Decreased preload
+
+Answer: B
+Explanation
+
+Increased venous return → ↑ preload → ↑ EDV → via Frank-Starling → ↑ stroke volume
+
+Incorrect Answers
+A/E: Opposite (preload increases)
+C: EF usually unchanged or slightly increased
+D: ESV unchanged or slightly decreased
+Question 12: Renal Clearance
+Vignette
+
+A 28-year-old healthy volunteer undergoes renal function testing with inulin infusion.
+
+Physical Exam
+
+Normal vitals
+
+Labs
+Plasma inulin: 1 mg/mL
+Urine inulin: 125 mg/mL
+Urine flow rate: 1 mL/min
+Question
+
+What is the GFR?
+
+Choices
+
+A. 50 mL/min
+B. 75 mL/min
+C. 100 mL/min
+D. 125 mL/min
+E. 150 mL/min
+
+Answer: D
+Explanation
+
+GFR = (U × V) / P = (125 × 1) / 1 = 125 mL/min
+
+Question 13: Pulmonary Mechanics
+Vignette
+
+A 35-year-old woman with pulmonary fibrosis presents with progressive dyspnea.
+
+Physical Exam
+RR: 24/min
+SpO₂: 90%
+Lungs: fine crackles
+Question
+
+Which of the following is decreased?
+
+Choices
+
+A. Lung compliance
+B. Elastic recoil
+C. Work of expiration
+D. Residual volume
+E. Alveolar surface tension
+
+Answer: A
+Explanation
+
+Fibrosis → stiff lungs → ↓ compliance
+
+Incorrect Answers
+B: Elastic recoil ↑
+C: Work of inspiration increases more
+D: RV often decreased
+E: Surfactant not primary issue
+Question 14: Autonomic Physiology
+Vignette
+
+A drug selectively stimulates β1 receptors.
+
+Physical Exam
+HR: 110/min
+BP: 135/80 mmHg
+Question
+
+What effect is expected?
+
+Choices
+
+A. Decreased heart rate
+B. Increased contractility
+C. Bronchoconstriction
+D. Decreased renin release
+E. Increased GI motility
+
+Answer: B
+Explanation
+
+β1 → ↑ contractility and heart rate
+
+Incorrect Answers
+A: Opposite
+C: β2 controls bronchodilation
+D: β1 increases renin
+E: Sympathetic ↓ GI motility
+Question 15: Acid-Base Compensation
+Vignette
+
+A 60-year-old man with COPD has chronic CO₂ retention.
+
+Labs
+pH: 7.36
+PaCO₂: 60 mmHg
+HCO₃⁻: 34 mEq/L
+Question
+
+What explains the near-normal pH?
+
+Choices
+
+A. Respiratory compensation
+B. Renal compensation
+C. Increased ventilation
+D. Decreased bicarbonate reabsorption
+E. Acute buffering only
+
+Answer: B
+Explanation
+
+Chronic respiratory acidosis → kidneys retain HCO₃⁻ → renal compensation
+
+Question 16: Endocrine Feedback
+Vignette
+
+A patient has elevated T3 and T4 levels.
+
+Question
+
+What happens to TSH?
+
+Choices
+
+A. Increased
+B. Decreased
+C. Unchanged
+D. Pulsatile increase
+E. Cyclic variation
+
+Answer: B
+Explanation
+
+Negative feedback → ↑ T3/T4 → ↓ TSH
+
+Question 17: Synaptic Transmission
+Vignette
+
+A toxin blocks vesicle fusion in neurons.
+
+Question
+
+What is directly inhibited?
+
+Choices
+
+A. Neurotransmitter synthesis
+B. Neurotransmitter release
+C. Reuptake
+D. Receptor binding
+E. Ion channel opening
+
+Answer: B
+Explanation
+
+Vesicle fusion → required for neurotransmitter release
+
+Question 18: GI Absorption
+Vignette
+
+A patient has resection of terminal ileum.
+
+Question
+
+Which deficiency is most likely?
+
+Choices
+
+A. Iron
+B. Calcium
+C. Vitamin B12
+D. Folate
+E. Glucose
+
+Answer: C
+Explanation
+
+Terminal ileum absorbs vitamin B12
+
+Question 19: Hemodynamics
+Vignette
+
+A patient has arteriolar vasoconstriction.
+
+Question
+
+What happens to total peripheral resistance (TPR)?
+
+Choices
+
+A. Decreases
+B. Increases
+C. No change
+D. Becomes zero
+E. Fluctuates randomly
+
+Answer: B
+Explanation
+
+Arterioles control resistance → constriction → ↑ TPR
+
+Question 20: Filtration Forces (Starling Forces)
+Vignette
+
+A patient has hypoalbuminemia due to liver disease.
+
+Labs
+Albumin: 2.0 g/dL
+Question
+
+What happens at capillaries?
+
+Choices
+
+A. Increased oncotic pressure
+B. Decreased filtration
+C. Increased filtration (edema)
+D. Increased reabsorption
+E. No effect
+
+Answer: C
+Explanation
+
+Low albumin → ↓ plasma oncotic pressure → ↑ filtration → edema
+
+Incorrect Answers
+A: Opposite
+B/D: Reduced oncotic pressure prevents reabsorption
+E: Clearly affects fluid movement
+
+
+
+
+Question 21: Cardio–Renal Interaction (RAAS + HF Trap)
+Vignette
+
+A 65-year-old man with ischemic cardiomyopathy presents with worsening dyspnea and edema.
+
+Physical Exam
+BP: 100/65 mmHg
+HR: 105/min
+RR: 22/min
+SpO₂: 91%
+S3 present, JVD elevated
+Labs
+Na⁺: 130 mEq/L
+BNP: 900 pg/mL
+Creatinine: 1.6 mg/dL
+Question
+
+Which of the following changes is most responsible for worsening fluid retention?
+
+Choices
+
+A. Increased atrial natriuretic peptide secretion
+B. Decreased sympathetic tone
+C. Increased angiotensin II–mediated efferent constriction
+D. Decreased aldosterone secretion
+E. Increased renal perfusion pressure
+
+Answer: C
+Explanation
+
+Low cardiac output → ↓ renal perfusion → RAAS activation → Ang II → efferent constriction + aldosterone → Na⁺ retention → worsening edema
+
+Incorrect Answers
+A: ANP opposes fluid retention
+B: Sympathetic tone is increased, not decreased
+D: Aldosterone is increased
+E: Perfusion is decreased
+Question 22: Pulmonary–Acid Base Integration
+Vignette
+
+A 24-year-old woman presents with salicylate overdose.
+
+Physical Exam
+RR: 30/min
+HR: 110/min
+Labs
+pH: 7.45
+PaCO₂: 25 mmHg
+HCO₃⁻: 17 mEq/L
+Question
+
+What is the primary disorder?
+
+Choices
+
+A. Pure respiratory alkalosis
+B. Pure metabolic acidosis
+C. Mixed respiratory alkalosis and metabolic acidosis
+D. Metabolic alkalosis with compensation
+E. Respiratory acidosis
+
+Answer: C
+Explanation
+
+Salicylates → stimulate respiratory center (↓ CO₂) + metabolic acidosis → mixed disorder
+
+Trap
+
+Near-normal pH hides mixed disorder
+
+Incorrect Answers
+A/B: Both present together
+D/E: Incorrect pattern
+Question 23: Oxygen Delivery (Curve Trap)
+Vignette
+
+A 30-year-old man with carbon monoxide poisoning.
+
+Physical Exam
+SpO₂: 100%
+Confusion present
+Labs
+PaO₂: Normal
+Question
+
+What happens to oxygen delivery?
+
+Choices
+
+A. Increased due to high PaO₂
+B. Decreased due to left shift of curve
+C. Increased due to right shift
+D. Unchanged hemoglobin binding
+E. Increased tissue extraction
+
+Answer: B
+Explanation
+
+CO binds Hb → left shift + ↓ O₂ delivery
+
+Trap
+
+Normal PaO₂ does NOT mean normal oxygen content
+
+Question 24: Renal Physiology (Diuretic Trap)
+Vignette
+
+A patient is started on a loop diuretic.
+
+Labs
+Hypokalemia
+Metabolic alkalosis
+Question
+
+What mechanism explains metabolic alkalosis?
+
+Choices
+
+A. Increased bicarbonate secretion
+B. Increased H⁺ secretion in collecting duct
+C. Decreased aldosterone activity
+D. Decreased Na⁺ delivery to distal nephron
+E. Increased proximal bicarbonate loss
+
+Answer: B
+Explanation
+
+Volume depletion → ↑ aldosterone → ↑ H⁺ secretion → metabolic alkalosis
+
+Question 25: Neuro–Muscle Integration
+Vignette
+
+A patient has myasthenia gravis.
+
+Physical Exam
+Muscle weakness worsens with use
+Question
+
+What is the primary physiologic defect?
+
+Choices
+
+A. Decreased acetylcholine release
+B. Decreased postsynaptic receptor activation
+C. Increased acetylcholinesterase activity
+D. Impaired calcium release from SR
+E. Defective actin-myosin binding
+
+Answer: B
+Explanation
+
+Autoantibodies → ACh receptor destruction → ↓ end-plate potential
+
+Question 26: GI–Hormonal Integration
+Vignette
+
+A patient with pancreatic insufficiency has steatorrhea.
+
+Question
+
+Which hormone is most likely elevated?
+
+Choices
+
+A. Gastrin
+B. Secretin
+C. Cholecystokinin
+D. Motilin
+E. Somatostatin
+
+Answer: C
+Explanation
+
+Fat in lumen → ↑ CCK → stimulates pancreatic enzyme secretion
+
+Question 27: Cardiovascular Reflexes (Baroreceptor Trap)
+Vignette
+
+A patient suddenly stands up from lying position.
+
+Physical Exam
+BP briefly drops
+HR increases
+Question
+
+What mediates the increase in heart rate?
+
+Choices
+
+A. Increased parasympathetic activity
+B. Decreased sympathetic activity
+C. Decreased baroreceptor firing
+D. Increased vagal tone
+E. Increased atrial stretch
+
+Answer: C
+Explanation
+
+↓ BP → ↓ baroreceptor firing → ↑ sympathetic → ↑ HR
+
+Question 28: Endocrine Integration (Insulin vs Glucagon)
+Vignette
+
+A fasting individual has low blood glucose.
+
+Question
+
+Which process is increased?
+
+Choices
+
+A. Glycogenesis
+B. Glycolysis
+C. Gluconeogenesis
+D. Lipogenesis
+E. Protein synthesis
+
+Answer: C
+Explanation
+
+Fasting → glucagon → ↑ gluconeogenesis
+
+Question 29: Pulmonary Diffusion (DLCO Trap)
+Vignette
+
+A patient with emphysema.
+
+Question
+
+What happens to DLCO?
+
+Choices
+
+A. Increased
+B. Decreased
+C. Unchanged
+D. Initially increased then decreased
+E. Only affected during exercise
+
+Answer: B
+Explanation
+
+Loss of alveolar surface area → ↓ diffusion capacity (DLCO)
+
+Question 30: Renal Tubular Transport (Glucose Trap)
+Vignette
+
+A diabetic patient has glucosuria.
+
+Labs
+Plasma glucose: 300 mg/dL
+Question
+
+What explains glucose in urine?
+
+Choices
+
+A. Decreased filtration
+B. Transport maximum exceeded
+C. Increased secretion
+D. Decreased renal blood flow
+E. Increased oncotic pressure
+
+Answer: B
+Explanation
+
+Glucose exceeds Tm → spills into urine
+
+Trap
+
+Not secretion — it's failed reabsorption
+
+
+
+
+
+Question 31: Cardiac Output vs TPR Trap
+Vignette
+
+A 55-year-old man with septic shock is admitted to the ICU.
+
+Physical Exam
+BP: 85/50 mmHg
+HR: 120/min
+RR: 24/min
+Temp: 39.2°C
+Warm extremities, bounding pulses
+Labs
+Lactate: 5 mmol/L
+Question
+
+Which hemodynamic profile is most likely?
+
+Choices
+
+A. ↓ CO, ↑ TPR
+B. ↑ CO, ↓ TPR
+C. ↓ CO, ↓ TPR
+D. ↑ CO, ↑ TPR
+E. Normal CO, ↓ TPR
+
+Answer: B
+Explanation
+
+Early septic shock → vasodilation → ↓ TPR + compensatory ↑ CO (warm shock)
+
+Incorrect Answers
+A: Cardiogenic shock
+C: Late septic shock
+D/E: Do not match physiology
+Question 32: Filtration Fraction Trap
+Vignette
+
+A patient is started on an ACE inhibitor.
+
+Physical Exam
+BP: 125/80 mmHg
+Labs
+Creatinine slightly increased
+Question
+
+What happens to filtration fraction (FF)?
+
+Choices
+
+A. Increases
+B. Decreases
+C. No change
+D. Initially increases then decreases
+E. Becomes zero
+
+Answer: B
+Explanation
+
+ACE inhibitor → ↓ Ang II → efferent dilation → ↓ GFR > ↓ RPF → ↓ FF
+
+Question 33: Oxygen Content vs Saturation Trap
+Vignette
+
+A patient with severe anemia presents with fatigue.
+
+Physical Exam
+SpO₂: 99%
+Labs
+Hemoglobin: 6 g/dL
+Question
+
+Which is most decreased?
+
+Choices
+
+A. PaO₂
+B. Oxygen saturation
+C. Oxygen content
+D. Alveolar ventilation
+E. Diffusion capacity
+
+Answer: C
+Explanation
+
+O₂ content depends on Hb → low Hb → ↓ oxygen content despite normal saturation
+
+Question 34: Renal Compensation Timing
+Vignette
+
+A patient develops acute respiratory acidosis after opioid overdose.
+
+Labs (initial)
+pH: 7.25
+PaCO₂: 60 mmHg
+HCO₃⁻: 26 mEq/L
+Question
+
+What will occur after 3–5 days?
+
+Choices
+
+A. Decreased bicarbonate reabsorption
+B. Increased bicarbonate excretion
+C. Increased renal bicarbonate reabsorption
+D. Decreased H⁺ secretion
+E. No compensation occurs
+
+Answer: C
+Explanation
+
+Chronic respiratory acidosis → renal retention of HCO₃⁻
+
+Question 35: V/Q Extreme Values
+Vignette
+
+A patient has a pulmonary embolism.
+
+Question
+
+What is the V/Q ratio in affected areas?
+
+Choices
+
+A. 0
+B. 0.5
+C. 0.8
+D. 1
+E. ∞
+
+Answer: E
+Explanation
+
+PE → no perfusion → V/Q = ∞ (dead space)
+
+Question 36: Muscle Contraction Physiology
+Vignette
+
+A researcher measures skeletal muscle contraction after ATP depletion.
+
+Question
+
+What occurs?
+
+Choices
+
+A. Decreased Ca²⁺ binding to troponin
+B. Failure of myosin head detachment
+C. Increased cross-bridge cycling
+D. Decreased actin exposure
+E. Increased ATP hydrolysis
+
+Answer: B
+Explanation
+
+ATP needed for detachment → no ATP → rigor state
+
+Question 37: Starling Curve Shift Trap
+Vignette
+
+A patient receives a β1 agonist infusion.
+
+Question
+
+What happens to the cardiac function curve?
+
+Choices
+
+A. Shifts downward
+B. Shifts upward
+C. Shifts left only
+D. Becomes flat
+E. No change
+
+Answer: B
+Explanation
+
+β1 → ↑ contractility → upward shift of Starling curve
+
+Question 38: Hormonal Feedback Trap
+Vignette
+
+A patient has a TSH-secreting pituitary adenoma.
+
+Labs
+↑ TSH
+↑ T3/T4
+Question
+
+What happens to TRH?
+
+Choices
+
+A. Increased
+B. Decreased
+C. Unchanged
+D. Pulsatile increase
+E. Cyclic decrease
+
+Answer: B
+Explanation
+
+High T3/T4 → negative feedback → ↓ TRH
+
+Question 39: Pulmonary Compliance Trap
+Vignette
+
+A premature infant has respiratory distress syndrome.
+
+Question
+
+What is the primary physiologic abnormality?
+
+Choices
+
+A. Increased compliance
+B. Decreased surface tension
+C. Increased alveolar collapse
+D. Increased diffusion capacity
+E. Increased residual volume
+
+Answer: C
+Explanation
+
+Low surfactant → ↑ surface tension → alveolar collapse
+
+Trap
+
+Compliance is decreased, not increased
+
+Question 40: Renal Blood Flow Autoregulation
+Vignette
+
+A patient has moderate decrease in blood pressure.
+
+Question
+
+How is GFR maintained?
+
+Choices
+
+A. Afferent constriction
+B. Afferent dilation
+C. Efferent dilation
+D. Decreased renin release
+E. Increased sodium excretion
+
+Answer: B
+Explanation
+
+Autoregulation → afferent dilation maintains GFR
+
+=====================================================
+
+Question 1 — Cardiac Physiology (Frank-Starling Mechanism)
+
+Vignette:
+
+A 68-year-old retired female schoolteacher presents to the cardiology clinic with a 3-month history of progressive dyspnea on exertion, 2-pillow orthopnea, and bilateral ankle swelling. She has a 15-year history of poorly controlled hypertension. Her current medications include amlodipine 10 mg daily.
+
+Physical Examination:
+
+
+
+Vital Signs: BP 158/96 mmHg | HR 88/min, irregularly irregular | RR 20/min | Temp 37.1°C | SpO₂ 93% on room air
+
+General: Mild respiratory distress at rest
+
+Neck: Jugular venous distension at 45°
+
+Lungs: Bilateral basilar crackles that do not clear with coughing
+
+Cardiovascular: Irregularly irregular rhythm; S3 gallop heard at the apex; no murmurs
+
+Extremities: 2+ pitting edema to the level of the knees bilaterally
+
+Laboratory Results:
+
+TestResultReference RangeBNP620 pg/mL< 100Serum Na⁺138 mEq/L136–145Serum K⁺4.1 mEq/L3.5–5.0Creatinine1.3 mg/dL0.6–1.2Echocardiogram EF30%55–70%Chest X-rayCardiomegaly, Kerley B lines—
+
+Question:
+
+Which of the following best explains why this patient's stroke volume remains reduced despite an elevated preload?
+
+
+
+A. Decreased venous return due to systemic arterial vasodilation
+
+B. Reduced myocardial contractility shifting the Frank-Starling curve downward
+
+C. Increased afterload from peripheral vasoconstriction as the sole mechanism
+
+D. Excessive bradycardia reducing ventricular filling time
+
+E. Mitral regurgitation causing retrograde flow into the left atrium
+
+Correct Answer: B
+
+Reasoning (B): This is heart failure with reduced ejection fraction (HFrEF). The fundamental defect is intrinsic myocardial contractility failure. On the Frank-Starling curve, the failing ventricle operates on a depressed and flattened curve — even at elevated end-diastolic volumes (high preload, evidenced by JVD, S3 gallop, and pulmonary edema), the ventricle cannot generate adequate stroke volume. BNP >400 pg/mL reflects neurohormonal activation (RAAS + SNS) driven by reduced effective cardiac output. The S3 gallop arises from rapid deceleration of blood entering a dilated, poorly compliant ventricle during early diastole. This is a direct application of Guyton & Hall Chapter 10 and Costanzo's discussion of the Frank-Starling law in pathological states.
+
+Incorrect Answer Breakdown:
+
+A: Decreased venous return would reduce preload, not elevate it. This patient has overtly elevated preload (JVD, edema, S3), which is the opposite physiology. Decreased venous return causing low SV is characteristic of distributive/hypovolemic shock or severe dehydration, not HFrEF.
+
+C: Increased afterload alone (e.g., hypertensive crisis) does reduce stroke volume, but an EF of 30% with structural chamber dilation indicates intrinsic myopathic failure — not isolated pressure overload. Afterload excess does contribute to the pathophysiology of HFrEF but is not the primary mechanism of reduced SV once the curve is depressed.
+
+D: Her heart rate is 88/min — a compensatory tachycardia, not bradycardia. Bradycardia reducing SV would be the mechanism in complete heart block (Stokes-Adams syndrome) or iatrogenic beta-blocker overdose, not in this clinical picture.
+
+E: Mitral regurgitation causes reduced forward SV due to retrograde flow, but it produces a holosystolic blowing murmur at the apex radiating to the axilla. No murmur is described here. MR can develop as a secondary complication of annular dilation in HFrEF, but is not the mechanism being tested in this question.
+
+Question 2 — Renal Physiology / Acid-Base
+
+Vignette:
+
+A 24-year-old male medical student is brought to the emergency department by his roommate after a witnessed ingestion of approximately 60 tablets of aspirin (325 mg each) about 4 hours ago. He is confused and extremely agitated. His roommate reports he was complaining of loud ringing in both ears immediately before becoming altered.
+
+Physical Examination:
+
+
+
+Vital Signs: BP 110/70 mmHg | HR 118/min | RR 32/min, deep and labored | Temp 38.4°C | SpO₂ 98% on room air
+
+General: Diaphoretic, confused, unable to follow complex commands
+
+HEENT: Bilateral tinnitus reported by patient
+
+Lungs: Clear to auscultation bilaterally
+
+Abdomen: Soft, mild epigastric tenderness; no guarding
+
+Laboratory Results:
+
+TestResultReference RangeArterial pH7.467.35–7.45PaCO₂18 mmHg35–45HCO₃⁻12 mEq/L22–26Serum Na⁺140 mEq/L136–145Serum K⁺3.2 mEq/L3.5–5.0Salicylate level68 mg/dL< 30 (therapeutic)UrinalysispH 5.0, no glucosuria—
+
+Question:
+
+Which of the following best describes the primary acid-base disturbance and its mechanism in this patient?
+
+
+
+A. Primary metabolic acidosis with appropriate respiratory compensation via Kussmaul breathing
+
+B. Primary respiratory alkalosis with appropriate renal compensation producing secondary metabolic acidosis
+
+C. Mixed primary respiratory alkalosis and primary metabolic acidosis occurring simultaneously
+
+D. Primary metabolic alkalosis from vomiting-induced HCl loss with compensatory hypoventilation
+
+E. Pure respiratory acidosis from salicylate-mediated CNS depression and CO₂ retention
+
+Correct Answer: C
+
+Reasoning (C): Salicylate toxicity is the only classic toxidrome that produces a true simultaneous mixed primary acid-base disorder. Two distinct mechanisms operate concurrently: (1) Salicylates directly stimulate the medullary respiratory center → primary respiratory alkalosis (PaCO₂ = 18 mmHg, driving pH up); (2) Salicylates uncouple oxidative phosphorylation and accumulate organic acids (lactic acid, keto acids) → primary metabolic acidosis (HCO₃⁻ = 12 mEq/L, driving pH down). The near-normal but slightly alkalemic pH (7.46) reflects two opposing primary processes nearly canceling each other out. Hypokalemia results from alkalemia-driven intracellular K⁺ shift. This is explicitly covered in Costanzo BRS Physiology Chapter 7 and Guyton & Hall Chapter 31.
+
+Incorrect Answer Breakdown:
+
+A: Pure primary metabolic acidosis with respiratory compensation would show a low pH (e.g., 7.20–7.30) with a compensatory reduction in PaCO₂. Using Winter's formula: expected PaCO₂ = (1.5 × 12) + 8 ± 2 = 26 mmHg. The measured PaCO₂ of 18 mmHg is far below this expected compensation, confirming that a co-existing independent primary respiratory alkalosis is present — not just compensation.
+
+B: If respiratory alkalosis were the sole primary disorder with appropriate chronic renal compensation, the expected HCO₃⁻ would fall by approximately 5 mEq/L per 10 mmHg drop in PaCO₂ (chronic) → HCO₃⁻ ≈ 22 − 13.5 = ~18–19 mEq/L. An HCO₃⁻ of 12 mEq/L is far below expected renal compensation, proving a co-existing primary metabolic acidosis — not a simple compensatory response.
+
+D: Primary metabolic alkalosis requires elevated HCO₃⁻ and alkalemic pH with elevated PaCO₂ as compensation. This patient has low HCO₃⁻ (12 mEq/L) and low PaCO₂, making metabolic alkalosis physiologically impossible here. Metabolic alkalosis from vomiting (HCl loss) is the correct context for that answer choice.
+
+E: Salicylates in early and moderate toxicity stimulate the respiratory center, causing hyperventilation — not depression. Respiratory acidosis with CO₂ retention is a late/preterminal finding seen only with catastrophic overdose causing medullary failure. This patient has PaCO₂ of 18 mmHg (hyperventilation), excluding respiratory acidosis.
+
+Question 3 — Respiratory Physiology (V/Q Mismatch)
+
+Vignette:
+
+A 57-year-old male retired coal miner with a 35 pack-year smoking history presents to the pulmonology clinic with an 8-year history of progressive exertional dyspnea and a chronic productive cough yielding whitish-gray sputum. He uses a salbutamol inhaler "several times daily." He denies hemoptysis, fever, or chills.
+
+Physical Examination:
+
+
+
+Vital Signs: BP 138/84 mmHg | HR 94/min | RR 22/min | Temp 37.0°C | SpO₂ 88% on room air
+
+General: Appears barrel-chested; pursed-lip breathing at rest
+
+Chest: Bilateral hyperresonance to percussion; markedly diminished breath sounds diffusely; prolonged expiratory phase; scattered expiratory wheezes
+
+Extremities: No clubbing; trace ankle edema
+
+Laboratory Results:
+
+TestResultReference RangeFEV₁38% of predicted> 80%FVC72% of predicted> 80%FEV₁/FVC0.48> 0.70TLC140% of predicted80–120%DLCO35% of predicted> 70%Arterial pH7.367.35–7.45PaCO₂52 mmHg35–45PaO₂55 mmHg80–100
+
+Question:
+
+Which of the following mechanisms is primarily responsible for this patient's hypoxemia?
+
+
+
+A. Diffusion impairment across the alveolar-capillary membrane from alveolar wall fibrosis
+
+B. Alveolar hypoventilation as the sole mechanism of reduced PaO₂
+
+C. Ventilation-perfusion (V/Q) mismatch from airway obstruction and alveolar destruction
+
+D. Right-to-left intracardiac shunt through a patent foramen ovale
+
+E. Decreased inspired oxygen tension due to environmental exposure at high altitude
+
+Correct Answer: C
+
+Reasoning (C): In COPD/emphysema, small airway inflammation and collapse creates regions of low V/Q (alveoli that are perfused but inadequately ventilated). Blood traversing these low-V/Q units exits with low O₂ content, mixing with blood from normal units and dragging down the overall PaO₂ — a process called venous admixture. Unlike true shunt, V/Q mismatch responds to supplemental oxygen because increasing FiO₂ can raise alveolar PO₂ even in poorly ventilated units. Key confirmatory findings: FEV₁/FVC < 0.70 (obstruction), TLC 140% (hyperinflation from air trapping), hyperresonance, and diminished breath sounds. This is a core concept in Costanzo Physiology Chapter 5 and BRS Physiology pulmonary sections.
+
+Incorrect Answer Breakdown:
+
+A: Diffusion impairment is the hallmark of interstitial lung disease/pulmonary fibrosis, which shows a restrictive pattern (low TLC, normal or high FEV₁/FVC) with markedly reduced DLCO. While DLCO is low here (from loss of alveolar surface area in emphysema), diffusion limitation in COPD is a secondary phenomenon — V/Q mismatch remains the dominant mechanism. Diffusion impairment also typically worsens with exercise.
+
+B: Alveolar hypoventilation does contribute (PaCO₂ = 52 mmHg, consistent with "Blue Bloater" phenotype). However, pure alveolar hypoventilation produces a normal alveolar-arterial (A-a) gradient. This patient has a widened A-a gradient [A-a = 150 − (52/0.8) − 55 = ~30 mmHg], confirming that V/Q mismatch is co-existing and dominant. Pure hypoventilation hypoxemia is corrected completely by breathing room air deeper.
+
+D: Right-to-left shunt (intracardiac, e.g., Eisenmenger syndrome; or intrapulmonary, e.g., pulmonary AVM) produces hypoxemia that does not correct with 100% supplemental O₂, because shunted blood bypasses ventilated alveoli entirely. This patient's hypoxemia would substantially improve with O₂. No cardiac findings or evidence of structural heart disease is described.
+
+E: Decreased inspired PO₂ from high altitude reduces PaO₂ by lowering PiO₂ globally — the A-a gradient remains normal, and 100% O₂ fully corrects the hypoxemia. This patient is clearly not at altitude; this answer is physiologically correct as a mechanism in a different context but entirely inapplicable here.
+
+Question 4 — Endocrine Physiology (Thyroid / Beta-Receptor Upregulation)
+
+Vignette:
+
+A 34-year-old female elementary school teacher presents with a 6-month history of heat intolerance, unintentional weight loss of 9 kg despite increased appetite, palpitations, hand tremor, and diarrhea. She has no prior medical history. Her mother had "thyroid problems" requiring radioactive iodine treatment.
+
+Physical Examination:
+
+
+
+Vital Signs: BP 152/64 mmHg (wide pulse pressure) | HR 114/min, regular | RR 18/min | Temp 37.8°C | SpO₂ 99% on room air
+
+Eyes: Mild bilateral proptosis; lid lag present
+
+Neck: Diffusely enlarged, non-tender, non-nodular thyroid gland; thyroid bruit audible
+
+Skin: Warm, moist, velvety texture; pretibial myxedema bilaterally
+
+Neurological: Fine resting tremor of outstretched hands; hyperreflexia bilaterally
+
+Laboratory Results:
+
+TestResultReference RangeTSH< 0.01 mIU/L0.4–4.0Free T44.8 ng/dL0.8–1.8Free T312.1 pg/mL2.3–4.2TSI (Thyroid-stimulating Ig)PositiveNegativeECGSinus tachycardia—CBCWithin normal limits—
+
+Question:
+
+Which of the following best explains the pathophysiological mechanism of this patient's cardiovascular findings?
+
+
+
+A. Direct TSH receptor stimulation of cardiac beta-1 adrenergic receptors causing tachycardia
+
+B. Thyroid hormone upregulation of cardiac beta-adrenergic receptors with increased SERCA2a activity and systemic vasodilation
+
+C. Catecholamine hypersecretion from a co-existing adrenal pheochromocytoma
+
+D. Atrial fibrillation reducing effective ventricular filling time and cardiac output
+
+E. TSI autoantibody-mediated destruction of sinoatrial node pacemaker cells
+
+Correct Answer: B
+
+Reasoning (B): Thyroid hormone (primarily T3, the active intracellular form) exerts cardiovascular effects through multiple synergistic mechanisms: (1) T3 transcriptionally upregulates beta-1 adrenergic receptor density on cardiomyocytes, amplifying endogenous catecholamine effects → tachycardia and increased inotropy; (2) T3 increases expression of myosin heavy-chain alpha isoform (faster ATPase) and SERCA2a (SR Ca²⁺-ATPase), accelerating both contraction and relaxation; (3) T3 relaxes vascular smooth muscle → systemic vasodilation → reflex tachycardia and wide pulse pressure (BP 152/64). The net result is dramatically increased cardiac output. This mechanism is detailed in Guyton & Hall Chapter 76 and Costanzo Chapter 9.
+
+Incorrect Answer Breakdown:
+
+A: TSH is profoundly suppressed (<0.01 mIU/L) in this patient — it is not elevated and plays no role in her symptoms. Furthermore, TSH receptors are expressed on thyrocytes, not cardiomyocytes. TSH does not directly stimulate cardiac beta-1 receptors. TSH suppression is a consequence of high circulating T3/T4 exerting negative feedback on the pituitary.
+
+C: Pheochromocytoma classically presents with paroxysmal (episodic) severe hypertension, diaphoresis, and headache ("the 5 Ps"). The key distinguishing feature here is TSI positivity, bilateral proptosis, thyroid bruit, and pretibial myxedema — these are pathognomonic for Graves' disease and cannot be explained by catecholamine excess alone. Plasma/urine metanephrines would be required to exclude pheo.
+
+D: Atrial fibrillation does complicate Graves' disease in approximately 10–15% of cases and can reduce cardiac output. However, this patient's ECG shows sinus tachycardia — not AF. Even when AF occurs in hyperthyroidism, it is a consequence of the thyroid hormone-mediated effects, not the primary cardiovascular mechanism.
+
+E: TSI (thyroid-stimulating immunoglobulin) antibodies bind and activate TSH receptors on thyrocytes, driving excess T3/T4 production. They have no known mechanism of action on SA node pacemaker cells. Autoimmune destruction of SA node tissue is not a recognized feature of Graves' disease.
+
+Question 5 — GI / Hepatic Physiology (Portal Hypertension & Ascites)
+
+Vignette:
+
+A 49-year-old male construction worker with a 25-year history of heavy alcohol use presents with progressive abdominal distension, jaundice, and easy bruising over the past 3 weeks. He stopped drinking alcohol 2 weeks ago after a family intervention. He takes no medications.
+
+Physical Examination:
+
+
+
+Vital Signs: BP 104/66 mmHg | HR 98/min | RR 18/min | Temp 37.2°C | SpO₂ 97% on room air
+
+General: Cachectic, icteric sclera, temporal muscle wasting
+
+Skin: Spider angiomata (>6) on the chest and upper arms; palmar erythema
+
+Abdomen: Markedly distended with shifting dullness and a positive fluid wave; caput medusae; mild diffuse tenderness; no rebound
+
+Neurological: Asterixis (flapping tremor) present bilaterally
+
+Extremities: 2+ pitting edema to mid-shin
+
+Laboratory Results:
+
+TestResultReference RangeSerum Albumin2.1 g/dL3.5–5.0Total Bilirubin6.8 mg/dL0.2–1.2PT/INR1.90.9–1.1Serum Na⁺128 mEq/L136–145Creatinine1.8 mg/dL0.6–1.2Serum-Ascites Albumin Gradient (SAAG)1.8 g/dL—Serum Ammonia98 µmol/L11–35
+
+Question:
+
+Which of the following is the primary pathophysiological mechanism responsible for ascites formation in this patient?
+
+
+
+A. Lymphatic overproduction from hepatic sinusoidal hypertension exceeding thoracic duct drainage capacity
+
+B. Portal hypertension causing splanchnic vasodilation, reduced effective arterial blood volume, and subsequent RAAS-mediated sodium and water retention
+
+C. Hypoalbuminemia alone reducing plasma oncotic pressure sufficiently to cause peritoneal fluid accumulation
+
+D. Alcohol-induced chemical peritonitis causing exudative fluid leak into the peritoneal cavity
+
+E. Renal tubular sodium wasting from alcohol-induced type IV renal tubular acidosis
+
+Correct Answer: B
+
+Reasoning (B): Ascites in cirrhosis is best explained by the Peripheral Arterial Vasodilation Hypothesis (Schrier model, covered in Guyton & Hall Chapter 25 and Costanzo's renal chapter): Cirrhosis → portal hypertension → splanchnic arterial vasodilation (mediated by nitric oxide, substance P, glucagon) → reduced effective arterial blood volume → unloading of baroreceptors → activation of RAAS, ADH (vasopressin), and sympathetic nervous system → avid renal sodium and water retention → total body Na/water excess → ascites formation (in combination with elevated sinusoidal hydrostatic pressure). A SAAG ≥ 1.1 g/dL confirms portal hypertension as the etiology. Hyponatremia (Na⁺ 128) results from non-osmotic ADH release.
+
+Incorrect Answer Breakdown:
+
+A: Increased hepatic lymph flow does occur when sinusoidal pressure rises in cirrhosis and contributes to ascites as a secondary mechanism. However, this is not the primary driver. The dominant pathophysiology is the neurohumoral cascade (RAAS + ADH activation) triggered by splanchnic vasodilation. Lymphatic overflow alone cannot explain the dilutional hyponatremia and avid renal sodium retention seen in this patient.
+
+C: Pure hypoalbuminemia (as in nephrotic syndrome or protein-calorie malnutrition) reduces plasma oncotic pressure and can cause ascites — but in those conditions, the SAAG is < 1.1 g/dL because portal pressure is not elevated. This patient's SAAG of 1.8 g/dL definitively establishes portal hypertension as the primary driver. Both mechanisms coexist here, but hypoalbuminemia alone is insufficient to explain the full picture.
+
+D: Chemical or infectious peritonitis produces exudative ascitic fluid with SAAG < 1.1 g/dL, high total protein (>2.5 g/dL), elevated LDH, and often elevated WBC. This patient's SAAG of 1.8 g/dL is characteristic of transudative portal hypertension ascites. Spontaneous bacterial peritonitis can complicate cirrhotic ascites but does not cause the initial fluid accumulation.
+
+E: Renal tubular acidosis (type IV) causes hyperchloremic metabolic acidosis with hyperkalemia from aldosterone insufficiency — not sodium wasting sufficient to produce ascites. Sodium retention (not wasting) is the renal problem in cirrhotic ascites, driven by secondary hyperaldosteronism from RAAS activation, the exact opposite of tubular wasting.
+
+Question 6 — Neurophysiology (Aphasia Localization)
+
+Vignette:
+
+A 74-year-old retired engineer is brought to the emergency department by his wife at 8:00 AM. She states he woke up unable to speak properly. He can understand her and follows her instructions, but responds only with short, effortful, single words. He has a history of hypertension, type 2 diabetes, and atrial fibrillation. His warfarin was noted to be subtherapeutic (INR 1.4) at his appointment 2 weeks ago.
+
+Physical Examination:
+
+
+
+Vital Signs: BP 182/98 mmHg | HR 84/min, irregularly irregular | RR 16/min | Temp 36.9°C | SpO₂ 97% on room air
+
+Speech: Non-fluent, telegraphic, effortful output; comprehension intact (follows 3-step commands); repetition severely impaired
+
+Face: Right lower facial droop (upper face spared)
+
+Motor: Right arm pronator drift; strength 4/5 right upper extremity
+
+Sensation: Intact throughout
+
+Laboratory / Imaging Results:
+
+TestResultINR1.4 (subtherapeutic)CT Head (non-contrast)No hemorrhage; no early ischemic changesBlood Glucose110 mg/dLCBCWithin normal limits
+
+Question:
+
+Which of the following best identifies the anatomical localization and physiological basis for this patient's preserved comprehension with impaired speech production?
+
+
+
+A. Wernicke's area (posterior superior temporal gyrus); impaired phonemic decoding of incoming auditory language
+
+B. Broca's area (inferior frontal gyrus, dominant hemisphere); intact auditory language processing with disrupted motor-articulatory speech programming
+
+C. Arcuate fasciculus; disconnection of Wernicke's to Broca's area causing isolated severe repetition failure with preserved fluency
+
+D. Global aphasia from complete left middle cerebral artery trunk occlusion; both production and comprehension are lost
+
+E. Thalamic relay nuclei; hypophonic fluent aphasia with intact repetition from subcortical lacunar infarction
+
+Correct Answer: B
+
+Reasoning (B): The clinical triad of non-fluent, effortful, telegraphic speech + intact comprehension + impaired repetition localizes precisely to Broca's area (Brodmann areas 44 and 45, inferior frontal gyrus, left dominant hemisphere), supplied by the superior division of the left middle cerebral artery. Broca's area subserves the motor programming and sequential articulation of speech. Because Wernicke's area (posterior superior temporal gyrus, responsible for auditory language comprehension) is unaffected, the patient understands perfectly. The right-sided lower facial droop and arm drift confirm left hemisphere cortical pathology. Subtherapeutic INR in AF creates cardioembolic risk — a classic NBME setup. Reference: BRS Physiology Neurophysiology chapter; Costanzo Chapter 7.
+
+Incorrect Answer Breakdown:
+
+A: Wernicke's aphasia (posterior superior temporal gyrus lesion) presents with fluent paraphasic speech (word substitutions, neologisms), impaired comprehension, and impaired repetition — often described as a "word salad." This patient speaks non-fluently and comprehends perfectly, which is the opposite pattern. Wernicke's area is intact here.
+
+C: Conduction aphasia localizes to the arcuate fasciculus connecting Broca's and Wernicke's areas. It presents with fluent speech, intact comprehension, but severely disproportionate impairment of repetition. The key differentiator: this patient's speech is non-fluent and effortful, which excludes conduction aphasia. Conduction aphasia patients speak freely but cannot repeat phrases like "no ifs, ands, or buts."
+
+D: Global aphasia results from a massive left MCA trunk occlusion destroying both Broca's and Wernicke's areas simultaneously — producing loss of both fluency and comprehension. This patient follows 3-step commands perfectly, conclusively excluding global aphasia. Global aphasia would render the patient unable to follow even a single simple command.
+
+E: Thalamic aphasia is a hypophonic (soft-voiced), relatively fluent aphasia with relatively preserved repetition — the output is quiet and reduced in quantity but not effortful or telegraphic in the Broca's sense. Lacunar infarcts in thalamic relay nuclei cause subcortical aphasia, which does not produce the right-sided cortical motor signs (pronator drift, facial droop) seen here.
+
+Question 7 — Renal Physiology (Tubular Transport / Glucose)
+
+Vignette:
+
+A 19-year-old male college student presents for a sports physical. He has no symptoms and no medical history. He does not take any medications and denies alcohol or drug use. Family history is notable for a maternal uncle who "always had sugar in his urine but was not diabetic." Review of systems is completely negative.
+
+Physical Examination:
+
+
+
+Vital Signs: BP 118/74 mmHg | HR 66/min | RR 14/min | Temp 36.8°C | SpO₂ 99% on room air
+
+General: Well-appearing, athletic build; no distress
+
+Remainder of physical exam: Completely unremarkable
+
+Laboratory Results:
+
+TestResultReference RangeFasting Blood Glucose88 mg/dL70–99HbA1c5.1%< 5.7%Serum BMPAll within normal limits—Urinalysis Glucose3+ (positive)NegativeUrinalysis KetonesNegativeNegativeUrinalysis ProteinNegativeNegativeUrine Osmolality520 mOsm/kg50–1200
+
+Question:
+
+Which of the following best explains the pathophysiological mechanism of this patient's glucosuria?
+
+
+
+A. Elevated plasma glucose exceeding the normal renal threshold of 180 mg/dL
+
+B. Defective SGLT2 (sodium-glucose cotransporter 2) in the proximal convoluted tubule, reducing glucose reabsorptive capacity below the normal filtered load
+
+C. Osmotic diuresis from uncontrolled hyperglycemia overwhelming tubular reabsorption
+
+D. Competitive inhibition of SGLT2 by an ingested pharmacological agent
+
+E. Reduced GFR causing less filtered glucose but disproportionately impaired tubular secretion
+
+Correct Answer: B
+
+Reasoning (B): This patient has familial renal glucosuria (benign glucosuria) — a rare autosomal recessive/dominant condition caused by loss-of-function mutations in SGLT2 (SLC5A2 gene) expressed on the apical membrane of S1 segment proximal convoluted tubule cells. Normally, SGLT2 reabsorbs ~90% of filtered glucose (remaining 10% by SGLT1 in S3). With SGLT2 dysfunction, the tubular transport maximum (Tm) is reduced well below the normal filtered load at euglycemic plasma glucose levels, causing glucosuria despite a normal plasma glucose of 88 mg/dL. The family history (maternal uncle) supports a hereditary pattern. No hyperglycemia, no ketones, no symptoms — this is physiologically benign. Covered in Costanzo "Big" Physiology Chapter 6 and Guyton & Hall Chapter 28.
+
+Incorrect Answer Breakdown:
+
+A: The normal renal glucose threshold is ~180 mg/dL (the plasma concentration at which filtered load exceeds Tm). This patient's plasma glucose is 88 mg/dL — far below this threshold. In a patient with a normal SGLT2, no glucosuria would occur at this plasma glucose level. This answer applies to diabetic glucosuria, not to this scenario.
+
+C: Osmotic diuresis from hyperglycemia is the mechanism of glucosuria in uncontrolled type 1 or type 2 diabetes mellitus. This patient has a fasting glucose of 88 mg/dL and HbA1c of 5.1% — conclusively excluding diabetes. No polyuria, polydipsia, or weight loss is described. Ketones are negative, further excluding diabetic ketoacidosis.
+
+D: Pharmacological SGLT2 inhibitors (empagliflozin, dapagliflozin, canagliflozin) intentionally reduce Tm for glucose to achieve therapeutic glucosuria in type 2 diabetes. This patient denies all medications, and this would be an acquired pharmacological mechanism, not an inherited/physiological one. This answer would be correct if the clinical scenario described a patient with T2DM on an SGLT2i.
+
+E: Reduced GFR decreases the filtered glucose load — which would paradoxically protect against glucosuria (less glucose presented to tubules). Tubular secretion is not a mechanism for glucose handling; glucose is only filtered and reabsorbed, never secreted by renal tubules. This answer conflates glucose handling with uric acid or drug transport physiology.
+
+Question 8 — Cardiovascular Physiology (Pressure-Volume Loop / Aortic Stenosis)
+
+Vignette:
+
+A 78-year-old retired female librarian presents with a 14-month history of exertional chest tightness, an episode of syncope last month while climbing stairs, and progressive dyspnea on exertion. She has no history of coronary artery disease. She takes aspirin 81 mg daily.
+
+Physical Examination:
+
+
+
+Vital Signs: BP 108/86 mmHg (narrow pulse pressure) | HR 76/min | RR 18/min | Temp 36.8°C | SpO₂ 96% on room air
+
+Carotid Pulse: Pulsus parvus et tardus (weak, delayed upstroke) bilaterally
+
+Cardiac: Harsh crescendo-decrescendo systolic murmur, loudest at right 2nd intercostal space, radiating to bilateral carotid arteries; S4 gallop present; S2 paradoxically split
+
+Lungs: Fine bibasilar crackles
+
+Laboratory / Imaging Results:
+
+TestResultReference RangeEchocardiogram AVA0.7 cm²> 2.0 cm² (normal)Mean Gradient (across AV)52 mmHg< 10 mmHgEF58%55–70%LV Wall Thickness1.6 cm0.6–1.1 cmBNP480 pg/mL< 100Troponin I0.02 ng/mL (normal)< 0.04
+
+Question:
+
+On this patient's left ventricular pressure-volume loop, which of the following changes is most expected compared to a normal loop?
+
+
+
+A. Leftward shift of the loop with decreased end-diastolic volume and decreased stroke volume
+
+B. Increased peak systolic pressure with narrowed loop width, elevated end-diastolic pressure, and concentric hypertrophy shifting the EDPVR curve upward
+
+C. Rightward shift of the loop with markedly increased end-diastolic volume reflecting eccentric dilatation
+
+D. Decreased peak systolic pressure with a widened loop representing high-output cardiac state
+
+E. Normal loop morphology with only a shortened systolic time interval
+
+Correct Answer: B
+
+Reasoning (B): Severe aortic stenosis (AVA 0.7 cm², mean gradient 52 mmHg) creates fixed outflow obstruction → dramatically elevated LV systolic pressure required to eject blood across the stenotic valve. On the P-V loop: (1) Peak LV systolic pressure rises markedly (often >200 mmHg); (2) Stroke volume (loop width) narrows because forward output is limited by the fixed obstruction — explaining narrow pulse pressure; (3) Chronic pressure overload → concentric LV hypertrophy (wall 1.6 cm) → reduced LV compliance → the end-diastolic pressure-volume relationship (EDPVR) shifts upward and leftward (stiff ventricle), elevating LVEDP → S4 gallop (atrial kick required to fill stiff LV) → pulmonary edema. EF is preserved (58%) because contractility is intact — this is HFpEF from afterload excess. Reference: Costanzo "Big" Physiology Chapter 4, P-V loop analysis.
+
+Incorrect Answer Breakdown:
+
+A: Leftward shift with decreased EDV describes reduced preload states (hemorrhage, dehydration, tamponade compressing the right heart). In aortic stenosis, the LV does not empty well and EDV tends to be normal or slightly elevated over time. The loop does not shift leftward — it narrows in width (reduced SV) while shifting upward in peak pressure.
+
+C: Rightward shift with markedly increased EDV describes eccentric hypertrophy and ventricular dilatation, as seen in aortic/mitral regurgitation (volume overload) or dilated cardiomyopathy. In aortic stenosis, the adaptation is concentric hypertrophy (wall thickening without chamber dilation) to normalize wall stress by Laplace's law (stress = Pr/2h). Eccentric dilatation is not the primary adaptive response to pressure overload.
+
+D: A high-output cardiac state (hyperthyroidism, arteriovenous fistula, severe anemia) produces a widened loop with increased SV and low afterload — the exact physiological opposite of aortic stenosis, which creates high afterload and narrow pulse pressure. Peak systolic pressure would not decrease in aortic stenosis.
+
+E: The loop morphology is substantially abnormal in severe AS — stating only a shortened systolic time is incorrect. In fact, aortic stenosis typically prolongs the LV ejection time (the valve takes longer to eject a given volume against high resistance), which is reflected clinically as a paradoxically split S2 (delayed aortic valve closure).
+
+Question 9 — Fluid & Electrolyte Physiology (SIADH vs. Cerebral Salt Wasting)
+
+Vignette:
+
+A 61-year-old male high school principal is admitted to the neurosurgical ICU following a subarachnoid hemorrhage (SAH) from a ruptured anterior communicating artery aneurysm 4 days ago. On day 4, nursing notes progressive confusion and lethargy. He has no prior medical history. Current medications include nimodipine and phenytoin.
+
+Physical Examination:
+
+
+
+Vital Signs: BP 148/90 mmHg | HR 88/min | RR 16/min | Temp 37.5°C | SpO₂ 98% on room air
+
+General: Lethargic; oriented to person only; no focal deficits beyond baseline
+
+Mucous Membranes: Moist
+
+Skin Turgor: Normal
+
+JVP: Normal (estimated 6 cmH₂O)
+
+Laboratory Results:
+
+TestResultReference RangeSerum Na⁺122 mEq/L136–145Serum Osmolality258 mOsm/kg280–295Urine Na⁺68 mEq/L20–40Urine Osmolality620 mOsm/kg50–1200Serum K⁺3.4 mEq/L3.5–5.0Serum BUN10 mg/dL7–20Serum Uric Acid2.1 mg/dL3.5–7.2Daily Urine Output3,200 mL/day~1,500
+
+Question:
+
+Which of the following best differentiates the mechanism of hyponatremia in this patient from Syndrome of Inappropriate ADH secretion (S
+

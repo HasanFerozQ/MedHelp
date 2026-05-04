@@ -4,22 +4,23 @@
 BEGIN;
 
 -- Ensure the topic exists
-INSERT INTO topics (id, title, description, category)
+INSERT INTO topics (id, title, slug, year_id, semester_id)
 VALUES (
     'nbme-shelf-anatomy-1st-year',
     'NBME Shelf: Gross Anatomy & Embryology',
-    '110 high-yield questions covering 1st Year Anatomy & Embryology for NBME Shelf preparation.',
-    '1st Year'
+    'nbme-anatomy-year1',
+    1,
+    1
 )
 ON CONFLICT (id) DO UPDATE
-SET title = EXCLUDED.title, description = EXCLUDED.description, category = EXCLUDED.category;
+SET title = EXCLUDED.title, slug = EXCLUDED.slug, year_id = EXCLUDED.year_id, semester_id = EXCLUDED.semester_id;
 
 -- Delete existing questions for this topic to ensure idempotency
 DELETE FROM questions WHERE topic_id = 'nbme-shelf-anatomy-1st-year';
 
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '23a7345d-8cee-44ed-a36d-652476fd4fd3',
+    '7dbd4625-0b5d-4f79-aae8-623b8842dfbe',
     'nbme-shelf-anatomy-1st-year',
     'A newborn male presents with excessive salivation and choking during feeding.
 
@@ -50,7 +51,7 @@ E: Urogenital anomalies',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '91d29902-235a-487a-95a6-d09f61d819b5',
+    '0a257e67-289f-4fdf-b6e3-ff53f604e195',
     'nbme-shelf-anatomy-1st-year',
     'A 34-year-old female presents after a thyroidectomy with hoarseness.
 
@@ -78,7 +79,7 @@ D/E: Not involved in phonation',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'c612ea9b-6a4c-4451-926a-bf08a7b8b334',
+    '593d5cc4-affa-4052-b6eb-a30021ce55d8',
     'nbme-shelf-anatomy-1st-year',
     'A 60-year-old male presents with sudden loss of vision in the right eye.
 
@@ -100,7 +101,7 @@ Others: cortical deficits',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '1a825ea8-7280-487a-83c9-1181afe81d06',
+    '295ef9c3-548a-48d3-bef1-1ebe45d96e49',
     'nbme-shelf-anatomy-1st-year',
     'A 25-year-old athlete presents with scapular winging after trauma.
 
@@ -121,7 +122,7 @@ Others unrelated',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '4a040962-da8d-4200-816b-7e72c35fe144',
+    '3dfe972b-2c17-4152-a261-d849c05b0a94',
     'nbme-shelf-anatomy-1st-year',
     'A newborn has cyanosis that improves when crying.
 
@@ -137,7 +138,7 @@ Cyanosis relieved by crying → nasal obstruction.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'f0e3d706-5d41-47fb-af99-92d792c986fa',
+    '0244f5e3-7ba7-4b6a-adb5-91743493353d',
     'nbme-shelf-anatomy-1st-year',
     'A patient presents with inability to extend wrist.
 
@@ -153,7 +154,7 @@ Radial nerve → wrist extension.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '8ca9ad69-c5cb-46d3-b50c-6ada343bb52e',
+    '008edbb9-e8f4-4e96-940e-54f933982209',
     'nbme-shelf-anatomy-1st-year',
     'Failure of neural crest migration leads to:',
     '["Meckel diverticulum", "Hirschsprung disease", "Omphalocele", "Gastroschisis", "Pyloric stenosis"]'::jsonb,
@@ -163,7 +164,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'dede9752-801a-42bc-adae-349728f0f3d2',
+    'b51af616-d3a9-4e2f-aec6-cc3364cad5e4',
     'nbme-shelf-anatomy-1st-year',
     'A patient cannot invert the foot.
 
@@ -177,7 +178,7 @@ Which nerve is injured?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '0b6ace4c-c7d0-402b-96fb-138fede6d1cb',
+    '0236a7ba-c079-48ad-aef5-0db36786b75f',
     'nbme-shelf-anatomy-1st-year',
     'A newborn has abdominal contents protruding into umbilical cord.
 
@@ -191,7 +192,7 @@ Diagnosis?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '9ad7215a-79e2-4cd1-b318-ce613f854905',
+    'dd07aca7-8ccb-4a7c-946d-06416b1eeeae',
     'nbme-shelf-anatomy-1st-year',
     'A 28-year-old male motorcyclist is brought to the ED after a high-speed crash. His right upper limb is adducted, internally rotated, and extended at the elbow with pronated forearm.
 
@@ -224,7 +225,7 @@ Others not consistent',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '30668eaf-f327-4e9f-8657-391577d952b5',
+    'd6ad7bb0-cd02-4d28-93c0-67d984a39f27',
     'nbme-shelf-anatomy-1st-year',
     'A newborn presents with difficulty swallowing and stridor.
 
@@ -242,7 +243,7 @@ Persistence → vascular ring compressing airway.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'ee407253-ef05-4d37-9e10-7383d8a47809',
+    '95a13894-51f3-4b1c-8ec2-20f0f3a0430c',
     'nbme-shelf-anatomy-1st-year',
     'A 63-year-old male presents with:
 
@@ -261,7 +262,7 @@ Facial nerve nucleus located in pons → LMN facial paralysis.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '4d59049e-2d0d-4df6-a22b-88bdf2f81b31',
+    '21b98efe-9c8f-4889-b97d-421aa359729e',
     'nbme-shelf-anatomy-1st-year',
     'A 45-year-old male presents with a bulge above the inguinal ligament.
 
@@ -277,7 +278,7 @@ Direct hernias occur medial to inferior epigastric vessels.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '8a95cc55-bbc0-4bd3-adc4-3d1e90306db0',
+    'dc8f99d8-a573-40e8-b3ab-519d9df4ee0c',
     'nbme-shelf-anatomy-1st-year',
     'A neonate presents with bilious vomiting.
 
@@ -293,7 +294,7 @@ What is the underlying embryological defect?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '88c90033-4426-4edb-bf9a-b08da27b0c80',
+    '6e0ee162-60ae-4bda-9faf-88d7194acdbf',
     'nbme-shelf-anatomy-1st-year',
     'A 40-year-old patient cannot dorsiflex the foot.
 
@@ -309,7 +310,7 @@ Controls anterior compartment → dorsiflexion.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'dda1e1b5-9395-4331-a45c-ad1f9a25ba34',
+    '553aec02-56d4-4eb6-bc28-de89b121cccb',
     'nbme-shelf-anatomy-1st-year',
     'A newborn presents with respiratory distress.
 
@@ -327,7 +328,7 @@ Defect → Bochdalek hernia.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'b94f3ee5-81e6-44f7-9461-b76f07625390',
+    '8145b482-4499-4c51-9045-c2d95305d4e9',
     'nbme-shelf-anatomy-1st-year',
     'A patient cannot abduct the eye.
 
@@ -341,7 +342,7 @@ Which nerve is affected?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '72403c67-1f25-475e-bb92-f5dd5c22ac5c',
+    '20b3d845-7cb9-4b8d-a0ba-11bb60f6a36e',
     'nbme-shelf-anatomy-1st-year',
     'A fetus has spina bifida with exposed neural tissue.
 
@@ -355,7 +356,7 @@ Failure of which process?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '5a7bc5b6-4967-417d-b51a-ea7b8da5a2ce',
+    '3494d147-248a-4f14-862f-7b2233e5df91',
     'nbme-shelf-anatomy-1st-year',
     'A patient with cirrhosis develops caput medusae.
 
@@ -400,7 +401,7 @@ E: Not involving CN VI',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '135cef9b-5ef4-4325-8560-f707b99300a6',
+    '22639397-d894-4d5d-b245-3a6c7d7d4801',
     'nbme-shelf-anatomy-1st-year',
     'A newborn has facial asymmetry and difficulty chewing.
 
@@ -416,7 +417,7 @@ First arch → CN V3 → muscles of mastication.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'accedad6-a34d-4380-b4ba-31743973bb28',
+    '076d7262-82f6-4df1-9bf5-53a3034daaa4',
     'nbme-shelf-anatomy-1st-year',
     'A 32-year-old female undergoes lymph node biopsy in the posterior triangle and develops shoulder droop.
 
@@ -432,7 +433,7 @@ CN XI innervates trapezius → shoulder elevation.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '258f0aca-9747-491a-ba4a-446b6435ddc1',
+    '206a1bda-eafe-419c-9996-b873eef18187',
     'nbme-shelf-anatomy-1st-year',
     'A patient has a pelvic kidney.
 
@@ -446,7 +447,7 @@ What caused this anomaly?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '845f5ba3-2b3d-410a-9600-10f2e9d64562',
+    '46866cb3-62c2-4387-93bf-1b28510caed6',
     'nbme-shelf-anatomy-1st-year',
     'A patient has an aneurysm causing bitemporal hemianopia.
 
@@ -462,7 +463,7 @@ Compresses optic chiasm → bitemporal hemianopia.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '7012776b-f691-42e3-9d51-1aff4d29abeb',
+    '8cda1be3-84f2-4122-92d8-f6ca42f2fe08',
     'nbme-shelf-anatomy-1st-year',
     'A newborn has persistent truncus arteriosus.
 
@@ -476,7 +477,7 @@ Failure of which process?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '0122a476-edae-43a9-b714-b9c223102b2e',
+    '0c4c782b-d5b9-4a36-9a78-49fa46afdcbd',
     'nbme-shelf-anatomy-1st-year',
     'A patient has inability to extend fingers but wrist extension is weak (not absent).
 
@@ -492,7 +493,7 @@ Branch of radial nerve → finger extension only.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'b8053f5a-5048-4146-8899-9f04b36fc2fa',
+    '01d6a5cc-3d6a-4176-91fd-0412589b91a9',
     'nbme-shelf-anatomy-1st-year',
     'Which structure is derived from the midgut?',
     '["Esophagus", "Stomach", "Duodenum (proximal)", "Appendix", "Liver"]'::jsonb,
@@ -502,7 +503,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '8b4cd804-c29b-47bc-97e8-46feae6bba57',
+    'f785101a-c776-422f-a93a-be7c54c4d0fd',
     'nbme-shelf-anatomy-1st-year',
     'A lesion causes:
 
@@ -520,7 +521,7 @@ Brown-Séquard syndrome.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'cb6a78cd-cd8e-47f4-a016-eacd99aad43c',
+    'e70711e9-77f1-42a9-9a50-a89930acc74b',
     'nbme-shelf-anatomy-1st-year',
     'A newborn has cleft lip.
 
@@ -534,7 +535,7 @@ Failure of fusion between which structures?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '42312ad0-e350-4736-9b9d-58cb3d002a3d',
+    '53c122c0-144a-4056-aa14-7dcb52d028ce',
     'nbme-shelf-anatomy-1st-year',
     'A 62-year-old male undergoes femoral artery catheterization and later develops weakness in knee extension.
 
@@ -564,7 +565,7 @@ E: Lateral thigh sensation',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'c7117063-43b8-47aa-baa6-756cdc46260d',
+    '1e19ffc3-4545-4a20-9c16-bcc24fb40345',
     'nbme-shelf-anatomy-1st-year',
     'A premature infant has respiratory distress due to lack of surfactant.
 
@@ -580,7 +581,7 @@ Surfactant production begins late canalicular, increases in saccular stage.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '5acf1566-8b8b-4ded-bc12-d94148fa827b',
+    '3d9969fa-c45c-452d-9dad-d7266578ffc4',
     'nbme-shelf-anatomy-1st-year',
     'A patient presents with:
 
@@ -597,7 +598,7 @@ Which artery is occluded?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '811a7c9a-3cb4-42d7-aea3-102bbd92aa45',
+    '4be1f906-6bda-4390-af8b-c3689fa6b009',
     'nbme-shelf-anatomy-1st-year',
     'A child has undescended testes.
 
@@ -611,7 +612,7 @@ Which structure guides testicular descent?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '68e82cea-64bf-4654-8a31-c5cdda473edd',
+    '9de6e47c-0e3f-4b73-a0df-a05efb9e6373',
     'nbme-shelf-anatomy-1st-year',
     'A patient suffers injury during venipuncture.
 
@@ -627,7 +628,7 @@ Order: TAN → Tendon, Artery, Nerve.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '03eb4e4f-2b00-4362-ab71-c5e646c68d80',
+    '95900f92-21c9-4204-a685-045af42d2c80',
     'nbme-shelf-anatomy-1st-year',
     'Which structure is derived from neural crest cells?',
     '["Skeletal muscle", "Melanocytes", "Hepatocytes", "Renal tubules", "Endothelium"]'::jsonb,
@@ -637,7 +638,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '3eb44c08-952a-4287-83cd-58933aeac445',
+    'a70933f2-05ef-4da7-b379-8c456a5ead1e',
     'nbme-shelf-anatomy-1st-year',
     'A stroke causes:
 
@@ -653,7 +654,7 @@ Which part is affected?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'fe2f3436-9ca5-47b4-b996-ccf2ecdb26ef',
+    '4b7a244d-75f4-4984-984b-8d726892366e',
     'nbme-shelf-anatomy-1st-year',
     'Which structure arises from the foregut?',
     '["Appendix", "Transverse colon (distal)", "Liver", "Cecum", "Ascending colon"]'::jsonb,
@@ -663,7 +664,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'ef3ad60d-a9ac-4930-833a-ca5ab0e20e50',
+    'b4932781-355b-45f4-b254-357e57a888a5',
     'nbme-shelf-anatomy-1st-year',
     'A patient cannot externally rotate the shoulder.
 
@@ -677,7 +678,7 @@ Which muscle is affected?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '835ac726-6a90-4b0f-ac17-76ec21ab9fec',
+    'ab282945-ffd7-4b87-b38d-23ff969a81be',
     'nbme-shelf-anatomy-1st-year',
     'Failure of cloacal division results in:',
     '["Hypospadias", "Epispadias", "Persistent cloaca", "Renal agenesis", "Horseshoe kidney"]'::jsonb,
@@ -688,7 +689,7 @@ Set 5 (Q41–50)',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'bbd7f3d9-256b-48d8-9c3a-3407d1a7d598',
+    'e71b0675-545d-4b0f-8a5d-5187a4d619ac',
     'nbme-shelf-anatomy-1st-year',
     'A penetrating injury affects the deepest structure.
 
@@ -702,7 +703,7 @@ Which structure is most posterior/deep?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '6c089ed0-ff0d-4687-a784-733e01e3995d',
+    'c6d4c696-9d05-47b4-bc34-253d85d32aee',
     'nbme-shelf-anatomy-1st-year',
     'Annular pancreas results from:',
     '["Failure of ventral bud rotation", "Failure of dorsal bud formation", "Excessive apoptosis", "Neural crest defect", "Cloacal abnormality"]'::jsonb,
@@ -712,7 +713,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '4e922d5b-5309-49aa-a508-e8830e18d21d',
+    'af7c6602-697d-48f6-80cf-30bcf251b410',
     'nbme-shelf-anatomy-1st-year',
     'A lesion proximal to chorda tympani causes:',
     '["Loss of taste anterior 2/3 tongue", "Loss of taste posterior 1/3", "Loss of smell", "Loss of vision", "Loss of gag reflex"]'::jsonb,
@@ -722,7 +723,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '1757fe26-2b57-412a-b222-6a899711aa53',
+    '97de4964-f9ca-4090-8806-b8cf50dc8716',
     'nbme-shelf-anatomy-1st-year',
     'Patent foramen ovale results from:',
     '["Failure of septum primum", "Failure of septum secundum", "Failure of fusion of septa", "Neural crest defect", "Endocardial cushion defect"]'::jsonb,
@@ -732,7 +733,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'ff3a3e0c-9170-49d0-9bed-f151e10eb12b',
+    '85bfcc6f-ce7b-42c6-b8da-506ec6d0dbec',
     'nbme-shelf-anatomy-1st-year',
     'Compression causes:
 
@@ -748,7 +749,7 @@ Which structure is compressed?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '8e6b3192-fb2c-4479-bdad-f298b00bf6e7',
+    'be02ede9-9ed6-481a-99ae-63d2506191c2',
     'nbme-shelf-anatomy-1st-year',
     'Persistence leads to:',
     '["Omphalocele", "Gastroschisis", "Meckel diverticulum", "Umbilical hernia", "Diaphragmatic hernia"]'::jsonb,
@@ -758,7 +759,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '8abd3aa2-0aea-4fbe-8b72-4d4c7f5f96cc',
+    '31fe8871-85bd-4fc0-9908-906b039fe44a',
     'nbme-shelf-anatomy-1st-year',
     'Which branch arises from the first part?',
     '["Vertebral artery", "Suprascapular artery", "Dorsal scapular artery", "Circumflex scapular artery", "Thoracodorsal artery"]'::jsonb,
@@ -768,7 +769,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'e1d9507c-dff0-4370-ae03-e715388011fd',
+    '03a4fbdc-8aff-4223-b382-8777461de136',
     'nbme-shelf-anatomy-1st-year',
     'Failure of urachus closure results in:',
     '["Vesicoureteral reflux", "Patent urachus", "Meckel diverticulum", "Renal agenesis", "Bladder exstrophy"]'::jsonb,
@@ -778,7 +779,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '054ae373-71e4-4be6-9464-86f43d26c578',
+    '5668c1cc-1a8e-49aa-8b66-00510a785942',
     'nbme-shelf-anatomy-1st-year',
     'A lesion causes ipsilateral ataxia.
 
@@ -792,7 +793,7 @@ Which structure is affected?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '0e395f46-82e6-4cbc-958a-78dbc4bd43f9',
+    '7ee8868c-e0ee-4966-9edf-fd64153e7091',
     'nbme-shelf-anatomy-1st-year',
     'Which structure arises from the third pouch?',
     '["Thyroid gland", "Inferior parathyroid", "Superior parathyroid", "Thymus", "Tonsils"]'::jsonb,
@@ -802,7 +803,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'd9beb85d-1b8b-48d6-8444-933f7d0591c1',
+    'a1e4fb44-1f64-4b88-b5fe-907bd48c7919',
     'nbme-shelf-anatomy-1st-year',
     'A 55-year-old female undergoes axillary lymph node dissection for breast carcinoma. Postoperatively, she has difficulty elevating her arm above the horizontal plane.
 
@@ -834,7 +835,7 @@ E: Rhomboids',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'c32faed2-18e6-41f6-b184-72133389b9b8',
+    '533b32a5-0466-4551-b5c2-5d1b661742e4',
     'nbme-shelf-anatomy-1st-year',
     'A neonate has isolated esophageal atresia without fistula.
 
@@ -848,7 +849,7 @@ Which developmental error occurred?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '53b7675a-8f13-4c9e-81ee-a33b9ea594c1',
+    'f2e4b3f6-9f23-4ea3-819a-7196121dc1b2',
     'nbme-shelf-anatomy-1st-year',
     'A 40-year-old typist has numbness in the lateral 3½ fingers.
 
@@ -865,7 +866,7 @@ Which structure is compressed?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '08fbbce8-a8a1-4fc9-98e5-8e7d4b7b38f8',
+    '996660b6-e99a-4393-ac72-0ca147993be8',
     'nbme-shelf-anatomy-1st-year',
     'A patient has a midline neck cyst that moves with swallowing.
 
@@ -879,7 +880,7 @@ What is the embryologic origin?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'a6d3a076-63e5-40f4-bc6d-6245fdc22b9c',
+    '170e2385-f7c8-475e-b17c-7b9bb10d9075',
     'nbme-shelf-anatomy-1st-year',
     'A tumor compresses structures passing through the jugular foramen.
 
@@ -893,7 +894,7 @@ Which nerve is affected?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '09130de9-521b-4af6-ad11-c7e300467112',
+    'f3d4b564-1dc2-4ae8-b4be-39a76775e485',
     'nbme-shelf-anatomy-1st-year',
     'A fetus shows absence of radius.
 
@@ -907,7 +908,7 @@ Which signaling center is responsible for anterior-posterior limb patterning?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '6d4c2e3b-1732-42ea-b4e9-49b0405e65e7',
+    '2a3f2151-0868-4141-a123-bd1ae9bf3c6c',
     'nbme-shelf-anatomy-1st-year',
     'An intramuscular injection is improperly given in the medial buttock, leading to foot drop.
 
@@ -924,7 +925,7 @@ Which nerve is injured?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '33cc96e2-2e70-44bc-87be-fa85d3879217',
+    '126e7966-be33-4e84-92e1-b2d9510bba45',
     'nbme-shelf-anatomy-1st-year',
     'A defect allows left-to-right shunting between atria.
 
@@ -938,7 +939,7 @@ Which structure normally closes after birth?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'd4c90ed1-4350-411c-9c19-0eca88ba545a',
+    'b95c0117-8793-4808-af87-87dc1ffe699a',
     'nbme-shelf-anatomy-1st-year',
     'A patient has ischemia of the midgut.
 
@@ -952,7 +953,7 @@ Which artery is occluded?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '3632f0a5-b912-4902-9216-fef125054799',
+    '64bdb9de-5d1d-4a84-9f41-ff2907078ed5',
     'nbme-shelf-anatomy-1st-year',
     'Persistence of the second pharyngeal cleft leads to:',
     '["Branchial cyst", "Thyroglossal cyst", "Dermoid cyst", "Lymphangioma", "Hemangioma"]'::jsonb,
@@ -962,7 +963,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '141b0102-6da0-4e4b-9440-8019a3541309',
+    'af7f8977-a5cb-47e0-9e06-a456d4ec4159',
     'nbme-shelf-anatomy-1st-year',
     'A 29-year-old man presents after a fall with:
 
@@ -993,7 +994,7 @@ E: Extension deficits',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '8a88854a-c118-489a-9535-bb69d9446f29',
+    'a9b22a51-8481-4a4d-8d9b-b2965c81a439',
     'nbme-shelf-anatomy-1st-year',
     'A neonate has nonrotation of the gut. The colon lies entirely on the left side.
 
@@ -1011,7 +1012,7 @@ Nonrotation = 90° only completed',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '31c36869-bbda-463e-af06-248063e97bc4',
+    '61c5bb67-1310-4d16-8775-bfb9f952f9ca',
     'nbme-shelf-anatomy-1st-year',
     'A lesion causes:
 
@@ -1029,7 +1030,7 @@ Where is the lesion?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '957a003f-153b-46fa-a02a-1d0c8710b490',
+    '44c10aa1-8c53-40d5-b0e7-d9ed1f8a9130',
     'nbme-shelf-anatomy-1st-year',
     'Which structure is derived from the left 6th aortic arch?',
     '["Left common carotid", "Left pulmonary artery", "Aortic arch", "Subclavian artery", "Internal carotid artery"]'::jsonb,
@@ -1041,7 +1042,7 @@ Left 6th → pulmonary artery + ductus arteriosus',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'ed0ec845-6f5e-4597-b4e3-7fc4e77c5a5e',
+    'ad3c9706-cdd5-4c45-9a59-c3c8a57bfde8',
     'nbme-shelf-anatomy-1st-year',
     'During hysterectomy, a surgeon accidentally ligates the ureter near the uterine artery.
 
@@ -1057,7 +1058,7 @@ Where does this occur?',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '43fe68ee-0f31-4460-92a5-39c416e40ac1',
+    '3f1a6626-5d67-4313-b887-b0fb779c4eb9',
     'nbme-shelf-anatomy-1st-year',
     'Which defect is caused by failure of neural crest migration?',
     '["Ventricular septal defect", "Tetralogy of Fallot", "Atrial septal defect", "Patent ductus arteriosus", "Coarctation of aorta"]'::jsonb,
@@ -1069,7 +1070,7 @@ Outflow tract defects = neural crest.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'f81c8e99-2a3d-4847-b1a9-280215d83304',
+    'dc05c1fd-5c2d-45a3-9fb3-3aa5ef45d8ed',
     'nbme-shelf-anatomy-1st-year',
     'A patient cannot extend MCP joints but can extend wrist.
 
@@ -1085,7 +1086,7 @@ Wrist extension preserved = radial nerve intact proximally.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'b8c1f07c-67cf-4252-9685-3679c80f46eb',
+    'e0b54322-2bbf-4c21-8e87-d39d35f4bb49',
     'nbme-shelf-anatomy-1st-year',
     'Which structure contributes to the central tendon of diaphragm?',
     '["Pleuroperitoneal membrane", "Septum transversum", "Dorsal mesentery", "Body wall", "Somites"]'::jsonb,
@@ -1095,7 +1096,7 @@ VALUES (
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'd89f4390-a197-411b-9870-3f024796f03f',
+    '3665d299-e997-4259-9b61-fed66db853bf',
     'nbme-shelf-anatomy-1st-year',
     'An aneurysm causes:
 
@@ -1113,7 +1114,7 @@ ACA → lower limb cortex',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '1c9e1c45-bdd9-4141-ba79-e453d26888cf',
+    'c93d90fb-3196-4116-b972-1f4ee020f8d5',
     'nbme-shelf-anatomy-1st-year',
     'Which nerve is associated with the 4th pharyngeal arch?',
     '["CN V", "CN VII", "CN IX", "CN X (superior laryngeal)", "CN X (recurrent laryngeal)"]'::jsonb,
@@ -1160,7 +1161,7 @@ E: Retrograde lymphatic flow (as seen in cardiac failure or superior vena cava s
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '5d30c391-6373-42bb-9b9e-0b9b7b922308',
+    'd9cdbd14-ac4c-4267-a69b-dd0f7e0c22c5',
     'nbme-shelf-anatomy-1st-year',
     'A 34-year-old female emergency medicine nurse presents to her physician with a 6-week history of right foot drop that developed insidiously. She reports difficulty walking and frequent tripping. She denies back pain, bowel or bladder incontinence, or trauma. She recalls spending prolonged periods crouching while tending to her garden over the past two months.
 Physical Examination:
@@ -1186,7 +1187,7 @@ E: The deep fibular nerve supplies the anterior compartment only. A pure deep fi
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '11f29a30-8929-4c0a-889a-8c0d4fb3e83e',
+    '210ccc86-f1bf-4043-b6c4-cc55b652fc39',
     'nbme-shelf-anatomy-1st-year',
     'A 52-year-old male accountant presents to the emergency department after sudden onset of severe, tearing chest pain that radiates to the interscapular region. He has a history of poorly controlled hypertension and reports a 20-year history of tobacco use (1 pack/day). He denies shortness of breath and is not diaphoretic.
 Physical Examination:
@@ -1215,7 +1216,7 @@ E: The ligamentum arteriosum at the aortic isthmus is the classic site of trauma
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '588a5eec-a507-4dfa-adc5-e21531bcdc1e',
+    'f0e35847-3d2c-4960-98c0-54f773875abd',
     'nbme-shelf-anatomy-1st-year',
     'A 3-day-old male neonate is noted by the nursing staff to have a bluish discoloration of the lips and fingernails immediately after feeding. He was born at 39 weeks gestation via uncomplicated vaginal delivery. APGAR scores were 8 and 9 at 1 and 5 minutes respectively. His mother received routine prenatal care and all screening tests were negative. On examination, a harsh holosystolic murmur is auscultated at the left lower sternal border.
 Physical Examination:
@@ -1241,7 +1242,7 @@ E: Persistent truncus arteriosus (PTA) results from failed aorticopulmonary sept
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'cf96ba2e-d8f5-495d-8c9d-f1324bc6df0a',
+    '0895b2b0-64b5-4122-8cb7-815272bf023a',
     'nbme-shelf-anatomy-1st-year',
     'A 45-year-old female librarian presents to her ophthalmologist with a 3-week history of painless, progressive ptosis of her left eyelid and diplopia, worse when looking to the right. She also notes that her left pupil appears larger than her right when she checks in the mirror. She denies headache, nausea, or changes in vision beyond the diplopia. Past medical history is notable for hypertension, for which she takes amlodipine. She denies trauma.
 Physical Examination:
@@ -1266,7 +1267,7 @@ E: CN VI (abducens) innervates the lateral rectus muscle and has no role in pupi
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '1c3b515a-f52e-4d35-819f-c03e20428205',
+    'c2e7948b-341a-4fe9-9560-040885329c93',
     'nbme-shelf-anatomy-1st-year',
     'A 58-year-old male postal worker presents to his cardiologist with a 4-month history of exertional chest pressure, dyspnea on exertion after climbing one flight of stairs, and bilateral ankle swelling. He has a history of hypertension and type 2 diabetes. He denies syncope, orthopnea, or palpitations. He was told by his dentist two years ago that he has a heart murmur.
 Physical Examination:
@@ -1294,7 +1295,7 @@ E: The septum secundum is the atrial structure that grows inferiorly to overlap 
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'cb042577-b781-4fa9-8514-e52fbf94607b',
+    '42ea2d59-054a-4d95-8a5c-850b29725258',
     'nbme-shelf-anatomy-1st-year',
     'A 29-year-old female yoga instructor presents to her OB/GYN with a 5-day history of severe right lower quadrant pain, nausea, and a single episode of vomiting. Her last menstrual period was 7 weeks ago. She has a history of pelvic inflammatory disease treated 3 years ago and uses no contraception. She denies vaginal discharge or fever at home. A urine pregnancy test performed at registration is positive.
 Physical Examination:
@@ -1322,7 +1323,7 @@ E: The presacral space is a retroperitoneal fascial plane between the rectum and
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'd4fb221e-4922-401b-8e12-616f946144dc',
+    '0a3bf788-efb3-48c6-9007-718732fee826',
     'nbme-shelf-anatomy-1st-year',
     'A 41-year-old male long-distance truck driver presents to his primary care physician with a 2-month history of progressive hoarseness, mild dysphagia, and a sensation of fullness in his throat. He has a 25-pack-year smoking history and drinks alcohol occasionally. He denies hemoptysis, weight loss, or dyspnea. He reports no recent upper respiratory infection.
 Physical Examination:
@@ -1348,7 +1349,7 @@ E: Mechanical fixation of the arytenoid by direct tumor infiltration would produ
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'c9680d59-8c8a-4ea2-9203-2055fa25b976',
+    '370e5377-27c5-4bc6-8665-69fe5e9ffd73',
     'nbme-shelf-anatomy-1st-year',
     'A 23-year-old male college rugby player is brought to the emergency department by teammates after sustaining a direct blow to the right lateral knee during a tackle. He felt an immediate "pop" and could not continue playing. He has significant right knee swelling. He denies any prior knee injuries.
 Physical Examination:
@@ -1372,7 +1373,7 @@ E: PCL with MCL and posterior capsule is a more severe multi-ligament injury typ
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '134f7f27-d1bd-47e2-9600-71ddbe58a708',
+    '9bf1f25d-9b03-4531-88b3-c8a6547e5607',
     'nbme-shelf-anatomy-1st-year',
     'A 31-year-old female kindergarten teacher, 28 weeks pregnant with her first child, is referred by her midwife for a fetal anatomical survey after a routine ultrasound revealed polyhydramnios. The patient denies symptoms. She has no significant personal or family medical history and takes only prenatal vitamins.
 Physical Examination:
@@ -1397,7 +1398,7 @@ E: Incomplete pleuroperitoneal fold fusion causes a Congenital Diaphragmatic Her
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '599dfd17-c42a-4215-97e4-7e76759d9714',
+    '36cc84c4-babb-4c29-aedb-33af4f4f04a2',
     'nbme-shelf-anatomy-1st-year',
     'A 19-year-old male college wrestler presents to the student health clinic with a 10-day history of right shoulder pain and progressive weakness. During a match two weeks ago, his right arm was forcefully abducted and externally rotated while being tackled. He denies numbness in his fingers or hand. He notes he cannot initiate abduction of his right arm from his side.
 Physical Examination:
@@ -1421,7 +1422,7 @@ E: The boundaries are inverted (teres major and minor are switched), and the con
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '74a727a3-825e-40a4-868d-2570abcf3b2a',
+    '41af518c-32c6-475c-af3f-e7ef39445bf2',
     'nbme-shelf-anatomy-1st-year',
     'A 62-year-old male retired plumber presents to his urologist with a 3-week history of painless hematuria and a dull ache in his left flank. He has a 35-pack-year smoking history and a history of hypertension managed with lisinopril. He denies dysuria, frequency, or weight loss. A urine cytology performed by his GP was atypical.
 Physical Examination:
@@ -1447,7 +1448,7 @@ E: The "nutcracker phenomenon" describes compression of the left renal vein betw
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '020f6999-7b30-4b04-9ea2-23caeced898e',
+    'c8d45a17-3a0a-4205-a50b-9a72648d0367',
     'nbme-shelf-anatomy-1st-year',
     'A 55-year-old female executive is seen in the neurology clinic for progressive difficulty swallowing and dysarthria over 6 months. She reports that her voice has become nasal and she frequently chokes on liquids. She denies limb weakness, sensory changes, or visual disturbances. She has a history of well-controlled hypertension.
 Physical Examination:
@@ -1473,7 +1474,7 @@ E: The superior laryngeal nerve is a branch of CN X supplying the cricothyroid m
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '1d988f4d-f217-431a-a99c-85846d71ee1f',
+    '2366a5f4-cf68-4b68-aa07-e5b2ab2be60d',
     'nbme-shelf-anatomy-1st-year',
     'A 38-year-old female yoga instructor presents to her gynecologist for her annual visit. She mentions that during her last pelvic exam three years ago, she was told she had a "retroverted uterus." She has no complaints. She is G2P2 with two uncomplicated vaginal deliveries. She is sexually active with one male partner and uses copper IUD contraception.
 Subsequently, she returns to the emergency department 2 weeks later with acute onset severe pelvic pain, inability to void, and urge to defecate without result (tenesmus). Pelvic ultrasound shows a 6-cm left adnexal cystic mass with internal echoes and a fluid-filled posterior cul-de-sac.
@@ -1494,7 +1495,7 @@ E: The broad ligament contains the uterine tubes, round ligaments, ovarian ligam
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '44e83b66-b498-497a-b306-2e14f8da2c96',
+    'b5369a19-bc41-4b84-933d-61b3e7537191',
     'nbme-shelf-anatomy-1st-year',
     'A 2-day-old male neonate in the NICU is noted to have respiratory distress since delivery. He was born at 37 weeks via cesarean section due to fetal distress. APGAR scores were 5 and 7 at 1 and 5 minutes. The mother had normal prenatal care; second-trimester ultrasound was reported as normal (though limited by fetal positioning). Initial resuscitation with bag-mask ventilation failed to improve oxygen saturation.
 Physical Examination:
@@ -1518,7 +1519,7 @@ E: The pleuropericardial folds are atrial-level structures separating the perica
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'e10452de-6bf9-4c6f-a411-fb49ac901269',
+    '716c619b-826f-4653-a25a-553bde9c4470',
     'nbme-shelf-anatomy-1st-year',
     'A 47-year-old female school teacher presents to her internist with a 4-month history of progressive fatigue, dysphagia to solids and occasionally liquids, and a 10-pound weight loss. She also reports difficulty raising her right arm above her head over the past 6 weeks and has noticed that her right eyelid droops slightly, most noticeable in the evening. She has a 30-pack-year smoking history.
 Physical Examination:
@@ -1544,7 +1545,7 @@ E: The dorsal motor nucleus of the vagus is the parasympathetic preganglionic nu
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '0041d7a5-4b54-4a90-a7e6-18503aa0ee32',
+    'f1acbce3-45ab-4641-a732-253f951be09a',
     'nbme-shelf-anatomy-1st-year',
     'A 44-year-old male construction contractor presents to the emergency department complaining of sudden onset of severe low back pain that began while lifting a heavy beam 6 hours ago. He reports the pain radiates from his right buttock down the posterior thigh and lateral leg to the dorsum of his right foot. He has difficulty walking on his heels and notes numbness over the dorsum of his right foot.
 Physical Examination:
@@ -1567,7 +1568,7 @@ E: The quadriceps (knee extension) is innervated by L2–L4 via the femoral nerv
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'c047b2e1-1573-4b61-b97c-8f293d8af3cb',
+    '059ac15d-827d-402c-a4ef-4fd3452cb7ce',
     'nbme-shelf-anatomy-1st-year',
     'A 26-year-old male first-year medical student is brought to the emergency department by his roommate after sudden onset of the "worst headache of his life" that began while studying approximately 90 minutes ago. He vomited twice. He has no significant past medical history and takes no medications. He denies trauma.
 Physical Examination:
@@ -1589,7 +1590,7 @@ E: This answer omits the interspinous ligament (present at L4–L5) and also inc
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '73ebad74-7f9a-42b7-b71f-3d952cba0224',
+    '40924516-e9eb-4066-b80c-8f3101b16f34',
     'nbme-shelf-anatomy-1st-year',
     'A 4-week-old male infant is brought to the pediatrician by his parents due to non-bilious, projectile vomiting after every feeding for the past 10 days. He is first-born, and his parents report he appears hungry immediately after vomiting. He has had progressively fewer wet diapers and his fontanelle appears slightly sunken.
 Physical Examination:
@@ -1618,7 +1619,7 @@ E: The pylorus is a foregut derivative, not midgut. The midgut extends from just
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '18637082-a577-4ef9-954e-4fdb680c0979',
+    'cdeae48d-5771-4f2d-b368-8c5e18294676',
     'nbme-shelf-anatomy-1st-year',
     'A 68-year-old male retired electrician with a history of atrial fibrillation (on warfarin, last INR 1.6 — subtherapeutic) presents to the emergency department with sudden onset right-sided facial droop, slurred speech, and difficulty swallowing that began 2 hours ago. His wife reports he also suddenly complained of dizziness and "the room spinning." He denies headache or loss of consciousness.
 Physical Examination:
@@ -1645,7 +1646,7 @@ E: Basilar artery occlusion (locked-in syndrome if complete) produces bilateral 
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '8ac2995c-1d26-49e9-8d48-968fefe6a0e0',
+    '789128ba-deb9-47ce-aaf6-34b227f1bebc',
     'nbme-shelf-anatomy-1st-year',
     'A 28-year-old male construction worker is brought to the emergency department after falling 15 feet from a ladder, landing on his feet before falling onto his right side. He complains of severe pain in his right mid-thigh. He has no prior medical history.
 
@@ -1679,7 +1680,7 @@ E: Common fibular nerve injury causes "foot drop" (loss of dorsiflexion/eversion
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '79338685-d1a2-4e10-ae39-566747c1ab9a',
+    '26e60e82-746c-477e-b0c3-707fd2f8a094',
     'nbme-shelf-anatomy-1st-year',
     'A newborn female is examined in the nursery. The mother, a 32-year-old G1P1, had limited prenatal care but reports no alcohol or drug use. The infant was born at 39 weeks via spontaneous vaginal delivery.
 
@@ -1709,7 +1710,7 @@ E: Results in duodenal atresia.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '4a69b748-4845-4d24-88d0-d92f4df1611f',
+    '2f7583b6-ec3f-450c-93d9-20b2a5eb9563',
     'nbme-shelf-anatomy-1st-year',
     'A 64-year-old male retired smoker presents with a 4-month history of hoarseness. He denies dysphagia or weight loss. He has a history of hypertension and a recently diagnosed 4.5 cm thoracic aortic aneurysm.
 
@@ -1739,7 +1740,7 @@ E: It passes posterior to the root of the lung but loops specifically around the
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'c0d24450-b2ca-438c-8936-e973673d7689',
+    '075b5d00-9c6c-4054-b308-ef8550c28738',
     'nbme-shelf-anatomy-1st-year',
     'A 42-year-old female secretary presents with "pins and needles" in her right hand for the past 6 months. The symptoms are worse at night and while typing. She has no history of trauma.
 
@@ -1767,7 +1768,7 @@ E: Purely motor branch of the ulnar nerve.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '71eddf4a-f3ca-4310-80a1-bec39b610984',
+    '7c8c6356-4fb2-4771-8c1b-9f8f5d24c2c7',
     'nbme-shelf-anatomy-1st-year',
     'A 19-year-old male is brought to the ED after being struck in the temple by a baseball. He was briefly unconscious, then awoke and felt fine for an hour, but is now becoming increasingly somnolent.
 
@@ -1797,7 +1798,7 @@ E: Transmits CN IX, X, XI and the internal jugular vein.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '21c72f6e-2e66-492a-9b63-6f0d44214efa',
+    'fbaa5d47-3f41-438f-bae0-a881df2ae4c2',
     'nbme-shelf-anatomy-1st-year',
     'A 3-day-old infant is evaluated for projectile, non-bilious vomiting after every feeding. The infant appears hungry and eager to feed again immediately after vomiting.
 
@@ -1833,7 +1834,7 @@ E: Leads to duodenal atresia (associated with Down Syndrome and "double bubble" 
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'a28a7633-e116-415d-9e49-dfc103921e90',
+    'a4b0116d-a6a1-4551-8f0d-23c0e5274b1c',
     'nbme-shelf-anatomy-1st-year',
     'A 45-year-old male presents to the clinic with chronic "heartburn" and difficulty swallowing. He has a history of GERD and a BMI of 34.
 
@@ -1861,7 +1862,7 @@ E: The IVC passes through the caval opening at T8.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'c9faff96-c0ad-4e40-a655-2dd8a520bcb8',
+    '55543d48-4252-45ed-a886-1b56810f53ac',
     'nbme-shelf-anatomy-1st-year',
     'A 58-year-old female presents with sudden onset of "the worst headache of her life." She has a history of smoking and autosomal dominant polycystic kidney disease (ADPKD).
 
@@ -1885,7 +1886,7 @@ A, C, D, E: These are possible sites for Berry aneurysms, but $ACom$ is statisti
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'bacbb61e-28dd-4c02-8630-3b13a8db1e25',
+    '935c0298-3594-4aab-bec6-844054acbafa',
     'nbme-shelf-anatomy-1st-year',
     'A 50-year-old male is undergoing an emergency repair of a perforated duodenal ulcer. During the surgery, the surgeon must ligate the artery supplying the first part of the duodenum to control bleeding.
 
@@ -1909,7 +1910,7 @@ E: Supplies the gut from the distal duodenum to the proximal two-thirds of the t
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '36c35194-9add-4a9a-9946-65238a7fc086',
+    '0d242293-b55d-4bce-9b87-1b058670aa8e',
     'nbme-shelf-anatomy-1st-year',
     'A 22-year-old male athlete presents with a "heavy" feeling in his scrotum. He notes it feels like a "bag of worms" when he stands, but the sensation improves when he lies down.
 
@@ -1937,7 +1938,7 @@ E: Both sides have valves (though they may be incompetent in varicocele).',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '87299225-75dd-4cc5-b293-7dc668cf0c04',
+    '3754bdf5-6118-44b1-a277-b0ed131cf6b5',
     'nbme-shelf-anatomy-1st-year',
     'A 32-year-old female G2P1 at 19 weeks gestation undergoes a routine fetal anatomy scan. The radiologist identifies that the fetal heart is located entirely outside of the thoracic cavity, protruding through a midline defect in the chest wall.
 
@@ -1965,7 +1966,7 @@ E: Contributes to the diaphragm and the fibrous pericardium, but not the primary
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'e141942f-1dc3-4641-a8ba-dd04ac388c96',
+    '50909d4b-8c0a-4b98-ac2c-0876577eaa1e',
     'nbme-shelf-anatomy-1st-year',
     'A 45-year-old male presents to the ED with severe, tearing chest pain that radiates to his back between the scapulae. He has a history of uncontrolled hypertension.
 
@@ -1993,7 +1994,7 @@ D: Not directly responsible for the valvular murmur in the context of dissection
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '259c3c48-963a-415f-87c5-4e7224fdd9ff',
+    '5eb01c1a-90be-4217-bddc-f38a8c66d58f',
     'nbme-shelf-anatomy-1st-year',
     'A 28-year-old male professional baseball pitcher presents with numbness and tingling in the ring and little fingers of his left hand. He also notes weakness when trying to grip a baseball.
 
@@ -2021,7 +2022,7 @@ E: Site for radial nerve compression (Wrist drop).',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '61519895-35d5-40c3-b33e-08faf505c603',
+    'b52f8439-31e5-4f08-baf5-669fc14d8dc8',
     'nbme-shelf-anatomy-1st-year',
     'A 60-year-old male is undergoing an emergency repair of a ruptured abdominal aortic aneurysm (AAA). The surgeon notes the aneurysm is located just inferior to the origin of the renal arteries.
 
@@ -2045,7 +2046,7 @@ E: The gonadal vein drains into the renal vein on the left; the artery does not 
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'cd166bbd-6cc5-4c70-99d5-5a5f65f239ea',
+    '02498ef7-f76f-44f3-9438-da71b731ef46',
     'nbme-shelf-anatomy-1st-year',
     'A 1-day-old male infant is found to have an opening on the ventral surface of the penis. The urethral opening is located at the mid-shaft of the penis.
 
@@ -2073,7 +2074,7 @@ E: Leads to hydrocele or inguinal hernia.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '1233f12b-a55e-47b5-be5a-00fdf1e3cafc',
+    '413bb624-d4a2-4b8f-b6c1-07582c0245e5',
     'nbme-shelf-anatomy-1st-year',
     'A 50-year-old female presents with sudden onset of "double vision" and a drooping eyelid. She has a history of heavy smoking.
 
@@ -2097,7 +2098,7 @@ D & E: While CN III passes between these, the $PCom$ aneurysm is the classic hig
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'fe18576c-f746-4bd8-b2c4-b8ed6eb03041',
+    '3e239b4d-5f1e-4872-97b0-ba350af2f677',
     'nbme-shelf-anatomy-1st-year',
     'A 35-year-old male is brought to the ED after a motor vehicle accident where he sustained a "dashboard injury" to his flexed knee. He complains of severe pain and instability in his right knee.
 
@@ -2119,7 +2120,7 @@ E: Usually involves locking or popping with twisting motions (McMurray test).',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'decacbdc-74ce-442c-a90a-b9d3e30425e9',
+    '353fa3e1-6b77-4102-87f4-f689a1120a88',
     'nbme-shelf-anatomy-1st-year',
     'A 22-year-old female presents with a small, painless lump in her neck that moves when she swallows. She has no other symptoms.
 
@@ -2147,7 +2148,7 @@ E: The point of origin, but the remnant itself is found along the duct.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'a4118ff2-007e-4831-a528-1b0b1514beab',
+    '05571bf5-bb18-4046-ba13-aedb7ec000b6',
     'nbme-shelf-anatomy-1st-year',
     'A 70-year-old male presents with difficulty starting his urinary stream and frequent nighttime urination.
 
@@ -2169,7 +2170,7 @@ D & E: Not the primary sites for glandular hyperplasia.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    '59612053-a6e3-44db-9d91-27f3e1e27e4a',
+    'cbbd3047-3735-4822-aca0-ad7430512fd9',
     'nbme-shelf-anatomy-1st-year',
     'A 42-year-old female undergoes a thyroidectomy for a large multinodular goiter. Postoperatively, she notices that her voice is weak and she can no longer reach high-pitched notes when singing.
 
@@ -2193,7 +2194,7 @@ E: Innervates the infrahyoid (strap) muscles.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'f0018ee2-58ab-4653-9fea-555b6a747f40',
+    '62593820-37d8-4e08-8a37-a3cde58bd195',
     'nbme-shelf-anatomy-1st-year',
     'A 45-year-old male is brought to the emergency department after a high-speed motor vehicle accident. He was the restrained driver and hit the steering wheel with his chest. He complains of severe retrosternal pain.
 
@@ -2225,7 +2226,7 @@ E: This is a common site for a chest tube (midaxillary line), not pericardiocent
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'ee9a20dc-5bb5-4be2-bbd9-a895f35ae1bc',
+    '9c359e8b-0731-4107-8348-755206798082',
     'nbme-shelf-anatomy-1st-year',
     'A newborn male is noted to have a constant dribbling of urine from his umbilicus. The infant is otherwise healthy and was born at term.
 
@@ -2255,7 +2256,7 @@ E: The membrane that ruptures to form the urogenital and anal openings.',
 );
 INSERT INTO questions (id, topic_id, question_text, options, correct_option_index, explanation, difficulty)
 VALUES (
-    'b9f80739-eaec-4152-afa7-4842c74472ff',
+    '4f5f4ace-731c-408c-923a-bbcf367a9ba6',
     'nbme-shelf-anatomy-1st-year',
     'A 68-year-old male with a history of heavy alcohol use and cirrhosis is brought to the ED after vomiting a large amount of bright red blood.
 
