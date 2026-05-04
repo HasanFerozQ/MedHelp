@@ -1,0 +1,33 @@
+The Vignette
+
+A 55-year-old athlete undergoes cardiac catheterization as part of a sports medicine physiological assessment. A left ventricular pressure-volume loop is obtained, and his cardiovascular parameters are found to be within optimal ranges for his activity level.
+
+The Question
+
+Which point marks the beginning of isovolumetric relaxation?
+
+Choices
+
+A. Point A
+
+B. Point B
+
+C. Point C
+
+D. Point D
+
+Phase 3: Explanation & Answer Key
+
+Correct Answer: C
+
+Reasoning:
+
+Isovolumetric relaxation begins immediately after the ventricle has finished ejecting blood. At Point C, ventricular pressure falls below aortic pressure, causing the aortic valve to close. This produces the second heart sound ($S_2$). At this exact moment, the ventricle contains the End-Systolic Volume (ESV). Because both the aortic and mitral valves are now closed, the ventricle relaxes and pressure drops sharply without any change in volume (Line C to D).
+
+Incorrect Answer Breakdown:
+
+Point A (Mitral Valve Closes): This marks the end of diastole and the beginning of isovolumetric contraction.
+
+Point B (Aortic Valve Opens): This marks the end of isovolumetric contraction and the beginning of the ventricular ejection phase.
+
+Point D (Mitral Valve Opens): This marks the end of isovolumetric relaxation and the beginning of the ventricular filling phase.

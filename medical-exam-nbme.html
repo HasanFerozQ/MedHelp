@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBME Shelf Exams | MediHelp</title>
+  <meta name="description" content="High-yield NBME Shelf Exam preparation. Master clinical clerkships with our subject-wise 110-question mock exams." />
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+  <style>
+    .nbme-hero { 
+      padding: 60px 0; 
+      background: linear-gradient(135deg, var(--bg-elevated) 0%, rgba(59,130,246,0.05) 100%); 
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .mock-exam-cta {
+      background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      box-shadow: 0 20px 40px rgba(59,130,246,0.2);
+    }
+    
+    .step-nav { 
+      display: flex; 
+      gap: 10px; 
+      margin-bottom: 30px; 
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+    .step-tab {
+      padding: 12px 30px;
+      color: var(--text-muted);
+      font-weight: 800;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .step-tab:hover { color: var(--text-h); background: var(--bg-card); }
+    .step-tab.active { 
+      color: white; 
+      background: #3b82f6; 
+      box-shadow: 0 4px 15px rgba(59,130,246,0.3);
+    }
+
+    .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .topic-card { 
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; 
+      cursor: pointer; transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+    }
+    .topic-card:hover { border-color: #3b82f6; transform: translateY(-4px); box-shadow: 0 10px 20px rgba(59,130,246,0.1); }
+    .topic-card h3 { font-size: 18px; font-weight: 800; color: var(--text-h); line-height: 1.3; }
+    
+    .btn-mock {
+      padding: 16px 32px;
+      background: white;
+      color: #1e40af;
+      font-weight: 900;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .btn-mock:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+    @media (max-width: 768px) {
+      .mock-exam-cta { flex-direction: column; text-align: center; gap: 24px; }
+      .nbme-hero { padding: 40px 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR SAME AS GATEWAY -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png" alt="MediHelp">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+
+        <a href="medical-exam-semester.html">Semesters</a>
+        <a href="/pricing">Expert Help</a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-btn">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="nbme-hero">
+    <div class="container">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+      </div>
+      <h1 class="hero-h1">NBME <span style="color: #3b82f6;">Shelf Exams</span></h1>
+      <p class="hero-sub" style="margin-bottom: 0;">High-yield clinical content organized by year. Master your clerkships with subject-specific exams.</p>
+      
+      <!-- Mock Exam CTA -->
+      <div class="mock-exam-cta">
+        <div>
+          <div style="display: inline-block; padding: 4px 12px; background: rgba(255,255,255,0.2); border-radius: 20px; font-size: 11px; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Premium Feature · $24.99/Year</div>
+          <h2 style="font-size: 28px; font-weight: 900; margin-bottom: 8px;">Ready for your Shelf?</h2>
+          <p style="opacity: 0.9; font-weight: 600;">Simulate the real exam with our 110-question, 2hr 45min subject-wise Mock Exams.</p>
+        </div>
+        <a href="medical-exam-simulator.html?exam_id=nbme-shelf-anatomy-1st-year" class="btn-mock" style="display: inline-flex; align-items: center; gap: 8px;">Take Anatomy Shelf <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-bottom: 100px;">
+    <div class="step-nav" id="step-nav">
+      <div class="step-tab active" data-step="1st Year">1st Year</div>
+      <div class="step-tab" data-step="2nd Year">2nd Year</div>
+      <div class="step-tab" data-step="3rd Year">3rd Year</div>
+      <div class="step-tab" data-step="4th Year">4th Year</div>
+    </div>
+
+    <div id="topic-loading" style="text-align:center; padding: 40px; color: var(--text-muted);">Loading topics...</div>
+    <div class="topic-grid" id="topic-grid">
+      <!-- Topics injected here -->
+    </div>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Free tools and professional advocates helping patients fight medical billing errors and reduce hospital costs.</p>
+          <div style="margin-top:16px; display:flex; gap:12px; margin-bottom: 16px;">
+            <a href="https://www.linkedin.com/company/medihelplive/" target="_blank" rel="noopener" style="color:var(--text-muted); transition:0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'" title="Follow MediHelp on LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+          </div>
+          <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; background:rgba(34,197,94,0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(34,197,94,0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
+            <span style="font-size:11px; background:rgba(245,158,11,0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(245,158,11,0.2);">No Signup</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Free Tools</h4>
+          <ul>
+            <li><a href="/audit">Bill Audit Tool</a></li>
+            <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings Search</a></li>
+            <li><a href="/providers">Provider Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/pricing" style="color:var(--expert-amber); display: inline-flex; align-items: center; gap: 6px;">Human Bill Negotiation <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m12 3 1.91 5.82L21 12l-7.09 3.18L12 21l-1.91-5.82L3 12l7.09-3.18L12 3z"/></svg></a></li>
+            <li><a href="/blog">Patient Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
+        <span>© 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms & Disclaimer</a></span>
+        <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const stepTabs = document.querySelectorAll('.step-tab');
+    let currentStep = "1st Year";
+
+    stepTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        stepTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentStep = tab.dataset.step;
+        loadTopics(currentStep);
+      });
+    });
+
+    async function loadTopics(categoryName) {
+      const grid = document.getElementById('topic-grid');
+      const loader = document.getElementById('topic-loading');
+      
+      grid.innerHTML = '';
+      loader.classList.remove('hidden');
+
+      // Fetch topics where usmle_step == stepId (Exclude internal mock pool)
+      // We explicitly fetch counts for both standalone MCQs and nested Case Questions
+      const { data, error } = await window.dbClient
+        .from('topics')
+        .select(`
+          *, 
+          mcqs(id),
+          case_studies(
+            id,
+            case_questions(id)
+          )
+        `)
+        .eq('category', categoryName)
+        .order('created_at', { ascending: true });
+
+      loader.classList.add('hidden');
+
+      if (error || !data || !data.length) {
+        grid.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">
+          No topics found for ${categoryName} yet.
+        </p>`;
+        return;
+      }
+
+      data.forEach((topic, index) => {
+        const isFreeDemo = (index === 0);
+        // Calculate total questions: Standalone MCQs + All questions inside Case Studies
+        let caseQuestionCount = 0;
+        if (topic.case_studies) {
+          topic.case_studies.forEach(cs => {
+            if (cs.case_questions) {
+              caseQuestionCount += cs.case_questions.length;
+            }
+          });
+        }
+        
+        const totalQuestions = (topic.mcqs ? topic.mcqs.length : 0) + caseQuestionCount;
+        
+        const card = document.createElement('div');
+        card.className = 'topic-card';
+        card.innerHTML = `
+          <div>
+            ${isFreeDemo ? '<div style="display: inline-block; padding: 2px 8px; background: #3b82f6; color: white; border-radius: 4px; font-size: 10px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Free Demo</div>' : ''}
+            <h3>${topic.title}</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Master high-yield concepts for ${topic.title}.</p>
+          </div>
+          <div style="font-size: 12px; font-weight: 800; color: #3b82f6;">${totalQuestions} Questions Available</div>
+        `;
+        card.onclick = () => {
+           window.location.href = `medical-exam-simulator.html?exam_id=${topic.id}`;
+        };
+        grid.appendChild(card);
+      });
+    }
+
+    // Initial load
+    if (window.dbClient) loadTopics("1st Year");
+    
+    // Theme toggle
+    if (window.MediHelp) MediHelp.initTheme();
+  </script>
+</body>
+</html>

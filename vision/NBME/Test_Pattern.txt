@@ -1,0 +1,2844 @@
+A 52-year-old male construction worker presents with progressive difficulty raising his right arm over the past 3 months. He reports chronic shoulder pain worsened by overhead activity. He has a 20-pack-year smoking history.
+
+Physical Examination:
+Temp: 36.8°C
+HR: 78/min
+BP: 128/80 mmHg
+RR: 14/min
+SpO₂: 98%
+Weakness in arm abduction from 15°–90°
+Positive empty can test
+No sensory deficits
+Labs:
+CBC: Normal
+ESR: Mildly elevated
+Question:
+
+Which of the following structures is most likely injured?
+
+A. Axillary nerve
+B. Suprascapular nerve
+C. Long thoracic nerve
+D. Thoracodorsal nerve
+E. Radial nerve
+
+Answer: B — Suprascapular nerve
+Explanation:
+
+The supraspinatus muscle (initiates abduction 0–15° and assists beyond) is innervated by the suprascapular nerve. Chronic impingement damages this nerve.
+
+Incorrect:
+A: Axillary → deltoid (15°–90°), but initiation preserved here
+C: Long thoracic → winged scapula
+D: Thoracodorsal → latissimus dorsi
+E: Radial → wrist extension
+Question 2
+
+A newborn male presents with excessive salivation and choking during feeding.
+
+Physical Examination:
+Temp: 36.5°C
+HR: 140/min
+RR: 40/min
+SpO₂: 92%
+Abdominal distension
+Inability to pass nasogastric tube
+Labs:
+ABG: Mild respiratory acidosis
+Question:
+
+What is the embryological cause of this condition?
+
+A. Failure of neural crest migration
+B. Abnormal tracheoesophageal septum formation
+C. Persistence of vitelline duct
+D. Failure of midgut rotation
+E. Defective cloacal division
+
+Answer: B — Abnormal tracheoesophageal septum
+Explanation:
+
+Classic esophageal atresia with TE fistula due to improper division of foregut.
+
+Incorrect:
+A: Hirschsprung disease
+C: Meckel diverticulum
+D: Malrotation
+E: Urogenital anomalies
+Question 3
+
+A 34-year-old female presents after a thyroidectomy with hoarseness.
+
+Physical Exam:
+Temp: 37°C
+HR: 82/min
+BP: 120/76 mmHg
+RR: 16/min
+Weak voice
+Cannot abduct vocal cords
+Question:
+
+Which nerve is most likely injured?
+
+A. External branch of superior laryngeal nerve
+B. Internal branch of superior laryngeal nerve
+C. Recurrent laryngeal nerve
+D. Glossopharyngeal nerve
+E. Hypoglossal nerve
+
+Answer: C — Recurrent laryngeal nerve
+Explanation:
+
+Controls all intrinsic laryngeal muscles except cricothyroid.
+
+Incorrect:
+A: Pitch control only
+B: Sensory above vocal cords
+D/E: Not involved in phonation
+Question 4
+
+A 60-year-old male presents with sudden loss of vision in the right eye.
+
+Physical Exam:
+Fundoscopy: Cherry red spot
+Question:
+
+Which artery is occluded?
+
+A. Posterior cerebral artery
+B. Central retinal artery
+C. Ophthalmic artery
+D. Middle cerebral artery
+E. Anterior cerebral artery
+
+Answer: B — Central retinal artery
+Explanation:
+
+Classic central retinal artery occlusion → painless vision loss.
+
+Incorrect:
+C: Would affect orbit more broadly
+Others: cortical deficits
+Question 5
+
+A 25-year-old athlete presents with scapular winging after trauma.
+
+Question:
+
+Which muscle is paralyzed?
+
+A. Trapezius
+B. Rhomboid major
+C. Serratus anterior
+D. Levator scapulae
+E. Deltoid
+
+Answer: C — Serratus anterior
+Explanation:
+
+Injury to long thoracic nerve → winged scapula.
+
+Incorrect:
+A: Drooping shoulder
+B: Retraction weakness
+Others unrelated
+Question 6
+
+A newborn has cyanosis that improves when crying.
+
+Question:
+
+Most likely diagnosis?
+
+A. Tetralogy of Fallot
+B. Transposition of great vessels
+C. Choanal atresia
+D. PDA
+E. Truncus arteriosus
+
+Answer: C — Choanal atresia
+Explanation:
+
+Cyanosis relieved by crying → nasal obstruction.
+
+Question 7
+
+A patient presents with inability to extend wrist.
+
+Question:
+
+Which nerve is damaged?
+
+A. Median nerve
+B. Ulnar nerve
+C. Radial nerve
+D. Musculocutaneous nerve
+E. Axillary nerve
+
+Answer: C — Radial nerve
+Explanation:
+
+Radial nerve → wrist extension.
+
+Question 8
+
+Failure of neural crest migration leads to:
+
+A. Meckel diverticulum
+B. Hirschsprung disease
+C. Omphalocele
+D. Gastroschisis
+E. Pyloric stenosis
+
+Answer: B — Hirschsprung disease
+Question 9
+
+A patient cannot invert the foot.
+
+Question:
+
+Which nerve is injured?
+
+A. Deep fibular
+B. Superficial fibular
+C. Tibial nerve
+D. Common fibular
+E. Sural nerve
+
+Answer: C — Tibial nerve
+Question 10
+
+A newborn has abdominal contents protruding into umbilical cord.
+
+Question:
+
+Diagnosis?
+
+A. Gastroschisis
+B. Omphalocele
+C. Meckel diverticulum
+D. Hernia
+E. Diastasis recti
+
+Answer: B — Omphalocele
+
+
+Question 11 (Brachial Plexus)
+
+A 28-year-old male motorcyclist is brought to the ED after a high-speed crash. His right upper limb is adducted, internally rotated, and extended at the elbow with pronated forearm.
+
+Physical Examination:
+Temp: 36.7°C
+HR: 110/min
+BP: 134/82 mmHg
+RR: 20/min
+SpO₂: 97%
+Loss of shoulder abduction
+Loss of elbow flexion
+“Waiter’s tip” posture
+Labs:
+Normal
+Question:
+
+Which nerve roots are most likely injured?
+
+A. C5–C6
+B. C7–C8
+C. C8–T1
+D. T1–T2
+E. C6–C7
+
+Answer: A — C5–C6
+Explanation:
+
+Classic Erb-Duchenne palsy (upper trunk).
+Muscles affected: deltoid, biceps, supraspinatus.
+
+Incorrect:
+B: Middle trunk → less classic posture
+C: Klumpke palsy (claw hand)
+Others not consistent
+Question 12 (Embryology – Aortic Arches)
+
+A newborn presents with difficulty swallowing and stridor.
+
+Imaging:
+Double aortic arch compressing trachea/esophagus
+Question:
+
+Which embryological structure failed to regress?
+
+A. Left 4th arch
+B. Right dorsal aorta
+C. Left dorsal aorta
+D. Right 4th arch
+E. Left 6th arch
+
+Answer: B — Right dorsal aorta
+Explanation:
+
+Persistence → vascular ring compressing airway.
+
+Question 13 (Neuroanatomy – Brainstem)
+
+A 63-year-old male presents with:
+
+Right facial paralysis
+Decreased lacrimation
+Hyperacusis
+Question:
+
+Lesion is most likely in which structure?
+
+A. Medial medulla
+B. Lateral medulla
+C. Pons (facial nucleus)
+D. Midbrain tectum
+E. Internal capsule
+
+Answer: C — Pons
+Explanation:
+
+Facial nerve nucleus located in pons → LMN facial paralysis.
+
+Question 14 (Inguinal Canal Anatomy)
+
+A 45-year-old male presents with a bulge above the inguinal ligament.
+
+Question:
+
+A direct inguinal hernia passes through which structure?
+
+A. Deep inguinal ring
+B. Hesselbach’s triangle
+C. Femoral canal
+D. Superficial ring only
+E. Lacunar ligament
+
+Answer: B — Hesselbach’s triangle
+Explanation:
+
+Direct hernias occur medial to inferior epigastric vessels.
+
+Question 15 (Embryology – Midgut Rotation)
+
+A neonate presents with bilious vomiting.
+
+Imaging:
+Corkscrew appearance of intestines
+Question:
+
+What is the underlying embryological defect?
+
+A. Failure of foregut rotation
+B. Failure of midgut rotation
+C. Failure of hindgut migration
+D. Persistent vitelline duct
+E. Abnormal cloacal division
+
+Answer: B — Midgut rotation failure
+Question 16 (Lower Limb Nerve Injury)
+
+A 40-year-old patient cannot dorsiflex the foot.
+
+Question:
+
+Which nerve is injured?
+
+A. Tibial nerve
+B. Deep fibular nerve
+C. Superficial fibular nerve
+D. Femoral nerve
+E. Obturator nerve
+
+Answer: B — Deep fibular nerve
+Explanation:
+
+Controls anterior compartment → dorsiflexion.
+
+Question 17 (Embryology – Diaphragm)
+
+A newborn presents with respiratory distress.
+
+Imaging:
+Abdominal organs in thoracic cavity
+Question:
+
+Which structure failed to develop properly?
+
+A. Septum transversum
+B. Pleuroperitoneal membranes
+C. Dorsal mesentery
+D. Body wall muscles
+E. Central tendon
+
+Answer: B — Pleuroperitoneal membranes
+Explanation:
+
+Defect → Bochdalek hernia.
+
+Question 18 (Cranial Nerve Anatomy)
+
+A patient cannot abduct the eye.
+
+Question:
+
+Which nerve is affected?
+
+A. CN III
+B. CN IV
+C. CN VI
+D. CN V1
+E. CN II
+
+Answer: C — CN VI
+Question 19 (Embryology – Neural Tube)
+
+A fetus has spina bifida with exposed neural tissue.
+
+Question:
+
+Failure of which process?
+
+A. Neural crest migration
+B. Neural tube closure
+C. Somite differentiation
+D. Endoderm formation
+E. Mesoderm segmentation
+
+Answer: B — Neural tube closure
+Question 20 (Portal-Systemic Anastomosis)
+
+A patient with cirrhosis develops caput medusae.
+
+Question:
+
+Which veins are involved?
+
+A. Superior epigastric + inferior epigastric
+B. Paraumbilical + superficial epigastric
+C. Splenic + renal
+D. Portal + hepatic veins
+E. Gastric + esophageal
+
+Answer: B — Paraumbilical + superficial epigastric
+
+
+A 47-year-old male presents with diplopia and inability to abduct the right eye. He also has decreased corneal reflex.
+
+Physical Examination:
+Temp: 37.1°C
+HR: 84/min
+BP: 130/78 mmHg
+RR: 16/min
+SpO₂: 98%
+Right lateral rectus paralysis
+Loss of sensation over forehead
+Labs:
+Normal
+Question:
+
+Which structure is most likely affected?
+
+A. Internal carotid artery
+B. Cavernous sinus
+C. Superior orbital fissure only
+D. Optic canal
+E. Pterygopalatine fossa
+
+Answer: B — Cavernous sinus
+Explanation:
+
+CN VI (abduction) + V1 (forehead sensation) involvement → lesion in cavernous sinus, where these structures run together.
+
+Incorrect:
+A: ICA alone doesn’t cause V1 sensory loss
+C: Would spare some structures
+D: Only optic nerve
+E: Not involving CN VI
+Question 22 (Embryology – Pharyngeal Arches)
+
+A newborn has facial asymmetry and difficulty chewing.
+
+Question:
+
+Muscles of mastication arise from which pharyngeal arch?
+
+A. First arch
+B. Second arch
+C. Third arch
+D. Fourth arch
+E. Sixth arch
+
+Answer: A — First arch
+Explanation:
+
+First arch → CN V3 → muscles of mastication.
+
+Question 23 (Posterior Triangle of Neck)
+
+A 32-year-old female undergoes lymph node biopsy in the posterior triangle and develops shoulder droop.
+
+Question:
+
+Which nerve was injured?
+
+A. Phrenic nerve
+B. Vagus nerve
+C. Spinal accessory nerve
+D. Hypoglossal nerve
+E. Greater auricular nerve
+
+Answer: C — Spinal accessory nerve
+Explanation:
+
+CN XI innervates trapezius → shoulder elevation.
+
+Question 24 (Embryology – Kidney Ascent)
+
+A patient has a pelvic kidney.
+
+Question:
+
+What caused this anomaly?
+
+A. Failure of ureteric bud formation
+B. Failure of kidney ascent
+C. Failure of metanephric differentiation
+D. Abnormal cloacal division
+E. Persistence of pronephros
+
+Answer: B — Failure of ascent
+Question 25 (Circle of Willis)
+
+A patient has an aneurysm causing bitemporal hemianopia.
+
+Question:
+
+Which artery is involved?
+
+A. Middle cerebral artery
+B. Posterior cerebral artery
+C. Anterior cerebral artery
+D. Anterior communicating artery
+E. Basilar artery
+
+Answer: D — Anterior communicating artery
+Explanation:
+
+Compresses optic chiasm → bitemporal hemianopia.
+
+Question 26 (Embryology – Heart Development)
+
+A newborn has persistent truncus arteriosus.
+
+Question:
+
+Failure of which process?
+
+A. Neural crest migration
+B. Endocardial cushion formation
+C. Septum primum formation
+D. Septum secundum formation
+E. Cardiac looping
+
+Answer: A — Neural crest migration
+Question 27 (Upper Limb Compartments)
+
+A patient has inability to extend fingers but wrist extension is weak (not absent).
+
+Question:
+
+Which nerve branch is injured?
+
+A. Radial nerve (main trunk)
+B. Posterior interosseous nerve
+C. Median nerve
+D. Ulnar nerve
+E. Musculocutaneous nerve
+
+Answer: B — Posterior interosseous nerve
+Explanation:
+
+Branch of radial nerve → finger extension only.
+
+Question 28 (Embryology – Gut Derivatives)
+
+Which structure is derived from the midgut?
+
+A. Esophagus
+B. Stomach
+C. Duodenum (proximal)
+D. Appendix
+E. Liver
+
+Answer: D — Appendix
+Question 29 (Spinal Cord Tracts)
+
+A lesion causes:
+
+Loss of pain and temperature on left side
+Motor weakness on right side
+Question:
+
+Where is the lesion?
+
+A. Left lateral medulla
+B. Right lateral medulla
+C. Left spinal cord (hemisection)
+D. Right spinal cord (hemisection)
+E. Central cord
+
+Answer: D — Right hemisection
+Explanation:
+
+Brown-Séquard syndrome.
+
+Question 30 (Embryology – Face Development)
+
+A newborn has cleft lip.
+
+Question:
+
+Failure of fusion between which structures?
+
+A. Maxillary + lateral nasal
+B. Maxillary + medial nasal
+C. Mandibular + maxillary
+D. Frontonasal + mandibular
+E. Lateral nasal + mandibular
+
+Answer: B — Maxillary + medial nasal
+
+
+
+Question 31 (Femoral Triangle)
+
+A 62-year-old male undergoes femoral artery catheterization and later develops weakness in knee extension.
+
+Physical Examination:
+Temp: 36.9°C
+HR: 88/min
+BP: 132/84 mmHg
+RR: 16/min
+SpO₂: 98%
+Weak quadriceps
+Decreased patellar reflex
+Question:
+
+Which structure was most likely injured?
+
+A. Femoral nerve
+B. Obturator nerve
+C. Sciatic nerve
+D. Saphenous nerve
+E. Lateral femoral cutaneous nerve
+
+Answer: A — Femoral nerve
+Explanation:
+
+Femoral nerve lies lateral to femoral artery → supplies quadriceps.
+
+Incorrect:
+B: Adductor weakness
+C: Posterior thigh
+D: Sensory only
+E: Lateral thigh sensation
+Question 32 (Embryology – Lung Development)
+
+A premature infant has respiratory distress due to lack of surfactant.
+
+Question:
+
+Which embryologic stage is affected?
+
+A. Pseudoglandular
+B. Canalicular
+C. Saccular
+D. Alveolar
+E. Embryonic
+
+Answer: C — Saccular stage
+Explanation:
+
+Surfactant production begins late canalicular, increases in saccular stage.
+
+Question 33 (Medial Medullary Syndrome)
+
+A patient presents with:
+
+Contralateral paralysis
+Loss of vibration sense
+Tongue deviates toward lesion
+Question:
+
+Which artery is occluded?
+
+A. Posterior inferior cerebellar artery
+B. Anterior spinal artery
+C. Basilar artery
+D. Superior cerebellar artery
+E. Vertebral artery
+
+Answer: B — Anterior spinal artery
+Question 34 (Embryology – Testicular Descent)
+
+A child has undescended testes.
+
+Question:
+
+Which structure guides testicular descent?
+
+A. Processus vaginalis
+B. Gubernaculum
+C. Mesonephric duct
+D. Mullerian duct
+E. Tunica vaginalis
+
+Answer: B — Gubernaculum
+Question 35 (Cubital Fossa)
+
+A patient suffers injury during venipuncture.
+
+Question:
+
+Which structure lies medial to the brachial artery in the cubital fossa?
+
+A. Biceps tendon
+B. Median nerve
+C. Radial nerve
+D. Cephalic vein
+E. Basilic vein
+
+Answer: B — Median nerve
+Explanation:
+
+Order: TAN → Tendon, Artery, Nerve.
+
+Question 36 (Embryology – Neural Crest)
+
+Which structure is derived from neural crest cells?
+
+A. Skeletal muscle
+B. Melanocytes
+C. Hepatocytes
+D. Renal tubules
+E. Endothelium
+
+Answer: B — Melanocytes
+Question 37 (Internal Capsule)
+
+A stroke causes:
+
+Contralateral hemiplegia
+No sensory loss
+Question:
+
+Which part is affected?
+
+A. Anterior limb
+B. Genu
+C. Posterior limb
+D. Retrolenticular
+E. Sublenticular
+
+Answer: C — Posterior limb
+Question 38 (Embryology – Foregut Derivatives)
+
+Which structure arises from the foregut?
+
+A. Appendix
+B. Transverse colon (distal)
+C. Liver
+D. Cecum
+E. Ascending colon
+
+Answer: C — Liver
+Question 39 (Rotator Cuff Anatomy)
+
+A patient cannot externally rotate the shoulder.
+
+Question:
+
+Which muscle is affected?
+
+A. Subscapularis
+B. Teres minor
+C. Deltoid
+D. Pectoralis major
+E. Latissimus dorsi
+
+Answer: B — Teres minor
+Question 40 (Embryology – Cloacal Division)
+
+Failure of cloacal division results in:
+
+A. Hypospadias
+B. Epispadias
+C. Persistent cloaca
+D. Renal agenesis
+E. Horseshoe kidney
+
+Answer: C — Persistent cloaca
+🧠 FINAL SET
+Set 5 (Q41–50)
+Question 41 (Popliteal Fossa)
+
+A penetrating injury affects the deepest structure.
+
+Question:
+
+Which structure is most posterior/deep?
+
+A. Tibial nerve
+B. Popliteal vein
+C. Popliteal artery
+D. Common fibular nerve
+E. Small saphenous vein
+
+Answer: C — Popliteal artery
+Question 42 (Embryology – Pancreas)
+
+Annular pancreas results from:
+
+A. Failure of ventral bud rotation
+B. Failure of dorsal bud formation
+C. Excessive apoptosis
+D. Neural crest defect
+E. Cloacal abnormality
+
+Answer: A — Ventral bud rotation failure
+Question 43 (Facial Nerve Lesion)
+
+A lesion proximal to chorda tympani causes:
+
+A. Loss of taste anterior 2/3 tongue
+B. Loss of taste posterior 1/3
+C. Loss of smell
+D. Loss of vision
+E. Loss of gag reflex
+
+Answer: A — Loss of taste anterior 2/3
+Question 44 (Embryology – Atrial Septum)
+
+Patent foramen ovale results from:
+
+A. Failure of septum primum
+B. Failure of septum secundum
+C. Failure of fusion of septa
+D. Neural crest defect
+E. Endocardial cushion defect
+
+Answer: C — Failure of fusion
+Question 45 (Thoracic Outlet)
+
+Compression causes:
+
+Weak hand grip
+Sensory loss medial forearm
+Question:
+
+Which structure is compressed?
+
+A. Upper trunk
+B. Middle trunk
+C. Lower trunk
+D. Lateral cord
+E. Posterior cord
+
+Answer: C — Lower trunk
+Question 46 (Embryology – Vitelline Duct)
+
+Persistence leads to:
+
+A. Omphalocele
+B. Gastroschisis
+C. Meckel diverticulum
+D. Umbilical hernia
+E. Diaphragmatic hernia
+
+Answer: C — Meckel diverticulum
+Question 47 (Subclavian Artery Branches)
+
+Which branch arises from the first part?
+
+A. Vertebral artery
+B. Suprascapular artery
+C. Dorsal scapular artery
+D. Circumflex scapular artery
+E. Thoracodorsal artery
+
+Answer: A — Vertebral artery
+Question 48 (Embryology – Urachus)
+
+Failure of urachus closure results in:
+
+A. Vesicoureteral reflux
+B. Patent urachus
+C. Meckel diverticulum
+D. Renal agenesis
+E. Bladder exstrophy
+
+Answer: B — Patent urachus
+Question 49 (Cerebellar Lesion)
+
+A lesion causes ipsilateral ataxia.
+
+Question:
+
+Which structure is affected?
+
+A. Cerebellar hemisphere
+B. Basal ganglia
+C. Thalamus
+D. Internal capsule
+E. Red nucleus
+
+Answer: A — Cerebellar hemisphere
+Question 50 (Embryology – Pharyngeal Pouches)
+
+Which structure arises from the third pouch?
+
+A. Thyroid gland
+B. Inferior parathyroid
+C. Superior parathyroid
+D. Thymus
+E. Tonsils
+
+Answer: D — Thymus
+
+Question 51 (Axilla – Surgical Anatomy)
+
+A 55-year-old female undergoes axillary lymph node dissection for breast carcinoma. Postoperatively, she has difficulty elevating her arm above the horizontal plane.
+
+Physical Examination:
+Temp: 37.0°C
+HR: 80/min
+BP: 126/78 mmHg
+RR: 14/min
+SpO₂: 99%
+Weak upward rotation of scapula
+Shoulder droop
+Labs:
+Normal
+Question:
+
+Which nerve was most likely injured?
+
+A. Long thoracic nerve
+B. Thoracodorsal nerve
+C. Spinal accessory nerve
+D. Axillary nerve
+E. Dorsal scapular nerve
+
+Answer: C — Spinal accessory nerve
+Explanation:
+
+Trapezius (CN XI) → required for elevation above horizontal.
+
+Incorrect:
+A: Winged scapula
+B: Latissimus dorsi
+D: Deltoid (abduction 15–90°)
+E: Rhomboids
+Question 52 (Embryology – Esophageal Development)
+
+A neonate has isolated esophageal atresia without fistula.
+
+Question:
+
+Which developmental error occurred?
+
+A. Failure of recanalization
+B. Abnormal tracheoesophageal septum
+C. Neural crest defect
+D. Failure of foregut rotation
+E. Abnormal cloacal division
+
+Answer: A — Failure of recanalization
+Question 53 (Carpal Tunnel Anatomy)
+
+A 40-year-old typist has numbness in the lateral 3½ fingers.
+
+Physical Examination:
+Positive Tinel sign
+Thenar atrophy
+Question:
+
+Which structure is compressed?
+
+A. Ulnar nerve
+B. Radial nerve
+C. Median nerve
+D. Flexor carpi ulnaris tendon
+E. Palmaris longus tendon
+
+Answer: C — Median nerve
+Question 54 (Embryology – Thyroid Development)
+
+A patient has a midline neck cyst that moves with swallowing.
+
+Question:
+
+What is the embryologic origin?
+
+A. Second pharyngeal pouch
+B. Thyroglossal duct
+C. Neural crest cells
+D. Third pharyngeal arch
+E. Endoderm of foregut
+
+Answer: B — Thyroglossal duct
+Question 55 (Cranial Nerve – Jugular Foramen)
+
+A tumor compresses structures passing through the jugular foramen.
+
+Question:
+
+Which nerve is affected?
+
+A. CN V
+B. CN VII
+C. CN IX
+D. CN II
+E. CN VI
+
+Answer: C — CN IX
+Question 56 (Embryology – Limb Development)
+
+A fetus shows absence of radius.
+
+Question:
+
+Which signaling center is responsible for anterior-posterior limb patterning?
+
+A. Apical ectodermal ridge
+B. Zone of polarizing activity
+C. Somites
+D. Neural crest
+E. Lateral plate mesoderm
+
+Answer: B — Zone of polarizing activity
+Question 57 (Gluteal Region Anatomy)
+
+An intramuscular injection is improperly given in the medial buttock, leading to foot drop.
+
+Physical Examination:
+Loss of dorsiflexion
+Sensory loss lateral leg
+Question:
+
+Which nerve is injured?
+
+A. Superior gluteal nerve
+B. Inferior gluteal nerve
+C. Sciatic nerve
+D. Femoral nerve
+E. Obturator nerve
+
+Answer: C — Sciatic nerve
+Question 58 (Embryology – Interatrial Septum)
+
+A defect allows left-to-right shunting between atria.
+
+Question:
+
+Which structure normally closes after birth?
+
+A. Ductus arteriosus
+B. Foramen ovale
+C. Ductus venosus
+D. Umbilical vein
+E. Umbilical arteries
+
+Answer: B — Foramen ovale
+Question 59 (Abdominal Vasculature)
+
+A patient has ischemia of the midgut.
+
+Question:
+
+Which artery is occluded?
+
+A. Celiac trunk
+B. Superior mesenteric artery
+C. Inferior mesenteric artery
+D. Renal artery
+E. Splenic artery
+
+Answer: B — Superior mesenteric artery
+Question 60 (Embryology – Pharyngeal Clefts)
+
+Persistence of the second pharyngeal cleft leads to:
+
+A. Branchial cyst
+B. Thyroglossal cyst
+C. Dermoid cyst
+D. Lymphangioma
+E. Hemangioma
+
+Answer: A — Branchial cyst
+
+Question 61 (Brachial Plexus Trap – Root vs Branch)
+
+A 29-year-old man presents after a fall with:
+
+Loss of elbow flexion
+Loss of forearm supination
+Preserved shoulder abduction
+Physical Exam:
+Temp: 36.8°C
+HR: 76/min
+BP: 124/80 mmHg
+RR: 14/min
+Question:
+
+Which structure is most likely injured?
+
+A. Upper trunk (C5–C6)
+B. Musculocutaneous nerve
+C. Axillary nerve
+D. Lateral cord
+E. Radial nerve
+
+Answer: B — Musculocutaneous nerve
+Trap Insight:
+
+Erb palsy would affect shoulder abduction too.
+Isolated deficit → distal nerve (musculocutaneous).
+
+Incorrect:
+A: Would affect deltoid
+C: Deltoid only
+D: Broader deficits
+E: Extension deficits
+Question 62 (Embryology – Rotation Trap)
+
+A neonate has nonrotation of the gut. The colon lies entirely on the left side.
+
+Question:
+
+At what stage did the defect occur?
+
+A. 90° rotation only
+B. 180° rotation
+C. Failure of initial 90° rotation
+D. Failure of return to abdominal cavity
+E. Failure of fixation
+
+Answer: A — Only initial 90° rotation occurred
+Trap Insight:
+
+NBME loves distinguishing:
+
+Nonrotation = 90° only completed
+Question 63 (Neuroanatomy – Crossing Fibers Trap)
+
+A lesion causes:
+
+Ipsilateral facial paralysis
+Contralateral body paralysis
+Question:
+
+Where is the lesion?
+
+A. Medial medulla
+B. Lateral medulla
+C. Pons (facial colliculus)
+D. Midbrain crus cerebri
+E. Internal capsule
+
+Answer: C — Pons
+Trap Insight:
+
+“Crossed findings” + facial nerve involvement = pons
+
+Question 64 (Embryology – Aortic Arch Derivatives Trap)
+
+Which structure is derived from the left 6th aortic arch?
+
+A. Left common carotid
+B. Left pulmonary artery
+C. Aortic arch
+D. Subclavian artery
+E. Internal carotid artery
+
+Answer: B — Left pulmonary artery
+Trap Insight:
+
+Left 6th → pulmonary artery + ductus arteriosus
+
+Question 65 (Pelvic Anatomy – Ureter Trap)
+
+During hysterectomy, a surgeon accidentally ligates the ureter near the uterine artery.
+
+Question:
+
+Where does this occur?
+
+A. At pelvic brim
+B. Near cervix
+C. At bladder dome
+D. At ovarian ligament
+E. At urethra
+
+Answer: B — Near cervix
+Trap Insight:
+
+“Water under the bridge” → ureter under uterine artery.
+
+Question 66 (Embryology – Neural Crest Trap)
+
+Which defect is caused by failure of neural crest migration?
+
+A. Ventricular septal defect
+B. Tetralogy of Fallot
+C. Atrial septal defect
+D. Patent ductus arteriosus
+E. Coarctation of aorta
+
+Answer: B — Tetralogy of Fallot
+Trap Insight:
+
+Outflow tract defects = neural crest.
+
+Question 67 (Upper Limb – Compartment Trap)
+
+A patient cannot extend MCP joints but can extend wrist.
+
+Question:
+
+Which structure is damaged?
+
+A. Radial nerve (axilla)
+B. Posterior interosseous nerve
+C. Deep branch of ulnar nerve
+D. Median nerve
+E. Musculocutaneous nerve
+
+Answer: B — Posterior interosseous nerve
+Trap Insight:
+
+Wrist extension preserved = radial nerve intact proximally.
+
+Question 68 (Embryology – Diaphragm Components Trap)
+
+Which structure contributes to the central tendon of diaphragm?
+
+A. Pleuroperitoneal membrane
+B. Septum transversum
+C. Dorsal mesentery
+D. Body wall
+E. Somites
+
+Answer: B — Septum transversum
+Question 69 (Circle of Willis – Subtle Trap)
+
+An aneurysm causes:
+
+Contralateral lower limb weakness
+No upper limb deficit
+Question:
+
+Which artery is involved?
+
+A. Middle cerebral artery
+B. Anterior cerebral artery
+C. Posterior cerebral artery
+D. Basilar artery
+E. Anterior communicating artery
+
+Answer: B — Anterior cerebral artery
+Trap Insight:
+
+ACA → lower limb cortex
+
+Question 70 (Embryology – Pharyngeal Arch Nerves Trap)
+
+Which nerve is associated with the 4th pharyngeal arch?
+
+A. CN V
+B. CN VII
+C. CN IX
+D. CN X (superior laryngeal)
+E. CN X (recurrent laryngeal)
+
+Answer: D — Superior laryngeal nerve
+Trap Insight:
+4th arch → superior laryngeal
+6th arch → recurrent laryngeal
+
+
+
+-------------------------------------------- --------------------------------------------
+-------------------------------------------- --------------------------------------------
+-------------------------------------------- --------------------------------------------
+
+A 67-year-old male retired construction worker presents to his primary care physician with a 3-month history of progressive dysphagia to solids, a 12-pound unintentional weight loss, and a persistent cough that worsens when lying down. He has a 40-pack-year smoking history and drinks 2–3 glasses of whiskey nightly. He denies hemoptysis or chest pain.
+Physical Examination:
+Vital Signs: Temp: 37.1°C, HR: 88/min, BP: 142/88 mmHg, RR: 18/min, SpO₂: 96% on room air.
+General: Cachectic-appearing male in no acute distress.
+Head & Neck: Left supraclavicular lymphadenopathy (Virchow's node, ~2 cm, firm, non-tender). No jugular venous distension.
+Chest: Dull percussion and decreased breath sounds at the right lung base.
+Abdomen: Non-tender, no organomegaly.
+Laboratory Results:
+Hemoglobin: 10.1 g/dL (Normal: 13.5–17.5)
+MCV: 78 fL (Normal: 80–100)
+WBC: 9,800/mm³ (Normal: 4,500–11,000)
+Albumin: 2.9 g/dL (Normal: 3.5–5.0)
+ALT: 38 U/L (Normal: 7–56)
+Alkaline Phosphatase: 210 U/L (Normal: 44–147)
+Barium swallow: Irregular mucosal narrowing in the mid-esophagus.
+Which of the following best explains the presence of the left supraclavicular lymphadenopathy in this patient?
+A. Direct extension of the esophageal tumor into adjacent lymphatic channels of the mediastinum.
+B. Hematogenous spread of tumor cells via the azygos venous system to the thoracic duct.
+C. Lymphatic drainage of the abdominal and thoracic viscera converges into the thoracic duct, which empties near the left subclavian vein, making this the terminal node for distant metastases.
+D. The right lymphatic duct drains the esophagus directly into the right subclavian vein, causing preferential right-sided nodal involvement.
+E. Retrograde lymphatic flow from mediastinal nodes secondary to elevated right atrial pressure.
+Correct Answer: C
+Reasoning: The left supraclavicular (Virchow's) node is the sentinel node for intra-abdominal and thoracic malignancies. This is explained entirely by the anatomy of the thoracic duct (Moore's Clinically Oriented Anatomy). The thoracic duct begins at the cisterna chyli (L1–L2), ascends through the posterior mediastinum to the right of the aorta, crosses to the left at T4–T5, and empties into the junction of the left internal jugular and left subclavian veins. Because it collects lymph from virtually all of the body below the diaphragm plus the left thorax, metastatic cells traveling via lymphatics preferentially deposit at this terminal node — the left supraclavicular (Virchow's) node. This finding (Troisier's sign) signals advanced metastatic disease.
+Incorrect Answer Breakdown:
+A: Direct local extension would cause mediastinal lymphadenopathy, not a palpable left supraclavicular node. Local extension is a different mechanism than distant nodal metastasis.
+B: The azygos system is a venous structure, not lymphatic. Hematogenous spread would seed the liver and lungs before causing a palpable supraclavicular node.
+D: The right lymphatic duct drains the right thorax, right arm, and right head/neck — it does NOT specifically drain the esophagus, and right supraclavicular involvement is less classic for esophageal cancer than left-sided Virchow's node.
+E: Retrograde lymphatic flow (as seen in cardiac failure or superior vena cava syndrome) is not the mechanism here. There are no findings of right heart failure (no JVD, no edema), and this mechanism would not explain a firm, discrete, non-tender node.
+
+QUESTION 
+A 34-year-old female emergency medicine nurse presents to her physician with a 6-week history of right foot drop that developed insidiously. She reports difficulty walking and frequent tripping. She denies back pain, bowel or bladder incontinence, or trauma. She recalls spending prolonged periods crouching while tending to her garden over the past two months.
+Physical Examination:
+Vital Signs: Temp: 36.8°C, HR: 72/min, BP: 118/74 mmHg, RR: 14/min, SpO₂: 99% on room air.
+Neurological: Right-sided weakness of ankle dorsiflexion (0/5), toe extension (1/5), and eversion (2/5). Inversion is intact (4/5). Sensation is decreased over the dorsum of the right foot and lateral leg. Knee jerk (L4) is intact bilaterally. Achilles reflex is intact bilaterally.
+Musculoskeletal: Full range of motion at the right hip and knee. No tenderness over the lumbar spine.
+Laboratory Results:
+CBC: Within normal limits.
+CMP: Within normal limits.
+Fasting glucose: 88 mg/dL (Normal: 70–99).
+ESR: 12 mm/hr (Normal: 0–20).
+MRI lumbar spine: No disc herniation or nerve root compression identified.
+Which of the following is the most likely site of nerve injury?
+A. L4–L5 nerve root compression at the intervertebral foramen.
+B. The sciatic nerve at the level of the greater sciatic notch.
+C. The common fibular (peroneal) nerve at the fibular head.
+D. The superficial fibular nerve in the anterior compartment of the leg.
+D. The deep fibular nerve in the lateral compartment of the leg.
+Correct Answer: C
+Reasoning: This is a classic presentation of common fibular (common peroneal) nerve palsy, as described in both Moore's Clinically Oriented Anatomy and Snell's Clinical Neuroanatomy. The common fibular nerve wraps around the neck of the fibula superficially, making it highly vulnerable to compression from prolonged crouching, habitual leg-crossing, or external pressure. It divides into: (1) the deep fibular nerve, which supplies the anterior compartment (tibialis anterior, extensor hallucis longus) responsible for dorsiflexion and toe extension, and (2) the superficial fibular nerve, which supplies the lateral compartment (fibularis longus and brevis) responsible for eversion. Both functions are impaired here. Inversion (tibialis posterior, posterior compartment, tibial nerve) is preserved, confirming the lesion is distal to the sciatic nerve. The MRI rules out a central/radicular cause.
+Incorrect Answer Breakdown:
+A: An L4–L5 radiculopathy would show back pain, possible disc herniation on MRI, and would likely affect knee extension (L4) or involve other dermatomal/myotomal distributions. The normal MRI and absence of back pain make this incorrect.
+B: A sciatic nerve injury at the greater sciatic notch would produce combined tibial AND fibular nerve deficits — foot drop plus loss of plantar flexion, plus numbness of the entire foot and posterior leg. Inversion (tibial nerve) would be impaired.
+D (first): The superficial fibular nerve supplies only the lateral compartment (eversion) and lateral leg/dorsal foot sensation. A pure superficial fibular lesion would spare dorsiflexion, which is severely affected here.
+E: The deep fibular nerve supplies the anterior compartment only. A pure deep fibular palsy would cause foot drop but preserve eversion and spares the lateral leg sensation. Both are affected here, confirming a more proximal common fibular lesion.
+
+QUESTION 
+A 52-year-old male accountant presents to the emergency department after sudden onset of severe, tearing chest pain that radiates to the interscapular region. He has a history of poorly controlled hypertension and reports a 20-year history of tobacco use (1 pack/day). He denies shortness of breath and is not diaphoretic.
+Physical Examination:
+Vital Signs: Temp: 37.0°C, HR: 102/min, BP: Right arm 178/104 mmHg, Left arm 143/86 mmHg, RR: 20/min, SpO₂: 97% on room air.
+General: Anxious male in moderate distress.
+Cardiovascular: S1 and S2 normal; a diastolic decrescendo murmur is heard along the left sternal border. Pulses are diminished in the left upper extremity compared to the right.
+Chest: Clear to auscultation bilaterally.
+Neurological: Grossly intact.
+Laboratory Results:
+Hemoglobin: 14.3 g/dL (Normal: 13.5–17.5)
+Troponin I: 0.02 ng/mL (Normal: <0.04)
+D-dimer: 3,400 ng/mL (Normal: <500)
+Creatinine: 1.1 mg/dL (Normal: 0.7–1.3)
+ECG: Sinus tachycardia; no ST-segment changes.
+CXR: Widened mediastinum.
+Which of the following best describes the anatomical structure most directly involved in the pathophysiology of this patient's condition?
+A. The right coronary artery, originating from the right aortic sinus of Valsalva.
+B. The tunica intima and tunica media of the thoracic aorta.
+C. The pulmonary trunk at its bifurcation into right and left pulmonary arteries.
+D. The fibrous pericardium and its attachment to the central tendon of the diaphragm.
+E. The ligamentum arteriosum and its attachment to the aortic isthmus.
+Correct Answer: B
+Reasoning: This patient presents with a Type A aortic dissection (Stanford classification). The pathophysiology involves a tear in the tunica intima, allowing blood to track between the intima and media, creating a false lumen within the tunica media (Gray's Anatomy for Students; Moore's Clinically Oriented Anatomy). The key findings are: (1) tearing interscapular pain — classic for posterior mediastinal involvement; (2) blood pressure differential between arms — the dissection flap occludes the left subclavian artery origin; (3) aortic regurgitation murmur — the dissection extends proximally, disrupting aortic valve commissure support; (4) widened mediastinum on CXR — blood expanding the aortic wall or hemopericardium. Troponin is negative, ruling out MI. Elevated D-dimer reflects intravascular clot formation in the false lumen.
+Incorrect Answer Breakdown:
+A: Right coronary artery involvement could occur if the dissection extends into the right sinus of Valsalva (causing inferior MI), but the negative troponin and absence of ST changes make this a consequence, not the primary structure involved.
+C: Pulmonary trunk pathology (e.g., pulmonary embolism) would cause hypoxia, pleuritic chest pain, and a positive D-dimer, but would NOT cause interscapular pain, BP differential between arms, or an aortic regurgitation murmur.
+D: The fibrous pericardium and diaphragm are not directly involved in aortic dissection pathophysiology, although hemopericardium (tamponade) is a lethal complication if the dissection ruptures into the pericardial space.
+E: The ligamentum arteriosum at the aortic isthmus is the classic site of traumatic aortic injury (sudden deceleration), not hypertension-related dissection. This patient's chronic hypertension and medial degeneration, not trauma, are the etiology.
+
+QUESTION 
+A 3-day-old male neonate is noted by the nursing staff to have a bluish discoloration of the lips and fingernails immediately after feeding. He was born at 39 weeks gestation via uncomplicated vaginal delivery. APGAR scores were 8 and 9 at 1 and 5 minutes respectively. His mother received routine prenatal care and all screening tests were negative. On examination, a harsh holosystolic murmur is auscultated at the left lower sternal border.
+Physical Examination:
+Vital Signs: Temp: 37.0°C, HR: 158/min, BP: 68/42 mmHg (right arm), RR: 52/min, SpO₂: 84% on room air.
+General: Neonate appears comfortable at rest but becomes visibly cyanotic with feeding.
+Cardiovascular: RV heave palpable. Harsh grade IV/VI holosystolic murmur at LLSB. Single S2.
+Respiratory: Mild subcostal retractions. Clear to auscultation.
+Chest X-ray: Boot-shaped heart ("coeur en sabot"), decreased pulmonary vascular markings.
+Laboratory Results:
+ABG (room air): pH 7.38, pO₂ 48 mmHg, pCO₂ 36 mmHg, HCO₃ 21 mEq/L
+CBC: Within normal limits.
+Echocardiogram: Pending.
+Which of the following embryological events most directly accounts for the cardiac findings in this patient?
+A. Failure of the aorticopulmonary septum to spiral during division of the truncus arteriosus.
+B. Incomplete fusion of the endocardial cushions resulting in a primum atrial septal defect.
+C. Anterior and superior displacement of the infundibular (outlet) septum during cardiac morphogenesis.
+D. Failure of the foramen secundum to develop in the septum primum.
+E. Abnormal neural crest cell migration resulting in truncus arteriosus persistens.
+Correct Answer: C
+Reasoning: This neonate has Tetralogy of Fallot (ToF), the most common cyanotic congenital heart disease presenting beyond the neonatal period. The classic findings are cyanosis, a right ventricular outflow tract obstruction murmur, RV heave, boot-shaped heart (due to RV hypertrophy with an upturned apex), and decreased pulmonary vascularity. Per Langman's Medical Embryology, all four components of ToF (pulmonary stenosis, VSD, overriding aorta, RVH) are embryologically explained by a single developmental event: anterosuperior displacement of the infundibular (conoventricular) septum. This displaced septum fails to align with the muscular septum, producing the VSD; it narrows the right ventricular outflow tract (pulmonary stenosis); and the overriding aorta results from the malalignment. RVH is a compensatory consequence of the obstruction.
+Incorrect Answer Breakdown:
+A: Failure of the aorticopulmonary septum to spiral produces Transposition of the Great Arteries (TGA). TGA presents with cyanosis but a normal-shaped heart on CXR ("egg on a string"), parallel great vessels, and no VSD murmur. The spiral nature of normal septation places the aorta posterior-left and pulmonary trunk anterior-right.
+B: Incomplete endocardial cushion fusion causes an ostium primum ASD or complete AVSD (atrioventricular septal defect), commonly associated with Down syndrome. This presents with left-to-right shunting and pulmonary overcirculation, not cyanosis and decreased pulmonary markings.
+D: Failure of foramen secundum development in the septum primum describes the sequence leading to an ostium primum ASD — again a left-to-right shunt defect, not a cyanotic lesion with right ventricular outflow obstruction.
+E: Persistent truncus arteriosus (PTA) results from failed aorticopulmonary septum formation (absent, not malaligned). PTA presents with a single great vessel overriding both ventricles, a single semilunar valve, increased pulmonary blood flow (not decreased), and cardiomegaly — a different clinical picture entirely.
+
+QUESTION 
+A 45-year-old female librarian presents to her ophthalmologist with a 3-week history of painless, progressive ptosis of her left eyelid and diplopia, worse when looking to the right. She also notes that her left pupil appears larger than her right when she checks in the mirror. She denies headache, nausea, or changes in vision beyond the diplopia. Past medical history is notable for hypertension, for which she takes amlodipine. She denies trauma.
+Physical Examination:
+Vital Signs: Temp: 36.9°C, HR: 76/min, BP: 146/90 mmHg, RR: 14/min, SpO₂: 98% on room air.
+Ophthalmological Exam: Left eye ptosis with the eye deviated "down and out." Left pupil: 7 mm, non-reactive to light or accommodation. Right pupil: 3 mm, briskly reactive. No papilledema on fundoscopy.
+Neurological: Intact motor and sensory exam of all extremities. No ataxia.
+Laboratory Results:
+CBC: WNL.
+CMP: WNL.
+HbA1c: 5.6% (Normal: <5.7%)
+MRA of the brain: A 7-mm outpouching at the junction of the left internal carotid artery and posterior communicating artery.
+Which of the following is the most accurate anatomical explanation for the pupillary findings in this patient?
+A. The pupillodilator fibers of CN III are compressed first because they run in the outermost layer of the nerve and are susceptible to extrinsic compression.
+B. The pupilloconstrictor fibers of CN III travel in the superficial dorsomedial aspect of the nerve and are compressed first by an expanding extrinsic mass.
+C. Ischemia of the vasa nervorum of CN III selectively damages the centrally located pupilloconstrictor fibers while sparing the peripherally located motor fibers.
+D. Herniation of the uncus over the tentorium cerebelli directly damages the Edinger-Westphal nucleus in the midbrain.
+E. Compression of the abducens nerve (CN VI) at Dorello's canal produces ipsilateral pupil dilation via internuclear connections.
+Correct Answer: B
+Reasoning: This is a "surgical" CN III palsy caused by an expanding posterior communicating artery aneurysm — a neurosurgical emergency. The key distinguishing feature is the mydriatic (dilated, non-reactive) pupil. The Edinger-Westphal nucleus provides pupilloconstrictor (parasympathetic) fibers that travel in the superficial dorsomedial aspect (the outer layer) of CN III (Snell's Clinical Neuroanatomy; Moore). These fibers receive their blood supply from the pial surface and are therefore most susceptible to extrinsic compression by an aneurysm or herniation. As the aneurysm expands, it first compresses these superficial parasympathetic fibers, resulting in loss of pupillary constriction (mydriasis) before the somatic motor fibers (which innervate the extraocular muscles) are fully compromised. This "pupil-involving" palsy mandates emergent neurovascular imaging.
+Incorrect Answer Breakdown:
+A: This answer has the fiber type correct (pupilloconstrictor = parasympathetic) but incorrectly names them "pupillodilator." Pupillodilator fibers are sympathetic (via the long ciliary nerve, CN V₁ pathway) and are NOT carried in CN III. This is a factual error.
+C: Ischemic (diabetic) CN III palsy spares the pupil because the vasa nervorum supply the central motor fibers, which are the first to become ischemic. The superficial parasympathetic fibers, relying on pial surface vessels rather than vasa nervorum, are spared. This patient's normal HbA1c makes diabetic palsy unlikely, and the finding of a PCoA aneurysm on MRA confirms the compressive etiology.
+D: Uncal herniation is the other common cause of compressive CN III palsy, but it occurs in the context of mass effect (trauma, epidural hematoma, large intracerebral hemorrhage) and would present with ipsilateral pupil dilation, altered consciousness, and contralateral hemiparesis. The isolated findings here, with no altered consciousness and an identified aneurysm, point to the PCoA aneurysm as the cause. The mechanism is also wrong — herniation compresses CN III as it passes between the posterior cerebral artery and the superior cerebellar artery, not via direct nuclear damage.
+E: CN VI (abducens) innervates the lateral rectus muscle and has no role in pupillary dilation. CN VI palsy produces medial deviation of the eye (esotropia) and inability to abduct. It has no direct or indirect connection to the Edinger-Westphal nucleus that would cause pupillary dilation.
+
+QUESTION 
+A 58-year-old male postal worker presents to his cardiologist with a 4-month history of exertional chest pressure, dyspnea on exertion after climbing one flight of stairs, and bilateral ankle swelling. He has a history of hypertension and type 2 diabetes. He denies syncope, orthopnea, or palpitations. He was told by his dentist two years ago that he has a heart murmur.
+Physical Examination:
+Vital Signs: Temp: 37.0°C, HR: 82/min, BP: 108/64 mmHg, RR: 18/min, SpO₂: 95% on room air.
+Cardiovascular: Displaced point of maximal impulse (PMI) at the 6th intercostal space, anterior axillary line. A harsh, crescendo-decrescendo systolic ejection murmur is heard best at the right upper sternal border, radiating to the bilateral carotids. S2 is soft and single. A fourth heart sound (S4) is present.
+Pulmonary: Bibasilar crackles.
+Extremities: 2+ pitting edema bilaterally to the mid-tibia.
+Laboratory Results:
+BNP: 820 pg/mL (Normal: <100)
+Sodium: 133 mEq/L (Normal: 135–145)
+Creatinine: 1.4 mg/dL (Normal: 0.7–1.3)
+Troponin I: 0.03 ng/mL (Normal: <0.04)
+ECG: Left ventricular hypertrophy pattern; no acute ST changes.
+Echocardiogram: Aortic valve area of 0.7 cm² (Normal: 3.0–4.0 cm²); mean gradient of 52 mmHg; LV ejection fraction 35%.
+Which of the following best describes the embryological origin of the valve most likely affected in this patient?
+A. The aortic valve develops from the endocardial cushions of the atrioventricular canal.
+B. The aortic valve develops from the truncal ridges (cushions) of the truncus arteriosus, which are populated by neural crest cells.
+C. The aortic valve develops from the myocardial cells of the bulbus cordis as they undergo epithelial-to-mesenchymal transition.
+D. The aortic valve forms from the primary interventricular septum as it expands superiorly to fuse with the aorticopulmonary septum.
+E. The aortic valve develops from the septum secundum as it grows inferiorly to overlap the foramen ovale.
+Correct Answer: B
+Reasoning: This patient has severe calcific aortic stenosis with low-flow, low-gradient physiology and reduced LVEF — a presentation of advanced outflow obstruction leading to biventricular failure. The question asks about the embryological origin of the aortic valve. Per Langman's Medical Embryology, the semilunar valves (aortic and pulmonary) develop from the truncal ridges (cushions) of the truncus arteriosus. These ridges are critically populated by cardiac neural crest cells that migrate from the dorsal neural tube (rhombomeres 6–8) through the pharyngeal arches into the cardiac outflow tract. Neural crest cells undergo epithelial-to-mesenchymal transition and form the mesenchymal core of the truncal cushions, which then excavate to form the three cusps of each semilunar valve. This neural crest contribution is distinct from the AV valves.
+Incorrect Answer Breakdown:
+A: The endocardial cushions of the AV canal form the mitral and tricuspid valves, not the semilunar valves. Defects in AV cushion development result in AV septal defects and valvular dysplasia (e.g., Ebstein anomaly of the tricuspid valve in the context of complete AVSD is a separate mechanism). This is a critical embryological distinction tested frequently.
+C: The bulbus cordis contributes to the trabeculated portion of the right ventricle and the outflow tracts (conus arteriosus), not to valve cusp formation. Myocardial-to-mesenchymal transformation is not the mechanism for semilunar valve development; neural crest-populated cushion remodeling is.
+D: The primary interventricular septum forms the muscular interventricular septum. It grows superiorly and eventually fuses with the endocardial cushions and the aorticopulmonary septum to close the interventricular foramen. It plays no role in semilunar valve cusp formation.
+E: The septum secundum is the atrial structure that grows inferiorly to overlap the foramen primum/secundum, forming the valve of the foramen ovale. It is entirely an atrial partitioning structure with no contribution to the semilunar valves.
+
+QUESTION 
+A 29-year-old female yoga instructor presents to her OB/GYN with a 5-day history of severe right lower quadrant pain, nausea, and a single episode of vomiting. Her last menstrual period was 7 weeks ago. She has a history of pelvic inflammatory disease treated 3 years ago and uses no contraception. She denies vaginal discharge or fever at home. A urine pregnancy test performed at registration is positive.
+Physical Examination:
+Vital Signs: Temp: 37.6°C, HR: 112/min, BP: 98/62 mmHg, RR: 22/min, SpO₂: 98% on room air.
+General: Patient appears uncomfortable and diaphoretic.
+Abdomen: Right lower quadrant tenderness with voluntary guarding. No rebound tenderness. Bowel sounds are diminished.
+Pelvic: Cervical motion tenderness. Right adnexal tenderness and a palpable mass. Uterus is small and non-tender.
+Rectal: No masses.
+Laboratory Results:
+Serum β-hCG: 2,800 mIU/mL (Normal for 7 weeks: 7,650–229,000 mIU/mL)
+Hemoglobin: 9.8 g/dL (Normal: 12.0–16.0)
+Hematocrit: 29% (Normal: 36–48%)
+WBC: 11,400/mm³ (Normal: 4,500–11,000)
+Transvaginal Ultrasound: No intrauterine gestational sac identified; free fluid in the cul-de-sac (pouch of Douglas); a 3.2-cm right adnexal mass.
+Which of the following statements most accurately describes the anatomical basis for the accumulation of free fluid in the location identified on ultrasound?
+A. The rectouterine pouch (of Douglas) is the most inferior reflection of the peritoneum in the female pelvis, representing the lowest point in the peritoneal cavity in the supine position, making it the dependent site for fluid accumulation.
+B. The vesicouterine pouch is the most inferior peritoneal recess in the female pelvis and collects blood tracking down from the fallopian tube.
+C. The paravesical fossa is the primary dependent space in the pelvis due to its location lateral to the urinary bladder.
+D. The ischiorectal (ischioanal) fossa communicates freely with the peritoneal cavity, allowing blood to pool inferiorly.
+E. The presacral space is continuous with the retroperitoneum and collects fluid via lymphatic channels draining the adnexa.
+Correct Answer: A
+Reasoning: This patient has a ruptured ectopic pregnancy — suggested by positive β-hCG, no intrauterine pregnancy, a right adnexal mass, hemodynamic instability (tachycardia, hypotension), falling hemoglobin, and free fluid on ultrasound. The free fluid on transvaginal ultrasound is in the rectouterine pouch (cul-de-sac of Douglas). Per Moore's Clinically Oriented Anatomy and Netter's Atlas, the rectouterine pouch is the peritoneal reflection between the posterior surface of the uterus/cervix and the anterior surface of the rectum. It is the most inferior part of the peritoneal cavity in females in both the standing and supine positions. Blood from a ruptured fallopian tube flows inferiorly along the paracolic gutters and pools in this dependent pouch. Identification of fluid here on transvaginal ultrasound is both the most sensitive and most easily accessible sign of hemoperitoneum in gynecological emergencies.
+Incorrect Answer Breakdown:
+B: The vesicouterine pouch is the peritoneal reflection between the anterior surface of the uterus and the posterior surface of the urinary bladder. It is more superior and anterior than the rectouterine pouch and is not the most dependent site. Fluid does accumulate here but only after the rectouterine pouch fills — it is not the first or most reliable site.
+C: The paravesical fossa is a lateral extraperitoneal space adjacent to the bladder. It is not a peritoneal recess and does not freely communicate with the peritoneal cavity in a way that would collect intraperitoneal hemorrhage first.
+D: The ischiorectal (ischioanal) fossa is an extraperitoneal space in the perineum below the levator ani, completely separated from the peritoneal cavity by the pelvic diaphragm. It has no communication with the peritoneum and would not fill with intraperitoneal blood.
+E: The presacral space is a retroperitoneal fascial plane between the rectum and the sacrum. It does not communicate with the peritoneal cavity directly and does not collect intraperitoneal hemorrhage. Fluid from a ruptured ectopic would be intraperitoneal, not retroperitoneal.
+
+QUESTION 
+A 41-year-old male long-distance truck driver presents to his primary care physician with a 2-month history of progressive hoarseness, mild dysphagia, and a sensation of fullness in his throat. He has a 25-pack-year smoking history and drinks alcohol occasionally. He denies hemoptysis, weight loss, or dyspnea. He reports no recent upper respiratory infection.
+Physical Examination:
+Vital Signs: Temp: 37.1°C, HR: 78/min, BP: 130/82 mmHg, RR: 14/min, SpO₂: 98% on room air.
+General: Well-nourished male in no distress.
+Head & Neck: A 2.5-cm, firm, non-tender left neck mass at level IV (between the cricothyroid notch and the clavicle, anterior to the sternocleidomastoid). No tenderness. Trachea is midline.
+Laryngoscopy: Left vocal cord is fixed in the paramedian position. Right vocal cord moves normally.
+Laboratory Results:
+CBC: WNL.
+CMP: WNL.
+TSH: 2.1 mIU/L (Normal: 0.4–4.0).
+CT Neck/Chest with contrast: Left-sided mediastinal mass encasing the aortopulmonary window; enlarged lymph nodes at levels III, IV, and V on the left; no lung parenchymal lesions.
+Which of the following best explains the mechanism of the vocal cord paralysis in this patient?
+A. Direct tumor invasion of the left cricothyroid muscle, which is innervated by the external branch of the superior laryngeal nerve.
+B. Compression of the left recurrent laryngeal nerve at the level of the aortopulmonary window by the mediastinal mass.
+C. Invasion of the left vagus nerve at the jugular foramen by a skull base tumor.
+D. Compression of the left recurrent laryngeal nerve in the tracheoesophageal groove by a thyroid malignancy.
+E. Direct infiltration of the left arytenoid cartilage causing mechanical fixation of the vocal cord.
+Correct Answer: B
+Reasoning: This patient has left vocal cord paralysis caused by compression of the left recurrent laryngeal nerve (RLN) at the aortopulmonary window — a presentation known as Ortner's syndrome (cardiovocal syndrome), though here caused by a mediastinal malignancy rather than vascular dilation. The anatomical basis (Moore; Netter; High-Yield Gross Anatomy) is critical: the left RLN branches from the left vagus nerve (CN X) at the level of the aortic arch, hooks under the ligamentum arteriosum/aorticopulmonary window, and ascends in the tracheoesophageal groove to reach the larynx. This long intrathoracic course makes the left RLN uniquely vulnerable to mediastinal pathology (lymphoma, lung cancer, aortic aneurysm, pericardial effusion). The right RLN loops around the right subclavian artery in the neck and has a much shorter intrathoracic course, explaining why unilateral left vocal cord palsy from mediastinal disease is far more common than right-sided.
+Incorrect Answer Breakdown:
+A: The external branch of the superior laryngeal nerve (eSLN) innervates the cricothyroid muscle only, producing a weak, breathy voice with pitch difficulties but NOT vocal cord fixation or paralysis in the paramedian position. True vocal cord paralysis requires RLN injury.
+C: A skull base tumor at the jugular foramen would injure CN IX, X, and XI together (jugular foramen syndrome/Vernet's syndrome), producing vocal cord palsy along with dysphagia, loss of gag reflex, and ipsilateral trapezius/SCM weakness. There is no skull base finding on this patient's CT.
+D: Left RLN compression in the tracheoesophageal groove by a thyroid mass is a valid and testable cause of left vocal cord palsy, but the CT specifically identifies the mediastinal mass at the aortopulmonary window, and the TSH is normal with no thyroid mass described. The most anatomically accurate explanation given the imaging is mediastinal compression at the aortopulmonary window.
+E: Mechanical fixation of the arytenoid by direct tumor infiltration would produce a fixed cord but usually occurs in the setting of direct laryngeal invasion by hypopharyngeal or laryngeal carcinoma. Laryngoscopy would show mucosal irregularity at the arytenoid. This patient's CT shows a mediastinal mass, not a laryngeal primary.
+
+QUESTION 
+A 23-year-old male college rugby player is brought to the emergency department by teammates after sustaining a direct blow to the right lateral knee during a tackle. He felt an immediate "pop" and could not continue playing. He has significant right knee swelling. He denies any prior knee injuries.
+Physical Examination:
+Vital Signs: Temp: 36.9°C, HR: 94/min, BP: 122/78 mmHg, RR: 16/min, SpO₂: 99%.
+Musculoskeletal (Right Knee): 2+ effusion. Full passive range of motion limited by pain. Varus stress test: negative. Valgus stress test at 0° and 30°: grade II laxity with endpoint, significant medial joint line pain. Lachman test: grade II laxity with a soft endpoint, compared to the contralateral knee. Anterior drawer test: grade II positive. Posterior drawer test: negative. McMurray test: positive for medial joint line click with external rotation.
+Neurovascular: Intact distal pulses, sensation, and motor function.
+Laboratory Results:
+No labs indicated.
+X-ray (right knee AP, lateral, oblique): No fractures or bony avulsions. Joint space preserved.
+MRI Right Knee: Pending.
+Which of the following combinations of structures is most likely disrupted based on the examination findings?
+A. Lateral collateral ligament, iliotibial band, and lateral meniscus.
+B. Posterior cruciate ligament, posterior oblique ligament, and medial meniscus.
+C. Anterior cruciate ligament, medial collateral ligament, and medial meniscus (O'Donoghue's unhappy triad).
+D. Anterior cruciate ligament, lateral collateral ligament, and lateral meniscus.
+E. Posterior cruciate ligament, medial collateral ligament, and posterior capsule.
+Correct Answer: C
+Reasoning: This is the classic "unhappy triad" (O'Donoghue triad), described in Moore's Clinically Oriented Anatomy and Gray's Anatomy for Students as the most common combined ligamentous injury from a valgus force to the knee (a direct blow to the lateral knee with the foot planted). The medial compartment opens under tension from a valgus force, injuring three structures: (1) the Medial Collateral Ligament (MCL) — positive valgus stress test at 0° and 30°; (2) the Anterior Cruciate Ligament (ACL) — positive Lachman test and anterior drawer test (soft endpoint = complete tear); and (3) the Medial Meniscus — positive McMurray with a medial click on external rotation. The medial meniscus is more vulnerable than the lateral because it is firmly attached to the deep MCL fibers (coronary ligament), making it unable to escape compressive and rotational forces. The lateral meniscus is more mobile and therefore less frequently injured.
+Incorrect Answer Breakdown:
+A: A lateral compartment injury (LCL, IT band, lateral meniscus) results from a varus stress (blow to the medial knee). The varus stress test would be positive and the valgus stress test negative. This patient's mechanism (blow to the lateral knee = valgus force) and positive valgus stress test are inconsistent with this answer.
+B: A PCL injury produces a positive posterior drawer test (posterior tibial sag). This patient's posterior drawer is negative. The posterior oblique ligament injury would also not be the primary finding with a valgus mechanism.
+D: Combined ACL/LCL/lateral meniscus injury can occur with hyperextension or varus-external rotation mechanisms. The positive valgus stress test specifically indicating MCL laxity, combined with medial McMurray, argues against lateral compartment involvement as the primary injury.
+E: PCL with MCL and posterior capsule is a more severe multi-ligament injury typically seen with dashboard injuries (posterior tibial force with knee flexed) or hyperextension. Again, the negative posterior drawer test makes PCL involvement unlikely here.
+
+QUESTION 
+A 31-year-old female kindergarten teacher, 28 weeks pregnant with her first child, is referred by her midwife for a fetal anatomical survey after a routine ultrasound revealed polyhydramnios. The patient denies symptoms. She has no significant personal or family medical history and takes only prenatal vitamins.
+Physical Examination:
+Vital Signs: Temp: 36.8°C, HR: 82/min, BP: 118/72 mmHg, RR: 14/min, SpO₂: 99%.
+Obstetric Exam: Fundal height 33 cm (elevated for 28 weeks). Fetal heart tones regular at 144/min.
+Laboratory Results:
+Maternal serum AFP: 0.4 MoM (Normal: 0.5–2.5 MoM — low AFP; normal is 0.5–2.5)
+Glucose challenge test (50g): 128 mg/dL (Normal: <130 mg/dL) — passed.
+Maternal karyotype: 46,XX.
+Fetal karyotype (amniocentesis): 47,XX,+21.
+Targeted fetal ultrasound: Absent gastric bubble. A "double bubble" sign at the level of the duodenum. Echogenic bowel. No cardiac anomaly identified.
+Which of the following best describes the embryological mechanism responsible for the specific gastrointestinal finding identified on ultrasound?
+A. Failure of the midgut to complete its normal 270-degree counterclockwise rotation during return to the abdominal cavity in weeks 10–12, resulting in Ladd's bands obstructing the duodenum.
+B. Failure of vacuolization and recanalization of the solid-phase duodenum (during weeks 8–10) resulting in duodenal atresia.
+C. Premature return of the midgut to the abdominal cavity before week 10, causing malrotation and internal herniation.
+D. Abnormal neural crest cell migration into the myenteric and submucosal plexuses of the hindgut, producing an aganglionic segment.
+E. Incomplete fusion of the pleuroperitoneal folds, allowing herniation of abdominal contents into the thoracic cavity and compressing the developing foregut.
+Correct Answer: B
+Reasoning: The "double bubble" sign on ultrasound represents two air/fluid-filled chambers — the stomach and the proximal duodenum — separated by the pylorus, with no gas beyond the obstruction. This is pathognomonic for duodenal atresia or stenosis. Per Langman's Medical Embryology, the duodenum (derived from the caudal foregut and cranial midgut) undergoes a solid phase between weeks 5–8 when proliferating epithelium temporarily occludes the lumen. Recanalization occurs by weeks 8–10 through vacuolization (formation and coalescence of vacuoles). Failure of this recanalization results in duodenal atresia. Duodenal atresia has a well-established association with Trisomy 21 (Down syndrome), seen in approximately 30% of cases — confirmed by the fetal karyotype here (47,XX,+21). Polyhydramnios results because the fetus is unable to swallow and absorb amniotic fluid normally past the obstruction.
+Incorrect Answer Breakdown:
+A: Ladd's bands from malrotation can extrinsically compress the duodenum and cause obstruction, but malrotation does not produce a classic "double bubble" sign — it more often presents postnatally with bilious vomiting and a "corkscrew" appearance on upper GI series. Malrotation is not associated with Trisomy 21. The mechanism (failure of rotation) is entirely distinct from the intrinsic luminal obstruction of atresia.
+C: The midgut normally herniates out of the abdominal cavity at week 6 and returns at weeks 10–12 after rotating 270 degrees counterclockwise. Premature return is not a recognized cause of duodenal obstruction and does not explain the double bubble sign.
+D: Failure of neural crest cell migration into the bowel wall causes Hirschsprung's disease (congenital aganglionic megacolon), which affects the hindgut (rectosigmoid most commonly). Hirschsprung's presents postnatally with failure to pass meconium, abdominal distension, and a rectal biopsy showing absent ganglion cells — not a prenatal double bubble sign. While Hirschsprung's has a weak association with Down syndrome, it does not cause the duodenal findings here.
+E: Incomplete pleuroperitoneal fold fusion causes a Congenital Diaphragmatic Hernia (CDH), where abdominal organs herniate into the thorax, compressing the ipsilateral lung (pulmonary hypoplasia). CDH presents with respiratory distress and bowel sounds in the chest on the affected side, not with a double bubble sign. The diaphragm and foregut are separate structures, and diaphragmatic defects do not intrinsically cause duodenal atresia.
+
+
+
+QUESTION 
+A 19-year-old male college wrestler presents to the student health clinic with a 10-day history of right shoulder pain and progressive weakness. During a match two weeks ago, his right arm was forcefully abducted and externally rotated while being tackled. He denies numbness in his fingers or hand. He notes he cannot initiate abduction of his right arm from his side.
+Physical Examination:
+Vital Signs: Temp: 36.9°C, HR: 68/min, BP: 116/74 mmHg, RR: 14/min, SpO₂: 99%.
+Musculoskeletal: Right shoulder: visible flattening of the deltoid contour laterally. Abduction 0–15° is absent; abduction from 15–90° is possible with assistance. Lateral rotation is weak (2/5). Medial rotation and adduction are full strength (5/5). No tenderness over the acromioclavicular joint or bicipital groove.
+Neurological: Decreased sensation over a "regimental badge" distribution on the lateral aspect of the right upper arm. Biceps and brachioradialis reflexes intact bilaterally.
+Laboratory Results:
+No labs indicated.
+MRI Right Shoulder: No rotator cuff tear. No labral tear. No fracture. Mild edema surrounding the quadrilateral space.
+Which of the following best describes the boundaries of the space through which the injured nerve travels, and the specific structures it passes alongside?
+A. The quadrilateral space is bounded superiorly by the teres minor, inferiorly by the teres major, medially by the long head of the triceps, and laterally by the surgical neck of the humerus; it transmits the axillary nerve and the posterior circumflex humeral artery.
+B. The triangular space is bounded superiorly by the teres minor, inferiorly by the teres major, and laterally by the long head of the triceps; it transmits the axillary nerve and the anterior circumflex humeral artery.
+C. The quadrilateral space is bounded superiorly by the subscapularis, inferiorly by the teres major, medially by the long head of the biceps, and laterally by the coracobrachialis; it transmits the musculocutaneous nerve and brachial artery.
+D. The triangular interval is bounded superiorly by the teres major, medially by the long head of the triceps, and laterally by the shaft of the humerus; it transmits the axillary nerve and the circumflex scapular artery.
+E. The quadrilateral space is bounded superiorly by the teres major, inferiorly by the teres minor, medially by the surgical neck of the humerus, and laterally by the long head of the triceps; it transmits the radial nerve and the profunda brachii artery.
+Correct Answer: A
+Reasoning: This is a classic quadrilateral space syndrome with axillary nerve injury. The mechanism — forced abduction and external rotation — is the classic mechanism for axillary nerve traction injury as it wraps around the surgical neck of the humerus. The axillary nerve (C5–C6, from the posterior cord of the brachial plexus) innervates the deltoid (abduction 15–90°, all three heads) and teres minor (lateral rotation), and provides the superior lateral cutaneous nerve of the arm — the "regimental badge" sensory territory over the lateral deltoid. Per Moore and Netter, the quadrilateral (quadrangular) space boundaries are: superior = teres minor (posteriorly) and subscapularis (anteriorly); inferior = teres major; medial = long head of triceps; lateral = surgical neck of humerus. The axillary nerve and posterior circumflex humeral artery pass through it. MRI edema in this space confirms compression/traction injury here.
+Incorrect Answer Breakdown:
+A: Correct as stated above.
+B: The triangular space (medial triangular space) is bounded by teres minor (superiorly), teres major (inferiorly), and the long head of the triceps (laterally). It transmits the circumflex scapular artery (a branch of the subscapular artery), NOT the axillary nerve. Confusing these two spaces is a frequent USMLE trap.
+C: These are entirely incorrect boundaries and contents. The musculocutaneous nerve passes through the coracobrachialis muscle belly directly, not through a fascial space. The long head of the biceps and coracobrachialis do not form boundaries of any named posterior axillary space.
+D: This describes the triangular interval (lateral triangular space / lower triangular space), bounded by teres major (superiorly), long head of triceps (medially), and the shaft of the humerus (laterally). It transmits the radial nerve and the profunda brachii (deep brachial) artery — not the axillary nerve. This is another classic distractor.
+E: The boundaries are inverted (teres major and minor are switched), and the contents are wrong. The radial nerve and profunda brachii pass through the triangular interval, not the quadrilateral space. The long head of triceps is the medial, not lateral, boundary.
+
+QUESTION 
+A 62-year-old male retired plumber presents to his urologist with a 3-week history of painless hematuria and a dull ache in his left flank. He has a 35-pack-year smoking history and a history of hypertension managed with lisinopril. He denies dysuria, frequency, or weight loss. A urine cytology performed by his GP was atypical.
+Physical Examination:
+Vital Signs: Temp: 37.0°C, HR: 80/min, BP: 152/92 mmHg, RR: 16/min, SpO₂: 98%.
+Abdomen: Non-tender. A vague fullness is palpable in the left flank. No bruit over the renal arteries.
+Genitourinary: No costovertebral angle tenderness on the right. Mild left CVA tenderness. Left-sided varicocele present, non-reducible in the supine position.
+Laboratory Results:
+Hemoglobin: 18.4 g/dL (Normal: 13.5–17.5) — polycythemia
+Creatinine: 1.1 mg/dL (Normal: 0.7–1.3)
+Calcium: 11.4 mg/dL (Normal: 8.5–10.2) — hypercalcemia
+Urinalysis: 3+ blood, no casts, no bacteria.
+CT Abdomen/Pelvis with contrast: 8.2-cm heterogeneous, enhancing left renal mass with central necrosis. Left renal vein thrombus extending into the inferior vena cava.
+Which of the following best explains the anatomical basis for the non-reducible left-sided varicocele in this patient?
+A. The left testicular vein drains directly into the left renal vein at a right angle, lacking competent valves; left renal vein obstruction by tumor thrombus raises venous pressure in the left testicular vein, causing varicocele formation.
+B. The left testicular vein drains directly into the inferior vena cava at an oblique angle, which is obstructed by the IVC thrombus.
+C. The right testicular vein drains into the left renal vein, and the IVC thrombus raises pressure retrogradely through the left renal vein into the right testicular circulation.
+D. The left testicular vein drains into the left common iliac vein; IVC obstruction raises iliac venous pressure and causes retrograde varicocele.
+E. The left testicular artery is compressed by the left renal vein, causing venous congestion by arteriovenous fistula formation.
+Correct Answer: A
+Reasoning: This patient has a classic presentation of renal cell carcinoma (RCC) — painless hematuria, flank mass, polycythemia (ectopic EPO production), hypercalcemia (PTHrP secretion), and left renal vein/IVC thrombus. The non-reducible left varicocele is explained entirely by anatomy (Moore; Netter; High-Yield Gross Anatomy): the left testicular (gonadal) vein drains superiorly into the left renal vein (not the IVC) at a near-right angle, creating relatively high venous pressure even under normal conditions. The right testicular vein, by contrast, drains directly into the IVC at an oblique angle. When a left renal tumor invades and thromboses the left renal vein, venous outflow from the left testicular vein is obstructed, causing a sudden-onset, non-reducible (fails to decompress in the supine position) left varicocele. This is a key clinical sign suggesting underlying renal malignancy rather than idiopathic varicocele.
+Incorrect Answer Breakdown:
+B: The left testicular vein does NOT drain into the IVC — it drains into the left renal vein. This is a high-yield anatomical fact. Confusing left (→ renal vein) and right (→ IVC) testicular vein drainage is the most common error tested on this topic.
+C: The right testicular vein drains into the IVC, not into the left renal vein. The anatomical drainage patterns are side-specific and asymmetric. There is no scenario in which the right testicular vein drains into the left renal vein under normal anatomy.
+D: The left testicular vein does not drain into the left common iliac vein. It ascends from the inguinal canal retroperitoneally to drain into the left renal vein. Common iliac venous obstruction would produce left lower limb edema, not a varicocele.
+E: The "nutcracker phenomenon" describes compression of the left renal vein between the aorta and the superior mesenteric artery, which can produce a left-sided varicocele by obstructing left renal vein outflow. However, the mechanism is purely venous pressure elevation — not arteriovenous fistula formation. Furthermore, this patient has a documented left renal vein thrombus from RCC invasion, which is a more direct and complete explanation.
+
+QUESTION 
+A 55-year-old female executive is seen in the neurology clinic for progressive difficulty swallowing and dysarthria over 6 months. She reports that her voice has become nasal and she frequently chokes on liquids. She denies limb weakness, sensory changes, or visual disturbances. She has a history of well-controlled hypertension.
+Physical Examination:
+Vital Signs: Temp: 37.0°C, HR: 76/min, BP: 138/84 mmHg, RR: 14/min, SpO₂: 97%.
+Cranial Nerves: CN II–VII intact bilaterally. CN IX/X: Uvula deviates to the right on phonation; gag reflex absent bilaterally; palate elevates asymmetrically (left side fails to elevate). CN XI: Sternocleidomastoid and trapezius strength 5/5 bilaterally. CN XII: Tongue midline at rest; no fasciculations; mild tongue weakness bilaterally.
+Motor: 5/5 throughout all four extremities. Normal tone.
+Sensory: Intact to all modalities.
+Reflexes: 3+ bilateral biceps, triceps, brachioradialis, and patellar reflexes. Bilateral Babinski sign present.
+Laboratory Results:
+CBC: WNL. CMP: WNL. TSH: 1.8 mIU/L.
+MRI Brain/Brainstem: No infarct, no mass, no demyelinating lesion.
+EMG/Nerve Conduction Studies: Normal sensory and motor conduction velocities.
+The pattern of uvular deviation to the right, absent gag reflex, and brisk hyperreflexia with Babinski signs without limb weakness most likely represents injury to which of the following anatomical structures?
+A. Left nucleus ambiguus and right corticobulbar fibers producing a combined lower and upper motor neuron lesion of CN X.
+B. Bilateral corticobulbar tracts above the level of the brainstem nuclei, producing pseudobulbar palsy, combined with lower motor neuron degeneration of the nucleus ambiguus bilaterally.
+C. Right vagus nerve at the jugular foramen, producing ipsilateral soft palate paresis with contralateral hyperreflexia from a separate cortical lesion.
+D. Left hypoglossal nucleus and bilateral corticospinal tracts at the level of the pyramidal decussation.
+E. Bilateral superior laryngeal nerves compressing the pharyngeal constrictors from an external mass at the skull base.
+Correct Answer: B
+Reasoning: This clinical picture is pathognomonic for ALS (Amyotrophic Lateral Sclerosis) with combined upper motor neuron (UMN) and lower motor neuron (LMN) involvement of the bulbar musculature. Per Snell's Clinical Neuroanatomy and Moore: uvular deviation to the right means the left vagus nerve (CN X) / nucleus ambiguus is weak (lower motor neuron sign); the absent gag reflex and dysphonia confirm bilateral LMN bulbar involvement (bulbar palsy component). Simultaneously, the brisk hyperreflexia (3+), bilateral Babinski signs, and spastic tone in a patient without sensory deficits or imaging abnormalities are the UMN signs (pseudobulbar palsy component). The combination of bilateral corticobulbar (UMN) degeneration and bilateral nucleus ambiguus (LMN) degeneration, in the absence of a structural lesion, is the hallmark of ALS with bulbar onset. The normal EMG/NCS rules out peripheral neuropathy.
+Incorrect Answer Breakdown:
+A: A single left nucleus ambiguus lesion plus right corticobulbar injury could produce unilateral bulbar findings, but would not explain bilateral absent gag reflexes, bilateral Babinski signs, and diffuse hyperreflexia. A combination of single discrete lesions is less parsimonious than a systemic degenerative process.
+C: A unilateral right vagus nerve lesion at the jugular foramen (e.g., glomus jugulare tumor) would cause ipsilateral palate droop (uvula deviates away from the lesion = uvula deviates LEFT if the RIGHT CN X is injured). The uvula here deviates RIGHT, indicating LEFT CN X dysfunction. Furthermore, a unilateral vagal lesion would not produce bilateral hyperreflexia and Babinski signs without a separate intracranial lesion, making this a two-lesion explanation where one suffices.
+D: The left hypoglossal nucleus injury would produce left tongue weakness with deviation toward the left on protrusion. The tongue here is midline and without fasciculations, making an isolated hypoglossal nucleus lesion the primary pathology unlikely. The pyramidal decussation is in the medulla and bilateral tract lesions there would produce crossed motor deficits with sensory changes — not seen here.
+E: The superior laryngeal nerve is a branch of CN X supplying the cricothyroid muscle and supraglottic laryngeal sensation. It does not innervate the pharyngeal constrictors (which receive pharyngeal plexus input from CN IX/X). External skull base compression sufficient to cause bilateral SLN palsy would produce palpable masses and structural findings on MRI, which are absent.
+
+QUESTION 
+A 38-year-old female yoga instructor presents to her gynecologist for her annual visit. She mentions that during her last pelvic exam three years ago, she was told she had a "retroverted uterus." She has no complaints. She is G2P2 with two uncomplicated vaginal deliveries. She is sexually active with one male partner and uses copper IUD contraception.
+Subsequently, she returns to the emergency department 2 weeks later with acute onset severe pelvic pain, inability to void, and urge to defecate without result (tenesmus). Pelvic ultrasound shows a 6-cm left adnexal cystic mass with internal echoes and a fluid-filled posterior cul-de-sac.
+Physical Examination:
+Vital Signs: Temp: 37.3°C, HR: 104/min, BP: 108/70 mmHg, RR: 20/min, SpO₂: 98%.
+Abdomen: Diffuse lower abdominal and pelvic tenderness. No peritoneal signs in the upper abdomen.
+Pelvic: Extreme posterior fornix tenderness. A tense, bulging, exquisitely tender mass is palpable through the posterior vaginal fornix.
+Which of the following accurately describes the peritoneal anatomy that makes the physical examination finding through the posterior fornix possible, and the anatomical basis of the urinary and rectal symptoms?
+A. The posterior vaginal fornix is directly adjacent to the vesicouterine pouch; cystic fluid compresses the bladder trigone (inability to void) and sigmoid colon (tenesmus).
+B. The posterior vaginal fornix is separated from the rectouterine pouch (of Douglas) only by the posterior vaginal wall and peritoneum; a mass in this space compresses the bladder base anteriorly and the rectum posteriorly.
+C. The posterior fornix lies immediately below the uterosacral ligaments; torsion of these ligaments compresses the ureter (causing urinary retention) and the obturator nerve (causing rectal tenesmus).
+D. The posterior fornix communicates directly with the peritoneal cavity via a congenital patent processus vaginalis, allowing fluid to flow freely between the peritoneum and vaginal lumen.
+E. The posterior fornix is adjacent to the pararectal fossa; infected fluid from the left ovarian cyst has tracked along the broad ligament to compress the left uterine artery, causing uterine ischemia and referred rectal pain.
+Correct Answer: B
+Reasoning: This patient has a hemorrhagic or torsed left ovarian cyst with secondary hemoperitoneum pooling in the rectouterine pouch (of Douglas). The critical anatomy (Moore; Netter; Gray's Anatomy for Students): the rectouterine pouch is the most inferior part of the peritoneal cavity in women and lies directly posterior to the uterus and vaginal vault. The posterior vaginal fornix is separated from this peritoneal pouch by only the thin posterior vaginal wall and the parietal peritoneum. This is precisely why culdocentesis (needle aspiration through the posterior fornix) can access intraperitoneal fluid, and why a pelvic abscess or hematoma in the cul-de-sac produces a palpable, tender, bulging mass through the posterior fornix. The mass in the rectouterine pouch compresses the bladder base and urethra anteriorly (urinary retention/urgency) and the rectum posteriorly (tenesmus — sensation of incomplete evacuation).
+Incorrect Answer Breakdown:
+A: The vesicouterine pouch is anterior (between the uterus and bladder), not posterior. The posterior fornix is in anatomical contact with the POSTERIOR peritoneal recess (rectouterine pouch), not the anterior one. A mass in the vesicouterine pouch would be palpable through the anterior fornix, not the posterior fornix.
+C: The uterosacral ligaments run from the posterior cervix to the sacrum, flanking the rectouterine pouch. They do not directly compress the ureter in this setting. The ureter runs lateral to the cervix (approximately 1–2 cm lateral at the level of the uterine artery — "water under the bridge" — and is not in the path of a posteriorly located cyst. Tenesmus is rectal in origin (rectal compression), not from obturator nerve irritation.
+D: A patent processus vaginalis is an embryological remnant relevant to inguinal hernias and hydroceles of the canal of Nuck in females. It does not connect the peritoneal cavity to the vaginal lumen, and its persistence in adults is rare and not relevant to acute pelvic pain of this nature.
+E: The broad ligament contains the uterine tubes, round ligaments, ovarian ligaments, uterine vessels, and ureters within its layers. While ovarian cysts arise within the broad ligament's mesovarium, the physical exam finding of posterior fornix bulging is explained by cul-de-sac fluid, not broad ligament tracking. Uterine artery compression causing ischemia is not a recognized mechanism for this clinical presentation.
+
+QUESTION 
+A 2-day-old male neonate in the NICU is noted to have respiratory distress since delivery. He was born at 37 weeks via cesarean section due to fetal distress. APGAR scores were 5 and 7 at 1 and 5 minutes. The mother had normal prenatal care; second-trimester ultrasound was reported as normal (though limited by fetal positioning). Initial resuscitation with bag-mask ventilation failed to improve oxygen saturation.
+Physical Examination:
+Vital Signs: HR: 168/min, RR: 68/min, BP: 52/32 mmHg, Temp: 36.6°C, SpO₂: 74% on 100% FiO₂.
+General: Cyanotic, grunting, and using accessory muscles of respiration. Barrel-shaped chest. Scaphoid abdomen.
+Chest Auscultation: Decreased breath sounds over the left hemithorax. Bowel sounds audible over the left chest. Heart sounds heard best on the right side of the chest.
+Abdomen: Scaphoid (concave), soft.
+Laboratory Results:
+ABG: pH 7.18, pO₂ 38 mmHg, pCO₂ 62 mmHg, HCO₃ 18 mEq/L.
+CXR: Loops of bowel in the left hemithorax; cardiac silhouette shifted to the right; absent left hemidiaphragm shadow.
+Which of the following embryological events and the specific week of development most accurately explains the pathogenesis of this neonate's condition?
+A. Failure of closure of the pleuropericardial folds during week 5, allowing pericardial contents to herniate into the left pleural cavity.
+B. Failure of fusion of the pleuroperitoneal folds (Bochdalek defect) during weeks 6–8, before completion of midgut rotation, allowing abdominal viscera to occupy the left pleural space and impair ipsilateral lung development.
+C. Failure of the septum transversum to fuse with the esophageal mesentery during week 4, creating a central tendon defect through which the stomach herniates.
+D. Incomplete muscularization of the posterolateral diaphragm from the body wall mesoderm during weeks 12–16, occurring after the bowel has returned to the abdomen.
+E. Abnormal partitioning of the coelomic cavity by the pleuropericardial folds during week 7, creating a communication between the pericardial and peritoneal cavities.
+Correct Answer: B
+Reasoning: This neonate has a left-sided Congenital Diaphragmatic Hernia (CDH) through the foramen of Bochdalek — the most common type (>85% of CDH), occurring posterolaterally on the left side. Per Langman's Medical Embryology, the diaphragm has four embryological contributions: (1) septum transversum → central tendon; (2) pleuroperitoneal folds → posterolateral portions; (3) esophageal mesentery → crura; (4) body wall mesoderm → peripheral muscular portion. The pleuroperitoneal folds close between weeks 6–8. If closure is delayed, the midgut — which herniates into the umbilical cord at week 6 and returns at weeks 10–12 — finds the pleural cavity open and occupies it instead of the abdomen. The herniated viscera compress the developing ipsilateral lung, causing pulmonary hypoplasia (the primary cause of mortality). The scaphoid abdomen, dextrocardia (mediastinal shift), and bowel sounds in the left chest are the classic clinical triad.
+Incorrect Answer Breakdown:
+A: The pleuropericardial folds separate the pericardial cavity from the pleural cavities (not the peritoneal cavity). Their failure would create a pleuropericardial communication — a pericardial defect — not a diaphragmatic hernia with bowel in the chest. This is a fundamentally different structure from the pleuroperitoneal folds.
+C: The septum transversum forms the central tendon of the diaphragm and the ventral mesentery of the foregut. Its failure to fuse with the esophageal mesentery would produce a central diaphragmatic hernia (rare) through which the esophagus/stomach protrudes — not the posterolateral Bochdalek hernia filled with midgut loops. Furthermore, this mechanism does not produce pulmonary hypoplasia.
+D: Muscularization from body wall mesoderm completes after the pleuroperitoneal fold fusion. If the fold fuses on time, bowel has already returned to the abdomen (weeks 10–12) and the pleural space is closed before muscularization completes. A muscularization failure occurring after week 12 would produce an eventration of the diaphragm (thin, elevated hemidiaphragm) — not an open pleuroperitoneal connection. Timing is the critical distinction Langman's tests.
+E: The pleuropericardial folds are atrial-level structures separating the pericardial and pleural cavities. Their abnormal partitioning describes pericardial defects, not diaphragmatic hernias. CDH is a pleuroperitoneal (not pleuropericardial) fold failure.
+
+QUESTION 
+A 47-year-old female school teacher presents to her internist with a 4-month history of progressive fatigue, dysphagia to solids and occasionally liquids, and a 10-pound weight loss. She also reports difficulty raising her right arm above her head over the past 6 weeks and has noticed that her right eyelid droops slightly, most noticeable in the evening. She has a 30-pack-year smoking history.
+Physical Examination:
+Vital Signs: Temp: 36.9°C, HR: 82/min, BP: Right arm 104/68 mmHg, Left arm 122/78 mmHg, RR: 16/min, SpO₂: 96%.
+Head & Neck: Right-sided partial ptosis, miosis (right pupil 2 mm, left pupil 4 mm), and enophthalmos. No anhidrosis appreciated.
+Neurological: Right deltoid and supraspinatus 3/5 weakness. Right biceps reflex diminished (1+). Right C5–T1 dermatomal paresthesias. Sensation intact to pinprick in bilateral lower extremities.
+Cardiovascular: Diminished right radial pulse. No right carotid bruit.
+CXR: Apical right lung mass with rib destruction.
+Laboratory Results:
+CBC: WNL. LFTs: WNL.
+Calcium: 10.0 mg/dL (Normal: 8.5–10.2).
+CT Chest with contrast: 5.8-cm right apical lung mass with invasion of the right first and second ribs, right subclavian artery encasement, and involvement of the right brachial plexus (C8–T1).
+Which of the following best describes the anatomical pathway of the sympathetic fibers whose disruption accounts for the ocular findings in this patient?
+A. First-order neuron from the hypothalamus descends ipsilaterally in the lateral tegmentum of the brainstem and lateral funiculus of the spinal cord to synapse in the ciliospinal center of Budge (C8–T2); second-order neuron exits the spinal cord, crosses the midline at T1, and ascends over the lung apex; third-order neuron travels with the ophthalmic division of CN V to the orbit.
+B. First-order neuron from the hypothalamus descends ipsilaterally to synapse in the ciliospinal center of Budge (C8–T2); second-order (preganglionic) neuron exits via the ventral ramus, passes over the lung apex and subclavian artery, and synapses in the superior cervical ganglion; third-order (postganglionic) neuron travels with the internal carotid artery plexus and ophthalmic division of CN V to reach the dilator pupillae, superior tarsal muscle, and lower lid retractor.
+C. First-order neuron from the Edinger-Westphal nucleus descends to C8–T2; second-order neuron travels with the phrenic nerve over the lung apex; third-order neuron joins the facial nerve (CN VII) to reach the orbicularis oculi.
+D. First-order neuron from the hypothalamus synapses bilaterally in the Edinger-Westphal nucleus; second-order neuron travels with CN III; third-order neuron synapses in the ciliary ganglion supplying the dilator pupillae.
+E. The sympathetic fibers originate in the dorsal motor nucleus of the vagus, descend to the T1 ventral horn, exit via the dorsal ramus, and pass posterior to the lung apex to synapse in the middle cervical ganglion.
+Correct Answer: B
+Reasoning: This patient has a Pancoast (superior sulcus) tumor — an apical lung malignancy that classically invades the brachial plexus (C8–T1: hand/wrist intrinsic muscle weakness, C5–C6: deltoid/biceps weakness from superior spread), subclavian vessels (diminished right radial pulse, BP differential), and the sympathetic chain, producing Horner's syndrome (ptosis, miosis, enophthalmos). Per Snell's Clinical Neuroanatomy and Moore, the three-neuron sympathetic pathway to the eye is: (1) First-order (central) neuron: hypothalamus → descends ipsilaterally through the lateral tegmentum of brainstem → lateral funiculus of the cervicothoracic spinal cord → synapses in the ciliospinal center of Budge (C8–T2); (2) Second-order (preganglionic) neuron: exits via the T1 ventral root → white rami communicantes → passes over the lung apex and loops around the subclavian artery → ascends to synapse in the superior cervical ganglion; (3) Third-order (postganglionic) neuron: travels along the internal carotid artery → through the cavernous sinus → joins CN V₁ (nasociliary branch) → reaches the orbit to innervate dilator pupillae (miosis when damaged), superior tarsal muscle of Müller (ptosis when damaged), and inferior tarsal muscle (enophthalmos when damaged). The Pancoast tumor interrupts the second-order neuron as it arches over the lung apex.
+Incorrect Answer Breakdown:
+A: This answer incorrectly states the second-order neuron "crosses the midline at T1." The entire sympathetic pathway to the eye is ipsilateral — there is no midline crossing anywhere in the three-neuron arc. This is a classic distractor and a frequently tested fact.
+C: The Edinger-Westphal nucleus is the parasympathetic nucleus of CN III, responsible for pupilloconstriction — the opposite of sympathetic function. It has no role in Horner's syndrome. The phrenic nerve (C3–C5) innervates the diaphragm and has no role in transmitting sympathetic fibers to the orbit. The facial nerve innervates the orbicularis oculi (eye closure via parasympathetics to the lacrimal gland), not the tarsal muscles.
+D: This answer again incorrectly invokes the Edinger-Westphal nucleus (parasympathetic) and CN III for a sympathetic pathway. Furthermore, the dilator pupillae is a sympathetically innervated muscle — it is never innervated via the ciliary ganglion (which is a parasympathetic ganglion supplying the sphincter pupillae and ciliary muscle). This answer confuses parasympathetic and sympathetic eye anatomy.
+E: The dorsal motor nucleus of the vagus is the parasympathetic preganglionic nucleus for thoracic and abdominal viscera — it has no role in pupillary or palpebral sympathetic innervation. The sympathetic pathway exits via the ventral (not dorsal) ramus. The middle cervical ganglion (at C6) is not the synapse point for the ocular sympathetic pathway — that is the superior cervical ganglion.
+
+QUESTION 
+A 44-year-old male construction contractor presents to the emergency department complaining of sudden onset of severe low back pain that began while lifting a heavy beam 6 hours ago. He reports the pain radiates from his right buttock down the posterior thigh and lateral leg to the dorsum of his right foot. He has difficulty walking on his heels and notes numbness over the dorsum of his right foot.
+Physical Examination:
+Vital Signs: Temp: 37.0°C, HR: 88/min, BP: 134/84 mmHg, RR: 16/min, SpO₂: 99%.
+Musculoskeletal: Lumbar paraspinal muscle spasm. Limited lumbar flexion due to pain.
+Neurological: Right ankle dorsiflexion 2/5. Right extensor hallucis longus 1/5. Right peroneal eversion 3/5. Right plantar flexion 5/5. Sensation decreased over the right dorsal foot and first web space. Right patellar reflex 2+ (intact). Right Achilles reflex 2+ (intact). Straight leg raise: positive at 40° on the right, reproducing right leg pain.
+Laboratory Results:
+CBC: WNL. CMP: WNL.
+MRI Lumbar Spine: Right paracentral disc herniation at L4–L5 with compression of the traversing right L5 nerve root.
+Which of the following correctly describes the full myotomal and dermatomal territory of the compressed nerve root, and why the specific reflexes tested are preserved in this patient?
+A. L5 innervates the tibialis anterior (dorsiflexion), extensor hallucis longus, and fibularis (peroneus) longus and brevis (eversion). Its dermatomal territory covers the lateral leg, dorsum of the foot, and first web space. No standard deep tendon reflex is reliably mediated by L5; the patellar reflex tests L2–L4 and the Achilles tests S1–S2 — hence both reflexes are preserved.
+B. L5 innervates the gastrocnemius and soleus (plantar flexion) and flexor hallucis longus. Its dermatomal territory covers the sole of the foot and the lateral ankle. The absent Achilles reflex is the hallmark of L5 radiculopathy.
+C. L5 innervates the tibialis anterior (dorsiflexion) and has a dermatomal territory covering the medial leg and medial foot. The patellar reflex (L4) is impaired because L4 and L5 share the same reflex arc.
+D. L5 innervates the hip abductors (gluteus medius and minimus) exclusively; dorsiflexion weakness is caused by simultaneous L4 root compression. The medial hamstring reflex tests L5 and would be absent.
+E. L5 innervates the quadriceps femoris and the tibialis posterior; dorsiflexion weakness reflects anterior compartment ischemia. The Achilles reflex is absent because S1 and L5 share a common reflex arc.
+Correct Answer: A
+Reasoning: Per Moore's Clinically Oriented Anatomy, Snell's Clinical Neuroanatomy, and High-Yield Gross Anatomy, the L5 nerve root myotome includes: tibialis anterior (primary dorsiflexor), extensor hallucis longus (great toe extension), extensor digitorum longus and brevis, fibularis (peroneus) longus and brevis (eversion), gluteus medius and minimus (hip abduction), and semi-membranosus/semi-tendinosus (medial hamstrings). Its dermatome covers the lateral leg, dorsal foot, and first web space (the classic L5 territory, distinct from S1 which covers the lateral foot and sole). The critical examination point: there is NO reliably testable standard deep tendon reflex for L5. The patellar reflex is L2–L4 (femoral nerve; primarily L4), and the Achilles reflex is S1–S2 (tibial nerve). L5 is the "reflex-absent" radiculopathy — making it harder to detect clinically without imaging, since both standard reflexes remain intact even with complete L5 root compression.
+Incorrect Answer Breakdown:
+B: Gastrocnemius and soleus (plantar flexion) and the Achilles reflex are S1–S2 functions, not L5. The Achilles reflex is the hallmark of S1 radiculopathy (most commonly from L5–S1 disc herniation). The dermatomal territory described (sole of foot, lateral ankle) is S1, not L5. This entire answer describes S1 radiculopathy.
+C: The medial leg and medial foot dermatomal territory belongs to the saphenous nerve (L3–L4 distribution), not L5. L4 and L5 do not share a common reflex arc — each segmental level has anatomically distinct reflex pathways. The patellar reflex (L2–L4) tests primarily L4 and would be diminished in L4 radiculopathy, but L5 root compression does not affect the L4 reflex arc.
+D: While L5 does contribute to hip abduction via gluteus medius/minimus, the primary myotomal deficit is dorsiflexion — this cannot be attributed "exclusively" to a separate simultaneous L4 compression without imaging evidence. The medial hamstring reflex is an inconsistently elicited reflex that does test L5 but is not a standard clinical examination reflex. This answer is partially correct but misleading in attributing dorsiflexion weakness solely to L4.
+E: The quadriceps (knee extension) is innervated by L2–L4 via the femoral nerve, not L5. Tibialis posterior is primarily L4–L5 (tibial nerve) but plantar flexes/inverts the foot. S1 and L5 do NOT share a reflex arc — they are entirely separate segmental levels with distinct motor and sensory territories. Attributing dorsiflexion weakness to anterior compartment ischemia is factually incorrect.
+
+QUESTION 
+A 26-year-old male first-year medical student is brought to the emergency department by his roommate after sudden onset of the "worst headache of his life" that began while studying approximately 90 minutes ago. He vomited twice. He has no significant past medical history and takes no medications. He denies trauma.
+Physical Examination:
+Vital Signs: Temp: 37.4°C, HR: 98/min, BP: 168/102 mmHg, RR: 18/min, SpO₂: 99%.
+General: Distressed young male, photophobic, holding his head.
+Neurological: Alert and oriented ×4. Cranial nerves II–XII grossly intact. No focal motor or sensory deficits. Kernig's sign positive. Brudzinski's sign positive. No papilledema on fundoscopy.
+CT Head (non-contrast): No intracranial hemorrhage identified (sensitivity ~98% within 6 hours). No midline shift.
+Lumbar Puncture: Opening pressure 280 mmHg (Normal: 70–180). CSF: uniformly bloody in all four tubes; xanthochromia present on spectrophotometry.
+The lumbar puncture was performed at the L4–L5 interspace. Which of the following accurately describes all relevant structures penetrated by the needle, in order from superficial to deep, and the embryological origin of the innermost layer entered?
+A. Skin → subcutaneous fat → supraspinous ligament → interspinous ligament → ligamentum flavum → epidural space → dura mater → subdural space → arachnoid mater → subarachnoid space. The pia mater (not entered) and arachnoid mater are derived from neural crest cells.
+B. Skin → subcutaneous fat → supraspinous ligament → interspinous ligament → ligamentum flavum → dura mater → subdural space → arachnoid mater → subarachnoid space. The arachnoid and pia are derived from mesoderm.
+C. Skin → subcutaneous fat → posterior longitudinal ligament → interspinous ligament → ligamentum flavum → epidural space → dura mater → arachnoid mater → subarachnoid space. The dura mater is derived from neural crest cells.
+D. Skin → subcutaneous fat → supraspinous ligament → interspinous ligament → ligamentum flavum → epidural space → dura mater → epidural space → arachnoid mater → subarachnoid space (CSF obtained here). The arachnoid and pia mater (leptomeninges) are derived from neural crest cells.
+E. Skin → subcutaneous fat → supraspinous ligament → ligamentum flavum → epidural fat → dura mater → subarachnoid space → pia mater. The dura is of mesodermal origin; the leptomeninges are of ectodermal (surface ectoderm) origin.
+Correct Answer: D
+Reasoning: This patient has a subarachnoid hemorrhage (SAH) — "thunderclap" headache, bloody CSF uniform across all tubes (distinguishing it from a traumatic tap where blood clears), and xanthochromia (yellow pigmentation from bilirubin from lysed red cells, seen >2 hours post-bleed). The LP needle traverses (per Moore; Gray's Anatomy for Students): skin → subcutaneous fat → supraspinous ligament → interspinous ligament → ligamentum flavum → epidural space (containing fat and epidural venous plexus) → dura mater → arachnoid mater → subarachnoid space (where CSF is collected). Note: the subdural space is a potential space, not a true traversable layer during LP. The interspinous ligament is absent in the cervical region but present at L4–L5. Per Langman's Medical Embryology, the leptomeninges (arachnoid mater + pia mater) are derived from neural crest cells that migrate into the head region. The dura mater has a dual origin — cranially from neural crest, spinally from mesoderm.
+Incorrect Answer Breakdown:
+B: This answer omits the epidural space, which is a real anatomical space traversed by the needle (it contains fat and the internal vertebral venous plexus). The epidural space must be listed between the ligamentum flavum and the dura mater. Additionally, stating arachnoid and pia are mesodermal is incorrect — they are neural crest derivatives (leptomeninges).
+C: The posterior longitudinal ligament runs on the posterior surface of the vertebral bodies inside the spinal canal (anterior to the dural sac). A midline LP needle does not penetrate it — it stays in the posterior midline, passing through the supraspinous and interspinous ligaments and ligamentum flavum. Stating the dura is from neural crest is partially correct intracranially, but the spinal dura is mesodermal — this is a distinction Langman's tests specifically.
+D: Correct, as explained above. The epidural space appears once, between the ligamentum flavum and the dura mater.
+E: This answer omits the interspinous ligament (present at L4–L5) and also incorrectly names the leptomeninges as "surface ectoderm" derivatives. Surface ectoderm gives rise to skin, hair, nails, and lens — not meninges. The leptomeninges are neural crest (neuroectoderm), not surface ectoderm.
+
+QUESTION 
+A 4-week-old male infant is brought to the pediatrician by his parents due to non-bilious, projectile vomiting after every feeding for the past 10 days. He is first-born, and his parents report he appears hungry immediately after vomiting. He has had progressively fewer wet diapers and his fontanelle appears slightly sunken.
+Physical Examination:
+Vital Signs: Temp: 37.0°C, HR: 162/min, BP: 70/42 mmHg, RR: 40/min, SpO₂: 98%.
+General: Fussy but consolable; visibly dehydrated.
+Abdomen: A firm, 1.5-cm, mobile, non-tender, olive-shaped mass is palpable in the right upper quadrant (epigastrium) after feeding. Visible peristaltic waves passing from left to right across the upper abdomen.
+No jaundice. No organomegaly.
+Laboratory Results:
+Sodium: 131 mEq/L (Normal: 135–145)
+Potassium: 3.1 mEq/L (Normal: 3.5–5.0)
+Chloride: 88 mEq/L (Normal: 98–108)
+Bicarbonate: 31 mEq/L (Normal: 22–29)
+BUN: 22 mg/dL (Normal: 5–18)
+pH (venous): 7.52 (Normal: 7.35–7.45)
+Ultrasound abdomen: Pyloric muscle thickness 5 mm (Normal: <3 mm); pyloric channel length 20 mm (Normal: <16 mm).
+Which of the following correctly identifies the embryological origin of the affected structure, its normal adult anatomical position relative to the transpyloric plane, and the mechanism of the electrolyte abnormality?
+A. The pylorus develops from the endodermal lining of the foregut with a mesodermal muscular wall; it lies at the transpyloric plane (L1) along with the duodenojejunal junction; hypertrophy obstructs gastric outflow, causing loss of HCl and resulting in hypochloremic, hypokalemic metabolic alkalosis.
+B. The pylorus develops entirely from neural crest cells that migrate into the foregut wall; it lies below the transpyloric plane at L2; obstruction causes loss of bicarbonate-rich pancreatic secretions, producing metabolic acidosis.
+C. The pylorus develops from splanchnic mesoderm only; it lies at the subhepatic angle below the right costal margin; the metabolic alkalosis results from compensatory renal bicarbonate retention to correct the alkalosis.
+D. The pylorus develops from the endodermal lining and splanchnic mesodermal wall of the caudal foregut; it normally lies at the transpyloric plane (L1), to the right of the midline; projectile vomiting expels gastric acid (HCl), leading to hypochloremic, hypokalemic metabolic alkalosis through direct acid loss and secondary renal potassium wasting.
+E. The pylorus develops from the midgut endoderm caudal to the Meckel's diverticulum remnant; it lies at the level of L3; vomiting expels bile-stained secretions, producing hyperchloremic metabolic acidosis.
+Correct Answer: D
+Reasoning: This is classic hypertrophic pyloric stenosis (HPS) — the most common cause of surgical obstruction in infants, presenting at 3–6 weeks of age with non-bilious (pre-ampullary) projectile vomiting, a palpable "olive," visible left-to-right peristaltic waves, and hypochloremic, hypokalemic metabolic alkalosis. Per Langman's Medical Embryology, the stomach and pylorus develop from the caudal foregut endoderm (luminal epithelium) with a surrounding splanchnic mesodermal wall (smooth muscle layers). The pylorus lies at the transpyloric plane (L1), at the level of the 9th costal cartilages, to the right of the midline — a key anatomical landmark (Moore; Netter). The metabolic derangement: repeated vomiting → loss of H⁺ and Cl⁻ from gastric HCl → metabolic alkalosis and hypochloremia. The kidneys attempt to maintain volume by retaining Na⁺ and excreting K⁺ and H⁺ (paradoxical aciduria), worsening hypokalemia. This "hypochloremic, hypokalemic, metabolic alkalosis" is the pathognomonic biochemical signature of HPS.
+Incorrect Answer Breakdown:
+A: This answer is partially correct (foregut endoderm with mesodermal wall, transpyloric plane location, and correct alkalosis mechanism) but states the duodenojejunal junction lies at the transpyloric plane alongside the pylorus. The DJ junction (ligament of Treitz) actually lies at the L2 level, slightly below and to the left — the transpyloric plane (L1) landmarks include the pylorus, the neck of the pancreas, the hilum of the kidneys, the origin of the superior mesenteric artery, and the duodenum at the L1 level. This anatomical inaccuracy makes D the better, more precise answer.
+B: Neural crest cells contribute to the enteric nervous system (Auerbach's and Meissner's plexuses) within the gut wall but do NOT form the structural smooth muscle of the pylorus. An entirely neural crest-derived pylorus is factually incorrect. Furthermore, pyloric stenosis blocks gastric (acid) outflow, not pancreatic (alkaline) outflow — obstruction of pancreatic secretions would require a more distal obstruction and would produce metabolic acidosis, not alkalosis.
+C: Splanchnic mesoderm gives rise to the smooth muscle and connective tissue layers of the gut, but the luminal epithelium is endodermal. Saying the pylorus is "mesodermal only" omits the endodermal contribution. The anatomical location described (subhepatic angle, right costal margin) is the position of the gallbladder fundus, not the pylorus.
+E: The pylorus is a foregut derivative, not midgut. The midgut extends from just below the ampulla of Vater to the mid-transverse colon. Meckel's diverticulum is a remnant of the vitelline (omphalomesenteric) duct in the distal ileum — an entirely different structure. Non-bilious vomiting confirms the obstruction is proximal to the ampulla (pre-bile duct entry), consistent with a pyloric (foregut) obstruction, not a midgut lesion.
+
+QUESTION 
+A 68-year-old male retired electrician with a history of atrial fibrillation (on warfarin, last INR 1.6 — subtherapeutic) presents to the emergency department with sudden onset right-sided facial droop, slurred speech, and difficulty swallowing that began 2 hours ago. His wife reports he also suddenly complained of dizziness and "the room spinning." He denies headache or loss of consciousness.
+Physical Examination:
+Vital Signs: Temp: 37.1°C, HR: 88/min (irregularly irregular), BP: 164/96 mmHg, RR: 16/min, SpO₂: 96%.
+Cranial Nerves: Right-sided facial pain and temperature loss (CN V territory). Right-sided palate droop and absent gag reflex (CN IX/X). Right vocal cord paresis (hoarse voice). Right CN XI weakness (trapezius/SCM).
+Motor: Left-sided arm and leg weakness (4/5).
+Sensory: Left-sided decreased pain and temperature sensation in the arm and leg.
+Cerebellar: Right-sided finger-nose ataxia. Right-sided dysdiadochokinesia.
+Pupils: Right-sided ptosis, miosis, and enophthalmos (Horner's syndrome).
+Which of the following arterial territories, and the specific brainstem tract or nucleus most accurately accounts for each individual finding in this patient?
+A. Left anterior inferior cerebellar artery (AICA) occlusion: ipsilateral CN V loss = spinal trigeminal nucleus; ipsilateral CN IX/X/XI = nucleus ambiguus; ipsilateral Horner = descending sympathetic fibers; contralateral hemibody pain/temp loss = lateral spinothalamic tract; ipsilateral cerebellar signs = inferior cerebellar peduncle.
+B. Right posterior inferior cerebellar artery (PICA) occlusion (Wallenberg syndrome): ipsilateral CN V loss = spinal trigeminal nucleus and tract; ipsilateral CN IX/X/XI = nucleus ambiguus; ipsilateral Horner = descending hypothalamospinal sympathetic fibers; contralateral hemibody pain/temp loss = lateral spinothalamic tract; ipsilateral cerebellar signs = inferior cerebellar peduncle/restiform body.
+C. Right superior cerebellar artery (SCA) occlusion: ipsilateral CN V loss = chief sensory nucleus; ipsilateral CN IX/X/XI = dorsal motor nucleus of vagus; contralateral hemibody loss = medial lemniscus; ipsilateral cerebellar signs = superior cerebellar peduncle.
+D. Left posterior inferior cerebellar artery (PICA) occlusion: ipsilateral CN V loss = mesencephalic trigeminal nucleus; contralateral CN IX/X = nucleus ambiguus crossing in the medulla; contralateral Horner = descending sympathetic fibers decussating at C3; ipsilateral limb weakness = lateral corticospinal tract.
+E. Basilar artery occlusion: bilateral CN V loss = bilateral spinal trigeminal nuclei; bilateral CN IX/X/XI = bilateral nucleus ambiguus; bilateral Horner = bilateral descending sympathetic fibers; bilateral hemibody loss = bilateral lateral spinothalamic tracts; bilateral cerebellar signs = bilateral inferior cerebellar peduncles.
+Correct Answer: B
+Reasoning: This is a textbook presentation of Wallenberg syndrome (lateral medullary syndrome), caused by occlusion of the right posterior inferior cerebellar artery (PICA) or right vertebral artery, infarting the lateral medulla. Per Snell's Clinical Neuroanatomy and Moore, each finding maps to a specific structure in the lateral medulla: (1) Ipsilateral face pain/temp loss → spinal trigeminal nucleus and tract (CN V); (2) Ipsilateral dysphagia, absent gag, hoarseness, palatal droop → nucleus ambiguus (CN IX, X, XI); (3) Ipsilateral Horner's syndrome (ptosis, miosis, enophthalmos) → descending hypothalamospinal sympathetic fibers passing through the lateral tegmentum of the medulla; (4) Contralateral body pain/temperature loss → lateral spinothalamic tract (already crossed from the contralateral side); (5) Ipsilateral cerebellar signs (ataxia, dysdiadochokinesia) → inferior cerebellar peduncle (restiform body) and/or direct cerebellar involvement. The crossed sensory pattern — ipsilateral face, contralateral body — is pathognomonic for a lateral medullary lesion and is the USMLE hallmark of this syndrome.
+Incorrect Answer Breakdown:
+A: AICA supplies the lateral pons and anterior inferior cerebellum. An AICA infarct (lateral pontine syndrome) produces similar crossed findings but at the pontine level: ipsilateral CN VI (lateral gaze palsy), ipsilateral CN VII (LMN facial weakness), ipsilateral sensorineural hearing loss (cochlear nuclei/CN VIII), and ipsilateral Horner. It does not produce CN IX/X/XI deficits (nucleus ambiguus is in the medulla, not pons). Furthermore, the laterality is described as "left AICA" when the patient's findings are all right-sided (ipsilateral face, left body = RIGHT lateral medulla lesion).
+C: The superior cerebellar artery (SCA) supplies the superior cerebellum and upper dorsal pons. SCA occlusion causes ipsilateral cerebellar signs and contralateral pain/temperature loss from the spinothalamic tract, but the CN deficits are upper pontine (CN IV, partial CN V). The nucleus ambiguus is a medullary structure; the dorsal motor nucleus of the vagus does not mediate the gag reflex and palatal elevation (that is nucleus ambiguus). The medial lemniscus carries proprioception and vibration (dorsal column modalities), not pain/temperature — this answer confuses spinothalamic and lemniscal tract functions.
+D: A left PICA occlusion would produce LEFT-sided ipsilateral face findings and RIGHT-sided body findings. This patient has right-sided face findings and left-sided body findings, localizing the lesion to the RIGHT lateral medulla. The hypothalamospinal sympathetic fibers do not decussate — they descend ipsilaterally throughout their entire course (from hypothalamus to ciliospinal center). "Decussating at C3" is anatomically incorrect and does not exist in any neuroanatomy reference.
+E: Basilar artery occlusion (locked-in syndrome if complete) produces bilateral pontine and cerebellar infarction with bilateral motor and sensory deficits, quadriplegia, and preserved vertical gaze. The entirely unilateral constellation of this patient's findings is inconsistent with basilar occlusion. Bilateral PICA territory infarction from a single basilar occlusion is a different, more catastrophic presentation.
+
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+
+
+Question 
+Vignette: A 28-year-old male construction worker is brought to the emergency department after falling 15 feet from a ladder, landing on his feet before falling onto his right side. He complains of severe pain in his right mid-thigh. He has no prior medical history.
+
+Physical Examination:
+
+Vital Signs: BP: 105/65 mmHg, HR: 112/min, RR: 20/min, Temp: 37.0°C, $SpO_2$: 98% on RA.
+
+Musculoskeletal: Significant swelling and deformity of the right mid-thigh. Pulsatile bleeding is absent, but the thigh is tense.
+
+Neurological: Diminished sensation over the anterior thigh and medial aspect of the leg down to the medial malleolus. Loss of knee extension and absent patellar reflex.
+
+Laboratory Data:
+
+Hemoglobin: 10.5 g/dL (Normal: 13.5–17.5)
+
+Creatine Kinase: 800 U/L (Normal: 22–198)
+
+Which of the following nerves was most likely injured?
+
+A. Obturator nerve
+
+B. Femoral nerve
+
+C. Sciatic nerve
+
+D. Lateral femoral cutaneous nerve
+
+E. Common fibular nerve
+
+Correct Answer: B
+
+Detailed Explanation: The femoral nerve (L2–L4) innervates the anterior compartment of the thigh (quadriceps femoris). Injury results in loss of knee extension and the patellar reflex. Its sensory branches (anterior cutaneous branches and the saphenous nerve) provide sensation to the anterior thigh and the medial leg down to the foot.
+
+A: The obturator nerve innervates the medial (adductor) compartment; injury causes weakness in hip adduction.
+
+C: Sciatic nerve injury would cause weakness in knee flexion and all movements of the foot/ankle.
+
+D: This nerve is purely sensory to the lateral thigh; it has no motor component.
+
+E: Common fibular nerve injury causes "foot drop" (loss of dorsiflexion/eversion).
+
+Question 
+
+Vignette: A newborn female is examined in the nursery. The mother, a 32-year-old G1P1, had limited prenatal care but reports no alcohol or drug use. The infant was born at 39 weeks via spontaneous vaginal delivery.
+
+Physical Examination:
+
+Vital Signs: BP: 64/42 mmHg, HR: 140/min, RR: 45/min, Temp: 36.8°C.
+
+General: A large, midline abdominal wall defect is noted at the base of the umbilical cord. The defect is covered by a translucent sac containing loops of small bowel and a portion of the liver.
+
+Laboratory Data:
+
+Maternal AFP (at 16 weeks): Elevated.
+
+Which of the following embryological processes failed to occur correctly?
+
+A. Fusion of the lateral body folds.
+
+B. Involution of the vitelline duct.
+
+C. Return of the physiological midgut herniation.
+
+D. Migration of neural crest cells to the gut wall.
+
+E. Canalization of the duodenum.
+
+Correct Answer: C
+
+Detailed Explanation: This is an Omphalocele. During the 6th week, the midgut physiologically herniates into the umbilical cord. By the 10th week, it should return to the abdominal cavity. Failure of this return results in an omphalocele, which is notably covered by peritoneum/amnion.
+
+A: Failure of lateral fold fusion results in gastroschisis, where the bowel protrudes to the right of the umbilicus without a covering sac.
+
+B: Failure of vitelline duct involution leads to Meckel’s diverticulum.
+
+D: Results in Hirschsprung disease.
+
+E: Results in duodenal atresia.
+
+Question 
+
+Vignette: A 64-year-old male retired smoker presents with a 4-month history of hoarseness. He denies dysphagia or weight loss. He has a history of hypertension and a recently diagnosed 4.5 cm thoracic aortic aneurysm.
+
+Physical Examination:
+
+Vital Signs: BP: 148/90 mmHg, HR: 78/min, RR: 14/min, Temp: 36.6°C.
+
+Laryngoscopy: The left vocal fold is fixed in an adducted position during attempted abduction. The right vocal fold moves normally.
+
+Laboratory Data:
+
+CXR: Widened mediastinal silhouette.
+
+The structure responsible for this patient’s hoarseness loops around which of the following?
+
+A. Right subclavian artery
+
+B. Arch of the aorta
+
+C. Ligamentum arteriosum
+
+D. Common carotid artery
+
+E. Root of the left lung
+
+Correct Answer: B
+
+Detailed Explanation: The left recurrent laryngeal nerve branches from the vagus nerve, loops under the arch of the aorta (lateral to the ligamentum arteriosum), and ascends in the tracheoesophageal groove. Aneurysms of the aortic arch can compress this nerve, causing left vocal cord paralysis (Ortner syndrome).
+
+A: The right recurrent laryngeal nerve loops around the right subclavian artery.
+
+C: While the nerve is lateral to the ligamentum, the "looping" landmark for the arch is the primary anatomical relation in Moore/Netter.
+
+D: The vagus runs with the carotid, but doesn't loop around it.
+
+E: It passes posterior to the root of the lung but loops specifically around the arch.
+
+Question 
+
+Vignette: A 42-year-old female secretary presents with "pins and needles" in her right hand for the past 6 months. The symptoms are worse at night and while typing. She has no history of trauma.
+
+Physical Examination:
+
+Vital Signs: BP: 120/75 mmHg, HR: 70/min, RR: 12/min.
+
+Hands: Atrophy of the thenar eminence. Sensation is decreased over the palmar aspect of the thumb, index, and middle fingers, but is normal over the central palm (thenar crease).
+
+Tests: Positive Phalen and Tinel signs at the wrist.
+
+Which of the following anatomical structures provides sensory innervation to the area of the palm that is spared in this patient?
+
+A. Recurrent branch of the median nerve
+
+B. Palmar cutaneous branch of the median nerve
+
+C. Palmar branch of the ulnar nerve
+
+D. Superficial branch of the radial nerve
+
+E. Deep branch of the ulnar nerve
+
+Correct Answer: B
+
+Detailed Explanation: This is Carpal Tunnel Syndrome. The median nerve passes through the tunnel, but its palmar cutaneous branch arises proximal to the carpal transverse ligament and passes superficial to it. Therefore, sensation to the central palm is spared despite compression of the main nerve in the tunnel.
+
+A: This is a motor branch to the thenar muscles; it has no sensory component.
+
+C: Provides sensation to the medial palm (pinky side).
+
+D: Provides sensation to the dorsal web space of the thumb.
+
+E: Purely motor branch of the ulnar nerve.
+
+Question 
+
+Vignette: A 19-year-old male is brought to the ED after being struck in the temple by a baseball. He was briefly unconscious, then awoke and felt fine for an hour, but is now becoming increasingly somnolent.
+
+Physical Examination:
+
+Vital Signs: BP: 160/90 mmHg, HR: 55/min, RR: 10/min (Cushing triad).
+
+Neuro: Blown right pupil (mydriasis and fixed).
+
+Laboratory Data:
+
+CT Head: Biconvex (lens-shaped) hyperdense collection.
+
+The vessel injured in this patient enters the skull through which opening?
+
+A. Foramen ovale
+
+B. Foramen rotundum
+
+C. Foramen spinosum
+
+D. Foramen lacerum
+
+E. Jugular foramen
+
+Correct Answer: C
+
+Detailed Explanation: The patient has an epidural hematoma caused by a rupture of the middle meningeal artery. As detailed in Snell’s Clinical Neuroanatomy, this artery is a branch of the maxillary artery and enters the cranium through the foramen spinosum.
+
+A: Transmits the mandibular nerve ($V_3$).
+
+B: Transmits the maxillary nerve ($V_2$).
+
+D: Filled with cartilage in life; nothing significant passes through it.
+
+E: Transmits CN IX, X, XI and the internal jugular vein.
+
+Question 
+
+Vignette: A 3-day-old infant is evaluated for projectile, non-bilious vomiting after every feeding. The infant appears hungry and eager to feed again immediately after vomiting.
+
+Physical Examination:
+
+Vital Signs: BP: 70/45 mmHg, HR: 155/min, RR: 30/min, Temp: 37.1°C.
+
+Abdomen: A small, firm, "olive-like" mass is palpable in the epigastrium.
+
+Laboratory Data:
+
+Sodium: 132 mEq/L
+
+Potassium: 3.1 mEq/L (Low)
+
+Chloride: 88 mEq/L (Low)
+
+Bicarbonate: 34 mEq/L (High)
+
+Which of the following is the most likely pathophysiological mechanism?
+
+A. Failure of the pleuroperitoneal folds to close.
+
+B. Hypertrophy of the circular muscle layer of the pylorus.
+
+C. Failure of the ventral pancreatic bud to rotate.
+
+D. Persistence of the vitelline duct.
+
+E. Incomplete recanalization of the intestinal lumen.
+
+Correct Answer: B
+
+Detailed Explanation: This is Hypertrophic Pyloric Stenosis. It typically presents at 2–6 weeks (though can be earlier) with non-bilious projectile vomiting and a palpable olive mass. The underlying cause is hypertrophy of the pyloric sphincter muscle.
+
+A: Leads to diaphragmatic hernia.
+
+C: Leads to an Annular Pancreas, which causes bilious vomiting as it obstructs the second part of the duodenum.
+
+D: Leads to Meckel’s Diverticulum.
+
+E: Leads to duodenal atresia (associated with Down Syndrome and "double bubble" on X-ray).
+
+Question 
+
+Vignette: A 45-year-old male presents to the clinic with chronic "heartburn" and difficulty swallowing. He has a history of GERD and a BMI of 34.
+
+Physical Examination:
+
+Vital Signs: BP: 135/85 mmHg, HR: 72/min.
+
+General: Mild epigastric tenderness.
+
+Laboratory Data:
+
+Barium Swallow: Protrusion of the stomach through the esophageal hiatus into the posterior mediastinum.
+
+Which of the following structures normally passes through the same diaphragmatic opening as the esophagus?
+
+A. Azygos vein
+
+B. Phrenic nerve
+
+C. Vagus nerves
+
+D. Thoracic duct
+
+E. Inferior vena cava
+
+Correct Answer: C
+
+Detailed Explanation: The esophageal hiatus is at the level of T10. It transmits the esophagus and the anterior and posterior vagal trunks.
+
+A & D: The azygos vein and thoracic duct pass through the aortic hiatus at T12.
+
+B: The left phrenic nerve pierces the diaphragm directly; the right phrenic nerve passes through the caval opening at T8.
+
+E: The IVC passes through the caval opening at T8.
+
+Question 
+
+Vignette: A 58-year-old female presents with sudden onset of "the worst headache of her life." She has a history of smoking and autosomal dominant polycystic kidney disease (ADPKD).
+
+Physical Examination:
+
+Vital Signs: BP: 170/105 mmHg, HR: 95/min, RR: 18/min.
+
+Neuro: Nuchal rigidity is present. No focal deficits.
+
+Laboratory Data:
+
+Lumbar Puncture: Xanthochromia present in CSF.
+
+The most common site for the vascular abnormality causing this condition is the junction of which two vessels?
+
+A. Internal carotid and ophthalmic arteries
+
+B. Anterior communicating and anterior cerebral arteries
+
+C. Posterior communicating and internal carotid arteries
+
+D. Vertebral and basilar arteries
+
+E. Middle cerebral and internal carotid arteries
+
+Correct Answer: B
+
+Detailed Explanation: This is a Subarachnoid Hemorrhage (SAH) likely due to a ruptured Berry aneurysm. ADPKD is a major risk factor. The most common site for these aneurysms is the Anterior Communicating Artery ($ACom$) junction within the Circle of Willis.
+
+A, C, D, E: These are possible sites for Berry aneurysms, but $ACom$ is statistically the most frequent (approx. 35%).
+
+Question 
+
+Vignette: A 50-year-old male is undergoing an emergency repair of a perforated duodenal ulcer. During the surgery, the surgeon must ligate the artery supplying the first part of the duodenum to control bleeding.
+
+Physical Examination:
+
+Intraoperative: Bleeding is identified from the posterior wall of the duodenal bulb.
+
+Which artery is most likely responsible for the hemorrhage?
+
+A. Left gastric artery
+
+B. Splenic artery
+
+C. Gastroduodenal artery
+
+D. Proper hepatic artery
+
+E. Superior mesenteric artery
+
+Correct Answer: C
+
+Detailed Explanation: Posterior duodenal ulcers frequently erode into the gastroduodenal artery, which runs directly behind the first part of the duodenum. This is a common surgical anatomy "pimp" question in Moore's.
+
+A: Supplies the lesser curvature of the stomach.
+
+B: Runs along the superior border of the pancreas to the spleen.
+
+D: Gives off the right gastric and then enters the hepatoduodenal ligament.
+
+E: Supplies the gut from the distal duodenum to the proximal two-thirds of the transverse colon.
+
+Question 
+
+Vignette: A 22-year-old male athlete presents with a "heavy" feeling in his scrotum. He notes it feels like a "bag of worms" when he stands, but the sensation improves when he lies down.
+
+Physical Examination:
+
+Genitalia: Soft, palpable mass superior to the left testis that disappears in the supine position. The right side is normal.
+
+Laboratory Data:
+
+Semen Analysis: Mild oligospermia.
+
+Which anatomical feature explains why this condition occurs more frequently on the left side?
+
+A. The left testicular vein drains into the inferior vena cava at an acute angle.
+
+B. The left testicular vein drains into the left renal vein at a 90-degree angle.
+
+C. The right testicular vein is longer than the left.
+
+D. The left testicular artery is compressed by the SMA.
+
+E. The left pampiniform plexus lacks valves.
+
+Correct Answer: B
+
+Detailed Explanation: This is a Varicocele. They occur on the left side in 90% of cases because the left testicular vein drains into the left renal vein at a perpendicular (90-degree) angle. This creates higher pressure compared to the right testicular vein, which drains directly into the IVC at an oblique angle.
+
+A: This describes the right side (oblique/acute angle into IVC).
+
+C: The left vein is actually longer because it has to reach the renal vein.
+
+D: This describes "Nutcracker Syndrome" (compression of the left renal vein between SMA and Aorta), which causes the varicocele, but the anatomy of the drainage (Choice B) is the primary reason for the side preference.
+
+E: Both sides have valves (though they may be incompetent in varicocele).
+
+
+Question 
+
+Vignette: A 32-year-old female G2P1 at 19 weeks gestation undergoes a routine fetal anatomy scan. The radiologist identifies that the fetal heart is located entirely outside of the thoracic cavity, protruding through a midline defect in the chest wall.
+
+Physical Examination:
+
+Maternal Vitals: BP: 118/74 mmHg, HR: 76/min.
+
+Laboratory Data:
+
+Maternal Serum AFP: Significantly elevated.
+
+Which of the following embryological failures is the most likely cause of this condition?
+
+A. Failure of the pleuroperitoneal folds to close.
+
+B. Failure of the lateral body folds to fuse in the thoracic region.
+
+C. Failure of neural crest cell migration into the truncated arteriosus.
+
+D. Abnormal signaling during the looping of the heart tube.
+
+E. Defective development of the septum transversum.
+
+Correct Answer: B
+
+Detailed Explanation: This is Ectopia Cordis, a rare condition where the heart is located outside the thorax. According to Langman’s Medical Embryology, this occurs due to the failure of the lateral body folds to fuse in the midline to form the thoracic wall during the fourth week of development.
+
+A: Leads to congenital diaphragmatic hernia.
+
+C: Leads to conotruncal heart defects (e.g., Tetralogy of Fallot).
+
+D: Leads to dextrocardia or situs inversus.
+
+E: Contributes to the diaphragm and the fibrous pericardium, but not the primary chest wall closure.
+
+Question 
+
+Vignette: A 45-year-old male presents to the ED with severe, tearing chest pain that radiates to his back between the scapulae. He has a history of uncontrolled hypertension.
+
+Physical Examination:
+
+Vital Signs: BP: 180/110 mmHg (Right arm), 140/90 mmHg (Left arm), HR: 105/min, RR: 22/min.
+
+Heart: A new high-pitched, blowing diastolic murmur is heard at the right sternal border.
+
+Laboratory Data:
+
+Chest CT Angiography: Reveal an intimal tear in the ascending aorta extending to the aortic arch.
+
+The murmur heard on examination is most likely due to the involvement of which anatomical structure?
+
+A. Mitral valve annulus
+
+B. Aortic root dilation
+
+C. Pulmonary valve stenosis
+
+D. Left atrium
+
+E. Chordae tendineae
+
+Correct Answer: B
+
+Detailed Explanation: The patient has a Stanford Type A Aortic Dissection. As described in Moore's Clinically Oriented Anatomy, dissection of the ascending aorta can propagate retrograde toward the heart, causing aortic root dilation and subsequent aortic valve insufficiency. This manifests as a diastolic murmur.
+
+A & E: Related to mitral regurgitation, which would produce a systolic murmur at the apex.
+
+C: Produces a systolic crescendo-decrescendo murmur at the left second intercostal space.
+
+D: Not directly responsible for the valvular murmur in the context of dissection.
+
+Question 
+
+Vignette: A 28-year-old male professional baseball pitcher presents with numbness and tingling in the ring and little fingers of his left hand. He also notes weakness when trying to grip a baseball.
+
+Physical Examination:
+
+Vital Signs: Stable.
+
+Hands: Wasting of the hypothenar eminence. When asked to grip a piece of paper between his thumb and index finger (Froment's sign), he compensates by flexing the IP joint of the thumb.
+
+Neuro: Sensation is decreased over the medial 1.5 fingers on both the palmar and dorsal surfaces.
+
+What is the most likely site of nerve compression?
+
+A. Carpal tunnel
+
+B. Guyon canal
+
+C. Cubital tunnel
+
+D. Pronator teres muscle
+
+E. Spiral groove of the humerus
+
+Correct Answer: C
+
+Detailed Explanation: The patient has an ulnar nerve injury. Because the sensory loss involves the dorsal aspect of the medial 1.5 fingers, the lesion must be proximal to the wrist (the dorsal cutaneous branch of the ulnar nerve arises in the forearm). Therefore, the cubital tunnel at the elbow is the most likely site.
+
+A: Involves the median nerve.
+
+B: Compression at the wrist (Guyon canal) would spare the dorsal sensation of the hand.
+
+D: Site for median nerve compression (Pronator syndrome).
+
+E: Site for radial nerve compression (Wrist drop).
+
+Question 
+
+Vignette: A 60-year-old male is undergoing an emergency repair of a ruptured abdominal aortic aneurysm (AAA). The surgeon notes the aneurysm is located just inferior to the origin of the renal arteries.
+
+Physical Examination:
+
+Intraoperative: The surgeon identifies the left renal vein crossing anterior to the aorta.
+
+The left renal vein typically passes posterior to which of the following arteries?
+
+A. Celiac trunk
+
+B. Superior mesenteric artery
+
+C. Inferior mesenteric artery
+
+D. Common iliac artery
+
+E. Gonadal artery
+
+Correct Answer: B
+
+Detailed Explanation: As illustrated in Netter’s Atlas of Human Anatomy, the left renal vein travels from the left kidney to the IVC by passing between the superior mesenteric artery (SMA) anteriorly and the aorta posteriorly. Compression at this site is known as "Nutcracker Syndrome."
+
+A: Located superior to the renal veins.
+
+C: Located inferior to the renal veins.
+
+D: Located much further down in the pelvis.
+
+E: The gonadal vein drains into the renal vein on the left; the artery does not cross anterior to it in this specific relational context.
+
+Question 
+
+Vignette: A 1-day-old male infant is found to have an opening on the ventral surface of the penis. The urethral opening is located at the mid-shaft of the penis.
+
+Physical Examination:
+
+Genitalia: The penis is curved ventrally (chordee). Both testes are descended in the scrotum.
+
+Laboratory Data:
+
+Karyotype: 46, XY.
+
+Failure of which embryological structure to fuse is responsible for this condition?
+
+A. Genital swellings
+
+B. Urogenital folds
+
+C. Genital tubercle
+
+D. Paramesonephric ducts
+
+E. Processus vaginalis
+
+Correct Answer: B
+
+Detailed Explanation: This is Hypospadias. According to Langman’s, the definitive spongy urethra in males is formed by the fusion of the urogenital (urethral) folds. Failure of these folds to fuse results in an opening on the ventral (underside) surface of the penis.
+
+A: Fusion of the genital swellings forms the scrotum.
+
+C: Forms the glans penis and the phallus.
+
+D: These regress in males; in females, they form the uterus and fallopian tubes.
+
+E: Leads to hydrocele or inguinal hernia.
+
+Question 
+
+Vignette: A 50-year-old female presents with sudden onset of "double vision" and a drooping eyelid. She has a history of heavy smoking.
+
+Physical Examination:
+
+Vital Signs: BP: 140/85 mmHg, HR: 80/min.
+
+Neuro: Complete ptosis of the right eye. The right eye is deviated "down and out." The right pupil is dilated and non-reactive to light.
+
+An aneurysm at the junction of which two vessels is the most likely cause?
+
+A. Anterior communicating and anterior cerebral
+
+B. Posterior communicating and internal carotid
+
+C. Middle cerebral and internal carotid
+
+D. Basilar and superior cerebellar
+
+E. Posterior cerebral and basilar
+
+Correct Answer: B
+
+Detailed Explanation: This is a Cranial Nerve III (Oculomotor) palsy. Because the pupil is involved (dilated/fixed), it suggests external compression of the nerve. Snell’s Clinical Neuroanatomy emphasizes that the CN III travels between the posterior cerebral artery and the superior cerebellar artery, but it is most commonly compressed by an aneurysm at the junction of the Posterior Communicating Artery ($PCom$) and the Internal Carotid Artery.
+
+A: Causes visual field defects (bitemporal hemianopsia) or is asymptomatic until rupture.
+
+C: Usually presents with stroke symptoms (hemiparesis).
+
+D & E: While CN III passes between these, the $PCom$ aneurysm is the classic high-yield association for surgical CN III palsy.
+
+Question 
+
+Vignette: A 35-year-old male is brought to the ED after a motor vehicle accident where he sustained a "dashboard injury" to his flexed knee. He complains of severe pain and instability in his right knee.
+
+Physical Examination:
+
+Knee: With the knee flexed at 90 degrees, the tibia can be displaced posteriorly relative to the femur (Positive Posterior Drawer Sign).
+
+Which of the following ligamentous structures is most likely damaged?
+
+A. Anterior cruciate ligament
+
+B. Posterior cruciate ligament
+
+C. Medial collateral ligament
+
+D. Lateral collateral ligament
+
+E. Medial meniscus
+
+Correct Answer: B
+
+Detailed Explanation: Gray’s Anatomy for Students identifies the Posterior Cruciate Ligament (PCL) as the primary stabilizer against posterior translation of the tibia. The "dashboard injury" (force applied to the anterior tibia while the knee is flexed) is the classic mechanism for PCL rupture.
+
+A: Would result in a positive Anterior Drawer Sign or Lachman test.
+
+C & D: Result from valgus/varus stress, respectively.
+
+E: Usually involves locking or popping with twisting motions (McMurray test).
+
+Question 
+
+Vignette: A 22-year-old female presents with a small, painless lump in her neck that moves when she swallows. She has no other symptoms.
+
+Physical Examination:
+
+Neck: A 1.5 cm mobile mass is palpated in the midline, just superior to the thyroid cartilage.
+
+Laboratory Data:
+
+Biopsy: Shows normal thyroid tissue.
+
+This ectopic tissue is most likely a remnant of which embryological structure?
+
+A. First pharyngeal pouch
+
+B. Thyroglossal duct
+
+C. Second pharyngeal cleft
+
+D. Ultramobranchial body
+
+E. Foramen cecum
+
+Correct Answer: B
+
+Detailed Explanation: Langman’s states that the thyroid gland descends from the foramen cecum of the tongue to its final position in the neck. The thyroglossal duct is the path of descent. Remnants of thyroid tissue can be left anywhere along this path, often forming a thyroglossal duct cyst in the midline.
+
+A: Forms the epithelial lining of the auditory tube and middle ear.
+
+C: Forms the cervical sinus (which normally disappears).
+
+D: Gives rise to parafollicular (C) cells of the thyroid.
+
+E: The point of origin, but the remnant itself is found along the duct.
+
+Question 
+
+Vignette: A 70-year-old male presents with difficulty starting his urinary stream and frequent nighttime urination.
+
+Physical Examination:
+
+DRE: The prostate is enlarged, rubbery, and non-tender. The median sulcus is palpable.
+
+The enlargement in Benign Prostatic Hyperplasia (BPH) primarily involves which zone of the prostate?
+
+A. Peripheral zone
+
+B. Central zone
+
+C. Transition zone
+
+D. Anterior muscular stroma
+
+E. Fibrous capsule
+
+Correct Answer: C
+
+Detailed Explanation: As noted in Moore’s, BPH typically involves the Transition Zone, which surrounds the urethra. This is why BPH commonly causes obstructive urinary symptoms. Prostate cancer, conversely, most often arises in the Peripheral Zone.
+
+A: Site for most prostate cancers.
+
+B: Surrounds the ejaculatory ducts.
+
+D & E: Not the primary sites for glandular hyperplasia.
+
+Question 
+
+Vignette: A 42-year-old female undergoes a thyroidectomy for a large multinodular goiter. Postoperatively, she notices that her voice is weak and she can no longer reach high-pitched notes when singing.
+
+Physical Examination:
+
+Laryngoscopy: The vocal folds adduct and abduct normally, but the left vocal fold appears "limp" and lacks tension.
+
+Which nerve was most likely injured during the surgery?
+
+A. Recurrent laryngeal nerve
+
+B. Internal branch of the superior laryngeal nerve
+
+C. External branch of the superior laryngeal nerve
+
+D. Glossopharyngeal nerve
+
+E. Ansa cervicalis
+
+Correct Answer: C
+
+Detailed Explanation: The external branch of the superior laryngeal nerve innervates the cricothyroid muscle, which tenses the vocal folds to increase pitch. Injury to this nerve (often during ligation of the superior thyroid artery) results in an inability to produce high-pitched sounds.
+
+A: Would cause vocal fold paralysis (hoarseness or airway obstruction).
+
+B: Provides sensory innervation to the larynx above the vocal folds.
+
+D: Provides sensation to the posterior third of the tongue and oropharynx.
+
+E: Innervates the infrahyoid (strap) muscles.
+
+
+Question 
+
+Vignette: A 45-year-old male is brought to the emergency department after a high-speed motor vehicle accident. He was the restrained driver and hit the steering wheel with his chest. He complains of severe retrosternal pain.
+
+Physical Examination:
+
+Vital Signs: BP: 90/60 mmHg, HR: 120/min, RR: 24/min, $SpO_2$: 94% on RA.
+
+Heart: Muffled heart sounds; jugular venous distension is noted.
+
+Lungs: Clear to auscultation bilaterally.
+
+Laboratory Data:
+
+FAST Exam: Shows a layer of fluid within the pericardial sac.
+
+To perform an emergency pericardiocentesis, the needle should be inserted in which of the following locations to avoid the pleura and lungs?
+
+A. Left 2nd intercostal space, midclavicular line
+
+B. Right 4th intercostal space, parasternal line
+
+C. Left 5th intercostal space, just lateral to the sternum
+
+D. Right 5th intercostal space, midclavicular line
+
+E. Left 6th intercostal space, midaxillary line
+
+Correct Answer: C
+
+Detailed Explanation: According to Moore's Clinically Oriented Anatomy, the "bare area" of the pericardium is located in the left 5th or 6th intercostal space immediately lateral to the sternum. In this region, the pericardium is not covered by pleura or lung due to the cardiac notch of the left lung.
+
+A: Site for needle decompression of a tension pneumothorax.
+
+B: Risk of entering the right pleura and lung.
+
+D: Midclavicular line would likely pierce the lung/pleura.
+
+E: This is a common site for a chest tube (midaxillary line), not pericardiocentesis.
+
+Question 
+
+Vignette: A newborn male is noted to have a constant dribbling of urine from his umbilicus. The infant is otherwise healthy and was born at term.
+
+Physical Examination:
+
+Vital Signs: Stable.
+
+Abdomen: Clear fluid is seen leaking from the umbilical stump. No masses are palpated.
+
+Laboratory Data:
+
+Creatinine (Fluid): High (consistent with urine).
+
+This condition is caused by the persistence of a structure derived from which embryological organ?
+
+A. Vitelline duct
+
+B. Allantois
+
+C. Mesonephric duct
+
+D. Paramesonephric duct
+
+E. Cloacal membrane
+
+Correct Answer: B
+
+Detailed Explanation: This is a Urachal Fistula. Langman’s Medical Embryology explains that the allantois connects the fetal bladder to the umbilicus. Normally, it obliterates to become the urachus (median umbilical ligament). If the entire lumen remains patent, urine can leak from the umbilicus.
+
+A: Persistence leads to a vitelline fistula, which leaks fecal matter, not urine.
+
+C: Forms male reproductive structures (epididymis, vas deferens).
+
+D: Forms female reproductive structures (uterus, tubes).
+
+E: The membrane that ruptures to form the urogenital and anal openings.
+
+Question 
+
+Vignette: A 68-year-old male with a history of heavy alcohol use and cirrhosis is brought to the ED after vomiting a large amount of bright red blood.
+
+Physical Examination:
+
+Vital Signs: BP: 85/55 mmHg, HR: 115/min.
+
+General: Jaundiced with visible "caput medusae" on the abdomen.
+
+Laboratory Data:
+
+INR: 1.9
+
+Albumin: 2.4 g/dL
+
+The "caput medusae" observed on the abdomen represents an anastomosis between which two venous systems?
+
+A. Left gastric vein and Azygos vein
+
+B. Superior rectal vein and Inferior rectal vein
+
+C. Paraumbilical veins and Superficial epigastric veins
+
+D. Splenic vein and Short gastric veins
+
+E. Inferior mesenteric vein and Renal vein
+
+Correct Answer: C
+
+Detailed Explanation: High-Yield Gross Anatomy describes the portosystemic anastomoses that occur in portal hypertension. Caput medusae involves the paraumbilical veins (portal) and the superficial epigastric veins (systemic).
+
+A: These form esophageal varices.
+
+B: These form internal hemorrhoids.
+
+D: These are involved in gastric varices.
+
+E: This is not a standard portosystemic anastomosis site mentioned in major texts.
+
+Question 
+
+Vignette: A 22-year-old male is brought to the ED with a deep knife wound to the palm of his hand. He is unable to adduct his thumb.
+
+Physical Examination:
+
+Motor: The patient can flex and abduct the thumb, but cannot move the thumb toward the index finger in the plane of the palm.
+
+Sensory: Normal over the entire hand.
+
+Which of the following nerves was most likely injured?
+
+A. Recurrent branch of the median nerve
+
+B. Deep branch of the ulnar nerve
+
+C. Palmar branch of the median nerve
+
+D. Superficial branch of the radial nerve
+
+E. Anterior interosseous nerve
+
+Correct Answer: B
+
+Detailed Explanation: While most thumb muscles (the OAF: Opponens, Abductor pollicis brevis, Flexor pollicis brevis) are innervated by the median nerve, the Adductor Pollicis is the exception. As per Netter’s, it is innervated by the deep branch of the ulnar nerve.
+
+A: Innervates the thenar muscles; injury would prevent opposition and abduction.
+
+C: Sensory branch; does not affect motor function.
+
+D: Purely sensory to the dorsal hand.
+
+E: Innervates deep forearm muscles; would not cause isolated loss of thumb adduction.
+
+Question 
+
+Vignette: A 30-year-old male presents with a persistent, painless swelling in the midline of his scrotum, superior to the testis.
+
+Physical Examination:
+
+Genitalia: A 2-cm, fluctuant, non-tender mass is palpated at the head of the epididymis. The mass transilluminates brilliantly when a light is applied.
+
+Laboratory Data:
+
+Ultrasound: Cystic lesion containing dead sperm.
+
+This most likely diagnosis is a remnant of which of the following?
+
+A. Mesonephric duct
+
+B. Paramesonephric duct
+
+C. Gubernaculum
+
+D. Processus vaginalis
+
+E. Efferent ductules
+
+Correct Answer: E
+
+Detailed Explanation: This is a Spermatocele. According to Moore's, these are retention cysts found in the head of the epididymis or the efferent ductules. They are distinct from hydroceles in that they often contain milky fluid and spermatozoa.
+
+A: Forms the main drainage system (vas deferens).
+
+B: Remnants in males include the appendix testis.
+
+C: Guides the descent of the testes.
+
+D: Failure to obliterate leads to a congenital hydrocele or hernia.
+
+Question 
+
+Vignette: A 45-year-old female presents with severe pain in her right upper quadrant that radiates to her right shoulder. The pain is particularly bad after eating a fatty meal.
+
+Physical Examination:
+
+Abdomen: Tenderness in the RUQ; inspiration is halted due to pain when the examiner’s hand is pressed under the right costal margin.
+
+Irritation of which nerve is responsible for the referred pain to the right shoulder?
+
+A. Right phrenic nerve
+
+B. Right vagus nerve
+
+C. Right intercostal nerves (T5-T9)
+
+D. Right greater splanchnic nerve
+
+E. Right long thoracic nerve
+
+Correct Answer: A
+
+Detailed Explanation: Gallbladder inflammation (cholecystitis) can irritate the diaphragmatic peritoneum. As noted in Gray’s Anatomy for Students, the diaphragm and its associated peritoneum are innervated by the phrenic nerve (C3-C5). Sensory fibers from C3-C5 also supply the skin over the shoulder (supraclavicular nerves), leading to referred pain.
+
+B: Involved in autonomic reflexes, not somatic referred pain.
+
+C: Responsible for the localized RUQ abdominal wall pain, but not shoulder pain.
+
+D: Carries visceral afferent pain fibers to the T5-T9 spinal segments (epigastric pain).
+
+Question 
+
+Vignette: A 2-week-old infant is brought to the clinic because of a "crooked neck." The infant's head is tilted toward the right shoulder, and the chin is rotated toward the left.
+
+Physical Examination:
+
+Neck: A firm, non-tender, 1-cm mass is palpated within the right sternocleidomastoid muscle. Passive range of motion of the neck is limited.
+
+This condition (congenital muscular torticollis) results from injury to which of the following?
+
+A. Spinal accessory nerve (CN XI)
+
+B. C1-C2 spinal nerves
+
+C. Sternocleidomastoid muscle
+
+D. Trapezius muscle
+
+E. Phrenic nerve
+
+Correct Answer: C
+
+Detailed Explanation: Congenital muscular torticollis is caused by fibrosis or shortening of the sternocleidomastoid (SCM) muscle, often due to intrauterine malposition or birth trauma. Because the SCM tilts the head toward the ipsilateral side and rotates the chin away, a right-sided SCM contracture produces the described deformity.
+
+A: Injury would lead to muscle wasting (atrophy) and shoulder droop, not contracture and head tilt.
+
+B: Contribute to the cervical plexus, but are not the primary cause of this muscular fibrosis.
+
+D: Also innervated by CN XI, but does not cause the rotation seen in torticollis.
+
+Question 
+
+Vignette: A 62-year-old male presents with sudden onset of severe abdominal pain. He has a history of atrial fibrillation and was not taking his anticoagulation.
+
+Physical Examination:
+
+Vital Signs: BP: 150/90 mmHg, HR: 110/min (irregularly irregular).
+
+Abdomen: Minimal tenderness; bowel sounds are absent.
+
+Laboratory Data:
+
+CT Angiography: Shows an embolus in the superior mesenteric artery (SMA).
+
+Which of the following structures is most likely to remain viable due to collateral circulation from the celiac trunk?
+
+A. Jejunum
+
+B. Ileum
+
+C. Ascending colon
+
+D. Proximal duodenum
+
+E. Cecum
+
+Correct Answer: D
+
+Detailed Explanation: The proximal duodenum (above the major duodenal papilla) receives blood from the superior pancreaticoduodenal artery, which is a branch of the celiac trunk (via the gastroduodenal artery). The distal duodenum receives blood from the SMA. The anastomosis between the superior and inferior pancreaticoduodenal arteries provides collateral flow.
+
+A, B, C, E: These structures are primarily or solely supplied by the SMA and are at high risk of necrosis in SMA occlusion.
+
+Question 
+
+Vignette: A newborn male is noted to have a defect in his lower abdominal wall through which the posterior wall of the bladder is visible.
+
+Physical Examination:
+
+General: The bladder mucosa is exposed and moist. The pubic bones are widely separated.
+
+Genitalia: Epispadia is present.
+
+This condition (bladder exstrophy) is caused by a developmental failure of which structure?
+
+A. Ureteric bud
+
+B. Metanephric blastema
+
+C. Mesoderm migration between ectoderm and endoderm
+
+D. Urorectal septum
+
+E. Allantois
+
+Correct Answer: C
+
+Detailed Explanation: Langman’s explains that bladder exstrophy occurs when mesoderm fails to migrate between the ectoderm and endoderm in the lower abdominal wall. This prevents proper formation of the abdominal muscles and the anterior wall of the bladder, leading to rupture of the overlying ectoderm and exposure of the bladder.
+
+A & B: Involved in kidney development.
+
+D: Failure leads to urorectal fistulas or imperforate anus.
+
+E: Involved in urachal anomalies.
+
+Question 40
+
+Vignette: A 54-year-old female presents with a "bulge" in her neck. She has difficulty swallowing and a feeling that food gets "stuck" in her throat. She also notes halitosis (bad breath).
+
+Physical Examination:
+
+Neck: A soft, fluctuant mass is palpable in the left posterior neck.
+
+Laboratory Data:
+
+Barium Swallow: Shows an out-pouching of the esophagus through Killian's dehiscence.
+
+Killian's dehiscence is located between which two parts of the inferior pharyngeal constrictor?
+
+A. Salpingopharyngeus and Palatopharyngeus
+
+B. Thyropharyngeus and Cricopharyngeus
+
+C. Middle and Inferior constrictors
+
+D. Stylopharyngeus and Cricopharyngeus
+
+E. Superior and Middle constrictors
+
+Correct Answer: B
+
+Detailed Explanation: This is a Zenker’s Diverticulum. As described in Snell’s Clinical Anatomy, it is a false diverticulum occurring at a point of weakness called Killian's dehiscence. This area is located between the thyropharyngeus and cricopharyngeus portions of the inferior constrictor muscle.
+
+A, C, D, E: These anatomical relationships do not form the specific site of Zenker’s Diverticulum.
+

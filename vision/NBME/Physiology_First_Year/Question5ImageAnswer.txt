@@ -1,0 +1,51 @@
+The Vignette
+
+A 50-year-old patient with no significant past medical history undergoes a routine physiological assessment. A left ventricular pressure-volume loop is obtained to evaluate basic cardiac parameters.
+
+The Question
+
+Based on the provided loop, what is the approximate ejection fraction?
+
+Choices
+
+A. 25%
+
+B. 40%
+
+C. 58%
+
+D. 70%
+
+Phase 3: Explanation & Answer Key
+
+Correct Answer: C
+
+Reasoning:
+
+To find the Ejection Fraction (EF), you must first determine the Stroke Volume (SV) and the End-Diastolic Volume (EDV) from the graph.
+
+Step 1: Identify EDV (Point A). This is the maximum volume on the x-axis, which is 150 mL.
+
+Step 2: Identify ESV (Point C). This is the minimum volume on the x-axis, which is roughly 60 mL (note: the text box in the image uses 50 mL for its "Normal Values" example, but let's look at the actual plot where the dot sits).
+
+Step 3: Calculate SV. $SV = EDV - ESV$. Using the values in the image's example box: $120\text{ mL} - 50\text{ mL} = 70\text{ mL}$.
+
+Step 4: Calculate EF. $EF = (SV / EDV) \times 100$. Following the image's logic: $(70 / 120) \times 100 = 58.3\%$.
+
+Incorrect Answer Breakdown:
+
+A (25%): This would represent severely depressed systolic function (Heart Failure with reduced Ejection Fraction).
+
+B (40%): This is considered "borderline" or "mildly reduced" systolic function.
+
+D (70%): While possible in hyperdynamic states or very fit athletes, it does not match the mathematical data provided in this specific loop's example box.
+
+Key Formulas for the Board Exam
+
+Students should memorize these three interconnected formulas:
+
+Stroke Volume (SV): $EDV - ESV$
+
+Ejection Fraction (EF): $SV / EDV$
+
+Cardiac Output (CO): $SV \times HR$

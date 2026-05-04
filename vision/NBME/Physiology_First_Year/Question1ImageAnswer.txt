@@ -1,0 +1,31 @@
+Vignette:
+
+A 62-year-old man with long-standing hypertension undergoes cardiac catheterization. During the procedure, a left ventricular pressure-volume loop is obtained to evaluate his cardiac function.
+
+The Question:
+
+Which point on the loop represents the closure of the mitral (bicuspid) valve?
+
+A. Point A
+
+B. Point B
+
+C. Point C
+
+D. Point D
+
+Phase 3: Explanation & Answer Key
+
+Correct Answer: A
+
+Reasoning:
+
+The mitral valve closes when left ventricular pressure exceeds left atrial pressure at the end of diastole. This occurs at the End-Diastolic Volume (EDV), which is the maximum volume the ventricle reaches (the rightmost point of the loop). This mechanical event produces the first heart sound ($S_1$) and marks the beginning of isovolumetric contraction.
+
+Incorrect Answer Breakdown:
+
+Point B (Aortic Valve Opens): At this point, ventricular pressure has climbed to meet aortic pressure. The aortic valve opens, and the ejection phase begins.
+
+Point C (Aortic Valve Closes): This occurs at the End-Systolic Volume (ESV). The closure of the aortic valve produces the second heart sound ($S_2$) and marks the start of isovolumetric relaxation.
+
+Point D (Mitral Valve Opens): As the ventricle relaxes, its pressure eventually falls below atrial pressure. The mitral valve opens here, allowing the ventricular filling phase (moving from D back to A) to begin.

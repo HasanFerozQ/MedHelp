@@ -1,0 +1,39 @@
+A 58-year-old man with a history of long-standing mitral regurgitation undergoes cardiac catheterization for a preoperative evaluation. During the procedure, a left ventricular pressure-volume loop is obtained. He is noted to have a blowing, holosystolic murmur heard best at the apex that radiates to the axilla.
+
+The Question
+
+Which point on the loop represents the closure of the mitral (bicuspid) valve?
+
+Choices
+
+A. Point A (Bottom-Right)
+
+B. Point B (Top-Right)
+
+C. Point C (Top-Left)
+
+D. Point D (Bottom-Left)
+
+E. Midpoint of the ventricular filling phase
+
+Phase 3: Explanation & Answer Key
+
+Correct Answer: A
+
+Reasoning:
+
+Even in the setting of Mitral Regurgitation (MR), Point A represents the end of diastole and the moment the mitral valve attempts to close. At this point, the ventricle reaches its End-Diastolic Volume (EDV). As ventricular pressure rises and just exceeds left atrial pressure, the mitral valve leaflets meet, marking the start of systole and producing the first heart sound ($S_1$).
+
+Pathophysiological Mechanism in the Image:
+
+In the provided loop (ChatGPT Image May 4, 2026, 02_15_42 PM.jpg), you will notice that the line from A to B is not perfectly vertical. This is a classic board-exam finding for MR. Because the valve does not seal properly, blood leaks back into the low-pressure left atrium as soon as the ventricle begins to contract. This eliminates the "isovolumetric" nature of this phase, as volume is lost during the pressure rise.
+
+Incorrect Answer Breakdown:
+
+Point B (Aortic Valve Opens): This marks the beginning of the ejection phase. In MR, the pressure required to reach this point may be lower than normal because the ventricle has a "blow-off valve" (the atrium) that decreases afterload.
+
+Point C (Aortic Valve Closes): This is the End-Systolic Volume (ESV) and marks the start of the relaxation phase ($S_2$ sound). In MR, the ESV is typically decreased because the ventricle empties into two outlets (Aorta and Left Atrium).
+
+Point D (Mitral Valve Opens): This marks the start of ventricular filling. In MR, the filling phase (D to A) is often more rapid and involves higher volumes, as the left atrium is overfilled from the regurgitant volume of the previous beat.
+
+Choice E: This is a distractor; no major valvular event occurs at the midpoint of the filling phase, though a mid-diastolic flow murmur might be heard in severe MR.

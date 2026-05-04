@@ -1,0 +1,41 @@
+A 70-year-old woman presents with exertional chest pain and a syncopal episode. Physical examination reveals a harsh, crescendo-decrescendo systolic murmur heard best at the right second intercostal space, radiating to the carotids. A left ventricular pressure-volume loop is obtained via cardiac catheterization.
+
+The Question
+
+Which point on the loop represents the opening of the aortic valve?
+
+Choices
+
+A. Point A (Bottom-Right)
+
+B. Point B (Top-Right)
+
+C. Point C (Top-Left)
+
+D. Point D (Bottom-Left)
+
+Phase 3: Explanation & Answer Key
+
+Correct Answer: B
+
+Reasoning:
+
+The aortic valve opens when the pressure inside the left ventricle exceeds the pressure in the aorta. Following the closure of the mitral valve at Point A, the ventricle undergoes isovolumetric contraction (Line A to B), where pressure rises sharply without a change in volume. At Point B, the pressure is finally sufficient to force the stenotic aortic valve open, initiating the ejection phase.
+
+Pathophysiological Mechanism of Aortic Stenosis:
+
+In the loop shown in the image, you can observe several classic findings of AS:
+
+Increased Peak Systolic Pressure: Notice the loop reaches significantly higher pressures (nearly 180 mmHg) compared to a normal loop (~120 mmHg). The ventricle must generate massive pressure to overcome the high resistance of the narrowed valve.
+
+Increased Afterload: Because the heart is pushing against a high-resistance "bottleneck," the afterload is significantly increased.
+
+Left Ventricular Hypertrophy (LVH): Over time, this pressure overload leads to concentric hypertrophy, which decreases ventricular compliance. This often results in an increased End-Diastolic Pressure (the "starting" pressure at Point A is higher than normal).
+
+Incorrect Answer Breakdown:
+
+Point A (Mitral Valve Closes): This marks the end of diastole and the beginning of systole ($S_1$).
+
+Point C (Aortic Valve Closes): In AS, this point might be reached earlier or at a lower stroke volume if the heart begins to fail, but it always represents the end of ejection and the start of isovolumetric relaxation ($S_2$).
+
+Point D (Mitral Valve Opens): This marks the beginning of ventricular filling. Due to LVH and decreased compliance, the "filling" line (D to A) might be steeper in a patient with AS.
