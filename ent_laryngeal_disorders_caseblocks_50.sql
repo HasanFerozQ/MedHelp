@@ -28,7 +28,11 @@ Vitals: Temp 98.6F.
 Physical Examination: Voice is hoarse and weak. Flexible laryngoscopy reveals bilateral edema and erythema of the true vocal folds. No discrete masses or airway compromise.
 Laboratory Results: None indicated.', 1) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Acute Viral Laryngitis', "order" = 1 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 32-year-old school teacher presents with hoarseness and a raspy voice for 3 days. She recently had a mild upper respiratory infection with a cough and rhinorrhea. She has been continuing to teach despite her symptoms.
+
+Vitals: Temp 98.6F.
+Physical Examination: Voice is hoarse and weak. Flexible laryngoscopy reveals bilateral edema and erythema of the true vocal folds. No discrete masses or airway compromise.
+Laboratory Results: None indicated.', "order" = 1 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -49,7 +53,11 @@ Vitals: Stable. BMI 30.
 Physical Examination: Laryngoscopy reveals posterior glottic erythema and edema (pachydermia laryngis) between the arytenoids.
 Laboratory Results: None.', 2) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Laryngopharyngeal Reflux (LPR)', "order" = 2 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 55-year-old male presents with a 6-month history of a rough voice, frequent throat clearing, and a sensation of a ''lump in his throat'' (globus sensation). His symptoms are typically worse in the morning. He drinks 3 cups of coffee daily and eats late at night.
+
+Vitals: Stable. BMI 30.
+Physical Examination: Laryngoscopy reveals posterior glottic erythema and edema (pachydermia laryngis) between the arytenoids.
+Laboratory Results: None.', "order" = 2 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -91,7 +99,11 @@ Vitals: Stable.
 Physical Examination: Laryngoscopy reveals a unilateral, broad-based, hemorrhagic, fluid-filled mass on the middle third of the right true vocal fold. The left vocal fold is normal.
 Laboratory Results: None.', 4) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Vocal Fold Polyp', "order" = 4 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 45-year-old male football coach presents with constant hoarseness that has not improved for 2 months. He vividly remembers losing his voice suddenly after screaming at a referee during a game.
+
+Vitals: Stable.
+Physical Examination: Laryngoscopy reveals a unilateral, broad-based, hemorrhagic, fluid-filled mass on the middle third of the right true vocal fold. The left vocal fold is normal.
+Laboratory Results: None.', "order" = 4 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -133,7 +145,32 @@ Vitals: Stable.
 Physical Examination: Laryngoscopy reveals bilateral, pale, lobulated, fleshy masses on the vocal processes of the arytenoid cartilages. The anterior vocal folds are clear.
 Laboratory Results: None.', 6) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Intubation Granuloma (Contact Granuloma)', "order" = 6 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 60-year-old female presents with a progressive, very low-pitched, ''gravelly'' voice over several years. She has a 40-pack-year smoking history. She also reports feeling a bit short of breath with exertion recently.
+
+Vitals: SpO2 96%.
+Physical Examination: Voice is distinctively deep and masculine. Laryngoscopy reveals bilateral, diffuse, massive, ''water-bag'' or ''balloon-like'' swelling along the entire length of both true vocal folds.
+Laboratory Results: None.', 5) RETURNING id INTO v_case_id;
+    ELSE
+        UPDATE case_studies SET scenario = 'Reinke''s Edema', "order" = 5 WHERE id = v_case_id;
+    END IF;
+
+    DELETE FROM case_questions WHERE case_id = v_case_id;
+    INSERT INTO case_questions (case_id, question, options, correct_index, explanation) VALUES
+    (v_case_id, 'What is the primary risk factor for Reinke''s edema (polypoid corditis)?', '["Alcohol abuse","Heavy, chronic cigarette smoking","Allergies","None"]', 1, 'Reinke''s edema is almost exclusively seen in chronic smokers, and more commonly affects middle-aged women.'),
+    (v_case_id, 'Why does the patient''s voice become so low-pitched?', '["Paralysis of the vocal cords","The massive fluid accumulation increases the mass of the vocal folds, significantly decreasing their fundamental frequency of vibration","Tumor invasion","None"]', 1, 'Increased mass equals slower vibration (lower pitch), often giving females a remarkably masculine voice.'),
+    (v_case_id, 'What is the most critical first step in management?', '["Surgical stripping of the vocal folds","Absolute smoking cessation (often leading to some regression of the edema)","Chemotherapy","None"]', 1, 'Surgery is only considered if smoking stops; if they continue smoking, the edema will return. Surgery is also done if the swelling is causing airway obstruction.');
+
+    ---------------------------------------------------------------------------
+    -- CASE 06: Intubation Granuloma (Contact Granuloma)
+    ---------------------------------------------------------------------------
+    SELECT id INTO v_case_id FROM case_studies WHERE topic_id = v_topic_id AND title = 'The Intubation Aftermath' LIMIT 1;
+    IF v_case_id IS NULL THEN
+        INSERT INTO case_studies (topic_id, title, scenario, "order")
+        VALUES (v_topic_id, 'The Intubation Aftermath', 'A 50-year-old male presents with hoarseness and a sensation of something stuck in his throat (foreign body sensation). He was in the ICU intubated for 10 days due to severe pneumonia a month ago.
+
+Vitals: Stable.
+Physical Examination: Laryngoscopy reveals bilateral, pale, lobulated, fleshy masses on the vocal processes of the arytenoid cartilages. The anterior vocal folds are clear.
+Laboratory Results: None.', "order" = 6 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -154,7 +191,11 @@ Vitals: Stable.
 Physical Examination: Laryngoscopy shows the left vocal fold is completely immobile and fixed in a paramedian position. The right vocal fold moves normally but cannot completely close the gap (glottic incompetence).
 Laboratory Results: None.', 7) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Unilateral Vocal Fold Paralysis', "order" = 7 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 45-year-old female presents with a very breathy, weak voice and difficulty swallowing liquids (occasional aspiration). She underwent a total thyroidectomy for a large multinodular goiter 2 weeks ago. She has no difficulty breathing.
+
+Vitals: Stable.
+Physical Examination: Laryngoscopy shows the left vocal fold is completely immobile and fixed in a paramedian position. The right vocal fold moves normally but cannot completely close the gap (glottic incompetence).
+Laboratory Results: None.', "order" = 7 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -175,7 +216,11 @@ Vitals: HR 110, RR 28, O2 sat dropping to 88%.
 Physical Examination: Patient is using accessory muscles to breathe. Flexible laryngoscopy shows both vocal folds are immobile and sitting near the midline, leaving only a 1-2 mm airway gap.
 Laboratory Results: None.', 8) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Bilateral Vocal Fold Paralysis', "order" = 8 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 50-year-old female is in the recovery room immediately after a difficult total thyroidectomy for advanced thyroid cancer. As the anesthesia wears off, she develops significant biphasic stridor and severe respiratory distress. Her voice is surprisingly adequate, though slightly weak.
+
+Vitals: HR 110, RR 28, O2 sat dropping to 88%.
+Physical Examination: Patient is using accessory muscles to breathe. Flexible laryngoscopy shows both vocal folds are immobile and sitting near the midline, leaving only a 1-2 mm airway gap.
+Laboratory Results: None.', "order" = 8 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -196,7 +241,11 @@ Vitals: Stable.
 Physical Examination: Normal speaking voice. Laryngoscopy shows both vocal folds are fully mobile. However, the vocal folds appear slightly shortened and bowed, and the epiglottis deviates to the left when attempting high-pitched phonation.
 Laboratory Results: None.', 9) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Superior Laryngeal Nerve (SLN) Paralysis', "order" = 9 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 40-year-old professional singer complains that her voice fatigues quickly and she has lost the ability to sing high pitches. She does not have a breathy voice or hoarseness at normal speaking pitches. She recently had surgery for a parapharyngeal space tumor near the carotid sheath high in the neck.
+
+Vitals: Stable.
+Physical Examination: Normal speaking voice. Laryngoscopy shows both vocal folds are fully mobile. However, the vocal folds appear slightly shortened and bowed, and the epiglottis deviates to the left when attempting high-pitched phonation.
+Laboratory Results: None.', "order" = 9 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -217,7 +266,11 @@ Vitals: Stable.
 Physical Examination: Laryngoscopy shows structurally normal vocal folds. However, during speech, there are severe, irregular, hyperadductive spasms of the vocal folds slamming together.
 Laboratory Results: None.', 10) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Adductor Spasmodic Dysphonia', "order" = 10 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 45-year-old female presents with a voice that sounds ''strained,'' ''strangled,'' and constantly breaks. She states she has to push hard to get words out. Her voice completely normalizes when she laughs, sings, or whispers. She has no history of intubation or trauma.
+
+Vitals: Stable.
+Physical Examination: Laryngoscopy shows structurally normal vocal folds. However, during speech, there are severe, irregular, hyperadductive spasms of the vocal folds slamming together.
+Laboratory Results: None.', "order" = 10 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -238,7 +291,11 @@ Vitals: Stable.
 Physical Examination: Laryngoscopy shows normal anatomy. During speech, the vocal folds involuntarily spasm apart (abduct) during voiceless consonants, causing sudden breathy breaks.
 Laboratory Results: None.', 11) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Abductor Spasmodic Dysphonia', "order" = 11 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 50-year-old male presents with a voice that intermittently drops out into a breathy whisper. He specifically notices these breaks when speaking words that start with voiceless consonants like ''h'', ''s'', or ''f'' (e.g., ''Harry''). His voice is normal when singing.
+
+Vitals: Stable.
+Physical Examination: Laryngoscopy shows normal anatomy. During speech, the vocal folds involuntarily spasm apart (abduct) during voiceless consonants, causing sudden breathy breaks.
+Laboratory Results: None.', "order" = 11 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -259,7 +316,11 @@ Vitals: Normal.
 Physical Examination: Laryngoscopy reveals bilaterally thin, bowed vocal folds with a prominent spindle-shaped gap between them during phonation. The vocal processes of the arytenoids are prominent.
 Laboratory Results: None.', 12) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Presbyphonia (Vocal Fold Atrophy)', "order" = 12 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'An 80-year-old male complains that his voice has become weak, thin, and breathy over the last few years. He has trouble being heard in noisy restaurants. He has no history of smoking, intubation, or surgery.
+
+Vitals: Normal.
+Physical Examination: Laryngoscopy reveals bilaterally thin, bowed vocal folds with a prominent spindle-shaped gap between them during phonation. The vocal processes of the arytenoids are prominent.
+Laboratory Results: None.', "order" = 12 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -280,7 +341,11 @@ Vitals: Normal at rest.
 Physical Examination: Pulmonary function tests are normal at rest. Flexible laryngoscopy performed immediately after she runs on a treadmill shows the vocal folds paradoxically ADDUCTING (closing) forcefully during inspiration.
 Laboratory Results: None.', 13) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Paradoxical Vocal Fold Motion (PVFM / VCD)', "order" = 13 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 16-year-old female elite gymnast presents with episodes of sudden, severe shortness of breath and loud inspiratory stridor that occur strictly during high-intensity workouts. She feels a ''choking'' sensation in her throat. She has been treated for exercise-induced asthma with albuterol, but it provides zero relief.
+
+Vitals: Normal at rest.
+Physical Examination: Pulmonary function tests are normal at rest. Flexible laryngoscopy performed immediately after she runs on a treadmill shows the vocal folds paradoxically ADDUCTING (closing) forcefully during inspiration.
+Laboratory Results: None.', "order" = 13 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -301,7 +366,11 @@ Vitals: Normal.
 Physical Examination: Laryngoscopy reveals a dark red, blood-filled appearance of the entire right true vocal fold. The left vocal fold is normal. No discrete polyp is seen.
 Laboratory Results: None.', 14) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Vocal Fold Hemorrhage', "order" = 14 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 28-year-old female opera singer presents with sudden onset of severe hoarseness and pain in her neck that occurred abruptly while hitting a high note during a performance the night before. Her voice completely ''gave out''.
+
+Vitals: Normal.
+Physical Examination: Laryngoscopy reveals a dark red, blood-filled appearance of the entire right true vocal fold. The left vocal fold is normal. No discrete polyp is seen.
+Laboratory Results: None.', "order" = 14 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -322,7 +391,11 @@ Vitals: Stable.
 Physical Examination: Awake flexible laryngoscopy reveals multiple, irregular, pink, ''wart-like'' or ''cauliflower-like'' exophytic lesions covering the true and false vocal folds.
 Laboratory Results: Biopsy confirms squamous papilloma.', 15) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Recurrent Respiratory Papillomatosis (RRP)', "order" = 15 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 4-year-old boy is brought in by his mother for chronic hoarseness that has been present for 2 years. Recently, he has developed mild stridor when playing vigorously. He has no history of intubation.
+
+Vitals: Stable.
+Physical Examination: Awake flexible laryngoscopy reveals multiple, irregular, pink, ''wart-like'' or ''cauliflower-like'' exophytic lesions covering the true and false vocal folds.
+Laboratory Results: Biopsy confirms squamous papilloma.', "order" = 15 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -343,7 +416,11 @@ Vitals: Normal. O2 sat 99%.
 Physical Examination: Inspiratory stridor is present. Flexible laryngoscopy shows an ''omega-shaped'' epiglottis and short aryepiglottic folds that collapse inward into the airway during inspiration.
 Laboratory Results: None.', 16) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Laryngomalacia', "order" = 16 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 4-week-old infant is brought in for noisy breathing. The parents report a high-pitched inspiratory squeak that is worse when the baby is crying, feeding, or lying on his back (supine). It improves when he is prone. The baby is gaining weight normally.
+
+Vitals: Normal. O2 sat 99%.
+Physical Examination: Inspiratory stridor is present. Flexible laryngoscopy shows an ''omega-shaped'' epiglottis and short aryepiglottic folds that collapse inward into the airway during inspiration.
+Laboratory Results: None.', "order" = 16 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -364,7 +441,11 @@ Vitals: RR 22, O2 sat 95%.
 Physical Examination: Biphasic stridor localized to the neck. Laryngoscopy shows normal vocal cord mobility, but viewing below the cords reveals a dense, circumferential ring of scar tissue narrowing the airway to 4 mm.
 Laboratory Results: None.', 17) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Subglottic Stenosis (Post-Intubation)', "order" = 17 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 45-year-old female presents with progressively worsening shortness of breath and biphasic stridor over the last 3 months. She has a history of a severe motor vehicle accident 6 months ago requiring 3 weeks of intubation in the ICU. Her voice is relatively normal.
+
+Vitals: RR 22, O2 sat 95%.
+Physical Examination: Biphasic stridor localized to the neck. Laryngoscopy shows normal vocal cord mobility, but viewing below the cords reveals a dense, circumferential ring of scar tissue narrowing the airway to 4 mm.
+Laboratory Results: None.', "order" = 17 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -385,7 +466,11 @@ Vitals: Stable.
 Physical Examination: Expiratory and inspiratory stridor. Laryngoscopy reveals a thick, circumferential subglottic narrowing just below the vocal folds.
 Laboratory Results: ANCA panel is negative. Rheumatoid factor negative.', 18) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Idiopathic Subglottic Stenosis', "order" = 18 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 35-year-old otherwise healthy female presents with a 1-year history of progressive dyspnea on exertion. She has been treated for adult-onset asthma with inhalers, with no improvement. She has NO history of intubation, trauma, or autoimmune disease.
+
+Vitals: Stable.
+Physical Examination: Expiratory and inspiratory stridor. Laryngoscopy reveals a thick, circumferential subglottic narrowing just below the vocal folds.
+Laboratory Results: ANCA panel is negative. Rheumatoid factor negative.', "order" = 18 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -406,7 +491,11 @@ Vitals: Temp 100.4F, HR 120, O2 sat 94%.
 Physical Examination: The child is mildly agitated with a characteristic seal-like bark cough. Chest shows mild retractions. No drooling; he is swallowing his secretions.
 Laboratory Results: Neck X-ray (AP view) shows symmetric subglottic narrowing (''steeple sign'').', 19) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Croup (Laryngotracheobronchitis)', "order" = 19 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 2-year-old boy is brought to the ED at 2 AM with a harsh, ''barking'' cough and inspiratory stridor. He had a runny nose and low-grade fever for 2 days prior.
+
+Vitals: Temp 100.4F, HR 120, O2 sat 94%.
+Physical Examination: The child is mildly agitated with a characteristic seal-like bark cough. Chest shows mild retractions. No drooling; he is swallowing his secretions.
+Laboratory Results: Neck X-ray (AP view) shows symmetric subglottic narrowing (''steeple sign'').', "order" = 19 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -427,7 +516,11 @@ Vitals: Temp 102.5F, HR 110, RR 24.
 Physical Examination: Patient appears toxic. Oral exam is normal (no tonsillar swelling). He is extremely tender to palpation over the hyoid bone.
 Laboratory Results: Lateral neck X-ray shows a massively enlarged epiglottis (''thumbprint sign'').', 20) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Adult Epiglottitis (Supraglottitis)', "order" = 20 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 45-year-old male presents to the ED with severe, rapidly progressive sore throat, dysphagia, and a muffled ''hot potato'' voice over 12 hours. He is leaning forward and drooling because it hurts too much to swallow his saliva. He has no cough.
+
+Vitals: Temp 102.5F, HR 110, RR 24.
+Physical Examination: Patient appears toxic. Oral exam is normal (no tonsillar swelling). He is extremely tender to palpation over the hyoid bone.
+Laboratory Results: Lateral neck X-ray shows a massively enlarged epiglottis (''thumbprint sign'').', "order" = 20 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -448,7 +541,11 @@ Vitals: Temp 103.8F, HR 140, RR 35.
 Physical Examination: Severe stridor and retractions. Endoscopy reveals thick, purulent secretions and thick crusts (pseudomembranes) lining the trachea below the vocal folds.
 Laboratory Results: WBC 18,000.', 21) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Bacterial Tracheitis', "order" = 21 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 5-year-old girl is brought to the ED. She had a typical case of ''croup'' for a few days, but suddenly became much worse with a high fever, severe stridor, and a toxic appearance. She is NOT drooling.
+
+Vitals: Temp 103.8F, HR 140, RR 35.
+Physical Examination: Severe stridor and retractions. Endoscopy reveals thick, purulent secretions and thick crusts (pseudomembranes) lining the trachea below the vocal folds.
+Laboratory Results: WBC 18,000.', "order" = 21 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -469,7 +566,11 @@ Vitals: Temp 100.1F.
 Physical Examination: Laryngoscopy reveals a granular, ulcerated exophytic mass on the posterior glottis and arytenoids. It mimics a carcinoma.
 Laboratory Results: Chest X-ray shows apical cavitary lesions. Sputum is positive for Acid-Fast Bacilli (AFB).', 22) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Laryngeal Tuberculosis', "order" = 22 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 55-year-old homeless male presents with chronic cough, night sweats, weight loss, and severe hoarseness with odynophagia (painful swallowing). He has a history of incarceration.
+
+Vitals: Temp 100.1F.
+Physical Examination: Laryngoscopy reveals a granular, ulcerated exophytic mass on the posterior glottis and arytenoids. It mimics a carcinoma.
+Laboratory Results: Chest X-ray shows apical cavitary lesions. Sputum is positive for Acid-Fast Bacilli (AFB).', "order" = 22 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -490,7 +591,11 @@ Vitals: Stable.
 Physical Examination: Laryngoscopy reveals thin, white, patchy ''cottage cheese'' plaques on both true vocal folds and the epiglottis. The underlying mucosa is slightly erythematous.
 Laboratory Results: None.', 23) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Laryngeal Candidiasis', "order" = 23 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 60-year-old asthmatic patient presents with a 3-week history of mild hoarseness. He recently started using a high-dose fluticasone inhaler daily but admits he rarely rinses his mouth afterward. He has no pain or dysphagia.
+
+Vitals: Stable.
+Physical Examination: Laryngoscopy reveals thin, white, patchy ''cottage cheese'' plaques on both true vocal folds and the epiglottis. The underlying mucosa is slightly erythematous.
+Laboratory Results: None.', "order" = 23 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -532,7 +637,11 @@ Vitals: HR 115, RR 24. O2 sat 95%.
 Physical Examination: Loss of the normal thyroid cartilage prominence (''Adam''s apple''). Extensive subcutaneous emphysema (crepitus) is felt over the anterior neck. Flexible laryngoscopy shows edema and a mucosal tear over the vocal cords.
 Laboratory Results: CT neck confirms a comminuted fracture of the thyroid cartilage.', 25) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Laryngeal Fracture', "order" = 25 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 25-year-old male is brought to the ED after a ''clothesline'' injury to the neck while riding a dirt bike. He is coughing up blood (hemoptysis), his voice is a hoarse whisper, and he has pain swallowing.
+
+Vitals: HR 115, RR 24. O2 sat 95%.
+Physical Examination: Loss of the normal thyroid cartilage prominence (''Adam''s apple''). Extensive subcutaneous emphysema (crepitus) is felt over the anterior neck. Flexible laryngoscopy shows edema and a mucosal tear over the vocal cords.
+Laboratory Results: CT neck confirms a comminuted fracture of the thyroid cartilage.', "order" = 25 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -553,7 +662,11 @@ Vitals: Stable.
 Physical Examination: Laryngoscopy reveals a 4 mm thick, white, adherent plaque on the middle third of the right true vocal cord. Vocal cord mobility is normal.
 Laboratory Results: Excisional biopsy shows severe dysplasia/carcinoma in situ.', 26) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Vocal Fold Dysplasia (Leukoplakia)', "order" = 26 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 60-year-old male with a history of heavy smoking and alcohol use presents with a painless white plaque on his right true vocal fold, discovered during a routine physical when he mentioned mild, intermittent hoarseness.
+
+Vitals: Stable.
+Physical Examination: Laryngoscopy reveals a 4 mm thick, white, adherent plaque on the middle third of the right true vocal cord. Vocal cord mobility is normal.
+Laboratory Results: Excisional biopsy shows severe dysplasia/carcinoma in situ.', "order" = 26 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -574,7 +687,11 @@ Vitals: Normal.
 Physical Examination: Neck exam is negative for lymphadenopathy. Laryngoscopy reveals an irregular, exophytic, ulcerated mass involving the anterior two-thirds of the right true vocal fold. The vocal fold has full mobility.
 Laboratory Results: Biopsy confirms well-differentiated Squamous Cell Carcinoma (SCC).', 27) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Glottic Squamous Cell Carcinoma (T1)', "order" = 27 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 65-year-old male smoker presents with a 3-month history of progressive, constant hoarseness. He has no pain, no dysphagia, and no weight loss.
+
+Vitals: Normal.
+Physical Examination: Neck exam is negative for lymphadenopathy. Laryngoscopy reveals an irregular, exophytic, ulcerated mass involving the anterior two-thirds of the right true vocal fold. The vocal fold has full mobility.
+Laboratory Results: Biopsy confirms well-differentiated Squamous Cell Carcinoma (SCC).', "order" = 27 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -595,7 +712,11 @@ Vitals: 10 lb weight loss over 2 months.
 Physical Examination: A 3 cm firm, mobile lymph node is palpable in the left level II neck. Laryngoscopy shows a massive, ulcerated tumor on the laryngeal surface of the epiglottis, spilling into the aryepiglottic fold.
 Laboratory Results: Biopsy confirms moderately differentiated SCC.', 28) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Supraglottic Squamous Cell Carcinoma', "order" = 28 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 58-year-old male alcoholic presents with a 2-month history of worsening throat pain, difficulty swallowing solid foods, and a ''hot potato'' voice. He recently noticed a firm lump on the left side of his neck.
+
+Vitals: 10 lb weight loss over 2 months.
+Physical Examination: A 3 cm firm, mobile lymph node is palpable in the left level II neck. Laryngoscopy shows a massive, ulcerated tumor on the laryngeal surface of the epiglottis, spilling into the aryepiglottic fold.
+Laboratory Results: Biopsy confirms moderately differentiated SCC.', "order" = 28 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -616,7 +737,11 @@ Vitals: RR 28, O2 sat 91%.
 Physical Examination: Stridor. Endoscopy reveals a large, smooth, submucosal-appearing mass filling the subglottis, extending downward toward the trachea. Both vocal cords are paralyzed.
 Laboratory Results: CT neck shows destruction of the cricoid cartilage by the tumor.', 29) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Subglottic Squamous Cell Carcinoma', "order" = 29 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 70-year-old female presents to the ED with severe dyspnea and biphasic stridor. She reports a history of very subtle, mild hoarseness for the past 6 months that she ignored. She has no pain.
+
+Vitals: RR 28, O2 sat 91%.
+Physical Examination: Stridor. Endoscopy reveals a large, smooth, submucosal-appearing mass filling the subglottis, extending downward toward the trachea. Both vocal cords are paralyzed.
+Laboratory Results: CT neck shows destruction of the cricoid cartilage by the tumor.', "order" = 29 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -637,7 +762,11 @@ Vitals: Stable.
 Physical Examination: A hard, non-tender mass is palpable over the cricoid cartilage. Laryngoscopy shows a smooth, submucosal bulge in the subglottis covered by normal-appearing mucosa.
 Laboratory Results: CT neck shows a mass arising from the cricoid cartilage with ''popcorn'' calcifications. Biopsy confirms low-grade Chondrosarcoma.', 30) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Laryngeal Chondrosarcoma', "order" = 30 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 65-year-old male presents with a long history of slowly progressive hoarseness and a hard mass on the outside of his ''Adam''s apple.''
+
+Vitals: Stable.
+Physical Examination: A hard, non-tender mass is palpable over the cricoid cartilage. Laryngoscopy shows a smooth, submucosal bulge in the subglottis covered by normal-appearing mucosa.
+Laboratory Results: CT neck shows a mass arising from the cricoid cartilage with ''popcorn'' calcifications. Biopsy confirms low-grade Chondrosarcoma.', "order" = 30 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -658,7 +787,11 @@ Vitals: Normal.
 Physical Examination: Laryngoscopy reveals a small, firm, yellowish-pink, broadly sessile mass on the posterior aspect of the true vocal fold.
 Laboratory Results: Biopsy shows large polygonal cells with abundant granular eosinophilic cytoplasm. Immunohistochemistry is strongly positive for S-100 protein.', 31) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Granular Cell Tumor of Larynx', "order" = 31 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 40-year-old African American female presents with mild hoarseness. She has no history of smoking.
+
+Vitals: Normal.
+Physical Examination: Laryngoscopy reveals a small, firm, yellowish-pink, broadly sessile mass on the posterior aspect of the true vocal fold.
+Laboratory Results: Biopsy shows large polygonal cells with abundant granular eosinophilic cytoplasm. Immunohistochemistry is strongly positive for S-100 protein.', "order" = 31 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -679,7 +812,11 @@ Vitals: Normal.
 Physical Examination: Laryngoscopy shows structurally normal vocal folds, but their movement becomes noticeably sluggish and weak after having her count aloud from 1 to 100.
 Laboratory Results: Acetylcholine receptor (AChR) antibodies are positive.', 32) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Myasthenia Gravis (Laryngeal)', "order" = 32 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 35-year-old female presents with a voice that starts strong in the morning but becomes progressively weaker, breathy, and severely fatigued by the evening. She also notes occasional trouble swallowing and double vision at the end of the day.
+
+Vitals: Normal.
+Physical Examination: Laryngoscopy shows structurally normal vocal folds, but their movement becomes noticeably sluggish and weak after having her count aloud from 1 to 100.
+Laboratory Results: Acetylcholine receptor (AChR) antibodies are positive.', "order" = 32 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -700,7 +837,11 @@ Vitals: Stable.
 Physical Examination: Laryngoscopy shows the vocal folds are immobile and fixed in a paramedian position. There is erythema and swelling over the arytenoid cartilages.
 Laboratory Results: High titers of Rheumatoid Factor and anti-CCP.', 33) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Rheumatoid Arthritis of Cricoarytenoid Joint', "order" = 33 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 55-year-old female with long-standing, severe Rheumatoid Arthritis (RA) with joint deformities presents with progressive hoarseness, throat pain, and mild inspiratory stridor.
+
+Vitals: Stable.
+Physical Examination: Laryngoscopy shows the vocal folds are immobile and fixed in a paramedian position. There is erythema and swelling over the arytenoid cartilages.
+Laboratory Results: High titers of Rheumatoid Factor and anti-CCP.', "order" = 33 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -721,7 +862,11 @@ Vitals: Normal.
 Physical Examination: Laryngoscopy reveals smooth, nodular, yellow-pink sub-mucosal masses involving the true and false vocal folds bilaterally.
 Laboratory Results: Biopsy shows amorphous extracellular deposits. Congo red stain shows classic ''apple-green birefringence'' under polarized light.', 34) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Laryngeal Amyloidosis', "order" = 34 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 60-year-old male presents with long-standing hoarseness. He has no history of smoking.
+
+Vitals: Normal.
+Physical Examination: Laryngoscopy reveals smooth, nodular, yellow-pink sub-mucosal masses involving the true and false vocal folds bilaterally.
+Laboratory Results: Biopsy shows amorphous extracellular deposits. Congo red stain shows classic ''apple-green birefringence'' under polarized light.', "order" = 34 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -763,7 +908,11 @@ Vitals: Temp 99.5F.
 Physical Examination: Bilateral auricular chondritis (sparing the non-cartilaginous lobule). The nose shows a slight ''saddle'' deformity. Laryngoscopy shows diffuse swelling and collapse of the laryngeal cartilages.
 Laboratory Results: ESR and CRP are highly elevated.', 36) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Relapsing Polychondritis', "order" = 36 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 45-year-old male presents with stridor, hoarseness, and anterior neck pain. He also complains that both of his ears are red, swollen, and severely painful, but notably, his earlobes are completely normal.
+
+Vitals: Temp 99.5F.
+Physical Examination: Bilateral auricular chondritis (sparing the non-cartilaginous lobule). The nose shows a slight ''saddle'' deformity. Laryngoscopy shows diffuse swelling and collapse of the laryngeal cartilages.
+Laboratory Results: ESR and CRP are highly elevated.', "order" = 36 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -784,7 +933,11 @@ Vitals: O2 sat 92%. RR 26.
 Physical Examination: Mild stridor. Awake fiberoptic intubation is performed immediately. Direct laryngoscopy during intubation shows massive, blistering edema of the supraglottis and vocal folds.
 Laboratory Results: Carboxyhemoglobin is elevated at 15%.', 37) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Thermal Laryngeal Injury', "order" = 37 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 30-year-old male firefighter is brought to the ED after being trapped in a burning building for 20 minutes. He has singed nasal hairs, soot in his mouth, and a hoarse voice.
+
+Vitals: O2 sat 92%. RR 26.
+Physical Examination: Mild stridor. Awake fiberoptic intubation is performed immediately. Direct laryngoscopy during intubation shows massive, blistering edema of the supraglottis and vocal folds.
+Laboratory Results: Carboxyhemoglobin is elevated at 15%.', "order" = 37 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -805,7 +958,11 @@ Vitals: O2 sat drops to 80% during feeds.
 Physical Examination: Aspiration is evident. Flexible laryngoscopy reveals a defect in the interarytenoid space, creating an open communication between the posterior larynx and the anterior esophagus.
 Laboratory Results: Barium swallow confirms massive aspiration through a laryngeal defect.', 38) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Laryngeal Cleft', "order" = 38 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A newborn infant presents with severe choking, coughing, and cyanosis every time he feeds. He also has a weak, breathy cry.
+
+Vitals: O2 sat drops to 80% during feeds.
+Physical Examination: Aspiration is evident. Flexible laryngoscopy reveals a defect in the interarytenoid space, creating an open communication between the posterior larynx and the anterior esophagus.
+Laboratory Results: Barium swallow confirms massive aspiration through a laryngeal defect.', "order" = 38 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -826,7 +983,11 @@ Vitals: Normal.
 Physical Examination: Laryngoscopy reveals a rhythmic, involuntary oscillation of the entire larynx and vocal folds during prolonged phonation of the vowel ''E''.
 Laboratory Results: None.', 39) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Essential Tremor of Voice', "order" = 39 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 70-year-old female presents with a ''shaky'' and ''quivering'' voice that has gradually worsened over 10 years. She also has a noticeable tremor in her hands when reaching for a cup. Her voice improves slightly after drinking a glass of wine.
+
+Vitals: Normal.
+Physical Examination: Laryngoscopy reveals a rhythmic, involuntary oscillation of the entire larynx and vocal folds during prolonged phonation of the vowel ''E''.
+Laboratory Results: None.', "order" = 39 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -847,7 +1008,11 @@ Vitals: Normal.
 Physical Examination: Palpation of the anterior neck reveals extreme tenderness and tightness over the strap muscles and hyoid bone. Laryngoscopy shows structurally perfectly normal vocal folds, but she squeezes her false vocal folds together (supraglottic hyperfunction) when she tries to speak.
 Laboratory Results: None.', 40) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Muscle Tension Dysphonia (MTD)', "order" = 40 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 30-year-old female call-center employee presents with a severe ache in her neck and a strained, raspy voice. She reports immense stress at work. Her voice improves significantly on the weekends.
+
+Vitals: Normal.
+Physical Examination: Palpation of the anterior neck reveals extreme tenderness and tightness over the strap muscles and hyoid bone. Laryngoscopy shows structurally perfectly normal vocal folds, but she squeezes her false vocal folds together (supraglottic hyperfunction) when she tries to speak.
+Laboratory Results: None.', "order" = 40 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -868,7 +1033,11 @@ Vitals: Normal.
 Physical Examination: Laryngoscopy with stroboscopy shows a unilateral, yellowish, submucosal swelling on the mid-portion of the left true vocal fold. There is significantly decreased mucosal wave over the lesion.
 Laboratory Results: Excision and biopsy reveal a squamous epithelium-lined sac filled with keratin debris.', 41) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Vocal Fold Epidermoid Cyst', "order" = 41 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 28-year-old female school teacher presents with chronic, moderate hoarseness. Voice therapy has provided minimal improvement.
+
+Vitals: Normal.
+Physical Examination: Laryngoscopy with stroboscopy shows a unilateral, yellowish, submucosal swelling on the mid-portion of the left true vocal fold. There is significantly decreased mucosal wave over the lesion.
+Laboratory Results: Excision and biopsy reveal a squamous epithelium-lined sac filled with keratin debris.', "order" = 41 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -910,7 +1079,32 @@ Vitals: Normal.
 Physical Examination: Tongue fasciculations are visible. Laryngoscopy shows sluggish, spastic vocal fold movements with pooling of saliva in the pyriform sinuses.
 Laboratory Results: EMG shows widespread acute and chronic denervation.', 43) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Amyotrophic Lateral Sclerosis (Bulbar Onset)', "order" = 43 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 72-year-old male with long-standing Parkinson''s disease complains that his family can no longer hear him. His speech is very rapid, mumbled, and extremely quiet (hypophonic).
+
+Vitals: Normal.
+Physical Examination: Resting tremor and bradykinesia. Laryngoscopy shows normal, mobile vocal folds, but they do not close forcefully during speech (glottic bowing).
+Laboratory Results: None.', 42) RETURNING id INTO v_case_id;
+    ELSE
+        UPDATE case_studies SET scenario = 'Parkinson''s Disease Dysphonia', "order" = 42 WHERE id = v_case_id;
+    END IF;
+
+    DELETE FROM case_questions WHERE case_id = v_case_id;
+    INSERT INTO case_questions (case_id, question, options, correct_index, explanation) VALUES
+    (v_case_id, 'What is the classic speech pattern in Parkinson''s disease called?', '["Spastic dysarthria","Hypokinetic dysarthria (characterized by soft, monotonous, rapid, and breathy speech)","Ataxic dysarthria","None"]', 1, 'The basal ganglia dysfunction leads to a poverty of movement, affecting the respiratory and laryngeal muscles.'),
+    (v_case_id, 'Why do Parkinson''s patients speak so quietly?', '["They are deaf","Rigidity and bradykinesia prevent them from generating sufficient subglottic air pressure and forceful vocal fold closure","Their vocal cords are paralyzed","None"]', 1, 'They literally lack the muscle dynamics to project their voice.'),
+    (v_case_id, 'What specific voice therapy program is highly effective for Parkinson''s dysphonia?', '["Whisper therapy","Lee Silverman Voice Treatment (LSVT LOUD), which focuses on intensive, high-effort voice exercises to ''recalibrate'' their perception of loudness","Botox","None"]', 1, 'LSVT forces the patient to use ''maximum effort'' to overcome the rigidity.');
+
+    ---------------------------------------------------------------------------
+    -- CASE 43: Amyotrophic Lateral Sclerosis (Bulbar Onset)
+    ---------------------------------------------------------------------------
+    SELECT id INTO v_case_id FROM case_studies WHERE topic_id = v_topic_id AND title = 'The ALS Larynx' LIMIT 1;
+    IF v_case_id IS NULL THEN
+        INSERT INTO case_studies (topic_id, title, scenario, "order")
+        VALUES (v_topic_id, 'The ALS Larynx', 'A 60-year-old male presents with progressively slurred speech, a harsh, strained voice, and difficulty swallowing. He has noted weakness in his hands. He frequently chokes on liquids.
+
+Vitals: Normal.
+Physical Examination: Tongue fasciculations are visible. Laryngoscopy shows sluggish, spastic vocal fold movements with pooling of saliva in the pyriform sinuses.
+Laboratory Results: EMG shows widespread acute and chronic denervation.', "order" = 43 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -931,7 +1125,11 @@ Vitals: HR 120, BP 90/60.
 Physical Examination: Severe burns and edema of the lips, oral cavity, and pharynx. Flexible laryngoscopy shows massive necrosis and edema of the epiglottis and arytenoids, severely narrowing the airway.
 Laboratory Results: None.', 44) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Caustic Laryngeal Injury', "order" = 44 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 25-year-old female is brought to the ED after intentionally ingesting a bottle of industrial drain cleaner (lye). She is drooling, unable to speak, and stridorous.
+
+Vitals: HR 120, BP 90/60.
+Physical Examination: Severe burns and edema of the lips, oral cavity, and pharynx. Flexible laryngoscopy shows massive necrosis and edema of the epiglottis and arytenoids, severely narrowing the airway.
+Laboratory Results: None.', "order" = 44 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -952,7 +1150,11 @@ Vitals: Normal.
 Physical Examination: Flexible laryngoscopy reveals a thick, fibrous band of tissue connecting the anterior third of the true vocal folds.
 Laboratory Results: Genetic testing reveals a 22q11.2 microdeletion.', 45) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Laryngeal Web', "order" = 45 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 6-month-old infant has had a weak, abnormal cry since birth and mild stridor. He has no feeding difficulties.
+
+Vitals: Normal.
+Physical Examination: Flexible laryngoscopy reveals a thick, fibrous band of tissue connecting the anterior third of the true vocal folds.
+Laboratory Results: Genetic testing reveals a 22q11.2 microdeletion.', "order" = 45 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -973,7 +1175,11 @@ Vitals: Normal.
 Physical Examination: Laryngoscopy with stroboscopy reveals a distinct longitudinal linear depression (groove) running along the medial edge of both true vocal folds. The mucosal wave is severely reduced over the grooves.
 Laboratory Results: None.', 46) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Sulcus Vocalis', "order" = 46 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 30-year-old male presents with a lifelong history of a weak, breathy, ''veiled'' voice. He has never smoked or abused his voice.
+
+Vitals: Normal.
+Physical Examination: Laryngoscopy with stroboscopy reveals a distinct longitudinal linear depression (groove) running along the medial edge of both true vocal folds. The mucosal wave is severely reduced over the grooves.
+Laboratory Results: None.', "order" = 46 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -994,7 +1200,11 @@ Vitals: RR 40. O2 sat 94%.
 Physical Examination: Laryngoscopy reveals a large, smooth, fluid-filled, submucosal cyst arising from the laryngeal ventricle, bulging into the airway and obscuring the vocal folds.
 Laboratory Results: None.', 47) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Saccular Cyst', "order" = 47 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 2-month-old infant presents with worsening stridor and difficulty breathing. The stridor is not position-dependent.
+
+Vitals: RR 40. O2 sat 94%.
+Physical Examination: Laryngoscopy reveals a large, smooth, fluid-filled, submucosal cyst arising from the laryngeal ventricle, bulging into the airway and obscuring the vocal folds.
+Laboratory Results: None.', "order" = 47 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -1015,7 +1225,11 @@ Vitals: HR 120, BP 100/60.
 Physical Examination: Active bubbling of air and blood from the neck wound. He is pale and struggling to breathe.
 Laboratory Results: None.', 48) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Penetrating Laryngeal Trauma', "order" = 48 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 22-year-old male is brought to the ED with a stab wound to the anterior neck, just above the thyroid cartilage. Blood is bubbling from the wound, and he has severe stridor.
+
+Vitals: HR 120, BP 100/60.
+Physical Examination: Active bubbling of air and blood from the neck wound. He is pale and struggling to breathe.
+Laboratory Results: None.', "order" = 48 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -1036,7 +1250,11 @@ Vitals: Caffeinated.
 Physical Examination: Reviewing notes.
 Laboratory Results: None.', 49) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Hoarseness Summary (Review)', "order" = 49 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 4th-year medical student is reviewing high-yield laryngeal conditions before a shelf exam.
+
+Vitals: Caffeinated.
+Physical Examination: Reviewing notes.
+Laboratory Results: None.', "order" = 49 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -1057,7 +1275,11 @@ Vitals: Normal.
 Physical Examination: Normal.
 Laboratory Results: None.', 50) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Vocal Cord Paralysis (Review)', "order" = 50 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 4th-year medical student is reviewing vocal cord paralysis.
+
+Vitals: Normal.
+Physical Examination: Normal.
+Laboratory Results: None.', "order" = 50 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
