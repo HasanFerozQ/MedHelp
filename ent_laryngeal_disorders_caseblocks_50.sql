@@ -1,7 +1,7 @@
 -- ENT (Otolaryngology): Laryngeal Disorders & Hoarseness
 -- US MD/MBBS (4th Year) clinical case blocks
 -- Target platform: Supabase (Postgres)
--- Topic Slug: ent-laryngeal-disorders-hoarseness
+-- Topic Slug: ent-laryngeal
 -- Sourced/Inspired by: Cummings, Scott-Brown, Bailey, Lalwani
 
 BEGIN;
@@ -11,9 +11,9 @@ DECLARE
     v_topic_id UUID;
     v_case_id UUID;
 BEGIN
-    SELECT id INTO v_topic_id FROM topics WHERE slug = 'ent-laryngeal-disorders-hoarseness' LIMIT 1;
+    SELECT id INTO v_topic_id FROM topics WHERE slug = 'ent-laryngeal' LIMIT 1;
     IF v_topic_id IS NULL THEN
-        RAISE EXCEPTION 'Topic slug % not found.', 'ent-laryngeal-disorders-hoarseness';
+        RAISE EXCEPTION 'Topic slug % not found.', 'ent-laryngeal';
     END IF;
 
     ---------------------------------------------------------------------------
@@ -78,7 +78,11 @@ Vitals: Normal.
 Physical Examination: Laryngoscopy with stroboscopy shows bilateral, symmetric, small, firm swellings at the junction of the anterior and middle thirds of the true vocal folds. The mucosa is otherwise normal.
 Laboratory Results: None.', 3) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Vocal Fold Nodules', "order" = 3 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 22-year-old female college student and lead singer in a rock band presents with progressive hoarseness, loss of high vocal range, and vocal fatigue over the past 4 months.
+
+Vitals: Normal.
+Physical Examination: Laryngoscopy with stroboscopy shows bilateral, symmetric, small, firm swellings at the junction of the anterior and middle thirds of the true vocal folds. The mucosa is otherwise normal.
+Laboratory Results: None.', "order" = 3 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -124,7 +128,11 @@ Vitals: SpO2 96%.
 Physical Examination: Voice is distinctively deep and masculine. Laryngoscopy reveals bilateral, diffuse, massive, ''water-bag'' or ''balloon-like'' swelling along the entire length of both true vocal folds.
 Laboratory Results: None.', 5) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Reinke''s Edema', "order" = 5 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 60-year-old female presents with a progressive, very low-pitched, ''gravelly'' voice over several years. She has a 40-pack-year smoking history. She also reports feeling a bit short of breath with exertion recently.
+
+Vitals: SpO2 96%.
+Physical Examination: Voice is distinctively deep and masculine. Laryngoscopy reveals bilateral, diffuse, massive, ''water-bag'' or ''balloon-like'' swelling along the entire length of both true vocal folds.
+Laboratory Results: None.', "order" = 5 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -145,28 +153,7 @@ Vitals: Stable.
 Physical Examination: Laryngoscopy reveals bilateral, pale, lobulated, fleshy masses on the vocal processes of the arytenoid cartilages. The anterior vocal folds are clear.
 Laboratory Results: None.', 6) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'A 60-year-old female presents with a progressive, very low-pitched, ''gravelly'' voice over several years. She has a 40-pack-year smoking history. She also reports feeling a bit short of breath with exertion recently.
-
-Vitals: SpO2 96%.
-Physical Examination: Voice is distinctively deep and masculine. Laryngoscopy reveals bilateral, diffuse, massive, ''water-bag'' or ''balloon-like'' swelling along the entire length of both true vocal folds.
-Laboratory Results: None.', 5) RETURNING id INTO v_case_id;
-    ELSE
-        UPDATE case_studies SET scenario = 'Reinke''s Edema', "order" = 5 WHERE id = v_case_id;
-    END IF;
-
-    DELETE FROM case_questions WHERE case_id = v_case_id;
-    INSERT INTO case_questions (case_id, question, options, correct_index, explanation) VALUES
-    (v_case_id, 'What is the primary risk factor for Reinke''s edema (polypoid corditis)?', '["Alcohol abuse","Heavy, chronic cigarette smoking","Allergies","None"]', 1, 'Reinke''s edema is almost exclusively seen in chronic smokers, and more commonly affects middle-aged women.'),
-    (v_case_id, 'Why does the patient''s voice become so low-pitched?', '["Paralysis of the vocal cords","The massive fluid accumulation increases the mass of the vocal folds, significantly decreasing their fundamental frequency of vibration","Tumor invasion","None"]', 1, 'Increased mass equals slower vibration (lower pitch), often giving females a remarkably masculine voice.'),
-    (v_case_id, 'What is the most critical first step in management?', '["Surgical stripping of the vocal folds","Absolute smoking cessation (often leading to some regression of the edema)","Chemotherapy","None"]', 1, 'Surgery is only considered if smoking stops; if they continue smoking, the edema will return. Surgery is also done if the swelling is causing airway obstruction.');
-
-    ---------------------------------------------------------------------------
-    -- CASE 06: Intubation Granuloma (Contact Granuloma)
-    ---------------------------------------------------------------------------
-    SELECT id INTO v_case_id FROM case_studies WHERE topic_id = v_topic_id AND title = 'The Intubation Aftermath' LIMIT 1;
-    IF v_case_id IS NULL THEN
-        INSERT INTO case_studies (topic_id, title, scenario, "order")
-        VALUES (v_topic_id, 'The Intubation Aftermath', 'A 50-year-old male presents with hoarseness and a sensation of something stuck in his throat (foreign body sensation). He was in the ICU intubated for 10 days due to severe pneumonia a month ago.
+        UPDATE case_studies SET scenario = 'A 50-year-old male presents with hoarseness and a sensation of something stuck in his throat (foreign body sensation). He was in the ICU intubated for 10 days due to severe pneumonia a month ago.
 
 Vitals: Stable.
 Physical Examination: Laryngoscopy reveals bilateral, pale, lobulated, fleshy masses on the vocal processes of the arytenoid cartilages. The anterior vocal folds are clear.
@@ -616,7 +603,11 @@ Vitals: Stable.
 Physical Examination: A compressible swelling is palpable in the right lateral neck. Laryngoscopy shows a smooth, submucosal bulge in the right false vocal fold and aryepiglottic fold.
 Laboratory Results: CT neck shows an air-filled sac extending from the laryngeal ventricle through the thyrohyoid membrane.', 24) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'External Laryngocele', "order" = 24 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 55-year-old male glassblower presents with a painless, intermittent swelling on the right side of his neck. The swelling reliably enlarges when he blows glass or performs a Valsalva maneuver, and he frequently notes a gurgling sound in his neck.
+
+Vitals: Stable.
+Physical Examination: A compressible swelling is palpable in the right lateral neck. Laryngoscopy shows a smooth, submucosal bulge in the right false vocal fold and aryepiglottic fold.
+Laboratory Results: CT neck shows an air-filled sac extending from the laryngeal ventricle through the thyrohyoid membrane.', "order" = 24 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -887,7 +878,11 @@ Vitals: BP 140/90. O2 sat 94%.
 Physical Examination: Severe biphasic stridor. Endoscopy reveals a circumferential, inflamed, and ulcerated narrowing of the subglottis.
 Laboratory Results: c-ANCA (PR3-ANCA) is markedly elevated.', 35) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Granulomatosis with Polyangiitis (Subglottic Stenosis)', "order" = 35 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 40-year-old male presents with progressively worsening stridor and dyspnea. He also reports a history of recurrent, bloody, crusting sinusitis and a recent diagnosis of glomerulonephritis.
+
+Vitals: BP 140/90. O2 sat 94%.
+Physical Examination: Severe biphasic stridor. Endoscopy reveals a circumferential, inflamed, and ulcerated narrowing of the subglottis.
+Laboratory Results: c-ANCA (PR3-ANCA) is markedly elevated.', "order" = 35 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -1058,7 +1053,11 @@ Vitals: Normal.
 Physical Examination: Resting tremor and bradykinesia. Laryngoscopy shows normal, mobile vocal folds, but they do not close forcefully during speech (glottic bowing).
 Laboratory Results: None.', 42) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'Parkinson''s Disease Dysphonia', "order" = 42 WHERE id = v_case_id;
+        UPDATE case_studies SET scenario = 'A 72-year-old male with long-standing Parkinson''s disease complains that his family can no longer hear him. His speech is very rapid, mumbled, and extremely quiet (hypophonic).
+
+Vitals: Normal.
+Physical Examination: Resting tremor and bradykinesia. Laryngoscopy shows normal, mobile vocal folds, but they do not close forcefully during speech (glottic bowing).
+Laboratory Results: None.', "order" = 42 WHERE id = v_case_id;
     END IF;
 
     DELETE FROM case_questions WHERE case_id = v_case_id;
@@ -1079,28 +1078,7 @@ Vitals: Normal.
 Physical Examination: Tongue fasciculations are visible. Laryngoscopy shows sluggish, spastic vocal fold movements with pooling of saliva in the pyriform sinuses.
 Laboratory Results: EMG shows widespread acute and chronic denervation.', 43) RETURNING id INTO v_case_id;
     ELSE
-        UPDATE case_studies SET scenario = 'A 72-year-old male with long-standing Parkinson''s disease complains that his family can no longer hear him. His speech is very rapid, mumbled, and extremely quiet (hypophonic).
-
-Vitals: Normal.
-Physical Examination: Resting tremor and bradykinesia. Laryngoscopy shows normal, mobile vocal folds, but they do not close forcefully during speech (glottic bowing).
-Laboratory Results: None.', 42) RETURNING id INTO v_case_id;
-    ELSE
-        UPDATE case_studies SET scenario = 'Parkinson''s Disease Dysphonia', "order" = 42 WHERE id = v_case_id;
-    END IF;
-
-    DELETE FROM case_questions WHERE case_id = v_case_id;
-    INSERT INTO case_questions (case_id, question, options, correct_index, explanation) VALUES
-    (v_case_id, 'What is the classic speech pattern in Parkinson''s disease called?', '["Spastic dysarthria","Hypokinetic dysarthria (characterized by soft, monotonous, rapid, and breathy speech)","Ataxic dysarthria","None"]', 1, 'The basal ganglia dysfunction leads to a poverty of movement, affecting the respiratory and laryngeal muscles.'),
-    (v_case_id, 'Why do Parkinson''s patients speak so quietly?', '["They are deaf","Rigidity and bradykinesia prevent them from generating sufficient subglottic air pressure and forceful vocal fold closure","Their vocal cords are paralyzed","None"]', 1, 'They literally lack the muscle dynamics to project their voice.'),
-    (v_case_id, 'What specific voice therapy program is highly effective for Parkinson''s dysphonia?', '["Whisper therapy","Lee Silverman Voice Treatment (LSVT LOUD), which focuses on intensive, high-effort voice exercises to ''recalibrate'' their perception of loudness","Botox","None"]', 1, 'LSVT forces the patient to use ''maximum effort'' to overcome the rigidity.');
-
-    ---------------------------------------------------------------------------
-    -- CASE 43: Amyotrophic Lateral Sclerosis (Bulbar Onset)
-    ---------------------------------------------------------------------------
-    SELECT id INTO v_case_id FROM case_studies WHERE topic_id = v_topic_id AND title = 'The ALS Larynx' LIMIT 1;
-    IF v_case_id IS NULL THEN
-        INSERT INTO case_studies (topic_id, title, scenario, "order")
-        VALUES (v_topic_id, 'The ALS Larynx', 'A 60-year-old male presents with progressively slurred speech, a harsh, strained voice, and difficulty swallowing. He has noted weakness in his hands. He frequently chokes on liquids.
+        UPDATE case_studies SET scenario = 'A 60-year-old male presents with progressively slurred speech, a harsh, strained voice, and difficulty swallowing. He has noted weakness in his hands. He frequently chokes on liquids.
 
 Vitals: Normal.
 Physical Examination: Tongue fasciculations are visible. Laryngoscopy shows sluggish, spastic vocal fold movements with pooling of saliva in the pyriform sinuses.
