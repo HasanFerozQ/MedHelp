@@ -6,6 +6,7 @@
   <title>Flash Cards | Medical Excellence - MediHelp</title>
   <link rel="stylesheet" href="styles.css">
   <script src="core.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     .flash-container {
       max-width: 1000px;
@@ -57,6 +58,11 @@
       font-size: 14px;
       color: var(--text-muted);
       font-weight: 600;
+    }
+    .topic-card-icon i {
+      width: 32px;
+      height: 32px;
+      stroke-width: 2px;
     }
     .back-nav {
       display: inline-flex;
@@ -125,7 +131,9 @@
       </div>
 
       <div id="empty-state" class="empty-state hidden">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom: 20px; opacity: 0.5;"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        <div style="margin-bottom: 20px; opacity: 0.5; display: flex; justify-content: center;">
+          <i data-lucide="layers-2" style="width: 64px; height: 64px; stroke-width: 1;"></i>
+        </div>
         <h3>No Flash Cards Yet</h3>
         <p>We are currently populating this section with high-yield content. Check back soon!</p>
       </div>
@@ -134,7 +142,7 @@
     <!-- Flash Card Study View (Hidden by default) -->
     <div id="study-view" class="hidden">
       <div class="back-nav" onclick="exitStudyMode()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m15 18-6-6 6-6"/></svg>
+        <i data-lucide="chevron-left" style="width: 20px; height: 20px; stroke-width: 3;"></i>
         Back to Topics
       </div>
 
@@ -157,11 +165,11 @@
 
       <div class="flash-card-controls">
         <button class="flash-card-nav-btn" id="prev-btn" title="Previous Card">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m15 18-6-6 6-6"/></svg>
+          <i data-lucide="chevron-left" style="width: 24px; height: 24px; stroke-width: 3;"></i>
         </button>
         <div class="flash-card-counter" id="card-counter">0 / 0</div>
         <button class="flash-card-nav-btn" id="next-btn" title="Next Card">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m9 18 6-6-6-6"/></svg>
+          <i data-lucide="chevron-right" style="width: 24px; height: 24px; stroke-width: 3;"></i>
         </button>
       </div>
     </div>
@@ -216,7 +224,7 @@
       'year1': [
         {
           topic: 'Thorax',
-          icon: '🫁',
+          icon: 'wind',
           cards: [
             {
               q: "What are the boundaries of the thorax?",
@@ -618,7 +626,7 @@
         },
         {
           topic: 'Abdomen',
-          icon: '🤰',
+          icon: 'layers',
           cards: [
             {
               q: "What are the boundaries of the abdomen?",
@@ -992,7 +1000,7 @@
         },
         {
           topic: 'Neuroanatomy',
-          icon: '🧠',
+          icon: 'brain',
           cards: [
             {
               q: "What is the embryological origin of the CNS?",
@@ -1390,7 +1398,7 @@
         },
         {
           topic: 'Neurophysiology',
-          icon: '⚡',
+          icon: 'zap',
           cards: [
             {
               q: "What is the resting membrane potential of a neuron?",
@@ -1796,7 +1804,7 @@
         },
         {
           topic: 'Systemic Embryology',
-          icon: '👶',
+          icon: 'baby',
           cards: [
             { q: "First functional organ to develop in the embryo?", a: "The Heart (beats by day 22)." },
             { q: "Embryologic origin of the Heart?", a: "Splanchnic Mesoderm." },
@@ -1924,6 +1932,137 @@
             { q: "Embryologic origin of the Mammary Glands?", a: "Downgrowths of surface ectoderm (Mammary Ridges/Milk Lines)." },
             { q: "Origin of the Tonsillar Crypts?", a: "Second Pharyngeal Pouch." }
           ]
+        },
+        {
+          topic: 'HEAD & NECK',
+          icon: 'skull',
+          cards: [
+            { q: "Which bone contains the Foramen Magnum?", a: "Occipital bone." },
+            { q: "Landmark where the Coronal and Sagittal sutures meet?", a: "Bregma." },
+            { q: "Landmark known as the 'soft spot' in infants?", a: "Anterior Fontanelle." },
+            { q: "Artery that runs deep to the Pterion?", a: "Middle Meningeal Artery." },
+            { q: "Foramen transmitting the Middle Meningeal Artery?", a: "Foramen Spinosum." },
+            { q: "Content of the Superior Orbital Fissure?", a: "CN III, IV, V1 (lacrimal, frontal, nasociliary), VI, and superior ophthalmic vein." },
+            { q: "Nerve passing through the Stylomastoid Foramen?", a: "CN VII (Facial nerve - motor branch)." },
+            { q: "Foramen transmitting the Mandibular nerve (V3)?", a: "Foramen Ovale." },
+            { q: "Foramen transmitting the Maxillary nerve (V2)?", a: "Foramen Rotundum." },
+            { q: "Structures passing through the Jugular Foramen?", a: "CN IX, X, XI, and Internal Jugular Vein." },
+            { q: "Nerve passing through the Optic Canal?", a: "CN II (Optic nerve) and Ophthalmic artery." },
+            { q: "Nerve responsible for the Efferent limb of the Corneal Reflex?", a: "CN VII (Temporal and Zygomatic branches)." },
+            { q: "Nerve responsible for the Afferent limb of the Corneal Reflex?", a: "CN V1 (Ophthalmic nerve - Nasociliary branch)." },
+            { q: "Muscle innervated by CN IV (Trochlear)?", a: "Superior Oblique." },
+            { q: "Muscle innervated by CN VI (Abducens)?", a: "Lateral Rectus." },
+            { q: "Which CN is affected in a patient with a 'down and out' eye?", a: "CN III (Oculomotor nerve palsy)." },
+            { q: "Nerve that provides taste to the posterior 1/3 of the tongue?", a: "CN IX (Glossopharyngeal)." },
+            { q: "Nerve providing general sensation to the anterior 2/3 of the tongue?", a: "CN V3 (Lingual nerve)." },
+            { q: "Nerve providing taste to the anterior 2/3 of the tongue?", a: "CN VII (Chorda tympani)." },
+            { q: "Clinical sign of a CN XII (Hypoglossal) lesion?", a: "Tongue deviates toward the side of the lesion." },
+            { q: "Innervation of the muscles of mastication?", a: "CN V3 (Mandibular nerve)." },
+            { q: "Nerve responsible for secretions from the Parotid Gland?", a: "CN IX (Glossopharyngeal via Otic ganglion)." },
+            { q: "Nerve responsible for secretions from the Submandibular Gland?", a: "CN VII (Facial via Submandibular ganglion)." },
+            { q: "Layers of the Scalp (SCALP acronym)?", a: "Skin, Connective tissue, Aponeurosis, Loose connective tissue, Pericranium." },
+            { q: "Which scalp layer is the 'dangerous area' for infection spread?", a: "Loose connective tissue (allows spread to intracranial sinuses via emissary veins)." },
+            { q: "Sensory innervation of the forehead?", a: "CN V1 (Supraorbital and Supratrochlear nerves)." },
+            { q: "Muscle responsible for closing the eyelids?", a: "Orbicularis Oculi (CN VII)." },
+            { q: "Muscle responsible for raising the upper eyelid?", a: "Levator Palpebrae Superioris (CN III)." },
+            { q: "Muscle responsible for puffing out the cheeks?", a: "Buccinator (CN VII)." },
+            { q: "Boundaries of the Anterior Triangle of the neck?", a: "Mandible, Midline of neck, Sternocleidomastoid (SCM)." },
+            { q: "Content of the Carotid Triangle?", a: "Carotid bifurcation, Internal Jugular Vein, Vagus nerve, Hypoglossal nerve." },
+            { q: "Muscle dividing the subclavian artery into three parts?", a: "Anterior Scalene." },
+            { q: "Nerve crossing the Sternocleidomastoid muscle?", a: "Great Auricular Nerve." },
+            { q: "Innervation of the Sternocleidomastoid and Trapezius?", a: "CN XI (Spinal Accessory nerve)." },
+            { q: "Only laryngeal muscle innervated by the External Laryngeal Nerve?", a: "Cricothyroid muscle." },
+            { q: "Nerve providing sensation above the vocal folds?", a: "Internal Laryngeal Nerve." },
+            { q: "Nerve providing motor innervation to all laryngeal muscles except cricothyroid?", a: "Recurrent Laryngeal Nerve." },
+            { q: "Nerve providing motor innervation to the Palatoglossus muscle?", a: "CN X (Vagus nerve)." },
+            { q: "Muscle responsible for abducting the vocal folds (opening the airway)?", a: "Posteric Cricoarytenoid." },
+            { q: "Only tongue muscle not innervated by CN XII?", a: "Palatoglossus (CN X)." },
+            { q: "Nerve responsible for the Afferent limb of the Gag Reflex?", a: "CN IX." },
+            { q: "Nerve responsible for the Efferent limb of the Gag Reflex?", a: "CN X." },
+            { q: "Structure containing the Baroreceptors for blood pressure?", a: "Carotid Sinus." },
+            { q: "Nerve innervating the Carotid Sinus?", a: "CN IX (Hering’s nerve)." },
+            { q: "First branch of the External Carotid Artery?", a: "Superior Thyroid Artery." },
+            { q: "Artery that supplies the Scalp and travels with the Auriculotemporal nerve?", a: "Superficial Temporal Artery." },
+            { q: "Contents of the Cavernous Sinus?", a: "CN III, IV, V1, V2, VI, and Internal Carotid Artery." },
+            { q: "Which nerve is most centrally located and first affected in Cavernous Sinus thrombosis?", a: "CN VI (Abducens)." },
+            { q: "Origin of the Sympathetic fibers to the head?", a: "Superior Cervical Ganglion." },
+            { q: "Triad of Horner’s Syndrome?", a: "Ptosis, Miosis, Anhydrosis." },
+            { q: "Space between the Buccopharyngeal and Prevertebral fascia?", a: "Retropharyngeal space." },
+            { q: "What is 'Ludwig’s Angina'?", a: "Infection of the submandibular space, often from an infected tooth." },
+            { q: "Nerve damaged during Thyroidectomy that affects voice pitch?", a: "External Laryngeal Nerve." },
+            { q: "Nerve at risk during ligation of the Inferior Thyroid Artery?", a: "Recurrent Laryngeal Nerve." },
+            { q: "Structure forming the 'Adam's Apple'?", a: "Laryngeal prominence of the Thyroid Cartilage." },
+            { q: "Which lymph node group receives drainage from the tip of the tongue?", a: "Submental lymph nodes." },
+            { q: "Nerve responsible for the 'Sneeze Reflex'?", a: "CN V (Trigeminal)." },
+            { q: "Path of the Parotid Duct (Stensen’s Duct)?", a: "Crosses Masseter, pierces Buccinator, opens opposite the 2nd upper molar." },
+            { q: "Innervation of the Tensor Tympani muscle?", a: "CN V3." },
+            { q: "Innervation of the Stapedius muscle?", a: "CN VII." },
+            { q: "Which nerve is blocked in 'Bell’s Palsy'?", a: "CN VII (Facial nerve)." },
+            { q: "Distinction between UMN and LMN Facial Nerve lesion?", a: "UMN spares the forehead (bilateral innervation); LMN affects the entire half-face." },
+            { q: "Sensory innervation of the Eardrum (external surface)?", a: "CN V3 (Auriculotemporal), CN X, and CN VII." },
+            { q: "Artery supplying the Palatine Tonsil?", a: "Tonsillar branch of the Facial Artery." },
+            { q: "Nerve traversing the Cribriform Plate?", a: "CN I (Olfactory)." },
+            { q: "Ganglion for the Oculomotor nerve parasympathetics?", a: "Ciliary Ganglion." },
+            { q: "Result of damaging the Left Optic Nerve?", a: "Total blindness in the left eye." },
+            { q: "Result of damaging the Optic Chiasm (e.g., Pituitary tumor)?", a: "Bitemporal Hemianopia." },
+            { q: "Primary arterial supply to the Nasal Septum (source of Epistaxis)?", a: "Kiesselbach’s Plexus." },
+            { q: "Nerve providing sensation to the lower teeth?", a: "Inferior Alveolar Nerve (V3)." },
+            { q: "Branch of the facial nerve that exits the skull but does not innervate facial expression muscles?", a: "Posterior Auricular Nerve." },
+            { q: "Nerve responsible for Dilator Pupillae (pupil dilation)?", a: "Sympathetic fibers from the Superior Cervical Ganglion." },
+            { q: "Nerve responsible for Sphincter Pupillae (pupil constriction)?", a: "Parasympathetic fibers from CN III (Edinger-Westphal nucleus)." },
+            { q: " 'Safety muscle' of the tongue?", a: "Genioglossus (prevents tongue from falling back and obstructing the airway)." },
+            { q: "Muscle that protrudes the Mandible?", a: "Lateral Pterygoid." },
+            { q: "Muscles that elevate the Mandible?", a: "Masseter, Temporalis, Medial Pterygoid." },
+            { q: "Sensory innervation of the Mandibular angle?", a: "Great Auricular Nerve (C2-C3), NOT Trigeminal." },
+            { q: "Vertebral level of the Hyoid Bone?", a: "C3." },
+            { q: "Vertebral level of the Thyroid Cartilage bifurcation?", a: "C4." },
+            { q: "Vertebral level of the Cricoid Cartilage?", a: "C6." },
+            { q: "Structure that pierces the Thyrohyoid membrane?", a: "Internal Laryngeal Nerve and Superior Laryngeal Artery." },
+            { q: "Nerve supply to the Platysma?", a: "Cervical branch of CN VII." },
+            { q: "Major vein formed by the union of the Superficial Temporal and Maxillary veins?", a: "Retromandibular Vein." },
+            { q: "Nerve passing through the Internal Acoustic Meatus?", a: "CN VII and CN VIII." },
+            { q: "Nerve that provides parasympathetic innervation to the Lacrimal gland?", a: "CN VII (via Greater Petrosal nerve and Pterygopalatine ganglion)." },
+            { q: "Branch of V3 that carries Chorda Tympani fibers?", a: "Lingual Nerve." },
+            { q: "Artery that gives rise to the Ophthalmic artery?", a: "Internal Carotid Artery." },
+            { q: "Primary drainage of the Face?", a: "Facial Vein to the Internal Jugular Vein." },
+            { q: "Nerve loop (C1-C3) that innervates the infrahyoid muscles?", a: "Ansa Cervicalis." },
+            { q: "Only infrahyoid muscle not innervated by the Ansa Cervicalis?", a: "Thyrohyoid (C1 via Hypoglossal nerve)." },
+            { q: "Muscle forming the floor of the mouth?", a: "Mylohyoid (CN V3)." },
+            { q: "Nerve providing sensation to the Hard Palate?", a: "Greater Palatine and Nasopalatine nerves (V2)." },
+            { q: "Nerve providing sensation to the Soft Palate?", a: "Lesser Palatine nerve (V2)." },
+            { q: "Artery that passes through the transverse foramina of the cervical vertebrae?", a: "Vertebral Artery." },
+            { q: "Union of the two Vertebral Arteries forms the...?", a: "Basilar Artery." },
+            { q: "Nerve passing between the Superior Cerebellar and Posterior Cerebral arteries?", a: "CN III." },
+            { q: "Nerve supply to the Ethmoid sinuses?", a: "Anterior and Posterior Ethmoidal nerves (V1)." },
+            { q: "Nerve supply to the Maxillary sinus?", a: "Superior Alveolar nerves (V2)." },
+            { q: "Structure that secretes Aqueous Humor?", a: "Ciliary Process." },
+            { q: "Site of drainage for Aqueous Humor?", a: "Canal of Schlemm." },
+            { q: "Primary lymphatic drainage of the Midline of the Lower Lip?", a: "Submental lymph nodes." },
+            { q: "Which lymph nodes are known as the 'Sentinel nodes' of the head and neck?", a: "Deep Cervical Lymph Nodes (specifically the Jugulodigastric node)." },
+            { q: "Boundaries of the 'Infratemporal Fossa'?", a: "Lateral: Ramus of mandible; Medial: Lateral pterygoid plate; Anterior: Posterior Maxilla." },
+            { q: "Content of the Infratemporal Fossa?", a: "Muscles of mastication (medial/lateral pterygoids), Maxillary artery, Mandibular nerve (V3), Pterygoid venous plexus." },
+            { q: "Clinical significance of the Pterygoid Venous Plexus?", a: "Communicates with the Cavernous Sinus; potential route for dental infections to reach the brain." },
+            { q: "Nerve that provides parasympathetic fibers to the Parotid gland?", a: "Lesser Petrosal Nerve (branch of CN IX)." },
+            { q: "Nerve that provides parasympathetic fibers to the Submandibular gland?", a: "Chorda Tympani (branch of CN VII)." },
+            { q: "Nerve carrying taste from the Epiglottis?", a: "Internal Laryngeal Nerve (CN X)." },
+            { q: "Ganglion associated with the Maxillary nerve (V2)?", a: "Pterygopalatine Ganglion." },
+            { q: "Ganglion associated with the Mandibular nerve (V3)?", a: "Otic Ganglion." },
+            { q: "Effect of Sympathetic stimulation on the eye?", a: "Mydriasis (dilation) and Superior Tarsal muscle contraction (eyelid elevation)." },
+            { q: "Effect of Parasympathetic stimulation on the eye?", a: "Miosis (constriction) and Ciliary muscle contraction (accommodation)." },
+            { q: "Sensory innervation of the Internal surface of the Tympanic Membrane?", a: "CN IX (Glossopharyngeal)." },
+            { q: "Nerve passing through the middle ear across the handle of the Malleus?", a: "Chorda Tympani." },
+            { q: "Muscle that opens the Eustachian Tube during swallowing?", a: "Tensor Veli Palatini (CN V3)." },
+            { q: "Result of a lesion to the Superior Oblique muscle?", a: "Diplopia when looking down (e.g., walking downstairs) and compensatory head tilt." },
+            { q: "Artery that supplies the retina (end artery)?", a: "Central Retinal Artery (branch of Ophthalmic)." },
+            { q: "What is a 'Blowout Fracture' of the orbit?", a: "Fracture of the orbital floor (Maxilla), potentially entrapping the Inferior Rectus muscle." },
+            { q: "Sign of an Inferior Rectus entrapment?", a: "Upward gaze palsy (inability to look up)." },
+            { q: "Cause of 'Frey’s Syndrome'?", a: "Misdirected regrowth of auriculotemporal nerve fibers (parasympathetic to parotid) to sweat glands after parotid surgery (sweating while eating)." },
+            { q: "Nerve at risk during a submandibular gland excision?", a: "Marginal Mandibular branch of the Facial Nerve." },
+            { q: "Most common site of a Thyroglossal Duct Cyst?", a: "Midline of the neck, usually inferior to the hyoid bone; moves upward with tongue protrusion." },
+            { q: "Location of a Branchial Cleft Cyst?", a: "Lateral neck, anterior to the Sternocleidomastoid muscle (remnant of 2nd pharyngeal cleft)." },
+            { q: "Muscle responsible for the 'Gag Reflex' elevation of the palate?", a: "Levator Veli Palatini (CN X)." },
+            { q: "Which dural venous sinus lies along the superior border of the Petrous part of the temporal bone?", a: "Superior Petrosal Sinus." }
+          ]
         }
       ],
       'year2': [], 'year3': [], 'year4': [], 'usmle1': [], 'usmle2': [], 'usmle3': []
@@ -1981,6 +2120,8 @@
       };
 
       renderTopics();
+      // Also initialize icons for static elements in HTML
+      lucide.createIcons();
     }
 
     function renderTopics() {
@@ -1995,13 +2136,18 @@
           const card = document.createElement('div');
           card.className = 'topic-card-item';
           card.innerHTML = `
-            <div class="topic-card-icon">${t.icon || '📚'}</div>
+            <div class="topic-card-icon">
+              <i data-lucide="${t.icon || 'book'}"></i>
+            </div>
             <div class="topic-card-title">${t.topic}</div>
             <div class="topic-card-count">${t.cards.length} Cards</div>
           `;
           card.onclick = () => startStudyMode(idx);
           topicGrid.appendChild(card);
         });
+        
+        // Initialize Lucide icons
+        lucide.createIcons();
       } else {
         topicGrid.classList.add('hidden');
         emptyState.classList.remove('hidden');
