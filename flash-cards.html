@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flash Cards | Medical Excellence - MediHelp</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="core.js"></script>
+  <style>
+    .flash-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .topic-selector {
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .topic-chip {
+      padding: 8px 18px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .topic-chip:hover {
+      border-color: var(--accent);
+      color: var(--text-h);
+    }
+    .topic-chip.active {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+      color: var(--accent-light);
+    }
+    .empty-state {
+      text-align: center;
+      padding: 60px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px dashed var(--border);
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png" alt="MediHelp">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/medical-exam-preparation">Medical Exams</a>
+        <a href="/flash-cards" class="active">Flash Cards</a>
+        <a href="#">Lab Reports <span class="tag-dev">[under development]</span></a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-btn">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flash-container">
+    <div style="text-align: center; margin-bottom: 40px;">
+      <h1 class="hero-h1">Medical <span class="grad-text">Flash Cards</span></h1>
+      <p class="hero-sub" style="margin-bottom: 20px;">Master high-yield medical concepts with interactive active recall cards.</p>
+    </div>
+
+    <!-- Main Tabs -->
+    <div class="tab-nav" id="main-tabs">
+      <div class="tab-item active" data-tab="year1">1st Year</div>
+      <div class="tab-item" data-tab="year2">2nd Year</div>
+      <div class="tab-item" data-tab="year3">3rd Year</div>
+      <div class="tab-item" data-tab="year4">4th Year</div>
+      <div class="tab-item" data-tab="usmle1">USMLE 1</div>
+      <div class="tab-item" data-tab="usmle2">USMLE 2</div>
+      <div class="tab-item" data-tab="usmle3">USMLE 3</div>
+    </div>
+
+    <!-- Topic Selector (Dynamic based on tab) -->
+    <div class="topic-selector" id="topic-list">
+      <!-- Topics injected here -->
+    </div>
+
+    <!-- Flash Card Area -->
+    <div id="flash-card-area">
+      <div class="flash-card-scene">
+        <div class="flash-card" id="card-element">
+          <div class="flash-card-face flash-card-front">
+            <div class="flash-card-label">Question</div>
+            <div class="flash-card-text" id="front-text">Select a topic to start</div>
+          </div>
+          <div class="flash-card-face flash-card-back">
+            <div class="flash-card-label">Answer</div>
+            <div class="flash-card-text" id="back-text">...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flash-card-controls">
+        <button class="flash-card-nav-btn" id="prev-btn" title="Previous Card">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="flash-card-counter" id="card-counter">0 / 0</div>
+        <button class="flash-card-nav-btn" id="next-btn" title="Next Card">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="empty-state" class="empty-state hidden">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom: 20px; opacity: 0.5;"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+      <h3>No Flash Cards Yet</h3>
+      <p>We are currently populating this section with high-yield content. Check back soon!</p>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: 80px;">
+    <div class="container" style="text-align: center; border-top: 1px solid var(--border); padding-top: 40px;">
+      <p>© 2026 MediHelp. Medical Excellence for Everyone.</p>
+    </div>
+  </footer>
+
+  <script>
+    const FLASH_DATA = {
+      'year1': [
+        {
+          topic: 'Thorax',
+          cards: [
+            {
+              q: "What are the boundaries of the thorax?",
+              a: "Superior — thoracic inlet (T1, 1st rib, manubrium) | Inferior — diaphragm | Anterior — sternum/costal cartilages | Posterior — thoracic vertebrae"
+            },
+            {
+              q: "What are the 3 parts of the sternum?",
+              a: "Manubrium | Body | Xiphoid process"
+            },
+            {
+              q: "What is the sternal angle (angle of Louis)?",
+              a: "Junction of manubrium and body | Level of T4/T5 | Marks: 2nd rib articulation, tracheal bifurcation, aortic arch begin/end"
+            }
+          ]
+        }
+      ],
+      'year2': [], 'year3': [], 'year4': [], 'usmle1': [], 'usmle2': [], 'usmle3': []
+    };
+
+    let currentTab = 'year1';
+    let currentTopicIndex = 0;
+    let currentCardIndex = 0;
+
+    const cardElement = document.getElementById('card-element');
+    const frontText = document.getElementById('front-text');
+    const backText = document.getElementById('back-text');
+    const cardCounter = document.getElementById('card-counter');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const topicList = document.getElementById('topic-list');
+    const flashCardArea = document.getElementById('flash-card-area');
+    const emptyState = document.getElementById('empty-state');
+
+    function init() {
+      // Main Tab Listeners
+      document.querySelectorAll('#main-tabs .tab-item').forEach(tab => {
+        tab.onclick = () => {
+          document.querySelectorAll('#main-tabs .tab-item').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentTab = tab.dataset.tab;
+          renderTopics();
+        };
+      });
+
+      // Card Flip
+      cardElement.onclick = () => {
+        cardElement.classList.toggle('is-flipped');
+      };
+
+      // Nav Buttons
+      prevBtn.onclick = () => {
+        if (currentCardIndex > 0) {
+          currentCardIndex--;
+          updateCard();
+        }
+      };
+
+      nextBtn.onclick = () => {
+        const cards = FLASH_DATA[currentTab][currentTopicIndex].cards;
+        if (currentCardIndex < cards.length - 1) {
+          currentCardIndex++;
+          updateCard();
+        }
+      };
+
+      renderTopics();
+    }
+
+    function renderTopics() {
+      const topics = FLASH_DATA[currentTab];
+      topicList.innerHTML = '';
+      
+      if (topics && topics.length > 0) {
+        flashCardArea.classList.remove('hidden');
+        emptyState.classList.add('hidden');
+        
+        topics.forEach((t, idx) => {
+          const chip = document.createElement('div');
+          chip.className = `topic-chip ${idx === currentTopicIndex ? 'active' : ''}`;
+          chip.textContent = t.topic;
+          chip.onclick = () => {
+            currentTopicIndex = idx;
+            currentCardIndex = 0;
+            renderTopics(); // Refresh chips
+            updateCard();
+          };
+          topicList.appendChild(chip);
+        });
+        updateCard();
+      } else {
+        flashCardArea.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+      }
+    }
+
+    function updateCard() {
+      const topics = FLASH_DATA[currentTab];
+      if (!topics || !topics[currentTopicIndex]) return;
+
+      const cards = topics[currentTopicIndex].cards;
+      const card = cards[currentCardIndex];
+
+      // Reset flip state when changing card
+      cardElement.classList.remove('is-flipped');
+      
+      // Update text after a short delay if it was flipped (to avoid seeing text change mid-flip)
+      setTimeout(() => {
+        frontText.textContent = card.q;
+        backText.textContent = card.a;
+        cardCounter.textContent = `${currentCardIndex + 1} / ${cards.length}`;
+        
+        prevBtn.disabled = currentCardIndex === 0;
+        nextBtn.disabled = currentCardIndex === cards.length - 1;
+      }, 50);
+    }
+
+    // Initialize
+    init();
+  </script>
+</body>
+</html>
