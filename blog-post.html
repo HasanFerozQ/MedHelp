@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediHelp Blog | Article</title>
   <meta name="description" content="Read detailed MediHelp blog articles on billing integrity, denials, coding patterns, and patient advocacy.">
+  <title>MediHelp Blog | Article</title>
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="MediHelp">
@@ -141,7 +141,8 @@
       <!-- MAIN CONTENT -->
       <main>
         <div id="post-header" class="post-header">
-          <!-- Filled by JS -->
+          <h1 id="article-main-title">MediHelp Blog Article</h1>
+          <!-- Skeletons shown during load -->
           <div class="skeleton" style="height:42px; width:80%; margin-bottom:16px; border-radius:8px;"></div>
           <div class="skeleton" style="height:24px; width:60%; border-radius:8px;"></div>
         </div>
@@ -333,9 +334,10 @@
       setMeta('meta[name="twitter:image"]', 'content', ogImage);
 
       // Header
-      document.getElementById('post-header').innerHTML = `
+      const headerEl = document.getElementById('post-header');
+      headerEl.innerHTML = `
         <span class="blog-tag" style="margin-bottom:16px; display:block;">${post.category}</span>
-        <h1 style="font-size:clamp(26px,4vw,42px); font-weight:900; color:var(--text-h); line-height:1.15; letter-spacing:-1px; margin-bottom:0;">${post.title}</h1>`;
+        <h1 id="article-main-title" style="font-size:clamp(26px,4vw,42px); font-weight:900; color:var(--text-h); line-height:1.15; letter-spacing:-1px; margin-bottom:0;">${post.title}</h1>`;
 
       // Stats bar
       document.getElementById('stat-date').childNodes[1].textContent = ` ${new Date(post.date).toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})}`;
