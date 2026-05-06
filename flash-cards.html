@@ -1386,9 +1386,412 @@
               q: "Which nucleus is the 'Biological Clock' of the brain?",
               a: "<b>Suprachiasmatic Nucleus (SCN)</b> of the Hypothalamus."
             }
+        {
+          topic: 'Neurophysiology',
+          icon: '⚡',
+          cards: [
+            {
+              q: "What is the resting membrane potential of a neuron?",
+              a: "-70 mV (inside negative relative to outside) | Maintained by: Na+/K+ ATPase (pumps 3 Na+ out, 2 K+ in) | High K+ inside, high Na+ outside | K+ leak channels — primary determinant of RMP | Cl- and large anions also contribute"
+            },
+            {
+              q: "What is the Nernst equation and its significance?",
+              a: "E = (61/z) × log([ion]out/[ion]in) | Calculates equilibrium potential for single ion | EK+ = -90 mV | ENa+ = +60 mV | ECl- = -70 mV | ECa2+ = +120 mV | RMP closer to EK+ because membrane is more permeable to K+ at rest"
+            },
+            {
+              q: "What is the Goldman-Hodgkin-Katz equation?",
+              a: "Accounts for multiple ions simultaneously | RMP determined by relative permeability of Na+, K+, Cl- | At rest — K+ permeability >> Na+ permeability | During AP — Na+ permeability >> K+ permeability | More complete than Nernst (single ion)"
+            },
+            {
+              q: "What are voltage-gated Na+ channels and their states?",
+              a: "3 states: Resting (closed, activatable) | Open (activated, Na+ rushes in) | Inactivated (closed, cannot open — absolute refractory period) | Activation gate — opens at -55 mV (threshold) | Inactivation gate — closes ~1 ms after opening | Blocked by tetrodotoxin (TTX), local anesthetics"
+            },
+            {
+              q: "What are voltage-gated K+ channels?",
+              a: "Slower than Na+ channels | Open during repolarization | Responsible for after-hyperpolarization (membrane goes below RMP) | Blocked by tetraethylammonium (TEA) | Contribute to relative refractory period"
+            },
+            {
+              q: "What is the Na+/K+ ATPase pump?",
+              a: "Electrogenic pump (net outward positive charge) | Pumps 3 Na+ out : 2 K+ in per cycle | Uses 1 ATP | Contributes ~-4 mV to RMP directly | Essential for maintaining ion gradients long-term | Inhibited by ouabain/cardiac glycosides (digoxin)"
+            },
+            {
+              q: "What is threshold potential?",
+              a: "~-55 mV for most neurons | Membrane potential at which AP is triggered | All-or-none phenomenon | Below threshold — graded potential only | At/above threshold — full AP generated regardless of stimulus strength | Determined by balance of inward Na+ and outward K+ currents"
+            },
+            {
+              q: "What are the phases of the action potential?",
+              a: "Resting (-70 mV) | Depolarization — Na+ channels open, Na+ rushes in, membrane → +30 mV | Repolarization — Na+ channels inactivate, K+ channels open, K+ exits | After-hyperpolarization — excess K+ efflux → below RMP | Return to resting — Na+/K+ pump restores gradients"
+            },
+            {
+              q: "What is the absolute refractory period?",
+              a: "Period during which NO stimulus can trigger another AP | Corresponds to Na+ channel inactivation | Lasts ~1–2 ms | Ensures unidirectional propagation of AP | Limits maximum firing frequency of neuron"
+            },
+            {
+              q: "What is the relative refractory period?",
+              a: "Period after absolute refractory period | Na+ channels recovering from inactivation | K+ channels still open (after-hyperpolarization) | A stronger-than-normal stimulus CAN trigger AP | Corresponds to after-hyperpolarization phase"
+            },
+            {
+              q: "What is accommodation?",
+              a: "Slow depolarization → Na+ channels inactivate before threshold reached → no AP | Rapid depolarization → AP generated | Clinically — why DC current causes single discharge but AC causes tetany | Also explains why slowly rising pressure may not cause pain"
+            },
+            {
+              q: "What is saltatory conduction?",
+              a: "AP jumps between nodes of Ranvier in myelinated fibers | Myelin acts as insulator — ion flow only at nodes | Faster + more energy efficient than continuous conduction | Velocity ∝ diameter + myelination | Lost in demyelinating diseases (MS, Guillain-Barré)"
+            },
+            {
+              q: "What are the classes of nerve fibers by conduction velocity?",
+              a: "Aα (Ia/Ib) — largest, fastest (70–120 m/s), myelinated — proprioception, motor | Aβ (II) — touch, pressure (30–70 m/s) | Aγ — intrafusal muscle fibers | Aδ (III) — fast pain, temperature (5–30 m/s) | B — preganglionic autonomic | C (IV) — slowest (0.5–2 m/s), unmyelinated — slow pain, temperature, postganglionic autonomic"
+            },
+            {
+              q: "What is the compound action potential?",
+              a: "Sum of APs from multiple nerve fibers in a nerve trunk | Different peaks correspond to different fiber types (A, B, C) | Used in nerve conduction studies | Reduced amplitude — fewer fibers conducting (axon loss) | Slowed velocity — demyelination"
+            },
+            {
+              q: "What are the steps of synaptic transmission?",
+              a: "AP arrives at presynaptic terminal | Voltage-gated Ca2+ channels open | Ca2+ influx → vesicle fusion (SNARE proteins) | Neurotransmitter released into synaptic cleft | Binds postsynaptic receptors | Response: EPSP or IPSP | Termination: reuptake, enzymatic degradation, diffusion"
+            },
+            {
+              q: "What is an EPSP vs IPSP?",
+              a: "EPSP (excitatory postsynaptic potential) — depolarization, Na+ or Ca2+ influx, moves membrane toward threshold | IPSP (inhibitory postsynaptic potential) — hyperpolarization, K+ efflux or Cl- influx, moves membrane away from threshold | Summation of EPSPs/IPSPs determines if AP fires"
+            },
+            {
+              q: "What is temporal vs spatial summation?",
+              a: "Temporal summation — rapid repeated stimuli from ONE presynaptic neuron → EPSPs summate over time | Spatial summation — simultaneous stimuli from MULTIPLE presynaptic neurons → EPSPs summate across membrane | Both mechanisms for reaching threshold"
+            },
+            {
+              q: "What is the role of Ca2+ in synaptic transmission?",
+              a: "Enters via voltage-gated Ca2+ channels (P/Q type at NMJ, N type at synapses) | Binds synaptotagmin → triggers SNARE complex assembly → vesicle fusion → exocytosis | Ca2+ removal terminates release | Blocked by aminoglycosides, Mg2+ excess → impaired transmission"
+            },
+            {
+              q: "What are ionotropic vs metabotropic receptors?",
+              a: "Ionotropic — ligand-gated ion channels, fast (ms), direct ion flow: AMPA, NMDA (glutamate), GABA-A, nicotinic ACh | Metabotropic — G-protein coupled receptors, slow (seconds), second messengers: mGluR, GABA-B, muscarinic ACh, adrenergic receptors"
+            },
+            {
+              q: "What is the NMDA receptor and its significance?",
+              a: "Glutamate + glycine receptor | Both ligand AND voltage-gated | Mg2+ blocks channel at rest (requires depolarization to remove Mg2+) | Permeable to Ca2+, Na+, K+ | Role in LTP (long-term potentiation) → learning + memory | Blocked by ketamine, PCP, Mg2+ | Overactivation → excitotoxicity (stroke, epilepsy)"
+            },
+            {
+              q: "What is long-term potentiation (LTP)?",
+              a: "Persistent strengthening of synaptic connections after repeated stimulation | Mechanism: NMDA receptor activation → Ca2+ influx → AMPA receptor insertion + phosphorylation → enhanced synaptic transmission | Basis of learning + memory (hippocampus) | Requires: coincident pre + postsynaptic activity (\"Hebbian plasticity\")"
+            },
+            {
+              q: "What is presynaptic inhibition?",
+              a: "Inhibitory neuron synapses onto presynaptic terminal | Reduces Ca2+ influx → less neurotransmitter release | GABA-B receptors mediate this via K+ channels | More effective than postsynaptic inhibition (controls input before summation) | Example — pain modulation in dorsal horn"
+            },
+            {
+              q: "What are the major excitatory neurotransmitters?",
+              a: "Glutamate — main CNS excitatory NT, AMPA + NMDA receptors | Aspartate | ACh (at NMJ, nicotinic) | Norepinephrine (α1, β1 — excitatory contexts) | Substance P — pain transmission | Histamine (H1 — arousal)"
+            },
+            {
+              q: "What are the major inhibitory neurotransmitters?",
+              a: "GABA — main CNS inhibitory NT | GABA-A (Cl- influx, fast) — benzodiazepines, barbiturates, alcohol potentiate | GABA-B (K+ efflux, slow) — baclofen | Glycine — spinal cord inhibition, strychnine blocks | Dopamine (D2 — inhibitory) | Serotonin (some inhibitory)"
+            },
+            {
+              q: "What is acetylcholine (ACh) and its receptors?",
+              a: "Synthesized from choline + acetyl-CoA (choline acetyltransferase) | Broken down by acetylcholinesterase | Nicotinic receptors (ionotropic) — NMJ, autonomic ganglia, CNS | Muscarinic receptors (metabotropic, M1–M5) — cardiac, smooth muscle, glands | M2 — heart (inhibitory) | M3 — smooth muscle + glands (excitatory)"
+            },
+            {
+              q: "What is dopamine and its pathways?",
+              a: "Synthesized: tyrosine → DOPA → dopamine | Mesolimbic pathway — reward, addiction | Mesocortical — cognition, motivation (↓ in schizophrenia negative symptoms) | Nigrostriatal — motor control (↓ in Parkinson's) | Tuberoinfundibular — inhibits prolactin | Receptors: D1/D5 (Gs, ↑cAMP) | D2/D3/D4 (Gi, ↓cAMP)"
+            },
+            {
+              q: "What is serotonin (5-HT) and its functions?",
+              a: "Synthesized from tryptophan | Raphe nuclei → widespread projections | Functions: mood, sleep, appetite, pain modulation, vomiting | 90% in GI tract (enterochromaffin cells) | 5-HT3 — ionotropic, mediates vomiting (ondansetron blocks) | SSRIs block reuptake → ↑ synaptic serotonin → antidepressant | Serotonin syndrome — hyperthermia, agitation, clonus"
+            },
+            {
+              q: "What is norepinephrine (NE) and its functions?",
+              a: "Synthesized: tyrosine → DOPA → dopamine → NE (dopamine β-hydroxylase) | Locus coeruleus → widespread CNS projections | Functions: arousal, attention, fight-or-flight | α1 — vasoconstriction | α2 — presynaptic inhibition (↓ NE release) | β1 — ↑ HR, contractility | β2 — bronchodilation, vasodilation | Reuptake blocked by TCAs, SNRIs"
+            },
+            {
+              q: "What is the role of nitric oxide (NO) as a neurotransmitter?",
+              a: "Gaseous, non-vesicular NT | Synthesized by NO synthase (nNOS in neurons) from arginine | Diffuses freely across membranes | Activates guanylate cyclase → ↑ cGMP | Functions: vasodilation, LTP, penile erection, pain modulation | Not stored in vesicles — released on demand"
+            },
+            {
+              q: "What are endogenous opioids?",
+              a: "Enkephalins, endorphins, dynorphins | μ (mu) — analgesia, euphoria, respiratory depression, constipation | κ (kappa) — analgesia, sedation, dysphoria | δ (delta) — analgesia, mood | Mechanism: Gi-coupled → ↓ cAMP → ↑ K+ conductance (hyperpolarization) + ↓ Ca2+ conductance → inhibit NT release | Naloxone — antagonist"
+            },
+            {
+              q: "What is a sensory receptor and receptor potential?",
+              a: "Transduces stimulus energy into electrical signal | Receptor potential — graded, non-propagating, proportional to stimulus intensity | Generator potential — if large enough → triggers AP in afferent nerve | Receptor types: mechanoreceptors, thermoreceptors, chemoreceptors, nociceptors, photoreceptors"
+            },
+            {
+              q: "What is sensory adaptation?",
+              a: "Decreased response to sustained stimulus | Rapidly adapting (phasic) receptors — respond to onset/offset only: Meissner's corpuscles (light touch), Pacinian corpuscles (vibration) | Slowly adapting (tonic) receptors — respond throughout stimulus: Merkel's discs (sustained pressure), Ruffini endings (skin stretch), muscle spindles"
+            },
+            {
+              q: "What are the cutaneous mechanoreceptors?",
+              a: "Meissner's corpuscles — fingertips, light touch, rapidly adapting | Merkel's discs — sustained pressure, fine discrimination, slowly adapting | Pacinian corpuscles — deep pressure, vibration, rapidly adapting | Ruffini endings — skin stretch, slowly adapting | Two-point discrimination — highest at fingertips (small receptive fields)"
+            },
+            {
+              q: "What is the dorsal column-medial lemniscal pathway?",
+              a: "Carries: fine touch, vibration, proprioception, two-point discrimination | 1st order — enters spinal cord, ascends ipsilateral in dorsal columns (fasciculus gracilis L, fasciculus cuneatus U) | Synapses in nucleus gracilis/cuneatus (medulla) | 2nd order — crosses (decussates) in medulla → medial lemniscus | 3rd order — VPL thalamus → primary somatosensory cortex (S1)"
+            },
+            {
+              q: "What is the spinothalamic tract?",
+              a: "Carries: pain, temperature, crude touch, pressure | 1st order — enters spinal cord, synapses in dorsal horn (Lissauer's tract) | 2nd order — crosses within 1–2 spinal levels → ascends contralateral in anterolateral column | 3rd order — VPL thalamus → S1 cortex | Lateral spinothalamic — pain + temperature | Anterior spinothalamic — crude touch"
+            },
+            {
+              q: "What is the clinical difference between dorsal column and spinothalamic lesions?",
+              a: "Dorsal column lesion — ipsilateral loss of fine touch, vibration, proprioception | Spinothalamic lesion — contralateral loss of pain + temperature (1–2 levels below lesion) | Brown-Séquard syndrome (hemicord) — ipsilateral DC loss + ipsilateral motor loss + contralateral spinothalamic loss"
+            },
+            {
+              q: "What is referred pain?",
+              a: "Pain perceived at site distant from actual pathology | Mechanism — convergence of visceral + somatic afferents on same dorsal horn neurons (convergence-projection theory) | Brain misinterprets visceral pain as somatic | Examples: cardiac pain → left arm/jaw | Appendix → periumbilical | Kidney → loin to groin | Diaphragm → shoulder tip"
+            },
+            {
+              q: "What is the gate control theory of pain?",
+              a: "Melzack + Wall (1965) | Large Aβ fibers activate inhibitory interneurons in substantia gelatinosa → \"close gate\" to pain signals from Aδ/C fibers | Small Aδ/C fibers inhibit these interneurons → \"open gate\" | Explains: rubbing injury reduces pain | Basis of TENS (transcutaneous electrical nerve stimulation)"
+            },
+            {
+              q: "What are nociceptors?",
+              a: "Free nerve endings — respond to noxious stimuli | Aδ fibers — fast, sharp, well-localized pain | C fibers — slow, burning, dull, poorly localized | Sensitized by: bradykinin, prostaglandins, substance P, H+, K+, histamine | Peripheral sensitization → allodynia + hyperalgesia | NSAIDs ↓ prostaglandin synthesis → ↓ peripheral sensitization"
+            },
+            {
+              q: "What is central sensitization?",
+              a: "Wind-up phenomenon — repeated C fiber stimulation → ↑ NMDA receptor activation → ↑ intracellular Ca2+ → ↑ excitability of dorsal horn neurons | Result: allodynia (pain from non-painful stimulus), hyperalgesia (↑ pain from painful stimulus) | Relevant in: fibromyalgia, chronic pain, phantom limb pain"
+            },
+            {
+              q: "What is the visual pathway?",
+              a: "Retina → optic nerve → optic chiasm (nasal fibers cross) → optic tract → LGN (lateral geniculate nucleus, thalamus) → optic radiation → primary visual cortex (V1, calcarine fissure, occipital lobe) | Upper fibers — parietal lobe (lower visual field) | Lower fibers — Meyer's loop temporal lobe (upper visual field)"
+            },
+            {
+              q: "What are the visual field defects by lesion location?",
+              a: "Optic nerve — monocular blindness | Optic chiasm — bitemporal hemianopia (pituitary tumor) | Optic tract — contralateral homonymous hemianopia | Meyer's loop (temporal) — superior quadrantanopia (\"pie in the sky\") | Parietal radiation — inferior quadrantanopia | Occipital cortex — contralateral homonymous hemianopia with macular sparing"
+            },
+            {
+              q: "What are rods vs cones?",
+              a: "Rods — 120 million, periphery, scotopic vision (dim light), single pigment (rhodopsin), no color discrimination, high convergence | Cones — 6 million, fovea, photopic vision (bright light), 3 types (S/M/L wavelength), color vision, low convergence → high acuity | Fovea centralis — highest acuity, cones only, no rods"
+            },
+            {
+              q: "What is the phototransduction cascade (rods)?",
+              a: "Light → retinal (11-cis → all-trans) → rhodopsin activation → transducin (Gi) activation → ↑ PDE → ↓ cGMP → cGMP-gated Na+ channels close → hyperpolarization → ↓ glutamate release | Dark — high cGMP → Na+ channels open → depolarized → tonic glutamate release"
+            },
+            {
+              q: "What is the auditory pathway?",
+              a: "Cochlea (hair cells) → cochlear nerve (CN VIII) → cochlear nuclei (medulla) → superior olivary complex (bilateral) → lateral lemniscus → inferior colliculus (midbrain) → medial geniculate nucleus (thalamus) → primary auditory cortex (A1, superior temporal gyrus, Heschl's gyri) | Bilateral representation — unilateral cortical lesion rarely causes deafness"
+            },
+            {
+              q: "What is the difference between conductive and sensorineural hearing loss?",
+              a: "Conductive — problem in outer/middle ear (cerumen, otitis media, otosclerosis) | Weber — lateralizes to affected ear | Rinne — BC > AC (abnormal) | Sensorineural — cochlea or CN VIII damage (noise, aminoglycosides, Ménière's) | Weber — lateralizes to normal ear | Rinne — AC > BC (normal pattern preserved but both reduced)"
+            },
+            {
+              q: "What is the vestibular system?",
+              a: "Detects: linear acceleration (otolith organs — utricle + saccule) | Angular acceleration (semicircular canals — ampullae, cristae) | Hair cells — stereocilia deflection toward kinocilium → depolarization | Away → hyperpolarization | Pathway: CN VIII → vestibular nuclei → VOR (eye movement) + VSR (posture) + thalamus → cortex"
+            },
+            {
+              q: "What is the vestibulo-ocular reflex (VOR)?",
+              a: "Maintains stable gaze during head movement | Head turns right → right horizontal canal excited → eyes move left (compensatory) | Pathway: vestibular nuclei → CN VI (abducens) + CN III (oculomotor) via MLF | MLF lesion → internuclear ophthalmoplegia (INO) — impaired adduction ipsilateral, nystagmus contralateral | Classic MS finding"
+            },
+            {
+              q: "What is the neuromuscular junction (NMJ)?",
+              a: "Synapse between motor neuron and skeletal muscle | Motor neuron AP → Ca2+ influx → ACh release | ACh binds nicotinic receptors (N2) → end-plate potential → muscle AP → contraction | AChE degrades ACh | Blocked by: curare (competitive nicotinic antagonist), succinylcholine (depolarizing block) | Disease: Myasthenia gravis (anti-AChR antibodies)"
+            },
+            {
+              q: "What is the motor unit?",
+              a: "Single motor neuron + all muscle fibers it innervates | Small motor units — few fibers, precise movement (extraocular, hand intrinsics) | Large motor units — many fibers, powerful movement (gastrocnemius, gluteus) | Henneman's size principle — small motor units recruited first, large last | Rate coding + recruitment = graded muscle force"
+            },
+            {
+              q: "What is the muscle spindle?",
+              a: "Intrafusal muscle fibers — detect muscle length + rate of change | Primary endings (Ia afferents) — respond to length + velocity | Secondary endings (II afferents) — respond to length only | Gamma motor neurons maintain spindle tension during contraction | Ia afferents → monosynaptic stretch reflex (myotatic reflex) + reciprocal inhibition of antagonist"
+            },
+            {
+              q: "What is the stretch reflex (myotatic reflex)?",
+              a: "Muscle stretched → spindle Ia afferents fire → synapse directly on α motor neurons → muscle contraction (monosynaptic) | Simultaneously: Ia fibers → inhibitory interneuron → antagonist muscle inhibited (reciprocal inhibition) | Examples: patellar reflex (L3/L4), biceps reflex (C5/C6) | Hyperreflexia — UMN lesion | Hyporeflexia — LMN lesion"
+            },
+            {
+              q: "What is the Golgi tendon organ (GTO)?",
+              a: "Located at muscle-tendon junction | Detects muscle tension (force) | Ib afferents → disynaptic inhibition of same muscle (autogenic inhibition) + excitation of antagonist | Protective reflex — prevents muscle damage from excessive force | Clasp-knife response in spasticity"
+            },
+            {
+              q: "What is the difference between UMN and LMN lesions?",
+              a: "UMN — spasticity, hyperreflexia, Babinski positive, no fasciculations, muscle groups affected, clonus | LMN — flaccidity, hyporeflexia, Babinski absent, fasciculations, fibrillations, muscle atrophy, specific muscles affected | Babinski sign — extensor plantar response (big toe dorsiflexion + fan of other toes) = UMN lesion in adults"
+            },
+            {
+              q: "What is the corticospinal tract?",
+              a: "Primary motor pathway (voluntary movement) | Origin: primary motor cortex (M1, precentral gyrus) + premotor + SMA | Descends through internal capsule (posterior limb) → cerebral peduncle → pons → medullary pyramids → decussates (85–90%) → lateral corticospinal tract → anterior horn α motor neurons | 10–15% uncrossed — anterior corticospinal tract"
+            },
+            {
+              q: "What is the role of the basal ganglia in motor control?",
+              a: "Modulates movement initiation + suppression | Direct pathway (Go) — cortex → striatum → GPi/SNr inhibition → thalamus disinhibited → ↑ motor cortex activity | Indirect pathway (No-Go) — cortex → striatum → GPe → STN → GPi/SNr excited → thalamus inhibited → ↓ motor cortex | Parkinson's — ↓ dopamine → ↑ indirect pathway → excessive inhibition → poverty of movement"
+            },
+            {
+              q: "What is the role of the cerebellum in motor control?",
+              a: "Coordination, timing, error correction | Compares intended vs actual movement (efference copy) | Cerebellar cortex → Purkinje cells (inhibitory, GABA) → deep cerebellar nuclei → thalamus → motor cortex | Vermis — axial/truncal coordination | Intermediate — limb coordination | Lateral hemispheres — motor planning | Flocculonodular lobe — vestibular, balance, VOR"
+            },
+            {
+              q: "What are the signs of cerebellar dysfunction?",
+              a: "DANISH mnemonic: Dysdiadochokinesia (impaired rapid alternating movements) | Ataxia (gait, limb) | Nystagmus | Intention tremor (tremor worsens as target approached) | Scanning dysarthria | Hypotonia | Also: past-pointing, rebound, decomposition of movement | Ipsilateral signs (cerebellum → same side)"
+            },
+            {
+              q: "What are the stages of sleep?",
+              a: "NREM Stage 1 — theta waves, light sleep, hypnic jerks | NREM Stage 2 — sleep spindles + K complexes, true sleep | NREM Stage 3 — delta waves (slow wave sleep, SWS), deep restorative sleep, growth hormone release | REM — desynchronized EEG (like waking), dreaming, muscle atonia, rapid eye movements, ↑ HR/BP | Sleep cycle ~90 min, 4–6 cycles/night, REM lengthens toward morning"
+            },
+            {
+              q: "What neurotransmitters promote sleep vs wakefulness?",
+              a: "Wakefulness — NE (locus coeruleus), serotonin (raphe), histamine (tuberomammillary nucleus), ACh (basal forebrain), orexin/hypocretin (lateral hypothalamus) | Sleep — GABA (VLPO — ventrolateral preoptic area) + adenosine (sleep pressure) | REM — ACh (on), NE + serotonin (off) | Orexin loss → narcolepsy"
+            },
+            {
+              q: "What is the EEG in different states?",
+              a: "Awake alert — beta waves (>13 Hz, low amplitude) | Awake relaxed (eyes closed) — alpha waves (8–13 Hz) | Stage 1 NREM — theta (4–8 Hz) | Stage 2 — sleep spindles (12–14 Hz) + K complexes | Stage 3 — delta (<4 Hz, high amplitude) | REM — beta-like (desynchronized) | Petit mal seizure — 3 Hz spike-wave"
+            },
+            {
+              q: "What is narcolepsy?",
+              a: "Loss of orexin (hypocretin) neurons (autoimmune) | Features: excessive daytime sleepiness | Cataplexy (sudden muscle weakness triggered by emotion) | Sleep paralysis | Hypnagogic hallucinations (at sleep onset) | REM intrusion into wakefulness | Tx: modafinil (wakefulness), sodium oxybate, SSRIs (cataplexy)"
+            },
+            {
+              q: "What are the functions of the hypothalamus?",
+              a: "Mnemonic TAN HATS: Thirst + water balance | Adenohypophysis control (releasing hormones) | Neurohypophysis (ADH, oxytocin) | Hunger + satiety | Autonomic regulation | Temperature regulation | Sexual behavior + circadian rhythms | Lateral hypothalamus — hunger (lesion → anorexia) | Ventromedial — satiety (lesion → obesity)"
+            },
+            {
+              q: "What is the autonomic nervous system overview?",
+              a: "Sympathetic (thoracolumbar T1–L2) — fight or flight | Parasympathetic (craniosacral CN III/VII/IX/X + S2–S4) — rest and digest | Both have 2-neuron chains: preganglionic + postganglionic | Preganglionic NT — ACh (both) | Postganglionic — sympathetic: NE (except sweat glands = ACh) | Parasympathetic: ACh"
+            },
+            {
+              q: "What are the sympathetic effects on organ systems?",
+              a: "Heart — ↑ HR (β1), ↑ contractility | Lungs — bronchodilation (β2) | Vasculature — vasoconstriction (α1) in skin/viscera, vasodilation (β2) in muscle | GI — ↓ motility, ↑ sphincter tone | Bladder — ↓ detrusor, ↑ internal sphincter (retention) | Eye — mydriasis (α1), ↑ aqueous production | Liver — glycogenolysis | Adrenal — epinephrine release"
+            },
+            {
+              q: "What are the parasympathetic effects on organ systems?",
+              a: "Heart — ↓ HR (M2), ↓ AV conduction | Lungs — bronchoconstriction, ↑ secretions | GI — ↑ motility, ↓ sphincter tone | Bladder — ↑ detrusor (voiding), ↓ internal sphincter | Eye — miosis (M3), accommodation (ciliary muscle), ↓ aqueous production | Glands — ↑ salivation, lacrimation, secretion (SLUDD: salivation, lacrimation, urination, defecation, digestion)"
+            },
+            {
+              q: "What is the baroreceptor reflex?",
+              a: "Baroreceptors in carotid sinus (CN IX) + aortic arch (CN X) | ↑ BP → ↑ firing → NTS (nucleus tractus solitarius) → ↑ vagal tone + ↓ sympathetic → ↓ HR + vasodilation → restore BP | ↓ BP → opposite | Carotid sinus hypersensitivity → syncope on neck pressure"
+            },
+            {
+              q: "What is the micturition reflex?",
+              a: "Bladder filling → stretch receptors → pelvic nerve (S2–S4) → spinal cord + pontine micturition center (PMC) | PMC coordinates: detrusor contraction (parasympathetic) + internal urethral sphincter relaxation (sympathetic withdrawal) + external sphincter relaxation (somatic, pudendal nerve) | Voluntary control via cortex (inhibits PMC until appropriate) | UMN lesion → detrusor overactivity | LMN lesion → flaccid bladder"
+            },
+            {
+              q: "What is the organization of the cerebral cortex?",
+              a: "6 layers (neocortex) | Layer 4 — granule cells, main input layer (especially sensory cortex) | Layer 5 — large pyramidal cells (Betz cells in M1), main output layer | Brodmann areas: 4 — primary motor | 3,1,2 — primary somatosensory | 17 — primary visual | 41/42 — primary auditory | 44/45 — Broca's | 22 — Wernicke's"
+            },
+            {
+              q: "What is the somatotopic organization of the motor and sensory cortex?",
+              a: "Homunculus — distorted map of body on cortex | Motor cortex (M1, precentral gyrus) — face + hand largest representation (fine control) | Sensory cortex (S1, postcentral gyrus) — same organization | Medial surface — leg/foot representation | Lateral surface — face/hand | Penfield's homunculus — classic diagram"
+            },
+            {
+              q: "What is Broca's vs Wernicke's aphasia?",
+              a: "Broca's (expressive) — area 44/45, inferior frontal gyrus | Non-fluent speech, intact comprehension, aware of deficit | Wernicke's (receptive) — area 22, superior temporal gyrus | Fluent but meaningless speech (word salad), impaired comprehension, unaware of deficit | Conduction aphasia — intact Broca's + Wernicke's but impaired repetition (arcuate fasciculus lesion) | Global aphasia — all language lost"
+            },
+            {
+              q: "What is hemispheric lateralization?",
+              a: "Left hemisphere (dominant in 95% right-handers) — language, analytical, sequential processing | Right hemisphere — spatial processing, music, holistic, emotional prosody | Split-brain studies (corpus callosum section) — each hemisphere processes contralateral visual field + controls contralateral hand independently"
+            },
+            {
+              q: "What is the limbic system and its functions?",
+              a: "HAMLET mnemonic: Hypothalamus | Amygdala (fear, emotion, emotional memory) | Memory (hippocampus — declarative memory, spatial navigation) | Learning | Emotion | Thalamus (anterior nucleus) | Also: cingulate gyrus, fornix, mammillary bodies | Papez circuit: hippocampus → fornix → mammillary bodies → anterior thalamus → cingulate → hippocampus"
+            },
+            {
+              q: "What is the role of the hippocampus?",
+              a: "Declarative (explicit) memory formation | Spatial navigation (place cells) | Converts short-term → long-term memory (consolidation) | Bilateral damage → anterograde amnesia (cannot form new declarative memories) | Retrograde memory relatively spared | HM (Henry Molaison) — classic case, bilateral hippocampectomy | Vulnerable to: hypoxia, Alzheimer's (first area affected), temporal lobe epilepsy"
+            },
+            {
+              q: "What is the amygdala?",
+              a: "Fear conditioning + emotional memory | Receives sensory input (thalamus — fast) + cortex (slow, detailed) | Projects to hypothalamus (autonomic fear response) | Bilateral amygdala damage (Klüver-Bucy syndrome) — placidity, hypersexuality, hyperorality, visual agnosia | ↑ amygdala activity — anxiety disorders, PTSD"
+            },
+            {
+              q: "What is CSF and where is it produced?",
+              a: "Clear, colorless fluid | Produced by choroid plexus (lateral > 3rd > 4th ventricles) | Volume ~150 mL, produced ~500 mL/day | Composition: low protein (<45 mg/dL), low glucose (60–70% serum), high Cl-, few cells (<5 lymphocytes) | Functions: buoyancy, protection, waste clearance, homeostasis"
+            },
+            {
+              q: "What is the flow of CSF?",
+              a: "Lateral ventricles → foramen of Monro → 3rd ventricle → cerebral aqueduct (of Sylvius) → 4th ventricle → foramina of Luschka (lateral) + Magendie (medial) → subarachnoid space → arachnoid granulations → superior sagittal sinus | Mnemonic: Monro, Sylvius, Luschka, Magendie"
+            },
+            {
+              q: "What is hydrocephalus?",
+              a: "↑ CSF volume → ↑ intracranial pressure | Communicating — impaired reabsorption at arachnoid granulations (post-meningitis, subarachnoid hemorrhage) | Non-communicating (obstructive) — blocked CSF flow (aqueductal stenosis, posterior fossa tumor) | Normal pressure hydrocephalus (NPH) — Hakim's triad: Wet (incontinence), Wacky (dementia), Wobbly (gait ataxia)"
+            },
+            {
+              q: "What is the blood-brain barrier (BBB)?",
+              a: "Formed by: tight junctions between brain capillary endothelial cells + astrocyte end-feet + pericytes | Restricts passage of: large molecules, charged molecules, most drugs, proteins | Allows: lipid-soluble molecules, O2, CO2, glucose (GLUT1), alcohol, some drugs | Circumventricular organs — lack BBB (area postrema/chemoreceptor trigger zone, neurohypophysis, organum vasculosum)"
+            },
+            {
+              q: "What is intracranial pressure (ICP) and Monro-Kellie doctrine?",
+              a: "Normal ICP: 7–15 mmHg | Monro-Kellie — skull is fixed volume: brain (80%) + blood (10%) + CSF (10%) = constant | ↑ in one component → compensated by ↓ in others | When compensation fails → ↑ ICP → herniation | Cushing's triad (late sign): ↑ BP + ↓ HR + irregular respirations"
+            },
+            {
+              q: "What is the EEG and what does it measure?",
+              a: "Electroencephalogram — measures cortical electrical activity (postsynaptic potentials of cortical neurons) | Not action potentials | Used for: epilepsy diagnosis, sleep staging, brain death confirmation, encephalopathy | Brain death — electrocerebral silence (flat EEG) | Amplitude reflects number of synchronously active neurons"
+            },
+            {
+              q: "What is the seizure types and their EEG patterns?",
+              a: "Focal (partial) — one hemisphere | Focal aware (simple partial) — no LOC | Focal impaired awareness (complex partial) — LOC, automatisms | Generalized — both hemispheres simultaneously | Tonic-clonic (grand mal) — tonic then clonic phases | Absence (petit mal) — 3 Hz spike-wave, brief staring | Myoclonic — brief muscle jerks | Atonic — drop attacks"
+            },
+            {
+              q: "What is the mechanism of epilepsy?",
+              a: "Imbalance between excitation (glutamate) and inhibition (GABA) | Seizure focus — group of neurons with abnormal synchronous discharge | Spreading depolarization → recruits neighboring neurons | Na+ channel mutations (SCN1A) — Dravet syndrome | GABA-A receptor mutations — juvenile myoclonic | Antiepileptics: Na+ channel blockers (phenytoin, carbamazepine) | GABA enhancers (valproate, benzodiazepines, barbiturates)"
+            },
+            {
+              q: "What is the descending pain modulation system?",
+              a: "PAG (periaqueductal gray) → RVM (rostroventral medulla) → dorsal horn | Releases: serotonin + NE + enkephalins → inhibit pain transmission | Opioids act on PAG (μ receptors) | Stimulation-produced analgesia | Stress-induced analgesia | Disruption → chronic pain states | Pathway basis for: opioids, TCAs, SNRIs in chronic pain"
+            },
+            {
+              q: "What is phantom limb pain?",
+              a: "Pain perceived in amputated limb | Mechanisms: peripheral sensitization of stump neuromas | Central sensitization — cortical reorganization (adjacent cortical areas invade amputated limb representation) | Maladaptive plasticity | Tx: mirror therapy (visual feedback to reorganize cortex), gabapentin, amitriptyline, TENS | Distinct from phantom sensation (non-painful awareness of limb)"
+            },
+            {
+              q: "What are thermoreceptors and temperature sensation pathways?",
+              a: "Warm receptors — C fibers (peak 45°C), TRPV1 channels (also activated by capsaicin) | Cold receptors — Aδ fibers (peak 25°C), TRPM8 channels (also activated by menthol) | Pathway: spinothalamic tract (lateral) → VPL thalamus → S1 | Temperature sensation lost contralateral in spinothalamic lesions | Syringomyelia — bilateral loss of pain + temperature (cape distribution) with preserved dorsal column"
+            },
+            {
+              q: "What is myasthenia gravis and its physiology?",
+              a: "Autoimmune — anti-AChR (nicotinic) antibodies → ↓ functional receptors + complement-mediated destruction | Fatigable muscle weakness (worse with use) | Ocular muscles first (ptosis, diplopia) | Diagnosis: edrophonium (Tensilon) test — AChE inhibitor → ↑ ACh | transient improvement | Tx: pyridostigmine (AChE inhibitor), immunosuppression, thymectomy | Lambert-Eaton — anti-VGCC antibodies, strength improves with use"
+            },
+            {
+              q: "What is Lambert-Eaton myasthenic syndrome (LEMS)?",
+              a: "Autoimmune — anti-VGCC (voltage-gated Ca2+ channel) antibodies → ↓ Ca2+ influx → ↓ ACh release | Associated with small cell lung cancer (paraneoplastic) | Proximal muscle weakness (improves with repeated use — post-tetanic potentiation) | Reduced DTRs | Autonomic features (dry mouth, erectile dysfunction) | Dx: ↑ CMAP on repetitive nerve stimulation | Tx: treat cancer, 3,4-DAP, immunosuppression"
+            },
+            {
+              q: "What is Parkinson's disease physiology?",
+              a: "Loss of dopaminergic neurons in substantia nigra pars compacta → ↓ striatal dopamine | ↓ direct pathway + ↑ indirect pathway → excessive inhibition of thalamus → ↓ motor cortex activation | Features: resting tremor (pill-rolling), rigidity (cogwheel), bradykinesia, postural instability | Lewy bodies (α-synuclein) | Tx: levodopa + carbidopa (dopa decarboxylase inhibitor prevents peripheral conversion)"
+            },
+            {
+              q: "What is multiple sclerosis (MS) physiology?",
+              a: "Autoimmune demyelination of CNS white matter | Loss of saltatory conduction → slowed/blocked AP | Remyelination → partial recovery (relapsing-remitting) | Lesions disseminated in space + time | Common findings: INO (MLF lesion), optic neuritis, Lhermitte's sign (electric shock on neck flexion), Uhthoff's phenomenon (symptoms worsen with heat) | CSF: ↑ IgG, oligoclonal bands, myelin basic protein"
+            },
+            {
+              q: "What is Guillain-Barré syndrome (GBS)?",
+              a: "Autoimmune demyelination of peripheral nerves | Post-infectious (Campylobacter, CMV, EBV, Zika) | Ascending flaccid paralysis + areflexia | Autonomic instability | Respiratory failure (monitor FVC) | CSF: albuminocytologic dissociation (↑ protein, normal cells) | NCS: slowed conduction velocity | Tx: IVIG or plasmapheresis | Miller-Fisher variant: ophthalmoplegia + ataxia + areflexia + anti-GQ1b antibodies"
+            },
+            {
+              q: "What is Alzheimer's disease neurophysiology?",
+              a: "↓ ACh (nucleus basalis of Meynert degeneration) | Amyloid plaques (extracellular Aβ42) + neurofibrillary tangles (intracellular hyperphosphorylated tau) | Synaptic loss correlates best with cognitive decline | Early: hippocampal atrophy → anterograde amnesia | Late: widespread cortical atrophy | APOE4 — risk gene | APP, presenilin 1/2 mutations — familial | Tx: AChE inhibitors (donepezil), memantine (NMDA antagonist)"
+            },
+            {
+              q: "What are the pharmacological targets in neurophysiology?",
+              a: "Na+ channels — local anesthetics (lidocaine), antiepileptics (phenytoin) | Ca2+ channels — gabapentin, nimodipine | GABA-A — benzodiazepines (allosteric, ↑ Cl- frequency), barbiturates (↑ Cl- duration) | AChE — neostigmine, organophosphates | NMDA — ketamine, memantine | Dopamine — levodopa, haloperidol | Serotonin — SSRIs, triptans | Opioid — morphine, naloxone"
+            },
+            {
+              q: "What is the physiology of local anesthetics?",
+              a: "Block voltage-gated Na+ channels (bind inactivated state) | Prevent AP generation + propagation | Ionized form — active, cannot cross membrane | Unionized form — crosses membrane → ionizes inside → binds channel | Acidic environment (infection) → more ionized → poor efficacy | Order of block: small myelinated (Aδ) > small unmyelinated (C) > large myelinated (Aα) | Pain + temperature lost before touch + proprioception"
+            },
+            {
+              q: "What is the blood supply to the spinal cord?",
+              a: "Anterior spinal artery (1) — anterior 2/3 of cord (corticospinal + spinothalamic tracts + anterior horn) | Posterior spinal arteries (2) — posterior 1/3 (dorsal columns) | Artery of Adamkiewicz (great anterior radicular artery) — major supply T8–L1, left side 75% | Anterior spinal artery syndrome: bilateral loss of motor + pain/temp + autonomic | Preserved: vibration + proprioception (posterior columns)"
+            },
+            {
+              q: "What is syringomyelia?",
+              a: "Fluid-filled cavity (syrinx) in central spinal cord | Expands → damages: anterior white commissure first (crossing spinothalamic fibers) → bilateral loss of pain + temperature in cape distribution | Later: anterior horn cells → LMN weakness | Dorsal columns spared | Associated with: Chiari malformation, trauma, tumors | Tx: treat underlying cause, surgical drainage"
+            },
+            {
+              q: "What is the reticular activating system (RAS)?",
+              a: "Network in brainstem reticular formation | Maintains wakefulness + consciousness | Projects to thalamus → cortex | Key nuclei: locus coeruleus (NE), raphe (5-HT), tuberomammillary (histamine), laterodorsal tegmentum (ACh) | RAS damage → coma | Anesthetics → suppress RAS | Antihistamines (H1) → sedation (block tuberomammillary nucleus)"
+            },
+            {
+              q: "What are the cranial nerve nuclei locations?",
+              a: "Midbrain — CN III (oculomotor), CN IV (trochlear) | Pons — CN V (trigeminal), CN VI (abducens), CN VII (facial), CN VIII (vestibulocochlear) | Medulla — CN IX (glossopharyngeal), CN X (vagus), CN XI (accessory — also spinal), CN XII (hypoglossal) | Mnemonic: \"Some Say Marry Money But My Brother Says Big Brains Matter More\""
+            },
+            {
+              q: "What is brain death?",
+              a: "Irreversible cessation of all brain function including brainstem | Prerequisites: known irreversible cause, normothermia, no sedatives/metabolic cause | Clinical tests: coma (no response) | Absent brainstem reflexes (pupillary, corneal, oculocephalic, gag, cough) | Apnea test (no breathing at PaCO2 >60 mmHg) | Confirmatory: EEG (flat), cerebral angiography (no flow) | Spinal cord reflexes may persist"
+            },
+            {
+              q: "What is neuroplasticity?",
+              a: "Brain's ability to reorganize structure + function | Mechanisms: LTP, LTD, synaptogenesis, axonal sprouting, cortical map reorganization | Hebbian plasticity — \"neurons that fire together wire together\" | Critical periods — windows of heightened plasticity (visual cortex before age 8) | Maladaptive plasticity — phantom limb pain, tinnitus, addiction | Therapeutic plasticity — rehabilitation after stroke, learning, memory consolidation"
+            }
           ]
         }
-      ],
       'year2': [], 'year3': [], 'year4': [], 'usmle1': [], 'usmle2': [], 'usmle3': []
     };
 
