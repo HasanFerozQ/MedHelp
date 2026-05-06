@@ -175,6 +175,16 @@
     </div>
   </main>
 
+  <!-- ══════════════════════════════════════════
+       FOOTER SEO TEXT
+  ══════════════════════════════════════════ -->
+  <section class="container" style="padding: 40px 28px 0; text-align: center; border-top: 1px solid var(--border);">
+    <p style="color: var(--text-muted); font-size: 13px; max-width: 900px; margin: 0 auto; line-height: 1.8;">
+      MediHelp provides free medical billing tools to help patients audit hospital bills, verify CPT codes, understand CARC and RARC claim denial codes, compare prescription drug prices, and find credentialed healthcare providers. Whether you received an unexpected medical bill, want to understand your Explanation of Benefits (EOB), check for duplicate charges, or get professional human negotiation support — MediHelp helps you take control of your healthcare expenses.
+    </p>
+  </section>
+
+  <!-- ── FOOTER ── -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
@@ -186,6 +196,11 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             </a>
           </div>
+          <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; background:rgba(34,197,94,0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(34,197,94,0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
+            <span style="font-size:11px; background:rgba(245,158,11,0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(245,158,11,0.2);">No Signup</span>
+          </div>
         </div>
         <div class="footer-col">
           <h4>Free Tools</h4>
@@ -193,12 +208,14 @@
             <li><a href="/audit">Bill Audit Tool</a></li>
             <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
             <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings Search</a></li>
+            <li><a href="/providers">Provider Search</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
           <ul>
-            <li><a href="/pricing" style="color:var(--expert-amber); display: inline-flex; align-items: center; gap: 6px;">Human Bill Negotiation</a></li>
+            <li><a href="/pricing" style="color:var(--expert-amber); display: inline-flex; align-items: center; gap: 6px;">Human Bill Negotiation <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m12 3 1.91 5.82L21 12l-7.09 3.18L12 21l-1.91-5.82L3 12l7.09-3.18L12 3z"/></svg></a></li>
             <li><a href="/blog">Patient Blog</a></li>
           </ul>
         </div>
@@ -207,7 +224,9 @@
           <ul>
             <li><a href="/privacy">Privacy Policy</a></li>
             <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
             <li><a href="/contact">Contact Us</a></li>
+            <li><a href="sitemap.xml">Sitemap</a></li>
           </ul>
         </div>
       </div>
@@ -625,8 +644,144 @@
           ]
         },
         {
-          topic: 'Abdomen',
+          topic: 'Pelvis & Perineum',
           icon: 'layers',
+          cards: [
+            { q: "What are the two types of pelvic inlets?", a: "Gynecoid (round/oval – female) and Android (heart-shaped – male)." },
+            { q: "Boundaries of the pelvic inlet (pelvic brim)?", a: "Sacral promontory (posteriorly), arcuate line of ilium, pectineal line (pecten pubis), pubic symphysis (anteriorly)." },
+            { q: "What is the diagonal conjugate?", a: "Distance from sacral promontory to inferior edge of pubic symphysis (~12.5 cm). Used clinically to estimate obstetric conjugate." },
+            { q: "What is the obstetric (true) conjugate?", a: "Shortest AP diameter of pelvic inlet (~11 cm); from sacral promontory to posterior surface of pubic symphysis." },
+            { q: "What is the interspinous diameter?", a: "Distance between the two ischial spines (~10 cm); the narrowest diameter of the pelvic outlet — clinically important in labor." },
+            { q: "Greater pelvis vs. lesser pelvis?", a: "Greater pelvis = above pelvic brim (part of abdominal cavity). Lesser pelvis = below pelvic brim; contains pelvic organs." },
+            { q: "What landmark separates greater from lesser pelvis?", a: "The pelvic brim (linea terminalis)." },
+            { q: "Bones forming the acetabulum?", a: "Ilium (superior 2/5), ischium (posterior-inferior 2/5), pubis (anterior-inferior 1/5)." },
+            { q: "What is the ischial spine's clinical significance?", a: "Landmark for pudendal nerve block; also marks level of ischial spine used in pudendal nerve anesthesia." },
+            { q: "What muscles form the pelvic diaphragm?", a: "Levator ani (pubococcygeus, iliococcygeus, puborectalis) + Coccygeus." },
+            { q: "Nerve supply of levator ani?", a: "Nerve to levator ani (S3, S4) from above + perineal branch of pudendal nerve from below." },
+            { q: "What is the perineal body (central tendon of perineum)?", a: "Fibromuscular node between anal canal and vagina (female) or bulb of penis (male); convergence point of multiple perineal muscles." },
+            { q: "What muscles attach to the perineal body?", a: "External anal sphincter, bulbospongiosus, superficial & deep transverse perineal, levator ani (pubococcygeus)." },
+            { q: "What is the arcus tendineus?", a: "White line on obturator fascia; attachment of levator ani." },
+            { q: "Obturator internus — nerve supply?", a: "Nerve to obturator internus (L5, S1, S2)." },
+            { q: "Piriformis — origin, insertion, nerve supply?", a: "Origin: anterior sacrum (S2–S4). Insertion: greater trochanter. Nerve: S1, S2 (direct branches)." },
+            { q: "What passes through the greater sciatic foramen above piriformis?", a: "Superior gluteal nerve and vessels." },
+            { q: "What passes through the greater sciatic foramen below piriformis?", a: "Inferior gluteal N&V, sciatic nerve, pudendal N&V, posterior femoral cutaneous nerve, nerve to obturator internus, nerve to quadratus femoris." },
+            { q: "What passes through the lesser sciatic foramen?", a: "Pudendal nerve and internal pudendal vessels (re-entering perineum), tendon of obturator internus." },
+            { q: "Branches of the internal iliac artery (anterior division)?", a: "Umbilical (→ superior vesical), obturator, inferior vesical (male), uterine (female), vaginal (female), middle rectal, inferior gluteal, internal pudendal." },
+            { q: "Branches of the internal iliac artery (posterior division)?", a: "Iliolumbar, lateral sacral, superior gluteal." },
+            { q: "What is the medial umbilical ligament?", a: "Obliterated umbilical artery; remnant of fetal circulation; forms fold on anterior abdominal wall." },
+            { q: "Uterine artery crosses which structure?", a: "Crosses ureter superiorly ('water under the bridge') — 2 cm lateral to cervix. Crucial surgical landmark." },
+            { q: "What is the clinical significance of uterine artery–ureter relationship?", a: "Ureter can be ligated accidentally during hysterectomy when clamping uterine artery." },
+            { q: "Ovarian artery — origin?", a: "Directly from abdominal aorta (L2); travels in suspensory ligament of ovary (infundibulopelvic ligament)." },
+            { q: "Venous drainage of rectum?", a: "Superior rectal vein → inferior mesenteric vein (portal). Middle & inferior rectal veins → internal iliac → systemic. Site of portosystemic anastomosis." },
+            { q: "What is the internal pudendal artery's course?", a: "Exits pelvis via greater sciatic foramen → wraps around ischial spine → enters perineum via lesser sciatic foramen → travels in pudendal canal (Alcock's canal)." },
+            { q: "What is the pudendal nerve (S2, S3, S4)?", a: "Main nerve of the perineum. Branches: inferior rectal, perineal, dorsal nerve of penis/clitoris." },
+            { q: "Where is the pudendal nerve blocked for anesthesia?", a: "At the ischial spine (transvaginally or transperineally)." },
+            { q: "Pelvic splanchnic nerves — origin and function?", a: "S2–S4 (parasympathetic); erection, bladder contraction, rectal motility. Also called nervi erigentes." },
+            { q: "Hypogastric nerve — function?", a: "Sympathetic (L1–L2 via superior hypogastric plexus); ejaculation, bladder neck closure, vasoconstriction." },
+            { q: "Superior hypogastric plexus — location?", a: "Anterior to L5/S1, below aortic bifurcation; receives sympathetic fibers from lumbar splanchnics." },
+            { q: "Inferior hypogastric plexus — contents?", a: "Mixed: sympathetic (hypogastric nerves) + parasympathetic (pelvic splanchnics); supplies pelvic viscera." },
+            { q: "What nerves are at risk in a radical hysterectomy?", a: "Pelvic splanchnic nerves (parasympathetic) → bladder atony; sympathetic fibers → voiding dysfunction." },
+            { q: "Femoral nerve — does it enter the pelvis?", a: "No. It runs in the groove between iliacus and psoas, exits under inguinal ligament lateral to femoral artery. Not a pelvic nerve." },
+            { q: "Obturator nerve — origin and course?", a: "L2–L4; descends on medial border of psoas → exits via obturator foramen → supplies medial thigh adductors." },
+            { q: "Lumbosacral trunk composition?", a: "L4 (partial) + L5; joins sacral plexus; lies on ala of sacrum." },
+            { q: "What is the rectouterine pouch (pouch of Douglas)?", a: "Peritoneal recess between uterus/vagina and rectum; lowest point of peritoneal cavity in females. Site of fluid collection." },
+            { q: "What is the vesicouterine pouch?", a: "Peritoneal recess between bladder and uterus; less deep than pouch of Douglas." },
+            { q: "What is the retropubic space (space of Retzius)?", a: "Extraperitoneal space between pubic symphysis and bladder; contains fat, venous plexus. Accessed in retropubic prostatectomy." },
+            { q: "Pararectal fossa — clinical relevance?", a: "Peritoneal recess lateral to rectum; can accumulate pus/blood; important in staging rectal cancer." },
+            { q: "Broad ligament — layers and contents?", a: "Double fold of peritoneum. Contains: uterine tube (mesosalpinx), ovary (mesovarium), round ligament (mesometrium), uterine vessels, ureter." },
+            { q: "Parts of the male urethra?", a: "Preprostatic (intramural), prostatic (longest – verumontanum here), membranous (shortest, sphincter), spongy/penile (longest overall)." },
+            { q: "Where is the external urethral sphincter located in males?", a: "Surrounds membranous urethra; skeletal muscle; voluntary control; innervated by pudendal nerve (S2–S4)." },
+            { q: "What is the verumontanum (seminal colliculus)?", a: "Elevation on posterior wall of prostatic urethra; site of ejaculatory duct openings and prostatic utricle." },
+            { q: "Ejaculatory duct — formation and opening?", a: "Formed by union of ductus deferens + seminal vesicle duct; opens on verumontanum in prostatic urethra." },
+            { q: "Zones of the prostate?", a: "Peripheral zone (70% – site of cancer), central zone (25% – ejaculatory ducts pass through), transition zone (5% – site of BPH)." },
+            { q: "Nerve supply of erection vs. ejaculation?", a: "Erection: parasympathetic (S2–S4, pelvic splanchnic = nervi erigentes). Ejaculation: sympathetic (L1–L2, hypogastric nerve)." },
+            { q: "Ductus deferens — arterial supply?", a: "Artery to ductus deferens (from inferior vesical or superior vesical artery)." },
+            { q: "Seminal vesicles — location and function?", a: "Posterior to bladder, superior to prostate; produce ~70% of seminal fluid (fructose, prostaglandins); do NOT store sperm." },
+            { q: "What is the prostatic venous plexus?", a: "Surrounds prostate; drains into internal iliac veins; communicates with vertebral venous plexus (Batson's plexus) → route of prostate cancer metastasis to vertebrae." },
+            { q: "Waldeyer's fascia?", a: "Fascia attaching rectum to sacrum posteriorly; must be divided during abdominoperineal resection." },
+            { q: "Parts of the uterus?", a: "Fundus, body, isthmus, cervix (supravaginal + vaginal portions)." },
+            { q: "Ligaments supporting the uterus?", a: "Cardinal (transverse cervical/Mackenrodt's) — main support. Uterosacral. Round ligament (maintains anteversion). Pubocervical." },
+            { q: "What is the cardinal (Mackenrodt's) ligament?", a: "Thickening of pelvic fascia; runs from cervix/upper vagina to lateral pelvic wall; MAIN support of uterus." },
+            { q: "Round ligament — course and function?", a: "Uterine horn → inguinal canal → labium majus. Maintains anteversion. Contains no major vessels." },
+            { q: "Blood supply of the ovary?", a: "Ovarian artery (from aorta) and ovarian branch of uterine artery; anastomose in mesovarium." },
+            { q: "What is the suspensory ligament of the ovary?", a: "Peritoneal fold (infundibulopelvic ligament); contains ovarian artery, vein, lymphatics, nerves." },
+            { q: "Ovarian ligament vs. suspensory ligament?", a: "Ovarian ligament = connects ovary to uterine horn (medially). Suspensory = connects ovary to lateral pelvic wall (contains ovarian vessels)." },
+            { q: "Layers of the uterine wall?", a: "Perimetrium (serosa), myometrium (smooth muscle – thickest), endometrium (mucosa)." },
+            { q: "Lymphatic drainage of the uterine body?", a: "Para-aortic lymph nodes (via ovarian vessels) + external iliac nodes." },
+            { q: "Lymphatic drainage of the cervix?", a: "Internal iliac, external iliac, obturator, sacral nodes." },
+            { q: "What is the vaginal fornix?", a: "Recess around cervix. Posterior fornix is deepest and adjacent to pouch of Douglas (clinical access point)." },
+            { q: "What is a culdocentesis?", a: "Needle aspiration through posterior vaginal fornix into pouch of Douglas; detects blood (ectopic pregnancy) or pus." },
+            { q: "Where does the sigmoid colon become the rectum?", a: "At the level of S3 vertebra (rectosigmoid junction)." },
+            { q: "What are the transverse folds of the rectum (Houston's valves)?", a: "Three semilunar folds; middle one is most constant and marks anterior peritoneal reflection (~7 cm from anus)." },
+            { q: "Arterial supply of the rectum?", a: "Superior rectal (inferior mesenteric), middle rectal (internal iliac), inferior rectal (internal pudendal)." },
+            { q: "Peritoneal covering of the rectum?", a: "Upper 1/3: covered anteriorly and laterally. Middle 1/3: anteriorly only. Lower 1/3: no peritoneal covering (extraperitoneal)." },
+            { q: "What is the dentate (pectinate) line?", a: "Junction of ectoderm and endoderm in anal canal; marks embryological boundary." },
+            { q: "Differences above vs. below dentate line?", a: "Above: columnar epithelium, visceral innervation (ANS), superior rectal artery, portal drainage, internal hemorrhoids, lymph to internal iliac. Below: stratified squamous epithelium, somatic innervation (pudendal), inferior rectal artery, systemic drainage, external hemorrhoids, lymph to superficial inguinal." },
+            { q: "What are anal columns (of Morgagni)?", a: "Longitudinal folds of mucosa in upper anal canal; separated by anal sinuses; anal valves connect them inferiorly." },
+            { q: "Internal vs. external anal sphincter?", a: "Internal: involuntary smooth muscle, ANS (sympathetic contracts, parasympathetic relaxes). External: voluntary skeletal muscle, pudendal nerve (S2–S4)." },
+            { q: "Puborectalis — function?", a: "Maintains anorectal angle (~90°); key for fecal continence; part of levator ani." },
+            { q: "What is Waldeyer's fascia (presacral)?", a: "Presacral fascia attaching to posterior rectum; important in TME (total mesorectal excision) for rectal cancer." },
+            { q: "What is the trigone of the bladder?", a: "Smooth triangular area between two ureteric orifices and internal urethral orifice; derived from mesonephric duct (mesoderm)." },
+            { q: "Where is the ureter most vulnerable to surgical injury?", a: "Three sites: where it crosses common iliac artery, where uterine artery crosses over it, where it enters bladder (ureterovesical junction)." },
+            { q: "What is the detrusor muscle?", a: "Three-layered smooth muscle of bladder wall; contracts during micturition; innervated by pelvic splanchnics (parasympathetic, S2–S4)." },
+            { q: "Vesical venous plexus — drainage?", a: "Drains into internal iliac veins; in males, communicates with prostatic plexus." },
+            { q: "Innervation of the bladder?", a: "Parasympathetic (S2–S4 via pelvic splanchnics): detrusor contraction. Sympathetic (T11–L2): relaxes detrusor, contracts internal sphincter. Somatic (pudendal, S2–S4): external sphincter." },
+            { q: "Boundaries of the perineum?", a: "Anteriorly: pubic symphysis. Posteriorly: coccyx. Laterally: ischiopubic rami, sacrotuberous ligaments, ischial tuberosities." },
+            { q: "What divides the perineum into two triangles?", a: "An imaginary transverse line connecting the two ischial tuberosities. Anterior = urogenital triangle. Posterior = anal triangle." },
+            { q: "Contents of the anal triangle?", a: "Anal canal, external anal sphincter, ischiorectal (ischioanal) fossa." },
+            { q: "What is the ischiorectal fossa?", a: "Fat-filled space lateral to anal canal; contains inferior rectal vessels and nerves; site of ischioanal abscess." },
+            { q: "What is the pudendal canal (Alcock's canal)?", a: "Fascial sheath on lateral wall of ischiorectal fossa; contains pudendal nerve, internal pudendal artery and vein." },
+            { q: "Layers of the scrotum (deep to superficial)?", a: "Skin → dartos muscle → external spermatic fascia → cremaster + cremasteric fascia → internal spermatic fascia → tunica vaginalis → tunica albuginea → testis." },
+            { q: "What is Colles' fascia?", a: "Superficial perineal fascia (membranous layer) in the perineum; continuous with Scarpa's fascia of abdomen and dartos of scrotum." },
+            { q: "What is the superficial perineal pouch?", a: "Space between Colles' fascia and perineal membrane; contains: erectile bodies (crura, bulb), perineal muscles (ischiocavernosus, bulbospongiosus, superficial transverse perineal), perineal nerves." },
+            { q: "What is the deep perineal pouch?", a: "Between perineal membrane and superior fascia of UGD; contains: external urethral sphincter, deep transverse perineal muscle, bulbourethral (Cowper's) glands, dorsal nerve/artery of penis." },
+            { q: "Cowper's (bulbourethral) glands — location and function?", a: "In deep perineal pouch; open into spongy urethra; produce pre-ejaculatory fluid (alkaline, lubricating)." },
+            { q: "Arterial supply of the penis?", a: "Internal pudendal artery → dorsal artery of penis, deep artery of penis (artery of corpus cavernosum), artery of bulb." },
+            { q: "What causes erection in males?", a: "Parasympathetic (S2–S4) → nitric oxide → relaxes smooth muscle in helicine arteries → engorgement of corpus cavernosum and spongiosum." },
+            { q: "Layers of the spermatic cord?", a: "External spermatic fascia (from external oblique), cremasteric fascia (from internal oblique + transversus abdominis), internal spermatic fascia (from transversalis fascia)." },
+            { q: "Contents of spermatic cord?", a: "Ductus deferens, testicular artery, pampiniform plexus, genital branch of genitofemoral nerve, cremasteric artery, artery to ductus deferens, lymphatics." },
+            { q: "Cremasteric reflex — arc?", a: "Afferent: femoral branch of genitofemoral nerve (L1, L2). Efferent: genital branch → cremaster. Lost in UMN lesions above L1." },
+            { q: "What is the gubernaculum?", a: "Guides testicular descent from abdomen into scrotum; becomes scrotal ligament in adults." },
+            { q: "Processus vaginalis — significance?", a: "Peritoneal outpouching accompanying testicular descent; normally obliterates; patent processus → indirect inguinal hernia or hydrocele." },
+            { q: "Parts of the vulva?", a: "Mons pubis, labia majora, labia minora, clitoris, vestibule (urethral + vaginal orifices), greater vestibular glands (Bartholin's), lesser vestibular glands." },
+            { q: "Homologue of the penis in females?", a: "Clitoris (glans, body, two crura — no corpus spongiosum, no urethra)." },
+            { q: "Homologue of the bulb of penis in females?", a: "Vestibular bulbs (bilateral)." },
+            { q: "Greater vestibular glands (Bartholin's) — homologue and clinical significance?", a: "Homologue of Cowper's glands in males; open at 4 and 8 o'clock at vestibule; can form Bartholin's cyst/abscess." },
+            { q: "What is the perineal membrane in females?", a: "Triangular fibrous sheet; pierced by urethra and vagina; less complete than in males." },
+            { q: "What is an episiotomy?", a: "Surgical incision of perineum during childbirth; mediolateral direction preferred to avoid external anal sphincter and perineal body." },
+            { q: "Nerve supply of the clitoris?", a: "Dorsal nerve of clitoris (branch of pudendal nerve, S2–S4)." },
+            { q: "Lymph drainage of the clitoris and labia majora?", a: "Superficial inguinal lymph nodes." },
+            { q: "What is a rectocele?", a: "Herniation of posterior vaginal wall (rectum bulges into vagina); due to weakened rectovaginal fascia/perineal body." },
+            { q: "What is a cystocele?", a: "Herniation of anterior vaginal wall (bladder bulges into vagina); caused by weakened pubocervical fascia." },
+            { q: "What causes urinary stress incontinence?", a: "Weakness of pelvic floor (levator ani) → bladder neck descends → external sphincter insufficient → leakage on increased intra-abdominal pressure." },
+            { q: "Mechanism of a 4th-degree perineal tear?", a: "Extends through perineal body, external anal sphincter, and into rectal mucosa." },
+            { q: "What is pelvic organ prolapse?", a: "Descent of pelvic organs (uterus, bladder, rectum) through vaginal canal; caused by levator ani/fascial failure." },
+            { q: "Where does prostate cancer most commonly metastasize and why?", a: "Vertebral column; via Batson's vertebral venous plexus (valveless communication between prostatic and vertebral plexuses)." },
+            { q: "What is a horseshoe abscess?", a: "Ischiorectal abscess crossing midline through deep post-anal space posterior to anal canal." },
+            { q: "Why does blood from an ectopic pregnancy collect in the pouch of Douglas?", a: "It is the most dependent part of the peritoneal cavity in females; culdocentesis can diagnose it." },
+            { q: "What is the clinical test for pudendal nerve damage?", a: "Loss of anal wink reflex (S2–S4); absent cutaneous sensation over perineum; impaired voluntary sphincter control." },
+            { q: "What spinal level is responsible for the micturition reflex?", a: "S2–S4 (parasympathetic); pontine micturition center (PMC) coordinates it; damage above PMC → loss of voluntary control." },
+            { q: "What structure gives rise to the trigone of the bladder?", a: "Mesonephric (Wolffian) duct; rest of bladder = urachus + allantois (endoderm)." },
+            { q: "What is the urorectal septum?", a: "Mesodermal partition dividing the cloaca into the urogenital sinus (anterior) and anal canal (posterior)." },
+            { q: "Homologue of labia majora in males?", a: "Scrotum (both derived from labioscrotal swellings)." },
+            { q: "Homologue of labia minora in males?", a: "Ventral penile shaft skin / frenulum." },
+            { q: "Müllerian (paramesonephric) duct derivatives in females?", a: "Uterine tubes, uterus, upper vagina (lower vagina from urogenital sinus)." },
+            { q: "What is the gubernaculum homologue in females?", a: "Round ligament of uterus + ovarian ligament." },
+            { q: "Indifferent gonad — when does sex differentiation begin?", a: "Week 7; SRY gene on Y chromosome triggers testicular differentiation → Sertoli cells produce AMH → Leydig cells produce testosterone." },
+            { q: "Prostatic utricle — embryological remnant?", a: "Remnant of paramesonephric (Müllerian) duct in males; homologue of vagina." },
+            { q: "Obstetric conjugate (true conjugate)?", a: "~11 cm (minimum for fetal head passage)." },
+            { q: "Diagonal conjugate?", a: "~12.5 cm." },
+            { q: "Interspinous diameter (narrowest outlet)?", a: "~10 cm." },
+            { q: "Normal anorectal angle maintained by puborectalis?", a: "~90° (80–110°)." },
+            { q: "Level of uterine artery crossing over ureter?", a: "2 cm lateral to cervix, at level of internal os." },
+            { q: "Level of aortic bifurcation?", a: "L4 vertebral level." },
+            { q: "Level of inferior mesenteric artery origin?", a: "L3." },
+            { q: "Distance of peritoneal reflection from anus (anterior)?", a: "~7–9 cm anteriorly (marked by middle rectal fold of Houston)." }
+          ]
+        },
+        {
+          topic: 'Abdomen',
+          icon: 'stethoscope',
           cards: [
             {
               q: "What are the boundaries of the abdomen?",
