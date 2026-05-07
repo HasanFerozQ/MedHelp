@@ -4494,15 +4494,35 @@
     const activeTopicName = document.getElementById('active-topic-name');
 
     function init() {
-      // Main Tab Listeners
-      document.querySelectorAll('#main-tabs .tab-item').forEach(tab => {
-        tab.onclick = () => {
-          document.querySelectorAll('#main-tabs .tab-item').forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          currentTab = tab.dataset.tab;
+      const mainTabs = document.getElementById('main-tabs');
+      const mobileDropdown = document.getElementById('mobile-tab-dropdown');
+
+      // Desktop Tab Listeners
+      if (mainTabs) {
+        mainTabs.querySelectorAll('.tab-item').forEach(tab => {
+          tab.onclick = () => {
+            mainTabs.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentTab = tab.dataset.tab;
+            if (mobileDropdown) mobileDropdown.value = currentTab;
+            renderTopics();
+          };
+        });
+      }
+
+      // Mobile Dropdown Listener
+      if (mobileDropdown) {
+        mobileDropdown.onchange = (e) => {
+          currentTab = e.target.value;
+          // Sync desktop tabs
+          if (mainTabs) {
+            mainTabs.querySelectorAll('.tab-item').forEach(t => {
+              t.classList.toggle('active', t.dataset.tab === currentTab);
+            });
+          }
           renderTopics();
         };
-      });
+      }
 
       // Card Flip
       cardElement.onclick = () => {
