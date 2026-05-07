@@ -900,6 +900,7 @@
     // --- QUIZ LOGIC ---
     async function startQuiz(topicId, title, isFreeDemo = false) {
       if (!isFreeDemo && !isPremium()) {
+        console.log('Access Denied: Premium Required');
         openPremiumModal();
         return;
       }
@@ -1283,10 +1284,11 @@
         
         const { data, error } = await query.single();
         if (data) {
-           let isFreeDemo = false;
+           const urlParams = new URLSearchParams(window.location.search);
+           let isFreeDemo = urlParams.get('free') === 'true';
            
-           if (data.year_id || data.usmle_step) {
-             let checkQuery = window.dbClient.from('topics').select('id').order('order', { ascending: true }).limit(1);
+           if (!isFreeDemo && (data.year_id || data.usmle_step)) {
+             let checkQuery = window.dbClient.from('topics').select('id').order('order', { ascending: true }).order('created_at', { ascending: true }).limit(1);
              if (data.year_id) {
                checkQuery = checkQuery.eq('year_id', data.year_id).is('usmle_step', null);
              } else {

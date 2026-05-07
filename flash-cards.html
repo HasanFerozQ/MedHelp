@@ -153,6 +153,79 @@
     </div>
   </nav>
 
+  <!-- Premium Access Modal -->
+  <div id="premium-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="grad-text">Unlock Premium Access</h2>
+        <button class="close-modal" onclick="closePremiumModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="premium-feature-list">
+          <div class="feature-item">
+            <div class="feature-icon">✨</div>
+            <div class="feature-text">
+              <strong>Full Curriculum Access</strong>
+              <p>Unlock all 4 years and USMLE Step preparation modules.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📚</div>
+            <div class="feature-text">
+              <strong>5,000+ Clinical MCQs</strong>
+              <p>High-yield questions with detailed explanations and reasoning.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-text">
+              <strong>Interactive Flash Cards</strong>
+              <p>Master concepts faster with our active recall system.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="pricing-box">
+          <div class="price-value">$24.99<small>/year</small></div>
+          <p>One-time annual payment. Cancel anytime.</p>
+          <a href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 15px;">Get Instant Access</a>
+        </div>
+
+        <div class="license-entry">
+          <p>Already have a license? Enter it below:</p>
+          <div style="display: flex; gap: 8px; margin-top: 8px;">
+            <input type="text" id="license-key" placeholder="Gumroad License Key" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-h);">
+            <button class="btn btn-secondary" onclick="verifyLicense()">Activate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+      z-index: 10000; display: none; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.visible { display: flex; }
+    .modal-content {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 24px; max-width: 500px; width: 100%;
+      padding: 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .close-modal { background: none; border: none; font-size: 28px; color: var(--text-muted); cursor: pointer; }
+    .feature-item { display: flex; gap: 16px; margin-bottom: 20px; text-align: left; }
+    .feature-icon { font-size: 24px; }
+    .feature-text strong { display: block; color: var(--text-h); font-size: 15px; }
+    .feature-text p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+    .pricing-box { background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 24px; margin: 24px 0; text-align: center; }
+    .price-value { font-size: 32px; font-weight: 900; color: var(--accent); }
+    .license-entry p { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  </style>
+
   <main class="flash-container">
     <div id="selection-view">
       <div style="text-align: center; margin-bottom: 40px;">
@@ -4426,7 +4499,7 @@
             { q: "Function of the Spliceosome?", a: "Removes introns and joins exons; mediated by <i>snRNPs</i> (\"<i>snurps</i>\")." },
             { q: "Antibodies against snRNPs (Anti-Smith) are highly specific for?", a: "<b>Systemic Lupus Erythematosus</b> (<b>SLE</b>)." },
             { q: "What is Alternative Splicing?", a: "Producing different proteins from the same gene by including/excluding different exons." },
-            { q: "Function of Aminoacyl-tRNA synthetase?", a: "Matches and attaches the correct amino acid to its tRNA (requires ATP)." },
+{ q: "Function of Aminoacyl-tRNA synthetase?", a: "Matches and attaches the correct amino acid to its tRNA (requires ATP)." },
             { q: "Inheritance of most enzyme deficiencies?", a: "Autosomal Recessive." },
             { q: "Inheritance of most structural protein deficiencies?", a: "Autosomal Dominant." },
             { q: "Genetic defect in Familial Hypercholesterolemia?", a: "Defective LDL receptor (Autosomal Dominant)." },
@@ -4435,21 +4508,30 @@
             { q: "Inheritance of Hunter Syndrome vs. Hurler Syndrome?", a: "<b>Hunter Syndrome</b> is X-linked Recessive; <b>Hurler Syndrome</b> is Autosomal Recessive." },
             { q: "Function of the p53 gene?", a: "Tumor suppressor; induces <i>p21</i> and stalls cell cycle at G1/S to repair <b>DNA</b> or induce apoptosis." },
             { q: "Genetic condition associated with germline p53 mutation?", a: "<b>Li-Fraumeni Syndrome</b> (multiple early-onset cancers)." },
-            { q: "Translocation associated with Chronic Myeloid Leukemia (CML)?", a: "t(9;22) \u2014 <i>The Philadelphia Chromosome</i> (<i>BCR-ABL</i> fusion)." },
-            { q: "Translocation associated with Burkitt Lymphoma?", a: "t(8;14) \u2014 <i>c-myc</i> activation." },
-            { q: "Translocation associated with Follicular Lymphoma?", a: "t(14;18) \u2014 <i>bcl-2</i> activation (inhibits apoptosis)." },
+            { q: "Translocation associated with Chronic Myeloid Leukemia (CML)?", a: "t(9;22) — <i>The Philadelphia Chromosome</i> (<i>BCR-ABL</i> fusion)." },
+            { q: "Translocation associated with Burkitt Lymphoma?", a: "t(8;14) — <i>c-myc</i> activation." },
+            { q: "Translocation associated with Follicular Lymphoma?", a: "t(14;18) — <i>bcl-2</i> activation (inhibits apoptosis)." },
             { q: "Genetic defect in Neurofibromatosis Type 1?", a: "<b>NF1</b> gene on Chromosome 17." },
             { q: "Genetic defect in Neurofibromatosis Type 2?", a: "<b>NF2</b> gene on Chromosome 22 (\"22 for Type 2\")." },
-            { q: "Function of the RB1 gene?", a: "Tumor suppressor that inhibits <i>E2F</i>; prevents G1 <b>\u2192</b> S transition." },
+            { q: "Function of the RB1 gene?", a: "Tumor suppressor that inhibits <i>E2F</i>; prevents G1 → S transition." },
             { q: "Definition of Uniparental Disomy?", a: "Offspring receives two copies of a chromosome from one parent and zero from the other." },
             { q: "What is Germline Mosaicism?", a: "Mutation occurs in a precursor egg or sperm cell, affecting some offspring but not the parent's somatic cells." },
             { q: "Definition of Variable Expressivity?", a: "Patients with the same genotype have varying degrees of phenotypic severity (e.g., <b>NF1</b>)." },
             { q: "Definition of Incomplete Penetrance?", a: "Not all individuals with a mutant genotype show the mutant phenotype." },
-            { q: "Formula for the \"Carrier Frequency\" of an AR disease if the prevalence is 1/10,000?", a: "q^2 = 1/10,000 <b>\u2192</b> q = 1/100. Carrier frequency (<i>2pq</i>) is approx 2 x 1/100 = 1/50." },
+            { q: "Formula for the \"Carrier Frequency\" of an AR disease if the prevalence is 1/10,000?", a: "q^2 = 1/10,000 → q = 1/100. Carrier frequency (<i>2pq</i>) is approx 2 x 1/100 = 1/50." },
             { q: "Karyotype of Jacob Syndrome?", a: "47, XYY (presents with tall stature, acne, and learning disability)." },
             { q: "Mechanism of G6PD Deficiency inheritance?", a: "X-linked Recessive." },
             { q: "Genetics of Wilson Disease?", a: "<i>ATP7B</i> mutation on Chromosome 13 (Autosomal Recessive)." },
-{ q: "Characteristics of Williams Syndrome?", a: "<i>elfin</i> facies, extreme friendliness with strangers, cardiovascular problems (supravalvular aortic stenosis)." },
+            { q: "Characteristics of Williams Syndrome?", a: "<i>elfin</i> facies, extreme friendliness with strangers, cardiovascular problems (supravalvular aortic stenosis)." },
+            { q: "Purpose of a \"Western Blot\"?", a: "To detect specific proteins in a tissue sample or extract." },
+            { q: "Definition of Polymorphism?", a: "A genetic variant that occurs in at least 1% of the population." },
+            { q: "Clinical significance of the CYP2D6 polymorphism?", a: "Affects the metabolism of many drugs (e.g., Codeine, antidepressants); patients can be \"poor\" or \"ultra-rapid\" metabolizers." },
+            { q: "Genetic test used to detect chromosomal imbalances (deletions/duplications) that are too small for a standard karyotype?", a: "Microarray (Comparative Genomic Hybridization)." },
+            { q: "Genetic defect in Wiskott-Aldrich Syndrome?", a: "Mutation in the <i>WASP</i> gene (X-linked Recessive); triad of Eczema, Thrombocytopenia, and Immunodeficiency." },
+            { q: "Genetic defect in Bruton Agammaglobulinemia?", a: "Defect in Bruton Tyrosine Kinase (<i>BTK</i> gene) on the X chromosome." },
+            { q: "Most common chromosomal cause of spontaneous abortion in the first trimester?", a: "Autosomal Trisomy (Trisomy 16 is the most common specifically, though rarely seen live-born)." },
+            { q: "Chromosomal location of the \"Alpha-globin\" genes?", a: "Chromosome 16." },
+            { q: "Chromosomal location of the \"Beta-globin\" genes?", a: "Chromosome 11." },
             { q: "Genetic cause of McCune-Albright Syndrome?", a: "G-protein signaling mutation (mosaicism); presents with cafe-au-lait spots, polyostotic fibrous dysplasia, and precocious puberty." },
             { q: "Function of Homeobox (Hox) genes?", a: "Code for transcription factors that guide the segmental organization of the embryo in a cranio-caudal direction." },
             { q: "Result of a mutation in a Hox gene?", a: "Appendages appearing in the wrong locations (<i>homeotic transformation</i>)." },
@@ -4461,12 +4543,6 @@
             { q: "Definition of Codominance?", a: "Both alleles are expressed in the phenotype of a heterozygote (e.g., Blood groups A, B, AB)." },
             { q: "Purpose of a \"Northern Blot\"?", a: "To detect specific sequences of RNA to study gene expression." },
             { q: "Purpose of a \"Western Blot\"?", a: "To detect specific proteins in a tissue sample or extract." },
-            { q: "Definition of Polymorphism?", a: "A genetic variant that occurs in at least 1% of the population." },
-            { q: "Clinical significance of the CYP2D6 polymorphism?", a: "Affects the metabolism of many drugs (e.g., Codeine, antidepressants); patients can be \"poor\" or \"ultra-rapid\" metabolizers." },
-            { q: "Genetic test used to detect chromosomal imbalances (deletions/duplications) that are too small for a standard karyotype?", a: "Microarray (Comparative Genomic Hybridization)." },
-            { q: "Genetic defect in Wiskott-Aldrich Syndrome?", a: "Mutation in the <i>WASP</i> gene (X-linked Recessive); triad of Eczema, Thrombocytopenia, and Immunodeficiency." },
-            { q: "Genetic defect in Bruton Agammaglobulinemia?", a: "Defect in Bruton Tyrosine Kinase (<i>BTK</i> gene) on the X chromosome." },
-            { q: "Most common chromosomal cause of spontaneous abortion in the first trimester?", a: "Autosomal Trisomy (Trisomy 16 is the most common specifically, though rarely seen live-born)." },
             { q: "Chromosomal location of the \"Alpha-globin\" genes?", a: "Chromosome 16." },
             { q: "Chromosomal location of the \"Beta-globin\" genes?", a: "Chromosome 11." },
             { q: "Definition of \"Loss of Heterozygosity\"?", a: "When a patient inherits one mutant tumor suppressor gene and the second, normal allele is later mutated or lost (<i>Knudson</i>\u2019s \"<i>Two-Hit</i>\" Hypothesis)." }
@@ -4561,16 +4637,18 @@
         topicGrid.classList.remove('hidden');
         
         topics.forEach((t, idx) => {
+          const isFreeDemo = (idx === 0);
           const card = document.createElement('div');
           card.className = 'topic-card-item';
           card.innerHTML = `
+            ${isFreeDemo ? '<div style="position:absolute; top:12px; right:12px; background:var(--accent); color:white; font-size:9px; font-weight:800; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px; z-index:1;">Free Demo</div>' : ''}
             <div class="topic-card-icon">
               <i data-lucide="${t.icon || 'book'}"></i>
             </div>
             <div class="topic-card-title">${t.topic}</div>
             <div class="topic-card-count">${t.cards.length} Cards</div>
           `;
-          card.onclick = () => startStudyMode(idx);
+          card.onclick = () => startStudyMode(idx, isFreeDemo);
           topicGrid.appendChild(card);
         });
         
@@ -4582,7 +4660,47 @@
       }
     }
 
-    function startStudyMode(index) {
+    function isPremium() {
+      return window.MediHelp && MediHelp.License && MediHelp.License.isActivated();
+    }
+
+    function openPremiumModal() {
+      const modal = document.getElementById('premium-modal');
+      if (modal) modal.classList.add('visible');
+    }
+
+    function closePremiumModal() {
+      const modal = document.getElementById('premium-modal');
+      if (modal) modal.classList.remove('visible');
+    }
+
+    async function verifyLicense() {
+      const key = document.getElementById('license-key').value.trim();
+      if (!key) return;
+      
+      const btn = document.querySelector('.license-entry .btn-secondary');
+      if (btn) {
+        btn.textContent = "Verifying...";
+        btn.disabled = true;
+      }
+
+      const success = await MediHelp.License.activate(key);
+      if (success) {
+        location.reload();
+      } else {
+        alert("Invalid license key. Please check and try again.");
+        if (btn) {
+          btn.textContent = "Activate";
+          btn.disabled = false;
+        }
+      }
+    }
+
+    function startStudyMode(index, isFreeDemo = false) {
+      if (!isFreeDemo && !isPremium()) {
+        openPremiumModal();
+        return;
+      }
       currentTopicIndex = index;
       currentCardIndex = 0;
       activeTopicName.textContent = FLASH_DATA[currentTab][index].topic;

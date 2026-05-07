@@ -72,9 +72,30 @@
     .btn-mock:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
     @media (max-width: 768px) {
-      .mock-exam-cta { flex-direction: column; text-align: center; gap: 24px; }
+      .mock-exam-cta { flex-direction: column; text-align: center; gap: 24px; padding: 30px 20px; }
       .usmle-hero { padding: 40px 0; }
+      
+      .step-nav { display: none !important; }
+      .mobile-step-select {
+        display: block !important;
+        width: 100%;
+        padding: 14px 18px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-accent);
+        border-radius: 12px;
+        color: var(--text-h);
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2322c55e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        background-size: 18px;
+        outline: none;
+      }
     }
+    .mobile-step-select { display: none; }
   </style>
 </head>
 <body>
@@ -102,6 +123,27 @@
       </div>
       <h1 class="hero-h1">USMLE <span style="color: #a855f7;">Board Prep</span></h1>
       <p class="hero-sub" style="margin-bottom: 0;">High-yield clinical content organized by board steps. Master the boards with precision.</p>
+
+      <!-- ⚠️ Mobile Advisory Banner -->
+      <div id="mobile-advisory" style="
+        display: flex;
+        margin: 28px auto 0;
+        max-width: 800px;
+        padding: 14px 20px;
+        background: linear-gradient(135deg, rgba(245,158,11,0.14), rgba(245,158,11,0.06));
+        border: 1px solid rgba(245,158,11,0.45);
+        border-radius: 12px;
+        color: #fcd34d;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        backdrop-filter: blur(8px);
+      ">
+        💻&nbsp; <strong>Advisory:</strong> Use on desktop for better examination experience
+      </div>
       
       <!-- Mock Exam CTA -->
       <div class="mock-exam-cta">
@@ -116,7 +158,11 @@
   </header>
 
   <main class="container" style="padding-bottom: 100px;">
-    <div class="step-nav" id="step-nav" style="display: none;">
+    <select class="mobile-step-select" id="mobile-step-dropdown">
+      <option value="1">USMLE Step 1</option>
+    </select>
+
+    <div class="step-nav" id="step-nav">
       <div class="step-tab active" data-step="1">USMLE Step 1</div>
     </div>
 
@@ -126,10 +172,65 @@
     </div>
   </main>
 
+  <!-- ══════════════════════════════════════════
+       FOOTER SEO TEXT
+  ══════════════════════════════════════════ -->
+  <section class="container" style="padding: 40px 28px 0; text-align: center; border-top: 1px solid var(--border);">
+    <p style="color: var(--text-muted); font-size: 13px; max-width: 900px; margin: 0 auto; line-height: 1.8;">
+      MediHelp provides free medical billing tools to help patients audit hospital bills, verify CPT codes, understand CARC and RARC claim denial codes, compare prescription drug prices, and find credentialed healthcare providers. Whether you received an unexpected medical bill, want to understand your Explanation of Benefits (EOB), check for duplicate charges, or get professional human negotiation support — MediHelp helps you take control of your healthcare expenses.
+    </p>
+  </section>
+
+  <!-- ── FOOTER ── -->
   <footer class="site-footer">
     <div class="container">
-      <div class="footer-bottom" style="text-align: center;">
-        <span>© 2026 MediHelp. Board Prep Excellence.</span>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Free tools and professional advocates helping patients fight medical billing errors and reduce hospital costs.</p>
+          <div style="margin-top:16px; display:flex; gap:12px; margin-bottom: 16px;">
+            <a href="https://www.linkedin.com/company/medihelplive/" target="_blank" rel="noopener" style="color:var(--text-muted); transition:0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'" title="Follow MediHelp on LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+          </div>
+          <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; background:rgba(34,197,94,0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(34,197,94,0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
+            <span style="font-size:11px; background:rgba(245,158,11,0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(245,158,11,0.2);">No Signup</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Free Tools</h4>
+          <ul>
+            <li><a href="/audit">Bill Audit Tool</a></li>
+            <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings Search</a></li>
+            <li><a href="/providers">Provider Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/pricing" style="color:var(--expert-amber); display: inline-flex; align-items: center; gap: 6px;">Human Bill Negotiation <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m12 3 1.91 5.82L21 12l-7.09 3.18L12 21l-1.91-5.82L3 12l7.09-3.18L12 3z"/></svg></a></li>
+            <li><a href="/blog">Patient Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
+        <span>© 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms & Disclaimer</a></span>
+        <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
       </div>
     </div>
   </footer>
@@ -168,6 +269,7 @@
         `)
         .eq('usmle_step', stepId)
         .neq('slug', 'usmle-1-mock-pool-hidden')
+        .order('order', { ascending: true })
         .order('created_at', { ascending: true });
 
       loader.classList.add('hidden');
@@ -212,7 +314,18 @@
     }
 
     // Initial load
-    if (window.dbClient) loadTopics(1);
+    if (window.dbClient) {
+      loadTopics(1);
+      
+      const dropdown = document.getElementById('mobile-step-dropdown');
+      if (dropdown) {
+        dropdown.onchange = (e) => {
+          currentStep = parseInt(e.target.value);
+          stepTabs.forEach(t => t.classList.toggle('active', parseInt(t.dataset.step) === currentStep));
+          loadTopics(currentStep);
+        };
+      }
+    }
     
     // Theme toggle
     if (window.MediHelp) MediHelp.initTheme();
