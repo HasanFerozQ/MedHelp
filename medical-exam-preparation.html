@@ -71,6 +71,18 @@
       .path-grid { grid-template-columns: 1fr; }
       .path-card { padding: 40px 24px; }
       .gateway-container { margin: 40px auto; }
+      /* Scrollable tab-nav on mobile */
+      .tab-nav {
+        justify-content: flex-start !important;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap !important;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+      }
+      .tab-nav::-webkit-scrollbar { display: none; }
+      /* Hide dev badge on mobile to prevent clipping */
+      .tag-dev { display: none; }
     }
     
     /* Decorative elements */
@@ -113,6 +125,33 @@
     <h1 class="hero-h1">Choose Your <span class="grad-text">Study Path</span></h1>
     <p class="hero-sub">Whether you are pursuing your university degree or preparing for international licensing boards, we provide the highest yield clinical content for your success.</p>
     
+    <!-- ⚠️ Mobile Advisory Banner -->
+    <div id="mobile-advisory" style="
+      display: none;
+      margin: -20px auto 28px;
+      max-width: 680px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, rgba(245,158,11,0.14), rgba(245,158,11,0.06));
+      border: 1px solid rgba(245,158,11,0.45);
+      border-radius: 12px;
+      color: #fcd34d;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(8px);
+    ">
+      💻&nbsp; <strong>Best on Desktop</strong> — For the complete exam experience, we recommend switching to a wider screen or desktop browser.
+    </div>
+    <script>
+      // Show advisory only on narrow screens
+      if (window.innerWidth < 1024) {
+        var el = document.getElementById('mobile-advisory');
+        if (el) el.style.display = 'flex';
+      }
+    </script>
+
     <!-- Navigation Tabs for the Page Content -->
     <div class="tab-nav" style="justify-content: center; margin-bottom: 40px; margin-top: 20px;">
       <div class="tab-item active" onclick="switchPrepTab('paths')">Study Paths</div>

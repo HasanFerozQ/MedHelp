@@ -723,7 +723,7 @@
 
       const { data, error } = await window.dbClient
         .from('topics')
-        .select('*, mcqs(id, type), case_studies(id, case_questions(id)), slug')
+        .select('*, mcqs(id), case_studies(id, case_questions(id))')
         .eq('year_id', yearId)
         .is('usmle_step', null)
         .order('order', { ascending: true });
@@ -762,7 +762,8 @@
 
           const allMcqs = topic.mcqs || [];
           const totalMcqs = allMcqs.length;
-          const totalCases = topic.case_studies.length;
+          const caseStudies = topic.case_studies || [];
+          const totalCases = caseStudies.length;
 
           const topicProg = userProgress[topic.id] || {};
           
@@ -770,13 +771,13 @@
           const progMcqCount = allMcqs.filter(m => topicProg[m.id]).length;
           
           let attemptedCases = 0;
-          topic.case_studies.forEach(cs => {
+          caseStudies.forEach(cs => {
             const qIds = cs.case_questions.map(q => q.id);
             const answered = qIds.filter(id => topicProg[id]).length;
             if (qIds.length > 0 && answered > 0) attemptedCases++;
           });
 
-          const totalQ = totalMcqs + topic.case_studies.flatMap(cs => cs.case_questions).length;
+          const totalQ = totalMcqs + caseStudies.flatMap(cs => cs.case_questions).length;
           const totalCorrect = Object.values(topicProg).filter(v => v.correct).length;
           const percent = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
 

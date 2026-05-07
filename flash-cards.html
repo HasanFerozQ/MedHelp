@@ -86,6 +86,21 @@
       color: var(--text-muted);
     }
     
+    /* ── MOBILE RESPONSIVENESS ── */
+    @media (max-width: 768px) {
+      .flash-container { padding: 0 14px; }
+      #main-tabs {
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap !important;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+      }
+      #main-tabs::-webkit-scrollbar { display: none; }
+      .topic-grid { grid-template-columns: 1fr; }
+    }
+
     /* Background Image Overlay */
     body::before {
       content: "";
