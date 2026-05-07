@@ -90,16 +90,30 @@
     @media (max-width: 768px) {
       .flash-container { padding: 0 14px; }
       #main-tabs {
-        justify-content: flex-start !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-        flex-wrap: nowrap !important;
-        padding-bottom: 4px;
-        scrollbar-width: none;
+        display: none !important;
       }
-      #main-tabs::-webkit-scrollbar { display: none; }
+      .mobile-tab-select {
+        display: block !important;
+        width: 100%;
+        padding: 14px 18px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-accent);
+        border-radius: 12px;
+        color: var(--text-h);
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2322c55e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        background-size: 18px;
+        outline: none;
+      }
       .topic-grid { grid-template-columns: 1fr; }
     }
+
+    .mobile-tab-select { display: none; }
 
     /* Background Image Overlay */
     body::before {
@@ -146,6 +160,27 @@
         <p class="hero-sub" style="margin-bottom: 20px;">Select a year and topic to start your active recall session.</p>
       </div>
 
+      <!-- ⚠️ Mobile Advisory Banner -->
+      <div id="mobile-advisory" style="
+        display: flex;
+        margin: -10px auto 30px;
+        max-width: 800px;
+        padding: 14px 20px;
+        background: linear-gradient(135deg, rgba(245,158,11,0.14), rgba(245,158,11,0.06));
+        border: 1px solid rgba(245,158,11,0.45);
+        border-radius: 12px;
+        color: #fcd34d;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        backdrop-filter: blur(8px);
+      ">
+        💻&nbsp; <strong>Advisory:</strong> Use on desktop for better examination experience
+      </div>
+
       <!-- Main Tabs -->
       <div class="tab-nav" id="main-tabs" style="justify-content: center;">
         <div class="tab-item active" data-tab="year1">1st Year</div>
@@ -156,6 +191,17 @@
         <div class="tab-item" data-tab="usmle2">USMLE 2</div>
         <div class="tab-item" data-tab="usmle3">USMLE 3</div>
       </div>
+
+      <!-- Mobile Dropdown -->
+      <select class="mobile-tab-select" id="mobile-tab-dropdown">
+        <option value="year1">1st Year</option>
+        <option value="year2">2nd Year</option>
+        <option value="year3">3rd Year</option>
+        <option value="year4">4th Year</option>
+        <option value="usmle1">USMLE 1</option>
+        <option value="usmle2">USMLE 2</option>
+        <option value="usmle3">USMLE 3</option>
+      </select>
 
       <!-- Topic Grid -->
       <div class="topic-grid" id="topic-grid">
@@ -4342,6 +4388,15 @@
             { q: "Physical findings in Turner Syndrome?", a: "Short stature, webbed neck, streak ovaries, coarctation of the aorta." },
             { q: "Mechanism of Cri-du-chat Syndrome?", a: "Congenital microdeletion of short arm of chromosome 5 (5p-)." },
             { q: "Common findings in DiGeorge Syndrome?", a: "<i>CATCH-22</i>: Cardiac defects, Abnormal facies, Thymic hypoplasia, Cleft palate, Hypocalcemia (22q11 deletion)." },
+            { q: "Karyotype of Jacob Syndrome?", a: "47, XYY (presents with tall stature, acne, and learning disability)." },
+            { q: "Mechanism of G6PD Deficiency inheritance?", a: "X-linked Recessive." },
+            { q: "Genetics of Wilson Disease?", a: "<i>ATP7B</i> mutation on Chromosome 13 (Autosomal Recessive)." },
+            { q: "Defect in von Hippel-Lindau (VHL) disease?", a: "VHL gene (tumor suppressor) on Chromosome 3." },
+            { q: "Name of the syndrome: 45, XO?", a: "<b>Turner Syndrome</b>." },
+            { q: "Name of the syndrome: 47, XXY?", a: "<b>Klinefelter Syndrome</b>." },
+            { q: "Most common cause of intellectual disability in males?", a: "<b>Fragile X Syndrome</b>." },
+            { q: "Genetics of Williams Syndrome?", a: "Microdeletion of long arm of chromosome 7 (includes elastin gene)." },
+            { q: "Characteristics of Williams Syndrome?", a: "<i>elfin</i> facies, extreme friendliness with strangers, cardiovascular problems (supravalvular aortic stenosis)." },
             { q: "Hardy-Weinberg Equation for allele frequency?", a: "p + q = 1" },
             { q: "Hardy-Weinberg Equation for phenotype/genotype frequency?", a: "p^2 + 2pq + q^2 = 1" },
             { q: "What does 2pq represent in Hardy-Weinberg?", a: "Heterozygote (carrier) frequency." },
@@ -4394,12 +4449,7 @@
             { q: "Karyotype of Jacob Syndrome?", a: "47, XYY (presents with tall stature, acne, and learning disability)." },
             { q: "Mechanism of G6PD Deficiency inheritance?", a: "X-linked Recessive." },
             { q: "Genetics of Wilson Disease?", a: "<i>ATP7B</i> mutation on Chromosome 13 (Autosomal Recessive)." },
-            { q: "Defect in von Hippel-Lindau (VHL) disease?", a: "VHL gene (tumor suppressor) on Chromosome 3." },
-            { q: "Name of the syndrome: 45, XO?", a: "<b>Turner Syndrome</b>." },
-            { q: "Name of the syndrome: 47, XXY?", a: "<b>Klinefelter Syndrome</b>." },
-            { q: "Most common cause of intellectual disability in males?", a: "<b>Fragile X Syndrome</b>." },
-            { q: "Genetics of Williams Syndrome?", a: "Microdeletion of long arm of chromosome 7 (includes elastin gene)." },
-            { q: "Characteristics of Williams Syndrome?", a: "<i>elfin</i> facies, extreme friendliness with strangers, cardiovascular problems (supravalvular aortic stenosis)." },
+{ q: "Characteristics of Williams Syndrome?", a: "<i>elfin</i> facies, extreme friendliness with strangers, cardiovascular problems (supravalvular aortic stenosis)." },
             { q: "Genetic cause of McCune-Albright Syndrome?", a: "G-protein signaling mutation (mosaicism); presents with cafe-au-lait spots, polyostotic fibrous dysplasia, and precocious puberty." },
             { q: "Function of Homeobox (Hox) genes?", a: "Code for transcription factors that guide the segmental organization of the embryo in a cranio-caudal direction." },
             { q: "Result of a mutation in a Hox gene?", a: "Appendages appearing in the wrong locations (<i>homeotic transformation</i>)." },
