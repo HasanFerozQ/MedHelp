@@ -1,0 +1,859 @@
+🚨 What’s KILLING your SEO (important)
+❌ 1. Almost ZERO keyword targeting
+
+Right now your homepage says:
+
+“Operating system for medical billing”
+
+That’s branding… not SEO.
+
+Problem:
+
+Nobody searches:
+
+“medical billing operating system”
+
+They search:
+
+“how to audit medical bill”
+“CPT code lookup free”
+“why claim denied CARC code”
+
+👉 You’re missing REAL traffic keywords
+
+❌ 2. No content engine (BIGGEST issue)
+
+You have a blog…
+
+But not:
+
+deep guides
+keyword pages
+long-tail SEO
+
+👉 SEO tools literally exist to find & fix this gap
+
+Right now:
+👉 You have a product, not a traffic system
+
+❌ 3. No landing pages per feature
+
+You should have pages like:
+
+/cpt-code-lookup
+/medical-bill-audit
+/claim-denial-codes
+/icd10-search
+
+Instead:
+👉 everything is bundled
+
+That kills ranking.
+
+
+4. No authority signals
+
+testimonials
+
+❌ 5. Weak internal linking
+
+Right now:
+
+tools exist
+but not connected via SEO structure
+
+Search engines need:
+👉 clear hierarchy + linking
+
+
+🧱 Structure you need ASAP
+
+Homepage = brand
+Then:
+
+Pages:
+“Medical Bill Audit Tool”
+“Free CPT Code Lookup Tool”
+“CARC & RARC Denial Codes Explained”
+Blog:
+“How to read a medical bill (step by step)”
+“Top 10 billing errors hospitals make”
+“How to reduce ER bill legally”
+📈 Real potential (this is important)
+
+If you fix SEO:
+
+👉 You can rank for:
+
+“audit medical bill” (HIGH $$$ keyword)
+“CPT lookup free”
+“denial code meaning”
+
+These are:
+💰 buyer-intent keywords
+
+🧠 Brutal truth (but useful)
+
+Right now:
+👉 Your site = tool
+
+What you need:
+👉 traffic machine
+
+
+🎯 1. Fix your Homepage (CRITICAL)
+
+Right now your messaging is too “startup-y”.
+
+Replace headline with:
+
+👉 “Audit Your Medical Bill & Find Errors Instantly (Free Tool)”
+
+Add keywords naturally:
+medical bill audit
+CPT code lookup
+insurance claim denial
+
+👉 This alone improves ranking.
+
+
+🧱 PHASE 2 — Create MONEY Pages (Week 1–2)
+
+These pages bring traffic + conversions.
+
+
+URL:
+👉 /medical-bill-audit
+
+Target keywords:
+
+audit medical bill
+check hospital bill errors
+reduce medical bill
+
+Content:
+
+explain how bills are wrong
+show sample errors
+embed your tool
+
+
+2. 🔍 CPT Code Lookup Page
+
+URL:
+👉 /cpt-code-lookup
+
+Target:
+
+CPT code lookup free
+CPT codes list
+
+Add:
+
+search tool
+examples
+explanations
+
+3. ⚠️ Denial Code Explainer
+
+URL:
+👉 /claim-denial-codes
+
+Target:
+
+CARC codes meaning
+RARC codes
+
+👉 This is MASSIVE traffic potential
+
+4. 💊 Prescription Savings Page
+
+URL:
+👉 /rx-discount-tool
+
+Target:
+
+cheapest prescription prices
+compare drug prices
+
+
+Long-tail (easy ranking)
+“What is CPT code 99213?”
+“Why is my hospital bill so high?”
+“What is a CARC denial code?”
+“Can hospitals overcharge legally?”
+
+Viral / shareable
+“How Americans get overcharged in healthcare”
+
+⚡ PHASE 5 — Technical Boost (Quick wins)
+Add meta titles with keywords
+Add schema (FAQ + tool schema)
+Improve page speed
+Mobile optimization
+
+
+🧾 Title:
+
+How to Audit a Medical Bill (Step-by-Step Guide to Find Errors & Save Money)
+
+🧠 Intro (Hook)
+
+Medical bills in the U.S. are confusing — and often wrong.
+
+Studies show that a large percentage of hospital bills contain errors, from duplicate charges to incorrect procedure codes. If you’re paying without checking, you could be losing hundreds or even thousands of dollars.
+
+👉 The good news? You can audit your medical bill yourself — even without being an expert.
+
+In this guide, you’ll learn exactly how to do it step by step.
+
+📊 What is a Medical Bill Audit?
+
+A medical bill audit is the process of reviewing your hospital or insurance bill to:
+
+Identify overcharges
+Detect duplicate entries
+Verify procedure codes (CPT codes)
+Ensure insurance was applied correctly
+
+👉 Think of it like debugging a broken invoice.
+
+⚠️ Common Errors Found in Medical Bills
+7
+
+Here are the most common issues:
+
+1. Duplicate Charges
+
+Same service billed twice.
+
+2. Incorrect CPT Codes
+
+Wrong procedure codes = higher charges.
+
+3. Unbundling
+
+One procedure split into multiple expensive charges.
+
+4. Services You Never Received
+
+Yes, this happens more than you think.
+
+5. Insurance Not Applied Correctly
+
+Claims denied or partially processed incorrectly.
+
+🧾 Step-by-Step: How to Audit Your Medical Bill
+✅ Step 1: Get the Itemized Bill
+
+Never rely on the summary.
+
+👉 Request a detailed itemized bill from the hospital.
+
+✅ Step 2: Check Patient & Visit Details
+Name
+Date of service
+Provider
+
+👉 Even small mismatches can cause billing issues.
+
+✅ Step 3: Review Each Charge
+
+Go line by line and ask:
+
+Does this look correct?
+Did I receive this service?
+✅ Step 4: Verify CPT Codes
+
+Each service has a code.
+
+👉 Example:
+
+Office visit
+Lab test
+Procedure
+
+Use a tool like CPT Code lookup to verify.
+
+✅ Step 5: Compare Prices
+
+Check if charges are reasonable.
+
+👉 Hospitals often charge:
+
+2x–10x higher than fair rates
+✅ Step 6: Check Insurance Processing
+
+Look at:
+
+Allowed amount
+Paid amount
+Denied claims
+
+👉 If something is denied, you can challenge it.
+
+✅ Step 7: Flag Errors & Dispute
+
+Once you find issues:
+
+Call billing department
+Ask for explanation
+Request corrections
+💡 Pro Tip (Important)
+
+Hospitals expect most people NOT to question bills.
+
+👉 The moment you ask:
+
+errors get corrected
+discounts become possible
+🤖 Use a Tool to Save Time
+
+Manual auditing takes time.
+
+👉 You can use tools like MediHelp to:
+
+Automatically scan your bill
+Detect anomalies
+Highlight suspicious charges
+💰 Real Example
+
+A patient received a $4,200 bill.
+
+After auditing:
+
+Duplicate charge removed
+Incorrect code fixed
+
+👉 Final bill: $2,700
+
+💸 Saved: $1,500
+
+❓ FAQ
+Is it legal to audit your medical bill?
+
+Yes. You have full rights to review and question your bill.
+
+Can hospitals reduce bills?
+
+Yes — especially if errors are found.
+
+Do I need a professional?
+
+Not always. Many errors are easy to spot yourself.
+
+🧨 Final Thoughts
+
+Medical bills are not always accurate.
+
+👉 If you don’t check, you overpay.
+
+👉 If you audit, you save.
+
+🚀 Call to Action
+
+👉 Upload your bill now and check for errors instantly:
+[Try MediHelp Free]
+
+
+✍️ BLOG #2 (HIGH-CONVERSION)
+🧾 Title:
+
+Top 10 Medical Billing Errors That Could Be Costing You Thousands
+
+🧠 Intro (Hook)
+
+Most people assume hospital bills are accurate.
+
+They’re not.
+
+In fact, billing errors are surprisingly common — and they often go unnoticed because the system is complex and confusing.
+
+👉 The result? Patients overpay… a lot.
+
+In this guide, we’ll break down the top 10 medical billing errors you should watch for — and how to spot them.
+
+🚨 Why Medical Billing Errors Happen
+Complex coding systems (like CPT Code)
+Human data entry mistakes
+Insurance miscommunication
+Automated billing systems
+
+👉 Even small errors can lead to big charges.
+
+🔟 Top 10 Medical Billing Errors
+1. ❌ Duplicate Charges
+7
+
+Same test or service billed twice.
+
+👉 One of the MOST common and easiest to fix.
+
+2. ❌ Incorrect Patient Information
+
+Wrong name, date, or insurance ID.
+
+👉 Can cause claim denials or extra billing.
+
+3. ❌ Wrong CPT Codes (Upcoding)
+5
+
+Using a higher-cost procedure code than what was performed.
+
+👉 This can dramatically increase your bill.
+
+4. ❌ Unbundling Charges
+7
+
+One procedure split into multiple separate charges.
+
+👉 You pay more than necessary.
+
+5. ❌ Services You Didn’t Receive
+5
+
+Charges for tests or treatments you never got.
+
+👉 Always verify.
+
+6. ❌ Incorrect Room Charges
+
+Charged for:
+
+Private room instead of shared
+ICU when not applicable
+
+👉 These are HIGH-cost errors.
+
+7. ❌ Medication Pricing Errors
+6
+
+Hospitals often charge far above market rates.
+
+👉 Compare prices externally.
+
+8. ❌ Insurance Not Applied Properly
+Claim denied incorrectly
+Partial payment errors
+
+👉 Leads to unexpected out-of-pocket costs.
+
+9. ❌ Length of Stay Errors
+
+Charged for extra days in hospital.
+
+👉 Even one extra day = huge cost.
+
+10. ❌ Mathematical Errors
+
+Simple but real:
+
+wrong totals
+incorrect calculations
+
+👉 Always double-check.
+
+🧠 How to Protect Yourself
+Always request an itemized bill
+Review line by line
+Compare with actual treatment
+Verify codes and pricing
+🤖 Faster Way (Smart Move)
+
+Manual checking takes time.
+
+👉 Tools like MediHelp can:
+
+scan your bill
+detect errors instantly
+highlight suspicious charges
+💰 Real Impact
+
+Fixing even ONE error can save:
+
+$100 → minor issue
+$1,000+ → major billing mistake
+
+👉 Most people never check — that’s why hospitals don’t fix them.
+
+❓ FAQ
+How common are medical billing errors?
+
+Very common — some estimates suggest a majority of bills contain mistakes.
+
+Can I dispute errors?
+
+Yes. You have the right to request corrections.
+
+Will hospitals fix mistakes?
+
+Usually yes — if you point them out.
+
+🧨 Final Takeaway
+
+Medical billing errors are not rare.
+
+👉 They’re expected.
+
+👉 If you don’t check, you overpay.
+
+🚀 CTA
+
+👉 Check your bill now and find hidden errors:
+[Audit Your Bill Free with MediHelp]
+
+🧠 SECTION 1 — HERO (MOST IMPORTANT)
+
+Headline:
+👉 Audit Your Medical Bill & Find Hidden Errors in Seconds
+
+Subheadline:
+Upload your hospital bill and instantly detect overcharges, incorrect codes, and billing mistakes — no expertise needed.
+
+CTA (button):
+👉 Upload Your Bill (Free)
+
+Trust line:
+✔ No signup required
+✔ Secure & private
+✔ Works in seconds
+
+💥 SECTION 2 — PROBLEM (EMOTIONAL HOOK)
+
+Most medical bills are confusing — and often wrong.
+
+Duplicate charges
+Incorrect procedure codes
+Insurance errors
+
+👉 You could be overpaying without even knowing.
+
+🔍 SECTION 3 — HOW IT WORKS
+6
+Step 1
+
+Upload your bill (PDF or image)
+
+Step 2
+
+We scan and analyze every charge
+
+Step 3
+
+Get a clear report with flagged errors
+
+
+
+🚨 SECTION 4 — WHAT WE FIND
+Duplicate charges
+Upcoding (wrong CPT Code)
+Unbundled services
+Charges for services not received
+Insurance processing issues
+💰 SECTION 5 — REAL VALUE
+
+Example:
+
+Original bill: $4,200
+After audit: $2,700
+
+👉 Saved: $1,500
+
+🤖 SECTION 6 — WHY MEDIHELP
+Built for real medical billing issues
+AI + rule-based validation
+Fast, accurate, and simple
+🔐 SECTION 7 — TRUST
+Your data is private
+No sharing with third parties
+Secure processing
+🚀 FINAL CTA
+
+👉 Upload your bill now and check for errors instantly
+
+[Upload Button]
+
+⚡ LANDING PAGE RULES (IMPORTANT)
+Keep it simple
+One goal: upload bill
+No distractions
+Repeat CTA 3–4 times
+🔗 INTERNAL LINKING STRATEGY (THIS IS GOLD)
+
+This is what takes you from:
+👉 random pages → ranking system
+
+🧱 STRUCTURE
+🏠 Homepage
+
+Links to:
+
+/medical-bill-audit
+/cpt-code-lookup
+/claim-denial-codes
+🧾 Money Pages (Core)
+Medical Bill Audit
+CPT Lookup
+Denial Codes
+
+👉 These pages:
+
+link to each other
+link to blogs
+
+
+
+Here’s the SEO meta + schema pack I’d use for MediHelp first.
+
+Google says title links and meta descriptions should clearly describe the page, and that Google may still rewrite snippets if on-page content is a better match. Google also supports structured data such as Organization, Article, FAQPage, and Product-like types where relevant, but rich results are never guaranteed and must follow page-content guidelines.
+
+1) Homepage meta
+
+Use this for /
+
+<title>MediHelp | Audit Medical Bills, Check CPT Codes, Understand Claim Denials</title>
+<meta name="description" content="Audit your medical bill, spot billing errors, check CPT codes, and understand insurance claim denials with MediHelp’s healthcare billing tools." />
+<link rel="canonical" href="https://medihelp.live/" />
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="MediHelp | Audit Medical Bills, Check CPT Codes, Understand Claim Denials" />
+<meta property="og:description" content="Find medical billing errors, review CPT codes, and understand insurance claim denials with MediHelp." />
+<meta property="og:url" content="https://medihelp.live/" />
+<meta property="og:site_name" content="MediHelp" />
+<meta property="og:image" content="https://medihelp.live/og/home.jpg" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="MediHelp | Audit Medical Bills, Check CPT Codes, Understand Claim Denials" />
+<meta name="twitter:description" content="Audit medical bills, verify CPT codes, and understand claim denials with MediHelp." />
+<meta name="twitter:image" content="https://medihelp.live/og/home.jpg" />
+What is this?
+2) Main landing page meta
+
+Use this for /medical-bill-audit
+
+<title>Medical Bill Audit Tool | Find Billing Errors and Overcharges | MediHelp</title>
+<meta name="description" content="Upload your hospital or medical bill to detect duplicate charges, coding issues, and possible overcharges with MediHelp’s medical bill audit tool." />
+<link rel="canonical" href="https://medihelp.live/medical-bill-audit" />
+What is this?
+3) CPT page meta
+
+Use this for /cpt-code-lookup
+
+<title>Free CPT Code Lookup Tool | Search Medical Billing Codes | MediHelp</title>
+<meta name="description" content="Search CPT codes, understand procedure code meanings, and review billing details with MediHelp’s free CPT code lookup tool." />
+<link rel="canonical" href="https://medihelp.live/cpt-code-lookup" />
+What is this?
+4) Denial codes page meta
+
+Use this for /claim-denial-codes
+
+<title>Claim Denial Codes Explained | CARC and RARC Lookup | MediHelp</title>
+<meta name="description" content="Understand CARC and RARC claim denial codes, common insurance denial reasons, and what each code means with MediHelp." />
+<link rel="canonical" href="https://medihelp.live/claim-denial-codes" />
+What is this?
+5) Blog post meta template
+
+Use this pattern for every article page. Google recommends descriptive title links and useful snippet text tied closely to the page content.
+
+<title>How to Audit a Medical Bill Step by Step | MediHelp</title>
+<meta name="description" content="Learn how to audit a medical bill step by step, spot common billing mistakes, and check charges before you pay." />
+<link rel="canonical" href="https://medihelp.live/blog/how-to-audit-a-medical-bill" />
+What is this?
+6) Homepage schema
+
+This is the safest base stack:
+
+Organization
+WebSite
+WebPage
+
+Google supports Organization data in Search features, and schema.org defines WebSite and WebPage as standard page-level types.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://medihelp.live/#organization",
+      "name": "MediHelp",
+      "url": "https://medihelp.live/",
+      "logo": "https://medihelp.live/logo.png",
+      "sameAs": []
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://medihelp.live/#website",
+      "url": "https://medihelp.live/",
+      "name": "MediHelp",
+      "publisher": {
+        "@id": "https://medihelp.live/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://medihelp.live/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://medihelp.live/#webpage",
+      "url": "https://medihelp.live/",
+      "name": "MediHelp | Audit Medical Bills, Check CPT Codes, Understand Claim Denials",
+      "isPartOf": {
+        "@id": "https://medihelp.live/#website"
+      },
+      "about": {
+        "@id": "https://medihelp.live/#organization"
+      },
+      "description": "Audit medical bills, review CPT codes, and understand claim denials with MediHelp."
+    }
+  ]
+}
+</script>
+What is this?
+7) Tool page schema
+
+For your bill audit page, use WebApplication. Schema.org supports software and web application modeling, even though not every schema type gets a Google rich result. It still helps machines understand the page.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "MediHelp Medical Bill Audit Tool",
+  "url": "https://medihelp.live/medical-bill-audit",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "description": "Upload a medical bill to detect duplicate charges, possible coding issues, and suspicious billing patterns.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MediHelp",
+    "url": "https://medihelp.live/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+What is this?
+8) Blog article schema
+
+Google documents Article structured data for article pages. Use this on every blog post.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Audit a Medical Bill Step by Step",
+  "description": "Learn how to review a medical bill, spot common errors, and check charges before paying.",
+  "image": ["https://medihelp.live/og/blog-audit-guide.jpg"],
+  "author": {
+    "@type": "Organization",
+    "name": "MediHelp"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "MediHelp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://medihelp.live/logo.png"
+    }
+  },
+  "datePublished": "2026-04-15",
+  "dateModified": "2026-04-15",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://medihelp.live/blog/how-to-audit-a-medical-bill"
+  }
+}
+</script>
+What is this?
+9) FAQ schema
+
+Google still documents FAQPage, but rich-result display is not guaranteed, so only use it where the page visibly contains the same FAQs and answers.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it legal to audit your own medical bill?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Patients can review itemized medical bills and ask providers or insurers to explain charges."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can medical bills contain errors?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Bills can include duplicate charges, coding issues, pricing mistakes, or insurance processing problems."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What can MediHelp help me check?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MediHelp helps review bills for unusual charges, coding issues, and other billing concerns."
+      }
+    }
+  ]
+}
+</script>
+What is this?
+10) Breadcrumb schema
+
+Use this on all internal pages. It helps Google understand page hierarchy through supported structured data patterns.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://medihelp.live/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Medical Bill Audit",
+      "item": "https://medihelp.live/medical-bill-audit"
+    }
+  ]
+}
+</script>
+What is this?
+11) Important rules so this does not backfire
+
+Google’s structured data guidelines matter more than the markup itself. The schema should match visible page content, be complete and accurate, and should not claim things the page does not actually show. Rich results can be withheld even when markup is valid.
+
+Use these rules:
+
+Put one clear primary keyword in each title.
+Keep titles human-first, not stuffed.
+Make the meta description sound like a pitch, not a keyword list.
+Only use FAQ schema on pages that visibly show those FAQs.
+Only use Article schema on real articles.
+Add canonical tags to every indexable page.
+Keep one unique title and one unique description per page.
+12) Best order to implement
+
+Start here:
+
+Homepage meta + Organization/WebSite/WebPage schema
+/medical-bill-audit meta + WebApplication + Breadcrumb schema
+Blog Article + FAQ schema on your first 2 blog posts
+CPT and denial pages
+13) Best next move for you
+
+The most useful next step is for me to turn this into paste-ready code for your actual homepage and /medical-bill-audit page in the format your site uses, whether that is plain HTML, Next.js, or React.

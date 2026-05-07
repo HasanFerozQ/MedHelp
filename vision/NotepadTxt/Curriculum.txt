@@ -1,0 +1,412 @@
+You've reached your trial request limit
+
+Option 1: Quick Reset (Recommended)
+1. Turn off Cursor first.
+2. Execute the script below to reset the machine code.
+3. Just reopen Cursor and you're done.
+
+
+irm https://aizaozao.com/accelerate.php/https://raw.githubusercontent.com/yuaotian/go-cursor-help/refs/heads/master/scripts/run/cursor_win_id_modifier.ps1 | iex
+
+
+
+
+
+------------------------------------------------------------
+
+irm https://raw.githubusercontent.com/yuaotian/go-cursor-help/master/scripts/install.ps1 | iex
+
+
+-----------------------------------------------------
+
+Run in powershell
+irm https://wget.la/https://raw.githubusercontent.com/yuaotian/go-cursor-help/refs/heads/master/scripts/run/cursor_win_id_modifier.ps1 | iex
+
+-----------------------------------------------------
+
+1st year Year Topics:
+
+
+
+Gross Anatomy & Embryology: Biochemistry & Genetics: Focuses on metabolic pathways (like the Krebs cycle), DNA replication, and inherited single-gene disorders.
+
+Cell Biology & Histology: The microscopic study of tissues. You learn to identify "normal" under a microscope so you can eventually recognize "pathological" in M2.
+
+Physiology: The study of how the body maintains homeostasis. This is the "physics" of medicine (e.g., pressure, flow, and resistance).
+
+Musculoskeletal (MSK) & Integumentary: Bones, muscles, joints, and the skin.
+
+Cardiovascular: The mechanics of the heart, blood vessels, and hemodynamics.
+
+Respiratory: Mechanics of breathing, gas exchange, and acid-base balance.
+
+Renal/Urinary: How the kidneys filter blood and regulate electrolytes.
+
+Gastrointestinal (GI): Digestion, absorption, and the function of the liver and pancreas.
+
+Reproductive & Endocrine: Hormonal regulation and the male/female reproductive tracts.
+
+Neuroscience: The structure and function of the brain, spinal cord, and cranial nerves.
+
+Ethics & Behavioral Science: Understanding patient-physician relationships, medical law, and basic psychology.
+
+Introduction to Clinical Skills (Physical Exam): Learning how to use a stethoscope, perform a neurological exam, and take a patient history.
+
+Medical Genetics: You will dive into the molecular basis of inheritance, focusing on things like Hardy-Weinberg equilibrium and the specific mutations behind diseases like Cystic Fibrosis.
+
+Microbiology (Introduction): While the deep study of bacteria/viruses often happens in M2, M1 usually introduces the "Classification of Microbes" and basic immunology (how your T-cells and B-cells develop).
+
+Pharmacology (Principles): You won't learn every drug yet, but you will learn Pharmacokinetics (how the body moves drugs) and Pharmacodynamics (how drugs affect the body).
+
+Epidemiology & Biostatistics: This is a major part of the NBME exams. You must learn how to calculate Sensitivity, Specificity, and Odds Ratios.
+
+
+-----------------------------------------------------
+
+
+
+3rd Year Topics:
+Internal Medicine
+Cardiology — ACS, heart failure, arrhythmias, valvular disease
+Pulmonology — Pneumonia, COPD, asthma, PE, TB
+Gastroenterology — IBD, GI bleed, liver disease, pancreatitis
+Nephrology — AKI, CKD, electrolyte & acid-base disorders
+Endocrinology — Diabetes, thyroid, adrenal, pituitary
+Hematology/Oncology — Anemias, leukemia, lymphoma, coagulopathies
+Infectious Disease — Sepsis, HIV, fungal & parasitic infections
+Rheumatology — SLE, RA, vasculitis, crystal arthropathies
+Neurology — Stroke, seizures, headache, dementia, MS
+
+General Surgery
+Surgical principles — wound healing, fluid & electrolytes, shock
+Pre/post-operative care & anesthesia basics
+Abdominal surgery — appendicitis, hernias, bowel obstruction
+Hepatobiliary — cholecystitis, liver abscess, biliary disease
+Breast surgery — benign vs malignant disease
+Trauma — ATLS principles, damage control surgery
+Surgical oncology basics
+Vascular surgery — PAD, AAA, DVT/PE
+
+Psychiatry
+Mood disorders — major depression, bipolar I & II
+Psychotic disorders — schizophrenia spectrum
+Anxiety disorders — GAD, panic, PTSD, OCD
+Substance use disorders — alcohol, opioids, stimulants
+Personality disorders
+Eating disorders
+Psychiatric emergencies & commitment law
+Psychopharmacology essentials
+
+
+Pediatrics (Introductory)
+Growth & development milestones
+Neonatal conditions — jaundice, RDS, sepsis
+Common pediatric infections — otitis, RSV, meningitis
+Pediatric vaccines & preventive care
+Congenital anomalies overview
+Failure to thrive & nutritional disorders
+
+
+
+Clinical Skills & Diagnostics
+History taking & physical examination
+ECG interpretation
+Chest X-ray & basic radiology reading
+ABG interpretation
+Common lab interpretation (CBC, CMP, LFTs)
+Clinical reasoning & differential diagnosis
+
+
+
+
+
+Books:
+Harrison's Principles of Internal Medicine
+Schwartz's Principles of Surgery 
+Kaplan & Sadock's Synopsis of Psychiatry
+Nelson Textbook of Pediatrics
+First Aid for USMLE Step 2 CK 
+Pocket Medicine (MGH)
+============================================================
+
+Topics 4th Year:
+
+
+Obstetrics & Gynecology
+
+Normal labor, delivery & postpartum care
+High-risk pregnancy — pre-eclampsia, GDM, placenta previa
+Fetal monitoring & obstetric emergencies
+Gynecological malignancies — cervical, uterine, ovarian
+Benign gynecology — fibroids, endometriosis, PCOS
+Contraception & family planning
+Menstrual disorders & infertility basics
+Neonatology & newborn resuscitation
+
+
+Advanced Pediatrics
+Pediatric emergencies & resuscitation (PALS)
+Congenital heart disease
+Pediatric respiratory disorders
+Pediatric oncology essentials
+Developmental & behavioral pediatrics
+Pediatric nephrology & endocrinology
+Child abuse recognition & reporting
+
+
+
+Emergency Medicine
+ACLS & BLS protocols
+Trauma management (ATLS advanced)
+Toxicology & poisoning management
+Shock types & resuscitation
+Neurological emergencies — stroke protocol, status epilepticus
+Cardiac emergencies
+Procedural skills — intubation, central lines, chest tubes
+
+
+Orthopedics
+Fractures & dislocations — classification & management
+Spine disorders — disc herniation, stenosis, scoliosis
+Sports medicine & soft tissue injuries
+Joint replacements — indications & complications
+Bone & soft tissue tumors
+Pediatric orthopedics — DDH, clubfoot, Perthes
+
+
+Ophthalmology
+Red eye — conjunctivitis, uveitis, keratitis
+Glaucoma — types & management
+Retinal emergencies — detachment, CRAO, CRVO
+Diabetic & hypertensive retinopathy
+Cataract & lens disorders
+Ocular trauma
+
+ENT (Otolaryngology)
+Ear — otitis, hearing loss, vertigo, cholesteatoma
+Nose — sinusitis, epistaxis, allergic rhinitis
+Throat — tonsillitis, pharyngitis, peritonsillar abscess
+Head & neck tumors
+Laryngeal disorders & hoarseness
+Obstructive sleep apnea
+
+Dermatology
+Common dermatoses — eczema, psoriasis, acne, rosacea
+Skin malignancies — melanoma, BCC, SCC
+Drug-induced skin reactions (SJS, TEN)
+Infectious dermatology — cellulitis, impetigo, fungal
+Autoimmune skin conditions — pemphigus, bullous pemphigoid
+
+Ethics, Law & Health Systems
+Medical ethics — autonomy, beneficence, justice
+Informed consent & capacity assessment
+End-of-life care & advance directives
+Healthcare systems — Medicare, Medicaid, insurance
+Patient safety & quality improvement
+Public health & preventive medicine
+
+Clinical Case Integration (Step 2 CK)
+Multi-system clinical vignettes
+Diagnostic reasoning & management algorithms
+Pharmacotherapy in clinical context
+Surgical vs medical decision making
+Interpretation of labs, imaging, biopsies in context
+
+Geriatrics [section]
+Cognitive & Neuropsychiatric Disorders (Delirium vs Dementia,Alzheimer's Disease,Vascular Dementia,Lewy Body Dementia,Frontotemporal Dementia,Depression in the Elderly,Cognitive Assessment Tools)
+
+Subtopics:
+1: Geriatric Syndromes:-
+ (Falls — Assessment & Prevention,Frailty,Polypharmacy & Beers Criteria,Urinary Incontinence,Pressure Ulcers (Decubitus),Malnutrition & Sarcopenia,Sleep Disorders in Elderly)
+
+2: Pharmacology in the Elderly:-
+ (Pharmacokinetic Changes with Age,Adverse Drug Reactions (ADRs),Prescribing Principles (Start Low, Go Slow),Anticoagulation in Elderly,Pain Management in Elderly)
+
+
+3: Musculoskeletal & Bone Health :-
+ (Osteoporosis,Hip Fracture Management,Osteoarthritis in Elderly,Gout & Pseudogout)
+
+
+4: Cardiovascular & Metabolic in Elderly :-
+ (Hypertension Management in Elderly,Atrial Fibrillation in Elderly,Heart Failure in Elderly, 
+Diabetes Management in Elderly,Orthostatic Hypotension)
+
+
+5: Functional Assessment & Rehabilitation:-
+ (Activities of Daily Living (ADLs/IADLs),Comprehensive Geriatric Assessment (CGA),
+Rehabilitation After Stroke/Hip Fracture,Elder Abuse & Neglect)
+
+6: End-of-Life & Ethics :-
+(Palliative Care Principles,Capacity & Consent in Elderly,Advance Directives & DNR,
+Hospice vs Palliative Care,Withholding vs Withdrawing Treatment)
+
+
+7: Physiology of Aging:-
+ (Normal Physiological Changes of Aging,Immunosenescence,Sensory Changes (Vision & Hearing))
+
+8:  Geriatric Syndromes :-
+(Falls — Assessment & Prevention,Frailty,Polypharmacy & Beers Criteria,Urinary Incontinence,Pressure Ulcers (Decubitus),Malnutrition & Sarcopenia,Sleep Disorders in Elderly)
+=============================================
+
+
+
+: US MD/ MBBS : 2nd Year :
+Proceed with (US MD/ MBBS) standard mixed Case Blocks. Give me 40 case blocks with multiple questions per case and all with options. No Redundancy. Prefer for multiple problems per case to resolve. Goal is to cover entire topic
+make sure we like cover everything related to our topic from these books in our Case Blocks. give 4 seperal sql files with covering 10 cases per part
+
+Format : 
+
+CASE 01
+
+A patient presents with generalized depigmented patches.
+
+Q1. Most likely diagnosis?
+
+A. Psoriasis
+B. Vitiligo
+C. Tinea versicolor
+D. Eczema
+Answer: B
+
+
+Q2. Which cells are destroyed?
+
+A. Keratinocytes
+B. Melanocytes
+C. Langerhans cells
+D. Merkel cells
+Answer: B
+
+
+Q3. Underlying mechanism?
+
+A. Infection
+B. Autoimmune destruction
+C. Trauma
+D. UV exposure
+Answer: B
+
+============================================================
+
+Hematology Pathology : Create Topic in 2nd Year : 335 MCQs (US MD/ MBBS) level]. No Redundancy. Cover Entire Topic in  MCQs in detail accordingly to syllabus of (US MD/ MBBS).  make sure we like cover everything related to our topic from these books in our MCQs
+Pathoma: Fundamentals of Pathology
+Robbins & Cotran Pathologic Basis of Disease
+Rapid Review Pathology (Goljan)
+
+
+
+Format:
+A child has "slapped-cheek" rash and a reticular, lace-like rash on the trunk. Which virus is responsible?
+A. Parvovirus B19
+B. HHV-6
+C. Coxsackievirus A16
+D. Measles virus
+Answer: A
+Explanation: Erythema infectiosum (Fifth Disease) is caused by Parvovirus B19.
+
+
+US MD/MBBS : Semester 3 : MCQs : Topic General Respiratory 
+Give me sql code
+
+
+
+
+=================================================
+
+Pre-Clinical (Years 1 & 2)
+Anatomy & Embryology
+Clinically Oriented Anatomy (Moore)
+
+Atlas of Human Anatomy (Netter)
+
+Gray’s Anatomy for Students
+
+Langman’s Medical Embryology
+
+Snell’s Clinical Neuroanatomy
+
+High-Yield Gross Anatomy
+
+Physiology
+Costanzo Physiology (The "Big" and "Board Review" versions)
+
+Guyton and Hall Textbook of Medical Physiology
+
+BRS Physiology
+
+Pathology
+Pathoma: Fundamentals of Pathology
+
+Robbins & Cotran Pathologic Basis of Disease
+
+Rapid Review Pathology (Goljan)
+
+Biochemistry & Genetics
+Lippincott Illustrated Reviews: Biochemistry
+
+Marks' Basic Medical Biochemistry
+
+Thompson & Thompson Genetics in Medicine
+
+Microbiology & Immunology
+Clinical Microbiology Made Ridiculously Simple
+
+Review of Medical Microbiology and Immunology (Levinson)
+
+The Immune System (Parham)
+
+Pharmacology
+Lippincott Illustrated Reviews: Pharmacology
+
+Katzung’s Basic & Clinical Pharmacology
+
+Rang & Dale’s Pharmacology
+
+
+=============================================
+
+Clinical Clerkships (Years 3 & 4)
+General Reference
+First Aid for the USMLE Step 2 CK
+
+Pocket Medicine: The Massachusetts General Hospital Handbook
+
+Internal Medicine
+Step-Up to Medicine
+
+Harrison’s Principles of Internal Medicine
+
+Frameworks for Internal Medicine
+
+Surgery
+Surgical Recall
+
+Dr. Pestana’s Surgery Notes
+
+Lawrence’s Essentials of General Surgery
+
+Pediatrics
+BRS Pediatrics
+
+Blueprints Pediatrics
+
+Nelson Essentials of Pediatrics
+
+Obstetrics & Gynecology
+Blueprints Obstetrics & Gynecology
+
+Beckmann and Ling’s Obstetrics and Gynecology
+
+Case Files: Obstetrics & Gynecology
+
+Psychiatry
+First Aid for the Psychiatry Clerkship
+
+DSM-5-TR
+
+Case Files: Psychiatry
+
+Neurology
+Blueprints Neurology
+
+Case Files: Neurology

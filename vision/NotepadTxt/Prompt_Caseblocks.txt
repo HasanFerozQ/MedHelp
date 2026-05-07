@@ -1,0 +1,98 @@
+Similarily for
+4th Year US MD/ MBBS
+Section: Ethics, Law & Health Systems
+Topic: 
+Informed consent & capacity assessment
+
+Books Source for Ethics, Law & Health Systems along with your own intelligent generation for caseblocks:
+
+ Clinical Ethics: A Practical Approach to Ethical Decisions in Clinical Medicine — Jonsen, Siegler & Winslade (8th ed., McGraw-Hill)
+
+"Medical Ethics and Professionalism" — NBME/USMLE Content Outline (free, primary source — always start here)
+
+First Aid for the USMLE Step 1 / Step 2 CK — Sections on Ethics & Biostatistics (written specifically to the NBME blueprint)
+
+"Patient-Centered Medicine" and "The Four Principles" framework — Beauchamp & Childress, "Principles of Biomedical Ethics" (Oxford University Press) — the foundational academic text
+Kaplan USMLE Ethics (board-focused, concise, highly yield)
+OnlineMedEd / Amboss Ethics module (for Step 2/3 application)
+
+====================================================================================
+
+
+For 4th Year US MD/ MBBS standard mixed Case Blocks. Give me 50 case blocks with multiple questions per case and all with options. No Redundancy. Prefer for multiple problems per case to resolve. Goal is to cover entire topic
+Section: Ethics, Law & Health Systems
+
+Topic: 
+Informed consent & capacity assessment
+
+Books Source for Ethics, Law & Health Systems along with your own intelligent generation for caseblocks:
+
+ Clinical Ethics: A Practical Approach to Ethical Decisions in Clinical Medicine — Jonsen, Siegler & Winslade (8th ed., McGraw-Hill)
+
+"Medical Ethics and Professionalism" — NBME/USMLE Content Outline (free, primary source — always start here)
+
+First Aid for the USMLE Step 1 / Step 2 CK — Sections on Ethics & Biostatistics (written specifically to the NBME blueprint)
+
+"Patient-Centered Medicine" and "The Four Principles" framework — Beauchamp & Childress, "Principles of Biomedical Ethics" (Oxford University Press) — the foundational academic text
+Kaplan USMLE Ethics (board-focused, concise, highly yield)
+OnlineMedEd / Amboss Ethics module (for Step 2/3 application)
+
+
+Example:
+
+
+The Question
+A 64-year-old male is brought to the Emergency Department by his wife due to "confusion and acting strange" for the past 24 hours. The patient has a medical history of Type 2 Diabetes, Hypertension, and Stage 3 Chronic Kidney Disease. He was recently treated with a course of trimethoprim-sulfamethoxazole for a urinary tract infection.
+
+
+Physical Examination:
+
+Vitals: Temp: 100.2°F | HR: 104 bpm | RR: 18/min | BP: 108/62 mmHg.
+
+Mental Status: Disoriented to time and place; follows simple commands but is slow to respond.
+
+Physical: Mucous membranes are dry. Skin turgor is poor. No focal neurological deficits are noted. Cardiac exam shows a soft systolic murmur. Lungs are clear to auscultation.
+
+Laboratory Results:
+
+Serum Sodium: 158 mEq/L (Normal: 135–145)
+
+Serum Potassium: 4.1 mEq/L (Normal: 3.5–5.0)
+
+Serum Glucose: 142 mg/dL (Normal: 70–100)
+
+BUN / Creatinine: 52 mg/dL / 2.1 mg/dL (Baseline Cr: 1.4)
+
+Urine Osmolality: 550 mOsm/kg
+
+
+
+Question 1: Diagnosis & Initial Management
+Which of the following is the most appropriate next step in the management of this patient’s hypernatremia?
+
+A. Administration of IV 0.45% (half-normal) saline.
+B. Administration of IV 0.9% (normal) saline.
+C. Administration of IV 3% (hypertonic) saline.
+D. Rapid correction with 5% Dextrose in water (D5W).
+E. Desmopressin (dDAVP) administration.
+
+Q1 Answer: B (Administration of IV 0.9% normal saline)
+Reasoning: This is a classic Step 2 CK "trap." While the patient is hypernatremic (which usually requires free water or hypotonic fluids), the patient is hemodynamically unstable (tachycardic, borderline hypotensive, dry membranes).
+
+
+
+Question 2: Pathophysiology (Follow-up)
+The patient’s disorientation and elevated sodium levels are most likely the result of which mechanism?
+
+A. Central Diabetes Insipidus.
+B. Osmotic diuresis from hyperglycemia.
+C. Impaired thirst mechanism and inadequate free water intake.
+D. Syndrome of Inappropriate Antidiuretic Hormone (SIADH).
+E. Nephrogenic Diabetes Insipidus.
+
+
+Q2 Answer: C (Impaired thirst/Inadequate free water intake)Reasoning: The patient is elderly and has been ill (UTI). In the setting of high serum sodium ($>145$) and appropriately concentrated urine ($>300\text{--}600 \text{ mOsm/kg}$), the kidneys are working correctly to conserve water. The problem is a lack of intake.
+
+
+Give like Vignettes or physical exam or lab data and details of patients too to make them interesting. 
+Make sure you provide correct explanation as well as explanation for answers that are not correct as example question. No redundancy

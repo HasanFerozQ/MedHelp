@@ -1,0 +1,176 @@
+Index Now:
+
+API: 60d19d6ca538448995707da3c61b8e6f
+
+
+One-Command Update: You can now trigger a site-wide re-index anytime by running:
+npm run submit-indexnow
+
+=====================================================================================
+Pre-Clinical (Years 1 & 2)
+Anatomy & Embryology
+Clinically Oriented Anatomy (Moore)
+
+Atlas of Human Anatomy (Netter)
+
+Gray’s Anatomy for Students
+
+Langman’s Medical Embryology
+
+Snell’s Clinical Neuroanatomy
+
+High-Yield Gross Anatomy
+
+Physiology
+Costanzo Physiology (The "Big" and "Board Review" versions)
+
+Guyton and Hall Textbook of Medical Physiology
+
+BRS Physiology
+
+Pathology
+Pathoma: Fundamentals of Pathology
+
+Robbins & Cotran Pathologic Basis of Disease
+
+Rapid Review Pathology (Goljan)
+
+Biochemistry & Genetics
+Lippincott Illustrated Reviews: Biochemistry
+
+Marks' Basic Medical Biochemistry
+
+Thompson & Thompson Genetics in Medicine
+
+Microbiology & Immunology
+Clinical Microbiology Made Ridiculously Simple
+
+Review of Medical Microbiology and Immunology (Levinson)
+
+The Immune System (Parham)
+
+Pharmacology
+Lippincott Illustrated Reviews: Pharmacology
+
+Katzung’s Basic & Clinical Pharmacology
+
+Rang & Dale’s Pharmacology
+
+
+=============================================
+
+Clinical Clerkships (Years 3 & 4)
+General Reference
+First Aid for the USMLE Step 2 CK
+
+Pocket Medicine: The Massachusetts General Hospital Handbook
+
+Internal Medicine
+Step-Up to Medicine
+
+Harrison’s Principles of Internal Medicine
+
+Frameworks for Internal Medicine
+
+Surgery
+Surgical Recall
+
+Dr. Pestana’s Surgery Notes
+
+Lawrence’s Essentials of General Surgery
+
+Pediatrics
+BRS Pediatrics
+
+Blueprints Pediatrics
+
+Nelson Essentials of Pediatrics
+
+Obstetrics & Gynecology
+Blueprints Obstetrics & Gynecology
+
+Beckmann and Ling’s Obstetrics and Gynecology
+
+Case Files: Obstetrics & Gynecology
+
+Psychiatry
+First Aid for the Psychiatry Clerkship
+
+DSM-5-TR
+
+Case Files: Psychiatry
+
+Neurology
+Blueprints Neurology
+
+Case Files: Neurology
+
+====================================================================================
+4th semester books
+
+Obgyn:
+Beckmann and Ling's Obstetrics and Gynecology 9th ed. 2024
+Casanova, Goepfert, Hueppchen, Weiss, Connolly — LWW / Wolters Kluwer
+
+
+Case Files: Obstetrics and Gynecology 6th ed.
+Eugene C. Toy, Patti Jayne Ross, Benton Baker, John Jennings — McGraw Hill
+
+Blueprints Obstetrics & Gynecology 7th ed.
+Tamara Callahan, Aaron Caughey — LWW / Wolters Kluwer
+
+
+First Aid for the OB/GYN Clerkship 5th ed.
+Sims, Dotters-Katz, Ganti, Kaufman — McGraw Hill
+
+
+
+Adv Pediatrics:
+
+Nelson Essentials of Pediatrics 9th ed. 2023
+Marcdante, Kliegman, Schuh — Elsevier / Saunders
+
+Blueprints Pediatrics 7th ed. 2020
+Bradley S. Marino, Katie S. Fine — LWW / Wolters Kluwer
+
+BRS Pediatrics (Board Review Series) 2nd ed.
+Lloyd J. Brown, Ryan J. Coller, Lee T. Miller — LWW / Wolters Kluwer
+
+Case Files: Pediatrics 6th ed.
+Toy, Hormann, McNeese, Lahoti, Sanders, Geltemeyer, Yetman — McGraw Hill
+
+
+
+
+
+Emergency Medicine: 
+
+Step-Up to Emergency Medicine 1st ed.
+Martin Huecker, Scott H. Plantz — LWW / Wolters Kluwer
+
+
+Tintinalli's Emergency Medicine: A Comprehensive Study Guide 9th ed. 2020
+Tintinalli, Yealy, Meckler, Stapczynski — McGraw Hill
+
+
+Case Files: Emergency Medicine 5th ed.
+Barclay-Buchanan, Toy, Simon, Takenaka, Rosh — McGraw Hill
+
+Roberts and Hedges' Clinical Procedures in Emergency Medicine and Acute Care 7th ed.
+James R. Roberts — Elsevier / Saunders
+
+
+
+
+Orthopedics:
+Campbell's Operative Orthopaedics
+Azar, Beaty, Canale — Elsevier (14th ed.)
+
+Rockwood & Green's Fractures in Adults
+Bucholz, Court-Brown, Heckman — Wolters Kluwer (9th ed.)
+
+Miller's Review of Orthopaedics
+Mark D. Miller — Elsevier (8th ed.)
+
+Apley & Solomon's System of Orthopaedics and Trauma
+Blom, Warwick, Whitehouse — CRC Press (10th ed.)

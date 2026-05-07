@@ -1,0 +1,133 @@
+Attribute (underlined) : Key attribute
+Attribute : simple attribute
+Attribute (dotted underlined) : Foreign Key attribute
+
+
+2324
+
+
+
+
+
+https://radiopaedia.org/search?scope=cases&sort=date_of_publication
+
+https://radathand.com/radiology-calculators/
+
+
+http://www.ecglibrary.com/ecghome.php?
+
+
+
+https://litfl.com/left-atrial-enlargement-ecg-library/
+
+
+https://lit.fe.uni-lj.si/en/research/resources/3D-2D-GS-CA/
+
+
+
+
+
+3rd Year Section : Clinical Skills & Diagnostics
+
+Subtopic: Common Lab Interpretation
+
+Create 350 MCQs (US MD/ MBBS) level. No Redundancy. Cover Entire Topic in  MCQs in detail accordingly to syllabus of (US MD/ MBBS).  make sure we cover everything related to our topic from these books too in our MCQs along with your expert generated MCQs for 3rd Year Students.
+
+
+
+Books Sources:
+
+1. Bates' Guide to Physical Examination and History Taking
+Author: Lynn S. Bickley, MD et al. | Publisher: Lippincott Williams & Wilkins (13th Ed.)
+
+
+2. McGee's Evidence-Based Physical Diagnosis
+Author: Steven McGee, MD | Publisher: Elsevier (6th Ed.)
+
+3. Pocket Medicine (The MGH Handbook)
+Author: Marc S. Sabatine, MD | Publisher: Lippincott Williams & Wilkins (7th Ed.)
+
+DeGowin's Diagnostic Examination (for deeper clinical reasoning) and Schwartz's Clinical Handbook
+
+Format:
+
+A child has "slapped-cheek" rash and a reticular, lace-like rash on the trunk. Which virus is responsible?
+
+A. Parvovirus B19
+
+B. HHV-6
+
+C. Coxsackievirus A16
+
+D. Measles virus
+
+Answer: A
+
+Explanation: Erythema infectiosum (Fifth Disease) is caused by Parvovirus B19.
+Important: Do not add Book Source Name in Answer or Explanation 
+
+
+Provide sql code only without typo and syntax errors.
+
+
+=========================================================
+
+
+4th Year US MD/ MBBS
+Section: Advanced Pediatrics
+Topic: Obstetrics & Gynecology Basics
+The topic is already present in 4th Year under section of Advanced Pediatrics. Just add the caseblocks to that topic.    
+
+
+I need 50 Caseblocks of subtopic : US MD/ MBBS : 4th Year :   
+Proceed with (US MD/ MBBS) standard mixed Case Blocks. Give me 50 case blocks with multiple questions per case and all with options. No Redundancy. Prefer for multiple problems per case to resolve. Goal is to cover entire topic 
+make sure we like cover everything related to our topic from these books in our Case Blocks. give multiple sql files if needed.
+
+Books Source along with your own intelligent generation for caseblocks:
+
+Beckmann and Ling's Obstetrics and Gynecology 9th ed. 2024
+Casanova, Goepfert, Hueppchen, Weiss, Connolly — LWW / Wolters Kluwer
+
+
+Case Files: Obstetrics and Gynecology 6th ed.
+Eugene C. Toy, Patti Jayne Ross, Benton Baker, John Jennings — McGraw Hill
+
+Blueprints Obstetrics & Gynecology 7th ed.
+Tamara Callahan, Aaron Caughey — LWW / Wolters Kluwer
+
+
+First Aid for the OB/GYN Clerkship 5th ed.
+Sims, Dotters-Katz, Ganti, Kaufman — McGraw Hill
+
+
+Format : 
+
+CASE 01
+
+A patient presents with generalized depigmented patches.
+
+Q1. Most likely diagnosis?
+
+A. Psoriasis
+B. Vitiligo
+C. Tinea versicolor
+D. Eczema
+Answer: B
+
+
+Q2. Which cells are destroyed?
+
+A. Keratinocytes
+B. Melanocytes
+C. Langerhans cells
+D. Merkel cells
+Answer: B
+
+
+Q3. Underlying mechanism?
+
+A. Infection
+B. Autoimmune destruction
+C. Trauma
+D. UV exposure
+Answer: B

@@ -1,0 +1,118 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="FloraFetch UML">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- User -->
+        <mxCell id="user" value="User
+----------------------
+user_id : int
+name : string
+email : string
+phone : string
+password : string
+----------------------
+login()
+register()
+logout()
+updateProfile()" style="shape=rectangle" vertex="1" parent="1">
+          <mxGeometry x="50" y="50" width="200" height="200" as="geometry"/>
+        </mxCell>
+
+        <!-- Address -->
+        <mxCell id="address" value="Address
+----------------------
+address_id : int
+user_id : int
+location : string
+type : string
+----------------------
+addAddress()
+updateAddress()" style="shape=rectangle" vertex="1" parent="1">
+          <mxGeometry x="300" y="50" width="200" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- Product -->
+        <mxCell id="product" value="Product
+----------------------
+product_id : int
+name : string
+price : float
+size : string
+sunlight : string
+water_frequency : string
+----------------------
+addProduct()
+updateProduct()
+deleteProduct()" style="shape=rectangle" vertex="1" parent="1">
+          <mxGeometry x="50" y="300" width="220" height="220" as="geometry"/>
+        </mxCell>
+
+        <!-- Category -->
+        <mxCell id="category" value="Category
+----------------------
+category_id : int
+name : string" style="shape=rectangle" vertex="1" parent="1">
+          <mxGeometry x="300" y="300" width="180" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Cart -->
+        <mxCell id="cart" value="Cart
+----------------------
+cart_id : int
+user_id : int
+----------------------
+addItem()
+removeItem()" style="shape=rectangle" vertex="1" parent="1">
+          <mxGeometry x="550" y="50" width="200" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- Order -->
+        <mxCell id="order" value="Order
+----------------------
+order_id : int
+user_id : int
+total_price : float
+status : string
+----------------------
+placeOrder()
+trackOrder()" style="shape=rectangle" vertex="1" parent="1">
+          <mxGeometry x="550" y="250" width="220" height="200" as="geometry"/>
+        </mxCell>
+
+        <!-- Payment -->
+        <mxCell id="payment" value="Payment
+----------------------
+payment_id : int
+order_id : int
+method : COD
+status : string" style="shape=rectangle" vertex="1" parent="1">
+          <mxGeometry x="800" y="250" width="200" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- Review -->
+        <mxCell id="review" value="Review
+----------------------
+review_id : int
+user_id : int
+product_id : int
+rating : int
+comment : string" style="shape=rectangle" vertex="1" parent="1">
+          <mxGeometry x="800" y="50" width="220" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- Relationships -->
+        <mxCell id="rel1" edge="1" parent="1" source="user" target="address"/>
+        <mxCell id="rel2" edge="1" parent="1" source="user" target="cart"/>
+        <mxCell id="rel3" edge="1" parent="1" source="user" target="order"/>
+        <mxCell id="rel4" edge="1" parent="1" source="product" target="category"/>
+        <mxCell id="rel5" edge="1" parent="1" source="order" target="payment"/>
+        <mxCell id="rel6" edge="1" parent="1" source="user" target="review"/>
+        <mxCell id="rel7" edge="1" parent="1" source="product" target="review"/>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
