@@ -1,0 +1,1334 @@
+[
+  {
+    "q": "Most common cause of a <b>Bartholin Cyst</b>?",
+    "a": "Inflammation and obstruction of the Bartholin gland duct."
+  },
+  {
+    "q": "Classic clinical presentation of <b>Lichen Sclerosus</b>?",
+    "a": "Thinning of the epidermis (parchment-like) and \"leukoplakia\" in postmenopausal women."
+  },
+  {
+    "q": "Risk of progression to Squamous Cell Carcinoma in <b>Lichen Sclerosus</b>?",
+    "a": "Slightly increased risk."
+  },
+  {
+    "q": "Histologic hallmark of <b>Lichen Simplex Chronicus</b>?",
+    "a": "Hyperplasia of the vulvar squamous epithelium and dermal inflammation."
+  },
+  {
+    "q": "Definitive cell type seen in <b>Extramammary Paget Disease</b>?",
+    "a": "Large, malignant epithelial cells with <b>PAS</b>+, Keratin+, and <b>S100</b>- staining."
+  },
+  {
+    "q": "Key distinction between Vulvar <b>Paget Disease</b> and Melanoma?",
+    "a": "Paget cells are <b>PAS</b>+ and Keratin+, while Melanoma is <b>S100</b>+."
+  },
+  {
+    "q": "Most common primary malignancy of the vagina?",
+    "a": "Squamous cell carcinoma, usually associated with high-risk <b>HPV</b>."
+  },
+  {
+    "q": "Classic exposure history for Vaginal Clear Cell Adenocarcinoma?",
+    "a": "In utero exposure to Diethylstilbestrol (<b>DES</b>)."
+  },
+  {
+    "q": "Characteristic histologic finding in Sarcoma Botryoides (Rhabdomyosarcoma)?",
+    "a": "Spindle-shaped cells with \"cambium layer\" and skeletal muscle differentiation (desmin+)."
+  },
+  {
+    "q": "Defining feature of the <b>Transformation Zone</b> in the cervix?",
+    "a": "Area where squamous epithelium meets columnar epithelium; site of most <b>HPV</b> infections.\n\nUterus and Endometrium"
+  },
+  {
+    "q": "Primary driver of <b>Endometrial Hyperplasia</b>?",
+    "a": "Unopposed estrogen (obesity, <b>PCOS</b>, or exogenous source)."
+  },
+  {
+    "q": "Most common symptom of <b>Endometrial Carcinoma</b>?",
+    "a": "Postmenopausal bleeding."
+  },
+  {
+    "q": "Genetic mutation most associated with Endometrioid Carcinoma (Type I)?",
+    "a": "<b>PTEN</b> tumor suppressor gene mutation."
+  },
+  {
+    "q": "Histologic characteristic of Serous <b>Endometrial Carcinoma</b> (Type II)?",
+    "a": "Papillary growth pattern with Psammoma bodies and <b>p53</b> mutations."
+  },
+  {
+    "q": "Definition of <b>Adenomyosis</b>?",
+    "a": "Extension of endometrial glands and stroma into the uterine myometrium."
+  },
+  {
+    "q": "Definition of <b>Endometriosis</b>?",
+    "a": "Ectopic endometrial glands and stroma outside the uterine cavity."
+  },
+  {
+    "q": "Most common site for <b>Endometriosis</b>?",
+    "a": "The ovaries (often forming \"<b>Chocolate Cysts</b>\")."
+  },
+  {
+    "q": "Common clinical triad of <b>Endometriosis</b>?",
+    "a": "Dysmenorrhea, dyspareunia, and infertility."
+  },
+  {
+    "q": "Most common benign tumor in females?",
+    "a": "<b>Leiomyoma</b> (<b>Fibroid</b>)."
+  },
+  {
+    "q": "Characteristic gross appearance of a <b>Leiomyoma</b>?",
+    "a": "Multiple, well-circumscribed, firm, gray-white whorled masses."
+  },
+  {
+    "q": "Key distinction between <b>Leiomyoma</b> and <b>Leiomyosarcoma</b>?",
+    "a": "Leiomyosarcomas are solitary, show necrosis, hemorrhage, and high mitotic activity.\n\nOvarian Pathology"
+  },
+  {
+    "q": "Most common type of Ovarian Tumor?",
+    "a": "Surface epithelial tumors."
+  },
+  {
+    "q": "Serum marker used to monitor response to treatment in surface epithelial ovarian cancer?",
+    "a": "<b>CA-125</b>."
+  },
+  {
+    "q": "Most common malignant germ cell tumor in children?",
+    "a": "<b>Yolk Sac Tumor</b> (Endodermal Sinus Tumor)."
+  },
+  {
+    "q": "Characteristic histologic finding in Yolk Sac Tumors?",
+    "a": "<b>Schiller-Duval bodies</b> (glomeruloid-like structures)."
+  },
+  {
+    "q": "Tumor marker elevated in Yolk Sac Tumors?",
+    "a": "Alpha-fetoprotein (<b>AFP</b>)."
+  },
+  {
+    "q": "Ovarian counterpart to the male <b>seminoma</b>?",
+    "a": "<b>Dysgerminoma</b>."
+  },
+  {
+    "q": "Most common benign germ cell tumor in young women?",
+    "a": "<b>Cystic Teratoma</b> (<b>Dermoid Cyst</b>)."
+  },
+  {
+    "q": "Definition of <b>Struma Ovarii</b>?",
+    "a": "A specialized teratoma composed primarily of thyroid tissue."
+  },
+  {
+    "q": "Most common clinical presentation of a <b>Granulosa Cell Tumor</b>?",
+    "a": "Signs of estrogen excess (precocious puberty or postmenopausal bleeding)."
+  },
+  {
+    "q": "Histologic hallmark of Granulosa Cell Tumors?",
+    "a": "<b>Call-Exner bodies</b> (small follicles filled with eosinophilic material)."
+  },
+  {
+    "q": "Definition of a <b>Meigs Syndrome</b>?",
+    "a": "Triad of ovarian fibroma, ascites, and pleural effusion."
+  },
+  {
+    "q": "Definition of a <b>Krukenberg Tumor</b>?",
+    "a": "Metastatic signet-ring cell carcinoma to the ovaries, usually from a gastric primary.\n\nGestational and Placental Pathology"
+  },
+  {
+    "q": "Genetic makeup of a Complete <b>Hydatidiform Mole</b>?",
+    "a": "46,XX or 46,XY (all paternal DNA; empty egg fertilized by two sperm or one sperm that duplicates)."
+  },
+  {
+    "q": "Genetic makeup of a Partial <b>Hydatidiform Mole</b>?",
+    "a": "Triploid (69,XXX or 69,XXY); normal egg fertilized by two sperm."
+  },
+  {
+    "q": "\"Snowstorm\" appearance on ultrasound indicates?",
+    "a": "<b>Hydatidiform Mole</b>."
+  },
+  {
+    "q": "Risk of <b>Choriocarcinoma</b> is higher in which type of mole?",
+    "a": "Complete <b>Hydatidiform Mole</b>."
+  },
+  {
+    "q": "Major hormone elevated in Gestational Trophoblastic Disease?",
+    "a": "beta-<b>hCG</b>."
+  },
+  {
+    "q": "Characteristic of <b>Eclampsia</b> vs. <b>Preeclampsia</b>?",
+    "a": "<b>Preeclampsia</b> (hypertension, edema, proteinuria) + Seizures."
+  },
+  {
+    "q": "Definition of <b>Placenta Previa</b>?",
+    "a": "Attachment of the placenta to the lower uterine segment, covering the internal os."
+  },
+  {
+    "q": "Primary symptom of <b>Placenta Abruptio</b>?",
+    "a": "Painful vaginal bleeding in the third trimester.\n\nMale Reproductive: Testis and Prostate"
+  },
+  {
+    "q": "Most common risk factor for Testicular Germ Cell Tumors?",
+    "a": "<b>Cryptorchidism</b> (undescended testes)."
+  },
+  {
+    "q": "Most common testicular tumor in men aged 15-40?",
+    "a": "<b>Seminoma</b>."
+  },
+  {
+    "q": "Histology of a <b>Seminoma</b>?",
+    "a": "Large cells with clear cytoplasm and central nuclei (\"fried egg\" appearance) in lobules."
+  },
+  {
+    "q": "Tumor markers for <b>Choriocarcinoma</b> in males?",
+    "a": "Significantly elevated <b>hCG</b>."
+  },
+  {
+    "q": "Most common testicular tumor in infants and children?",
+    "a": "<b>Yolk Sac Tumor</b>."
+  },
+  {
+    "q": "Defining feature of Reidell\u2019s cells in Leydig Cell Tumors?",
+    "a": "<b>Reinke crystals</b> (rod-shaped cytoplasmic inclusions)."
+  },
+  {
+    "q": "Primary location of <b>Benign Prostatic Hyperplasia</b> (<b>BPH</b>)?",
+    "a": "Transitional zone (periurethral)."
+  },
+  {
+    "q": "Primary location of Prostatic Adenocarcinoma?",
+    "a": "Peripheral zone (posterior lobe)."
+  },
+  {
+    "q": "Use of <b>PSA</b> (<b>Prostate Specific Antigen</b>) in screening?",
+    "a": "Nonspecific; can be elevated in <b>BPH</b>, prostatitis, and cancer."
+  },
+  {
+    "q": "Most common site for Prostate Cancer metastasis?",
+    "a": "Bone (Osteoblastic lesions in the lumbar spine).\n\nBreast Pathology"
+  },
+  {
+    "q": "Most common cause of \"Green-brown\" nipple discharge?",
+    "a": "Mammary Duct Ectasia."
+  },
+  {
+    "q": "Characteristics of <b>Fibrocystic Changes</b> (Non-proliferative)?",
+    "a": "Cysts, fibrosis, and apocrine metaplasia (no increased risk of cancer)."
+  },
+  {
+    "q": "Proliferative breast changes that increase cancer risk?",
+    "a": "Sclerosing adenosis, ductal hyperplasia, and atypical hyperplasia."
+  },
+  {
+    "q": "Most common benign tumor of the female breast?",
+    "a": "<b>Fibroadenoma</b>."
+  },
+  {
+    "q": "Characteristic clinical behavior of a <b>Fibroadenoma</b>?",
+    "a": "Estrogen-sensitive (grows during pregnancy, shrinks during menopause)."
+  },
+  {
+    "q": "Distinguishing feature of a <b>Phyllodes Tumor</b> from a <b>Fibroadenoma</b>?",
+    "a": "\"Leaf-like\" projections and higher cellularity/malignancy potential."
+  },
+  {
+    "q": "Location of Intraductal Papilloma?",
+    "a": "Within the large lactiferous ducts (typically presents with bloody nipple discharge)."
+  },
+  {
+    "q": "Most common type of invasive breast cancer?",
+    "a": "<b>Invasive Ductal Carcinoma</b> (No Special Type)."
+  },
+  {
+    "q": "Histologic feature of <b>Invasive Lobular Carcinoma</b>?",
+    "a": "\"Single-file\" pattern of cells due to loss of E-cadherin."
+  },
+  {
+    "q": "Clinical presentation of <b>Inflammatory Breast Cancer</b>?",
+    "a": "Peau d\u2019orange (orange peel skin) due to lymphatic obstruction."
+  },
+  {
+    "q": "Significance of <b>Paget Disease</b> of the Nipple?",
+    "a": "Indicates underlying Ductal Carcinoma In Situ (<b>DCIS</b>).\n\nInfectious & Inflammatory"
+  },
+  {
+    "q": "Causative agent of <i>Syphilis</i>?",
+    "a": "<i>Treponema pallidum</i>."
+  },
+  {
+    "q": "Characteristic lesion of Primary <i>Syphilis</i>?",
+    "a": "Chancre (painless ulcer)."
+  },
+  {
+    "q": "Characteristic lesion of Secondary <i>Syphilis</i>?",
+    "a": "Condyloma lata (flat, moist, wart-like lesions)."
+  },
+  {
+    "q": "Causative agent of <b>Lymphogranuloma Venereum</b>?",
+    "a": "<i><i>Chlamydia</i> trachomatis</i> (L1-L3 serotypes)."
+  },
+  {
+    "q": "Most common cause of <b>Pelvic Inflammatory Disease</b> (<b>PID</b>)?",
+    "a": "<i>Neisseria gonorrhoeae</i> and <i><i>Chlamydia</i> trachomatis</i>."
+  },
+  {
+    "q": "Potential complication of <b>PID</b> involving the liver?",
+    "a": "<b>Fitz-Hugh-Curtis Syndrome</b> (violin-string adhesions to the liver capsule)."
+  },
+  {
+    "q": "Diagnostic finding in <b>Bacterial Vaginosis</b>?",
+    "a": "\"Clue cells\" (vaginal epithelial cells covered in bacteria).\n\nAdvanced Concepts & Syndromes"
+  },
+  {
+    "q": "Common genetic mutation in <b>Polycystic Ovarian Syndrome</b> (<b>PCOS</b>)?",
+    "a": "Hyperinsulinemia leading to deranged LH:FSH ratio (>2:1)."
+  },
+  {
+    "q": "Classic clinical pentad of <b>PCOS</b>?",
+    "a": "Obesity, hirsutism, acne, infertility, and oligomenorrhea."
+  },
+  {
+    "q": "Association of <b>Lichen Sclerosus</b> with other diseases?",
+    "a": "Autoimmune disorders (e.g., thyroiditis, vitiligo)."
+  },
+  {
+    "q": "Role of High-risk <b>HPV</b> (16, 18) in oncogenesis?",
+    "a": "E6 protein inhibits <b>p53</b>; E7 protein inhibits Rb."
+  },
+  {
+    "q": "Difference between a follicular cyst and a corpus luteum cyst?",
+    "a": "Follicular arises from unruptured follicle; Corpus Luteum arises from a failed involution of the corpus luteum."
+  },
+  {
+    "q": "Histologic appearance of Medullary Carcinoma of the breast?",
+    "a": "Sheets of large cells with prominent lymphocytic infiltrate (associated with <b>BRCA1</b>)."
+  },
+  {
+    "q": "Most common cause of Scrotal Swelling in infants?",
+    "a": "Hydrocele (patent processus vaginalis)."
+  },
+  {
+    "q": "Mechanism of a Varicocele?",
+    "a": "Dilated veins in the pampiniform plexus (\"bag of worms\")."
+  },
+  {
+    "q": "Why are Varicoceles more common on the left side?",
+    "a": "The left spermatic vein drains into the left renal vein at a 90-degree angle."
+  },
+  {
+    "q": "Definition of Hypospadias?",
+    "a": "Urethral opening on the ventral (bottom) surface of the penis."
+  },
+  {
+    "q": "Definition of Epispadias?",
+    "a": "Urethral opening on the dorsal (top) surface of the penis (associated with bladder exstrophy)."
+  },
+  {
+    "q": "Definition of <b>Bowen Disease</b> of the penis?",
+    "a": "In situ Squamous Cell Carcinoma presenting as a leukoplakic plaque on the shaft."
+  },
+  {
+    "q": "Major risk factor for Penile Squamous Cell Carcinoma?",
+    "a": "<b>HPV</b> infection and lack of circumcision (poor hygiene/smegma)."
+  },
+  {
+    "q": "Hallmark of Sertoli-Leydig Cell Tumors?",
+    "a": "Re-masculinization or virilization in females."
+  },
+  {
+    "q": "Pathology of Brenner Tumor?",
+    "a": "Ovarian tumor containing \"Walnut-like\" nuclei and urothelial (bladder-like) epithelium."
+  },
+  {
+    "q": "Definition of Endometrial Polyp?",
+    "a": "Benign exophytic growth of endometrial glands and stroma; often associated with Tamoxifen."
+  },
+  {
+    "q": "Mechanism of fat necrosis in the breast?",
+    "a": "Trauma-induced release of fatty acids leading to saponification and calcification."
+  },
+  {
+    "q": "Most common location for an ectopic pregnancy?",
+    "a": "Ampulla of the Fallopian tube."
+  },
+  {
+    "q": "Definition of <b>Asherman Syndrome</b>?",
+    "a": "Intrauterine adhesions (synechiae) following over-aggressive D&C, leading to infertility."
+  },
+  {
+    "q": "Cause of Vulvar Vestibulitis?",
+    "a": "Inflammation of small glands in the vestibule causing severe entry dyspareunia."
+  },
+  {
+    "q": "Significance of a high mitotic count in a smooth muscle tumor of the uterus?",
+    "a": "Suggests <b>Leiomyosarcoma</b> rather than <b>Leiomyoma</b>."
+  },
+  {
+    "q": "Common site of origin for Serous Tubal Intraepithelial Carcinoma (STIC)?",
+    "a": "Fimbria of the Fallopian tube."
+  },
+  {
+    "q": "Histology of Comedocarcinoma (<b>DCIS</b> subtype)?",
+    "a": "Central necrosis with calcifications within the duct."
+  },
+  {
+    "q": "Preferred staging system for Gynecologic cancers?",
+    "a": "FIGO Staging."
+  },
+  {
+    "q": "Most significant prognostic factor in Breast Cancer?",
+    "a": "Axillary lymph node status."
+  },
+  {
+    "q": "Effect of Triple Negative Breast Cancer on prognosis?",
+    "a": "Poor prognosis (<b>ER</b>-, <b>PR</b>-, <b>HER2</b>-)."
+  },
+  {
+    "q": "Hormone changes in Menopause?",
+    "a": "Decreased estrogen, significantly increased FSH (loss of negative feedback)."
+  },
+  {
+    "q": "Typical age for testicular torsion?",
+    "a": "Neonates or adolescents (bell-clapper deformity)."
+  },
+  {
+    "q": "Distinction between <b>Seminoma</b> and Non-seminomatous tumors regarding radiosensitivity?",
+    "a": "Seminomas are highly radiosensitive."
+  },
+  {
+    "q": "Typical immunohistochemistry for <b>Dysgerminoma</b>?",
+    "a": "OCT3/4, PLAP, and c-KIT (CD117)."
+  },
+  {
+    "q": "Risk factors for Vulvar Squamous Cell Carcinoma (Non-<b>HPV</b> related)?",
+    "a": "Long-standing <b>Lichen Sclerosus</b> in elderly women."
+  },
+  {
+    "q": "Definition of Chronic Prostatitis?",
+    "a": "Recurrent UTIs or pelvic pain with/without bacterial growth in prostatic secretions."
+  },
+  {
+    "q": "Relationship between breast density and cancer risk?",
+    "a": "Increased radiographic density correlates with higher risk."
+  },
+  {
+    "q": "Effect of breastfeeding on breast cancer risk?",
+    "a": "Protective (decreases lifetime estrogen exposure)."
+  },
+  {
+    "q": "Most common cause of Acute Mastitis?",
+    "a": "<i>Staphylococcus aureus</i> (usually during breastfeeding)."
+  },
+  {
+    "q": "Pathology of Periductal Mastitis?",
+    "a": "Subareolar inflammation seen mostly in smokers (Vitamin A deficiency leads to squamous metaplasia)."
+  },
+  {
+    "q": "Gross description of Mucinous (Colloid) Carcinoma of the breast?",
+    "a": "\"Blue-gray\" gelatinous mass."
+  },
+  {
+    "q": "Precursor lesion to most Ovarian Surface Epithelial tumors?",
+    "a": "Inclusion cysts or fimbrial epithelium."
+  },
+  {
+    "q": "Histologic feature of Clear Cell Adenocarcinoma of the ovary?",
+    "a": "Large cells with clear cytoplasm and \"hobnail\" cells."
+  },
+  {
+    "q": "Definition of Endolymphatic Stromal Myosis?",
+    "a": "Low-grade endometrial stromal sarcoma that infiltrates vessels."
+  },
+  {
+    "q": "Definition of Decidualization?",
+    "a": "Changes in endometrial stroma in response to progesterone to prepare for implantation."
+  },
+  {
+    "q": "Distinction between Squamous Cell Carcinoma and Adenocarcinoma of the cervix?",
+    "a": "Both caused by <b>HPV</b>, but SCC arises from the exocervix and Adeno from the endocervical glands."
+  },
+  {
+    "q": "Common cause of spontaneous abortion in the first trimester?",
+    "a": "Chromosomal abnormalities (e.g., aneuploidy)."
+  },
+  {
+    "q": "Definition of Placenta Accreta?",
+    "a": "Placental attachment directly to the myometrium due to a defective decidua."
+  },
+  {
+    "q": "Difference between Placenta Increta and Percreta?",
+    "a": "Increta invades myometrium; Percreta invades through to the serosa/bladder."
+  },
+  {
+    "q": "Leading cause of Maternal Death in the developed world?",
+    "a": "Thromboembolism or <b>Preeclampsia</b> complications."
+  },
+  {
+    "q": "Histologic marker for <b>Choriocarcinoma</b>?",
+    "a": "Proliferation of cytotrophoblasts and syncytiotrophoblasts without villi."
+  },
+  {
+    "q": "Mechanism of Hemolytic Disease of the Newborn?",
+    "a": "Maternal IgG antibodies cross the placenta and attack fetal RBCs (Rh incompatibility)."
+  },
+  {
+    "q": "Definition of Hydrops Fetalis?",
+    "a": "Severe fetal edema caused by anemia (immune or non-immune)."
+  },
+  {
+    "q": "Most common benign neoplasm of the fallopian tube?",
+    "a": "Adenomatoid tumor."
+  },
+  {
+    "q": "Clinical sign of Hydrocele?",
+    "a": "Transillumination of the scrotum."
+  },
+  {
+    "q": "Presentation of Testicular Lymphoma?",
+    "a": "Most common testicular mass in men >60; usually Diffuse Large B-Cell Lymphoma."
+  },
+  {
+    "q": "Target of Trastuzumab (Herceptin) in breast cancer?",
+    "a": "<b>HER2</b>/neu (ERBB2) receptor."
+  },
+  {
+    "q": "Precursor to <b>Invasive Lobular Carcinoma</b>?",
+    "a": "Lobular Carcinoma In Situ (<b>LCIS</b>)."
+  },
+  {
+    "q": "Management of <b>LCIS</b>?",
+    "a": "Observation or Tamoxifen (considered a risk factor rather than a direct precursor)."
+  },
+  {
+    "q": "Hallmark of Paget's Disease of the Vulva?",
+    "a": "Intraepidermal spread of malignant cells; usually no underlying invasive cancer (unlike breast)."
+  },
+  {
+    "q": "Most common cause of vulvar \"strawberry spots\" on the cervix?",
+    "a": "<i>Trichomonas vaginalis</i> infection."
+  },
+  {
+    "q": "Characteristic feature of <b>Lymphogranuloma Venereum</b> (<b>LGV</b>) in the chronic phase?",
+    "a": "Fibrosis and \"esthiomene\" (vulvar elephantiasis)."
+  },
+  {
+    "q": "Primary histologic feature of Granuloma Inguinale (Donovanosis)?",
+    "a": "Donovan bodies (intracellular safety-pin shaped bacteria) in macrophages."
+  },
+  {
+    "q": "Type of epithelium replaced in Vaginal Adenosis?",
+    "a": "Squamous epithelium is replaced by columnar (glandular) epithelium."
+  },
+  {
+    "q": "Most common site for Vulvar Melanoma?",
+    "a": "Labia minora and clitoris."
+  },
+  {
+    "q": "Defining histologic feature of Hidradenoma Papilliferum?",
+    "a": "Complex papillary structures lined by a double layer of cells (myoepithelial and secretory)."
+  },
+  {
+    "q": "Primary risk factor for Malignant Mixed M\u00fcllerian Tumor (MMMT)?",
+    "a": "Prior pelvic radiation therapy.\n\nUterus: Endometrium & Myometrium"
+  },
+  {
+    "q": "Effect of Tamoxifen on the uterus vs. the breast?",
+    "a": "Antagonist in the breast, but Pro-estrogenic (agonist) in the endometrium."
+  },
+  {
+    "q": "Characteristic finding in Chronic Endometritis biopsy?",
+    "a": "Presence of Plasma Cells (lymphocytes alone are insufficient for diagnosis)."
+  },
+  {
+    "q": "Common clinical consequence of an Inadequate Luteal Phase?",
+    "a": "Infertility or repeated early pregnancy loss due to low progesterone."
+  },
+  {
+    "q": "Definition of Endometrial Metaplasia?",
+    "a": "Replacement of normal endometrial glands with squamous or tubal cells."
+  },
+  {
+    "q": "Histologic feature of Endometrial Stromal Sarcoma?",
+    "a": "Proliferation of cells resembling stromal cells during the proliferative phase."
+  },
+  {
+    "q": "Standard treatment for <b>Endometrial Hyperplasia</b> with Atypia?",
+    "a": "Hysterectomy (due to high risk of progression to carcinoma)."
+  },
+  {
+    "q": "Effect of oral contraceptive pills (OCPs) on Endometrial Cancer risk?",
+    "a": "Protective (progestin counteracts estrogen).\n\nOvarian Tumors (The \"Small Print\" Robbins Topics)"
+  },
+  {
+    "q": "Classification of a Brenner Tumor?",
+    "a": "Surface epithelial tumor with urothelial (bladder-like) differentiation."
+  },
+  {
+    "q": "Ovarian tumor associated with Pseudomyxoma Peritonei?",
+    "a": "Mucinous Cystadenocarcinoma (often involving the appendix)."
+  },
+  {
+    "q": "Primary difference between Serous and Mucinous ovarian tumors?",
+    "a": "Serous are more often bilateral; Mucinous are more often unilateral and larger."
+  },
+  {
+    "q": "Defining feature of \"Chocolate Cyst\"?",
+    "a": "Endometrioma (<b>endometriosis</b> of the ovary filled with old blood)."
+  },
+  {
+    "q": "Tumor marker for Sertoli-Leydig Cell Tumors?",
+    "a": "Testosterone (and potentially Inhibin)."
+  },
+  {
+    "q": "Characteristic of Ovarian Fibroma Grossly?",
+    "a": "Solid, firm, white, and whorled (resembles a uterine <b>leiomyoma</b>)."
+  },
+  {
+    "q": "What is a Walthard Cell Rest?",
+    "a": "Small nests of transitional-like cells on the fallopian tube/ovary surface (benign)."
+  },
+  {
+    "q": "Most common primary cancer that metastasizes to the ovary?",
+    "a": "Gastric Carcinoma (Krukenberg) or Colon Carcinoma.\n\nGestational Pathology (Molecular & Rare)"
+  },
+  {
+    "q": "Presence of fetal tissue in a Partial vs. Complete Mole?",
+    "a": "Partial Mole contains fetal tissue; Complete Mole does not."
+  },
+  {
+    "q": "Risk of invasive mole or <b>choriocarcinoma</b> after a Complete Mole?",
+    "a": "Approximately 15% to 20%."
+  },
+  {
+    "q": "Defining vascular change in <b>Preeclampsia</b>?",
+    "a": "Fibrinoid necrosis and atherosis of the spiral arteries in the placenta."
+  },
+  {
+    "q": "Definition of Amniotic Fluid Embolism?",
+    "a": "Entry of amniotic fluid into maternal circulation causing DIC and respiratory failure."
+  },
+  {
+    "q": "Histologic finding in Amniotic Fluid Embolism?",
+    "a": "Squamous cells and lanugo hair in the maternal pulmonary microvasculature."
+  },
+  {
+    "q": "What is a Velamentous Cord Insertion?",
+    "a": "Umbilical cord inserts into the fetal membranes rather than the placental mass."
+  },
+  {
+    "q": "Definition of Vasa Previa?",
+    "a": "Fetal vessels crossing the internal os of the cervix (high risk of fetal exsanguination).\n\nMale Reproductive: Prostate & Penis"
+  },
+  {
+    "q": "Gleason Score calculation basis?",
+    "a": "Sum of the primary (most common) and secondary (second most common) architectural patterns."
+  },
+  {
+    "q": "Typical Gleason Score indicating high-grade, aggressive cancer?",
+    "a": "8 to 10 (Gleason Pattern 4 and 5)."
+  },
+  {
+    "q": "Histologic marker absent in Prostatic Adenocarcinoma?",
+    "a": "Basal cell layer (absent in malignant glands)."
+  },
+  {
+    "q": "Effect of 5-alpha reductase inhibitors on <b>BPH</b>?",
+    "a": "Blocks conversion of Testosterone to DHT, shrinking the prostate volume."
+  },
+  {
+    "q": "Term for \"Hardening of the Penis\" due to fibrous plaque in the tunica albuginea?",
+    "a": "<b>Peyronie Disease</b>."
+  },
+  {
+    "q": "Define Erythroplasia of Queyrat?",
+    "a": "Squamous cell carcinoma in situ (CIS) of the glans penis, presenting as a red plaque."
+  },
+  {
+    "q": "Clinical presentation of <b>Bowenoid Papulosis</b>?",
+    "a": "Multiple reddish-brown papules on the penis; associated with <b>HPV</b> 16; rarely progresses to cancer.\n\nMale Reproductive: Testis & Scrotum"
+  },
+  {
+    "q": "Serum marker often elevated in Seminomas?",
+    "a": "Placental Alkaline Phosphatase (PLAP)."
+  },
+  {
+    "q": "Is a <b>Seminoma</b> usually painful or painless?",
+    "a": "Painless enlargement of the testis."
+  },
+  {
+    "q": "Tumor marker elevated in 100% of Choriocarcinomas?",
+    "a": "<b>hCG</b> (Human Chorionic Gonadotropin)."
+  },
+  {
+    "q": "Most common component of Mixed Germ Cell Tumors?",
+    "a": "Embryonal Carcinoma."
+  },
+  {
+    "q": "Distinction between Embryonal Carcinoma and <b>Seminoma</b>?",
+    "a": "Embryonal is more aggressive, often has hemorrhage/necrosis, and forms primitive glands."
+  },
+  {
+    "q": "Most common cause of Orchitis in a young adult?",
+    "a": "<i>Chlamydia</i> or <i>Gonorrhea</i>."
+  },
+  {
+    "q": "Most common cause of Orchitis in an older man (>35)?",
+    "a": "<i>E. coli</i> or <i>Pseudomonas</i> (UTI-related)."
+  },
+  {
+    "q": "Unique complication of Mumps in post-pubertal males?",
+    "a": "Orchitis (can lead to infertility, but usually unilateral).\n\nBreast Pathology: Molecular & Subtypes"
+  },
+  {
+    "q": "Significance of \"Radial Scar\" on mammography?",
+    "a": "Mimics carcinoma but is a benign lesion with a fibroelastotic center."
+  },
+  {
+    "q": "Defining feature of Sclerosing Adenosis?",
+    "a": "Increased number of acini with stromal fibrosis and calcification."
+  },
+  {
+    "q": "Distinction between <b>DCIS</b> and <b>LCIS</b> regarding bilaterality?",
+    "a": "<b>LCIS</b> is much more likely to be bilateral and multifocal."
+  },
+  {
+    "q": "Effect of <b>HER2</b>/neu amplification on breast cancer treatment?",
+    "a": "Predicts response to Trastuzumab (anti-<b>HER2</b> antibody)."
+  },
+  {
+    "q": "Molecular marker used to predict benefit of chemotherapy in <b>ER</b>+ breast cancer?",
+    "a": "Oncotype DX (multigene assay)."
+  },
+  {
+    "q": "Triple Negative Breast Cancer is most common in which population?",
+    "a": "African American women and <b>BRCA1</b> mutation carriers."
+  },
+  {
+    "q": "Characteristics of Lobular Carcinoma In Situ (<b>LCIS</b>) cells?",
+    "a": "Small, dyscohesive cells due to lack of E-cadherin."
+  },
+  {
+    "q": "Most common cause of Galactorrhea in non-pregnant women?",
+    "a": "Prolactinoma (Pituitary tumor).\n\nSyndromes & Genetic Correlations"
+  },
+  {
+    "q": "Genetic syndrome associated with bilateral ovarian fibromas?",
+    "a": "Gorlin Syndrome (Nevoid Basal Cell Carcinoma Syndrome)."
+  },
+  {
+    "q": "Association of Granulosa Cell Tumors with the endometrium?",
+    "a": "Secreted estrogen causes <b>Endometrial Hyperplasia</b> or Carcinoma."
+  },
+  {
+    "q": "Mutation found in most Leydig Cell Tumors?",
+    "a": "GNAS mutations."
+  },
+  {
+    "q": "Common karyotype of <b>Klinefelter Syndrome</b>?",
+    "a": "47,XXY."
+  },
+  {
+    "q": "Why does <b>Klinefelter Syndrome</b> cause high FSH?",
+    "a": "Seminiferous tubule dysgenesis leads to decreased Inhibin B."
+  },
+  {
+    "q": "Primary defect in Androgen Insensitivity Syndrome?",
+    "a": "Defective Androgen Receptor (X-linked)."
+  },
+  {
+    "q": "Why do AIS patients have high LH?",
+    "a": "Resistance to androgen feedback at the hypothalamus/pituitary."
+  },
+  {
+    "q": "Definition of <b>Swyer Syndrome</b>?",
+    "a": "46,XY karyotype with a SRY mutation resulting in a phenotypic female with streak gonads.\n\nDiagnostics & Miscellaneous"
+  },
+  {
+    "q": "Best stain to visualize basement membrane in the vagina?",
+    "a": "Periodic Acid-Schiff (<b>PAS</b>)."
+  },
+  {
+    "q": "Use of Inhibin as a tumor marker?",
+    "a": "Monitoring Granulosa Cell Tumors."
+  },
+  {
+    "q": "Diagnostic significance of a \"Bag of Worms\" on physical exam?",
+    "a": "Varicocele."
+  },
+  {
+    "q": "Expected <b>hCG</b> level in a patient with an Ectopic Pregnancy?",
+    "a": "Lower than expected for gestational age (fails to double every 48 hours)."
+  },
+  {
+    "q": "Histologic feature of Condyloma Acuminatum?",
+    "a": "Koilocytic atypia (wrinkled nuclei with perinuclear halos)."
+  },
+  {
+    "q": "Term for fusion of labia due to low estrogen in children?",
+    "a": "Labial Adhesions."
+  },
+  {
+    "q": "Primary cause of \"Inadequate Luteal Phase\" in older women?",
+    "a": "Diminished ovarian reserve (failing corpus luteum)."
+  },
+  {
+    "q": "Common cause of hematocolpos (blood in the vagina)?",
+    "a": "Imperforate Hymen."
+  },
+  {
+    "q": "Defining feature of <b>Turner Syndrome</b> on the ovary?",
+    "a": "Streak ovaries (accelerated oocyte loss)."
+  },
+  {
+    "q": "Most common location for an accessory nipple (Polythelia)?",
+    "a": "Along the milk line (axilla to groin)."
+  },
+  {
+    "q": "Characteristic histologic feature of a Fibroepithelial Polyp (Skin Tag)?",
+    "a": "Fibrovascular core covered by benign squamous epithelium."
+  },
+  {
+    "q": "Most common benign tumor of the vulva?",
+    "a": "Condyloma Acuminatum (Genital Warts)."
+  },
+  {
+    "q": "Definition of Vulvar Intraepithelial Neoplasia (VIN)?",
+    "a": "Dysplastic squamous cells within the vulvar epidermis, graded I-III."
+  },
+  {
+    "q": "Primary treatment for high-grade VIN?",
+    "a": "Surgical excision or laser ablation."
+  },
+  {
+    "q": "Relationship between <b>Lichen Sclerosus</b> and Squamous Cell Carcinoma?",
+    "a": "Chronic inflammation leads to <b>p53</b> mutations in the absence of <b>HPV</b>.\n\nUterine Corpus & Tubes"
+  },
+  {
+    "q": "Histologic appearance of Endometrial Stromal Nodule?",
+    "a": "Well-circumscribed proliferation of endometrial stromal cells with no vascular invasion."
+  },
+  {
+    "q": "Distinction between Low-grade and High-grade Endometrial Stromal Sarcoma?",
+    "a": "Low-grade has minimal atypia and infiltrates vessels; High-grade is pleomorphic and aggressive."
+  },
+  {
+    "q": "Primary cause of Salpingitis?",
+    "a": "Ascending infection from the lower genital tract (<i>Gonorrhea</i>/<i>Chlamydia</i>)."
+  },
+  {
+    "q": "Definition of Hydrosalpinx?",
+    "a": "Distention of the fallopian tube with clear fluid, often following chronic salpingitis."
+  },
+  {
+    "q": "Most common benign tumor of the Fallopian Tube?",
+    "a": "Adenomatoid Tumor (mesothelial origin).\n\nOvarian: Specialized & Stromal"
+  },
+  {
+    "q": "Characteristic clinical feature of a Hilus Cell Tumor?",
+    "a": "Virilization due to testosterone production; contains <b>Reinke crystals</b>."
+  },
+  {
+    "q": "Defining feature of Gonadoblastoma?",
+    "a": "Rare tumor found in dysgenetic gonads (e.g., <b>Swyer Syndrome</b>) containing germ cells and sex cord-stroma."
+  },
+  {
+    "q": "Most common source of Pseudomyxoma Peritonei?",
+    "a": "Appendiceal mucinous neoplasm (rarely primary ovarian)."
+  },
+  {
+    "q": "Pathogenesis of Ovarian Torsion?",
+    "a": "Twisting of the ovary on its suspensory ligament, compromising blood flow."
+  },
+  {
+    "q": "\"Bell-clapper deformity\" is to the testis as ______ is to the ovary.",
+    "a": "An enlarged ovarian mass (dermoid or cyst).\n\nMale Reproductive: Specialized Pathology"
+  },
+  {
+    "q": "Definition of Phimosis?",
+    "a": "Inability to retract the prepuce (foreskin) over the glans penis."
+  },
+  {
+    "q": "Definition of Paraphimosis?",
+    "a": "Prepuce is trapped behind the glans, causing vascular compromise (medical emergency)."
+  },
+  {
+    "q": "Typical presentation of Balanoposthitis?",
+    "a": "Inflammation of the glans and prepuce, commonly in uncircumcised men with poor hygiene."
+  },
+  {
+    "q": "Most common type of Penile Cancer?",
+    "a": "Squamous Cell Carcinoma."
+  },
+  {
+    "q": "Distinguishing feature of a Spermatocele?",
+    "a": "Cystic accumulation of sperm in the head of the epididymis."
+  },
+  {
+    "q": "Histology of a Leydig Cell Tumor?",
+    "a": "Eosinophilic cytoplasm with characteristic <b>Reinke crystals</b>."
+  },
+  {
+    "q": "Hormonal profile in a Sertoli Cell Tumor?",
+    "a": "Usually hormonally silent, but can rarely produce estrogens.\n\nBreast: Rare & High-Yield"
+  },
+  {
+    "q": "Characteristic of Diabetic Mastopathy?",
+    "a": "Firm, painless breast mass in Type 1 Diabetics showing lymphocytic lobulitis and fibrosis."
+  },
+  {
+    "q": "Histology of Granulomatous Mastitis?",
+    "a": "Non-caseating granulomas involving the lobules, often idiopathic or associated with Sarcoidosis."
+  },
+  {
+    "q": "Most common cause of a \"Palpable Mass\" in a woman under 30?",
+    "a": "<b>Fibroadenoma</b>."
+  },
+  {
+    "q": "Definition of Atypical Ductal Hyperplasia (ADH)?",
+    "a": "Proliferation of monomorphic cells partially filling a duct; increases breast cancer risk by 4-5x."
+  },
+  {
+    "q": "Common mutation in Familial Breast Cancer (other than BRCA)?",
+    "a": "TP53 (Li-Fraumeni Syndrome) or <b>PTEN</b> (Cowden Syndrome)."
+  },
+  {
+    "q": "Characteristic appearance of \"Comedo\" <b>DCIS</b> on gross pathology?",
+    "a": "Toothpaste-like necrotic material squeezed from the ducts.\n\nPregnancy & Placenta (Molecular)"
+  },
+  {
+    "q": "Pathophysiology of <b>HELLP Syndrome</b>?",
+    "a": "Severe <b>preeclampsia</b> leading to Hemolysis, Elevated Liver enzymes, and Low Platelets."
+  },
+  {
+    "q": "Definition of Chorioamnionitis?",
+    "a": "Bacterial infection of the fetal membranes, usually ascending from the vagina."
+  },
+  {
+    "q": "Gross appearance of the placenta in Chorioamnionitis?",
+    "a": "Opaque, friable, and foul-smelling membranes."
+  },
+  {
+    "q": "Result of a \"Circumvallate Placenta\"?",
+    "a": "A double layer of chorion and amnion creates a ring, increasing risk of premature rupture."
+  },
+  {
+    "q": "Primary cause of Abruptio Placentae?",
+    "a": "Maternal hypertension, cocaine use, or trauma.\n\nSystemic/Syndromic Associations"
+  },
+  {
+    "q": "Association between Peutz-Jeghers Syndrome and the reproductive system?",
+    "a": "Increased risk of Sex Cord Tumors with Annular Tubules (SCTAT)."
+  },
+  {
+    "q": "Ovarian tumor associated with Gorlin Syndrome?",
+    "a": "Ovarian Fibroma."
+  },
+  {
+    "q": "Reproductive association with von Hippel-Lindau (VHL) disease?",
+    "a": "Epididymal cystadenomas."
+  },
+  {
+    "q": "Genetic basis of Congenital Adrenal Hyperplasia (most common type)?",
+    "a": "21-hydroxylase deficiency (leads to virilization in females)."
+  },
+  {
+    "q": "Definition of <b>Kallmann Syndrome</b>?",
+    "a": "Hypogonadotropic hypogonadism and anosmia (failure of GnRH neuron migration)."
+  },
+  {
+    "q": "Relationship between Myasthenia Gravis and reproductive pathology?",
+    "a": "Associated with Thymoma, which can be confused with germ cell tumors in the mediastinum."
+  },
+  {
+    "q": "Effect of Mumps on fertility?",
+    "a": "Can cause permanent sterility if orchitis is bilateral and severe."
+  },
+  {
+    "q": "Most common site of extra-nodal Lymphoma in the male reproductive system?",
+    "a": "The testis."
+  },
+  {
+    "q": "Most common oncogenic driver in Serous Cystadenocarcinoma (High Grade)?",
+    "a": "TP53 mutation (present in >95% of cases)."
+  },
+  {
+    "q": "Genetic mutation pathognomonic for Low-Grade Serous Ovarian Carcinoma?",
+    "a": "KRAS or BRAF mutations."
+  },
+  {
+    "q": "Primary molecular defect in <b>McCune-Albright Syndrome</b> affecting the ovary?",
+    "a": "GNAS gene mutation leading to constitutive activation of FSH receptors and precocious puberty."
+  },
+  {
+    "q": "FOXL2 mutation is a diagnostic marker for which tumor?",
+    "a": "Adult-type <b>Granulosa Cell Tumor</b>."
+  },
+  {
+    "q": "DICER1 mutations are commonly associated with which pediatric ovarian tumor?",
+    "a": "Sertoli-Leydig Cell Tumor."
+  },
+  {
+    "q": "The \"Two-Hit Hypothesis\" in <b>BRCA1</b>/2 related breast cancer refers to?",
+    "a": "An inherited germline mutation followed by a somatic loss of the remaining wild-type allele.\n\nSpecific Histological Variants"
+  },
+  {
+    "q": "Classic histologic feature of \"Hobnail Cells\" is seen in?",
+    "a": "Clear Cell Carcinoma of the ovary or endometrium."
+  },
+  {
+    "q": "Defining histological feature of an Adenomatoid Tumor?",
+    "a": "Vacuolated mesothelial cells forming gland-like spaces (often in the epididymis or fallopian tube)."
+  },
+  {
+    "q": "Presence of \"Call-Exner-like\" spaces in a male testicular tumor suggests?",
+    "a": "Sertoli Cell Tumor."
+  },
+  {
+    "q": "Hallmark of Microcystic Adnexal Carcinoma of the vulva?",
+    "a": "Deeply invasive nests of small cysts and cords with perineural invasion."
+  },
+  {
+    "q": "Definition of \"Starry Sky\" appearance in the reproductive system?",
+    "a": "Burkitt Lymphoma (can involve the ovaries or testes).\n\nAdvanced Male Reproductive Pathology"
+  },
+  {
+    "q": "Term for the precursor lesion of most Testicular Germ Cell Tumors?",
+    "a": "Germ Cell Neoplasia In Situ (GCNIS)."
+  },
+  {
+    "q": "Which testicular germ cell tumor does NOT arise from GCNIS?",
+    "a": "Pediatric <b>Yolk Sac Tumor</b> and Teratoma."
+  },
+  {
+    "q": "Primary immunohistochemical marker for <b>Seminoma</b>?",
+    "a": "OCT3/4 and SALL4."
+  },
+  {
+    "q": "Histologic appearance of Spermatocytic Tumor (formerly Spermatocytic <b>Seminoma</b>)?",
+    "a": "Three cell populations (small, medium, and giant) with \"spireme\" chromatin."
+  },
+  {
+    "q": "Typical behavior of a Spermatocytic Tumor vs. a Classic <b>Seminoma</b>?",
+    "a": "Spermatocytic Tumors occur in older men and rarely metastasize."
+  },
+  {
+    "q": "Clinical significance of \"High-Grade Prostatic Intraepithelial Neoplasia\" (HGPIN)?",
+    "a": "Precursor to prostatic adenocarcinoma; requires close follow-up but not immediate surgery.\n\nClinical Correlation & \"Pearls\""
+  },
+  {
+    "q": "What is the \"Schiller-Duval body\" analogous to in embryology?",
+    "a": "A primitive glomerulus."
+  },
+  {
+    "q": "Definition of \"Pseudopityriasis Rosea\" in the context of <i>Syphilis</i>?",
+    "a": "The generalized maculopapular rash of secondary <i>syphilis</i> involving the palms and soles."
+  },
+  {
+    "q": "Cause of \"Violin-string\" adhesions in <b>Fitz-Hugh-Curtis Syndrome</b>?",
+    "a": "Chronic inflammation and scarring of the liver capsule following <b>PID</b>."
+  },
+  {
+    "q": "Most common cause of a \"Cold\" (non-functional) nodule in the testis?",
+    "a": "Any solid testicular mass should be considered malignant until proven otherwise (orchiectomy)."
+  },
+  {
+    "q": "Significance of a \"Blue Dot Sign\" on the scrotum?",
+    "a": "Torsion of the appendix testis (benign, non-surgical)."
+  },
+  {
+    "q": "What is the \"Whiff Test\" used for?",
+    "a": "Diagnosis of <b>Bacterial Vaginosis</b> (addition of KOH produces a fishy odor).\n\nBreast: High-Level Concepts"
+  },
+  {
+    "q": "Definition of \"Flat Epithelial Atypia\" (FEA) in the breast?",
+    "a": "Replacement of native terminal duct lobular unit cells by one or more layers of atypical cuboidal/columnar cells."
+  },
+  {
+    "q": "Most common cause of \"Granulomatous Lobular Mastitis\"?",
+    "a": "Possible autoimmune reaction or reaction to <i>Corynebacterium</i> (seen in parous women)."
+  },
+  {
+    "q": "Defining feature of \"<b>Inflammatory Breast Cancer</b>\" on biopsy?",
+    "a": "Dermal lymphatic invasion by tumor emboli."
+  },
+  {
+    "q": "Histologic distinction of Medullary Carcinoma of the breast?",
+    "a": "Pushing borders, syncytial growth pattern, and prominent lymphoplasmacytic infiltrate."
+  },
+  {
+    "q": "Significance of the \"Phyllodes\" leaf-like architecture?",
+    "a": "Overgrowth of the stromal component relative to the epithelial component.\n\nPlacental & Developmental Nuances"
+  },
+  {
+    "q": "Primary risk associated with a \"Bipartite Placenta\" (Placenta Bilobata)?",
+    "a": "Increased risk of vasa previa and postpartum hemorrhage."
+  },
+  {
+    "q": "Definition of \"Amnion Nodosum\"?",
+    "a": "Small, yellow-white nodules on the fetal surface of the amnion; associated with severe oligohydramnios."
+  },
+  {
+    "q": "Most common cause of \"Single Umbilical Artery\" (SUA)?",
+    "a": "Usually idiopathic, but associated with an increased risk of fetal chromosomal and renal anomalies."
+  },
+  {
+    "q": "Pathogenesis of \"Gestational Alloimmune Thrombocytopenia\"?",
+    "a": "Maternal antibodies (anti-HPA-1a) cross the placenta and destroy fetal platelets."
+  },
+  {
+    "q": "Characteristic finding in \"Cervical Intraepithelial Neoplasia\" (CIN) Grade III?",
+    "a": "Full-thickness loss of maturation and high nuclear-to-cytoplasmic ratio."
+  },
+  {
+    "q": "IHC marker to differentiate Sex Cord-Stromal tumors from Epithelial tumors?",
+    "a": "Inhibin (Positive in Sex Cord-Stromal)."
+  },
+  {
+    "q": "Characteristic IHC profile for Embryonal Carcinoma?",
+    "a": "CD30 positive, CK positive, and OCT3/4 positive."
+  },
+  {
+    "q": "IHC stain used to confirm a diagnosis of Mesothelioma in the tunica vaginalis?",
+    "a": "Calretinin."
+  },
+  {
+    "q": "Use of <b>p16</b> IHC in cervical pathology?",
+    "a": "Strong, diffuse staining indicates high-risk <b>HPV</b> (E7) activity."
+  },
+  {
+    "q": "IHC marker for Clear Cell Carcinoma of the ovary?",
+    "a": "HNF-1-beta.\n\nClinical Syndromes & Drug Effects"
+  },
+  {
+    "q": "Term for \"Ovarian hyperstimulation\" causing massive cystic enlargement?",
+    "a": "Theca Lutein Cysts (associated with high <b>hCG</b> or fertility drugs)."
+  },
+  {
+    "q": "Classic drug cause of Endometrial Polyps?",
+    "a": "Tamoxifen."
+  },
+  {
+    "q": "Reproductive side effect of Spironolactone in males?",
+    "a": "Gynecomastia (due to its anti-androgenic effects)."
+  },
+  {
+    "q": "Condition of the breast associated with long-term Cimetidine use?",
+    "a": "Gynecomastia."
+  },
+  {
+    "q": "Definition of \"Stein-Leventhal Syndrome\"?",
+    "a": "The original name for <b>Polycystic Ovarian Syndrome</b> (<b>PCOS</b>).\n\nRare & Complex Variants"
+  },
+  {
+    "q": "Definition of \"Large Cell Calcifying Sertoli Cell Tumor\"?",
+    "a": "A rare Sertoli cell tumor associated with Carney Complex."
+  },
+  {
+    "q": "Defining feature of \"Serous Surface Papillary Carcinoma\"?",
+    "a": "Primary peritoneal cancer that is histologically identical to ovarian serous carcinoma but the ovaries are minimally involved."
+  },
+  {
+    "q": "Histologic hallmark of \"Microglandular Hyperplasia\" of the cervix?",
+    "a": "Proliferation of small glands, often associated with pregnancy or OCP use; mimics adenocarcinoma."
+  },
+  {
+    "q": "What is a \"Decidual Cast\"?",
+    "a": "The entire thickened endometrial lining shed in one piece, often seen in ectopic pregnancy or sudden progesterone drop."
+  },
+  {
+    "q": "Definition of \"Placental Site Trophoblastic Tumor\" (PSTT)?",
+    "a": "Rare tumor of intermediate trophoblasts; secretes Human Placental Lactogen (hPL) rather than <b>hCG</b>.\n\nSpecific Developmental Anomalies"
+  },
+  {
+    "q": "Definition of \"Gartner Duct Cyst\"?",
+    "a": "Remnant of the Wolffian (Mesonephric) duct on the lateral wall of the vagina."
+  },
+  {
+    "q": "Definition of \"M\u00fcllerian Agenesis\" (Mayer-Rokitansky-K\u00fcster-Hauser syndrome)?",
+    "a": "Congenital absence of the uterus and upper 2/3 of the vagina in 46,XX females."
+  },
+  {
+    "q": "Result of a \"Bicornuate Uterus\"?",
+    "a": "Incomplete fusion of the M\u00fcllerian ducts, resulting in a heart-shaped uterus with two horns."
+  },
+  {
+    "q": "Origin of a \"Paraovarian Cyst\"?",
+    "a": "Remnants of the Wolffian duct located in the broad ligament (e.g., Hydatid of Morgagni).\n\nVascular & Inflammatory Extras"
+  },
+  {
+    "q": "Most common cause of \"Granulomatous Orchitis\"?",
+    "a": "Idiopathic (suspected autoimmune) or Tuberculosis."
+  },
+  {
+    "q": "Pathogenesis of \"<b>Fournier Gangrene</b>\"?",
+    "a": "Necrotizing fasciitis of the perineum/scrotum; a surgical emergency."
+  },
+  {
+    "q": "\"Yellow-brown\" pigment in a \"Luteoma of Pregnancy\"?",
+    "a": "Intracellular lipid."
+  },
+  {
+    "q": "Clinical behavior of a \"Luteoma of Pregnancy\"?",
+    "a": "Benign, regresses spontaneously postpartum, but can cause maternal virilization."
+  },
+  {
+    "q": "Definition of \"Squamous Metaplasia of Lactiferous Ducts\" (SMULD)?",
+    "a": "Periductal mastitis; keratin plugs the duct leading to abscess and fistula formation in smokers.\n\nFinal High-Yield Odds & Ends"
+  },
+  {
+    "q": "Primary risk factor for Primary Vaginal Melanoma?",
+    "a": "Unlike skin melanoma, it is not UV-related; etiology is unknown."
+  },
+  {
+    "q": "Key difference between \"Low-grade\" and \"High-grade\" SIL (Squamous Intraepithelial Lesion)?",
+    "a": "LSIL typically regresses (<b>HPV</b> 6, 11); HSIL has a high risk of progression (<b>HPV</b> 16, 18)."
+  },
+  {
+    "q": "Primary symptom of \"Torsion of the Appendix Testis\"?",
+    "a": "Sudden onset localized pain with a palpable \"blue dot\" on the upper scrotum."
+  },
+  {
+    "q": "Definition of \"Prehn Sign\"?",
+    "a": "Relief of scrotal pain with elevation (Positive in epididymitis, Negative in torsion)."
+  },
+  {
+    "q": "Most common cause of \"Azoospermia\" (no sperm) in cystic fibrosis?",
+    "a": "Congenital Bilateral Absence of the Vas Deferens (CBAVD)."
+  },
+  {
+    "q": "How to distinguish a <b>Seminoma</b> from a <b>Dysgerminoma</b>?",
+    "a": "They are histologically identical; the name depends on the gender of the patient (<b>Seminoma</b> in males, <b>Dysgerminoma</b> in females)."
+  },
+  {
+    "q": "Distinguishing feature of Embryonal Carcinoma vs. <b>Yolk Sac Tumor</b> markers?",
+    "a": "Embryonal is usually <b>AFP</b> negative (or low), while Yolk Sac is always <b>AFP</b> positive."
+  },
+  {
+    "q": "Histologic hallmark of a Granular Cell Tumor of the vulva?",
+    "a": "<b>S100</b> positive cells with abundant eosinophilic granules and pseudoepitheliomatous hyperplasia (mimics SCC)."
+  },
+  {
+    "q": "Primary difference between Follicular Cysts and Theca Lutein Cysts?",
+    "a": "Follicular cysts are usually solitary; Theca Lutein cysts are multiple, bilateral, and driven by high <b>hCG</b>."
+  },
+  {
+    "q": "Key histologic distinction between Paget\u2019s Disease of the Breast and Melanoma?",
+    "a": "Paget cells contain mucin (<b>PAS</b> positive) and are <b>S100</b> negative.\n\nSpecific Molecular Pathology & IHC (Level 2)"
+  },
+  {
+    "q": "Which breast cancer subtype is most associated with the \"Basal-like\" gene expression?",
+    "a": "Triple-negative breast cancer (<b>ER</b>-, <b>PR</b>-, <b>HER2</b>-)."
+  },
+  {
+    "q": "Primary molecular driver in Phyllodes Tumors?",
+    "a": "MED12 mutations."
+  },
+  {
+    "q": "Molecular hallmark of Alveolar Rhabdomyosarcoma (Sarcoma Botryoides variant)?",
+    "a": "t(2;13) or t(1;13) translocation involving PAX3 or PAX7."
+  },
+  {
+    "q": "IHC marker used to distinguish between a Complete and Partial Mole?",
+    "a": "<b>p57</b> (expressed in Partial Moles; absent in Complete Moles due to lack of maternal DNA)."
+  },
+  {
+    "q": "Genetic mutation associated with Sertoli-Leydig tumors in Pleuropulmonary Blastoma?",
+    "a": "DICER1 mutation.\n\nPlacental & Umbilical Cord Micro-Pathology"
+  },
+  {
+    "q": "Definition of Placental Infarction?",
+    "a": "Localized necrosis of villi due to compromised maternal blood flow (common in <b>Preeclampsia</b>)."
+  },
+  {
+    "q": "Histologic sign of a <i>CMV</i> infection in the placenta?",
+    "a": "\"Owl\u2019s eye\" intranuclear inclusions in enlarged villous cells."
+  },
+  {
+    "q": "Definition of Chorangioma?",
+    "a": "A benign, hamartomatous capillary hemangioma of the placenta."
+  },
+  {
+    "q": "Significance of \"Hoffbauer Cells\" in the placenta?",
+    "a": "They are fetal macrophages found in the villous stroma."
+  },
+  {
+    "q": "Consequence of \"True Knots\" in the umbilical cord?",
+    "a": "Can lead to fetal hypoxia and intrauterine fetal death (IUFD).\n\nClinical Signs & Eponyms"
+  },
+  {
+    "q": "What is \"Schwartzman Reaction\" in the context of pregnancy?",
+    "a": "A form of DIC and renal cortical necrosis triggered by endotoxins (often associated with septic abortion)."
+  },
+  {
+    "q": "Definition of \"<b>Arias-Stella Reaction</b>\"?",
+    "a": "Hypersecretory endometrial changes (enlarged nuclei) seen in pregnancy or ectopic pregnancy; mimics malignancy."
+  },
+  {
+    "q": "Classic presentation of \"<b>Peyronie Disease</b>\"?",
+    "a": "Fibrous plaque in the tunica albuginea causing painful curvature of the penis during erection."
+  },
+  {
+    "q": "Definition of \"Kraurosis Vulvae\"?",
+    "a": "Severe atrophy and shrinkage of the vulva, often the end-stage of <b>Lichen Sclerosus</b>."
+  },
+  {
+    "q": "Cause of \"Pseudohermaphroditism\" in males?",
+    "a": "Most commonly Androgen Insensitivity Syndrome (46,XY with female phenotype).\n\nMale Reproductive: Detailed Anatomy & Rare Tumors"
+  },
+  {
+    "q": "Primary histologic feature of \"Intratubular Germ Cell Neoplasia\"?",
+    "a": "Atypical germ cells limited to the seminiferous tubules (precursor to most GCTs)."
+  },
+  {
+    "q": "Most common site for a \"Sperm Granuloma\"?",
+    "a": "The eyeidymis (often follows a vasectomy)."
+  },
+  {
+    "q": "Definition of \"Tunica Vaginalis Hydrocele\"?",
+    "a": "Fluid collection between the parietal and visceral layers of the tunica vaginalis."
+  },
+  {
+    "q": "Mechanism of \"Testicular Infarction\" in Torsion?",
+    "a": "Venous obstruction occurs first, followed by arterial compromise and hemorrhagic necrosis."
+  },
+  {
+    "q": "Histology of \"Condyloma Acuminatum\" vs. \"Condyloma Latum\"?",
+    "a": "Acuminatum shows koilocytic atypia (<b>HPV</b>); Latum shows plasma cell-rich inflammation (<i>Syphilis</i>).\n\nAdvanced Breast: Rare Findings"
+  },
+  {
+    "q": "Definition of \"Cystosarcoma Phyllodes\"?",
+    "a": "An older term for <b>Phyllodes Tumor</b>, emphasizing its \"leaf-like\" and potentially malignant nature."
+  },
+  {
+    "q": "Distinguishing feature of \"Secretory Carcinoma\" of the breast?",
+    "a": "Rare, low-grade cancer that produces abundant intracellular and extracellular secretions; seen in children (Juvenile Carcinoma)."
+  },
+  {
+    "q": "Common location for \"Ectopic Breast Tissue\"?",
+    "a": "The axilla (most common site along the milk line)."
+  },
+  {
+    "q": "Definition of \"Mondor\u2019s Disease\"?",
+    "a": "Superficial thrombophlebitis of the breast veins; presents as a painful, cord-like mass."
+  },
+  {
+    "q": "Significance of \"Atypical Lobular Hyperplasia\" (ALH)?",
+    "a": "Similar to <b>LCIS</b> but cells fill <50% of the acini in a lobule; indicates increased cancer risk.\n\nFinal Synthesis: USMLE \"Must-Knows\""
+  },
+  {
+    "q": "Most common cause of \"Scrotal Pain\" in a 20-year-old?",
+    "a": "Epididymitis (usually <i>Chlamydia</i> or <i>Gonorrhea</i>)."
+  },
+  {
+    "q": "Most common cause of \"Scrotal Pain\" in a 12-year-old?",
+    "a": "Testicular Torsion."
+  },
+  {
+    "q": "Definition of \"Hematocle\"?",
+    "a": "Blood in the tunica vaginalis, usually following trauma."
+  },
+  {
+    "q": "Result of \"Chronic Endometritis\" on fertility?",
+    "a": "Increases risk of ectopic pregnancy and infertility due to tubal scarring."
+  },
+  {
+    "q": "Hallmark of \"Postpartum Pituitary Necrosis\" (Sheehan Syndrome)?",
+    "a": "Failure to lactate and loss of pubic hair due to ischemic necrosis of the anterior pituitary."
+  }
+]
