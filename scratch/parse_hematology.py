@@ -2,78 +2,73 @@ import json
 import re
 
 def format_text(text):
-    # Remove Section headers that get caught in text
-    text = re.sub(r'\nSection \d+:.*', '', text)
-    
     # LaTeX-like symbols
-    # Arrows
     text = text.replace(r'\uparrow', '&uarr;')
     text = text.replace(r'\downarrow', '&darr;')
     text = text.replace(r'\rightarrow', '&rarr;')
-    
-    # Math symbols
-    text = text.replace(r'\\%', '%')
-    text = text.replace(r'\%', '%')
-    text = text.replace(r'\times', '&times;')
-    text = text.replace(r'\approx', '&approx;')
-    
-    # Greek symbols
-    text = text.replace(r'\delta', '&delta;')
     text = text.replace(r'\alpha', '&alpha;')
     text = text.replace(r'\beta', '&beta;')
     text = text.replace(r'\gamma', '&gamma;')
+    text = text.replace(r'\delta', '&delta;')
+    text = text.replace(r'\pm', '&plusmn;')
+    text = text.replace(r'\times', '&times;')
+    text = text.replace(r'\ge', '&ge;')
+    text = text.replace(r'\le', '&le;')
+    text = text.replace(r'\Delta', '&Delta;')
+    text = text.replace(r'^\circ\text{C}', '&deg;C')
     
-    # Subscripts and Superscripts
-    text = re.sub(r'\^\{([^}]+)\}', r'<sup>\1</sup>', text)
-    text = re.sub(r'_\{([^}]+)\}', r'<sub>\1</sub>', text)
-    text = re.sub(r'\^(\w|\d)', r'<sup>\1</sup>', text)
-    text = re.sub(r'_(\w|\d)', r'<sub>\1</sub>', text)
+    # Generic Ions/Formulas in $...$
+    def latex_replacer(match):
+        inner = match.group(1)
+        # Handle t(9;22) etc.
+        inner = re.sub(r't\((\d+);(\d+)\)', r'<i>t</i>(\1;\2)', inner)
+        # Handle ^+ or ^- or ^{2+}
+        inner = re.sub(r'\^\{([^}]+)\}', r'<sup>\1</sup>', inner)
+        inner = re.sub(r'\^(\+|-|2\+|3\+)', r'<sup>\1</sup>', inner)
+        # Handle _3 or _{m} or _2 or _A
+        inner = re.sub(r'_\{([^}]+)\}', r'<sub>\1</sub>', inner)
+        inner = re.sub(r'_([a-zA-Z0-9])', r'<sub>\1</sub>', inner)
+        # Handle genes/proteins as italics if in math mode
+        inner = re.sub(r'\b(BCR-ABL|c-MYC|BCL-2|JAK2|TXA2|PIGA|RAR|ADAMTS13|ALK|HFE|PTEN|p53)\b', r'<i>\1</i>', inner)
+        # Remove \text{...}
+        inner = re.sub(r'\\text\{([^}]+)\}', r'\1', inner)
+        return inner
+
+    text = re.sub(r'\$([^$]+)\$', latex_replacer, text)
     
-    # Remove remaining math delimiters
-    text = text.replace('$', '')
-    
-    # Chemical formulas (more aggressive)
-    text = re.sub(r'\b(H2S|O2|CO2|Fe2\+)\b', lambda m: m.group(1).replace('2', '<sub>2</sub>').replace('+', '<sup>+</sup>'), text)
-    text = re.sub(r'TXA2', 'TXA<sub>2</sub>', text)
-    
-    # Common medical/biological italics
-    genera = ['Salmonella', 'Staphylococcus', 'Streptococcus', 'Mycoplasma', 'Plasmodium', 'Erythrocyte', 'Reticulocyte']
-    for g in genera:
-        text = re.sub(rf'\b({g})\b', r'<i>\1</i>', text)
+    # Organisms in Italics
+    organisms = [
+        'Salmonella', 'H. pylori', 'Plasmodium falciparum', 'Mycoplasma pneumoniae', 
+        'EBV', 'HTLV-1', 'Parvovirus B19', 'Staphylococcus aureus', 'E. coli O157:H7',
+        'Staph. aureus', 'E. coli', 'Mycoplasma', 'Mumps', 'Corynebacterium', 'HTLV-1'
+    ]
+    organisms = sorted(list(set(organisms)), key=len, reverse=True)
+    for org in organisms:
+        text = re.sub(rf'\b({re.escape(org)})\b', r'<i>\1</i>', text, flags=re.IGNORECASE)
 
     # Bolding high-yield terms
     keywords = [
-        'ALA synthase', 'Vitamin B6', 'erythropoietin', 'EPO', 'HbA1', 'HbF', 
-        'Reticulocyte Index', 'Plummer-Vinson Syndrome', 'Sideroblastic Anemia', 
-        'Thalassemia', 'Iron Deficiency', 'Lead Poisoning', 'B12', 'Folate', 
-        'SCD', 'Pernicious Anemia', 'Megaloblastic Anemia', 'PNH', 'Budd-Chiari', 
-        'Sickle Cell', 'G6PD', 'Heinz bodies', 'Bite cells', 'Coombs', 'CML', 
-        'Philadelphia chromosome', 'AML', 'ALL', 'Hodgkin Lymphoma', 
-        'Multiple Myeloma', 'DIC', 'TTP', 'HUS', 'ADAMTS13', 'Warfarin', 
-        'Heparin', 'HIT', 'Factor V Leiden', 'Polycythemia Vera', 'JAK2', 
-        'Burton lines', 'Reed-Sternberg', 'Bence-Jones', 'ATRA', 'Auer Rods',
-        'TRAP', 'Sezary Syndrome', 'Myelofibrosis', 'HALT', 'Howell-Jolly',
-        'Dacrocytes', 'Acanthocytes', 'Echinocytes', 'Degmacytes', 'Cabot Rings',
-        'Zeta potential', 'Rouleaux', 'Acute Chest Syndrome', 'vWF', 'GpIb', 
-        'GpIIb/IIIa', 'Pentad', 'CRAB', 'Bence-Jones', 'Reed-Sternberg', 'ATRA', 
-        'Auer Rods', 'Bence-Jones', 'Reed-Sternberg', 'ATRA', 'Auer Rods'
+        'Iron Deficiency Anemia', 'Thalassemia', 'Plummer-Vinson Syndrome', 'Sideroblastic Anemia', 
+        'Anemia of Chronic Disease', 'ACD', 'Megaloblastic Anemia', 'Pernicious Anemia', 
+        'Hemolytic Anemia', 'Hereditary Spherocytosis', 'Sickle Cell Anemia', 'Sickle Cell', 
+        'Paroxysmal Nocturnal Hemoglobinuria', 'PNH', 'G6PD deficiency', 'Autoimmune Hemolytic Anemia', 
+        'AIHA', 'Acute Myeloid Leukemia', 'AML', 'Acute Promyelocytic Leukemia', 'APL', 
+        'Acute Lymphoblastic Leukemia', 'ALL', 'Chronic Lymphocytic Leukemia', 'CLL', 
+        'Chronic Myeloid Leukemia', 'CML', 'Polycythemia Vera', 'Essential Thrombocythemia', 
+        'Hodgkin Lymphoma', 'Non-Hodgkin Lymphoma', 'Burkitt Lymphoma', 'Follicular Lymphoma', 
+        'Mantle Cell Lymphoma', 'Marginal Zone Lymphoma', 'Multiple Myeloma', 'MGUS', 
+        'Waldenström Macroglobulinemia', 'ITP', 'TTP', 'DIC', 'vWD', 'von Willebrand Disease', 
+        'Hemophilia A', 'Hemophilia B', 'Hemophilia', 'Factor V Leiden', 'Myelofibrosis', 
+        'Aplastic Anemia', 'MDS', 'Myelodysplastic Syndromes', 'Hairy Cell Leukemia', 
+        'Bernard-Soulier', 'Glanzmann Thrombasthenia', 'HELLP Syndrome', 'HUS', 'Hemolytic Uremic Syndrome',
+        'Schistocytes', 'Heinz bodies', 'Auer Rods', 'Philadelphia Chromosome', 'Reed-Sternberg', 
+        'Bence-Jones proteins', 'Rouleaux formation', 'Aquagenic pruritus', 'Howell-Jolly bodies', 
+        'Target cells', 'Bite cells', 'Smudge cells', 'Teardrop cells', 'Dacrocytes'
     ]
     
     keywords = sorted(list(set(keywords)), key=len, reverse=True)
     for k in keywords:
-        text = re.sub(rf'\b(?<!<b>)({re.escape(k)})(?!</b>)\b', r'<b>\1</b>', text, flags=re.IGNORECASE)
-
-    # Comparisons
-    text = text.replace(' < ', ' &lt; ')
-    text = text.replace(' > ', ' &gt; ')
-    text = re.sub(r'MCV < 80', 'MCV &lt; 80', text)
-    text = re.sub(r'MCV > 100', 'MCV &gt; 100', text)
-    text = re.sub(r'RI > 2%', 'RI &gt; 2%', text)
-    text = re.sub(r'> 3.5%', '&gt; 3.5%', text)
-    text = re.sub(r'> 5', '&gt; 5', text)
-    text = re.sub(r'< 10%', '&lt; 10%', text)
-    text = re.sub(r'< 13', '&lt; 13', text)
-    text = re.sub(r'> 13', '&gt; 13', text)
+        text = re.sub(rf'\b(?<!<b>)(?<!<i>)({re.escape(k)})(?!</i>)(?!</b>)\b', r'<b>\1</b>', text, flags=re.IGNORECASE)
 
     return text.strip()
 

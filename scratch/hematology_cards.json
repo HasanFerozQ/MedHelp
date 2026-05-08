@@ -1,834 +1,1010 @@
 [
   {
-    "q": "Rate-limiting step of Heme synthesis?",
-    "a": "&delta;-aminolevulinic acid (ALA) synthase (requires <b>Vitamin B6</b>)."
+    "q": "Fundamental definition of anemia based on lab values?",
+    "a": "Decrease in circulating red blood cell (RBC) mass, typically measured by Hemoglobin (Hb), Hematocrit (Hct), or RBC count."
   },
   {
-    "q": "Location of the <b>erythropoietin</b> (<b>EPO</b>) sensor in the kidney?",
-    "a": "Peritubular interstitial cells of the renal cortex."
+    "q": "Morphologic classification based on Mean Corpuscular Volume (MCV)?",
+    "a": "Microcytic (<80 fL), Normocytic (80\u2013100 fL), and Macrocytic (>100 fL)."
   },
   {
-    "q": "What state must iron be in to bind Oxygen?",
-    "a": "Ferrous state (Fe<sup>2+</sup>). (\"It 2nd-ly binds O<sub>2</sub>\")."
+    "q": "Primary cause of Microcytic Anemia related to heme synthesis?",
+    "a": "Iron deficiency (most common), <b>Sideroblastic anemia</b>, and Lead poisoning."
   },
   {
-    "q": "Major hemoglobin type in adults (<b>HbA1</b>) composition?",
-    "a": "&alpha;<sub>2</sub>&beta;<sub>2</sub>."
+    "q": "Primary cause of Microcytic Anemia related to globin synthesis?",
+    "a": "<b>Thalassemia</b>."
   },
   {
-    "q": "Major hemoglobin type in fetuses (<b>HbF</b>) composition?",
-    "a": "&alpha;<sub>2</sub>&gamma;<sub>2</sub>."
+    "q": "Most common cause of <b>Iron Deficiency Anemia</b> in adult males and postmenopausal females?",
+    "a": "Chronic GI bleeding (must rule out malignancy)."
   },
   {
-    "q": "Why does <b>HbF</b> have higher oxygen affinity than HbA?",
-    "a": "Decreased binding of 2,3-BPG to the &gamma;-subunits."
+    "q": "Distinctive lab profile of <b>Iron Deficiency Anemia</b>?",
+    "a": "Low serum iron, high TIBC (Total Iron Binding Capacity), low Ferritin, and high RDW."
   },
   {
-    "q": "Define \"<i>Reticulocyte</i> Index\" (RI) indicating adequate marrow response to anemia.",
-    "a": "RI &gt; 2%."
-  },
-  {
-    "q": "Most common cause of <b>Iron Deficiency</b> Anemia in elderly males?",
-    "a": "GI blood loss (occult malignancy until proven otherwise)."
-  },
-  {
-    "q": "Lab findings in <b>Iron Deficiency</b> Anemia (Ferritin, TIBC, Serum Fe)?",
-    "a": "&darr; Ferritin, &uarr; TIBC, &darr; Serum Iron."
-  },
-  {
-    "q": "Classic triad of <b>Plummer-Vinson Syndrome</b>?",
-    "a": "<b>Iron deficiency</b> anemia, Esophageal webs, Glossitis."
-  },
-  {
-    "q": "Primary defect in <b>Sideroblastic Anemia</b>?",
-    "a": "Protoporphyrin synthesis defect (<b>lead poisoning</b>, <b>Vitamin B6</b> deficiency, X-linked <b>ALA synthase</b> defect)."
-  },
-  {
-    "q": "Classic biopsy finding in <b>Sideroblastic Anemia</b> (Prussian Blue stain)?",
-    "a": "Ringed sideroblasts (iron-laden mitochondria surrounding the nucleus)."
+    "q": "Classic clinical triad of <b>Plummer-Vinson Syndrome</b>?",
+    "a": "<b>Iron deficiency anemia</b>, esophageal webs, and atrophic glossitis."
   },
   {
     "q": "Genetic defect in &alpha;-<b>Thalassemia</b>?",
-    "a": "Gene deletion (Chromosome 16)."
+    "a": "Gene deletion on Chromosome 16."
   },
   {
     "q": "Genetic defect in &beta;-<b>Thalassemia</b>?",
-    "a": "Point mutation in splice sites/promoter sequences (Chromosome 11)."
+    "a": "Point mutations in splice sites or promoter sequences on Chromosome 11."
   },
   {
-    "q": "Hemoglobin electrophoresis finding in &beta;-<b>Thalassemia</b> Minor?",
-    "a": "&uarr; HbA2 (&gt; 3.5%)."
+    "q": "Appearance of RBCs on blood smear in <b>Thalassemia</b>?",
+    "a": "<b>Target cells</b> and microcytic, hypochromic cells."
   },
   {
-    "q": "Skull X-ray finding in &beta;-<b>Thalassemia</b> Major?",
-    "a": "\"Crew-cut\" appearance (marrow expansion)."
+    "q": "Bone marrow finding in <b>Sideroblastic Anemia</b>?",
+    "a": "Ring sideroblasts (iron-laden mitochondria encircling the nucleus)."
   },
   {
-    "q": "Basophilic stippling is most associated with which Microcytic Anemia?",
-    "a": "<b>Lead Poisoning</b> (inhibition of pyrimidine 5'-nucleotidase)."
+    "q": "Mechanism of <b>Anemia of Chronic Disease</b> (<b>ACD</b>)?",
+    "a": "Chronic inflammation increases Hepcidin, which sequesters iron in macrophages and inhibits ferroportin."
   },
   {
-    "q": "Distinguishing lab finding between <b>B12</b> and <b>Folate</b> deficiency?",
-    "a": "Methylmalonic acid (MMA) is elevated in <b>B12</b> deficiency ONLY."
+    "q": "Lab findings in <b>Anemia of Chronic Disease</b>?",
+    "a": "Low serum iron, low TIBC, and high/normal Ferritin."
   },
   {
-    "q": "Neurological symptom associated with <b>B12</b> deficiency?",
-    "a": "Subacute Combined Degeneration (<b>SCD</b>) of the spinal cord (dorsal columns/lateral corticospinal tract)."
+    "q": "Primary mechanism of <b>Megaloblastic Anemia</b>?",
+    "a": "Impaired DNA synthesis leading to delayed nuclear maturation relative to cytoplasm."
   },
   {
-    "q": "Most common cause of Vitamin <b>B12</b> deficiency?",
-    "a": "<b>Pernicious Anemia</b> (anti-intrinsic factor antibodies)."
+    "q": "Key smear finding in Vitamin B12 or Folate deficiency?",
+    "a": "Hypersegmented neutrophils (>5 lobes) and oval macrocytes."
   },
   {
-    "q": "Type of cell seen on peripheral smear in <b>Megaloblastic Anemia</b>?",
-    "a": "Hypersegmented neutrophils (&gt; 5 lobes)."
+    "q": "Neurological symptom unique to Vitamin B12 deficiency (not in Folate)?",
+    "a": "Subacute combined degeneration of the spinal cord (dorsal columns/lateral corticospinal tracts)."
   },
   {
-    "q": "Common drug causes of <b>Folate</b> deficiency?",
-    "a": "Phenytoin, Methotrexate, Trimethoprim."
+    "q": "Common cause of B12 deficiency involving an autoimmune process?",
+    "a": "<b>Pernicious Anemia</b> (destruction of gastric parietal cells/Intrinsic Factor)."
   },
   {
-    "q": "Two major categories of Normocytic Anemia based on <i>Reticulocyte</i> Count?",
-    "a": "Hemolytic (High RC) vs. Non-hemolytic/Underproduction (Low RC)."
+    "q": "Reticulocyte response in Hemolytic Anemias?",
+    "a": "Increased Reticulocyte Count (RC), often >3% (corrected)."
   },
   {
-    "q": "Intravascular Hemolysis: Serum Haptoglobin levels?",
-    "a": "Decreased (Haptoglobin binds free Hemoglobin)."
+    "q": "Distinguishing lab feature of Intravascular Hemolysis?",
+    "a": "Low Haptoglobin, Hemoglobinuria, and Hemosiderinuria."
   },
   {
-    "q": "Confirmatory test for Hereditary Spherocytosis?",
-    "a": "Osmotic Fragility Test (or Eosin-5-maleimide flow cytometry)."
+    "q": "Inheritance pattern and defect in <b>Hereditary Spherocytosis</b>?",
+    "a": "Autosomal dominant; defect in RBC membrane proteins (Ankyrin, Spectrin, or Band 3)."
   },
   {
-    "q": "Mechanism of Paroxysmal Nocturnal Hemoglobinuria (<b>PNH</b>)?",
-    "a": "Acquired PIGA gene mutation &rarr; deficiency of GPI anchor &rarr; loss of CD55/CD59 (complement inhibitors)."
+    "q": "Diagnostic test for <b>Hereditary Spherocytosis</b>?",
+    "a": "Osmotic Fragility Test or Eosin-5-maleimide (EMA) binding test."
   },
   {
-    "q": "Triad of <b>PNH</b>?",
-    "a": "<b>Coombs</b>-negative hemolytic anemia, Pancytopenia, Venous thrombosis (e.g., <b>Budd-Chiari</b>)."
+    "q": "Precise molecular mutation in <b>Sickle Cell Anemia</b>?",
+    "a": "Glutamic acid replaced by Valine at position 6 of the &beta;-globin chain."
   },
   {
-    "q": "Amino acid substitution in <b>Sickle Cell</b> Anemia (HbS)?",
-    "a": "Glutamic acid to Valine at position 6 of &beta;-globin chain."
+    "q": "Primary cause of RBC sickling in HbS patients?",
+    "a": "Deoxygenation (hypoxia), dehydration, or acidosis."
   },
   {
-    "q": "Amino acid substitution in Hemoglobin C (HbC)?",
-    "a": "Glutamic acid to Lysine at position 6 of &beta;-globin chain. (\"LyCine\")."
+    "q": "Most common cause of osteomyelitis in <b>Sickle Cell</b> patients?",
+    "a": "<i>Salmonella</i>."
   },
   {
-    "q": "Most common trigger for <b>G6PD</b> deficiency oxidative stress?",
-    "a": "Fava beans, Infections, Sulfa drugs, Primaquine."
+    "q": "Mutation in Hemoglobin C (HbC)?",
+    "a": "Glutamic acid replaced by Lysine at position 6 of the &beta;-globin chain."
   },
   {
-    "q": "Histologic hallmark of <b>G6PD</b> deficiency?",
-    "a": "<b>Heinz bodies</b> and <b>Bite cells</b>."
+    "q": "Mechanism of <b>Paroxysmal Nocturnal Hemoglobinuria</b> (<b>PNH</b>)?",
+    "a": "Acquired PIGA gene mutation leading to loss of GPI anchor and decay-accelerating factor (CD55/59)."
   },
   {
-    "q": "Warm Agglutinin AIHA: Antibody type and association?",
-    "a": "IgG; associated with SLE and CLL."
+    "q": "Classic presentation of <b>PNH</b>?",
+    "a": "Dark urine in the morning and increased risk of venous thrombosis (e.g., Budd-Chiari syndrome)."
   },
   {
-    "q": "Cold Agglutinin AIHA: Antibody type and association?",
-    "a": "IgM; associated with <i>Mycoplasma</i> pneumoniae and Mononucleosis."
+    "q": "Enzyme deficiency causing episodic hemolysis after oxidative stress?",
+    "a": "Glucose-6-Phosphate Dehydrogenase (G6PD) deficiency."
   },
   {
-    "q": "Translocation associated with Chronic Myeloid Leukemia (<b>CML</b>)?",
-    "a": "t(9;22); BCR-ABL (<b>Philadelphia chromosome</b>)."
+    "q": "Key smear findings in <b>G6PD deficiency</b>?",
+    "a": "<b>Heinz bodies</b> (denatured Hb) and <b>Bite cells</b>."
   },
   {
-    "q": "Marker used to differentiate <b>CML</b> from a Leukemoid Reaction?",
-    "a": "Leukocyte Alkaline Phosphatase (LAP). Low in <b>CML</b>, High in Leukemoid Reaction."
+    "q": "Differentiation between Warm and Cold <b>Autoimmune Hemolytic Anemia</b>?",
+    "a": "Warm is IgG-mediated (extravascular); Cold is IgM-mediated (complement-mediated).\n\nWhite Blood Cell Disorders: Leukemias & Lymphomas"
   },
   {
-    "q": "Classic marker for Acute Myeloid Leukemia (<b>AML</b>)?",
-    "a": "<b>Auer Rods</b> (MPO positive)."
+    "q": "Characterization of Acute Leukemia in the bone marrow?",
+    "a": ">20% blasts in the marrow."
   },
   {
-    "q": "Specific treatment for <b>AML</b> M3 (Acute Promyelocytic Leukemia)?",
-    "a": "<b>All</b>-trans Retinoic Acid (<b>ATRA</b>)."
+    "q": "Pathognomonic biopsy finding for <b>Acute Myeloid Leukemia</b> (<b>AML</b>)?",
+    "a": "<b>Auer Rods</b> (peroxidase-positive cytoplasmic inclusions)."
   },
   {
-    "q": "Most common childhood leukemia?",
-    "a": "Acute Lymphoblastic Leukemia (<b>ALL</b>)."
+    "q": "Cytogenetic translocation associated with <b>Acute Promyelocytic Leukemia</b> (<b>APL</b>)?",
+    "a": "<i>t</i>(15;17) involving the Retinoic Acid Receptor (RAR)."
   },
   {
-    "q": "Translocation associated with Burkitt Lymphoma?",
-    "a": "t(8;14); c-myc activation."
+    "q": "Standard treatment to induce differentiation in <b>APL</b>?",
+    "a": "<b>All</b>-trans retinoic acid (ATRA)."
   },
   {
-    "q": "Translocation associated with Follicular Lymphoma?",
-    "a": "t(14;18); BCL-2 activation."
+    "q": "Most common pediatric malignancy?",
+    "a": "<b>Acute Lymphoblastic Leukemia</b> (<b>ALL</b>)."
   },
   {
-    "q": "Translocation associated with Mantle Cell Lymphoma?",
-    "a": "t(11;14); Cyclin D1 activation."
+    "q": "Marker for Pre-B and Pre-T <b>ALL</b>?",
+    "a": "TdT (Terminal deoxynucleotidyl transferase)."
   },
   {
-    "q": "Diagnostic cell for <b>Hodgkin Lymphoma</b>?",
-    "a": "<b>Reed-Sternberg</b> cell (\"Owl's eye\" appearance; CD15+, CD30+)."
+    "q": "Common translocation in B-<b>ALL</b> with a better prognosis?",
+    "a": "<i>t</i>(12;21)."
   },
   {
-    "q": "Clinical hallmark of <b>Multiple Myeloma</b>?",
-    "a": "<b>CRAB</b>: Hypercalcemia, Renal insufficiency, Anemia, Bone lytic lesions."
+    "q": "Hallmark lab finding in <b>Chronic Lymphocytic Leukemia</b> (<b>CLL</b>)?",
+    "a": "Absolute lymphocytosis and \"<b>Smudge cells</b>\" on peripheral smear."
   },
   {
-    "q": "Pathognomonic urine finding in <b>Multiple Myeloma</b>?",
-    "a": "<b>Bence-Jones</b> protein (Ig light chains)."
+    "q": "Genetic hallmark of <b>Chronic Myeloid Leukemia</b> (<b>CML</b>)?",
+    "a": "<b>Philadelphia Chromosome</b> <i>t</i>(9;22) forming the <i>BCR-ABL</i> fusion gene."
   },
   {
-    "q": "Role of von Willebrand Factor (<b>vWF</b>) in primary hemostasis?",
-    "a": "Adhesion of platelets to subendothelial collagen via <b>GpIb</b> receptor."
+    "q": "Distinguishing <b>CML</b> from a Leukemoid Reaction?",
+    "a": "<b>CML</b> has low Leukocyte Alkaline Phosphatase (LAP) score and increased basophils."
   },
   {
-    "q": "Platelet receptor for Fibrinogen (aggregation)?",
-    "a": "<b>GpIIb/IIIa</b>."
+    "q": "Target of Imatinib therapy?",
+    "a": "Tyrosine kinase activity of the <i>BCR-ABL</i> protein."
   },
   {
-    "q": "Coagulation factor deficiency in Hemophilia A?",
-    "a": "Factor VIII."
+    "q": "Mutation commonly found in <b>Polycythemia Vera</b> and <b>Essential Thrombocythemia</b>?",
+    "a": "<i>JAK2</i> V617F mutation."
   },
   {
-    "q": "Coagulation factor deficiency in Hemophilia B?",
-    "a": "Factor IX."
+    "q": "Clinical sign of <b>Polycythemia Vera</b> after a hot shower?",
+    "a": "<b>Aquagenic pruritus</b> (due to histamine release from increased mast cells)."
   },
   {
-    "q": "Lab profile of <b>DIC</b> (Platelets, PT/PTT, Fibrinogen, D-dimer)?",
-    "a": "&darr; Platelets, &uarr; PT/PTT, &darr; Fibrinogen, &uarr; D-dimer."
+    "q": "Pathological cell type in <b>Hodgkin Lymphoma</b>?",
+    "a": "<b>Reed-Sternberg</b> (RS) cells (CD15+ and CD30+)."
   },
   {
-    "q": "Deficiency in Thrombotic Thrombocytopenic Purpura (<b>TTP</b>)?",
-    "a": "<b>ADAMTS13</b> (<b>vWF</b> cleaving protease)."
+    "q": "Most common subtype of <b>Hodgkin Lymphoma</b>?",
+    "a": "Nodular Sclerosis (often presents with a mediastinal mass in young females)."
   },
   {
-    "q": "<b>Pentad</b> of <b>TTP</b>?",
-    "a": "Fever, Microangiopathic hemolytic anemia (MAHA), Thrombocytopenia, Renal failure, Neurological symptoms."
+    "q": "Translocation and gene involved in <b>Follicular Lymphoma</b>?",
+    "a": "<i>t</i>(14;18) involving <i>BCL-2</i> overexpression (inhibits apoptosis)."
   },
   {
-    "q": "Effect of Aspirin on platelet function?",
-    "a": "Irreversible inhibition of COX-1 (inhibits TXA<sub>2</sub> synthesis)."
+    "q": "Translocation and gene involved in <b>Burkitt Lymphoma</b>?",
+    "a": "<i>t</i>(8;14) involving <i>c-MYC</i> overexpression."
   },
   {
-    "q": "Mechanism of <b>Heparin</b>?",
-    "a": "Activates Antithrombin III."
+    "q": "Classic histological appearance of <b>Burkitt Lymphoma</b>?",
+    "a": "\"Starry sky\" appearance (tingible body macrophages among neoplastic B cells)."
   },
   {
-    "q": "Antidote for <b>Heparin</b> overdose?",
-    "a": "Protamine sulfate."
+    "q": "Lymphoma associated with chronic <i>H. pylori</i> infection?",
+    "a": "MALToma (<b>Marginal Zone Lymphoma</b>).\n\nPlasma Cell & Myeloid Dyscrasias"
   },
   {
-    "q": "Mechanism of <b>Warfarin</b>?",
-    "a": "Inhibits Epoxide Reductase (interferes with Vitamin K recycling)."
+    "q": "Triad of <b>Multiple Myeloma</b>?",
+    "a": "Lytic bone lesions, hypercalcemia, and monoclonal (M) protein spike."
   },
   {
-    "q": "Most common inherited hypercoagulable state?",
-    "a": "<b>Factor V Leiden</b> (resistance to Protein C cleavage)."
+    "q": "Key finding in the urine of <b>Multiple Myeloma</b> patients?",
+    "a": "<b>Bence-Jones proteins</b> (free light chains)."
   },
   {
-    "q": "Mutation associated with <b>Polycythemia Vera</b>?",
-    "a": "<b>JAK2</b> kinase mutation."
+    "q": "Characteristic RBC arrangement on smear in <b>Multiple Myeloma</b>?",
+    "a": "<b>Rouleaux formation</b> (stacks of coins due to high serum protein)."
   },
   {
-    "q": "Clinical symptom unique to <b>Polycythemia Vera</b>?",
-    "a": "Aquagenic pruritus (itching after a hot bath)."
+    "q": "Definition of <b>MGUS</b> (Monoclonal Gammopathy of Undetermined Significance)?",
+    "a": "M-spike <3 g/dL, <10% plasma cells in marrow, and no CRAB symptoms."
   },
   {
-    "q": "Major complication of Essential Thrombocythemia?",
-    "a": "Bleeding AND thrombosis (paradoxical)."
+    "q": "Features of <b>Waldenstr\u00f6m Macroglobulinemia</b>?",
+    "a": "Monoclonal IgM spike, hyperviscosity syndrome, and no lytic bone lesions.\n\nHemostasis & Coagulation"
   },
   {
-    "q": "Bone marrow finding in <b>Myelofibrosis</b>?",
-    "a": "\"Dry tap\" (extensive fibrosis) and Teardrop RBCs (<b>Dacrocytes</b>)."
+    "q": "Primary hemostasis involves which two components?",
+    "a": "Platelets and the vessel wall."
   },
   {
-    "q": "Storage form of iron in the marrow?",
-    "a": "Hemosiderin."
+    "q": "Adhesion molecule for platelets to subendothelial collagen?",
+    "a": "von Willebrand Factor (vWF) binding to GP Ib."
   },
   {
-    "q": "Target cells are typically seen in which three conditions?",
-    "a": "HbC disease, Asplenia, Liver disease, <b>Thalassemia</b>. (\"<b>HALT</b>\")."
+    "q": "Common drug that irreversibly inhibits Cyclooxygenase (COX-1)?",
+    "a": "Aspirin."
   },
   {
-    "q": "<b>Heinz bodies</b> vs <b>Howell-Jolly</b> bodies (Composition)?",
-    "a": "Heinz = Denatured Hemoglobin; <b>Howell-Jolly</b> = DNA remnants."
+    "q": "Lab finding that distinguishes <b>Bernard-Soulier</b> from <b>Glanzmann Thrombasthenia</b>?",
+    "a": "<b>Bernard-Soulier</b> has large platelets and low GP Ib; Glanzmann has low GP IIb/IIIa."
   },
   {
-    "q": "<b>Sideroblastic Anemia</b> vs <b>Lead Poisoning</b> (Enzyme inhibited)?",
-    "a": "Sideroblastic = <b>ALA Synthase</b>; Lead = ALA Dehydratase & Ferrochelatase."
+    "q": "Classic clinical presentation of Immune Thrombocytopenic Purpura (<b>ITP</b>)?",
+    "a": "Isolated thrombocytopenia following a viral infection, caused by anti-GP IIb/IIIa antibodies."
   },
   {
-    "q": "Primary site of heme degradation?",
-    "a": "Splenic Macrophages (Heme &rarr; Biliverdin &rarr; Unconjugated Bilirubin)."
+    "q": "The \"Pentad\" of Thrombotic Thrombocytopenic Purpura (<b>TTP</b>)?",
+    "a": "Fever, Anemia (MAHA), Thrombocytopenia, Renal failure, and Neurologic symptoms."
   },
   {
-    "q": "Effect of CO<sub>2</sub> and H^+ (acid) on the Oxygen-Hemoglobin dissociation curve?",
-    "a": "Right shift (Bohr effect) &rarr; increased O<sub>2</sub> unloading to tissues."
+    "q": "Enzyme deficiency in <b>TTP</b>?",
+    "a": "ADAMTS13 (vWF cleaving protease)."
   },
   {
-    "q": "Schistocytes + Normal PT/PTT?",
-    "a": "<b>TTP</b> or <b>HUS</b>."
+    "q": "Most common inherited bleeding disorder?",
+    "a": "<b>von Willebrand Disease</b> (<b>vWD</b>)."
   },
   {
-    "q": "Schistocytes + Prolonged PT/PTT?",
-    "a": "<b>DIC</b>."
+    "q": "Effect of <b>vWD</b> on lab values?",
+    "a": "Increased Bleeding Time and potentially increased PTT (vWF stabilizes Factor VIII)."
   },
   {
-    "q": "Isolated &uarr; PTT that corrects with mixing study?",
-    "a": "Factor deficiency (e.g., Hemophilia A/B)."
+    "q": "Deficiency in <b>Hemophilia A</b>?",
+    "a": "Factor VIII (X-linked recessive)."
   },
   {
-    "q": "Isolated &uarr; PTT that does NOT correct with mixing study?",
-    "a": "Coagulation factor inhibitor (e.g., Lupus Anticoagulant)."
+    "q": "Deficiency in <b>Hemophilia B</b>?",
+    "a": "Factor IX (X-linked recessive)."
   },
   {
-    "q": "Massive Splenomegaly + Pancytopenia + <b>TRAP</b> positive?",
-    "a": "Hairy Cell Leukemia."
+    "q": "Definition of Disseminated Intravascular Coagulation (<b>DIC</b>)?",
+    "a": "Pathologic activation of the coagulation cascade leading to widespread microthrombi and subsequent consumption of factors/platelets."
   },
   {
-    "q": "Smudge cells on peripheral smear?",
-    "a": "Chronic Lymphocytic Leukemia (CLL)."
+    "q": "Sensitive lab marker for <b>DIC</b>?",
+    "a": "Elevated D-dimer."
   },
   {
-    "q": "Lytic bone lesions + Hypercalcemia + Rash?",
-    "a": "Adult T-cell Leukemia/Lymphoma (HTLV-1)."
+    "q": "Most common inherited cause of Hypercoagulability (thrombophilia)?",
+    "a": "<b>Factor V Leiden</b> (resistance to Protein C cleavage).\n\nMyelodysplastic & Others"
   },
   {
-    "q": "\"Starry sky\" appearance on lymph node biopsy?",
-    "a": "Burkitt Lymphoma."
+    "q": "Definition of <b>Myelodysplastic Syndromes</b> (<b>MDS</b>)?",
+    "a": "Cytopenias with hypercellular marrow and maturation defects (ineffective hematopoiesis)."
   },
   {
-    "q": "Birbeck granules (tennis rackets) on EM?",
-    "a": "Langerhans Cell Histiocytosis."
+    "q": "Bone marrow finding in Primary <b>Myelofibrosis</b>?",
+    "a": "Extensive collagen fibrosis (Silver stain positive) and \"Dry tap\" on aspiration."
   },
   {
-    "q": "Eosinophilic inclusions in the cytoplasm of plasma cells in <b>Multiple Myeloma</b>?",
-    "a": "Russell bodies."
+    "q": "Characteristic RBC shape in Primary <b>Myelofibrosis</b>?",
+    "a": "<b>Teardrop cells</b> (<b>Dacrocytes</b>)."
   },
   {
-    "q": "Direct effect of 2,3-BPG on the hemoglobin oxygen affinity?",
-    "a": "It stabilizes the T (Taut) state, shifting the curve to the right and promoting O<sub>2</sub> unloading."
+    "q": "Function of Protein C and S?",
+    "a": "Inactivate Factors Va and VIIIa (act as anticoagulants)."
   },
   {
-    "q": "Why is the ESR (<i>Erythrocyte</i> Sedimentation Rate) increased in inflammation?",
-    "a": "Fibrinogen (an acute phase reactant) coats RBCs, neutralizing their negative surface charge (<b>Zeta potential</b>) and allowing them to aggregate (<b>Rouleaux</b>)."
+    "q": "Warfarin-induced skin necrosis is associated with which deficiency?",
+    "a": "Protein C deficiency."
   },
   {
-    "q": "Distinction between Hemoglobinuria and Myoglobinuria on dipstick?",
-    "a": "Both show \"Blood\" on dipstick, but only Hemoglobinuria shows pink/red serum (Myoglobin is cleared rapidly, leaving serum clear)."
+    "q": "Mechanism of Heparin-Induced Thrombocytopenia (HIT)?",
+    "a": "IgG antibodies against Heparin-Platelet Factor 4 (PF4) complexes."
   },
   {
-    "q": "What is the \"Rule of Three\" in RBC indices?",
-    "a": "RBC &times; 3 &approx; Hb and Hb &times; 3 &approx; Hct."
+    "q": "Preferred anticoagulant in HIT?",
+    "a": "Direct Thrombin Inhibitors (e.g., Argatroban)."
   },
   {
-    "q": "Most common cause of Death in <b>Sickle Cell</b> patients (Adults)?",
-    "a": "<b>Acute Chest Syndrome</b>."
+    "q": "Origin of the Thymic Cortex?",
+    "a": "Third Pharyngeal Pouch."
   },
   {
-    "q": "Organism responsible for Osteomyelitis in <b>Sickle Cell</b> patients?",
-    "a": "<i>Salmonella</i> (most common/classic) and <i>Staphylococcus</i> aureus."
+    "q": "Characteristic cell in Langerhans Cell Histiocytosis?",
+    "a": "Birbeck granules (tennis racket shape on EM)."
   },
   {
-    "q": "Effect of Hydroxyurea in <b>Sickle Cell</b> Disease?",
-    "a": "Increases production of <b>HbF</b>, which interferes with the polymerization of HbS."
+    "q": "Most common cause of Eosinophilia?",
+    "a": "Parasitic infections, Allergies, or Asthma (NAACP: Neoplasia, Asthma, Allergy, Collagen vascular disease, Parasites)."
   },
   {
-    "q": "Clinical finding in <b>Lead Poisoning</b> involving the gums?",
-    "a": "<b>Burton lines</b> (bluish-gray lead sulfide deposits)."
+    "q": "Significance of a \"Left Shift\" in a WBC differential?",
+    "a": "Increased proportion of immature neutrophils (band cells), indicating acute infection or inflammation."
   },
   {
-    "q": "Mechanism of Bernard-Soulier Syndrome?",
-    "a": "Deficiency of <b>GpIb</b>; impaired platelet-to-<b>vWF</b> adhesion."
+    "q": "Lab finding in Iron Overload (Hemochromatosis)?",
+    "a": "High Ferritin, high Serum Iron, and high Transferrin Saturation (>45-50%)."
   },
   {
-    "q": "Classic finding on peripheral smear for Bernard-Soulier?",
-    "a": "Giant platelets (often as large as RBCs)."
+    "q": "Effect of Lead Poisoning on RBCs?",
+    "a": "Basophilic stippling and inhibition of Ferrochelatase/ALA dehydratase."
   },
   {
-    "q": "Mechanism of Glanzmann Thrombasthenia?",
-    "a": "Deficiency/defect of <b>GpIIb/IIIa</b>; impaired platelet-to-platelet aggregation."
+    "q": "Vitamin required for the synthesis of ALA (heme precursor)?",
+    "a": "Vitamin B6 (Pyridoxine)."
   },
   {
-    "q": "Ristocetin cofactor assay result in von Willebrand Disease (vWD)?",
-    "a": "Abnormal (no agglutination), because <b>vWF</b> is required for Ristocetin-induced platelet clumping."
+    "q": "Primary site of Erythropoietin (EPO) production?",
+    "a": "Peritubular interstitial cells of the kidney."
   },
   {
-    "q": "Why is the PTT sometimes prolonged in vWD?",
-    "a": "<b>vWF</b> acts as a stabilizer/carrier for Factor VIII."
+    "q": "Typical MCV in <b>Sideroblastic Anemia</b>?",
+    "a": "Microcytic (can sometimes be dimorphic)."
   },
   {
-    "q": "What is the \"Pseudo-Thrombocytopenia\" artifact in lab reports?",
-    "a": "Platelet clumping in the test tube caused by EDTA (requires re-testing with a citrate tube)."
+    "q": "Role of Hepcidin in iron metabolism?",
+    "a": "It binds to Ferroportin to degrade it, preventing iron export from enterocytes and macrophages."
   },
   {
-    "q": "Mechanism of Immune Thrombocytopenic Purpura (ITP)?",
-    "a": "Anti-<b>GpIIb/IIIa</b> antibodies &rarr; splenic macrophage consumption of platelets."
+    "q": "Cause of \"Crew-cut\" appearance on skull X-ray?",
+    "a": "Expansion of marrow space due to severe erythroid hyperplasia (e.g., <b>Sickle Cell</b> or <b>Thalassemia</b>)."
   },
   {
-    "q": "First-line treatment for ITP in a patient with a dangerously low platelet count?",
-    "a": "IVIG (acts as a \"decoy\" for splenic macrophages) or Corticosteroids."
+    "q": "Difference between Lymphoma and Leukemia?",
+    "a": "Lymphoma arises as a discrete mass in nodes; Leukemia involves lymphoid or myeloid cells in bone marrow and blood."
   },
   {
-    "q": "Effect of Protein C/S deficiency on the body?",
-    "a": "Hypercoagulability; unable to inactivate Factors Va and VIIIa."
+    "q": "Characteristic finding in infectious mononucleosis (<i>EBV</i>)?",
+    "a": "Reactive (atypical) CD8+ T cells (Downey cells)."
   },
   {
-    "q": "Why does <b>Warfarin</b> cause \"Skin Necrosis\" in Protein C deficient patients?",
-    "a": "Protein C has a shorter half-life than Factors II, IX, and X; its rapid depletion creates a transient hypercoagulable state."
+    "q": "Lymph node region first involved in localized <b>Hodgkin Lymphoma</b>?",
+    "a": "Cervical or mediastinal nodes."
   },
   {
-    "q": "Mechanism of Antithrombin III deficiency?",
-    "a": "PTT fails to rise significantly after giving <b>Heparin</b> (<b>Heparin</b> resistance)."
+    "q": "Define Myelophthisic Anemia?",
+    "a": "Displacement of marrow by infiltrating processes (e.g., metastatic cancer, fibrosis)."
   },
   {
-    "q": "Difference between UFH (Unfractionated <b>Heparin</b>) and LMWH (Enoxaparin) mechanism?",
-    "a": "UFH inhibits both Thrombin and Factor Xa; LMWH predominantly inhibits Factor Xa."
+    "q": "Lab distinction between Folate and B12 deficiency regarding Methylmalonic Acid (MMA)?",
+    "a": "B12 deficiency has high MMA; Folate deficiency has normal MMA."
   },
   {
-    "q": "Lab test used to monitor <b>Warfarin</b> therapy?",
-    "a": "PT / INR."
+    "q": "Common cause of secondary Polycythemia?",
+    "a": "Hypoxia (lung disease, high altitude) or EPO-secreting tumors (Renal cell carcinoma)."
   },
   {
-    "q": "Direct Thrombin Inhibitors (e.g., Argatroban, Bivalirudin) are the treatment of choice for?",
-    "a": "<b>Heparin</b>-Induced Thrombocytopenia (<b>HIT</b>)."
+    "q": "Marker for Myeloid differentiation?",
+    "a": "Myeloperoxidase (MPO)."
   },
   {
-    "q": "Mutation found in almost 100% of Hairy Cell Leukemia cases?",
-    "a": "BRAF V600E."
+    "q": "Marker for Megakaryocytic differentiation?",
+    "a": "CD41 or CD61."
   },
   {
-    "q": "Distinctive \"Dry Tap\" on bone marrow aspiration is seen in which two conditions?",
-    "a": "Primary <b>Myelofibrosis</b> and Hairy Cell Leukemia."
+    "q": "Primary lab screening for Lupus Anticoagulant?",
+    "a": "Prolonged PTT that does not correct with a 1:1 mixing study (inhibitor present)."
   },
   {
-    "q": "Difference between Leukemoid Reaction and <b>CML</b> regarding Basophils?",
-    "a": "Basophilia is characteristic of <b>CML</b>, not a Leukemoid Reaction."
+    "q": "Target of Desmopressin (DDAVP) in <b>vWD</b>?",
+    "a": "Induces release of vWF from Weibel-Palade bodies of endothelial cells."
   },
   {
-    "q": "Typical immunophenotype of CLL B-cells?",
-    "a": "CD5+ and CD23+ (Note: CD5 is usually a T-cell marker)."
+    "q": "Clinical feature of Vitamin K deficiency?",
+    "a": "Bleeding (increased PT and PTT) due to decreased Factors II, VII, IX, X, C, and S."
   },
   {
-    "q": "What is a \"Richter Transformation\"?",
-    "a": "CLL/SLL transforming into an aggressive Diffuse Large B-Cell Lymphoma (DLBCL)."
+    "q": "Source of Vitamin K in humans?",
+    "a": "Dietary green leafy vegetables and bacterial synthesis in the gut."
   },
   {
-    "q": "\"Waldenstr\u00f6m Macroglobulinemia\" involves the overproduction of which Ig?",
-    "a": "IgM (leads to hyperviscosity syndrome)."
+    "q": "Cause of Splenomegaly in Pyruvate Kinase deficiency?",
+    "a": "Work hypertrophy from removing damaged RBCs (extravascular hemolysis)."
   },
   {
-    "q": "Radiographic \"Punch-out\" lesions in <b>Multiple Myeloma</b> are caused by?",
-    "a": "RANKL activation of Osteoclasts (and inhibition of Osteoblasts)."
+    "q": "Expected lab change in Chronic Blood Loss?",
+    "a": "Development of <b>Iron Deficiency Anemia</b>."
   },
   {
-    "q": "Key difference between MGUS and <b>Multiple Myeloma</b>?",
-    "a": "MGUS has &lt; 10% plasma cells in marrow and NO \"<b>CRAB</b>\" symptoms."
+    "q": "Major risk of untreated <b>Polycythemia Vera</b>?",
+    "a": "Hyperviscosity leading to thrombosis (stroke, MI)."
   },
   {
-    "q": "Most common transfusion reaction?",
-    "a": "Febrile Non-hemolytic Transfusion Reaction (caused by cytokines in stored blood)."
+    "q": "Defining feature of \"Blast Crisis\" in <b>CML</b>?",
+    "a": "Progression of <b>CML</b> to Acute Leukemia (<b>AML</b> or <b>ALL</b>)."
   },
   {
-    "q": "Primary symptom of TRALI (Transfusion-Related Acute Lung Injury)?",
-    "a": "Non-cardiogenic pulmonary edema (sudden onset respiratory distress/hypoxia)."
+    "q": "Key diagnostic marker for <b>Hairy Cell Leukemia</b>?",
+    "a": "TRAP positive (Tartrate-Resistant Acid Phosphatase)."
   },
   {
-    "q": "Mechanism of Acute Hemolytic Transfusion Reaction?",
-    "a": "Type II Hypersensitivity (preformed antibodies against donor ABO antigens)."
+    "q": "Treatment for <b>Hairy Cell Leukemia</b>?",
+    "a": "Cladribine (2-CDA)."
   },
   {
-    "q": "Blood product used to rapidly reverse <b>Warfarin</b>?",
-    "a": "Prothrombin Complex Concentrate (PCC) or Fresh Frozen Plasma (FFP)."
+    "q": "Common location for Extranodal <b>Marginal Zone Lymphoma</b>?",
+    "a": "Salivary glands (Sj\u00f6gren), Thyroid (Hashimoto), or Stomach (<i>H. pylori</i>)."
   },
   {
-    "q": "Indication for giving \"Washed\" Red Blood Cells?",
-    "a": "IgA deficiency (to prevent anaphylaxis)."
+    "q": "Typical patient profile for <b>Mantle Cell Lymphoma</b>?",
+    "a": "Older males; presents with late-stage disease/lymphadenopathy."
   },
   {
-    "q": "Storage lesion of RBCs involves a decrease in which metabolite?",
-    "a": "2,3-BPG (leads to increased O<sub>2</sub> affinity and decreased tissue delivery)."
+    "q": "Translocation for <b>Mantle Cell Lymphoma</b>?",
+    "a": "<i>t</i>(11;14) involving Cyclin D1."
   },
   {
-    "q": "Definition of Pancytopenia?",
-    "a": "Decrease in <b>all</b> three cell lines (RBCs, WBCs, and Platelets)."
+    "q": "Significance of the \"B symptoms\" in Lymphoma?",
+    "a": "Fever, night sweats, and weight loss (indicate poorer prognosis)."
   },
   {
-    "q": "Most common cause of Aplastic Anemia?",
-    "a": "Idiopathic (immune-mediated T-cell destruction of stem cells)."
+    "q": "Function of Antithrombin III?",
+    "a": "Inhibits Thrombin and Factor Xa; potentiated by Heparin."
   },
   {
-    "q": "Morphology of RBCs in Myelophthisic Anemia?",
-    "a": "Teardrop cells (<b>Dacrocytes</b>) \u2013 caused by the marrow being \"squeezed\" by fibrosis or tumor."
+    "q": "Common cause of <b>Sideroblastic Anemia</b> (acquired)?",
+    "a": "Alcoholism, Lead poisoning, or Isoniazid (B6 deficiency)."
   },
   {
-    "q": "Deficiency in Acute Intermittent Porphyria (AIP)?",
-    "a": "Porphobilinogen (PBG) deaminase."
+    "q": "Effect of Splenectomy on RBC morphology?",
+    "a": "Presence of <b>Howell-Jolly bodies</b> (nuclear remnants)."
   },
   {
-    "q": "The \"5 Ps\" of Acute Intermittent Porphyria symptoms?",
-    "a": "Painful abdomen, Port wine-colored urine, Polyneuropathy, Psychological disturbances, Precipitated by drugs (CYP450 inducers)."
+    "q": "Mechanism of Schistocyte formation?",
+    "a": "Shear stress as RBCs pass through fibrin mesh (Microangiopathic <b>Hemolytic Anemia</b>)."
   },
   {
-    "q": "Deficiency in Porphyria Cutanea Tarda (PCT)?",
-    "a": "Uroporphyrinogen decarboxylase."
+    "q": "Laboratory feature of Hemolytic Disease of the Newborn (Rh incompatibility)?",
+    "a": "Positive Direct Coombs test on fetal RBCs."
   },
   {
-    "q": "Classic clinical presentation of Porphyria Cutanea Tarda?",
-    "a": "Blistering cutaneous photosensitivity and hyperpigmentation (often associated with Hepatitis C)."
+    "q": "Differentiation between HbS trait and disease on Electrophoresis?",
+    "a": "Trait (HbAS) has <50% HbS; Disease (HbSS) has >90% HbS and no HbA."
   },
   {
-    "q": "Iron overload in the heart (Hemochromatosis) typically leads to?",
-    "a": "Restrictive or Dilated Cardiomyopathy."
+    "q": "Relationship between LDH and Hemolysis?",
+    "a": "LDH is an intracellular enzyme; levels rise significantly during RBC destruction."
   },
   {
-    "q": "Marker for identifying Hematopoietic Stem Cells (HSC)?",
-    "a": "CD34+."
+    "q": "Clinical significance of <b>Hairy Cell Leukemia</b> \"dry tap\"?",
+    "a": "Marrow fibrosis prevents aspiration."
   },
   {
-    "q": "Markers used to identify B-cell lineage via Flow Cytometry?",
-    "a": "CD19, CD20, and CD21."
+    "q": "Most common presentation of <b>Follicular Lymphoma</b>?",
+    "a": "Painless \"waxing and waning\" lymphadenopathy."
   },
   {
-    "q": "Marker used to identify the monocyte lineage?",
-    "a": "CD14 (the receptor for LPS)."
+    "q": "Role of the Mantle Zone in a lymph node?",
+    "a": "Area of B cells surrounding the germinal center."
   },
   {
-    "q": "What does a \"Shift to the Left\" signify in a CBC?",
-    "a": "Increased presence of immature neutrophils (band cells), usually indicating acute infection or inflammation."
+    "q": "Characteristic of Adult T-cell Leukemia/Lymphoma (ATLL)?",
+    "a": "Associated with <i>HTLV-1</i>; presents with skin lesions and hypercalcemia."
   },
   {
-    "q": "How is the \"Mentzer Index\" used to differentiate <b>Iron Deficiency</b> from <b>Thalassemia</b>?",
-    "a": "MCV / RBC count. If &lt; 13, it suggests <b>Thalassemia</b>; if &gt; 13, it suggests <b>Iron Deficiency</b>."
+    "q": "Define Myeloid:Erythroid (M:E) ratio?",
+    "a": "The ratio of myeloid elements to nucleated erythroid elements in the marrow (Normal is ~3:1)."
   },
   {
-    "q": "Meaning of \"Anisocytosis\" on a lab report?",
-    "a": "Variation in RBC size (measured by RDW - Red Cell Distribution Width)."
+    "q": "Reason for decreased M:E ratio?",
+    "a": "Erythroid hyperplasia (hemolysis) or myeloid hypoplasia."
   },
   {
-    "q": "Meaning of \"Poikilocytosis\"?",
-    "a": "Variation in RBC shape."
+    "q": "Common trigger for Aplastic Crisis in <b>Sickle Cell</b> or Spherocytosis?",
+    "a": "<i>Parvovirus B19</i> infection (infects erythroid precursors)."
   },
   {
-    "q": "Mechanism of Parvovirus B19 induced anemia?",
-    "a": "Directly infects and lyses Erythroid Precursor cells; causes Aplastic Crisis in patients with high RBC turnover (e.g., <b>Sickle Cell</b>)."
+    "q": "Definition of <b>Aplastic Anemia</b>?",
+    "a": "Pancytopenia with hypocellular bone marrow (fatty infiltration)."
   },
   {
-    "q": "Hallmark peripheral smear finding in Microangiopathic Hemolytic Anemia (MAHA)?",
-    "a": "Schistocytes (Helmet cells)."
+    "q": "Common drugs causing <b>Aplastic Anemia</b>?",
+    "a": "Carbamazepine, Chloramphenicol, Sulfonamides, and Chemotherapy."
   },
   {
-    "q": "What causes the \"Starry Sky\" appearance in Burkitt Lymphoma histology?",
-    "a": "Tingible body macrophages (white \"stars\") consuming apoptotic B-cells (dark \"sky\")."
+    "q": "Morphologic hallmark of Myelodysplastic Syndrome?",
+    "a": "Pseudo-Pelger-Hu\u00ebt cells (neutrophils with only two nuclear lobes)."
   },
   {
-    "q": "Which enzyme is deficient in Methemoglobinemia?",
-    "a": "Cytochrome b<sub>5</sub> reductase (Methemoglobin reductase)."
+    "q": "Key difference between Acute and Chronic Leukemias?",
+    "a": "Acute = proliferation of blasts (immature); Chronic = proliferation of mature/differentiating cells."
   },
   {
-    "q": "Treatment for symptomatic Methemoglobinemia?",
-    "a": "Methylene blue (reduces Fe<sup>3+</sup> back to Fe<sup>2+</sup>)."
+    "q": "Most common cause of death in <b>Multiple Myeloma</b>?",
+    "a": "Infection (due to loss of humoral immunity/hypogammaglobulinemia)."
   },
   {
-    "q": "Clinical \"classic\" presentation of Methemoglobinemia?",
-    "a": "Cyanosis (chocolate-colored blood) that does not improve with supplemental Oxygen."
+    "q": "Classic finding in Amyloidosis associated with <b>Multiple Myeloma</b>?",
+    "a": "Apple-green birefringence under polarized light with Congo Red stain."
   },
   {
-    "q": "Diagnostic hallmark of Myelodysplastic Syndromes (MDS)?",
-    "a": "\"Ringed Sideroblasts\" and \"Pseudo-Pelger-Hu\u00ebt anomaly\" (bilobed neutrophils)."
+    "q": "Common cause of False Positive VDRL/RPR?",
+    "a": "Antiphospholipid Syndrome (Lupus anticoagulant/Anticardiolipin antibodies)."
   },
   {
-    "q": "Major risk of Myelodysplastic Syndrome (MDS)?",
-    "a": "Transformation into Acute Myeloid Leukemia (<b>AML</b>)."
+    "q": "Preferred diagnostic step for suspected Lymphoma?",
+    "a": "Excisional lymph node biopsy (rather than Fine Needle Aspiration)."
   },
   {
-    "q": "In <b>Polycythemia Vera</b>, what happens to Serum <b>Erythropoietin</b> (<b>EPO</b>) levels?",
-    "a": "<b>EPO</b> is low (negative feedback from high RBC mass)."
+    "q": "Composition of Hemoglobin A2?",
+    "a": "Two alpha and two delta chains (&alpha;<sub>2</sub>&delta;<sub>2</sub>)."
   },
   {
-    "q": "Difference between \"Primary\" and \"Secondary\" Polycythemia?",
-    "a": "Primary (PV) has low <b>EPO</b>; Secondary (Altitude, Smoking, RCC) has high <b>EPO</b>."
+    "q": "Dominant hemoglobin type in a patient with &beta;-<b>Thalassemia</b> major?",
+    "a": "Hemoglobin F (&alpha;<sub>2</sub>&gamma;<sub>2</sub>)."
   },
   {
-    "q": "Term for marrow being replaced by \"non-hematopoietic\" material (tumor, granuloma)?",
-    "a": "Myelophthisis."
+    "q": "Reason for \"Chipmunk facies\" in <b>Thalassemia</b>?",
+    "a": "Extramedullary hematopoiesis causing expansion of facial bones."
   },
   {
-    "q": "Most common cause of Hydrops Fetalis?",
-    "a": "&alpha;-<b>Thalassemia</b> (4-gene deletion; Hb Barts / &gamma;<sub>4</sub>)."
+    "q": "Protective benefit of <b>Sickle Cell</b> Trait?",
+    "a": "Resistance to <i>Plasmodium falciparum</i> malaria."
   },
   {
-    "q": "Most common clinical presentation of Diamond-Blackfan Anemia?",
-    "a": "Rapid-onset anemia in the 1st year of life, short stature, and craniofacial/thumb anomalies."
+    "q": "Leading cause of death in adult <b>Sickle Cell</b> patients?",
+    "a": "Acute Chest Syndrome."
   },
   {
-    "q": "Genetic defect in Fanconi Anemia?",
-    "a": "DNA cross-link repair defect; leads to marrow failure and increased risk of <b>AML</b>."
+    "q": "Why is Hydroxyurea used in <b>Sickle Cell Anemia</b>?",
+    "a": "It increases the production of Hemoglobin F, which interferes with the polymerization of HbS."
   },
   {
-    "q": "Typical physical findings in Fanconi Anemia?",
-    "a": "Cafe-au-lait spots, short stature, and absent/hypoplastic thumbs."
+    "q": "Clinical consequence of Autosplenectomy in <b>Sickle Cell</b> patients?",
+    "a": "Increased susceptibility to encapsulated organisms (S. pneumoniae, H. influenzae).\n\nWhite Cell & Lymphoid Pathology: Advanced"
   },
   {
-    "q": "HbH disease involves how many &alpha;-globin gene deletions?",
-    "a": "3 gene deletions (&beta;<sub>4</sub> tetramers)."
+    "q": "Most common translocation in <b>Follicular Lymphoma</b>?",
+    "a": "<i>t</i>(14;18)."
   },
   {
-    "q": "What is \"Extramedullary Hematopoiesis\"?",
-    "a": "RBC production outside the marrow (Spleen/Liver), often seen in <b>Thalassemia</b> or <b>Myelofibrosis</b>."
+    "q": "Protein overexpressed in <b>Mantle Cell Lymphoma</b>?",
+    "a": "Cyclin D1 (promotes G1 to S phase transition)."
   },
   {
-    "q": "Pathogenesis of \"Bony Bossing\" in <b>Thalassemia</b>?",
-    "a": "Reactive marrow hyperplasia expanding the marrow space, leading to \"Chipmunk facies.\""
+    "q": "Defining immunophenotype of <b>Chronic Lymphocytic Leukemia</b> (<b>CLL</b>)?",
+    "a": "CD5, CD19, CD20, and CD23 positive."
   },
   {
-    "q": "Cause of \"Pain Crisis\" in <b>Sickle Cell</b> Disease?",
-    "a": "Vaso-occlusion (infarction) in small vessels due to sickled RBCs."
+    "q": "Common transformation of <b>CLL</b> into Diffuse Large B-Cell Lymphoma (DLBCL)?",
+    "a": "Richter Transformation."
   },
   {
-    "q": "Immediate treatment for <b>Heparin</b>-Induced Thrombocytopenia (<b>HIT</b>)?",
-    "a": "Stop <b>Heparin</b> immediately and start a Direct Thrombin Inhibitor (e.g., Argatroban)."
+    "q": "Classic presentation of Mycosis Fungoides?",
+    "a": "Skin patches, plaques, or tumors characterized by Pautrier microabscesses."
   },
   {
-    "q": "Lab marker for effective <b>B12</b> replacement therapy?",
-    "a": "Significant increase in <i>Reticulocyte</i> count within 3-5 days."
+    "q": "Definition of S\u00e9zary Syndrome?",
+    "a": "Leukemic phase of Mycosis Fungoides with cerebriform nuclei on blood smear."
   },
   {
-    "q": "Most common cause of Vitamin K deficiency in newborns?",
-    "a": "Lack of gut flora and poor placental transfer (prevented by Vitamin K injection at birth)."
+    "q": "Histological hallmark of Nodular Sclerosis <b>Hodgkin Lymphoma</b>?",
+    "a": "Lacunar cells (RS cell variants) and collagen bands circumscribing nodules."
   },
   {
-    "q": "Marker for identifying \"Blast\" cells in Acute Leukemia?",
-    "a": "CD34 (marker of immaturity)."
+    "q": "Lymphoma associated with Sj\u00f6gren Syndrome?",
+    "a": "MALT Lymphoma of the salivary gland.\n\nMyeloproliferative & Myelodysplastic Neoplasms"
   },
   {
-    "q": "Most common genetic mutation in Systemic Mastocytosis?",
+    "q": "Characteristic finding in the bone marrow of <b>Essential Thrombocythemia</b>?",
+    "a": "Increased numbers of enlarged, mature megakaryocytes in clusters."
+  },
+  {
+    "q": "Primary cause of death in <b>Myelofibrosis</b>?",
+    "a": "Infection, hemorrhage, or transformation to <b>AML</b>."
+  },
+  {
+    "q": "Definition of \"Dry Tap\" on bone marrow aspiration?",
+    "a": "Inability to aspirate marrow due to fibrosis (<b>Myelofibrosis</b>) or hypercellularity (<b>Hairy Cell Leukemia</b>)."
+  },
+  {
+    "q": "Differentiation between <b>Polycythemia Vera</b> and Stress Erythrocytosis (Gaisb\u00f6ck syndrome)?",
+    "a": "PV has increased RBC mass; Stress erythrocytosis has decreased plasma volume with normal RBC mass.\n\nCoagulation & Platelet Dynamics"
+  },
+  {
+    "q": "Mechanism of Action of Tranexamic Acid?",
+    "a": "Antifibrinolytic that inhibits the conversion of plasminogen to plasmin."
+  },
+  {
+    "q": "Result of a 1:1 Mixing Study in Factor VIII Deficiency?",
+    "a": "The PTT corrects to normal (indicates a deficiency, not an inhibitor)."
+  },
+  {
+    "q": "Most common site of bleeding in <b>Hemophilia</b>?",
+    "a": "Hemarthrosis (bleeding into joints)."
+  },
+  {
+    "q": "Effect of Uremia (Renal Failure) on platelet function?",
+    "a": "Qualitative platelet defect (impaired adhesion and aggregation) with normal platelet count."
+  },
+  {
+    "q": "Diagnostic criteria for Antiphospholipid Syndrome?",
+    "a": "Clinical thrombosis (or pregnancy loss) plus positive Lupus Anticoagulant, Anti-cardiolipin, or Anti-&beta;2-glycoprotein I antibodies."
+  },
+  {
+    "q": "Mechanism of Aspirin's antiplatelet effect?",
+    "a": "Irreversible acetylation of COX-1, preventing Thromboxane A2 (TXA<sub>2</sub>) synthesis."
+  },
+  {
+    "q": "Why is PT (INR) used to monitor Warfarin?",
+    "a": "Factor VII has the shortest half-life and is the first to decrease under Warfarin therapy.\n\nSpecialized Morphological Findings"
+  },
+  {
+    "q": "Appearance of RBCs in Lead Poisoning?",
+    "a": "Basophilic stippling (due to inhibition of pyrimidine 5'-nucleotidase)."
+  },
+  {
+    "q": "Appearance of RBCs in Liver Disease?",
+    "a": "Acanthocytes (spur cells) or <b>Target cells</b>."
+  },
+  {
+    "q": "Appearance of RBCs in Uremia?",
+    "a": "Echinocytes (burr cells)."
+  },
+  {
+    "q": "Finding on peripheral smear in Microangiopathic <b>Hemolytic Anemia</b> (MAHA)?",
+    "a": "<b>Schistocytes</b> (helmet cells)."
+  },
+  {
+    "q": "Histology of the \"Starry Sky\" pattern in <b>Burkitt Lymphoma</b>?",
+    "a": "Sheets of small malignant B cells (the \"sky\") with interspersed pale-stained tingible body macrophages (the \"stars\").\n\nAdditional Clinical Correlations"
+  },
+  {
+    "q": "Most common cause of B12 deficiency in the Western world?",
+    "a": "<b>Pernicious Anemia</b>."
+  },
+  {
+    "q": "Site of iron absorption in the GI tract?",
+    "a": "Duodenum."
+  },
+  {
+    "q": "Site of Folate absorption in the GI tract?",
+    "a": "Jejunum."
+  },
+  {
+    "q": "Site of Vitamin B12 absorption in the GI tract?",
+    "a": "Terminal Ileum (requires Intrinsic Factor)."
+  },
+  {
+    "q": "Condition associated with an elevated Mean Corpuscular Hemoglobin Concentration (MCHC)?",
+    "a": "<b>Hereditary Spherocytosis</b>."
+  },
+  {
+    "q": "Why are patients with <b>Sickle Cell</b> and Spherocytosis prone to Gallstones?",
+    "a": "Chronic hemolysis leads to increased bilirubin, forming pigmented (calcium bilirubinate) stones."
+  },
+  {
+    "q": "Primary treatment for Iron Overload (Hemochromatosis)?",
+    "a": "Therapeutic phlebotomy."
+  },
+  {
+    "q": "Mechanism of Anemia in Myelophthisic process?",
+    "a": "Space-occupying lesions (like metastatic cancer) replace hematopoietic tissue."
+  },
+  {
+    "q": "The \"Doughnut Cell\" (Anaplastic Large Cell Lymphoma)?",
+    "a": "Hallmarks cells with kidney-shaped nuclei and ALK protein positivity."
+  },
+  {
+    "q": "Major side effect of Heparin therapy?",
+    "a": "Bleeding and Heparin-Induced Thrombocytopenia (HIT)."
+  },
+  {
+    "q": "Reversal agent for Heparin?",
+    "a": "Protamine Sulfate."
+  },
+  {
+    "q": "Reversal agent for Warfarin (immediate)?",
+    "a": "Fresh Frozen Plasma (FFP) or Prothrombin Complex Concentrate (PCC)."
+  },
+  {
+    "q": "Reversal agent for Warfarin (delayed)?",
+    "a": "Vitamin K."
+  },
+  {
+    "q": "Significance of hypersegmented neutrophils?",
+    "a": "<b>Megaloblastic anemia</b> (B12 or Folate deficiency)."
+  },
+  {
+    "q": "Primary pathology in Post-Transfusion Purpura?",
+    "a": "Development of antibodies against platelet antigens (usually HPA-1a) following transfusion."
+  },
+  {
+    "q": "Common causes of non-megaloblastic macrocytic anemia?",
+    "a": "Alcoholism, liver disease, and Diamond-Blackfan anemia."
+  },
+  {
+    "q": "Clinical features of Diamond-Blackfan Anemia?",
+    "a": "Rapid-onset anemia in the first year of life, short stature, and craniofacial or thumb anomalies."
+  },
+  {
+    "q": "Difference between Diamond-Blackfan and Fanconi Anemia?",
+    "a": "Diamond-Blackfan is pure red cell aplasia; Fanconi is a global pancytopenia (DNA repair defect)."
+  },
+  {
+    "q": "Characteristic physical exam finding in Fanconi Anemia?",
+    "a": "Cafe-au-lait spots, short stature, and absent/hypoplastic radii or thumbs."
+  },
+  {
+    "q": "Laboratory finding in <i>Parvovirus B19</i>-induced Aplastic Crisis?",
+    "a": "Acute drop in hemoglobin with a reticulocyte count near 0%.\n\nHemolysis & RBC Enzymes (Advanced)"
+  },
+  {
+    "q": "Inheritance of <b>G6PD Deficiency</b>?",
+    "a": "X-linked recessive."
+  },
+  {
+    "q": "Why is the Direct Coombs test negative in <b>G6PD deficiency</b>?",
+    "a": "The hemolysis is due to enzyme deficiency and oxidative stress, not autoantibodies."
+  },
+  {
+    "q": "Definition of the \"Warm\" antibody in <b>AIHA</b>?",
+    "a": "IgG antibody that reacts at body temperature (37&deg;C); usually causes extravascular hemolysis."
+  },
+  {
+    "q": "Definition of the \"Cold\" antibody in <b>AIHA</b>?",
+    "a": "IgM antibody that reacts at low temperatures; often follows <i><i>Mycoplasma</i> pneumoniae</i> or <i>EBV</i>."
+  },
+  {
+    "q": "Why do <b>Howell-Jolly bodies</b> appear after splenectomy?",
+    "a": "The spleen is no longer present to \"pit\" or remove nuclear remnants from RBCs.\n\nMyeloproliferative Neoplasms (In-depth)"
+  },
+  {
+    "q": "Genetic hallmark of Systemic Mastocytosis?",
     "a": "KIT D816V mutation."
   },
   {
-    "q": "Enzyme deficient in Congenital Erythropoietic Porphyria (Gunther Disease)?",
-    "a": "Uroporphyrinogen III cosynthase."
+    "q": "Diagnostic finding in Systemic Mastocytosis?",
+    "a": "Increased serum tryptase and clusters of spindle-shaped mast cells in the bone marrow."
   },
   {
-    "q": "Effect of Hemolysis on Serum LDH (Lactate Dehydrogenase) and \uc65c?",
-    "a": "LDH is significantly increased; it is an enzyme abundant inside RBCs released upon rupture."
+    "q": "Clinical presentation of Mast Cell Activation Syndrome (MCAS)?",
+    "a": "Recurrent anaphylaxis, flushing, and diarrhea triggered by heat, exercise, or alcohol."
   },
   {
-    "q": "What is the \"Ham Test\" (Acidified Serum Test) historically used for?",
-    "a": "Paroxysmal Nocturnal Hemoglobinuria (<b>PNH</b>) \u2013 superseded by flow cytometry for CD55/59."
+    "q": "Distinguishing feature of <b>Essential Thrombocythemia</b> (ET) vs. Reactive Thrombocytosis?",
+    "a": "ET is a clonal malignancy (often JAK2+); Reactive is driven by cytokines (IL-6) in inflammation or iron deficiency.\n\nCoagulation & Transfusion Medicine"
   },
   {
-    "q": "\"Pencil Cells\" on peripheral smear are characteristic of?",
-    "a": "<b>Iron Deficiency</b> Anemia."
+    "q": "Major risk of Large-Volume Transfusion?",
+    "a": "Dilutional coagulopathy and hypocalcemia (due to citrate anticoagulant in blood bags)."
   },
   {
-    "q": "\"<b>Acanthocytes</b>\" (Spur Cells) are most commonly associated with?",
-    "a": "Liver disease or Abetalipoproteinemia."
+    "q": "Leading cause of transfusion-related fatality?",
+    "a": "Transfusion-Related Acute Lung Injury (TRALI)."
   },
   {
-    "q": "\"<b>Echinocytes</b>\" (Burr Cells) are most commonly associated with?",
-    "a": "Uremia (Renal Failure) or Pyruvate Kinase deficiency."
+    "q": "Mechanism of TRALI?",
+    "a": "Donor anti-HLA or anti-neutrophil antibodies activate recipient neutrophils in the pulmonary vasculature."
   },
   {
-    "q": "\"<b>Degmacytes</b>\" is the technical term for which cell type?",
-    "a": "<b>Bite Cells</b> (seen in <b>G6PD</b> deficiency)."
+    "q": "Difference between TRALI and TACO (Transfusion-Associated Circulatory Overload)?",
+    "a": "TRALI is non-cardiogenic pulmonary edema (normal PCWP); TACO is volume overload (high PCWP)."
   },
   {
-    "q": "What are \"<b>Cabot Rings</b>\" and when are they seen?",
-    "a": "Remnants of the mitotic spindle; seen in <b>Megaloblastic Anemia</b> or <b>Lead Poisoning</b>."
+    "q": "Lab marker used to monitor Low Molecular Weight Heparin (LMWH)?",
+    "a": "Anti-Factor Xa assay (PT/PTT are usually unreliable for LMWH)."
   },
   {
-    "q": "Mechanism of Hereditary Hemorrhagic Telangiectasia (Osler-Weber-Rendu)?",
-    "a": "Autosomal dominant disorder of blood vessels leading to telangiectasias and AVMs."
+    "q": "Mechanism of Argatroban?",
+    "a": "Direct Thrombin Inhibitor (DTI)."
   },
   {
-    "q": "Screening test for Factor XIII deficiency?",
-    "a": "5-Molar Urea Solubility Test (Standard PT/PTT will be normal)."
+    "q": "Primary treatment for a patient with Factor VIII Inhibitors (Acquired <b>Hemophilia</b>)?",
+    "a": "Bypassing agents like Activated Prothrombin Complex Concentrate (aPCC) or Recombinant Factor VIIa.\n\nLymphoid Neoplasms & Histiocytosis"
   },
   {
-    "q": "Function of Protein S?",
-    "a": "Acts as a cofactor for Protein C to inactivate Factors Va and VIIIa."
+    "q": "Immunophenotype of <b>Mantle Cell Lymphoma</b>?",
+    "a": "CD5+ and Cyclin D1+; CD23 negative (distinguishes it from <b>CLL</b>)."
   },
   {
-    "q": "What is \"Lupus Anticoagulant\" paradox?",
-    "a": "It prolongs PTT in vitro but causes a hypercoagulable state (thrombosis) in vivo."
+    "q": "Characteristic cell in Rosai-Dorfman Disease?",
+    "a": "Large histiocytes showing emperipolesis (engulfment of intact lymphocytes)."
   },
   {
-    "q": "Most common cause of \"Acquired\" Hemophilia?",
-    "a": "Autoantibodies against Factor VIII (often postpartum or malignancy-associated)."
+    "q": "Clinical triad of Hand-Sch\u00fcller-Christian Disease?",
+    "a": "Diabetes insipidus, exophthalmos, and lytic bone lesions (a variant of Langerhans Cell Histiocytosis)."
   },
   {
-    "q": "What are \"Pitting\" and \"Culling\" in the spleen?",
-    "a": "Pitting: Removing inclusions (<b>Heinz bodies</b>) without destroying the cell. Culling: Removing damaged RBCs entirely."
+    "q": "\"Letterer-Siwe Disease\" patient demographic?",
+    "a": "Infants (<2 years old); presents as a skin rash and multi-organ involvement."
   },
   {
-    "q": "Immunological consequence of Splenectomy?",
-    "a": "Decreased IgM and decreased complement activation, leading to susceptibility to encapsulated organisms."
+    "q": "Most common site for an Extranodal <b>Marginal Zone Lymphoma</b>?",
+    "a": "The stomach (associated with <i>H. pylori</i>).\n\nGeneral Pathology & Lab Signs"
   },
   {
-    "q": "The \"Encapsulated Trio\" to vaccinate against post-splenectomy?",
-    "a": "S. pneumoniae, H. influenzae type b, and N. meningitidis."
+    "q": "Significance of a \"Dry Tap\" in Bone Marrow?",
+    "a": "Suggests <b>Myelofibrosis</b>, <b>Hairy Cell Leukemia</b>, or metastatic cancer (marrow is too fibrotic or packed to aspirate)."
   },
   {
-    "q": "Cause of \"Gaucher Cells\" (crinkled paper appearance) in the marrow?",
-    "a": "Glucocerebrosidase deficiency."
+    "q": "Clinical significance of a \"Leukemoid Reaction\"?",
+    "a": "Exaggerated WBC elevation (>50,000) due to infection/stress, simulating leukemia but with mature cells."
   },
   {
-    "q": "Specific antidote for Dabigatran?",
-    "a": "Idarucizumab."
+    "q": "Definition of Pelger-Hu\u00ebt Anomaly?",
+    "a": "Benign inherited condition where neutrophils have bilobed (pince-nez) nuclei; can be \"pseudo\" in <b>MDS</b>."
   },
   {
-    "q": "Specific antidote for Factor Xa inhibitors (Rivaroxaban/Apixaban)?",
-    "a": "Andexanet alfa."
+    "q": "Primary metabolic abnormality in Tumor Lysis Syndrome?",
+    "a": "Hyperkalemia, hyperuricemia, hyperphosphatemia, and hypocalcemia."
   },
   {
-    "q": "Primary side effect of Desmopressin (DDAVP) when treating vWD?",
-    "a": "Hyponatremia (due to its ADH-like effect)."
+    "q": "Consequence of splenic congestion (e.g., in portal hypertension)?",
+    "a": "Hypersplenism leading to sequestration and destruction of <b>all</b> three blood cell lines (pancytopenia)."
   },
   {
-    "q": "What is \"Leucovorin Rescue\" used for?",
-    "a": "To reduce the toxicity of high-dose Methotrexate by providing a source of reduced <b>folate</b>."
+    "q": "Defining feature of Splenic Infarcts?",
+    "a": "Wedge-shaped, pale areas of necrosis due to lack of collateral blood flow (common in <b>Sickle Cell</b> or Emboli)."
   },
   {
-    "q": "Formula for Mean Corpuscular Hemoglobin Concentration (MCHC)?",
-    "a": "MCHC = (Hemoglobin / Hematocrit) &times; 100."
+    "q": "Condition associated with Thymic Hyperplasia?",
+    "a": "Myasthenia Gravis (present in ~65-75% of cases)."
   },
   {
-    "q": "What condition is the ONLY one with an increased MCHC?",
-    "a": "Hereditary Spherocytosis (due to membrane loss and cellular dehydration)."
+    "q": "Definition of a Thymoma?",
+    "a": "Neoplasm of thymic epithelial cells (can be associated with Pure Red Cell Aplasia or Myasthenia Gravis).\n\nAdvanced Flow Cytometry & Markers"
   },
   {
-    "q": "Corrected <i>Reticulocyte</i> Count formula?",
-    "a": "Retics % &times; (Hct / 45)."
+    "q": "Pan-B cell markers used in flow cytometry?",
+    "a": "CD19, CD20, and CD21."
   },
   {
-    "q": "How many days does it take for a <i>Reticulocyte</i> to mature in the peripheral blood?",
-    "a": "Approximately 1 day."
+    "q": "Pan-T cell markers used in flow cytometry?",
+    "a": "CD2, CD3, CD5, and CD7."
   },
   {
-    "q": "Differentiate \"<b>Iron Deficiency</b>\" vs \"Anemia of Chronic Disease\" via TIBC?",
-    "a": "Iron Def: TIBC is &uarr;. Chronic Disease: TIBC is &darr;."
+    "q": "Surface marker used to identify hematopoietic stem cells (HSCs)?",
+    "a": "CD34."
   },
   {
-    "q": "Differentiate \"Leukemoid Reaction\" vs \"<b>CML</b>\" via Cytogenetics?",
-    "a": "<b>CML</b> will have t(9;22); Leukemoid reaction will be cytogenetically normal."
+    "q": "Diagnostic markers for <b>Reed-Sternberg</b> cells?",
+    "a": "CD15+ and CD30+."
   },
   {
-    "q": "Differentiate \"<b>TTP</b>\" vs \"<b>HUS</b>\" in clinical presentation?",
-    "a": "<b>HUS</b> typically presents with bloody diarrhea (EHEC) and predominant renal failure; <b>TTP</b> has more neurological symptoms."
+    "q": "Classic immunophenotype for <b>Mantle Cell Lymphoma</b>?",
+    "a": "CD5+, CD19+, and Cyclin D1+.\n\nMyeloid Neoplasms & Rare Variations"
   },
   {
-    "q": "Differentiate \"Follicular Lymphoma\" vs \"Reactive Lymph Node Hyperplasia\"?",
-    "a": "Follicular Lymphoma: BCL-2 (+), lacks tingible body macrophages, monoclonal."
+    "q": "Clinical feature of Chronic Myelomonocytic Leukemia (CMML)?",
+    "a": "Persistent monocytosis (>1,000/\u00b5L) and absence of the <b>Philadelphia chromosome</b>."
   },
   {
-    "q": "Differentiate \"<b>Multiple Myeloma</b>\" vs \"Primary Amyloidosis\" (AL)?",
-    "a": "MM is a plasma cell malignancy; AL is a protein folding disorder (misfolded light chains) often secondary to a plasma cell dyscrasia."
+    "q": "Morphology of \"Faggot cells\" in <b>APL</b>?",
+    "a": "Promyelocytes containing bundles of <b>Auer rods</b> in the cytoplasm."
   },
   {
-    "q": "Most common inherited cause of <b>Sideroblastic Anemia</b>?",
-    "a": "X-linked deficiency of ALAS2 (erythroid-specific &delta;-aminolevulinic acid synthase)."
+    "q": "Significance of \"Hypersegmentation\" in Myelodysplastic Syndrome?",
+    "a": "It is a sign of dysgranulopoiesis (though more common in <b>Megaloblastic Anemia</b>).\n\nHemostatic Disorders: Rare & Clinical"
   },
   {
-    "q": "Direct effect of Lead on the heme pathway enzymes?",
-    "a": "Inhibits Ferrochelatase and ALA Dehydratase."
+    "q": "Mechanism of <b>Hemolytic Uremic Syndrome</b> (<b>HUS</b>)?",
+    "a": "Shiga-like toxin from <i><i>E. coli</i> O157:H7</i> damages endothelial cells, leading to microthrombi."
   },
   {
-    "q": "Which enzyme deficiency is protected against P. falciparum malaria?",
-    "a": "<b>G6PD</b> deficiency and Pyruvate Kinase deficiency."
+    "q": "Primary clinical difference between <b>HUS</b> and <b>TTP</b>?",
+    "a": "<b>HUS</b> predominantly involves renal failure and follows diarrhea; <b>TTP</b> involves CNS symptoms and ADAMTS13 deficiency."
   },
   {
-    "q": "Mechanism of Pyruvate Kinase (PK) deficiency?",
-    "a": "&darr; ATP &rarr; rigid RBCs &rarr; extravascular hemolysis in the splenic red pulp."
+    "q": "Result of Ristocetin Cofactor Assay in <b>von Willebrand Disease</b>?",
+    "a": "Abnormal (vWF is required for Ristocetin-induced platelet agglutination)."
   },
   {
-    "q": "Distinctive finding on peripheral smear for Pyruvate Kinase deficiency?",
-    "a": "<b>Echinocytes</b> (Burr cells) that are not related to uremia."
+    "q": "Effect of Vitamin C deficiency (Scurvy) on blood vessels?",
+    "a": "Defective collagen cross-linking leads to weakened vessel walls and easy bruising/petechiae."
   },
   {
-    "q": "What is the \"<b>TRAP</b>\" stain?",
-    "a": "Tartrate-Resistant Acid Phosphatase; used for Hairy Cell Leukemia."
+    "q": "Pathology of Henoch-Sch\u00f6nlein Purpura (HSP)?",
+    "a": "IgA immune complex deposition in small vessels, causing palpable purpura and hematuria.\n\nSpecial Stains & Diagnostics"
   },
   {
-    "q": "Typical immunophenotype for Hairy Cell Leukemia?",
-    "a": "CD11c, CD25, CD103."
+    "q": "Purpose of the Prussian Blue stain in Hematology?",
+    "a": "To visualize iron (ferritin/hemosiderin) in macrophages or ring sideroblasts."
   },
   {
-    "q": "The \"<b>Sezary Syndrome</b>\" triad?",
-    "a": "Erythroderma, Lymphadenopathy, and circulating Sezary cells (cerebriform nuclei)."
+    "q": "Purpose of the Periodic Acid-Schiff (PAS) stain in Leukemia?",
+    "a": "Positive in some cases of <b>ALL</b> (shows \"chunky\" positivity)."
   },
   {
-    "q": "Distinction between <b>Myelofibrosis</b> and <b>CML</b> on marrow biopsy?",
-    "a": "<b>Myelofibrosis</b> shows \"collagen fibrosis\" (Silver/Reticulin stain); <b>CML</b> is hypercellular with myeloid maturation."
+    "q": "Significance of \"Tartrate-Resistant Acid Phosphatase\" (TRAP)?",
+    "a": "Specific marker for <b>Hairy Cell Leukemia</b>."
   },
   {
-    "q": "What is \"Aleukemic Leukemia\"?",
-    "a": "Leukemia where the abnormal cells are confined to the marrow; the peripheral WBC count is normal or low."
+    "q": "Most accurate way to confirm a diagnosis of Hemoglobinopathy?",
+    "a": "High-Performance Liquid Chromatography (HPLC) or Hemoglobin Electrophoresis.\n\nRed Cell Metabolism & Structure"
   },
   {
-    "q": "Why is the \"Bleeding Time\" usually normal in Hemophilia?",
-    "a": "Bleeding time tests primary hemostasis (platelets); Hemophilia is a defect in secondary hemostasis (clotting factors)."
+    "q": "Enzyme responsible for converting Methemoglobin back to Hemoglobin?",
+    "a": "Cytochrome b5 reductase (NADH-methemoglobin reductase)."
   },
   {
-    "q": "Mechanism of Tranexamic Acid (TXA)?",
-    "a": "Antifibrinolytic; inhibits Plasminogen activation to Plasmin."
+    "q": "Clinical presentation of Methemoglobinemia?",
+    "a": "Cyanosis that does not improve with oxygen and \"chocolate-colored\" blood."
   },
   {
-    "q": "What is \"Glucanzmann Thrombasthenia\" vs \"Bernard-Soulier\" on Ristocetin test?",
-    "a": "Bernard-Soulier: No agglutination with Ristocetin. Glanzmann: Normal agglutination with Ristocetin (but fails with ADP/Collagen)."
+    "q": "Role of Ankyrin and Spectrin in the RBC?",
+    "a": "They maintain the biconcave shape and deformability of the red cell membrane."
   },
   {
-    "q": "What is the \"Russell Viper Venom Time\" (dRVVT) used for?",
-    "a": "To confirm the presence of Lupus Anticoagulant (Antiphospholipid Syndrome)."
+    "q": "Definition of \"Pancytopenia\"?",
+    "a": "Simultaneous decrease in RBCs, WBCs, and Platelets."
   },
   {
-    "q": "What is \"Hemoglobin Barts\"?",
-    "a": "&gamma;<sub>4</sub> (four gamma chains); seen in 4-gene deletion &alpha;-<b>Thalassemia</b> (Hydrops Fetalis)."
+    "q": "Most common cause of vitamin B12 deficiency in a strict vegan?",
+    "a": "Dietary deficiency (B12 is only found in animal products)."
   },
   {
-    "q": "What is \"Hemoglobin H\"?",
-    "a": "&beta;<sub>4</sub> (four beta chains); seen in 3-gene deletion &alpha;-<b>Thalassemia</b>."
+    "q": "Diagnosis for a child with \"painless\" cervical lymphadenopathy and a \"starry sky\" biopsy?",
+    "a": "<b>Burkitt Lymphoma</b>."
   },
   {
-    "q": "Effect of \"Acidosis\" on the P50 of the Oxygen-Hb curve?",
-    "a": "Increases the P50 (shifts curve to the right, meaning lower affinity)."
+    "q": "Most common pediatric cause of Vitamin B12 deficiency?",
+    "a": "Imerslund-Gr\u00e4sbeck syndrome (selective malabsorption of B12 with proteinuria)."
   },
   {
-    "q": "What is the \"P50\"?",
-    "a": "The partial pressure of oxygen at which hemoglobin is 50% saturated."
+    "q": "Primary pathology in Schwachman-Diamond Syndrome?",
+    "a": "Pancreatic exocrine insufficiency and neutropenia (ribosomal stress)."
   },
   {
-    "q": "Which Hemoglobin variant is most \"Polymerization-prone\"?",
-    "a": "Deoxygenated HbS."
+    "q": "Defining RBC morphology in Abetalipoproteinemia?",
+    "a": "Acanthocytes (spur cells)."
   },
   {
-    "q": "Why is Cimetidine or Sulfa drugs dangerous for <b>G6PD</b> patients?",
-    "a": "They induce oxidative stress, leading to Hemolysis."
+    "q": "Most common vascular complication of <b>Sickle Cell</b> Trait?",
+    "a": "Renal papillary necrosis (presenting as painless hematuria).\n\nMorphological \"Red Herrings\" & Artifacts"
   },
   {
-    "q": "Treatment of choice for \"Iron Overload\" (Hemochromatosis)?",
-    "a": "Therapeutic phlebotomy (or Deferoxamine/Deferasirox chelation if phlebotomy is contraindicated)."
+    "q": "Cause of \"Pappenheimer bodies\" on a smear?",
+    "a": "<b>Sideroblastic anemia</b> (these are iron inclusions)."
   },
   {
-    "q": "Common side effect of <b>EPO</b> (<b>Erythropoietin</b>) therapy?",
-    "a": "Hypertension and increased risk of thromboembolic events."
+    "q": "Significance of \"Cabot rings\"?",
+    "a": "Remnants of mitotic spindles; seen in <b>megaloblastic anemia</b> or lead poisoning."
   },
   {
-    "q": "What is the \"D-dimer\" specifically measuring?",
-    "a": "Fibrin degradation products that have been cross-linked by Factor XIII."
+    "q": "Distinguishing feature of \"Pseudo-thrombocytopenia\"?",
+    "a": "Platelet clumping in the presence of EDTA; corrected by using a sodium citrate tube."
   },
   {
-    "q": "Association: Thymoma?",
-    "a": "Pure Red Cell Aplasia (PRCA) or Myasthenia Gravis."
+    "q": "Cause of \"Stomatocytes\" (mouth-shaped cells)?",
+    "a": "Alcoholism or hereditary stomatocytosis.\n\nAdvanced Pharmacology & Therapeutics"
   },
   {
-    "q": "Association: \"Doughnut-shaped\" nuclei in neutrophils?",
-    "a": "Pseudo-Pelger-Huet anomaly (Myelodysplastic Syndrome)."
+    "q": "Mechanism of Eculizumab in <b>PNH</b>?",
+    "a": "Monoclonal antibody against C5 complement protein (prevents MAC formation)."
   },
   {
-    "q": "Association: \"Hyper-segmented\" neutrophils + Glossitis?",
-    "a": "<b>Megaloblastic Anemia</b> (<b>B12</b> or <b>Folate</b>)."
+    "q": "Mechanism of Romiplostim in <b>ITP</b>?",
+    "a": "Thrombopoietin (TPO) receptor agonist (stimulates platelet production)."
   },
   {
-    "q": "Association: Pruritus after a hot shower?",
-    "a": "<b>Polycythemia Vera</b> (Mast cell degranulation)."
+    "q": "Primary toxic effect of Doxorubicin in lymphoma treatment?",
+    "a": "Dilated cardiomyopathy."
+  },
+  {
+    "q": "Mechanism of Cyclophosphamide-induced hemorrhagic cystitis?",
+    "a": "Accumulation of the metabolite Acrolein in the bladder."
+  },
+  {
+    "q": "Drug used to prevent Hemorrhagic Cystitis?",
+    "a": "Mesna.\n\nSystemic Associations"
+  },
+  {
+    "q": "Hematologic association with Thymoma?",
+    "a": "Pure Red Cell Aplasia (PRCA) or Good Syndrome (hypogammaglobulinemia)."
+  },
+  {
+    "q": "Triad of Felty Syndrome?",
+    "a": "Rheumatoid Arthritis, Splenomegaly, and Neutropenia."
+  },
+  {
+    "q": "Meaning of \"Extramedullary Hematopoiesis\"?",
+    "a": "Blood cell production outside the bone marrow (e.g., liver/spleen), typically due to marrow failure."
+  },
+  {
+    "q": "Finding in the bone marrow of Gaucher Disease?",
+    "a": "\"Crinkled tissue paper\" appearance of macrophages (glucocerebrosidase deficiency)."
+  },
+  {
+    "q": "Define \"Hyperleukocytosis\" (Leukostasis)?",
+    "a": "WBC >100,000; a medical emergency where high blast counts cause vascular occlusion and tissue hypoxia."
+  },
+  {
+    "q": "Diagnostic significance of a \"Dry Tap\" in an elderly patient with massive splenomegaly?",
+    "a": "Highly suggestive of Primary <b>Myelofibrosis</b> or <b>Hairy Cell Leukemia</b>."
   }
 ]

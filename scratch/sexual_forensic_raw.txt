@@ -1,0 +1,1348 @@
+Front: Most common cause of Condyloma Acuminatum?
+
+Back: HPV types 6 and 11.
+
+Front: Histological hallmark of HPV infection in the cervix?
+
+Back: Koilocytes (cells with wrinkled "raisin" nuclei and perinuclear halos).
+
+Front: Definition of Extramammary Paget Disease of the vulva?
+
+Back: Malignant epithelial cells in the epidermis, staining PAS+, Keratin+, and S100-.
+
+Front: Distinguishing feature of Vulvar Melanoma from Paget Disease?
+
+Back: Melanoma is PAS- and S100+.
+
+Front: Cause of Sarcoma Botryoides (Embryonal Rhabdomyosarcoma)?
+
+Back: Proliferation of immature skeletal muscle (rhabdomyoblasts) in girls < 5 years old.
+
+Front: Pathognomonic finding in Sarcoma Botryoides?
+
+Back: Cytoplasmic cross-striations and "grape-like" vaginal mass.
+
+Front: Classic risk factor for Vaginal Clear Cell Adenocarcinoma?
+
+Back: In-utero exposure to Diethylstilbestrol (DES).
+
+Front: Defining characteristic of Cervical Intraepithelial Neoplasia (CIN) III?
+
+Back: Dysplasia involving the entire thickness of the epithelium (Carcinoma in situ).
+
+Front: Most common location for cervical cancer to arise?
+
+Back: Transformation zone (squamocolumnar junction).
+
+Front: Mechanism of HPV E6 protein in oncogenesis?
+
+Back: Promotes degradation of the p53 tumor suppressor protein.
+
+Front: Mechanism of HPV E7 protein in oncogenesis?
+
+Back: Binds and inactivates the Rb (Retinoblastoma) protein.
+
+Front: Definition of Asherman Syndrome?
+
+Back: Secondary amenorrhea due to loss of the basalis layer and subsequent scarring.
+
+Front: Components of the "Classic Triad" of Endometriosis?
+
+Back: Dysmenorrhea, dyspareunia, and infertility.
+
+Front: Most common site of Endometriosis?
+
+Back: Ovary (forming a "Chocolate Cyst").
+
+Front: Pathological definition of Adenomyosis?
+
+Back: Presence of endometrial glands and stroma within the uterine myometrium.
+
+Front: Defining feature of Endometrial Hyperplasia?
+
+Back: Increased proliferation of endometrial glands relative to stroma, caused by unopposed estrogen.
+
+Front: Most important predictor for progression of Endometrial Hyperplasia to Carcinoma?
+
+Back: Cellular atypia.
+
+Front: Most common pelvic tumor in females?
+
+Back: Leiomyoma (Fibroid).
+
+Front: Distinguishing feature of Leiomyosarcoma from Leiomyoma?
+
+Back: Arises de novo (not from fibroids) and shows necrosis, atypia, and high mitotic activity.
+
+Front: Common hormone profile in Polycystic Ovarian Syndrome (PCOS)?
+
+Back: Increased LH, decreased FSH (LH:FSH ratio > 3), and increased androgens.
+
+Front: Most common type of ovarian tumor?
+
+Back: Surface epithelial tumors (Serous and Mucinous).
+
+Front: Serum marker used to monitor response to therapy in epithelial ovarian cancer?
+
+Back: CA-125.
+
+Front: Most common germ cell tumor in females?
+
+Back: Cystic Teratoma (Dermoid Cyst).
+
+Front: Definition of Struma Ovarii?
+
+Back: A specialized teratoma composed primarily of thyroid tissue, potentially causing hyperthyroidism.
+
+Front: Female equivalent of a male Seminoma?
+
+Back: Dysgerminoma.
+
+Front: Tumor marker for Ovarian Dysgerminoma?
+
+Back: LDH (Lactate Dehydrogenase).
+
+Front: Characteristic histological finding in Yolk Sac Tumors?
+
+Back: Schiller-Duval bodies (glomeruloid-like structures).
+
+Front: Tumor marker for Yolk Sac (Endodermal Sinus) Tumors?
+
+Back: AFP (Alpha-fetoprotein).
+
+Front: Histological hallmark of Granulosa Cell Tumors?
+
+Back: Call-Exner bodies (small follicles filled with eosinophilic material).
+
+Front: Characteristic sign of Meigs Syndrome?
+
+Back: Ovarian fibroma, ascites, and pleural effusion.
+
+Front: Definition of a Krukenberg Tumor?
+
+Back: Metastatic mucinous tumor to the ovaries, usually from a gastric (signet ring cell) primary.
+
+Front: Most common cause of Ectopic Pregnancy?
+
+Back: Scarring from Pelvic Inflammatory Disease (PID).
+
+Front: Classic "Snowstorm" appearance on ultrasound indicates?
+
+Back: Hydatidiform Mole.
+
+Front: Genetic makeup of a Complete Hydatidiform Mole?
+
+Back: 46,XX (usually); all chromosomes are paternal in origin.
+
+Front: Risk of Choriocarcinoma is higher in which mole type?
+
+Back: Complete Hydatidiform Mole.
+
+Sexual Pathology: Male Reproductive System
+
+Front: Definition of Cryptorchidism?
+
+Back: Failure of one or both testes to descend into the scrotum.
+
+Front: Primary complication of untreated Cryptorchidism?
+
+Back: Increased risk of Germ Cell Tumors and infertility.
+
+Front: Most common cause of Orchitis in young adults?
+
+Back: Chlamydia trachomatis (D-K) or Neisseria gonorrhoeae.
+
+Front: Cause of Orchitis in older men?
+
+Back: E. coli and Pseudomonas (associated with UTI/BPH).
+
+Front: Defining feature of a Hydrocele?
+
+Back: Fluid collection within the tunica vaginalis that transilluminates.
+
+Front: Definition of a Varicocele?
+
+Back: Dilation of the pampiniform plexus of veins ("bag of worms").
+
+Front: Why are Varicoceles more common on the left side?
+
+Back: Left spermatic vein drains into the left renal vein at a 90-degree angle.
+
+Front: Most common testicular tumor in men aged 15–40?
+
+Back: Germ Cell Tumor.
+
+Front: Characteristic of Seminoma on gross pathology?
+
+Back: Homogeneous mass with no hemorrhage or necrosis; "fried egg" cells on histology.
+
+Front: Most common testicular tumor in infants and children?
+
+Back: Yolk Sac Tumor.
+
+Front: Difference between Seminoma and Non-Seminoma regarding radiosensitivity?
+
+Back: Seminomas are highly radiosensitive; Non-Seminomas are not.
+
+Front: Most common testicular tumor in men > 60?
+
+Back: Diffuse Large B-cell Lymphoma (Metastatic).
+
+Front: Primary location of Benign Prostatic Hyperplasia (BPH)?
+
+Back: Transitional zone (periurethral).
+
+Front: Primary location of Prostate Adenocarcinoma?
+
+Back: Peripheral zone (posterior aspect).
+
+Front: Best screening tool for Prostate Cancer?
+
+Back: Digital Rectal Exam (DRE) and PSA > 4 ng/mL.
+
+Front: System used to grade Prostate Cancer based on architecture?
+
+Back: Gleason Grading System.
+
+Front: Common site of Prostate Cancer metastasis?
+
+Back: Lumbar spine (Osteoblastic metastases).
+
+Forensic Pathology: Injury and Death Investigation
+
+Front: Definition of Algor Mortis?
+
+Back: Post-mortem cooling of the body to ambient temperature.
+
+Front: Definition of Livor Mortis?
+
+Back: Purple discoloration of dependent body parts due to gravity-induced blood settling.
+
+Front: When does Rigor Mortis typically peak?
+
+Back: 12 hours after death.
+
+Front: Difference between an Abrasion and a Laceration?
+
+Back: Abrasion is a superficial scrape; Laceration is a tear caused by blunt force (shows tissue bridging).
+
+Front: Defining feature of an Incised Wound?
+
+Back: A clean-cut wound longer than it is deep, caused by a sharp object (no tissue bridging).
+
+Front: Characteristics of a Contact Gunshot Wound?
+
+Back: Muzzle imprint, soot, and seared skin; "stellate" appearance over bone.
+
+Front: What is "Stippling" or "Tattooing" in forensics?
+
+Back: Small abrasions on skin caused by unburnt gunpowder particles in intermediate-range GSWs.
+
+Front: Primary finding in Carbon Monoxide (CO) poisoning?
+
+Back: Cherry-red discoloration of skin and organs.
+
+Front: Primary finding in Cyanide poisoning?
+
+Back: Bitter almond odor and "brick-red" skin.
+
+Front: Characteristics of a 1st-degree burn?
+
+Back: Epidermis only; painful, red, no blisters.
+
+Front: Characteristics of a 2nd-degree burn?
+
+Back: Epidermis and dermis; painful with blisters.
+
+Front: Definition of "Rule of Nines"?
+
+Back: Method used to estimate the total body surface area (TBSA) affected by burns.
+
+Front: Typical finding in exit wounds of GSWs?
+
+Back: Larger, irregular, and lack soot or stippling.
+
+Front: Definition of Cadaveric Spasm?
+
+Back: Instantaneous onset of rigor mortis in a specific muscle group, usually associated with violent death.
+
+Front: Main forensic finding in Drowning?
+
+Back: Frothy fluid in airways and "washerwoman" skin (though non-specific).
+
+Front: Finding in "Dry Drowning"?
+
+Back: Laryngospasm prevents water from entering the lungs.
+
+Front: Difference between "Manner of Death" and "Cause of Death"?
+
+Back: Cause is the injury/disease (e.g., GSW); Manner is the legal category (e.g., Homicide, Suicide, Accident).
+
+Front: Common finding in Manual Strangulation?
+
+Back: Fractured hyoid bone and petechial hemorrhages in the conjunctiva.
+
+Front: Forensic indicator of Antemortem vs. Postmortem bruising?
+
+Back: Antemortem bruises show cellular infiltration and inflammatory response.
+
+Front: Definition of Saponification (Adipocere)?
+
+Back: Conversion of body fat to a waxy, soap-like substance in moist, anaerobic environments.
+
+Front: Definition of Mummification?
+
+Back: Drying and shriveling of the body in hot, dry conditions.
+
+Front: What are Tardieu Spots?
+
+Back: Subpleural/subpericardial petechiae seen in cases of mechanical asphyxia.
+
+Front: Determining range of fire: Absence of soot/stippling indicates?
+
+Back: Distant range GSW (usually > 3 feet).
+
+Front: Sign of defensive wounds?
+
+Back: Lacerations or incisions on the palms, ulnar surface of forearms, or shins.
+
+Front: What defines a "Stab Wound"?
+
+Back: A sharp-force injury that is deeper than it is long on the skin surface.
+
+Front: Forensic significance of a "Hilt Mark"?
+
+Back: Patterned abrasion from the handle of a knife, indicating full-depth penetration.
+
+Front: Primary indicator of lightning strike (thermal injury)?
+
+Back: Lichtenberg figures (arborescent/fern-like skin patterns).
+
+Front: Characteristics of an Entry GSW?
+
+Back: Abrasion ring/collar around the hole.
+
+Front: Effect of Arsenic poisoning on the skin?
+
+Back: Hyperkeratosis and "raindrop" hyperpigmentation.
+
+Front: What is "Putrefaction"?
+
+Back: Decomposition of proteins by bacterial action, leading to green discoloration and bloating.
+
+Front: Significance of "Marbling" in decomposition?
+
+Back: Breakdown of hemoglobin in vessels creating a branched pattern on the skin.
+
+Front: Most common cause of sudden cardiac death in athletes?
+
+Back: Hypertrophic Cardiomyopathy (HCM).
+
+Front: Defining feature of a Contusion?
+
+Back: Bruising caused by blunt force that ruptures small blood vessels without breaking the skin.
+
+Front: Distinguishing Suicidal vs. Homicidal cut-throat wounds?
+
+Back: Suicide often shows "hesitation marks"; Homicide often shows deep, singular, or jagged defense-related cuts.
+
+Front: Mechanism of death in hanging?
+
+Back: Cerebral ischemia due to compression of carotid arteries (rather than airway obstruction).
+
+Front: Post-mortem finding in Hypothermia?
+
+Back: Wischnewski spots (multiple small hemorrhages in the gastric mucosa).
+
+Front: Definition of "Diatom Test"?
+
+Back: Detection of silica-shelled algae in bone marrow to support a diagnosis of drowning.
+
+Front: Forensic finding in Shaken Baby Syndrome?
+
+Back: Retinal hemorrhages, subdural hematoma, and diffuse axonal injury.
+
+Front: Characteristics of high-voltage electrical burns?
+
+Back: Small entry/exit points with massive deep tissue destruction.
+
+Front: Significance of "Blow-back" in forensics?
+
+Back: Blood and tissue found inside the barrel of a gun in contact shots.
+
+Front: Sequence of color changes in a bruise?
+
+Back: Red/Purple (Hb) -> Blue/Black -> Green (Biliverdin) -> Yellow/Brown (Bilirubin/Hemosiderin).
+
+Front: Timeframe for "fixed" Livor Mortis?
+
+Back: Usually after 8–12 hours; it no longer blanches with pressure.
+
+Front: Primary feature of Pulmonary Thromboembolism at autopsy?
+
+Back: Lines of Zahn (alternating layers of platelets/fibrin and RBCs) in the clot.
+
+Front: Distinguishing Premortem vs. Postmortem clots?
+
+Back: Premortem clots are friable and have Lines of Zahn; Postmortem clots are "chicken fat" (yellow) or "currant jelly" (red).
+
+Front: Common fracture site in motor vehicle accidents (pedestrian vs car)?
+
+Back: "Bumper fracture" (tibial/fibular fractures at the level of the car bumper).
+
+Front: Primary chemical change used for post-mortem interval (PMI) in the eye?
+
+Back: Increasing Potassium ($K^+$) concentration in the vitreous humor.
+
+Front: Definition of "Triage" in forensic mass disasters?
+
+Back: Prioritizing victims based on the severity of injuries and likelihood of survival.
+
+Front: Finding in "Coupe" vs "Contre-coupe" brain injury?
+
+Back: Coupe is at the site of impact; Contre-coupe is on the opposite side (common in falls).
+
+Front: Forensic significance of a "Dicing" pattern?
+
+Back: Small, squared-off abrasions caused by shattered tempered side-glass in car accidents.
+
+Front: Most reliable method for identifying a skeletonized body?
+
+Back: Dental records or DNA analysis.
+
+Front: Characteristics of Skeletal remains: Female Pelvis?
+
+Back: Wider sub-pubic angle (> 90 degrees), wider sciatic notch, and oval-shaped pelvic inlet.
+
+Front: Characteristics of Skeletal remains: Male Pelvis?
+
+Back: Narrow sub-pubic angle (< 90 degrees), heart-shaped pelvic inlet.
+
+Front: Definition of "Exsanguination"?
+
+Back: Death due to extreme blood loss (usually > 40% of blood volume).
+
+Front: Key finding in Heat Stroke?
+
+Back: Body temperature > 40°C (104°F) and anhidrosis (lack of sweating).
+
+Front: Sign of a "Graze Wound"?
+
+Back: Bullet moves tangential to the skin, causing an elongated abrasion without entering the body.
+
+Front: Significance of "Soot" in the airway?
+
+Back: Indicates the person was alive and breathing during a fire (Antemortem burn).
+
+Front: Most common toxicological finding in forensic autopsies?
+
+Back: Ethanol (Alcohol).
+
+Front: Rule for calculating blood alcohol clearance?
+
+Back: Average rate is 15–20 mg/dL per hour.
+
+Front: Most common cause of Pelvic Inflammatory Disease (PID)?
+
+Back: Chlamydia trachomatis and Neisseria gonorrhoeae.
+
+Front: Definition of Fitz-Hugh-Curtis Syndrome?
+
+Back: Inflammation of the liver capsule ("violin-string" adhesions) following PID.
+
+Front: Classic histological finding in Syphilitic Chancre (Primary)?
+
+Back: Endarteritis obliterans with a plasma cell-rich infiltrate.
+
+Front: Identifying feature of Lymphogranuloma Venereum (LGV)?
+
+Back: Necrotizing granulomatous inflammation of inguinal lymph nodes (stellate abscesses).
+
+Front: Causative agent of "Strawberry Cervix"?
+
+Back: Trichomonas vaginalis.
+
+Front: Most common cause of nipple discharge (bloody or serous)?
+
+Back: Intraductal papilloma.
+
+Front: Distinction between Intraductal Papilloma and Papillary Carcinoma?
+
+Back: Papilloma has a double layer of cells (epithelial and myoepithelial); Carcinoma lacks the myoepithelial layer.
+
+Front: Risk factor for Fat Necrosis of the breast?
+
+Back: Trauma (presents as a fixed, firm mass mimicking cancer).
+
+Front: Defining feature of Sclerosing Adenosis?
+
+Back: Increased acini and intralobular fibrosis, often associated with calcifications.
+
+Front: Most common benign tumor of the female breast?
+
+Back: Fibroadenoma.
+
+Front: Characteristic of Phyllodes Tumor?
+
+Back: "Leaf-like" projections on histology with increased stromal cellularity.
+
+Front: Most common location for breast cancer?
+
+Back: Upper outer quadrant.
+
+Front: Defining histological feature of Invasive Ductal Carcinoma (IDC)?
+
+Back: Nest and cords of tumor cells in a dense, desmoplastic stroma.
+
+Front: Hallmark of Invasive Lobular Carcinoma?
+
+Back: "Single-file" pattern of cells due to loss of E-cadherin.
+
+Front: Clinical presentation of Inflammatory Breast Cancer?
+
+Back: Peau d'orange (orange peel skin) due to lymphatic obstruction by tumor emboli.
+
+Sexual Pathology: Male & Miscellaneous
+
+Front: Pathogenesis of Balanitis Xerotica Obliterans?
+
+Back: Lichen sclerosus of the glans penis; presents as white patches and can cause phimosis.
+
+Front: Definition of Peyronie Disease?
+
+Back: Fibrous plaque within the tunica albuginea leading to abnormal penile curvature.
+
+Front: Distinguishing feature of Bowen Disease (Penis)?
+
+Back: Carcinoma in situ presenting as a leukoplakic (white) plaque on the shaft.
+
+Front: Definition of Erythroplasia of Queyrat?
+
+Back: Carcinoma in situ presenting as a red plaque on the glans.
+
+Front: Tumor marker for Choriocarcinoma in males?
+
+Back: Beta-hCG (may cause gynecomastia due to LH-like activity).
+
+Front: Most common cause of scrotal swelling in newborns?
+
+Back: Congenital hydrocele (incomplete closure of processus vaginalis).
+
+Front: Definition of Spermatocele?
+
+Back: Cystic dilation of the efferent ductules containing sperm.
+
+Forensic Pathology: Advanced Medicolegal Concepts
+
+Front: Definition of "Chain of Custody"?
+
+Back: The chronological documentation of the seizure, control, and analysis of physical evidence.
+
+Front: What is "Post-mortem Redistribution"?
+
+Back: The change in drug concentrations after death as drugs diffuse from organs into the blood.
+
+Front: Definition of an "Incised Wound" vs. "Stab Wound"?
+
+Back: Incised is longer than it is deep; Stab is deeper than it is long.
+
+Front: What is a "Défense Wound" on the hands?
+
+Back: Cuts on the palmar surface or ulnar borders, indicating an attempt to grab a weapon or shield the body.
+
+Front: Appearance of a "Star-shaped" (Stellate) entry wound?
+
+Back: Contact GSW over a bony prominence (e.g., the skull) due to expanding gases.
+
+Front: Definition of "Muzzle Imprint"?
+
+Back: An abrasion mirroring the gun barrel's end, seen in hard-contact wounds.
+
+Front: Typical color of Livor Mortis in Cyanide poisoning?
+
+Back: Bright cherry-red or pink.
+
+Front: Typical color of Livor Mortis in Nitrite or Chlorate poisoning?
+
+Back: Chocolate brown (due to methemoglobinemia).
+
+Front: What is "Somatice Death"?
+
+Back: The irreversible cessation of the functions of the brain, heart, and lungs.
+
+Front: What is "Molecular Death"?
+
+Back: The death of individual tissues and cells, occurring hours after somatic death.
+
+Front: Definition of "Kiernan’s Sign" (Forensics)?
+
+Back: Hemorrhage into the intermediate lobe of the pituitary in cases of hypothermia.
+
+Front: Difference between "Primary" and "Secondary" Blast Injuries?
+
+Back: Primary is due to the pressure wave (affects hollow organs); Secondary is due to flying debris/shrapnel.
+
+Front: What is "Tertiary" Blast Injury?
+
+Back: Injury resulting from the victim being thrown by the blast wind against a hard surface.
+
+Front: Common autopsy finding in anaphylactic shock?
+
+Back: Laryngeal edema and mucus plugging of the bronchi.
+
+Front: Definition of "Manner of Death: Undetermined"?
+
+Back: Used when there is insufficient information or conflicting evidence to choose a specific manner.
+
+Front: Definition of "Exhumation"?
+
+Back: The legal disinterment of a body for re-examination or identification.
+
+Front: What is "Petrifaction" in forensic entomology?
+
+Back: The use of insect life cycles (e.g., blowflies) to estimate the time since death.
+
+Front: Characteristic of "Exit Wounds" in GSW?
+
+Back: Irregular shape, absence of an abrasion ring, and no soot or stippling.
+
+Front: Definition of "Diatom Test" significance?
+
+Back: If diatoms are found in closed circulation (bone marrow/brain), it suggests the person drowned while alive.
+
+Front: Finding in "Garrotting"?
+
+Back: Form of strangulation using a cord or wire, often tightened with a stick.
+
+Front: Indicator of "Manual Strangulation"?
+
+Back: Fingernail abrasions on the neck and bruising of the deep neck muscles.
+
+Front: What is the "Boxer’s Posture" (Pugilistic Attitude)?
+
+Back: Flexion of limbs in fire victims due to heat-induced coagulation of muscle proteins.
+
+Front: Difference between "Antemortem" and "Postmortem" burns?
+
+Back: Antemortem burns show a red line of inflammation (vital reaction) and soot in the lungs.
+
+Front: Definition of "Neglect" in geriatric/pediatric forensics?
+
+Back: Failure of a caregiver to provide necessary food, clothing, shelter, or medical care.
+
+Front: What is a "Choke" in a shotgun?
+
+Back: The partial constriction of the bore at the muzzle to control the spread of the shot.
+
+Front: Significance of "Wadding" in shotgun wounds?
+
+Back: It can enter the wound at close range and help determine the distance of fire.
+
+Front: Definition of "Sudden Infant Death Syndrome" (SIDS)?
+
+Back: Sudden death of an infant < 1 year that remains unexplained after a thorough investigation/autopsy.
+
+Front: Common finding in "Air Embolism"?
+
+Back: Frothy blood in the right ventricle; usually diagnosed by opening the heart under water.
+
+Front: Primary finding in "Fat Embolism Syndrome"?
+
+Back: Petechial rash, respiratory distress, and CNS dysfunction after a long-bone fracture.
+
+Front: Definition of "Asphyxia"?
+
+Back: Interference with the uptake or utilization of oxygen.
+
+Front: Forensic significance of the "Hyoid Bone"?
+
+Back: Fractures are highly suggestive of manual strangulation in adults.
+
+Front: Timeframe for "Gastric Emptying" in forensics?
+
+Back: Light meals usually leave the stomach in 2 hours; heavy meals in 4-6 hours (highly variable).
+
+Front: What is "Tache Noire"?
+
+Back: A reddish-brown horizontal band on the eyeball when the eyes remain open after death.
+
+Front: Difference between "Self-inflicted" and "Homicidal" stab wounds?
+
+Back: Self-inflicted are often clustered in a reachable area (e.g., left chest) and may have hesitation marks.
+
+Front: What is "Simulated Suicide"?
+
+Back: A homicide made to look like a suicide by the perpetrator (e.g., moving the body or weapon).
+
+Front: Indicators of "High-Velocity" rifle wounds?
+
+Back: Massive tissue destruction and "explosive" exit wounds due to cavitation.
+
+Front: What is "Casper’s Dictum"?
+
+Back: A body decomposes in air twice as fast as in water and eight times as fast as in earth.
+
+Front: Define "Negative Autopsy"?
+
+Back: An autopsy where no gross or microscopic cause of death can be found (e.g., some arrhythmias).
+
+Front: Definition of "Medicolegal Autopsy"?
+
+Back: An autopsy performed under the authority of the state to determine cause and manner of death.
+
+Front: Common finding in "Drowning in Salt Water"?
+
+Back: Pulmonary edema and hemoconcentration (due to osmotic shift of fluid into lungs).
+
+Front: Common finding in "Drowning in Fresh Water"?
+
+Back: Hemodilution, hemolysis, and potential hyperkalemia.
+
+Front: Definition of "Whiplash Injury"?
+
+Back: Cervical strain/sprain caused by sudden hyperextension followed by hyperflexion.
+
+Front: Key feature of "Scald Burns"?
+
+Back: Caused by hot liquids; characterized by "tidemark" patterns and absence of singed hair.
+
+Front: What is "Pressure Pallor"?
+
+Back: Areas of the skin that remain pale because they were compressed against a surface during livor mortis.
+
+Front: Significance of "Toxicology Screening" in Forensic Pathology?
+
+Back: To identify poisons or drugs that may have caused or contributed to death.
+
+Front: Definition of "Bolus Death"?
+
+Back: Choking on a large piece of food, leading to sudden airway obstruction and vagal inhibition.
+
+Front: Forensic finding in "Electrocution"?
+
+Back: Joule burn (entry mark) showing a crater with raised, pale edges.
+
+Front: What is "Post-mortem Lividity" (another name for)?
+
+Back: Livor mortis.
+
+Front: Most common location for "Defense Wounds"?
+
+Back: Palmar surface of hands and outer aspect of forearms.
+
+Front: Defining feature of "Slash" wounds?
+
+Back: Sharp force injury where length is greater than depth.
+
+Front: What is "Smudging" in GSW?
+
+Back: The deposit of soot around the entry wound, typical of close-range fire.
+
+Front: What is "Stippling" (Tattooing)?
+
+Back: Small punctate abrasions from unburned powder, typical of intermediate-range GSW.
+
+Front: Range for "Intermediate-range" GSW stippling?
+
+Back: Usually between 1 centimeter to 1 meter (approx. 3 feet).
+
+Front: Indicator of "Hard Contact" GSW?
+
+Back: Muzzle imprint and "blowback" of tissue into the barrel.
+
+Front: Definition of "Laceration" vs "Incision"?
+
+Back: Lacerations are blunt force (ragged edges, tissue bridges); Incisions are sharp force (clean edges, no bridges).
+
+Front: Definition of "Abraded Skin"?
+
+Back: Superficial injury where the epidermis is removed by friction.
+
+Front: Definition of "Ecchymosis"?
+
+Back: A medical term for a bruise or contusion.
+
+Front: Most common cause of death in "House Fires"?
+
+Back: Carbon monoxide poisoning/smoke inhalation (not thermal burns).
+
+Front: Percentage of $COHb$ usually fatal in a healthy adult?
+
+Back: Greater than 50-60%.
+
+Front: Characteristics of "Exit Wounds" vs "Entry Wounds"?
+
+Back: Entry has an abrasion collar; Exit is usually larger and more irregular without a collar.
+
+Front: Definition of a Brenner Tumor?
+Back: An ovarian surface epithelial tumor containing bladder-like transitional epithelium.
+
+Front: Histological finding in a Sertoli-Leydig cell tumor?
+Back: Reinke crystals (pink, rod-shaped cytoplasmic inclusions).
+
+Front: Most common location for an Ectopic Pregnancy?
+Back: The ampulla of the fallopian tube.
+
+Front: Define "Decidualization" of the stroma?
+Back: Transformation of endometrial stroma into plump, secretory cells under the influence of progesterone.
+
+Front: What is "Arias-Stella Reaction"?
+Back: Endometrial changes (hyperchromatic, enlarged nuclei) associated with pregnancy or ectopic pregnancy.
+
+Front: Definition of Placenta Accreta?
+Back: Improper implantation of the placenta directly onto the myometrium without intervening decidua.
+
+Front: Definition of Placenta Percreta?
+Back: Placental invasion through the entire myometrium and into the serosa or adjacent organs (e.g., bladder).
+
+Front: Most common cause of Postpartum Hemorrhage?
+Back: Uterine atony.
+
+Front: Characteristic of HELLP Syndrome?
+Back: Hemolysis, Elevated Liver enzymes, and Low Platelets (a severe form of Preeclampsia).
+
+Front: Definition of Vulvar Lichen Sclerosus?
+Back: Thinning of the epidermis and "parchment-like" vulvar skin with a slight risk of Squamous Cell Carcinoma.
+
+Front: Definition of Lichen Simplex Chronicus?
+Back: Hyperplasia of vulvar squamous epithelium due to chronic scratching; no increased risk of cancer.
+
+Front: Pathogenesis of "Chocolate Cysts"?
+Back: Blood-filled cysts in the ovary caused by repeated cyclic hemorrhage of ectopic endometrial tissue.
+
+Front: Typical presentation of Sarcoma Botryoides?
+Back: A "bunch of grapes" mass protruding from the vagina of a child.
+
+Front: Most common benign tumor of the male breast?
+Back: Gynecomastia.
+
+Front: Primary risk factor for Male Breast Cancer?
+Back: BRCA2 mutation and Klinefelter Syndrome.
+
+Front: Definition of Extramammary Paget Disease?
+Back: Malignant cells in the vulvar epidermis (PAS+, Keratin+) that do not usually indicate an underlying cancer.
+
+Front: Most common cause of Granulomatous Orchitis?
+Back: Tuberculosis (caseating) or idiopathic (non-caseating).
+
+Front: Classic hormone finding in Choriocarcinoma?
+Back: Extremely high Beta-hCG levels.
+
+Front: Identifying feature of Endodermal Sinus (Yolk Sac) tumor in males?
+Back: Schiller-Duval bodies and elevated Alpha-fetoprotein (AFP).
+
+Front: Definition of Paratesticular Rhabdomyosarcoma?
+Back: A highly malignant tumor of the spermatic cord, typically occurring in children.
+
+Forensic Pathology: Specific Death Scenarios & Toxicology
+
+Front: What is "Paradoxical Undressing"?
+Back: A phenomenon in hypothermia where the victim removes clothes due to a false sensation of burning heat.
+
+Front: Forensic significance of "Post-mortem Teeth Pinkness"?
+Back: Often associated with carbon monoxide poisoning, drowning, or hypothermia.
+
+Front: Definition of "Excited Delirium Syndrome"?
+Back: A state of extreme agitation, hyperthermia, and superhuman strength, often leading to sudden death during restraint.
+
+Front: Finding in "Air Embolism" at autopsy?
+Back: Air bubbles in the coronary arteries or frothy blood in the right heart.
+
+Front: What are "Lines of Zahn"?
+Back: Laminated patterns in a thrombus formed by alternating layers of platelets/fibrin and RBCs.
+
+Front: Definition of "Agonal Thrombus"?
+Back: A thrombus formed in the heart during the process of dying.
+
+Front: What is "Embalming Artifact"?
+Back: Changes to the body (e.g., tissue firmness, chemical odors) that interfere with post-mortem toxicology and histology.
+
+Front: Significance of "Vitreous Glucose" post-mortem?
+Back: High levels suggest poorly controlled diabetes or diabetic ketoacidosis before death.
+
+Front: Typical finding in Ethylene Glycol poisoning?
+Back: Calcium oxalate crystals in the renal tubules.
+
+Front: What is "Methanol" poisoning hallmark?
+Back: Putaminal necrosis and retinal damage (formic acid toxicity).
+
+Front: Forensic finding in Chronic Lead Poisoning?
+Back: Lead lines on gums (Burton lines) and "lead lines" on epiphyses of long bones in X-rays.
+
+Front: Definition of "Pathergy" in forensics?
+Back: An exaggerated skin response to minor trauma, occasionally seen in specific systemic diseases.
+
+Front: What is "Kiernan’s Sign"?
+Back: Hemorrhages in the anterior pituitary stalk, often seen in hanging.
+
+Front: Characteristic of "Shotgun" entrance at close range?
+Back: A single large hole ("cookie cutter" appearance) with charred edges.
+
+Front: What is "Rat-hole" entrance?
+Back: An irregular shotgun entry wound where the individual pellets begin to diverge (intermediate range).
+
+Front: Significance of the "Pelvis" in age determination?
+Back: Changes in the pubic symphyseal surface are the most reliable skeletal indicators of age in adults.
+
+Front: Definition of "Livor Mortis" fixation?
+Back: Occurs when blood becomes trapped in the capillaries and no longer shifts with body movement.
+
+Front: Finding in "Ligature Strangulation"?
+Back: A horizontal mark on the neck, usually below the larynx, often encircling the entire neck.
+
+Front: Distinction between "Hanging" and "Ligature Strangulation" marks?
+Back: Hanging marks are usually inverted "V" shapes and incomplete; Ligature marks are horizontal and continuous.
+
+Front: What is "Post-mortem Caloric Production"?
+Back: A temporary rise in body temperature after death due to continued metabolic activity or infection.
+
+Front: Definition of "Individualization" in forensics?
+Back: The process of proving that a sample came from a unique source (e.g., fingerprints, DNA).
+
+Front: Finding in "Aspiration of Gastric Contents"?
+Back: Food particles and acidic fluid found in the terminal bronchioles.
+
+Front: Indicator of "Premortem" Bruising?
+Back: Microscopic evidence of inflammatory cells (neutrophils) and fibrin.
+
+Front: Definition of "Vagal Inhibition" death?
+Back: Sudden cardiac arrest caused by stimulation of the vagus nerve (e.g., pressure on the neck/carotid sinus).
+
+Front: What is "Tardieu’s Spots"?
+Back: Small petechial hemorrhages beneath the pleura or epicardium in asphyxial deaths.
+
+Front: Mechanism of "Stab" wound death?
+Back: Internal hemorrhage leading to hypovolemic shock.
+
+Front: Definition of "Manner of Death: Natural"?
+Back: Death caused exclusively by disease or the aging process.
+
+Front: Definition of "Manner of Death: Accidental"?
+Back: Death resulting from an unintentional action or event (e.g., a fall).
+
+Front: Definition of "Manner of Death: Homicide"?
+Back: Death resulting from a volitional act committed by another person.
+
+Front: What is "Cadaveric Spasm"?
+Back: Immediate muscle stiffening at death, usually occurring during intense physical or emotional stress.
+
+Front: Definition of Meigs Syndrome?
+Back: Triad of ovarian fibroma, ascites, and hydrothorax (pleural effusion).
+
+Front: Most common location for an accessory breast (polymastia)?
+Back: Along the "milk line" (from the axilla to the vulva).
+
+Front: Pathogenesis of Fat Necrosis of the breast?
+Back: Trauma or surgery leads to saponification of fat and a localized inflammatory response.
+
+Front: Definition of Comedocarcinoma?
+Back: A subtype of DCIS characterized by high-grade cells and central "cheese-like" necrosis.
+
+Front: Most common cause of Vaginitis with a "fishy" odor?
+Back: Bacterial vaginosis (Gardnerella vaginalis).
+
+Front: Defining characteristic of "Clue Cells"?
+Back: Vaginal epithelial cells covered in Gardnerella bacteria, giving them a fuzzy appearance.
+
+Front: Definition of Brenner Tumor?
+Back: A surface epithelial tumor of the ovary containing transitional (urothelial) cells.
+
+Front: What are Reinke Crystals?
+Back: Eosinophilic, rod-shaped inclusions found in Leydig cell tumors.
+
+Front: Primary difference between Partial and Complete Hydatidiform Moles?
+Back: Partial moles contain fetal parts and result from 2 sperm fertilizing 1 egg (69,XXX/XXY).
+
+Front: Histological finding in Choriocarcinoma?
+Back: Proliferation of cytotrophoblasts and syncytiotrophoblasts without chorionic villi.
+
+Front: Definition of Endometrial Polyp?
+Back: Benign growth of endometrial glands and stroma, often associated with Tamoxifen use.
+
+Front: Most common subtype of Cervical Cancer?
+Back: Squamous cell carcinoma (80%).
+
+Front: Mechanism of Koilocytic change?
+Back: HPV infection causes nuclear enlargement, hyperchromasia, and a clear perinuclear halo.
+
+Front: Definition of Spermatocele?
+Back: A painless, sperm-containing cyst of the epididymis.
+
+Front: Most common cause of Acute Prostatitis in men < 35?
+Back: Chlamydia trachomatis and Neisseria gonorrhoeae.
+
+Forensic Pathology: Advanced Autopsy & Injury Patterns
+Front: Definition of "Lichtenberg Figures"?
+Back: Fern-like skin patterns caused by a lightning strike (not a true burn).
+
+Front: What is a "Dicing" injury?
+Back: Small, L-shaped or square abrasions from tempered glass fragments in motor vehicle accidents.
+
+Front: Definition of "Brush Burn"?
+Back: A large, friction-induced abrasion caused by a body sliding across a rough surface.
+
+Front: Difference between "Primary" and "Secondary" impact in pedestrian accidents?
+Back: Primary is the initial hit by the car; Secondary is when the pedestrian hits the ground.
+
+Front: Significance of "Pink Teeth" in forensics?
+Back: Post-mortem artifact often seen in drowning or carbon monoxide poisoning due to hemoglobin breakdown.
+
+Front: Definition of "Somatice Death"?
+Back: The irreversible cessation of heart, lung, and brain function.
+
+Front: What is "Molecular (Cellular) Death"?
+Back: The death of individual tissues and cells, occurring hours after somatic death.
+
+Front: Definition of "Adipocere" (Grave Wax)?
+Back: A waxy, soap-like substance formed by the anaerobic hydrolysis of body fat in moist environments.
+
+Front: Forensic finding in "Chronic Arsenic Poisoning"?
+Back: Mees’ lines (white transverse lines) on the fingernails and "raindrop" skin pigmentation.
+
+Front: Definition of "Burking"?
+Back: A method of homicidal asphyxia involving sitting on the chest while covering the nose and mouth.
+
+Front: What is the "Pugilistic Attitude"?
+Back: A defensive-looking posture in fire victims caused by heat-induced shrinkage of muscle fibers.
+
+Front: Finding in "Carbon Monoxide" poisoning (Blood)?
+Back: Carboxyhemoglobin levels > 50% are typically lethal.
+
+Front: Definition of "Post-mortem Redistribution"?
+Back: Movement of drugs from tissues into the blood after death, which can skew toxicology results.
+
+Front: Most common site of "Hyoid Bone" fracture?
+Back: The greater horns, typically occurring in manual strangulation.
+
+Front: Definition of "Whiplash" injury?
+Back: Acceleration-deceleration injury of the cervical spine.
+
+Front: Difference between "True" and "False" Aneurysm in trauma?
+Back: True involves all three layers of the vessel wall; False (pseudoaneurysm) is a hematoma contained by adventitia.
+
+Front: Definition of "Tache Noire"?
+Back: Dark, horizontal bands across the eyes when they remain open after death.
+
+Front: Significance of "Vitreous Potassium"?
+Back: Levels increase at a predictable rate after death, used to estimate the post-mortem interval.
+
+Front: What is a "Joule Burn"?
+Back: An electrical entry wound characterized by a central crater and firm, pale edges.
+
+Front: Definition of "Sudden Infant Death Syndrome" (SIDS)?
+Back: Sudden death of an infant under 1 year that remains unexplained after full autopsy and scene investigation.
+
+Front: Characteristic of "Hard Contact" GSW?
+Back: Muzzle imprint and searing of the skin edges.
+
+Front: Definition of "Exhumation"?
+Back: The legal disinterment of a body for examination or evidence collection.
+
+Front: Finding in "Cyanide" poisoning (Internal)?
+Back: Bright red blood and organs with a bitter almond odor.
+
+Front: Definition of "Manner of Death"?
+Back: The legal classification of death (Natural, Accident, Suicide, Homicide, or Undetermined).
+
+Front: Definition of "Cause of Death"?
+Back: The specific injury or disease that leads to physiological collapse (e.g., Gunshot wound to the head)
+
+Front: Definition of Fat Necrosis of the breast?
+Back: A benign, firm mass caused by trauma or surgery, showing necrotic adipocytes and lipid-laden macrophages.
+
+Front: Characteristics of Sclerosing Adenosis?
+Back: Increased number of acini and intralobular fibrosis, often associated with calcifications.
+
+Front: Most common benign tumor of the female breast?
+Back: Fibroadenoma.
+
+Front: Typical behavior of a Fibroadenoma?
+Back: Estrogen-sensitive; grows during pregnancy and shrinks after menopause.
+
+Front: Defining feature of a Phyllodes Tumor?
+Back: Large, "leaf-like" stromal projections with higher cellularity than a fibroadenoma.
+
+Front: Definition of Intraductal Papilloma?
+Back: A benign growth in a large duct, presenting with serous or bloody nipple discharge in premenopausal women.
+
+Front: Pathological distinction of Ductal Carcinoma In Situ (DCIS)?
+Back: Malignant proliferation of cells in ducts with no invasion of the basement membrane.
+
+Front: Definition of Paget Disease of the Breast?
+Back: DCIS that extends up the lactiferous ducts to the skin of the nipple, causing a crusty, eczematous lesion.
+
+Front: Most common location for breast cancer?
+Back: Upper outer quadrant.
+
+Front: Defining feature of Invasive Lobular Carcinoma?
+Back: "Single-file" pattern of cells due to the loss of E-cadherin expression.
+
+Front: Hormone receptor status often seen in Medullary Carcinoma of the breast?
+Back: Often "Triple Negative" (ER-, PR-, and HER2-).
+
+Front: Most common cause of spontaneous abortion?
+Back: Fetal chromosomal abnormalities (especially Trisomy 16).
+
+Front: Definition of Placenta Previa?
+Back: Implantation of the placenta over the internal cervical os, presenting as painless third-trimester bleeding.
+
+Front: Definition of Abruptio Placentae?
+Back: Premature separation of the placenta from the uterine wall, presenting as painful third-trimester bleeding.
+
+Front: Classic "triad" of Preeclampsia?
+Back: Hypertension, proteinuria, and edema (though edema is no longer a strict diagnostic criterion).
+
+Forensic Pathology: Environmental & Toxicological
+Front: Definition of "Paradoxical Undressing"?
+Back: A phenomenon in hypothermia where a victim removes clothes due to a false sensation of heat from peripheral vasodilation.
+
+Front: Forensic indicator of Hypothermia?
+Back: Wischnewski spots (multiple small, dark gastric mucosal hemorrhages).
+
+Front: Defining feature of "Dry Drowning"?
+Back: Death from asphyxia due to intense laryngospasm without significant water aspiration.
+
+Front: Significance of "Diatoms" in drowning?
+Back: Finding silica-shelled algae in closed organs (like bone marrow) suggests the victim was alive during submersion.
+
+Front: Most common finding in "Choking on Food" (Bolus Death)?
+Back: Sudden cardiac arrest due to vagal inhibition from laryngeal stimulation.
+
+Front: Definition of "Excited Delirium Syndrome"?
+Back: State of extreme agitation, hyperthermia, and superhuman strength, often leading to sudden death during restraint.
+
+Front: Characteristic of "Lichtenberg Figures"?
+Back: Transient, fern-like skin patterns caused by a lightning strike.
+
+Front: Finding in "Carbon Monoxide" poisoning?
+Back: Cherry-red discoloration of the skin, muscles, and blood.
+
+Front: Most reliable method for identifying a skeletonized body?
+Back: Comparison of dental records or DNA profiling.
+
+Front: Definition of "Antemortem" injury?
+Back: An injury sustained before death, characterized by vital reactions like inflammation, bruising, or bleeding.
+
+Front: Definition of "Postmortem" injury?
+Back: An injury sustained after death, typically lacking a vital inflammatory response.
+
+Front: Identifying feature of "Exit Wounds" in GSW?
+Back: Larger, irregular shape, and absence of soot, stippling, or an abrasion collar.
+
+Front: Finding in "Manual Strangulation"?
+Back: Petechial hemorrhages in the eyes, bruising of neck muscles, and potential fracture of the hyoid bone.
+
+Front: Definition of "Manner of Death: Undetermined"?
+Back: A classification used when there is insufficient information or evidence to assign a specific manner (e.g., suicide vs. accident).
+
+Front: What is the "Rule of Nines"?
+Back: A clinical tool used in burn forensics to estimate the total body surface area affected.
+
+Front: Typical finding in "High-Voltage" electrical injury?
+Back: Extensive deep-tissue destruction and potential "blow-out" wounds at exit points.
+
+Front: Sign of "Smoke Inhalation" at autopsy?
+Back: Soot in the larynx, trachea, and bronchi, indicating the person was alive during the fire.
+
+Front: Definition of "Ligature Mark"?
+Back: A furrow in the neck produced by a cord or wire, typically horizontal in strangulation.
+
+Front: Difference between "Primary" and "Secondary" blast injuries?
+Back: Primary is due to the pressure wave (hollow organs); Secondary is due to shrapnel/debris.
+
+Front: Definition of "Mummification"?
+Back: Drying and shriveling of a body in hot, dry, and airy conditions.
+
+Front: Most common location for an Ectopic Pregnancy?
+Back: The Ampulla of the Fallopian Tube.
+
+Front: Definition of the "Arias-Stella Reaction"?
+Back: Benign endometrial nuclear hyperchromasia and pleomorphism associated with pregnancy.
+
+Front: What is a Brenner Tumor of the ovary?
+Back: A rare surface epithelial tumor containing transitional epithelium (urothelium).
+
+Front: Defining feature of a Struma Ovarii?
+Back: A specialized teratoma composed entirely of mature thyroid tissue.
+
+Front: What is the most common germ cell tumor in children under 3?
+Back: Yolk Sac Tumor (Endodermal Sinus Tumor).
+
+Front: Diagnostic histological feature of Yolk Sac Tumors?
+Back: Schiller-Duval bodies (glomerulus-like structures).
+
+Front: Most common testicular tumor in men over age 60?
+Back: Diffuse Large B-cell Lymphoma (usually metastatic).
+
+Front: Primary difference between a Seminoma and a Dysgerminoma?
+Back: Seminoma occurs in the testes; Dysgerminoma occurs in the ovary (histologically identical).
+
+Front: What are Reinke Crystals?
+Back: Rod-shaped cytoplasmic inclusions found in Leydig cell tumors.
+
+Front: Definition of Call-Exner Bodies?
+Back: Small, gland-like follicles filled with eosinophilic material seen in Granulosa Cell Tumors.
+
+Front: Hormone produced by Granulosa Cell Tumors?
+Back: Estrogen (often presents with precocious puberty or postmenopausal bleeding).
+
+Front: Definition of Bowenoid Papulosis?
+Back: Multiple reddish-brown papules on the penis caused by HPV 16; histologically CIS but rarely progresses.
+
+Front: Difference between Phimosis and Paraphimosis?
+Back: Phimosis is inability to retract the foreskin; Paraphimosis is a retracted foreskin that cannot be returned, causing ischemia.
+
+Front: Common cause of "Non-gonococcal Urethritis"?
+Back: Chlamydia trachomatis (serotypes D-K).
+
+Forensic Pathology: Toxicology & Trauma Specifics
+Front: Definition of "Post-mortem Redistribution"?
+Back: Changes in drug concentration after death due to diffusion from tissue reservoirs into the blood.
+
+Front: Forensic significance of Vitreous Humor?
+Back: It is an isolated fluid used to test for electrolytes, glucose, and alcohol post-mortem.
+
+Front: Finding in the stomach indicating Insulin Overdose?
+Back: Usually none; diagnosis requires testing for elevated insulin/C-peptide ratios at the injection site.
+
+Front: Appearance of "Lichtenberg Figures"?
+Back: Arborescent (fern-like) skin patterns pathognomonic for lightning strikes.
+
+Front: Difference between "Primary" and "Secondary" blast injury?
+Back: Primary is due to the blast wave (pressure); Secondary is due to flying shrapnel.
+
+Front: What is a "Tertiary" blast injury?
+Back: Injury caused by the body being physically thrown against an object by the blast wind.
+
+Front: Definition of "Somatice Death"?
+Back: The irreversible cessation of the functions of the brain, heart, and lungs.
+
+Front: Definition of "Molecular Death"?
+Back: The death of individual tissues and cells occurring at different rates after somatic death.
+
+Front: Significance of "Marbling" in decomposition?
+Back: Hemolysis of blood in vessels reacting with hydrogen sulfide, creating a visible venous network.
+
+Front: What is "Adipocere"?
+Back: A waxy substance (grave wax) formed by the anaerobic hydrolysis of fat in wet environments.
+
+Front: Defining feature of a "Stellate" GSW entry?
+Back: A star-shaped wound caused by gas expansion under the skin in a contact shot over bone.
+
+Front: What is "Sooting" (Smudging)?
+Back: Carbon deposits on the skin indicating a near-contact or close-range gunshot wound.
+
+Front: Definition of "Tattooing" (Stippling)?
+Back: Small punctate abrasions caused by unburnt gunpowder hitting the skin in intermediate-range GSWs.
+
+Front: Common autopsy finding in chronic Lead poisoning?
+Back: "Lead lines" (Burton lines) on the gums and basophilic stippling of RBCs.
+
+Front: Post-mortem finding in Ethylene Glycol poisoning?
+Back: Calcium oxalate crystals in the renal tubules (viewed under polarized light).
+
+Front: Forensic finding in Cyanide poisoning?
+Back: Bright red "cherry" lividity and a bitter almond odor from the cavities.
+
+Front: Significance of "Hyoid Bone" fracture?
+Back: A strong indicator of manual strangulation in adults.
+
+Front: Definition of "Tache Noire"?
+Back: A brown, horizontal band across the sclera occurring when the eyes remain open after death.
+
+Front: What is "Cadaveric Spasm"?
+Back: Immediate onset of rigor mortis at the moment of death, usually during violent struggle.
+
+Front: Definition of "Manner of Death"?
+Back: The legal category of death: Natural, Accident, Suicide, Homicide, or Undetermined.
+
+Front: Definition of Placenta Accreta?
+Back: Placenta attaches directly to the myometrium without penetrating it; often due to a prior C-section scar.
+
+Front: Definition of Placenta Increta?
+Back: Placental villi invade into the uterine myometrium.
+
+Front: Definition of Placenta Percreta?
+Back: Placental villi invade through the entire myometrium and may attach to the bladder or rectum.
+
+Front: Risk factor for Placental Abruption?
+Back: Maternal hypertension, smoking, and cocaine use.
+
+Front: Classic presentation of Vasa Previa?
+Back: Painless vaginal bleeding and fetal bradycardia following the rupture of membranes.
+
+Front: Definition of Velamentous Cord Insertion?
+Back: The umbilical cord inserts into the fetal membranes rather than the placenta itself.
+
+Front: Most common cause of Gestational Choriocarcinoma?
+Back: Preceding Hydatidiform Mole (50% of cases).
+
+Front: Hallmark finding of Preeclampsia on renal biopsy?
+Back: Glomerular endotheliosis (swelling of endothelial cells).
+
+Front: Distinction between Preeclampsia and Eclampsia?
+Back: Eclampsia includes the onset of new-onset grand mal seizures.
+
+Front: Definition of "Hydrops Fetalis"?
+Back: Accumulation of fluid (edema) in at least two fetal compartments, often due to severe Rh incompatibility.
+
+Forensic Pathology: Pediatric & Legal Technicalities
+Front: Definition of "Shaken Baby Syndrome"?
+Back: A form of abusive head trauma characterized by the triad of subdural hematoma, retinal hemorrhages, and encephalopathy.
+
+Front: Forensic finding in "Immersion Burns" (Abuse)?
+Back: "Stocking and glove" pattern with a sharp line of demarcation and no splash marks.
+
+Front: Significance of a "Spiral Fracture" in a non-ambulatory infant?
+Back: Highly suggestive of non-accidental trauma (physical abuse).
+
+Front: Definition of "SIDS" (Sudden Infant Death Syndrome)?
+Back: Sudden death of an infant < 1 year that remains unexplained after a thorough scene investigation and autopsy.
+
+Front: What is "Munchausen Syndrome by Proxy"?
+Back: A form of child abuse where a caregiver feigns or induces illness in a child for attention.
+
+Front: Definition of "Post-mortem Interval" (PMI)?
+Back: The estimated time that has elapsed since a person has died.
+
+Front: Most accurate skeletal indicator for determining biological sex?
+Back: The pelvis (specifically the sub-pubic angle and sciatic notch).
+
+Front: Definition of "Negligent Homicide"?
+Back: A death resulting from criminal negligence rather than a deliberate intent to kill.
+
+Front: What is a "Dying Declaration"?
+Back: A statement made by a person who believes they are about to die, often admissible as evidence in court.
+
+Front: Definition of "Medical Examiner" vs. "Coroner"?
+Back: A Medical Examiner is typically a forensic pathologist; a Coroner is an elected official who may not have medical training.
+
+Front: What is "Trace Evidence"?
+Back: Microscopic materials (hair, fibers, soil) transferred during a crime.
+
+Front: Definition of "Locard’s Exchange Principle"?
+Back: The concept that every contact leaves a trace.
+
+Front: Forensic finding in "Air Embolism"?
+Back: Presence of air in the right ventricle of the heart, often diagnosed by opening the heart under water.
+
+Front: Definition of "Exsanguination"?
+Back: Death caused by the loss of blood to the point where life cannot be sustained.
+
+Front: Most common cause of "Sudden Natural Death" in adults?
+Back: Ischemic heart disease (Coronary Artery Disease).
+
+Front: What is a "Hesitation Wound"?
+Back: Superficial sharp-force injuries (incisions) near a fatal wound, indicative of suicide.
+
+Front: Definition of "Livor Mortis" Blanching?
+Back: Pressure on the skin that turns the purple area white; indicates that the livor mortis is not yet "fixed."
+
+Front: Difference between "Primary" and "Secondary" Flaccidity?
+Back: Primary occurs immediately after death; Secondary occurs after Rigor Mortis has passed due to decomposition.
+
+Front: Definition of "Saponification"?
+Back: The process of turning body fat into adipocere.
+
+Front: Defining feature of a "Near-Contact" Gunshot Wound?
+Back: Presence of soot on the skin but no muzzle imprint or stellate tearing.
