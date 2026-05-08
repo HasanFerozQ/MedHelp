@@ -1,0 +1,1571 @@
+Front: Primary neurotransmitter released by all preganglionic autonomic fibers?
+
+Back: Acetylcholine (ACh).
+
+Front: Mechanism of action of Botulinum toxin at the neuromuscular junction?
+
+Back: Cleaves SNARE proteins to prevent ACh vesicle fusion and release.
+
+Front: Effect of low-dose Dopamine on renal blood flow?
+
+Back: Increases blood flow via D1 receptor-mediated vasodilation.
+
+Front: Classic triad of Atropine overdose?
+
+Back: "Mad as a hatter (delirium), red as a beet (flushing), dry as a bone (anhidrosis)."
+
+Front: Preferred treatment for Pheochromocytoma prior to surgical resection?
+
+Back: Non-selective alpha-blockers (e.g., Phenoxybenzamine) followed by beta-blockers.
+
+Front: Reason why Beta-blockers are used in Hyperthyroidism/Thyroid storm?
+
+Back: To decrease heart rate and inhibit peripheral conversion of T4 to T3.
+
+Front: Pathophysiological indication for Bethanechol?
+
+Back: Postoperative ileus and non-obstructive urinary retention.
+
+Front: Antidote for Organophosphate (cholinesterase inhibitor) poisoning?
+
+Back: Atropine (muscarinic antagonist) and Pralidoxime (AChE regenerator).
+
+Cardiovascular Pharmacology
+
+Front: Primary mechanism of action of Digoxin on cardiac myocytes?
+
+Back: Inhibition of $Na^+/K^+-ATPase$ pump, leading to increased intracellular $Ca^{2+}$.
+
+Front: Drug of choice for paroxysmal supraventricular tachycardia (PSVT) termination?
+
+Back: Adenosine.
+
+Front: Common side effect of ACE inhibitors caused by increased Bradykinin?
+
+Back: Dry, non-productive cough.
+
+Front: Mechanism of Aliskiren?
+
+Back: Direct Renin inhibitor.
+
+Front: Diuretic class that causes "Ototoxicity" as a side effect?
+
+Back: Loop Diuretics (e.g., Furosemide).
+
+Front: Primary metabolic side effect of Spironolactone?
+
+Back: Hyperkalemia and gynecomastia (anti-androgenic effect).
+
+Front: Electrolyte abnormality that increases the risk of Digoxin toxicity?
+
+Back: Hypokalemia.
+
+Front: First-line antihypertensive for a pregnant patient?
+
+Back: Hydralazine, Methyldopa, Labetalol, or Nifedipine.
+
+Front: Mechanism of action of Hydralazine?
+
+Back: Increases cGMP to cause smooth muscle relaxation (predominantly arterioles).
+
+Front: Lipid-lowering agent known to cause intense cutaneous flushing?
+
+Back: Niacin (Vitamin B3).
+
+Front: Mechanism of Statins?
+
+Back: Competitive inhibition of HMG-CoA reductase.
+
+Front: Class III antiarrhythmic drug known for causing pulmonary fibrosis?
+
+Back: Amiodarone.
+
+Renal & Diuretics
+
+Front: Site of action for Thiazide diuretics?
+
+Back: Distal Convoluted Tubule (Inhibition of $Na^+/Cl^-$ symporter).
+
+Front: Acid-base disturbance caused by Acetazolamide?
+
+Back: Hyperchloremic metabolic acidosis.
+
+Front: Most potent class of diuretics for managing pulmonary edema?
+
+Back: Loop Diuretics (acting on the Thick Ascending Limb).
+
+Central Nervous System (CNS)
+
+Front: Mechanism of Benzodiazepines on GABA-A receptors?
+
+Back: Increases the frequency of $Cl^-$ channel opening.
+
+Front: Mechanism of Barbiturates on GABA-A receptors?
+
+Back: Increases the duration of $Cl^-$ channel opening.
+
+Front: Antidote for Benzodiazepine overdose?
+
+Back: Flumazenil.
+
+Front: Competitive NMDA receptor antagonist used in Alzheimer’s disease?
+
+Back: Memantine.
+
+Front: Inhaled anesthetic associated with malignant hyperthermia?
+
+Back: Halothane (and Succinylcholine).
+
+Front: Drug used to treat Malignant Hyperthermia?
+
+Back: Dantrolene (prevents $Ca^{2+}$ release from sarcoplasmic reticulum).
+
+Front: Mechanism of action of Sumatriptan in migraine treatment?
+
+Back: 5-HT 1B/1D agonist causing vasoconstriction.
+
+Front: Major side effect of typical antipsychotics (e.g., Haloperidol) via D2 blockade?
+
+Back: Extrapyramidal symptoms (EPS).
+
+Front: Selective Serotonin Reuptake Inhibitor (SSRI) with the longest half-life?
+
+Back: Fluoxetine.
+
+Front: Life-threatening reaction characterized by "lead-pipe rigidity" and fever from neuroleptics?
+
+Back: Neuroleptic Malignant Syndrome (NMS).
+
+Front: Primary neurotransmitter deficiency targeted in Parkinson’s treatment?
+
+Back: Dopamine.
+
+Front: Reason for co-administering Carbidopa with Levodopa?
+
+Back: To inhibit peripheral DOPA decarboxylase, increasing CNS bioavailability.
+
+Antimicrobials
+
+Front: Mechanism of action of Penicillins?
+
+Back: Bind Penicillin-Binding Proteins (PBPs) to inhibit peptidoglycan cross-linking.
+
+Front: Classic side effect of Aminoglycosides (e.g., Gentamicin)?
+
+Back: Nephrotoxicity and Ototoxicity.
+
+Front: Antibiotic class associated with tendon rupture?
+
+Back: Fluoroquinolones (e.g., Ciprofloxacin).
+
+Front: Mechanism of action of Vancomycin?
+
+Back: Inhibits cell wall synthesis by binding to the D-Ala-D-Ala terminus.
+
+Front: Antibiotic known for causing "Gray Baby Syndrome"?
+
+Back: Chloramphenicol.
+
+Front: Treatment of choice for Methicillin-resistant Staphylococcus aureus (MRSA)?
+
+Back: Vancomycin.
+
+Front: Mechanism of Tetracyclines?
+
+Back: Bind to the 30S ribosomal subunit, blocking aminoacyl-tRNA binding.
+
+Front: Common side effect of Rifampin?
+
+Back: Orange discoloration of body fluids (tears, urine, sweat).
+
+Front: Antifungal that forms pores in the fungal cell membrane by binding Ergosterol?
+
+Back: Amphotericin B.
+
+Gastrointestinal Pharmacology
+
+Front: Mechanism of action of Omeprazole?
+
+Back: Irreversible inhibition of the $H^+/K^+-ATPase$ pump (Proton Pump).
+
+Front: H2-receptor antagonist known for inhibiting Cytochrome P450?
+
+Back: Cimetidine.
+
+Front: Mechanism of Misoprostol in ulcer prevention?
+
+Back: PGE1 analog that increases gastric mucus and decreases acid secretion.
+
+Front: Laxative that acts as an osmotic agent to draw water into the lumen?
+
+Back: Magnesium hydroxide (or Polyethylene glycol).
+
+Front: Primary use of Ondansetron?
+
+Back: Control of chemotherapy-induced nausea/vomiting (5-HT3 antagonist).
+
+Endocrine Pharmacology
+
+Front: Mechanism of action of Metformin?
+
+Back: Inhibits hepatic gluconeogenesis and increases peripheral insulin sensitivity.
+
+Front: Sulfonylurea mechanism of action?
+
+Back: Closes $K^+$ channels in pancreatic beta cells to trigger insulin release.
+
+Front: Serious side effect of Propylthiouracil (PTU) and Methimazole?
+
+Back: Agranulocytosis.
+
+Front: Clinical use of Desmopressin (DDAVP)?
+
+Back: Central Diabetes Insipidus and von Willebrand disease.
+
+Front: Drug of choice for replacement therapy in primary hypothyroidism?
+
+Back: Levothyroxine (T4).
+
+Respiratory Pharmacology
+
+Front: Mechanism of Albuterol in asthma?
+
+Back: Short-acting Beta-2 agonist (SABA) causing bronchodilation.
+
+Front: Inhaled corticosteroid used for chronic asthma maintenance?
+
+Back: Fluticasone (or Budesonide).
+
+Front: Mechanism of Montelukast?
+
+Back: Leukotriene receptor (CysLT1) antagonist.
+
+Front: Mechanism of Ipratropium?
+
+Back: Muscarinic (M3) antagonist that prevents bronchoconstriction.
+
+Hematology & Oncology
+
+Front: Mechanism of Heparin?
+
+Back: Activates Antithrombin III, which inactivates Thrombin and Factor Xa.
+
+Front: Antidote for Heparin reversal?
+
+Back: Protamine Sulfate.
+
+Front: Lab test used to monitor Warfarin therapy?
+
+Back: PT/INR.
+
+Front: Mechanism of Methotrexate?
+
+Back: Inhibits Dihydrofolate Reductase (DHFR), decreasing DNA synthesis.
+
+Front: Chemotherapeutic agent associated with dilated cardiomyopathy?
+
+Back: Doxorubicin (Adriamycin).
+
+Front: Chemotherapeutic agent associated with hemorrhagic cystitis?
+
+Back: Cyclophosphamide.
+
+Front: Drug used to prevent Cyclophosphamide-induced hemorrhagic cystitis?
+
+Back: Mesna.
+
+Autacoids & Inflammation
+
+Front: Irreversible inhibitor of COX-1 and COX-2?
+
+Back: Aspirin.
+
+Front: Major side effect of Celecoxib?
+
+Back: Increased risk of cardiovascular thrombosis (Selective COX-2 inhibitor).
+
+Front: Mechanism of action of Colchicine in Gout?
+
+Back: Inhibits tubulin polymerization to prevent leukocyte migration.
+
+Front: First-line chronic treatment for preventing Gout attacks?
+
+Back: Allopurinol (Xanthine oxidase inhibitor).
+
+(Extended Topics - High Yield Synthesis)
+
+Front: Mechanism of Sildenafil (Viagra)?
+
+Back: PDE-5 inhibitor, increasing cGMP levels.
+
+Front: Classic drug interaction with PDE-5 inhibitors?
+
+Back: Nitrates (causes severe hypotension).
+
+Front: Mechanism of Teriparatide?
+
+Back: Recombinant PTH analog that stimulates osteoblast activity.
+
+Front: Preferred treatment for Myasthenia Gravis?
+
+Back: Pyridostigmine (long-acting AChE inhibitor).
+
+Front: Mechanism of action of Clopidogrel?
+
+Back: Irreversible inhibition of ADP (P2Y12) receptors on platelets.
+
+Front: Side effect of Spironolactone that is avoided by using Eplerenone?
+
+Back: Gynecomastia.
+
+Front: Mechanism of Nitroprusside?
+
+Back: Releases NO to dilate both arterioles and venules (decreases Preload and Afterload).
+
+Front: Medication used to close a Patent Ductus Arteriosus (PDA)?
+
+Back: Indomethacin (NSAID).
+
+Front: Medication used to keep a Patent Ductus Arteriosus (PDA) open?
+
+Back: Alprostadil (PGE1).
+
+Front: Mechanism of Vincristine?
+
+Back: Binds tubulin to inhibit microtubule formation (M-phase arrest).
+
+Front: Mechanism of Paclitaxel?
+
+Back: Hyperstabilizes microtubules, preventing breakdown (M-phase arrest).
+
+Front: Toxicity associated with Bleomycin?
+
+Back: Pulmonary fibrosis.
+
+Front: Mechanism of Cyclosporine?
+
+Back: Calcineurin inhibitor; prevents transcription of IL-2.
+
+Front: Primary side effect of Tacrolimus?
+
+Back: Nephrotoxicity.
+
+Front: Mechanism of action of Sirolimus (Rapamycin)?
+
+Back: mTOR inhibitor; prevents response to IL-2.
+
+Front: Reversal agent for Warfarin overdose (immediate)?
+
+Back: Fresh Frozen Plasma (FFP) or Prothrombin Complex Concentrate (PCC).
+
+Front: Mechanism of action of Valproic acid?
+
+Back: Blocks $Na^+$ channels and increases GABA concentration.
+
+Front: Teratogenic effect of Phenytoin?
+
+Back: Fetal Hydantoin Syndrome (cleft lip/palate, nail hypoplasia).
+
+Front: Mechanism of Ethosuximide?
+
+Back: Blocks T-type $Ca^{2+}$ channels in thalamic neurons.
+
+Front: Drug of choice for Absence Seizures?
+
+Back: Ethosuximide.
+
+Front: Mechanism of action of Local Anesthetics (e.g., Lidocaine)?
+
+Back: Block voltage-gated $Na^+$ channels from the inside.
+
+Front: Order of nerve block by local anesthetics (size/myelination)?
+
+Back: Small myelinated > small unmyelinated > large myelinated.
+
+Front: Mechanism of action of Dantrolene?
+
+Back: Ryanodine receptor antagonist.
+
+Front: First-line treatment for ADHD?
+
+Back: Methylphenidate (or Amphetamines).
+
+Front: Mechanism of action of Bupropion?
+
+Back: Inhibits reuptake of Norepinephrine and Dopamine.
+
+Front: Major contraindication for Bupropion?
+
+Back: Patients with Seizure disorders or Bulimia/Anorexia.
+
+Front: Drug used for smoking cessation that is a partial nicotinic agonist?
+
+Back: Varenicline.
+
+Front: Mechanism of action of Lithium?
+
+Back: Inhibits the Inositol recycling pathway.
+
+Front: Most common cardiac malformation associated with Lithium use in pregnancy?
+
+Back: Ebstein Anomaly (tricuspid valve displacement).
+
+Front: Class of drugs that cause "Cinchonism"?
+
+Back: Quinidine and Quinine.
+
+Front: Drug of choice for treating Giardia lamblia?
+
+Back: Metronidazole.
+
+Front: Mechanism of action of Terbinafine?
+
+Back: Inhibits Squalene Epoxidase.
+
+Front: Mechanism of action of Zidovudine (AZT)?
+
+Back: Nucleoside Reverse Transcriptase Inhibitor (NRTI).
+
+Front: Protease inhibitor side effect common to the class?
+
+Back: Hyperglycemia and lipodystrophy.
+
+Front: Mechanism of action of Acyclovir?
+
+Back: Guanosine analog that is phosphorylated by viral Thymidine Kinase.
+
+Front: Treatment for CMV retinitis that inhibits DNA polymerase?
+
+Back: Ganciclovir.
+
+Front: Mechanism of action of Isoniazid (INH)?
+
+Back: Inhibits synthesis of mycolic acids.
+
+Front: Vitamin co-administered with INH to prevent peripheral neuropathy?
+
+Back: Vitamin B6 (Pyridoxine).
+
+Front: First-line drug for Trichomonas vaginalis?
+
+Back: Metronidazole.
+
+Front: Mechanism of action of Sulfonamides?
+
+Back: PABA analogs that inhibit Dihydropteroate Synthase.
+
+Front: Side effect of Sulfonamides in newborns?
+
+Back: Kernicterus.
+
+Front: Drug of choice for MRSA skin infections (outpatient)?
+
+Back: TMP-SMX or Clindamycin.
+
+Front: Mechanism of action of Macrolides?
+
+Back: Bind 50S subunit and inhibit translocation.
+
+Front: Effect of Verapamil on the heart?
+
+Back: Decreases HR and contractility (Non-dihydropyridine $Ca^{2+}$ channel blocker).
+
+Front: Mechanism of Ezetimibe?
+
+Back: Prevents cholesterol absorption at the small intestine brush border.
+
+Front: First-line treatment for Acute Gout?
+
+Back: NSAIDs (e.g., Indomethacin) or Glucocorticoids.
+
+Front: Mechanism of Bisphosphonates?
+
+Back: Induce apoptosis in osteoclasts.
+
+Front: Side effect of Alendronate?
+
+Back: Corrosive esophagitis.
+
+Front: Mechanism of Raloxifene?
+
+Back: SERM (Estrogen agonist in bone, antagonist in breast/uterus).
+
+Front: Drug used to treat Cyanide poisoning?
+
+Back: Nitrites (induce methemoglobinemia) and Sodium Thiosulfate.
+
+Front: Mechanism of action of Acetylcysteine in APAP overdose?
+
+Back: Restores Glutathione stores.
+
+Front: Mechanism of action of Carbon Monoxide poisoning?
+
+Back: Competitive inhibition of $O_2$ binding to Hemoglobin (left shift).
+
+Front: Treatment for Methanol or Ethylene Glycol poisoning?
+
+Back: Fomepizole.
+
+Front: Mechanism of action of Heparin-Induced Thrombocytopenia (HIT)?
+
+Back: IgG antibodies against Heparin-Platelet Factor 4 (PF4) complex.
+
+Front: Treatment for HIT?
+
+Back: Stop Heparin; start Direct Thrombin Inhibitor (e.g., Argatroban).
+
+Front: Mechanism of action of Abciximab?
+
+Back: Monoclonal antibody against GPIIb/IIIa receptors.
+
+Front: Reversal agent for Dabigatran?
+
+Back: Idarucizumab.
+
+Front: Mechanism of action of Thionamides (PTU/Methimazole)?
+
+Back: Inhibit thyroid peroxidase, blocking iodine organification and coupling.
+
+Front: Primary side effect of Flutamide?
+
+Back: Gynecomastia and hepatotoxicity (Competitive androgen receptor antagonist).
+
+Front: Mechanism of action of Finasteride?
+
+Back: 5-alpha-reductase inhibitor (decreases conversion of Testosterone to DHT).
+
+Front: Drug used to induce ovulation in patients with PCOS?
+
+Back: Clomiphene (SERM that inhibits negative feedback by estrogen on the hypothalamus).
+
+Front: Mechanism of action of Anastrozole?
+
+Back: Aromatase inhibitor (decreases peripheral conversion of androgens to estrogen).
+
+Front: Mechanism of action of Mifepristone?
+
+Back: Progesterone receptor antagonist used for medical abortion.
+
+Front: Mechanism of action of Tamsulosin?
+
+Back: Alpha-1A/D selective antagonist (targets prostate smooth muscle, minimizes systemic hypotension).
+
+CNS Pharmacology (Part 2 - Anesthetics & Addiction)
+
+Front: Intravenous anesthetic associated with "dissociative anesthesia" and hallucinations?
+
+Back: Ketamine (NMDA receptor antagonist).
+
+Front: Intravenous anesthetic that is a potent GABA-A agonist and causes "milk of amnesia"?
+
+Back: Propofol.
+
+Front: Mechanism of action of Local Anesthetics?
+
+Back: Blockade of voltage-gated sodium channels from the intracellular side.
+
+Front: Effect of adding Epinephrine to a local anesthetic?
+
+Back: Vasoconstriction (decreases systemic absorption, reduces bleeding, increases duration of action).
+
+Front: Drug used to treat opioid-induced constipation that does not cross the BBB?
+
+Back: Methylnaltrexone.
+
+Front: Mechanism of action of Modafinil?
+
+Back: Promotes wakefulness by increasing synaptic Dopamine (used for Narcolepsy).
+
+Front: Treatment for Restless Leg Syndrome?
+
+Back: Dopamine agonists (e.g., Pramipexole or Ropinirole).
+
+Immunology & Autoimmunity
+
+Front: Mechanism of action of Mycophenolate Mofetil?
+
+Back: Reversibly inhibits IMP dehydrogenase, preventing purine synthesis in B and T cells.
+
+Front: Targeted protein of Adalimumab and Etanercept?
+
+Back: TNF-alpha.
+
+Front: Mechanism of action of Thalidomide?
+
+Back: Inhibits TNF-alpha and has anti-angiogenic properties (major teratogen: Phocomelia).
+
+Front: Mechanism of action of Leflunomide?
+
+Back: Inhibits dihydroorotate dehydrogenase, preventing pyrimidine synthesis.
+
+Antimicrobials (Part 2 - Specialized Coverage)
+
+Front: Mechanism of action of Polymyxins (Colistin)?
+
+Back: Act as detergents to disrupt the bacterial cell membrane (Gram-negative coverage).
+
+Front: Mechanism of action of Daptomycin?
+
+Back: Lipopeptide that disrupts the cell membrane of Gram-positive cocci via depolarization.
+
+Front: Common side effect of Daptomycin?
+
+Back: Myopathy and elevated Creatine Kinase (CK).
+
+Front: Drug of choice for prophylaxis against Mycobacterium avium complex (MAC) in AIDS?
+
+Back: Azithromycin.
+
+Front: Mechanism of action of Griseofulvin?
+
+Back: Interferes with microtubule function to inhibit mitosis in dermatophytes.
+
+Front: Mechanism of action of Permethrin?
+
+Back: Inhibits sodium channel deactivation, leading to paralysis in mites/lice.
+
+Front: Mechanism of action of Albendazole?
+
+Back: Inhibits microtubule synthesis in helminths.
+
+Autacoids & Respiratory (Part 2)
+
+Front: Mechanism of action of Guaifenesin?
+
+Back: Expectorant that thins respiratory secretions (does not suppress cough).
+
+Front: Mechanism of action of Dextromethorphan?
+
+Back: NMDA receptor antagonist that acts on the medullary cough center to suppress cough.
+
+Front: Mechanism of action of Bosentan?
+
+Back: Endothelin-1 receptor antagonist used for Pulmonary Arterial Hypertension.
+
+Front: Common side effect of Bosentan?
+
+Back: Hepatotoxicity.
+
+Front: Mechanism of action of Omalizumab?
+
+Back: Monoclonal antibody that binds unbound IgE (used in refractory asthma).
+
+Toxicology & Antidotes (Comprehensive)
+
+Front: Antidote for Iron toxicity?
+
+Back: Deferoxamine.
+
+Front: Antidote for Lead poisoning?
+
+Back: EDTA, Dimercaprol, Succimer (in children).
+
+Front: Antidote for Copper toxicity (Wilson’s Disease)?
+
+Back: Penicillamine or Trientine.
+
+Front: Antidote for Cyanide poisoning?
+
+Back: Nitrites (to form methemoglobin) and Hydroxocobalamin (Vitamin B12a).
+
+Front: Antidote for Ethylene Glycol or Methanol?
+
+Back: Fomepizole (inhibits Alcohol Dehydrogenase).
+
+Front: Mechanism of action of Sugammadex?
+
+Back: Encapsulates and inactivates Rocuronium/Vecuronium (Neuromuscular blockade reversal).
+
+Front: Antidote for Beta-blocker overdose?
+
+Back: Glucagon (increases cAMP in cardiac myocytes via non-adrenergic pathway).
+
+Front: Antidote for Salicylate (Aspirin) overdose?
+
+Back: Sodium Bicarbonate (alkalinizes urine to trap the drug).
+
+Front: Drug class that causes "Fanconi Syndrome" if taken after expiration?
+
+Back: Tetracyclines.
+
+High-Yield Miscellany (The "Odds and Ends")
+
+Front: Mechanism of action of Orlistat?
+
+Back: Inhibits gastric and pancreatic lipases to decrease fat absorption.
+
+Front: Mechanism of action of Ursodeoxycholic acid (Ursodiol)?
+
+Back: Decreases cholesterol secretion into bile; used to dissolve gallstones.
+
+Front: Mechanism of action of Cinacalcet?
+
+Back: Sensitizes calcium-sensing receptors (CaSR) in the parathyroid gland to decrease PTH.
+
+Front: Drug used to treat SIADH that is a Vasopressin antagonist?
+
+Back: Conivaptan or Tolvaptan.
+
+Front: Mechanism of action of Sevelamer?
+
+Back: Phosphate binder used in Chronic Kidney Disease to prevent hyperphosphatemia.
+
+Front: Mechanism of action of Riluzole?
+
+Back: Decreases glutamate excitotoxicity; used to extend survival in ALS.
+
+Front: Mechanism of action of Varenicline?
+
+Back: Partial agonist at α4β2 nicotinic acetylcholine receptors.
+
+Front: Mechanism of action of Sacubitril?
+
+Back: Neprilysin inhibitor (prevents degradation of Natriuretic Peptides).
+
+Front: Standard dual therapy for Heart Failure with Reduced Ejection Fraction (HFrEF)?
+
+Back: Sacubitril/Valsartan (ARNI).
+
+Front: Definition of Zero-order elimination?
+
+Back: Rate of elimination is constant regardless of plasma concentration (e.g., Ethanol, Aspirin at high doses).
+
+Front: Definition of First-order elimination?
+
+Back: Constant fraction of drug is eliminated per unit time (rate depends on concentration).
+
+Front: Formula for Loading Dose?
+
+Back: $LD = (C_p \times V_d) / F$.
+
+Front: Formula for Maintenance Dose?
+
+Back: $MD = (C_p \times CL \times \tau) / F$.
+
+Front: Number of half-lives required to reach steady state?
+
+Back: Approximately 4 to 5.
+
+Front: Effect of a competitive antagonist on $V_{max}$ and $K_m$?
+
+Back: $V_{max}$ remains unchanged; $K_m$ increases.
+
+Front: Effect of a non-competitive antagonist on $V_{max}$ and $K_m$?
+
+Back: $V_{max}$ decreases; $K_m$ remains unchanged.
+
+Front: Primary Phase 1 metabolism reaction?
+
+Back: Oxidation, reduction, or hydrolysis (usually via Cytochrome P450).
+
+Front: Primary Phase 2 metabolism reaction?
+
+Back: Conjugation (Glucuronidation, Acetylation, Sulfation) to make drugs polar for excretion.
+
+Advanced Oncology & Immunotherapy
+
+Front: Mechanism of action of Imatinib (Gleevec)?
+
+Back: Tyrosine kinase inhibitor of BCR-ABL (Philadelphia chromosome).
+
+Front: Mechanism of action of Trastuzumab (Herceptin)?
+
+Back: Monoclonal antibody against HER2/neu (ERBB2) receptor.
+
+Front: Mechanism of action of Rituximab?
+
+Back: Monoclonal antibody against CD20 found on B-cells.
+
+Front: Mechanism of action of Tamoxifen?
+
+Back: Selective Estrogen Receptor Modulator (SERM); antagonist in breast, agonist in bone/uterus.
+
+Front: Common side effect of Tamoxifen?
+
+Back: Increased risk of endometrial cancer and thromboembolism.
+
+Front: Mechanism of action of 5-Fluorouracil (5-FU)?
+
+Back: Pyrimidine analog that covalently inhibits Thymidylate Synthase.
+
+Front: Mechanism of action of Etoposide?
+
+Back: Inhibits Topoisomerase II, causing DNA strand breaks.
+
+Front: Mechanism of action of Irinotecan/Topotecan?
+
+Back: Inhibits Topoisomerase I.
+
+Front: Mechanism of action of Pembrolizumab/Nivolumab?
+
+Back: PD-1 inhibitors that "release the brakes" on T-cells to attack tumors.
+
+Advanced Infectious Disease (Rare/High-Yield)
+
+Front: Treatment for prophylaxis against Pneumocystis jirovecii (PCP) in HIV?
+
+Back: TMP-SMX (Bactrim).
+
+Front: Mechanism of action of Linezolid?
+
+Back: Binds 50S subunit to prevent formation of the initiation complex.
+
+Front: Unique side effect of Linezolid related to antidepressants?
+
+Back: Serotonin Syndrome (due to weak MAO inhibition).
+
+Front: Mechanism of action of Nitrofurantoin?
+
+Back: Bactericidal; damages bacterial DNA (used primarily for uncomplicated UTIs).
+
+Front: Drug of choice for treating Neurosyphilis?
+
+Back: Penicillin G (IV).
+
+Clinical Interactions & Contraindications
+
+Front: Interaction between St. John’s Wort and Cyclosporine?
+
+Back: St. John’s Wort induces CYP3A4, decreasing Cyclosporine levels and causing transplant rejection.
+
+Front: Interaction between Grapefruit juice and Statins?
+
+Back: Grapefruit juice inhibits CYP3A4, increasing Statin levels and risk of myopathy.
+
+Front: Why are Tetracyclines contraindicated in children and pregnancy?
+
+Back: Chelation of calcium causes permanent tooth discoloration and bone growth inhibition.
+
+Front: "Sulfa drugs" list (common cross-reactivity)?
+
+Back: Sulfonamides, Thiazides, Loop diuretics, Sulfonylureas, Acetazolamide, Celecoxib.
+
+Front: Drug-induced Lupus is most commonly associated with which drugs?
+
+Back: Hydralazine, Isoniazid, Procainamide, Phenytoin (SHIPP).
+
+Front: Characteristic finding of Digoxin toxicity on ECG?
+
+Back: "Scooped" ST segment and various arrhythmias (most common is PVCs).
+
+Final High-Yield Potpourri
+
+Front: Mechanism of action of Ranolazine?
+
+Back: Inhibits the late inward sodium current in cardiac myocytes (used for refractory angina).
+
+Front: Mechanism of action of Milrinone?
+
+Back: PDE-3 inhibitor; increases cAMP causing inotropy and vasodilation.
+
+Front: Mechanism of action of Ivabradine?
+
+Back: Selective inhibition of "funny" sodium channels ($I_f$) in the SA node.
+
+Front: Mechanism of action of Aprepitant?
+
+Back: Substance P antagonist (NK1 receptor blocker) used for chemotherapy-induced vomiting.
+
+Front: Drug used to prevent uric acid stones by alkalinizing urine?
+
+Back: Potassium Citrate.
+
+Front: Mechanism of action of Denosumab?
+
+Back: Monoclonal antibody against RANKL (inhibits osteoclast maturation).
+
+Front: Mechanism of action of Mupirocin?
+
+Back: Inhibits bacterial isoleucyl-tRNA synthetase (topical for Impetigo/MRSA colonization).
+
+Front: Drug of choice for Wilson’s Disease?
+
+Back: Penicillamine.
+
+Front: Mechanism of action of Octreotide?
+
+Back: Somatostatin analog used for acromegaly, carcinoid syndrome, and variceal bleeding.
+
+Front: Primary side effect of Amiodarone relating to the skin?
+
+Back: Blue-gray skin discoloration (photodermatitis).
+
+Front: Mechanism of action of Dipyridamole?
+
+Back: Inhibits phosphodiesterase and adenosine uptake to inhibit platelet aggregation.
+
+Front: Mechanism of action of Isotretinoin in acne treatment?
+
+Back: Vitamin A derivative that reduces sebum production and induces apoptosis of sebaceous glands.
+
+Front: Side effect of Topical Steroids used chronically on the skin?
+
+Back: Skin atrophy, striae, and telangiectasia.
+
+Front: Mechanism of Latanoprost in Glaucoma?
+
+Back: Prostaglandin F2α analog that increases uveoscleral outflow.
+
+Front: First-line medication for Acute Angle-Closure Glaucoma to rapidly lower IOP?
+
+Back: Acetazolamide (IV) or Pilocarpine.
+
+Front: Side effect of Alpha-agonists (e.g., Brimonidine) in the eye?
+
+Back: Blurry vision, ocular hyperemia, and foreign body sensation.
+
+Front: Mechanism of action of Timolol in Glaucoma?
+
+Back: Non-selective beta-blocker that decreases aqueous humor production.
+
+Reproductive & Obstetric Pharmacology
+
+Front: Drug used to prevent cerebral palsy and seizures in Preeclampsia?
+
+Back: Magnesium Sulfate.
+
+Front: Signs of Magnesium Sulfate toxicity?
+
+Back: Loss of deep tendon reflexes, respiratory depression, and cardiac arrest.
+
+Front: Antidote for Magnesium Sulfate toxicity?
+
+Back: Calcium Gluconate.
+
+Front: Mechanism of action of Oxytocin?
+
+Back: Stimulates Gq-coupled receptors to increase uterine contractions and milk let-down.
+
+Front: Mechanism of Terbutaline/Ritodrine in obstetrics?
+
+Back: Beta-2 agonists used as tocolytics to relax the uterus and delay preterm labor.
+
+Clinical Biochemical Pharmacology
+
+Front: Mechanism of action of Allopurinol vs. Probenecid?
+
+Back: Allopurinol inhibits xanthine oxidase; Probenecid inhibits renal reabsorption of uric acid.
+
+Front: Enzyme inhibited by Mycophenolate Mofetil?
+
+Back: Inosine Monophosphate Dehydrogenase (IMPDH).
+
+Front: Mechanism of action of Azathioprine?
+
+Back: Pro-drug of 6-Mercaptopurine; inhibits de novo purine synthesis.
+
+Front: Key interaction between Allopurinol and Azathioprine?
+
+Back: Allopurinol inhibits Xanthine Oxidase, leading to toxic levels of 6-MP/Azathioprine.
+
+Front: Mechanism of Pegloticase?
+
+Back: Recombinant uricase that converts uric acid to allantoin (more soluble).
+
+Specialized Infectious Disease & Vaccines
+
+Front: Mechanism of action of Sofosbuvir in Hepatitis C?
+
+Back: Inhibits HCV RNA-dependent RNA polymerase (NS5B).
+
+Front: Mechanism of action of Ribavirin?
+
+Back: Inhibits IMP dehydrogenase and viral RNA polymerase.
+
+Front: Major side effect of Ribavirin?
+
+Back: Dose-dependent hemolytic anemia and severe teratogenicity.
+
+Front: Treatment for prophylaxis in a patient with a needle-stick injury from an HIV+ source?
+
+Back: Post-Exposure Prophylaxis (PEP) with Tenofovir, Emtricitabine, and Raltegravir/Dolutegravir.
+
+Musculoskeletal & Connective Tissue
+
+Front: Mechanism of action of Cyclobenzaprine?
+
+Back: Centrally acting skeletal muscle relaxant (structurally related to TCAs).
+
+Front: Mechanism of action of Leflunomide in RA?
+
+Back: Inhibits dihydroorotate dehydrogenase, arresting T-cell proliferation.
+
+Front: Mechanism of action of Abatacept?
+
+Back: Binds to CD80/86 on APCs to prevent T-cell costimulation via CD28.
+
+Toxicology & Critical Care
+
+Front: Treatment for Salicylate-induced hyperventilation/respiratory alkalosis?
+
+Back: Supportive care (alkalinization of urine for the metabolic acidosis component).
+
+Front: Clinical presentation of "Atropine Fever"?
+
+Back: Hyperpyrexia due to suppression of sweat gland activity (anhidrosis).
+
+Front: Difference between Succinylcholine and Rocuronium mechanism?
+
+Back: Succinylcholine is a depolarizing blocker (ACh agonist); Rocuronium is a non-depolarizing blocker (competitive antagonist).
+
+Front: Phase of blockade for Succinylcholine that can be reversed by AChE inhibitors?
+
+Back: Phase II (prolonged exposure/desensitization); Phase I is worsened by AChE inhibitors.
+
+Front: Mechanism of action of Theophylline?
+
+Back: Inhibits Phosphodiesterase (PDE), increasing cAMP, and antagonizes Adenosine receptors.
+
+Front: Why is Theophylline rarely used now?
+
+Back: Narrow therapeutic index and many drug interactions (CYP450 metabolism).
+
+Final Scrutiny Cards
+
+Front: Mechanism of action of Prucalopride?
+
+Back: 5-HT4 receptor agonist used for chronic idiopathic constipation.
+
+Front: Mechanism of action of Rifaximin in Hepatic Encephalopathy?
+
+Back: Non-absorbable antibiotic that kills ammonia-producing gut bacteria.
+
+Front: Mechanism of action of Lactulose in Hepatic Encephalopathy?
+
+Back: Converted by gut bacteria to lactic acid, trapping $NH_3$ as $NH_4^+$ in the lumen.
+
+Front: Mechanism of action of Fenoldopam?
+
+Back: Dopamine D1 receptor agonist; used in hypertensive emergencies to dilate renal/coronary vessels.
+
+Front: Mechanism of action of Midodrine?
+
+Back: Alpha-1 agonist used to treat symptomatic orthostatic hypotension.
+
+Front: Genetic deficiency that increases the risk of hemolytic anemia with Primaquine or Sulfonamides?
+
+Back: Glucose-6-Phosphate Dehydrogenase (G6PD) deficiency.
+
+Front: Genetic variation that necessitates a lower dose of Warfarin?
+
+Back: Polymorphisms in CYP2C9 or VKORC1.
+
+Front: Effect of being a "Slow Acetylator" on Isoniazid (INH) therapy?
+
+Back: Increased risk of peripheral neuropathy and drug-induced lupus.
+
+Front: HLA allele associated with a high risk of Stevens-Johnson Syndrome (SJS) when taking Abacavir?
+
+Back: HLA-B*5701.
+
+Front: HLA allele associated with SJS in Asian populations taking Carbamazepine?
+
+Back: HLA-B*1502.
+
+Advanced Cardiovascular & Autonomic Nuances
+
+Front: Effect of "Low Dose" vs "High Dose" Epinephrine on Blood Pressure?
+
+Back: Low dose decreases BP (Beta-2 vasodilation); High dose increases BP (Alpha-1 vasoconstriction).
+
+Front: Primary side effect of Minoxidil (other than hypertrichosis)?
+
+Back: Reflex tachycardia and fluid retention (should be given with a beta-blocker and diuretic).
+
+Front: Mechanism of action of Sacubitril?
+
+Back: Inhibits Neprilysin, increasing levels of atrial natriuretic peptide (ANP) and BNP.
+
+Front: Why must ACE inhibitors be stopped 36 hours before starting Sacubitril/Valsartan?
+
+Back: To avoid a significant increase in the risk of angioedema.
+
+Front: Mechanism of "Nitrate Tolerance"?
+
+Back: Depletion of sulfhydryl groups or oxidative stress; managed by a "nitrate-free interval" (usually at night).
+
+Specialized Toxicology & Environmental
+
+Front: Treatment for Lead poisoning in an adult with severe symptoms?
+
+Back: Dimercaprol and EDTA.
+
+Front: Mechanism of Arsenic poisoning?
+
+Back: Inhibits lipoic acid, a necessary cofactor for Pyruvate Dehydrogenase.
+
+Front: Classic clinical presentation of Arsenic poisoning?
+
+Back: Garlic breath, rice-water stools, and "mees lines" (white lines on nails).
+
+Front: Antidote for Arsenic poisoning?
+
+Back: Dimercaprol.
+
+Front: Mechanism of action of Cyanide?
+
+Back: Inhibits Cytochrome c oxidase in the electron transport chain (inhibits aerobic respiration).
+
+Neuro-Psychiatry & Behavioral Health (Advanced)
+
+Front: Mechanism of action of Ramelteon?
+
+Back: Melatonin receptor (MT1 and MT2) agonist used for insomnia.
+
+Front: Mechanism of action of Suvorexant?
+
+Back: Orexin (hypocretin) receptor antagonist used for insomnia.
+
+Front: Drug of choice for Bulimia Nervosa?
+
+Back: Fluoxetine.
+
+Front: Mechanism of action of Atomoxetine?
+
+Back: Selective Norepinephrine Reuptake Inhibitor (SNRI) used for ADHD.
+
+Front: Why are MAO inhibitors contraindicated with Tyramine-rich foods (cheese, wine)?
+
+Back: Tyramine displaces stored Norepinephrine, leading to a hypertensive crisis.
+
+Hematology & Oncology (Niche Agents)
+
+Front: Mechanism of action of Bortezomib?
+
+Back: Proteasome inhibitor; induces apoptosis (used in Multiple Myeloma).
+
+Front: Mechanism of action of Bevacizumab?
+
+Back: Monoclonal antibody against VEGF (inhibits angiogenesis).
+
+Front: Mechanism of action of Cetuximab?
+
+Back: Monoclonal antibody against EGFR (Epidermal Growth Factor Receptor).
+
+Front: Mechanism of action of Rasburicase?
+
+Back: Recombinant uricase that catalyzes the metabolism of uric acid to allantoin.
+
+Front: Common use for Rasburicase in Oncology?
+
+Back: Prevention and treatment of Tumor Lysis Syndrome.
+
+Clinical "Best" Practices (Quick Hitters)
+
+Front: Best drug for treating hypertensive emergency in a patient with aortic dissection?
+
+Back: Esmolol (requires rapid heart rate and BP control).
+
+Front: Preferred anticoagulant for a pregnant patient with a DVT?
+
+Back: Low Molecular Weight Heparin (LMWH), such as Enoxaparin.
+
+Front: Preferred induction agent for a patient with asthma or hypotension?
+
+Back: Ketamine (causes bronchodilation and sympathetic stimulation).
+
+Front: First-line medication for trigeminal neuralgia?
+
+Back: Carbamazepine.
+
+Front: Best drug for prophylaxis of migraines?
+
+Back: Propranolol, Topiramate, or Amitriptyline.
+
+Front: Best drug for acute management of status epilepticus?
+
+Back: IV Benzodiazepines (Lorazepam or Diazepam).
+
+Final Check: Systemic "Oddities"
+
+Front: Mechanism of action of Pentazocine?
+
+Back: Opioid Kappa-receptor agonist and Mu-receptor partial agonist/antagonist.
+
+Front: Risk of giving Pentazocine to a patient already on Morphine?
+
+Back: May precipitate withdrawal due to Mu-receptor antagonism.
+
+Front: Mechanism of action of Tranexamic Acid?
+
+Back: Antifibrinolytic; inhibits Plasminogen activation.
+
+Front: Drug that causes "Yellow-green" vision distortion?
+
+Back: Digoxin.
+
+Front: Drug that causes "Blue-tinted" vision (Cyanopsia)?
+
+Back: Sildenafil (PDE-5 inhibitors).
+
+Front: Mechanism of action of Denosumab?
+
+Back: Monoclonal antibody against RANKL, inhibiting osteoclast maturation (used in Osteoporosis).
+
+Front: Mechanism of action of Romosozumab?
+
+Back: Inhibits Sclerostin, increasing bone formation and decreasing resorption.
+
+Front: Mechanism of action of Evolocumab/Alirocumab?
+
+Back: PCSK9 inhibitors; increase LDL receptor recycling to lower plasma LDL levels.
+
+Front: Mechanism of action of Omalizumab?
+
+Back: Binds unbound IgE to prevent it from binding Mast cells (used in allergic asthma).
+
+Front: Mechanism of action of Dupilumab?
+
+Back: IL-4 receptor alpha antagonist; inhibits IL-4 and IL-13 signaling (used in Eczema/Asthma).
+
+Front: Mechanism of action of Ustekinumab?
+
+Back: Monoclonal antibody against IL-12 and IL-23 (used in Psoriasis/Crohn's).
+
+Advanced Oncology & Targeted Therapy
+
+Front: Mechanism of action of Vemurafenib?
+
+Back: Small molecule inhibitor of BRAF V600E mutated kinase (used in Melanoma).
+
+Front: Mechanism of action of Olaparib?
+
+Back: PARP inhibitor; prevents DNA repair in BRCA-deficient cells (synthetic lethality).
+
+Front: Mechanism of action of Ipilimumab?
+
+Back: CTLA-4 inhibitor; enhances T-cell activation against tumor cells.
+
+Front: Mechanism of action of Abemaciclib/Palbociclib?
+
+Back: CDK4/6 inhibitors; arrest the cell cycle in the G1 phase.
+
+Critical Drug-Drug Interactions (Final)
+
+Front: Interaction between Amiodarone and Warfarin?
+
+Back: Amiodarone inhibits CYP2C9, leading to increased Warfarin levels and bleeding risk.
+
+Front: Interaction between Macrolides (except Azithromycin) and Statins?
+
+Back: Inhibition of CYP3A4 increases Statin concentration, leading to Rhabdomyolysis.
+
+Front: Effect of NSAIDs on Lithium levels?
+
+Back: Decreased renal clearance of Lithium, leading to toxicity.
+
+Front: Interaction between Sildenafil and Alpha-1 blockers?
+
+Back: Can lead to severe orthostatic hypotension (spaced 4 hours apart).
+
+Systemic Miscellany & Clinical "Pearls"
+
+Front: Drug of choice for treating malignant hyperthermia?
+
+Back: Dantrolene.
+
+Front: Mechanism of action of Midazolam?
+
+Back: Short-acting Benzodiazepine used for procedural sedation.
+
+Front: Drug that causes "Red Man Syndrome" due to histamine release?
+
+Back: Vancomycin (prevented by slow infusion).
+
+Front: Drug class that causes "Fanconi-like" syndrome?
+
+Back: Ifosfamide (or expired Tetracyclines).
+
+Front: Medication used to treat the EPS side effect "Akathisia"?
+
+Back: Beta-blockers or Benzodiazepines.
+
+Front: Antidote for anticholinergic toxicity?
+
+Back: Physostigmine (tertiary amine that crosses the BBB).
+
+Front: Antidote for Beta-blocker or Calcium Channel Blocker overdose?
+
+Back: Glucagon and/or high-dose Insulin with Glucose.
+
+Front: Mechanism of action of Cilostazol?
+
+Back: PDE-3 inhibitor; increases cAMP in platelets (inhibits aggregation) and dilates arteries.
+
+Front: Primary use for Cilostazol?
+
+Back: Symptomatic treatment of Intermittent Claudication.
+
+Front: Mechanism of action of Roflumilast?
+
+Back: PDE-4 inhibitor used to reduce exacerbations in severe COPD.
+
+Front: Drug used to treat nocturnal enuresis by decreasing urine volume?
+
+Back: Desmopressin (Oral or Nasal spray).
+
+Front: Drug used for rapid sequence intubation that is a nicotinic ACh receptor agonist?
+
+Back: Succinylcholine.
+
+Front: Major electrolyte side effect of Succinylcholine in burn or trauma patients?
+
+Back: Severe Hyperkalemia.
+
+Front: Mechanism of action of Sugammadex?
+
+Back: Selective relaxant binding agent used to reverse Rocuronium or Vecuronium.
+
+Front: Mechanism of action of Ivabradine?
+
+Back: Selective inhibitor of the $I_f$ (funny) current in the SA node.
+
+Front: Specific indication for Ivabradine?
+
+Back: Chronic HFrEF in patients with a resting heart rate $\ge$ 70 bpm who are on max beta-blockers.
+
+Front: Mechanism of action of Epoprostenol?
+
+Back: Prostacyclin ($PGI_2$) analog used for Pulmonary Arterial Hypertension to cause vasodilation.
+
+Front: Primary side effect of Minoxidil (systemic)?
+
+Back: Hypertrichosis and pericardial effusion.
+
+Front: Mechanism of action of Milrinone?
+
+Back: PDE-3 inhibitor that increases cAMP to provide positive inotropy and systemic vasodilation.
+
+Front: Unique mechanism of Nitroprusside toxicity?
+
+Back: Cyanide toxicity due to the release of 5 cyanide groups per molecule.
+
+Front: First-line medication for Raynaud’s phenomenon?
+
+Back: Calcium Channel Blockers (specifically Dihydropyridines like Nifedipine).
+
+Endocrine & Metabolic "Niches"
+
+Front: Mechanism of action of Miglitol or Acarbose?
+
+Back: Alpha-glucosidase inhibitors that delay carbohydrate absorption in the brush border.
+
+Front: Mechanism of action of Pramlintide?
+
+Back: Amylin analog that delays gastric emptying and suppresses glucagon secretion.
+
+Front: Mechanism of action of Exenatide or Liraglutide?
+
+Back: GLP-1 receptor agonists that increase glucose-dependent insulin secretion.
+
+Front: Major side effect of GLP-1 agonists?
+
+Back: Nausea, vomiting, and risk of Pancreatitis.
+
+Front: Mechanism of action of Canagliflozin (SGLT2 inhibitors)?
+
+Back: Inhibit glucose reabsorption in the Proximal Convoluted Futule.
+
+specialized Cellular & Molecular Targets
+
+Front: Mechanism of action of Dipyridamole?
+
+Back: Inhibits phosphodiesterase and adenosine uptake to decrease platelet aggregation.
+
+Front: Mechanism of action of Cilostazol in peripheral vascular disease?
+
+Back: PDE-3 inhibitor that increases cAMP, causing vasodilation and anti-platelet effects.
+
+Front: Mechanism of action of Abciximab vs. Eptifibatide?
+
+Back: Both are GPIIb/IIIa inhibitors; Abciximab is a monoclonal antibody, Eptifibatide is a peptide.
+
+Front: Mechanism of action of Tranexamic Acid?
+
+Back: Antifibrinolytic that competitively inhibits plasminogen activation.
+
+Front: Mechanism of action of Idarucizumab?
+
+Back: Specific reversal agent (monoclonal antibody) for the direct thrombin inhibitor Dabigatran.
+
+Sensory & Neuromuscular Extras
+
+Front: Mechanism of action of Pilocarpine in Sjögren's Syndrome?
+
+Back: Muscarinic agonist used to stimulate saliva and tear production.
+
+Front: Mechanism of action of Varenicline (Chantix)?
+
+Back: Partial agonist at the $\alpha_4\beta_2$ nicotinic acetylcholine receptor.
+
+Front: Side effect of Sildenafil on the eyes?
+
+Back: Cyanopsia (blue-tinted vision) due to inhibition of PDE-6 in the retina.
+
+Front: Mechanism of action of Botulinum Toxin?
+
+Back: Cleaves SNARE proteins to inhibit the release of Acetylcholine.
+
+The "Step 1" Tie-Breakers (Toxins & Odds)
+
+Front: Mechanism of St. Anthony's Fire (Ergotism)?
+
+Back: Ergot alkaloids (e.g., Ergotamine) causing intense peripheral vasoconstriction and gangrene.
+
+Front: Antidote for Theophylline overdose?
+
+Back: Beta-blockers (for arrhythmias) and activated charcoal.
+
+Front: Drug of choice for treating malignant hyperthermia triggered by volatile anesthetics?
+
+Back: Dantrolene.
+
+Front: Mechanism of action of Sodium Thiosulfate in cyanide poisoning?
+
+Back: Provides a sulfur donor for the enzyme Rhodanese to convert cyanide to thiocyanate.
+
+Front: Mechanism of action of Hydroxocobalamin in cyanide poisoning?
+
+Back: Binds cyanide to form Cyanocobalamin (Vitamin B12), which is excreted in the urine.
+
+Front: Mechanism of action of Riluzole in ALS?
+
+Back: Reduces glutamate neurotransmission (excitotoxicity).
+
+Front: Mechanism of action of Nusinersen?
+
+Back: Antisense oligonucleotide used in Spinal Muscular Atrophy to increase SMN protein production.
+
+Front: Mechanism of action of Ivacaftor in Cystic Fibrosis?
+
+Back: CFTR potentiator that keeps the chloride channel open longer in patients with the G551D mutation.
+
+Final High-Yield Interactions
+
+Front: Interaction between Clozapine and Carbamazepine?
+
+Back: Both can cause agranulocytosis; co-administration is strictly avoided.
+
+Front: Interaction between Lithium and Thiazide Diuretics?
+
+Back: Thiazides decrease lithium clearance, leading to potential lithium toxicity.
+
+Front: Interaction between Spironolactone and ACE inhibitors?
+
+Back: Increased risk of life-threatening hyperkalemia.
+
+Front: Interaction between Aminoglycosides and Loop Diuretics?
+
+Back: Synergistic ototoxicity.
+
+Front: Interaction between Tetracyclines and Antacids/Iron?
+
+Back: Divalent/trivalent cations chelate the drug, preventing absorption.
+
+Front: Mechanism of action of Basiliximab?
+
+Back: Monoclonal antibody that blocks the IL-2 receptor (CD25) on activated T cells.
+
+Front: Mechanism of action of Fingolimod?
+
+Back: Sphingosine-1-phosphate (S1P) receptor modulator that sequesters lymphocytes in lymph nodes.
+
+Front: Clinical use of Filgrastim (G-CSF)?
+
+Back: Recovery of bone marrow (neutrophils) after chemotherapy.
+
+Front: Mechanism of action of Sargramostim (GM-CSF)?
+
+Back: Stimulates both granulocyte and monocyte/macrophage lineages.
+
+Front: Mechanism of action of Aldesleukin?
+
+Back: Recombinant Interleukin-2 used in the treatment of Renal Cell Carcinoma and Melanoma.
+
+Front: Mechanism of action of IFN-alpha?
+
+Back: Used for Hepatitis B and C, Kaposi Sarcoma, and Hairy Cell Leukemia.
+
+Advanced Oncology (The "Hidden" High-Yields)
+
+Front: Mechanism of action of Asparaginase?
+
+Back: Depletes Asparagine to inhibit protein synthesis in leukemic cells (ALL).
+
+Front: Side effect of Asparaginase?
+
+Back: Pancreatitis and coagulation factor deficiencies.
+
+Front: Mechanism of action of Cytarabine (ara-C)?
+
+Back: Pyrimidine analog that inhibits DNA polymerase.
+
+Front: Primary toxicity of Cytarabine?
+
+Back: Panpancytopenia (severe bone marrow suppression).
+
+Front: Mechanism of action of Mercaptopurine (6-MP)?
+
+Back: Purine analog that inhibits de novo purine synthesis (activated by HGPRT).
+
+Reproductive & Specialized Endocrine
+
+Front: Mechanism of action of Danazol?
+
+Back: Synthetic androgen that acts as a partial agonist; used for Endometriosis.
+
+Front: Side effect of Danazol?
+
+Back: Weight gain, edema, and masculinization (hirsutism).
+
+Front: Mechanism of action of Letrozole?
+
+Back: Aromatase inhibitor used in ER-positive breast cancer and to induce ovulation in PCOS.
+
+Front: Mechanism of action of Cabergoline/Bromocriptine?
+
+Back: Dopamine agonists used to treat prolactinomas.
+
+Critical Toxicology: Venoms & Environmentals
+
+Front: Treatment for a bite from a Black Widow spider?
+
+Back: Muscle relaxants (Benzodiazepines) and antivenom if severe.
+
+Front: Clinical sign of Ciguatera toxin (found in large fish)?
+
+Back: Reversal of hot and cold sensations.
+
+Front: Treatment for Scorpion stings?
+
+Back: Supportive care and specific antivenom (Anascorp) for severe cases.
+
+Front: Mechanism of Scombroid poisoning?
+
+Back: Bacterial histidine decarboxylase converts histidine to histamine in spoiled fish.
+
+Integration & Systemic Summaries
+
+Front: Classic drug class that causes "Pill-induced Esophagitis"?
+
+Back: Bisphosphonates, Tetracyclines, and NSAIDs.
+
+Front: Medication that can cause a "Disulfiram-like reaction" with alcohol?
+
+Back: Metronidazole, certain Cephalosporins (Cefotetan), and Sulfonylureas.
+
+Front: List of P450 Inducers (mnemonic: "Guinness, Coronas, and PBRS induce Chronic Alcoholism")?
+
+Back: Griseofulvin, Carbamazepine, Phenytoin, Barbiturates, Rifampin, St. John’s Wort.
+
+Front: List of P450 Inhibitors (mnemonic: "SICKFACES.COM")?
+
+Back: Sodium Valproate, Isoniazid, Cimetidine, Ketoconazole, Fluconazole, Alcohol (Acute), Chloramphenicol, Erythromycin, Sulfonamides, Ciprofloxacin, Omeprazole, Metronidazole.
+
+Front: Drug of choice for prevention of NSAID-induced gastric ulcers?
+
+Back: Misoprostol.
+
+Front: Mechanism of action of Sacubitril/Valsartan (ARNI) in heart failure?
+
+Back: Combined inhibition of neprilysin (increasing ANP/BNP) and blockade of AT1 receptors.

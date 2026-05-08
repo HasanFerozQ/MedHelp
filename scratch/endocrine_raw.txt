@@ -1,0 +1,780 @@
+Front: Most common cause of hyperpituitarism?
+Back: Adenoma arising in the anterior lobe.
+
+Front: Functional vs. Non-functional pituitary adenoma definition?
+Back: Functional secretes hormones; Non-functional does not (often presents with mass effect).
+
+Front: Most common type of hyperfunctioning pituitary adenoma?
+Back: Prolactinoma.
+
+Front: Clinical manifestations of Prolactinoma in females?
+Back: Amenorrhea, galactorrhea, and infertility.
+
+Front: Effect of Prolactinoma on males?
+Back: Decreased libido and erectile dysfunction.
+
+Front: Consequence of Somatotroph Adenoma before epiphyses close?
+Back: Gigantism.
+
+Front: Consequence of Somatotroph Adenoma after epiphyses close?
+Back: Acromegaly.
+
+Front: Best screening test for Acromegaly?
+Back: Serum IGF-1 (Insulin-like Growth Factor-1).
+
+Front: Definitive diagnostic test for Acromegaly?
+Back: Oral glucose suppression test (failure to suppress Growth Hormone).
+
+Front: Cause of Nelson Syndrome?
+Back: Rapid enlargement of a pre-existing ACTH-producing adenoma after bilateral adrenalectomy.
+
+Front: Common symptoms of pituitary mass effect?
+Back: Bitemporal hemianopsia and headache.
+
+Front: Definition of Sheehan Syndrome?
+Back: Ischemic necrosis of the anterior pituitary following postpartum hemorrhage.
+
+Front: Classic presentation of Sheehan Syndrome?
+Back: Failure to lactate and loss of pubic hair.
+
+Front: Definition of Empty Sella Syndrome?
+Back: Herniation of the arachnoid and CSF into the sella, compressing the pituitary.
+
+Front: Posterior pituitary: Central Diabetes Insipidus (DI) cause?
+Back: ADH deficiency.
+
+Front: Diagnostic finding in Diabetes Insipidus?
+Back: Low urine specific gravity and high serum osmolality.
+
+Front: Primary cause of SIADH?
+Back: Ectopic ADH secretion (often Small Cell Carcinoma of the lung).
+
+Front: Electrolyte hallmark of SIADH?
+Back: Hyponatremia.
+
+Thyroid Gland: Hyper & Hypothyroidism
+Front: Most common cause of hyperthyroidism (Thyrotoxicosis)?
+Back: Graves Disease.
+
+Front: Classic triad of Graves Disease?
+Back: Hyperthyroidism, exophthalmos, and pretibial myxedema.
+
+Front: Antibody found in Graves Disease?
+Back: Thyroid Stimulating Immunoglobulin (TSI) - IgG antibody.
+
+Front: Most common cause of hypothyroidism in iodine-sufficient areas?
+Back: Hashimoto Thyroiditis.
+
+Front: Histological hallmark of Hashimoto Thyroiditis?
+Back: Intense lymphocytic infiltrate with germinal centers and Hurthle cells.
+
+Front: Antibodies associated with Hashimoto?
+Back: Anti-thyroid peroxidase (anti-TPO) and anti-thyroglobulin.
+
+Front: Definition of De Quervain (Subacute) Thyroiditis?
+Back: Granulomatous thyroiditis often following a viral infection.
+
+Front: Clinical hallmark of De Quervain Thyroiditis?
+Back: Painful, tender thyroid gland.
+
+Front: Definition of Riedel Thyroiditis?
+Back: Extensive fibrosis of the thyroid that may extend to adjacent neck structures.
+
+Front: Physical exam finding in Riedel Thyroiditis?
+Back: "Rock-hard," painless thyroid.
+
+Front: Definition of Cretinism?
+Back: Hypothyroidism in infancy or early childhood causing mental retardation and short stature.
+
+Front: Definition of Myxedema?
+Back: Hypothyroidism in older children or adults.
+
+Thyroid Neoplasia
+Front: Most common type of thyroid cancer?
+Back: Papillary Thyroid Carcinoma.
+
+Front: Key nuclear features of Papillary Carcinoma?
+Back: Orphan Annie eye nuclei and nuclear grooves.
+
+Front: Characteristic calcified structures in Papillary Carcinoma?
+Back: Psammoma bodies.
+
+Front: Distinguishing feature between Follicular Adenoma and Carcinoma?
+Back: Capsular or vascular invasion (requires histological exam).
+
+Front: Genetic mutation associated with Follicular Carcinoma?
+Back: RAS mutation or PAX8-PPARG translocation.
+
+Front: Cell of origin for Medullary Thyroid Carcinoma?
+Back: Parafollicular C cells.
+
+Front: Hormone secreted by Medullary Thyroid Carcinoma?
+Back: Calcitonin.
+
+Front: Staining characteristic of Medullary Thyroid Carcinoma?
+Back: Amyloid stroma staining with Congo Red.
+
+Front: Genetic association with Medullary Thyroid Carcinoma?
+Back: RET proto-oncogene (MEN 2A and 2B).
+
+Front: Characteristics of Anaplastic Thyroid Carcinoma?
+Back: Highly aggressive, occurs in elderly, rapidly enlarging neck mass.
+
+Parathyroid Glands
+Front: Most common cause of Primary Hyperparathyroidism?
+Back: Solitary parathyroid adenoma.
+
+Front: Classic "Bones, Stones, Groans, Moans" refers to?
+Back: Hypercalcemia symptoms in Primary Hyperparathyroidism.
+
+Front: Bone lesion characteristic of Hyperparathyroidism?
+Back: Osteitis fibrosa cystica (brown tumors).
+
+Front: Most common cause of Secondary Hyperparathyroidism?
+Back: Chronic Renal Failure.
+
+Front: Laboratory findings in Primary Hyperparathyroidism?
+Back: High PTH, high Calcium, low Phosphate.
+
+Front: Physical sign of Hypocalcemia: Chvostek sign?
+Back: Facial nerve tapping leads to facial twitching.
+
+Front: Physical sign of Hypocalcemia: Trousseau sign?
+Back: Carpal spasm after inflating a BP cuff.
+
+Front: Lab findings in Hypoparathyroidism?
+Back: Low PTH, low Calcium, high Phosphate.
+
+Pancreas: Diabetes Mellitus
+Front: Pathophysiology of Type 1 Diabetes Mellitus?
+Back: Autoimmune destruction of Beta cells leading to absolute insulin deficiency.
+
+Front: HLA associations for Type 1 DM?
+Back: HLA-DR3 and HLA-DR4.
+
+Front: Primary pathophysiology of Type 2 Diabetes Mellitus?
+Back: Insulin resistance and relative insulin deficiency.
+
+Front: Most common cause of death in Diabetics?
+Back: Myocardial Infarction (Macrovascular disease).
+
+Front: Leading cause of acquired blindness in the US?
+Back: Diabetic Retinopathy.
+
+Front: Classic histology of the kidney in Diabetes?
+Back: Kimmelstiel-Wilson nodules (nodular glomerulosclerosis).
+
+Front: Metabolic emergency in Type 1 DM?
+Back: Diabetic Ketoacidosis (DKA).
+
+Front: Metabolic emergency in Type 2 DM?
+Back: Hyperosmolar Hyperglycemic State (HHS).
+
+Front: Triad of Insulinoma (Whipple Triad)?
+Back: Hypoglycemia symptoms, low blood glucose, and relief of symptoms with glucose.
+
+Front: Clinical syndrome of Gastrinoma (Zollinger-Ellison)?
+Back: Peptic ulcers and diarrhea.
+
+Adrenal Cortex: Hyperfunction
+Front: Definition of Cushing Syndrome?
+Back: Hypercortisolism from any cause.
+
+Front: Definition of Cushing Disease?
+Back: Hypercortisolism due to an ACTH-secreting pituitary adenoma.
+
+Front: Physical features of Cushing Syndrome?
+Back: Moon facies, buffalo hump, and abdominal striae.
+
+Front: Primary Hyperaldosteronism (Conn Syndrome) cause?
+Back: Adrenal adenoma or bilateral adrenal hyperplasia.
+
+Front: Clinical hallmark of Conn Syndrome?
+Back: Hypertension and hypokalemia with low renin.
+
+Front: Most common enzyme deficiency in Congenital Adrenal Hyperplasia (CAH)?
+Back: 21-hydroxylase deficiency.
+
+Front: Clinical presentation of 21-hydroxylase deficiency?
+Back: Salt wasting, hypotension, and virilization.
+
+Front: Lab finding in 21-hydroxylase deficiency?
+Back: Increased 17-hydroxyprogesterone.
+
+Adrenal Insufficiency & Medulla
+Front: Definition of Addison Disease?
+Back: Chronic primary adrenocortical insufficiency.
+
+Front: Most common cause of Addison Disease in developed countries?
+Back: Autoimmune adrenalitis.
+
+Front: Most common cause of Addison Disease worldwide?
+Back: Tuberculosis.
+
+Front: Physical hallmark of Primary Adrenal Insufficiency?
+Back: Hyperpigmentation (due to increased ACTH/MSM).
+
+Front: Definition of Waterhouse-Friderichsen Syndrome?
+Back: Massive bilateral adrenal hemorrhage due to Neisseria meningitidis sepsis.
+
+Front: Origin of Pheochromocytoma?
+Back: Chromaffin cells of the adrenal medulla.
+
+Front: Rule of 10s for Pheochromocytoma?
+Back: 10% bilateral, 10% malignant, 10% extra-adrenal, 10% in children.
+
+Front: Urinary metabolites for diagnosing Pheochromocytoma?
+Back: Vanillylmandelic acid (VMA) and metanephrines.
+
+Front: Classic symptom triad of Pheochromocytoma?
+Back: Episodic headache, sweating, and palpitations.
+
+Front: Most common extracranial solid tumor of childhood?
+Back: Neuroblastoma.
+
+Front: Genetic marker for poor prognosis in Neuroblastoma?
+Back: N-myc amplification.
+
+Multiple Endocrine Neoplasia (MEN)
+Front: Components of MEN 1 (Wermer Syndrome)?
+Back: Pituitary, Parathyroid, and Pancreatic tumors (3 Ps).
+
+Front: Components of MEN 2A (Sipple Syndrome)?
+Back: Medullary thyroid carcinoma, Pheochromocytoma, and Parathyroid hyperplasia.
+
+Front: Components of MEN 2B?
+Back: Medullary thyroid carcinoma, Pheochromocytoma, and Mucosal neuromas/Marfanoid habitus.
+
+High-Yield Histology & Markers
+Front: Histological finding in Diabetic islet cells (Type 2)?
+Back: Amyloid deposition (Amylin).
+
+Front: Immunohistochemical marker for Medullary Thyroid Carcinoma?
+Back: Calcitonin or Chromogranin.
+
+Front: Adrenal finding in Chronic Exogenous Glucocorticoid use?
+Back: Bilateral cortical atrophy.
+
+Front: Adrenal finding in Cushing Disease (Pituitary)?
+Back: Bilateral cortical hyperplasia.
+
+Front: Characteristic cells in Neuroblastoma?
+Back: Homer-Wright rosettes.
+
+Front: "Grape-like" clusters in pituitary?
+Back: Potential description of Rathke Cleft Cyst.
+
+Front: Significance of Crooke Hyaline Change?
+Back: Replacement of cytoplasm in ACTH cells with keratin in response to high cortisol.
+
+Front: Thyroid condition associated with increased risk of B-cell lymphoma?
+Back: Hashimoto Thyroiditis.
+
+Front: Marker for Neuroendocrine tumors?
+Back: Synaptophysin and Chromogranin A.
+
+Front: Primary mediator of bone resorption in Malignancy-associated hypercalcemia?
+Back: PTHrP (PTH-related protein).
+
+Front: Key difference between MEN 2A and 2B?
+Back: 2A has Parathyroid involvement; 2B has Neuromas and Marfanoid habitus.
+
+Front: Mechanism of Methimazole/PTU?
+Back: Inhibition of thyroid peroxidase (TPO).
+
+Front: Effect of Amiodarone on the thyroid?
+Back: Can cause either hyperthyroidism or hypothyroidism (due to high iodine content).
+
+Front: Most common cause of Thyroid Storm?
+Back: Stress, infection, or surgery in a patient with untreated hyperthyroidism.
+
+Front: Definition of Jod-Basedow phenomenon?
+Back: Iodine-induced hyperthyroidism in a patient with a multinodular goiter.
+
+Front: Definition of Wolff-Chaikoff effect?
+Back: High iodine levels inhibiting thyroid hormone synthesis (protective).
+
+Front: Ectopic thyroid tissue location?
+Back: Base of the tongue (Lingual thyroid).
+
+Front: Remnant of the descent of the thyroid gland?
+Back: Thyroglossal duct cyst (midline neck mass).
+
+Front: Branchial cleft cyst location vs. Thyroglossal?
+Back: Lateral neck vs. Midline.
+
+Front: Relationship between Calcium and Albumin?
+Back: Total calcium drops by 0.8 for every 1.0 decrease in albumin.
+
+Front: Psammoma body mnemonics (PSaMMoma)?
+Back: Papillary thyroid, Serous ovary, Meningioma, Mesothelioma.
+
+Front: Primary location of the "Sertoli-cell only" equivalent in endocrine?
+Back: Not applicable, but used to differentiate primary vs secondary failure.
+
+Front: Treatment for Prolactinoma?
+Back: Dopamine agonists (Cabergoline, Bromocriptine).
+
+Front: Relationship between Prolactin and GnRH?
+Back: Prolactin inhibits GnRH secretion.
+
+Front: Most common cause of hypopituitarism in adults?
+Back: Non-secreting pituitary adenoma (compression).
+
+Front: Most common cause of hypopituitarism in children?
+Back: Craniopharyngioma.
+
+Front: Origin of Craniopharyngioma?
+Back: Rathke pouch remnants.
+
+Front: Classic imaging appearance of Craniopharyngioma?
+Back: Calcified, cystic mass with "machinery oil" fluid.
+
+Front: Diagnosis for patient with hypercalcemia and low urinary calcium?
+Back: Familial Hypocalciuric Hypercalcemia (FHH).
+
+Front: Defect in FHH?
+Back: Defective G-protein coupled calcium-sensing receptors (CaSR).
+
+Front: Effect of 11-beta-hydroxylase deficiency?
+Back: Hypertension (due to 11-deoxycorticosterone) and virilization.
+
+Front: Effect of 17-alpha-hydroxylase deficiency?
+Back: Hypertension and primary amenorrhea (low sex hormones).
+
+Front: Source of Aldosterone?
+Back: Zona Glomerulosa.
+
+Front: Source of Cortisol?
+Back: Zona Fasciculata.
+
+Front: Source of Androgens?
+Back: Zona Reticularis.
+
+Front: Mnemonic for Adrenal layers (G-F-R)?
+Back: Salt (Glomerulosa), Sugar (Fasciculata), Sex (Reticularis).
+
+Front: Major side effect of Spironolactone in males?
+Back: Gynecomastia.
+
+Front: Mechanism of Graves exophthalmos?
+Back: Fibroblast proliferation and GAG deposition triggered by TSH-receptor antibodies.
+
+Front: Effect of pregnancy on Total T4?
+Back: Increases due to increased Thyroid Binding Globulin (TBG).
+
+Front: Best indicator of thyroid function status?
+Back: TSH level.
+
+Front: Precursor of ACTH and MSH?
+Back: Pro-opiomelanocortin (POMC).
+
+Front: Histological appearance of Pituitary Adenoma?
+Back: Monomorphism (cells look identical) and absence of a reticulin network.
+
+Front: Difference between Pituitary Adenoma and Hyperplasia?
+Back: Adenomas lack reticulin; Hyperplasia preserves the reticulin framework.
+
+Front: Most common cause of Pituitary Apoplexy?
+Back: Sudden hemorrhage into a pre-existing pituitary adenoma.
+
+Front: Classic presentation of Pituitary Apoplexy?
+Back: Sudden "thunderclap" headache, visual loss, and cardiovascular collapse.
+
+Front: Most common location of ectopic ACTH production?
+Back: Small cell carcinoma of the lung or bronchial carcinoids.
+
+Front: Distinction between Central and Nephrogenic Diabetes Insipidus via Desmopressin?
+Back: Central DI responds to Desmopressin (urine osmolality increases); Nephrogenic does not.
+
+Thyroid & Parathyroid Fine Points
+Front: Mechanism of the "Cold Nodule" on thyroid scan?
+Back: Area of thyroid that does not take up radioactive iodine; higher risk for malignancy.
+
+Front: Significance of the BRAF mutation in thyroid cancer?
+Back: Strongly associated with Papillary Thyroid Carcinoma and poor prognosis.
+
+Front: Histological feature of Graves Disease?
+Back: Tall, columnar follicular cells with "scalloping" of the colloid.
+
+Front: Cause of Goiter in Iodine Deficiency?
+Back: Low T4 leads to high TSH, which causes hypertrophy and hyperplasia of follicular cells.
+
+Front: Definition of Plummar Syndrome?
+Back: Toxic Multinodular Goiter (hyperfunctioning nodules independent of TSH).
+
+Front: Difference between Toxic Multinodular Goiter and Graves?
+Back: Toxic MNG lacks exophthalmos and pretibial myxedema.
+
+Front: Most common cause of Hypocalcemia (overall)?
+Back: Hypoalbuminemia (though "true" ionized calcium remains normal).
+
+Front: Primary lab finding in Pseudohypoparathyroidism?
+Back: High PTH but low Calcium (due to end-organ resistance to PTH).
+
+Front: Genetic defect in Albright Hereditary Osteodystrophy?
+Back: Defective Gs-protein alpha subunit (GNAS1 mutation).
+
+Front: Physical phenotype of Albright Hereditary Osteodystrophy?
+Back: Short stature and shortened 4th/5th metacarpals.
+
+Adrenal Cortex & Medulla Nuances
+Front: Impact of chronic Ketoconazole use on the Adrenal gland?
+Back: Inhibits desmolase/steroid synthesis, leading to adrenal insufficiency.
+
+Front: High-dose Dexamethasone suppression test: No suppression of ACTH/Cortisol?
+Back: Suggests Ectopic ACTH production (e.g., Small Cell Lung Cancer).
+
+Front: High-dose Dexamethasone suppression test: Suppression of Cortisol?
+Back: Confirms Cushing Disease (Pituitary Adenoma).
+
+Front: Cause of Primary Pigmented Nodular Adrenocortical Disease?
+Back: Part of Carney Complex (PRKAR1A mutation).
+
+Front: Spironolactone vs. Eplerenone in Conn Syndrome?
+Back: Eplerenone is more selective and lacks the anti-androgenic side effects (gynecomastia).
+
+Front: Diagnostic use of MIBG scan?
+Back: Localization of extra-adrenal Pheochromocytomas (Paragangliomas).
+
+Front: Pre-operative management of Pheochromocytoma?
+Back: Alpha-blockade (Phenoxybenzamine) followed by Beta-blockade.
+
+Front: Why must Alpha-blockade precede Beta-blockade in Pheochromocytoma?
+Back: To prevent hypertensive crisis from unopposed alpha-1 stimulation.
+
+Diabetes & Pancreatic Neuroendocrine Tumors
+Front: Common HLA alleles for Type 1 DM?
+Back: HLA-DR3 and HLA-DR4.
+
+Front: Histological finding in early Type 1 DM islets?
+Back: Insulitis (lymphocytic infiltration).
+
+Front: Pathogenesis of Non-enzymatic Glycosylation (NEG) in Diabetes?
+Back: Glucose attaches to proteins, forming Advanced Glycation End-products (AGEs).
+
+Front: Mechanism of Sorbitol damage in Diabetics?
+Back: Glucose converted to Sorbitol via Aldose Reductase, causing osmotic swelling in Schwann cells and Lens.
+
+Front: Classic presentation of Glucagonoma?
+Back: Necrolytic migratory erythema (rash), diabetes, and anemia.
+
+Front: Presentation of Somatostatinoma?
+Back: Diabetes, steatorrhea, and gallstones (due to inhibition of CCK and insulin).
+
+Front: Clinical syndrome of VIPoma?
+Back: WDHA Syndrome: Watery Diarrhea, Hypokalemia, Achlorhydria.
+
+Systemic Endocrine & MEN Syndromes
+Front: Definition of Carcinoid Syndrome?
+Back: Flushing, diarrhea, and right-sided heart valve lesions.
+
+Front: Why are Carcinoid heart lesions only right-sided?
+Back: Lung MAO (Monoamine Oxidase) metabolizes serotonin before it reaches the left heart.
+
+Front: Urinary marker for Carcinoid Syndrome?
+Back: 5-HIAA (5-hydroxyindoleacetic acid).
+
+Front: Common trigger for Carcinoid Syndrome symptoms?
+Back: Alcohol or emotional stress causing hormone release.
+
+Front: Association of "Brown Tumors"?
+Back: Osteitis fibrosa cystica in Hyperparathyroidism.
+
+Front: Liddle Syndrome mimic?
+Back: Hyperaldosteronism presentation but with low Aldosterone/Renin (gain of function of ENaC).
+
+Front: Syndrome of Apparent Mineralocorticoid Excess (AME) cause?
+Back: Deficiency of 11-beta-HSD2 (often from licorice), allowing Cortisol to activate Mineralocorticoid receptors.
+
+Front: Difference between MEN 2A and 2B?
+Back: 2A includes Hyperparathyroidism; 2B includes Mucosal Neuromas and Marfanoid habitus.
+
+Front: Common genetic screening for families of MEN 2 patients?
+Back: Testing for RET proto-oncogene mutations.
+
+Front: Prophylactic treatment for RET mutation carriers in MEN 2?
+Back: Prophylactic thyroidectomy (due to 100% risk of Medullary Thyroid Carcinoma).
+
+Front: Histological characteristic of an Adrenal Adenoma?
+Back: Well-circumscribed yellow mass with cells resembling the normal zona fasciculata.
+
+Front: Most common site of ectopic adrenal tissue?
+Back: Along the path of gonadal descent (e.g., retroperitoneum, ovaries, testes).
+
+Front: Histological appearance of Adrenocortical Carcinoma?
+Back: Large, invasive mass with areas of necrosis, hemorrhage, and cystic change.
+
+Front: Distinction between Adrenal Adenoma and Carcinoma?
+Back: Carcinomas are typically larger (>100g), show vascular invasion, and have higher mitotic rates.
+
+Front: Effect of 11-beta-hydroxylase deficiency on Renin levels?
+Back: Low Renin (due to hypertension caused by 11-deoxycorticosterone).
+
+Front: Underlying cause of Adrenal Crisis in Addison patients?
+Back: Any form of acute stress (infection, trauma, surgery) that increases cortisol demand.
+
+Front: "Zellballen" pattern on histology is characteristic of?
+Back: Pheochromocytoma (nests of cells surrounded by vascular stroma).
+
+Front: Immunohistochemical stain positive in Pheochromocytoma?
+Back: Chromogranin and Synaptophysin.
+
+Front: S100 stain utility in Pheochromocytoma?
+Back: Highlights the sustenacular cells surrounding the Zellballen nests.
+
+Thyroid & Parathyroid: Nuance & Morphology
+Front: Definition of the "Tall Cell Variant" of Papillary Carcinoma?
+Back: Aggressive variant with height of cells at least twice their width and abundant eosinophilic cytoplasm.
+
+Front: Significance of the RET/PTC rearrangement?
+Back: Genetic driver commonly found in Papillary Thyroid Carcinoma.
+
+Front: Follicular Thyroid Carcinoma spread pattern?
+Back: Hematogenous (unlike Papillary, which is primarily lymphatic).
+
+Front: Pathogenesis of Secondary Hyperparathyroidism in Renal Failure?
+Back: Hyperphosphatemia leads to Hypocalcemia, which chronically stimulates PTH secretion.
+
+Front: Tertiary Hyperparathyroidism definition?
+Back: Autonomous PTH secretion following long-standing secondary hyperparathyroidism.
+
+Front: Major cause of "Hungry Bone Syndrome"?
+Back: Sudden drop in PTH after parathyroidectomy, causing rapid calcium uptake by bones.
+
+Front: Result of PTH on Renal Phosphorus handling?
+Back: Decreases phosphate reabsorption in the proximal convoluted tubule (Phosphate Trashing).
+
+Front: Histology of Parathyroid Adenoma?
+Back: Predominantly chief cells with a rim of normal parathyroid tissue and absence of stromal fat.
+
+Pancreatic Islets & Neuroendocrine Nuances
+Front: Relationship between Obesity and Insulin Resistance?
+Back: Increased adipokines (e.g., Resistin) and free fatty acids interfere with insulin signaling.
+
+Front: Primary cause of Polyuria in Diabetes?
+Back: Osmotic diuresis resulting from glucosuria.
+
+Front: Diagnostic threshold for HbA1c in Diabetes Mellitus?
+Back: Greater than or equal to 6.5%.
+
+Front: Definition of "Insular" amyloidosis?
+Back: Deposition of Amylin (IAPP) in the islets, characteristic of Type 2 DM.
+
+Front: Most common location of a Gastrinoma?
+Back: The "Gastrinoma Triangle" (Duodenum, pancreas, and porta hepatis).
+
+Front: Clinical finding in VIPoma (WDHA Syndrome)?
+Back: Watery Diarrhea, Hypokalemia, and Achlorhydria.
+
+Pituitary & Hypothalamic Specifics
+Front: Hormone deficiency sequence in Progressive Hypopituitarism?
+Back: GH is usually lost first, followed by LH/FSH, then TSH and ACTH.
+
+Front: Definition of Kallmann Syndrome?
+Back: Hypogonadotropic hypogonadism with anosmia due to failure of GnRH neurons to migrate.
+
+Front: Effect of Craniopharyngioma on the Pituitary Stalk?
+Back: Compression can cause Hyperprolactinemia (loss of dopamine inhibition).
+
+Front: Histology of "Adamantinomatous" Craniopharyngioma?
+Back: Squamous epithelium, "wet" keratin, and calcifications.
+
+Integrated Endocrine & Rare Syndromes
+Front: Definition of Autoimmune Polyendocrine Syndrome Type 1 (APS-1)?
+Back: Triad of Hypoparathyroidism, Adrenal insufficiency, and Chronic Mucocutaneous Candidiasis.
+
+Front: Genetic defect in APS-1?
+Back: Mutation in the AIRE (Autoimmune Regulator) gene.
+
+Front: Major endocrine risk in patients with Cowden Syndrome?
+Back: Increased risk of Follicular Thyroid Carcinoma (PTEN mutation).
+
+Front: McCune-Albright Syndrome endocrine manifestations?
+Back: Precocious puberty, hyperthyroidism, and GH-secreting adenomas.
+
+Front: Physical triad of McCune-Albright Syndrome?
+Back: Polyostotic fibrous dysplasia, Café-au-lait spots, and autonomous endocrine hyperfunction.
+
+Front: Metabolic cause of "Thyroidization" of the kidney?
+Back: Chronic Pyelonephritis (islets of thyroid-like tissue in renal parenchyma; distinct from thyroid pathology).
+
+Front: Difference between "Primary" and "Secondary" Hyperaldosteronism Renin levels?
+Back: Primary has Low Renin; Secondary has High Renin.
+
+Front: Cause of Secondary Hyperaldosteronism?
+Back: Decreased renal perfusion (e.g., Renal Artery Stenosis, Heart Failure).
+
+High-Yield Laboratory Interferences
+Front: Effect of high Biotin intake on Thyroid Function Tests?
+Back: Can falsely elevate T4/T3 and falsely lower TSH.
+
+Front: Why is C-peptide useful in Hypoglycemia workup?
+Back: Distinguishes endogenous insulin production (high C-peptide) from exogenous insulin injection (low C-peptide).
+
+Front: Lab profile of Factitious Hyperthyroidism?
+Back: Low TSH, High T4, and Low Thyroglobulin (due to exogenous ingestion).
+
+Front: Most common cause of a "Thyroid Storm"?
+Back: Acute stress (infection, surgery, or trauma) in a patient with pre-existing Graves disease.
+
+Front: Effect of Pregnancy on Total T4 vs. Free T4?
+Back: Total T4 increases (due to high TBG), but Free T4 remains normal (eustates).
+
+Front: Significance of "Cold" vs "Hot" nodules on RAIU scan?
+Back: Cold nodules are non-functional and more likely to be malignant; Hot nodules are functional and usually benign.
+
+Front: Histological feature of a Hurthle Cell?
+Back: Large follicular cell with abundant, granular, eosinophilic cytoplasm and numerous mitochondria.
+
+Front: Condition where Hurthle Cells are most prominently seen?
+Back: Hashimoto Thyroiditis and Hurthle Cell Adenoma/Carcinoma.
+
+Front: Most common location for an ectopic Parathyroid gland?
+Back: Within the Thymus (due to shared origin from the 3rd pharyngeal pouch).
+
+Front: Pathogenesis of Calciphylaxis?
+Back: Systemic calcification of small vessels leading to skin necrosis, often seen in end-stage renal disease/secondary hyperparathyroidism.
+
+Front: Difference between Osteitis Fibrosa Cystica and Renal Osteodystrophy?
+Back: Osteitis Fibrosa Cystica is specific to high PTH; Renal Osteodystrophy is the broader bone disease seen in chronic kidney failure.
+
+Adrenal & Pituitary: Advanced Diagnostics
+Front: Mechanism of the Metyrapone stimulation test?
+Back: Blocks 11-beta-hydroxylase; a normal response is an increase in ACTH and 11-deoxycortisol.
+
+Front: Utility of the Metyrapone test?
+Back: To evaluate the integrity of the entire Hypothalamic-Pituitary-Adrenal (HPA) axis.
+
+Front: Histological finding in the pituitary of a patient with Cushing Syndrome?
+Back: Crooke Hyaline Change (accumulation of intermediate filaments in ACTH-producing cells).
+
+Front: Primary difference between Lymphocytic Hypophysitis and Pituitary Adenoma?
+Back: Lymphocytic Hypophysitis is an autoimmune inflammation (often postpartum) that can mimic a mass on MRI.
+
+Front: Genetic mutation associated with MEN 1?
+Back: Mutation in the MENIN tumor suppressor gene.
+
+Front: Most common pituitary tumor in MEN 1?
+Back: Prolactinoma.
+
+Front: Relationship between Pituitary Gigantism and the Cardiovascular system?
+Back: Often leads to heart failure due to concentric left ventricular hypertrophy and cardiomyopathy.
+
+Metabolic & Pancreatic: The "Grey Zones"
+Front: Mechanism of "Amyloidosis" in Type 2 Diabetes?
+Back: Co-secretion of Islet Amyloid Polypeptide (Amylin) with insulin leads to its deposition in islets.
+
+Front: Distinction between Diabetic Ketoacidosis (DKA) and Hyperosmolar Hyperglycemic State (HHS)?
+Back: DKA (Type 1) has ketones and acidosis; HHS (Type 2) has extreme dehydration and higher glucose (>600 mg/dL).
+
+Front: Primary reason for the "Dawn Phenomenon" in Diabetics?
+Back: Early morning rise in blood sugar due to the physiological surge of Growth Hormone and Cortisol.
+
+Front: Definition of the "Somogyi Effect"?
+Back: Rebound hyperglycemia in the morning in response to an undiagnosed hypoglycemic episode during the night.
+
+Front: Diagnostic use of the Glucagon Stimulation Test?
+Back: Used to diagnose Pheochromocytoma (triggers catecholamine release) or growth hormone deficiency.
+
+Front: Hormone responsible for the "Incretin Effect"?
+Back: GLP-1 (Glucagon-like peptide-1) and GIP, which increase insulin secretion after oral glucose.
+
+Neuroendocrine & Rare Syndromes
+Front: Definition of Paraganglioma?
+Back: A tumor of the extra-adrenal sympathetic or parasympathetic ganglia (the "extra-adrenal pheochromocytoma").
+
+Front: Most common location for a Paraganglioma?
+Back: The Organ of Zuckerkandl (near the origin of the inferior mesenteric artery).
+
+Front: Components of Carney Complex?
+Back: Myxomas (heart/skin), hyperpigmentation (lentigines), and endocrine overactivity (adrenal/pituitary).
+
+Front: Characteristic of Von Hippel-Lindau (VHL) syndrome in Endocrine?
+Back: High risk for Pheochromocytoma (often bilateral).
+
+Front: Difference in Pheochromocytoma risk between MEN 2A and 2B?
+Back: The risk is roughly equal (~50%), but 2B presents with a more aggressive thyroid component.
+
+Front: Histological "Salt and Pepper" chromatin is a classic description of?
+Back: Neuroendocrine tumors (e.g., Carcinoid, Pancreatic NETs, Medullary Thyroid Carcinoma).
+
+Front: Most common hormone secreted by a Pancreatic Neuroendocrine Tumor (PanNET)?
+Back: Insulin (Insulinoma).
+
+Front: What is the "Rule of 10s" for Insulinomas?
+Back: Unlike Pheochromocytoma, only 10% of Insulinomas are malignant (most are benign).
+
+Front: Most common cause of death in patients with Acromegaly?
+Back: Heart failure (due to dilated cardiomyopathy).
+
+Front: Mechanism of hypercalcemia in Sarcoidosis?
+Back: 1-alpha-hydroxylase activity in granulomatous macrophages converts Vitamin D to its active form (1,25-OH).
+
+Front: Histological appearance of the thyroid in Riedel Thyroiditis?
+Back: Dense hyalinized fibrosis and a chronic inflammatory infiltrate.
+
+Front: Effect of chronic Lithium use on the thyroid?
+Back: Inhibition of thyroid hormone release, commonly causing hypothyroidism.
+
+Front: Definition of the "Pendred Syndrome"?
+Back: Genetic disorder causing sensorineural hearing loss and goiter due to iodine transport defects.
+
+Front: Primary difference in laboratory findings between 21-hydroxylase and 11-beta-hydroxylase deficiency?
+Back: 21-hydroxylase deficiency presents with hypotension; 11-beta-hydroxylase deficiency presents with hypertension.
+
+Front: Why does 17-alpha-hydroxylase deficiency cause hypertension?
+Back: Accumulation of 11-deoxycorticosterone, which has mineralocorticoid activity.
+
+Front: Most common cause of primary adrenal insufficiency in children?
+Back: Congenital Adrenal Hyperplasia (CAH).
+
+Front: Distinguishing feature of an Adrenal Myelolipoma?
+Back: A benign, non-functioning tumor composed of mature adipose tissue and hematopoietic elements.
+
+Pediatric & Developmental Endocrine Pathology
+Front: Presentation of a Lingual Thyroid?
+Back: A mass at the base of the tongue; may be the only functional thyroid tissue present.
+
+Front: Most common cause of congenital hypothyroidism worldwide?
+Back: Thyroid dysgenesis (aplasia, hypoplasia, or ectopic gland).
+
+Front: Effect of maternal gestational diabetes on the newborn?
+Back: Islet cell hyperplasia in the fetus leading to neonatal hypoglycemia after birth.
+
+Front: Classic cardiac defect associated with infants of diabetic mothers?
+Back: Transposition of the Great Arteries or Hypertrophic Cardiomyopathy (septal hypertrophy).
+
+Front: What is the "Water-Clear Cell" hyperplasia?
+Back: A rare form of parathyroid hyperplasia where cells have abundant clear cytoplasm.
+
+Finishing Touches: "Buzzword" Review
+Front: "Psammoma bodies" in the thyroid?
+Back: Papillary Thyroid Carcinoma.
+
+Front: "Amyloid stroma" in the thyroid?
+Back: Medullary Thyroid Carcinoma.
+
+Front: "Orphan Annie Eye" nuclei?
+Back: Papillary Thyroid Carcinoma.
+
+Front: "Rock-hard, fixed thyroid"?
+Back: Riedel Thyroiditis (or Anaplastic Carcinoma, but Riedel is the classic "hard" association).
+
+Front: "Pot-bellied, pale, puffy-faced infant with a protruding tongue"?
+Back: Cretinism (Congenital Hypothyroidism).
+
+Front: "Scalloped colloid"?
+Back: Graves Disease.
+
+Front: "Hurthle cells and lymphoid follicles with germinal centers"?
+Back: Hashimoto Thyroiditis.
+
+Front: "Zellballen" nests?
+Back: Pheochromocytoma.
+
+Front: "Homer-Wright Rosettes"?
+Back: Neuroblastoma.
+
+Front: "Kimmelstiel-Wilson nodules"?
+Back: Diabetic Nephropathy.

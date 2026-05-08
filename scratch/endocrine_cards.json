@@ -1,0 +1,1014 @@
+[
+  {
+    "q": "Most common cause of hyperpituitarism?",
+    "a": "Adenoma arising in the anterior lobe."
+  },
+  {
+    "q": "Functional vs. Non-functional pituitary adenoma definition?",
+    "a": "Functional secretes hormones; Non-functional does not (often presents with mass effect)."
+  },
+  {
+    "q": "Most common type of hyperfunctioning pituitary adenoma?",
+    "a": "<b>Prolactinoma</b>."
+  },
+  {
+    "q": "Clinical manifestations of <b>Prolactinoma</b> in females?",
+    "a": "Amenorrhea, galactorrhea, and infertility."
+  },
+  {
+    "q": "Effect of <b>Prolactinoma</b> on males?",
+    "a": "Decreased libido and erectile dysfunction."
+  },
+  {
+    "q": "Consequence of Somatotroph Adenoma before epiphyses close?",
+    "a": "<b>Gigantism</b>."
+  },
+  {
+    "q": "Consequence of Somatotroph Adenoma after epiphyses close?",
+    "a": "<b>Acromegaly</b>."
+  },
+  {
+    "q": "Best screening test for <b>Acromegaly</b>?",
+    "a": "Serum IGF-1 (Insulin-like Growth Factor-1)."
+  },
+  {
+    "q": "Definitive diagnostic test for <b>Acromegaly</b>?",
+    "a": "Oral glucose suppression test (failure to suppress Growth Hormone)."
+  },
+  {
+    "q": "Cause of Nelson Syndrome?",
+    "a": "Rapid enlargement of a pre-existing <b>ACTH</b>-producing adenoma after bilateral adrenalectomy."
+  },
+  {
+    "q": "Common symptoms of pituitary mass effect?",
+    "a": "Bitemporal hemianopsia and headache."
+  },
+  {
+    "q": "Definition of <b>Sheehan Syndrome</b>?",
+    "a": "Ischemic necrosis of the anterior pituitary following postpartum hemorrhage."
+  },
+  {
+    "q": "Classic presentation of <b>Sheehan Syndrome</b>?",
+    "a": "Failure to lactate and loss of pubic hair."
+  },
+  {
+    "q": "Definition of Empty Sella Syndrome?",
+    "a": "Herniation of the arachnoid and CSF into the sella, compressing the pituitary."
+  },
+  {
+    "q": "Posterior pituitary: Central <b>Diabetes Insipidus</b> (DI) cause?",
+    "a": "<b>ADH</b> deficiency."
+  },
+  {
+    "q": "Diagnostic finding in <b>Diabetes Insipidus</b>?",
+    "a": "Low urine specific gravity and high serum osmolality."
+  },
+  {
+    "q": "Primary cause of <b>SIADH</b>?",
+    "a": "Ectopic <b>ADH</b> secretion (often Small Cell Carcinoma of the lung)."
+  },
+  {
+    "q": "Electrolyte hallmark of <b>SIADH</b>?",
+    "a": "Hyponatremia.\n\nThyroid Gland: Hyper & Hypothyroidism"
+  },
+  {
+    "q": "Most common cause of hyperthyroidism (Thyrotoxicosis)?",
+    "a": "<b>Graves Disease</b>."
+  },
+  {
+    "q": "Classic triad of <b>Graves Disease</b>?",
+    "a": "Hyperthyroidism, exophthalmos, and pretibial myxedema."
+  },
+  {
+    "q": "Antibody found in <b>Graves Disease</b>?",
+    "a": "Thyroid Stimulating Immunoglobulin (TSI) - IgG antibody."
+  },
+  {
+    "q": "Most common cause of hypothyroidism in iodine-sufficient areas?",
+    "a": "<b>Hashimoto Thyroiditis</b>."
+  },
+  {
+    "q": "Histological hallmark of <b>Hashimoto Thyroiditis</b>?",
+    "a": "Intense lymphocytic infiltrate with germinal centers and Hurthle cells."
+  },
+  {
+    "q": "Antibodies associated with Hashimoto?",
+    "a": "Anti-thyroid peroxidase (anti-TPO) and anti-thyroglobulin."
+  },
+  {
+    "q": "Definition of De Quervain (Subacute) Thyroiditis?",
+    "a": "Granulomatous thyroiditis often following a viral infection."
+  },
+  {
+    "q": "Clinical hallmark of De Quervain Thyroiditis?",
+    "a": "Painful, tender thyroid gland."
+  },
+  {
+    "q": "Definition of Riedel Thyroiditis?",
+    "a": "Extensive fibrosis of the thyroid that may extend to adjacent neck structures."
+  },
+  {
+    "q": "Physical exam finding in Riedel Thyroiditis?",
+    "a": "\"Rock-hard,\" painless thyroid."
+  },
+  {
+    "q": "Definition of Cretinism?",
+    "a": "Hypothyroidism in infancy or early childhood causing mental retardation and short stature."
+  },
+  {
+    "q": "Definition of Myxedema?",
+    "a": "Hypothyroidism in older children or adults.\n\nThyroid Neoplasia"
+  },
+  {
+    "q": "Most common type of thyroid cancer?",
+    "a": "<b>Papillary Thyroid Carcinoma</b>."
+  },
+  {
+    "q": "Key nuclear features of Papillary Carcinoma?",
+    "a": "<b>Orphan Annie</b> eye nuclei and nuclear grooves."
+  },
+  {
+    "q": "Characteristic calcified structures in Papillary Carcinoma?",
+    "a": "<b>Psammoma bodies</b>."
+  },
+  {
+    "q": "Distinguishing feature between Follicular Adenoma and Carcinoma?",
+    "a": "Capsular or vascular invasion (requires histological exam)."
+  },
+  {
+    "q": "Genetic mutation associated with <b>Follicular Carcinoma</b>?",
+    "a": "RAS mutation or PAX8-PPARG translocation."
+  },
+  {
+    "q": "Cell of origin for <b>Medullary Thyroid Carcinoma</b>?",
+    "a": "Parafollicular C cells."
+  },
+  {
+    "q": "Hormone secreted by <b>Medullary Thyroid Carcinoma</b>?",
+    "a": "Calcitonin."
+  },
+  {
+    "q": "Staining characteristic of <b>Medullary Thyroid Carcinoma</b>?",
+    "a": "Amyloid stroma staining with Congo Red."
+  },
+  {
+    "q": "Genetic association with <b>Medullary Thyroid Carcinoma</b>?",
+    "a": "RET proto-oncogene (<b>MEN 2A</b> and 2B)."
+  },
+  {
+    "q": "Characteristics of Anaplastic Thyroid Carcinoma?",
+    "a": "Highly aggressive, occurs in elderly, rapidly enlarging neck mass.\n\nParathyroid Glands"
+  },
+  {
+    "q": "Most common cause of Primary Hyperparathyroidism?",
+    "a": "Solitary parathyroid adenoma."
+  },
+  {
+    "q": "Classic \"Bones, Stones, Groans, Moans\" refers to?",
+    "a": "Hypercalcemia symptoms in Primary Hyperparathyroidism."
+  },
+  {
+    "q": "Bone lesion characteristic of Hyperparathyroidism?",
+    "a": "Osteitis fibrosa cystica (brown tumors)."
+  },
+  {
+    "q": "Most common cause of Secondary Hyperparathyroidism?",
+    "a": "Chronic Renal Failure."
+  },
+  {
+    "q": "Laboratory findings in Primary Hyperparathyroidism?",
+    "a": "High <b>PTH</b>, high Calcium, low Phosphate."
+  },
+  {
+    "q": "Physical sign of Hypocalcemia: Chvostek sign?",
+    "a": "Facial nerve tapping leads to facial twitching."
+  },
+  {
+    "q": "Physical sign of Hypocalcemia: Trousseau sign?",
+    "a": "Carpal spasm after inflating a BP cuff."
+  },
+  {
+    "q": "Lab findings in Hypoparathyroidism?",
+    "a": "Low <b>PTH</b>, low Calcium, high Phosphate.\n\nPancreas: <b>Diabetes Mellitus</b>"
+  },
+  {
+    "q": "Pathophysiology of Type 1 <b>Diabetes Mellitus</b>?",
+    "a": "Autoimmune destruction of Beta cells leading to absolute insulin deficiency."
+  },
+  {
+    "q": "HLA associations for Type 1 DM?",
+    "a": "HLA-DR3 and HLA-DR4."
+  },
+  {
+    "q": "Primary pathophysiology of Type 2 <b>Diabetes Mellitus</b>?",
+    "a": "Insulin resistance and relative insulin deficiency."
+  },
+  {
+    "q": "Most common cause of death in Diabetics?",
+    "a": "Myocardial Infarction (Macrovascular disease)."
+  },
+  {
+    "q": "Leading cause of acquired blindness in the US?",
+    "a": "Diabetic Retinopathy."
+  },
+  {
+    "q": "Classic histology of the kidney in Diabetes?",
+    "a": "<b>Kimmelstiel-Wilson</b> nodules (nodular glomerulosclerosis)."
+  },
+  {
+    "q": "Metabolic emergency in Type 1 DM?",
+    "a": "Diabetic Ketoacidosis (<b>DKA</b>)."
+  },
+  {
+    "q": "Metabolic emergency in Type 2 DM?",
+    "a": "Hyperosmolar Hyperglycemic State (<b>HHS</b>)."
+  },
+  {
+    "q": "Triad of Insulinoma (<b>Whipple Triad</b>)?",
+    "a": "Hypoglycemia symptoms, low blood glucose, and relief of symptoms with glucose."
+  },
+  {
+    "q": "Clinical syndrome of Gastrinoma (<b>Zollinger-Ellison</b>)?",
+    "a": "Peptic ulcers and diarrhea.\n\nAdrenal Cortex: Hyperfunction"
+  },
+  {
+    "q": "Definition of <b>Cushing Syndrome</b>?",
+    "a": "Hypercortisolism from any cause."
+  },
+  {
+    "q": "Definition of <b>Cushing Disease</b>?",
+    "a": "Hypercortisolism due to an <b>ACTH</b>-secreting pituitary adenoma."
+  },
+  {
+    "q": "Physical features of <b>Cushing Syndrome</b>?",
+    "a": "Moon facies, buffalo hump, and abdominal striae."
+  },
+  {
+    "q": "Primary Hyperaldosteronism (<b>Conn Syndrome</b>) cause?",
+    "a": "Adrenal adenoma or bilateral adrenal hyperplasia."
+  },
+  {
+    "q": "Clinical hallmark of <b>Conn Syndrome</b>?",
+    "a": "Hypertension and hypokalemia with low renin."
+  },
+  {
+    "q": "Most common enzyme deficiency in Congenital Adrenal Hyperplasia (<b>CAH</b>)?",
+    "a": "21-hydroxylase deficiency."
+  },
+  {
+    "q": "Clinical presentation of 21-hydroxylase deficiency?",
+    "a": "Salt wasting, hypotension, and virilization."
+  },
+  {
+    "q": "Lab finding in 21-hydroxylase deficiency?",
+    "a": "Increased 17-hydroxyprogesterone.\n\nAdrenal Insufficiency & Medulla"
+  },
+  {
+    "q": "Definition of <b>Addison Disease</b>?",
+    "a": "Chronic primary adrenocortical insufficiency."
+  },
+  {
+    "q": "Most common cause of <b>Addison Disease</b> in developed countries?",
+    "a": "Autoimmune adrenalitis."
+  },
+  {
+    "q": "Most common cause of <b>Addison Disease</b> worldwide?",
+    "a": "Tuberculosis."
+  },
+  {
+    "q": "Physical hallmark of Primary Adrenal Insufficiency?",
+    "a": "Hyperpigmentation (due to increased <b>ACTH</b>/MSM)."
+  },
+  {
+    "q": "Definition of <b>Waterhouse-Friderichsen</b> Syndrome?",
+    "a": "Massive bilateral adrenal hemorrhage due to <i>Neisseria</i> meningitidis sepsis."
+  },
+  {
+    "q": "Origin of <b>Pheochromocytoma</b>?",
+    "a": "Chromaffin cells of the adrenal medulla."
+  },
+  {
+    "q": "Rule of 10s for <b>Pheochromocytoma</b>?",
+    "a": "10% bilateral, 10% malignant, 10% extra-adrenal, 10% in children."
+  },
+  {
+    "q": "Urinary metabolites for diagnosing <b>Pheochromocytoma</b>?",
+    "a": "Vanillylmandelic acid (VMA) and metanephrines."
+  },
+  {
+    "q": "Classic symptom triad of <b>Pheochromocytoma</b>?",
+    "a": "Episodic headache, sweating, and palpitations."
+  },
+  {
+    "q": "Most common extracranial solid tumor of childhood?",
+    "a": "<b>Neuroblastoma</b>."
+  },
+  {
+    "q": "Genetic marker for poor prognosis in <b>Neuroblastoma</b>?",
+    "a": "N-myc amplification.\n\nMultiple Endocrine Neoplasia (MEN)"
+  },
+  {
+    "q": "Components of <b>MEN 1</b> (Wermer Syndrome)?",
+    "a": "Pituitary, Parathyroid, and Pancreatic tumors (3 Ps)."
+  },
+  {
+    "q": "Components of <b>MEN 2A</b> (Sipple Syndrome)?",
+    "a": "<b>Medullary thyroid carcinoma</b>, <b>Pheochromocytoma</b>, and Parathyroid hyperplasia."
+  },
+  {
+    "q": "Components of <b>MEN 2B</b>?",
+    "a": "<b>Medullary thyroid carcinoma</b>, <b>Pheochromocytoma</b>, and Mucosal neuromas/Marfanoid habitus.\n\nHigh-Yield Histology & Markers"
+  },
+  {
+    "q": "Histological finding in Diabetic islet cells (Type 2)?",
+    "a": "Amyloid deposition (Amylin)."
+  },
+  {
+    "q": "Immunohistochemical marker for <b>Medullary Thyroid Carcinoma</b>?",
+    "a": "Calcitonin or Chromogranin."
+  },
+  {
+    "q": "Adrenal finding in Chronic Exogenous Glucocorticoid use?",
+    "a": "Bilateral cortical atrophy."
+  },
+  {
+    "q": "Adrenal finding in <b>Cushing Disease</b> (Pituitary)?",
+    "a": "Bilateral cortical hyperplasia."
+  },
+  {
+    "q": "Characteristic cells in <b>Neuroblastoma</b>?",
+    "a": "<b>Homer-Wright rosettes</b>."
+  },
+  {
+    "q": "\"Grape-like\" clusters in pituitary?",
+    "a": "Potential description of Rathke Cleft Cyst."
+  },
+  {
+    "q": "Significance of Crooke Hyaline Change?",
+    "a": "Replacement of cytoplasm in <b>ACTH</b> cells with keratin in response to high cortisol."
+  },
+  {
+    "q": "Thyroid condition associated with increased risk of B-cell lymphoma?",
+    "a": "<b>Hashimoto Thyroiditis</b>."
+  },
+  {
+    "q": "Marker for Neuroendocrine tumors?",
+    "a": "Synaptophysin and Chromogranin A."
+  },
+  {
+    "q": "Primary mediator of bone resorption in Malignancy-associated hypercalcemia?",
+    "a": "<b>PTHrP</b> (<b>PTH</b>-related protein)."
+  },
+  {
+    "q": "Key difference between <b>MEN 2A</b> and 2B?",
+    "a": "2A has Parathyroid involvement; 2B has Neuromas and Marfanoid habitus."
+  },
+  {
+    "q": "Mechanism of Methimazole/PTU?",
+    "a": "Inhibition of thyroid peroxidase (TPO)."
+  },
+  {
+    "q": "Effect of Amiodarone on the thyroid?",
+    "a": "Can cause either hyperthyroidism or hypothyroidism (due to high iodine content)."
+  },
+  {
+    "q": "Most common cause of Thyroid Storm?",
+    "a": "Stress, infection, or surgery in a patient with untreated hyperthyroidism."
+  },
+  {
+    "q": "Definition of Jod-Basedow phenomenon?",
+    "a": "Iodine-induced hyperthyroidism in a patient with a multinodular goiter."
+  },
+  {
+    "q": "Definition of Wolff-Chaikoff effect?",
+    "a": "High iodine levels inhibiting thyroid hormone synthesis (protective)."
+  },
+  {
+    "q": "Ectopic thyroid tissue location?",
+    "a": "Base of the tongue (Lingual thyroid)."
+  },
+  {
+    "q": "Remnant of the descent of the thyroid gland?",
+    "a": "Thyroglossal duct cyst (midline neck mass)."
+  },
+  {
+    "q": "Branchial cleft cyst location vs. Thyroglossal?",
+    "a": "Lateral neck vs. Midline."
+  },
+  {
+    "q": "Relationship between Calcium and Albumin?",
+    "a": "Total calcium drops by 0.8 for every 1.0 decrease in albumin."
+  },
+  {
+    "q": "Psammoma body mnemonics (PSaMMoma)?",
+    "a": "Papillary thyroid, Serous ovary, Meningioma, Mesothelioma."
+  },
+  {
+    "q": "Primary location of the \"Sertoli-cell only\" equivalent in endocrine?",
+    "a": "Not applicable, but used to differentiate primary vs secondary failure."
+  },
+  {
+    "q": "Treatment for <b>Prolactinoma</b>?",
+    "a": "Dopamine agonists (Cabergoline, Bromocriptine)."
+  },
+  {
+    "q": "Relationship between Prolactin and GnRH?",
+    "a": "Prolactin inhibits GnRH secretion."
+  },
+  {
+    "q": "Most common cause of hypopituitarism in adults?",
+    "a": "Non-secreting pituitary adenoma (compression)."
+  },
+  {
+    "q": "Most common cause of hypopituitarism in children?",
+    "a": "Craniopharyngioma."
+  },
+  {
+    "q": "Origin of Craniopharyngioma?",
+    "a": "Rathke pouch remnants."
+  },
+  {
+    "q": "Classic imaging appearance of Craniopharyngioma?",
+    "a": "Calcified, cystic mass with \"machinery oil\" fluid."
+  },
+  {
+    "q": "Diagnosis for patient with hypercalcemia and low urinary calcium?",
+    "a": "Familial Hypocalciuric Hypercalcemia (FHH)."
+  },
+  {
+    "q": "Defect in FHH?",
+    "a": "Defective G-protein coupled calcium-sensing receptors (CaSR)."
+  },
+  {
+    "q": "Effect of 11-beta-hydroxylase deficiency?",
+    "a": "Hypertension (due to 11-deoxycorticosterone) and virilization."
+  },
+  {
+    "q": "Effect of 17-alpha-hydroxylase deficiency?",
+    "a": "Hypertension and primary amenorrhea (low sex hormones)."
+  },
+  {
+    "q": "Source of Aldosterone?",
+    "a": "Zona Glomerulosa."
+  },
+  {
+    "q": "Source of Cortisol?",
+    "a": "Zona Fasciculata."
+  },
+  {
+    "q": "Source of Androgens?",
+    "a": "Zona Reticularis."
+  },
+  {
+    "q": "Mnemonic for Adrenal layers (G-F-R)?",
+    "a": "Salt (Glomerulosa), Sugar (Fasciculata), Sex (Reticularis)."
+  },
+  {
+    "q": "Major side effect of Spironolactone in males?",
+    "a": "Gynecomastia."
+  },
+  {
+    "q": "Mechanism of Graves exophthalmos?",
+    "a": "Fibroblast proliferation and GAG deposition triggered by <b>TSH</b>-receptor antibodies."
+  },
+  {
+    "q": "Effect of pregnancy on Total T<sub>4</sub>?",
+    "a": "Increases due to increased Thyroid Binding Globulin (TBG)."
+  },
+  {
+    "q": "Best indicator of thyroid function status?",
+    "a": "<b>TSH</b> level."
+  },
+  {
+    "q": "Precursor of <b>ACTH</b> and MSH?",
+    "a": "Pro-opiomelanocortin (POMC)."
+  },
+  {
+    "q": "Histological appearance of Pituitary Adenoma?",
+    "a": "Monomorphism (cells look identical) and absence of a reticulin network."
+  },
+  {
+    "q": "Difference between Pituitary Adenoma and Hyperplasia?",
+    "a": "Adenomas lack reticulin; Hyperplasia preserves the reticulin framework."
+  },
+  {
+    "q": "Most common cause of Pituitary Apoplexy?",
+    "a": "Sudden hemorrhage into a pre-existing pituitary adenoma."
+  },
+  {
+    "q": "Classic presentation of Pituitary Apoplexy?",
+    "a": "Sudden \"thunderclap\" headache, visual loss, and cardiovascular collapse."
+  },
+  {
+    "q": "Most common location of ectopic <b>ACTH</b> production?",
+    "a": "Small cell carcinoma of the lung or bronchial carcinoids."
+  },
+  {
+    "q": "Distinction between Central and Nephrogenic <b>Diabetes Insipidus</b> via Desmopressin?",
+    "a": "Central DI responds to Desmopressin (urine osmolality increases); Nephrogenic does not.\n\nThyroid & Parathyroid Fine Points"
+  },
+  {
+    "q": "Mechanism of the \"Cold Nodule\" on thyroid scan?",
+    "a": "Area of thyroid that does not take up radioactive iodine; higher risk for malignancy."
+  },
+  {
+    "q": "Significance of the BRAF mutation in thyroid cancer?",
+    "a": "Strongly associated with <b>Papillary Thyroid Carcinoma</b> and poor prognosis."
+  },
+  {
+    "q": "Histological feature of <b>Graves Disease</b>?",
+    "a": "Tall, columnar follicular cells with \"scalloping\" of the colloid."
+  },
+  {
+    "q": "Cause of Goiter in Iodine Deficiency?",
+    "a": "Low T<sub>4</sub> leads to high <b>TSH</b>, which causes hypertrophy and hyperplasia of follicular cells."
+  },
+  {
+    "q": "Definition of Plummar Syndrome?",
+    "a": "Toxic Multinodular Goiter (hyperfunctioning nodules independent of <b>TSH</b>)."
+  },
+  {
+    "q": "Difference between Toxic Multinodular Goiter and Graves?",
+    "a": "Toxic MNG lacks exophthalmos and pretibial myxedema."
+  },
+  {
+    "q": "Most common cause of Hypocalcemia (overall)?",
+    "a": "Hypoalbuminemia (though \"true\" ionized calcium remains normal)."
+  },
+  {
+    "q": "Primary lab finding in Pseudohypoparathyroidism?",
+    "a": "High <b>PTH</b> but low Calcium (due to end-organ resistance to <b>PTH</b>)."
+  },
+  {
+    "q": "Genetic defect in Albright Hereditary Osteodystrophy?",
+    "a": "Defective Gs-protein alpha subunit (GNAS1 mutation)."
+  },
+  {
+    "q": "Physical phenotype of Albright Hereditary Osteodystrophy?",
+    "a": "Short stature and shortened 4th/5th metacarpals.\n\nAdrenal Cortex & Medulla Nuances"
+  },
+  {
+    "q": "Impact of chronic Ketoconazole use on the Adrenal gland?",
+    "a": "Inhibits desmolase/steroid synthesis, leading to adrenal insufficiency."
+  },
+  {
+    "q": "High-dose Dexamethasone suppression test: No suppression of <b>ACTH</b>/Cortisol?",
+    "a": "Suggests Ectopic <b>ACTH</b> production (e.g., Small Cell Lung Cancer)."
+  },
+  {
+    "q": "High-dose Dexamethasone suppression test: Suppression of Cortisol?",
+    "a": "Confirms <b>Cushing Disease</b> (Pituitary Adenoma)."
+  },
+  {
+    "q": "Cause of Primary Pigmented Nodular Adrenocortical Disease?",
+    "a": "Part of Carney Complex (PRKAR1A mutation)."
+  },
+  {
+    "q": "Spironolactone vs. Eplerenone in <b>Conn Syndrome</b>?",
+    "a": "Eplerenone is more selective and lacks the anti-androgenic side effects (gynecomastia)."
+  },
+  {
+    "q": "Diagnostic use of MIBG scan?",
+    "a": "Localization of extra-adrenal Pheochromocytomas (Paragangliomas)."
+  },
+  {
+    "q": "Pre-operative management of <b>Pheochromocytoma</b>?",
+    "a": "Alpha-blockade (Phenoxybenzamine) followed by Beta-blockade."
+  },
+  {
+    "q": "Why must Alpha-blockade precede Beta-blockade in <b>Pheochromocytoma</b>?",
+    "a": "To prevent hypertensive crisis from unopposed alpha-1 stimulation.\n\nDiabetes & Pancreatic Neuroendocrine Tumors"
+  },
+  {
+    "q": "Common HLA alleles for Type 1 DM?",
+    "a": "HLA-DR3 and HLA-DR4."
+  },
+  {
+    "q": "Histological finding in early Type 1 DM islets?",
+    "a": "Insulitis (lymphocytic infiltration)."
+  },
+  {
+    "q": "Pathogenesis of Non-enzymatic Glycosylation (NEG) in Diabetes?",
+    "a": "Glucose attaches to proteins, forming Advanced Glycation End-products (AGEs)."
+  },
+  {
+    "q": "Mechanism of Sorbitol damage in Diabetics?",
+    "a": "Glucose converted to Sorbitol via Aldose Reductase, causing osmotic swelling in Schwann cells and Lens."
+  },
+  {
+    "q": "Classic presentation of Glucagonoma?",
+    "a": "Necrolytic migratory erythema (rash), diabetes, and anemia."
+  },
+  {
+    "q": "Presentation of Somatostatinoma?",
+    "a": "Diabetes, steatorrhea, and gallstones (due to inhibition of CCK and insulin)."
+  },
+  {
+    "q": "Clinical syndrome of VIPoma?",
+    "a": "WDHA Syndrome: Watery Diarrhea, Hypokalemia, Achlorhydria.\n\nSystemic Endocrine & MEN Syndromes"
+  },
+  {
+    "q": "Definition of Carcinoid Syndrome?",
+    "a": "Flushing, diarrhea, and right-sided heart valve lesions."
+  },
+  {
+    "q": "Why are Carcinoid heart lesions only right-sided?",
+    "a": "Lung MAO (Monoamine Oxidase) metabolizes serotonin before it reaches the left heart."
+  },
+  {
+    "q": "Urinary marker for Carcinoid Syndrome?",
+    "a": "5-HIAA (5-hydroxyindoleacetic acid)."
+  },
+  {
+    "q": "Common trigger for Carcinoid Syndrome symptoms?",
+    "a": "Alcohol or emotional stress causing hormone release."
+  },
+  {
+    "q": "Association of \"Brown Tumors\"?",
+    "a": "Osteitis fibrosa cystica in Hyperparathyroidism."
+  },
+  {
+    "q": "Liddle Syndrome mimic?",
+    "a": "Hyperaldosteronism presentation but with low Aldosterone/Renin (gain of function of ENaC)."
+  },
+  {
+    "q": "Syndrome of Apparent Mineralocorticoid Excess (AME) cause?",
+    "a": "Deficiency of 11-beta-HSD2 (often from licorice), allowing Cortisol to activate Mineralocorticoid receptors."
+  },
+  {
+    "q": "Difference between <b>MEN 2A</b> and 2B?",
+    "a": "2A includes Hyperparathyroidism; 2B includes Mucosal Neuromas and Marfanoid habitus."
+  },
+  {
+    "q": "Common genetic screening for families of MEN 2 patients?",
+    "a": "Testing for RET proto-oncogene mutations."
+  },
+  {
+    "q": "Prophylactic treatment for RET mutation carriers in MEN 2?",
+    "a": "Prophylactic thyroidectomy (due to 100% risk of <b>Medullary Thyroid Carcinoma</b>)."
+  },
+  {
+    "q": "Histological characteristic of an Adrenal Adenoma?",
+    "a": "Well-circumscribed yellow mass with cells resembling the normal zona fasciculata."
+  },
+  {
+    "q": "Most common site of ectopic adrenal tissue?",
+    "a": "Along the path of gonadal descent (e.g., retroperitoneum, ovaries, testes)."
+  },
+  {
+    "q": "Histological appearance of Adrenocortical Carcinoma?",
+    "a": "Large, invasive mass with areas of necrosis, hemorrhage, and cystic change."
+  },
+  {
+    "q": "Distinction between Adrenal Adenoma and Carcinoma?",
+    "a": "Carcinomas are typically larger (>100g), show vascular invasion, and have higher mitotic rates."
+  },
+  {
+    "q": "Effect of 11-beta-hydroxylase deficiency on Renin levels?",
+    "a": "Low Renin (due to hypertension caused by 11-deoxycorticosterone)."
+  },
+  {
+    "q": "Underlying cause of Adrenal Crisis in Addison patients?",
+    "a": "Any form of acute stress (infection, trauma, surgery) that increases cortisol demand."
+  },
+  {
+    "q": "\"<b>Zellballen</b>\" pattern on histology is characteristic of?",
+    "a": "<b>Pheochromocytoma</b> (nests of cells surrounded by vascular stroma)."
+  },
+  {
+    "q": "Immunohistochemical stain positive in <b>Pheochromocytoma</b>?",
+    "a": "Chromogranin and Synaptophysin."
+  },
+  {
+    "q": "S100 stain utility in <b>Pheochromocytoma</b>?",
+    "a": "Highlights the sustenacular cells surrounding the <b>Zellballen</b> nests.\n\nThyroid & Parathyroid: Nuance & Morphology"
+  },
+  {
+    "q": "Definition of the \"Tall Cell Variant\" of Papillary Carcinoma?",
+    "a": "Aggressive variant with height of cells at least twice their width and abundant eosinophilic cytoplasm."
+  },
+  {
+    "q": "Significance of the RET/PTC rearrangement?",
+    "a": "Genetic driver commonly found in <b>Papillary Thyroid Carcinoma</b>."
+  },
+  {
+    "q": "Follicular Thyroid Carcinoma spread pattern?",
+    "a": "Hematogenous (unlike Papillary, which is primarily lymphatic)."
+  },
+  {
+    "q": "Pathogenesis of Secondary Hyperparathyroidism in Renal Failure?",
+    "a": "Hyperphosphatemia leads to Hypocalcemia, which chronically stimulates <b>PTH</b> secretion."
+  },
+  {
+    "q": "Tertiary Hyperparathyroidism definition?",
+    "a": "Autonomous <b>PTH</b> secretion following long-standing secondary hyperparathyroidism."
+  },
+  {
+    "q": "Major cause of \"Hungry Bone Syndrome\"?",
+    "a": "Sudden drop in <b>PTH</b> after parathyroidectomy, causing rapid calcium uptake by bones."
+  },
+  {
+    "q": "Result of <b>PTH</b> on Renal Phosphorus handling?",
+    "a": "Decreases phosphate reabsorption in the proximal convoluted tubule (Phosphate Trashing)."
+  },
+  {
+    "q": "Histology of Parathyroid Adenoma?",
+    "a": "Predominantly chief cells with a rim of normal parathyroid tissue and absence of stromal fat.\n\nPancreatic Islets & Neuroendocrine Nuances"
+  },
+  {
+    "q": "Relationship between Obesity and Insulin Resistance?",
+    "a": "Increased adipokines (e.g., Resistin) and free fatty acids interfere with insulin signaling."
+  },
+  {
+    "q": "Primary cause of Polyuria in Diabetes?",
+    "a": "Osmotic diuresis resulting from glucosuria."
+  },
+  {
+    "q": "Diagnostic threshold for HbA<sub>1c</sub> in <b>Diabetes Mellitus</b>?",
+    "a": "Greater than or equal to 6.5%."
+  },
+  {
+    "q": "Definition of \"Insular\" amyloidosis?",
+    "a": "Deposition of Amylin (IAPP) in the islets, characteristic of Type 2 DM."
+  },
+  {
+    "q": "Most common location of a Gastrinoma?",
+    "a": "The \"Gastrinoma Triangle\" (Duodenum, pancreas, and porta hepatis)."
+  },
+  {
+    "q": "Clinical finding in VIPoma (WDHA Syndrome)?",
+    "a": "Watery Diarrhea, Hypokalemia, and Achlorhydria.\n\nPituitary & Hypothalamic Specifics"
+  },
+  {
+    "q": "Hormone deficiency sequence in Progressive Hypopituitarism?",
+    "a": "GH is usually lost first, followed by LH/FSH, then <b>TSH</b> and <b>ACTH</b>."
+  },
+  {
+    "q": "Definition of Kallmann Syndrome?",
+    "a": "Hypogonadotropic hypogonadism with anosmia due to failure of GnRH neurons to migrate."
+  },
+  {
+    "q": "Effect of Craniopharyngioma on the Pituitary Stalk?",
+    "a": "Compression can cause Hyperprolactinemia (loss of dopamine inhibition)."
+  },
+  {
+    "q": "Histology of \"Adamantinomatous\" Craniopharyngioma?",
+    "a": "Squamous epithelium, \"wet\" keratin, and calcifications.\n\nIntegrated Endocrine & Rare Syndromes"
+  },
+  {
+    "q": "Definition of Autoimmune Polyendocrine Syndrome Type 1 (APS-1)?",
+    "a": "Triad of Hypoparathyroidism, Adrenal insufficiency, and Chronic Mucocutaneous Candidiasis."
+  },
+  {
+    "q": "Genetic defect in APS-1?",
+    "a": "Mutation in the AIRE (Autoimmune Regulator) gene."
+  },
+  {
+    "q": "Major endocrine risk in patients with Cowden Syndrome?",
+    "a": "Increased risk of Follicular Thyroid Carcinoma (PTEN mutation)."
+  },
+  {
+    "q": "McCune-Albright Syndrome endocrine manifestations?",
+    "a": "Precocious puberty, hyperthyroidism, and GH-secreting adenomas."
+  },
+  {
+    "q": "Physical triad of McCune-Albright Syndrome?",
+    "a": "Polyostotic fibrous dysplasia, Caf\u00e9-au-lait spots, and autonomous endocrine hyperfunction."
+  },
+  {
+    "q": "Metabolic cause of \"Thyroidization\" of the kidney?",
+    "a": "Chronic Pyelonephritis (islets of thyroid-like tissue in renal parenchyma; distinct from thyroid pathology)."
+  },
+  {
+    "q": "Difference between \"Primary\" and \"Secondary\" Hyperaldosteronism Renin levels?",
+    "a": "Primary has Low Renin; Secondary has High Renin."
+  },
+  {
+    "q": "Cause of Secondary Hyperaldosteronism?",
+    "a": "Decreased renal perfusion (e.g., Renal Artery Stenosis, Heart Failure).\n\nHigh-Yield Laboratory Interferences"
+  },
+  {
+    "q": "Effect of high Biotin intake on Thyroid Function Tests?",
+    "a": "Can falsely elevate T<sub>4</sub>/T<sub>3</sub> and falsely lower <b>TSH</b>."
+  },
+  {
+    "q": "Why is <b>C-peptide</b> useful in Hypoglycemia workup?",
+    "a": "Distinguishes endogenous insulin production (high <b>C-peptide</b>) from exogenous insulin injection (low <b>C-peptide</b>)."
+  },
+  {
+    "q": "Lab profile of Factitious Hyperthyroidism?",
+    "a": "Low <b>TSH</b>, High T<sub>4</sub>, and Low Thyroglobulin (due to exogenous ingestion)."
+  },
+  {
+    "q": "Most common cause of a \"Thyroid Storm\"?",
+    "a": "Acute stress (infection, surgery, or trauma) in a patient with pre-existing <b>Graves disease</b>."
+  },
+  {
+    "q": "Effect of Pregnancy on Total T<sub>4</sub> vs. Free T<sub>4</sub>?",
+    "a": "Total T<sub>4</sub> increases (due to high TBG), but Free T<sub>4</sub> remains normal (eustates)."
+  },
+  {
+    "q": "Significance of \"Cold\" vs \"Hot\" nodules on RAIU scan?",
+    "a": "Cold nodules are non-functional and more likely to be malignant; Hot nodules are functional and usually benign."
+  },
+  {
+    "q": "Histological feature of a Hurthle Cell?",
+    "a": "Large follicular cell with abundant, granular, eosinophilic cytoplasm and numerous mitochondria."
+  },
+  {
+    "q": "Condition where Hurthle Cells are most prominently seen?",
+    "a": "<b>Hashimoto Thyroiditis</b> and Hurthle Cell Adenoma/Carcinoma."
+  },
+  {
+    "q": "Most common location for an ectopic Parathyroid gland?",
+    "a": "Within the Thymus (due to shared origin from the 3rd pharyngeal pouch)."
+  },
+  {
+    "q": "Pathogenesis of Calciphylaxis?",
+    "a": "Systemic calcification of small vessels leading to skin necrosis, often seen in end-stage renal disease/secondary hyperparathyroidism."
+  },
+  {
+    "q": "Difference between Osteitis Fibrosa Cystica and Renal Osteodystrophy?",
+    "a": "Osteitis Fibrosa Cystica is specific to high <b>PTH</b>; Renal Osteodystrophy is the broader bone disease seen in chronic kidney failure.\n\nAdrenal & Pituitary: Advanced Diagnostics"
+  },
+  {
+    "q": "Mechanism of the Metyrapone stimulation test?",
+    "a": "Blocks 11-beta-hydroxylase; a normal response is an increase in <b>ACTH</b> and 11-deoxycortisol."
+  },
+  {
+    "q": "Utility of the Metyrapone test?",
+    "a": "To evaluate the integrity of the entire Hypothalamic-Pituitary-Adrenal (HPA) axis."
+  },
+  {
+    "q": "Histological finding in the pituitary of a patient with <b>Cushing Syndrome</b>?",
+    "a": "Crooke Hyaline Change (accumulation of intermediate filaments in <b>ACTH</b>-producing cells)."
+  },
+  {
+    "q": "Primary difference between Lymphocytic Hypophysitis and Pituitary Adenoma?",
+    "a": "Lymphocytic Hypophysitis is an autoimmune inflammation (often postpartum) that can mimic a mass on MRI."
+  },
+  {
+    "q": "Genetic mutation associated with <b>MEN 1</b>?",
+    "a": "Mutation in the MENIN tumor suppressor gene."
+  },
+  {
+    "q": "Most common pituitary tumor in <b>MEN 1</b>?",
+    "a": "<b>Prolactinoma</b>."
+  },
+  {
+    "q": "Relationship between Pituitary <b>Gigantism</b> and the Cardiovascular system?",
+    "a": "Often leads to heart failure due to concentric left ventricular hypertrophy and cardiomyopathy.\n\nMetabolic & Pancreatic: The \"Grey Zones\""
+  },
+  {
+    "q": "Mechanism of \"Amyloidosis\" in Type 2 Diabetes?",
+    "a": "Co-secretion of Islet Amyloid Polypeptide (Amylin) with insulin leads to its deposition in islets."
+  },
+  {
+    "q": "Distinction between Diabetic Ketoacidosis (<b>DKA</b>) and Hyperosmolar Hyperglycemic State (<b>HHS</b>)?",
+    "a": "<b>DKA</b> (Type 1) has ketones and acidosis; <b>HHS</b> (Type 2) has extreme dehydration and higher glucose (>600 mg/dL)."
+  },
+  {
+    "q": "Primary reason for the \"Dawn Phenomenon\" in Diabetics?",
+    "a": "Early morning rise in blood sugar due to the physiological surge of Growth Hormone and Cortisol."
+  },
+  {
+    "q": "Definition of the \"Somogyi Effect\"?",
+    "a": "Rebound hyperglycemia in the morning in response to an undiagnosed hypoglycemic episode during the night."
+  },
+  {
+    "q": "Diagnostic use of the Glucagon Stimulation Test?",
+    "a": "Used to diagnose <b>Pheochromocytoma</b> (triggers catecholamine release) or growth hormone deficiency."
+  },
+  {
+    "q": "Hormone responsible for the \"Incretin Effect\"?",
+    "a": "GLP-1 (Glucagon-like peptide-1) and GIP, which increase insulin secretion after oral glucose.\n\nNeuroendocrine & Rare Syndromes"
+  },
+  {
+    "q": "Definition of Paraganglioma?",
+    "a": "A tumor of the extra-adrenal sympathetic or parasympathetic ganglia (the \"extra-adrenal <b>pheochromocytoma</b>\")."
+  },
+  {
+    "q": "Most common location for a Paraganglioma?",
+    "a": "The Organ of Zuckerkandl (near the origin of the inferior mesenteric artery)."
+  },
+  {
+    "q": "Components of Carney Complex?",
+    "a": "Myxomas (heart/skin), hyperpigmentation (lentigines), and endocrine overactivity (adrenal/pituitary)."
+  },
+  {
+    "q": "Characteristic of Von Hippel-Lindau (VHL) syndrome in Endocrine?",
+    "a": "High risk for <b>Pheochromocytoma</b> (often bilateral)."
+  },
+  {
+    "q": "Difference in <b>Pheochromocytoma</b> risk between <b>MEN 2A</b> and 2B?",
+    "a": "The risk is roughly equal (~50%), but 2B presents with a more aggressive thyroid component."
+  },
+  {
+    "q": "Histological \"Salt and Pepper\" chromatin is a classic description of?",
+    "a": "Neuroendocrine tumors (e.g., Carcinoid, Pancreatic NETs, <b>Medullary Thyroid Carcinoma</b>)."
+  },
+  {
+    "q": "Most common hormone secreted by a Pancreatic Neuroendocrine Tumor (PanNET)?",
+    "a": "Insulin (Insulinoma)."
+  },
+  {
+    "q": "What is the \"Rule of 10s\" for Insulinomas?",
+    "a": "Unlike <b>Pheochromocytoma</b>, only 10% of Insulinomas are malignant (most are benign)."
+  },
+  {
+    "q": "Most common cause of death in patients with <b>Acromegaly</b>?",
+    "a": "Heart failure (due to dilated cardiomyopathy)."
+  },
+  {
+    "q": "Mechanism of hypercalcemia in Sarcoidosis?",
+    "a": "1-alpha-hydroxylase activity in granulomatous macrophages converts Vitamin D to its active form (1,25-OH)."
+  },
+  {
+    "q": "Histological appearance of the thyroid in Riedel Thyroiditis?",
+    "a": "Dense hyalinized fibrosis and a chronic inflammatory infiltrate."
+  },
+  {
+    "q": "Effect of chronic Lithium use on the thyroid?",
+    "a": "Inhibition of thyroid hormone release, commonly causing hypothyroidism."
+  },
+  {
+    "q": "Definition of the \"Pendred Syndrome\"?",
+    "a": "Genetic disorder causing sensorineural hearing loss and goiter due to iodine transport defects."
+  },
+  {
+    "q": "Primary difference in laboratory findings between 21-hydroxylase and 11-beta-hydroxylase deficiency?",
+    "a": "21-hydroxylase deficiency presents with hypotension; 11-beta-hydroxylase deficiency presents with hypertension."
+  },
+  {
+    "q": "Why does 17-alpha-hydroxylase deficiency cause hypertension?",
+    "a": "Accumulation of 11-deoxycorticosterone, which has mineralocorticoid activity."
+  },
+  {
+    "q": "Most common cause of primary adrenal insufficiency in children?",
+    "a": "Congenital Adrenal Hyperplasia (<b>CAH</b>)."
+  },
+  {
+    "q": "Distinguishing feature of an Adrenal Myelolipoma?",
+    "a": "A benign, non-functioning tumor composed of mature adipose tissue and hematopoietic elements.\n\nPediatric & Developmental Endocrine Pathology"
+  },
+  {
+    "q": "Presentation of a Lingual Thyroid?",
+    "a": "A mass at the base of the tongue; may be the only functional thyroid tissue present."
+  },
+  {
+    "q": "Most common cause of congenital hypothyroidism worldwide?",
+    "a": "Thyroid dysgenesis (aplasia, hypoplasia, or ectopic gland)."
+  },
+  {
+    "q": "Effect of maternal gestational diabetes on the newborn?",
+    "a": "Islet cell hyperplasia in the fetus leading to neonatal hypoglycemia after birth."
+  },
+  {
+    "q": "Classic cardiac defect associated with infants of diabetic mothers?",
+    "a": "Transposition of the Great Arteries or Hypertrophic Cardiomyopathy (septal hypertrophy)."
+  },
+  {
+    "q": "What is the \"Water-Clear Cell\" hyperplasia?",
+    "a": "A rare form of parathyroid hyperplasia where cells have abundant clear cytoplasm.\n\nFinishing Touches: \"Buzzword\" Review"
+  },
+  {
+    "q": "\"<b>Psammoma bodies</b>\" in the thyroid?",
+    "a": "<b>Papillary Thyroid Carcinoma</b>."
+  },
+  {
+    "q": "\"Amyloid stroma\" in the thyroid?",
+    "a": "<b>Medullary Thyroid Carcinoma</b>."
+  },
+  {
+    "q": "\"<b>Orphan Annie</b> Eye\" nuclei?",
+    "a": "<b>Papillary Thyroid Carcinoma</b>."
+  },
+  {
+    "q": "\"Rock-hard, fixed thyroid\"?",
+    "a": "Riedel Thyroiditis (or Anaplastic Carcinoma, but Riedel is the classic \"hard\" association)."
+  },
+  {
+    "q": "\"Pot-bellied, pale, puffy-faced infant with a protruding tongue\"?",
+    "a": "Cretinism (Congenital Hypothyroidism)."
+  },
+  {
+    "q": "\"Scalloped colloid\"?",
+    "a": "<b>Graves Disease</b>."
+  },
+  {
+    "q": "\"Hurthle cells and lymphoid follicles with germinal centers\"?",
+    "a": "<b>Hashimoto Thyroiditis</b>."
+  },
+  {
+    "q": "\"<b>Zellballen</b>\" nests?",
+    "a": "<b>Pheochromocytoma</b>."
+  },
+  {
+    "q": "\"<b>Homer-Wright Rosettes</b>\"?",
+    "a": "<b>Neuroblastoma</b>."
+  },
+  {
+    "q": "\"<b>Kimmelstiel-Wilson</b> nodules\"?",
+    "a": "Diabetic Nephropathy."
+  }
+]
