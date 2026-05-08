@@ -1,0 +1,1706 @@
+Front: Definition of Nephrotic Syndrome?
+
+Back: Massive proteinuria (> 3.5 g/day), hypoalbuminemia, edema, and hyperlipidemia.
+
+Front: Most common cause of Nephrotic Syndrome in children?
+
+Back: Minimal Change Disease (MCD).
+
+Front: Light microscopy finding in Minimal Change Disease?
+
+Back: Normal-appearing glomeruli.
+
+Front: Electron microscopy finding diagnostic for Minimal Change Disease?
+
+Back: Effacement (flattening) of podocyte foot processes.
+
+Front: First-line treatment for Minimal Change Disease?
+
+Back: Corticosteroids (Prednisone).
+
+Front: Most common cause of Nephrotic Syndrome in African Americans and Hispanics?
+
+Back: Focal Segmental Glomerulosclerosis (FSGS).
+
+Front: Secondary causes associated with FSGS?
+
+Back: HIV infection, sickle cell disease, and heroin abuse.
+
+Front: Key light microscopy finding in FSGS?
+
+Back: Segmental sclerosis and hyalinosis in some, but not all, glomeruli.
+
+Front: Characteristic EM finding in FSGS?
+
+Back: Diffuse effacement of foot processes (similar to MCD but with structural damage).
+
+Front: Nephrotic syndrome associated with HBV, HCV, and NSAIDs?
+
+Back: Membranous Nephropathy.
+
+Front: Pathognomonic "Spike and Dome" appearance on silver stain?
+
+Back: Membranous Nephropathy.
+
+Front: Immunofluorescence (IF) pattern for Membranous Nephropathy?
+
+Back: Granular IgG and C3 along the basement membrane.
+
+Front: Major autoantibody associated with primary Membranous Nephropathy?
+
+Back: Anti-phospholipase A2 receptor (PLA2R) antibody.
+
+Front: Defining clinical triad of Nephritic Syndrome?
+
+Back: Hypertension, hematuria (RBC casts), and mild-to-moderate proteinuria.
+
+Front: Classic presentation of Poststreptococcal Glomerulonephritis (PSGN)?
+
+Back: Tea-colored urine 2–3 weeks after a skin or throat infection.
+
+Front: "Lumpy-bumpy" granular IF pattern in PSGN?
+
+Back: Subepithelial deposits of IgG, IgM, and C3.
+
+Front: Electron microscopy hallmark of PSGN?
+
+Back: Large subepithelial "humps."
+
+Front: Most common cause of glomerulonephritis worldwide?
+
+Back: IgA Nephropathy (Berger Disease).
+
+Front: Clinical timing of IgA Nephropathy hematuria?
+
+Back: Occurs concurrently with or days after an upper respiratory infection.
+
+Front: Systemic vasculitis involving IgA deposits, purpura, and abdominal pain?
+
+Back: Henoch-Schönlein Purpura (HSP).
+
+Front: Histological finding in Rapidly Progressive Glomerulonephritis (RPGN)?
+
+Back: Crescents in Bowman’s space consisting of fibrin and macrophages.
+
+Front: Mechanism of Goodpasture Syndrome?
+
+Back: Type II hypersensitivity; antibodies against alpha-3 chain of Type IV collagen.
+
+Front: Linear IF pattern on glomerular basement membrane?
+
+Back: Goodpasture Syndrome.
+
+Front: Nephritic condition presenting with hemoptysis and hematuria?
+
+Back: Goodpasture Syndrome (or Granulomatosis with Polyangiitis).
+
+Front: Differentiation of Wegener’s (GPA) from Goodpasture?
+
+Back: GPA is c-ANCA positive and lacks linear GBM deposits (pauci-immune).
+
+Front: "Tram-track" appearance on Light Microscopy?
+
+Back: Membranoproliferative Glomerulonephritis (MPGN).
+
+Front: Association for MPGN Type I?
+
+Back: Hepatitis B and C infections.
+
+Front: Pathophysiology of MPGN Type II (Dense Deposit Disease)?
+
+Back: C3 nephritic factor stabilizes C3 convertase, leading to persistent complement activation.
+
+Front: Alport Syndrome inheritance and defect?
+
+Back: X-linked dominant; defect in Type IV collagen.
+
+Front: Clinical triad of Alport Syndrome?
+
+Back: Hereditary nephritis (hematuria), sensorineural deafness, and ocular disturbances.
+
+Front: "Basket-weave" appearance on EM?
+
+Back: Alport Syndrome.
+
+II. Tubulointerstitial and Vascular Diseases
+
+Front: Most common cause of Acute Kidney Injury (AKI) in hospitalized patients?
+
+Back: Acute Tubular Necrosis (ATN).
+
+Front: Three phases of Acute Tubular Necrosis?
+
+Back: Prodromal (initiation), Oliguric (maintenance), and Polyuric (recovery).
+
+Front: Pathognomonic urinary cast in ATN?
+
+Back: Granular "Muddy Brown" casts.
+
+Front: Key lab finding in ATN: FENA?
+
+Back: FENA > 2% (inability to reabsorb sodium).
+
+Front: Nephrotoxic agents causing ATN?
+
+Back: Aminoglycosides, radiocontrast dye, lead, and ethylene glycol.
+
+Front: Specific site of tubular injury in ischemic ATN?
+
+Back: Straight segment of proximal tubule and thick ascending limb of Henle.
+
+Front: "Eosinophils in urine" suggests which diagnosis?
+
+Back: Acute Interstitial Nephritis (AIN).
+
+Front: Common drug triggers for Acute Interstitial Nephritis?
+
+Back: Penicillins, NSAIDs, sulfonamides, and diuretics (The "P" drugs).
+
+Front: Classic triad of Acute Interstitial Nephritis?
+
+Back: Fever, rash, and eosinophilia.
+
+Front: Renal Papillary Necrosis is commonly seen in which patients?
+
+Back: Sickle cell disease/trait, Diabetes Mellitus, Chronic Analgesic use, and Pyelonephritis.
+
+Front: Gross appearance of the kidney in Chronic Pyelonephritis?
+
+Back: Coarse, asymmetric corticomedullary scarring and blunted calyces.
+
+Front: "Thyroidization" of the kidney on histology?
+
+Back: Chronic Pyelonephritis (tubules filled with eosinophilic casts resembling thyroid follicles).
+
+Front: Difference between Hyaline and Hyperplastic Arteriolosclerosis?
+
+Back: Hyaline is from chronic HTN/Diabetes; Hyperplastic ("onion skin") is from Malignant HTN.
+
+Front: Renal pathology associated with Diffuse Cortical Necrosis?
+
+Back: Obstetric catastrophes (e.g., abruptio placentae) and septic shock.
+
+III. Cystic and Congenital Diseases
+
+Front: Inheritance and age of onset for ADPKD?
+
+Back: Autosomal Dominant; presents in adulthood (30s–40s).
+
+Front: Gene mutations in ADPKD?
+
+Back: PKD1 (Chromosome 16) or PKD2 (Chromosome 4).
+
+Front: Common extra-renal complication of ADPKD?
+
+Back: Berry aneurysms (Subarachnoid hemorrhage) and hepatic cysts.
+
+Front: ARPKD association in infants?
+
+Back: Congenital hepatic fibrosis and Potter sequence.
+
+Front: Cause of Potter Sequence?
+
+Back: Oligohydramnios (due to renal agenesis or posterior urethral valves) leading to lung hypoplasia.
+
+Front: Most common cause of bladder outlet obstruction in male infants?
+
+Back: Posterior Urethral Valves.
+
+Front: Multicystic Dysplastic Kidney (MCDK) pathogenesis?
+
+Back: Abnormal interaction between ureteric bud and metanephric mesenchyme; non-inherited.
+
+Front: Medullary Sponge Kidney clinical risk?
+
+Back: Increased risk of calcium stones but usually maintains normal renal function.
+
+IV. Metabolic and Systemic Involvement
+
+Front: Earliest clinical sign of Diabetic Nephropathy?
+
+Back: Microalbuminuria.
+
+Front: Pathognomonic histological lesion in Diabetic Nephropathy?
+
+Back: Kimmelstiel-Wilson nodules (nodular glomerulosclerosis).
+
+Front: Effect of ACE inhibitors in Diabetic Nephropathy?
+
+Back: Dilates efferent arteriole to reduce intraglomerular pressure and slow progression.
+
+Front: Renal Amyloidosis stain and microscopy?
+
+Back: Congo Red stain; Apple-green birefringence under polarized light.
+
+Front: Most common kidney stone composition?
+
+Back: Calcium oxalate.
+
+Front: Appearance of Calcium Oxalate stones?
+
+Back: Envelope or dumbbell-shaped crystals.
+
+Front: Stone type associated with Proteus/Urease-positive infections?
+
+Back: Ammonium magnesium phosphate (Struvite) stones.
+
+Front: Classic shape of Struvite stones?
+
+Back: Coffin lid crystals; can form Staghorn calculi.
+
+Front: Hexagonal crystals in urine indicate?
+
+Back: Cystinuria (defect in COLA transporter).
+
+Front: Treatment for Uric Acid stones?
+
+Back: Alkalinization of urine and hydration.
+
+V. Neoplasia of the Urinary System
+
+Front: Most common primary renal malignancy in adults?
+
+Back: Renal Cell Carcinoma (RCC).
+
+Front: Origin of Renal Cell Carcinoma cells?
+
+Back: Proximal convoluted tubule cells.
+
+Front: Paraneoplastic syndromes associated with RCC?
+
+Back: EPO (polycythemia), Renin (HTN), PTHrP (hypercalcemia), and ACTH (Cushing).
+
+Front: Genetic association with Clear Cell RCC?
+
+Back: Loss of VHL gene on Chromosome 3.
+
+Front: Classic triad of RCC (only in 10% of cases)?
+
+Back: Hematuria, palpable mass, and flank pain.
+
+Front: Most common site of metastasis for RCC?
+
+Back: Lung (via hematogenous spread to the renal vein).
+
+Front: Wilms Tumor (Nephroblastoma) typical patient?
+
+Back: Child aged 2–4 years.
+
+Front: WAGR Syndrome components?
+
+Back: Wilms tumor, Aniridia, Genitourinary malformations, and Retardation.
+
+Front: Histology of Wilms Tumor?
+
+Back: Blastema, primitive tubules/glomeruli, and stromal cells (triphasic).
+
+Front: Most common tumor of the urinary collecting system?
+
+Back: Transitional Cell (Urothelial) Carcinoma.
+
+Front: Major risk factors for Urothelial Carcinoma?
+
+Back: Smoking, Aniline dyes, Phenacetin, and Cyclophosphamide (Pee SAC).
+
+Front: Classic presentation of Bladder Cancer?
+
+Back: Painless gross hematuria in an older patient.
+
+Front: Risk factor for Squamous Cell Carcinoma of the bladder?
+
+Back: Chronic irritation (Schistosoma haematobium, chronic stones, long-term catheters).
+
+VI. Clinical Pathology & Laboratory Correlation
+
+Front: Formula for Fractional Excretion of Sodium (FENA)?
+
+Back: $(U_{Na} \times P_{Cr}) / (P_{Na} \times U_{Cr}) \times 100$.
+
+Front: Meaning of FENA < 1%?
+
+Back: Prerenal azotemia (kidneys are conserving sodium).
+
+Front: Urine Osmolality in Prerenal Azotemia?
+
+Back: High (> 500 mOsm/kg) as the kidney concentrates urine to save volume.
+
+Front: BUN/Creatinine ratio in Prerenal Azotemia?
+
+Back: > 20:1 (Urea is reabsorbed with water; Creatinine is not).
+
+Front: Hyaline casts clinical significance?
+
+Back: Non-specific; seen in concentrated urine or dehydration.
+
+Front: WBC casts signify?
+
+Back: Pyelonephritis or Acute Interstitial Nephritis (Inflammation).
+
+Front: Fatty casts ("Maltese Cross") signify?
+
+Back: Nephrotic Syndrome.
+
+Front: Broad/Waxy casts signify?
+
+Back: End-stage renal disease/Chronic renal failure.
+
+Front: RBC casts signify?
+
+Back: Glomerulonephritis or Malignant HTN.
+
+VII. Electrolytes and Acid-Base (Renal Focus)
+
+Front: Type 1 Renal Tubular Acidosis (RTA) defect?
+
+Back: Inability of distal tubule to secrete $H^+$.
+
+Front: Urinary pH in Type 1 RTA?
+
+Back: High (> 5.5).
+
+Front: Type 2 RTA defect?
+
+Back: Inability of proximal tubule to reabsorb $HCO_3^-$.
+
+Front: Association for Type 2 RTA?
+
+Back: Fanconi Syndrome.
+
+Front: Type 4 RTA cause?
+
+Back: Hypoaldosteronism or aldosterone resistance; leads to hyperkalemia.
+
+Front: Renal response to metabolic acidosis?
+
+Back: Increased ammonia ($NH_3$) production to buffer $H^+$ as $NH_4^+$.
+
+VIII. Pharmacology of the Renal System
+
+Front: Mechanism of Acetazolamide?
+
+Back: Carbonic anhydrase inhibitor in the proximal convoluted tubule.
+
+Front: Main clinical use for Acetazolamide (non-renal)?
+
+Back: Glaucoma and altitude sickness.
+
+Front: Mechanism of Loop Diuretics (e.g., Furosemide)?
+
+Back: Inhibits $Na^+/K^+/2Cl^-$ cotransporter in the thick ascending limb.
+
+Front: Major side effect of Loop Diuretics on calcium?
+
+Back: Hypocalcemia ("Loops Lose calcium").
+
+Front: Mechanism of Thiazide Diuretics?
+
+Back: Inhibits $Na^+/Cl^-$ cotransporter in the distal convoluted tubule.
+
+Front: Effect of Thiazides on calcium?
+
+Back: Hypercalcemia (increases reabsorption).
+
+Front: Mechanism of Spironolactone?
+
+Back: Aldosterone receptor antagonist in the cortical collecting duct.
+
+Front: Life-threatening side effect of Potassium-sparing diuretics?
+
+Back: Hyperkalemia.
+
+IX. Pathology of the Lower Urinary Tract
+
+Front: Most common cause of UTI (Cystitis)?
+
+Back: E. coli.
+
+Front: Sterile pyuria (WBCs in urine with negative culture) suggests?
+
+Back: Chlamydia trachomatis or Neisseria gonorrhoeae.
+
+Front: Morphological hallmark of Malakoplakia?
+
+Back: Michaelis-Gutmann bodies (calcified siderotic bodies).
+
+Front: Urachal cyst/adenocarcinoma remnant?
+
+Back: Allantois.
+
+Front: Location of Urachal cancer?
+
+Back: Dome of the bladder.
+
+Front: Definition of Exstrophy of the bladder?
+
+Back: Failure of the abdominal wall to close, exposing the bladder.
+
+Front: Association of Bladder Exstrophy?
+
+Back: Increased risk of Adenocarcinoma.
+
+Front: Hallmark of Chronic Cystitis?
+
+Back: Brunn nests (inward growth of urothelium).
+
+Front: Cystitis Glandularis?
+
+Back: Transformation of Brunn nests into cuboidal or columnar epithelium.
+
+Front: Common cause of obstruction in elderly men?
+
+Back: Benign Prostatic Hyperplasia (BPH).
+
+Front: BPH vs Prostate Cancer location?
+
+Back: BPH occurs in the periurethral/transition zone; Cancer in the peripheral zone.
+
+Front: Histological finding in Interstitial Cystitis (Hunner Ulcer)?
+
+Back: Chronic inflammation and mast cells; negative cultures.
+
+Front: Emphysematous Cystitis is most common in?
+
+Back: Diabetic patients (due to gas-forming organisms like E. coli).
+
+Front: Xanthogranulomatous Pyelonephritis appearance?
+
+Back: Yellow-orange nodules; associated with Proteus and "foamy" macrophages.
+
+Front: Renal Infarction gross appearance?
+
+Back: Pale, wedge-shaped cortical infarct.
+
+Front: Fanconi Syndrome electrolyte losses?
+
+Back: Loss of glucose, amino acids, $HCO_3^-$, and $PO_4^{3-}$ in urine.
+
+Front: Bartter Syndrome mimicry?
+
+Back: Mimics chronic Loop Diuretic use (defect in thick ascending limb).
+
+Front: Gitelman Syndrome mimicry?
+
+Back: Mimics chronic Thiazide Diuretic use (defect in distal tubule).
+
+Front: Liddle Syndrome pathophysiology?
+
+Back: Gain-of-function mutation increasing ENaC activity (presents like hyperaldosteronism but low aldosterone).
+
+Front: Most common cause of "Wire Loop" glomerular lesions?
+
+Back: Lupus Nephritis (specifically Class IV: Diffuse Proliferative GN).
+
+Front: Immunofluorescence pattern in Lupus Nephritis?
+
+Back: "Full House" pattern (granular staining for IgG, IgA, IgM, C3, and C1q).
+
+Front: Components of the Glomerular Filtration Barrier?
+
+Back: Fenestrated endothelium, basement membrane (Type IV collagen/heparan sulfate), and podocyte foot processes.
+
+Front: Function of Heparan Sulfate in the GBM?
+
+Back: Provides a negative charge barrier to repel proteins like albumin.
+
+Front: Genetic defect in Finnish-type Congenital Nephrotic Syndrome?
+
+Back: Mutation in the NPHS1 gene encoding Nephrin.
+
+Front: Pathogenesis of Dense Deposit Disease (MPGN Type II)?
+
+Back: Autoantibody (C3 Nephritic Factor) stabilizes C3 convertase, leading to hypocomplementemia.
+
+Front: Primary location of IgA deposits in Berger Disease?
+
+Back: Mesangium.
+
+Front: What defines "Rapidly Progressive" Glomerulonephritis?
+
+Back: Loss of renal function >50% within weeks to months, histologically characterized by crescents.
+
+Front: Major cytokine responsible for mesangial cell proliferation?
+
+Back: PDGF (Platelet-Derived Growth Factor).
+
+Front: Primary composition of the "crescents" in RPGN?
+
+Back: Fibrin, plasma proteins, and parietal epithelial cells (macrophages).
+
+XI. Renal Vascular & Ischemic Pathology
+
+Front: Pathogenesis of Hemolytic Uremic Syndrome (HUS)?
+
+Back: Shiga-like toxin (E. coli O157:H7) damages endothelium, causing microthrombi and mechanical hemolysis.
+
+Front: Clinical pentad of Thrombotic Thrombocytopenic Purpura (TTP)?
+
+Back: Fever, Microangiopathic Hemolytic Anemia, Thrombocytopenia, Neurological symptoms, and Renal failure.
+
+Front: Enzyme deficiency in TTP?
+
+Back: ADAMTS13 (vWF-cleaving protease).
+
+Front: "Flea-bitten" kidney appearance (gross) indicates?
+
+Back: Malignant Hypertension or Hyperplastic Arteriolosclerosis.
+
+Front: Typical cause of Renal Artery Stenosis in elderly men?
+
+Back: Atherosclerosis.
+
+Front: Typical cause of Renal Artery Stenosis in young women?
+
+Back: Fibromuscular Dysplasia ("string of beads" appearance on imaging).
+
+Front: Effect of Renal Artery Stenosis on the affected kidney size?
+
+Back: Atrophy due to chronic ischemia.
+
+Front: Effect of Renal Artery Stenosis on the unaffected kidney?
+
+Back: Hyaline arteriolosclerosis due to exposure to high systemic blood pressure.
+
+Front: Most common cause of Renal Vein Thrombosis?
+
+Back: Nephrotic Syndrome (loss of Antithrombin III in urine).
+
+Front: Classic presentation of Renal Vein Thrombosis in males?
+
+Back: Left-sided varicocele (left gonadal vein drains into left renal vein).
+
+XII. Tubular, Interstitial & Metabolic Fine Details
+
+Front: Fanconi Syndrome occurs in which part of the nephron?
+
+Back: Proximal Convoluted Tubule.
+
+Front: Hartnup Disease clinical presentation?
+
+Back: Pellagra-like symptoms (dermatitis, diarrhea, dementia) due to urinary loss of Tryptophan.
+
+Front: Major cause of Secondary Hyperparathyroidism in Chronic Kidney Disease?
+
+Back: Phosphate retention and decreased 1,25-dihydroxyvitamin D (Calcitriol).
+
+Front: Mechanism of "Renal Osteodystrophy"?
+
+Back: Hypocalcemia and hyperphosphatemia lead to increased PTH, causing bone resorption.
+
+Front: Most common type of metabolic alkalosis seen with diuretics?
+
+Back: Contraction alkalosis (volume depletion leading to RAAS activation and $H^+$ secretion).
+
+Front: Mechanism of Ethylene Glycol renal toxicity?
+
+Back: Metabolized to Oxalic Acid, causing ATN and Calcium Oxalate crystals.
+
+Front: Histological finding in Acute Biliary Nephrosis (Cholemic Nephrosis)?
+
+Back: Greenish-yellow bile pigment casts in tubules.
+
+Front: What are "Bence-Jones" proteins?
+
+Back: Immunoglobulin light chains found in the urine of Multiple Myeloma patients.
+
+Front: Appearance of Myeloma Kidney on histology?
+
+Back: Hard, eosinophilic, "fractured" intratubular casts with giant cell reaction.
+
+Front: Common cause of renal stones in patients with Crohn’s disease?
+
+Back: Increased oxalate absorption in the gut (hyperoxaluria).
+
+XIII. Congenital, Cystic & Structural Anomalies
+
+Front: Horseshoe Kidney is trapped under which artery during ascent?
+
+Back: Inferior Mesenteric Artery (IMA).
+
+Front: Horseshoe Kidney increases the risk of which cancer?
+
+Back: Renal Pelvis Transitional Cell Carcinoma.
+
+Front: Renal Agenesis (Bilateral) leads to what amniotic fluid volume?
+
+Back: Oligohydramnios.
+
+Front: Potter Sequence face appearance?
+
+Back: Flattened nose, recessed chin, and low-set ears.
+
+Front: Difference between Simple Cysts and RCC on CT?
+
+Back: Simple cysts are smooth-walled, fluid-filled, and do not enhance with contrast.
+
+Front: Acquired Cystic Disease of the Kidney is associated with?
+
+Back: Long-term Dialysis (increased risk of RCC).
+
+Front: Medullary Cystic Disease (Nephronophthisis) vs. Medullary Sponge Kidney?
+
+Back: Nephronophthisis leads to renal failure and shrunken kidneys; Sponge Kidney is benign.
+
+Front: Autosomal Dominant Tubulointerstitial Kidney Disease (ADTKD) symptom?
+
+Back: Hyperuricemia and early-onset gout.
+
+XIV. Further Neoplasia & Urologic Pathology
+
+Front: Angiomyolipoma is a classic renal finding in which systemic disease?
+
+Back: Tuberous Sclerosis.
+
+Front: Components of an Angiomyolipoma?
+
+Back: Blood vessels, smooth muscle, and adipose tissue.
+
+Front: Oncocytoma gross appearance?
+
+Back: Tan/Mahogany brown with a well-circumscribed central stellate scar.
+
+Front: Ultrastructural hallmark of Oncocytoma?
+
+Back: Cells packed with numerous mitochondria.
+
+Front: Clear Cell RCC arises from which specific tubule?
+
+Back: Proximal Tubule.
+
+Front: Chromophobe RCC arises from which cells?
+
+Back: Intercalated cells of the Collecting Duct.
+
+Front: Most common benign tumor of the bladder?
+
+Back: Inverted Papilloma.
+
+Front: Typical location of Urothelial Carcinoma "in situ"?
+
+Back: Flat lesion of malignant cells within the basement membrane; high risk of progression.
+
+Front: Primary difference between Stage and Grade in Bladder Cancer?
+
+Back: Stage (depth of invasion into the muscle) is the most important prognostic factor.
+
+Front: Gene mutation associated with Fibroepithelial polyp?
+
+Back: None typically, but it is the most common benign mass of the ureter in children.
+
+XV. Practical Lab & Imaging Correlation
+
+Front: "Muddy brown" casts vs. Hyaline casts?
+
+Back: Muddy brown = ATN; Hyaline = Normal/Dehydration.
+
+Front: Presence of "Glitter Cells" in urine indicates?
+
+Back: Pyelonephritis (neutrophils with Brownian motion).
+
+Front: Urine pH in Uric Acid stones?
+
+Back: Acidic (pH < 5.5).
+
+Front: Best imaging modality to visualize kidney stones?
+
+Back: Non-contrast CT scan.
+
+Front: Significance of "Esmarch’s" sign or high urinary Nitrites?
+
+Back: Presence of Gram-negative bacteria (e.g., E. coli, Proteus, Klebsiella).
+
+Front: Why are Nitrites negative in some UTIs?
+
+Back: Some organisms (Enterococcus, S. saprophyticus) do not reduce nitrate to nitrite.
+
+Front: What does "Telescoped Sediment" mean?
+
+Back: A urine sediment showing features of Nephritic, Nephrotic, and Chronic syndromes simultaneously (seen in SLE).
+
+Front: Formula for Serum Osmolality?
+
+Back: $2[Na^+] + \text{Glucose}/18 + \text{BUN}/2.8$.
+
+Front: Immunofluorescence pattern in Henoch-Schönlein Purpura (HSP)?
+
+Back: Granular IgA deposits in the mesangium (identical to IgA Nephropathy).
+
+Front: The "Three D's" of Dense Deposit Disease?
+
+Back: Dense deposits, Decreased C3, and Drusen (retinal deposits).
+
+Front: Most common cause of "Pauci-immune" Glomerulonephritis?
+
+Back: ANCA-associated vasculitides (GPA, MPA, or EGPA).
+
+Front: Target antigen in Goodpasture Syndrome?
+
+Back: Non-collagenous domain of the alpha-3 chain of Type IV Collagen.
+
+Front: Significance of C1q deposits in a "Full House" IF pattern?
+
+Back: Highly suggestive of Systemic Lupus Erythematosus (SLE) involvement.
+
+Front: Gene mutation in Von Hippel-Lindau (VHL) disease?
+
+Back: VHL gene on Chromosome 3p.
+
+Front: Retinal finding associated with VHL disease?
+
+Back: Hemangioblastoma.
+
+Front: Major renal complication of Tuberous Sclerosis?
+
+Back: Bilateral Renal Angiomyolipomas.
+
+XVII. Advanced Renal Physiology & Lab Interpretation
+
+Front: Primary site of Magnesium reabsorption in the nephron?
+
+Back: Thick Ascending Limb of the Loop of Henle (paracellularly).
+
+Front: Effect of PTH on the Proximal Tubule?
+
+Back: Inhibits $Na^+/PO_4^{3-}$ cotransport, leading to phosphaturia.
+
+Front: Effect of PTH on the Distal Tubule?
+
+Back: Stimulates $Ca^{2+}/Na^+$ exchange, increasing calcium reabsorption.
+
+Front: How does Glucose cause osmotic diuresis in Diabetes?
+
+Back: Filtered load exceeds the $T_m$ (transport maximum) of the PCT, keeping water in the tubule.
+
+Front: Urea recycling occurs in which part of the nephron?
+
+Back: Collecting Ducts (stimulated by ADH).
+
+Front: What is "Winter’s Formula" used for?
+
+Back: To calculate the expected respiratory compensation ($pCO_2$) in metabolic acidosis.
+
+Front: Winter’s Formula?
+
+Back: $pCO_2 = 1.5 \times [HCO_3^-] + 8 \pm 2$.
+
+Front: Definition of "Renal Clearance"?
+
+Back: Volume of plasma from which a substance is completely removed per unit time.
+
+XVIII. Toxicology & Drug-Induced Pathology
+
+Front: Renal side effect of Amphotericin B?
+
+Back: Distal Renal Tubular Acidosis (Type 1) and nephrogenic diabetes insipidus.
+
+Front: Renal side effect of Lithium?
+
+Back: Nephrogenic Diabetes Insipidus (antagonizes ADH at the collecting duct).
+
+Front: Mechanism of Cisplatin-induced kidney injury?
+
+Back: Direct tubular toxicity (ATN), often prevented with Amifostine and saline diuresis.
+
+Front: How do NSAIDs cause "Analgesic Nephropathy"?
+
+Back: Inhibition of Prostaglandins leads to afferent arteriole vasoconstriction and papillary necrosis.
+
+Front: Renal complication of high-dose Acyclovir?
+
+Back: Obstructive crystalline nephropathy (crystal precipitation in tubules).
+
+Front: Class of diuretics that causes "Ototoxicity"?
+
+Back: Loop Diuretics (e.g., Furosemide, Ethacrynic acid).
+
+Front: Why is Ethacrynic acid used instead of Furosemide?
+
+Back: It is not a sulfonamide; used in patients with sulfa allergies.
+
+XIX. Urological Conditions & Miscellaneous
+
+Front: Most common location for a "Ureteropelvic Junction" (UPJ) obstruction?
+
+Back: The junction between the renal pelvis and the ureter.
+
+Front: Classic presentation of a UPJ obstruction in a neonate?
+
+Back: Palpable flank mass; most common cause of neonatal hydronephrosis.
+
+Front: Pathogenesis of Retroperitoneal Fibrosis (Ormond Disease)?
+
+Back: Proliferation of fibrous tissue (often IgG4-related) compressing the ureters.
+
+Front: Renal finding in "Nutcracker Syndrome"?
+
+Back: Compression of the left renal vein between the SMA and Aorta; causes hematuria and flank pain.
+
+Front: Most common malignant tumor of the ureter?
+
+Back: Urothelial (Transitional Cell) Carcinoma.
+
+Front: Defining feature of Malakoplakia?
+
+Back: Chronic inflammatory reaction with soft, yellow mucosal plaques (Michaelis-Gutmann bodies).
+
+Front: Risk factor for primary Renal Lymphoma?
+
+Back: Usually occurs in the setting of systemic Non-Hodgkin Lymphoma.
+
+Front: Mechanism of "Overflow Incontinence"?
+
+Back: Impaired detrusor contractility or bladder outlet obstruction (bladder never fully empties).
+
+Front: Mechanism of "Stress Incontinence"?
+
+Back: Urethral hypermobility or sphincter weakness (leakage with coughing/sneezing).
+
+XX. Final "Quick Fire" High-Yields
+
+Front: "Phrygian cap" refers to?
+
+Back: A gallbladder anomaly (not renal, but often confused in abdominal imaging cards).
+
+Front: "Miley-tous" appearance of the kidney surface?
+
+Back: Benign Nephrosclerosis (from chronic hypertension).
+
+Front: Gold standard for diagnosing Renal Artery Stenosis?
+
+Back: Renal Arteriography.
+
+Front: Most common cause of death in ADPKD?
+
+Back: Cardiovascular disease or complications of Chronic Kidney Disease (CKD).
+
+Front: Primary renal cell type that senses $Cl^-$ concentration?
+
+Back: Macula Densa cells.
+
+Front: Effect of ANP on the afferent arteriole?
+
+Back: Vasodilation (increases GFR).
+
+Front: Effect of ANP on the efferent arteriole?
+
+Back: Vasoconstriction (increases GFR).
+
+Front: Classic hormone elevated in Choriocarcinoma/Testicular tumors that can cause hyperthyroidism?
+
+Back: hCG (shares an alpha-subunit with TSH).
+
+Front: Most common type of renal stone in children?
+
+Back: Calcium oxalate (just like adults), but always screen for metabolic defects.
+
+Front: Type of amyloidosis seen in long-term hemodialysis?
+
+Back: $\beta_2$-microglobulin amyloidosis.
+
+Front: Most common glomerulopathy associated with Malignancy (Solid Tumors)?
+
+Back: Membranous Nephropathy.
+
+Front: Glomerulopathy associated with Hodgkin Lymphoma?
+
+Back: Minimal Change Disease.
+
+Front: Pathogenesis of "Linear" IF in Goodpasture Syndrome?
+
+Back: Anti-GBM antibodies bind evenly to the Type IV collagen of the basement membrane.
+
+Front: Define "Pauci-immune" in the context of GN?
+
+Back: Glomerulonephritis with minimal to no immunoglobulin or complement deposits on IF.
+
+Front: Microscopic Polyangiitis (MPA) vs. Granulomatosis with Polyangiitis (GPA) renal findings?
+
+Back: Both cause pauci-immune RPGN; GPA involves granulomatous inflammation and c-ANCA, while MPA lacks granulomas and is p-ANCA positive.
+
+Front: Primary location of "Subendothelial" deposits in MPGN Type I?
+
+Back: Between the endothelial cell and the basement membrane.
+
+Front: Morphological feature of "Wire Loop" lesions in SLE?
+
+Back: Massive subendothelial immune complex deposits.
+
+Front: Fibrillary Glomerulonephritis pathology?
+
+Back: Congo Red-negative extracellular fibrils (larger than amyloid fibrils) in the mesangium.
+
+XXII. Extended Tubulointerstitial & Obstructive Pathology
+
+Front: Definition of "Hydronephrosis"?
+
+Back: Dilation of the renal pelvis and calyces due to obstruction of urine outflow.
+
+Front: Common causes of acquired bilateral hydronephrosis?
+
+Back: BPH, bladder tumors, and retroperitoneal fibrosis.
+
+Front: Renal Papillary Necrosis (RPN) mnemonic "SAAD"?
+
+Back: Sickle cell, Acute pyelonephritis, Analgesics (NSAIDs), and Diabetes.
+
+Front: Mechanism of "Urate Nephropathy" in Tumor Lysis Syndrome?
+
+Back: Precipitation of uric acid crystals in the acidic environment of the distal tubules/collecting ducts.
+
+Front: Prevention of Urate Nephropathy during chemotherapy?
+
+Back: Allopurinol or Rasburicase and aggressive hydration.
+
+Front: Major electrolyte abnormality in "Fanconi Syndrome"?
+
+Back: Type 2 (proximal) RTA leading to metabolic acidosis, hypophosphatemia, and hypokalemia.
+
+XXIII. Genetic & Molecular Drivers in Renal Tumors
+
+Front: Gene involved in Papillary Renal Cell Carcinoma?
+
+Back: MET proto-oncogene.
+
+Front: Distinction between Birt-Hogg-Dubé syndrome and RCC?
+
+Back: Genetic syndrome involving skin tumors, lung cysts, and Chromophobe RCC.
+
+Front: Denys-Drash Syndrome triad?
+
+Back: Wilms tumor, male pseudohermaphroditism, and early-onset renal failure (diffuse mesangial sclerosis).
+
+Front: Beckwith-Wiedemann Syndrome clinical features?
+
+Back: Wilms tumor, macroglossia, organomegaly, and hemihyperplasia (WT2 gene).
+
+Front: Distinction between Sporadic and Hereditary RCC?
+
+Back: Sporadic is typically single/unilateral in older adults; Hereditary is often multiple/bilateral in younger patients.
+
+XXIV. Lower Urinary Tract & Bladder Pathology
+
+Front: Pathogenesis of Malakoplakia?
+
+Back: Defective phagocytosis by macrophages leading to the accumulation of partially digested bacteria (Michaelis-Gutmann bodies).
+
+Front: Most common location for "Ectopic Ureter" in females?
+
+Back: Vestibule or vagina (bypasses the sphincter, leading to constant dribbling).
+
+Front: Predominant cell type in a "Urachal Adenocarcinoma"?
+
+Back: Glandular cells (resembling colonic mucosa) at the bladder dome.
+
+Front: Distinction between "Cystitis Cystica" and "Cystitis Glandularis"?
+
+Back: Both involve Brunn nests; Cystica has cystic spaces, Glandularis has intestinal-type goblet cells.
+
+Front: Typical risk factor for Squamous Cell Carcinoma of the Bladder in the Middle East?
+
+Back: Chronic Schistosomiasis (Schistosoma haematobium).
+
+XXV. Renal Pharmacology & Acid-Base Integration
+
+Front: Primary acid-base disturbance in Aspirin (Salicylate) overdose?
+
+Back: Mixed Respiratory Alkalosis and Anion Gap Metabolic Acidosis.
+
+Front: Diuretic used to treat idiopathic hypercalciuria (stone prevention)?
+
+Back: Thiazides (they increase distal $Ca^{2+}$ reabsorption).
+
+Front: Effect of Loop Diuretics on Magnesium?
+
+Back: Hypomagnesemia (disrupts the positive lumen potential needed for paracellular reabsorption).
+
+Front: Mechanism of Mannitol?
+
+Back: Osmotic diuretic that increases tubular fluid osmolarity, primarily in the PCT and descending limb of Henle.
+
+Front: Contraindication for Mannitol use?
+
+Back: Congestive Heart Failure and Pulmonary Edema (causes initial volume expansion).
+
+Front: Primary renal mechanism for compensating for Respiratory Acidosis?
+
+Back: Increased $HCO_3^-$ reabsorption and increased $H^+$ secretion (via $NH_4^+$ excretion).
+
+Front: Lab definition of "Azotemia"?
+
+Back: Elevation of BUN and Creatinine levels without clinical symptoms.
+
+Front: Lab definition of "Uremia"?
+
+Back: Azotemia accompanied by clinical symptoms (e.g., pericarditis, asterixis, encephalopathy).
+
+XXVI. Microscopic "Buzzwords" for Pathology
+
+Front: Buzzword: "Subepithelial Humps"?
+
+Back: Post-Streptococcal Glomerulonephritis (PSGN).
+
+Front: Buzzword: "Subendothelial Deposits"?
+
+Back: MPGN Type I or Lupus Nephritis.
+
+Front: Buzzword: "Intramembranous Deposits"?
+
+Back: MPGN Type II (Dense Deposit Disease).
+
+Front: Buzzword: "Linear IgG"?
+
+Back: Goodpasture Syndrome.
+
+Front: Buzzword: "Granular IgG/C3"?
+
+Back: PSGN or Membranous Nephropathy.
+
+Front: Buzzword: "Mesangial IgA"?
+
+Back: Berger Disease or Henoch-Schönlein Purpura.
+
+Front: Buzzword: "Orphan Annie Eye" nuclei in the kidney?
+
+Back: Not standard—usually Thyroid, but can be seen in some variants of Papillary RCC (rarely tested, stick to Thyroid).
+
+Front: Buzzword: "Eosinophilic granular cytoplasm" in a well-circumscribed renal mass?
+
+Back: Renal Oncocytoma.
+
+
+Front: Definition of Hyperacute Transplant Rejection?
+
+Back: Occurs within minutes; mediated by pre-formed antibodies (Type II hypersensitivity) causing thrombosis.
+
+Front: Most common cause of Hyperacute Rejection?
+
+Back: ABO blood group incompatibility or anti-HLA antibodies.
+
+Front: Hallmark of Acute Cellular Rejection?
+
+Back: Endothelialitis or interstitial infiltration by T-cells (Type IV hypersensitivity).
+
+Front: Histological finding in Chronic Transplant Rejection?
+
+Back: Intimal thickening (vascular fibrosis) and interstitial fibrosis with tubular atrophy.
+
+Front: Viral infection frequently causing graft failure in renal transplants?
+
+Back: BK Polyomavirus.
+
+Front: Diagnostic histological finding for BK Virus nephropathy?
+
+Back: Intranuclear viral inclusions in tubular epithelial cells.
+
+XXVIII. Pregnancy and the Kidney
+
+Front: Normal physiological change in GFR during pregnancy?
+
+Back: GFR increases by approximately 50% due to increased plasma volume.
+
+Front: Definition of Preeclampsia?
+
+Back: New-onset hypertension (>140/90) and proteinuria (or end-organ dysfunction) after 20 weeks gestation.
+
+Front: Pathognomonic renal lesion in Preeclampsia?
+
+Back: Glomerular Endotheliosis (swelling of endothelial cells obliterating capillary lumens).
+
+Front: Significance of HELLP syndrome in renal context?
+
+Back: Hemolysis, Elevated Liver enzymes, and Low Platelets; high risk for Acute Kidney Injury and DIC.
+
+XXIX. Advanced Acid-Base & Electrolyte Pathophysiology
+
+Front: Formula for the Anion Gap?
+
+Back: $Na^+ - (Cl^- + HCO_3^-)$.
+
+Front: Normal range for the Serum Anion Gap?
+
+Back: 8 to 12 mEq/L.
+
+Front: Mnemonic for High Anion Gap Metabolic Acidosis (HAGMA)?
+
+Back: MUDPILES (Methanol, Uremia, DKA, Propylene glycol, Iron/INH, Lactic acidosis, Ethylene glycol, Salicylates).
+
+Front: Calculation for the Urinary Anion Gap?
+
+Back: $Na^+ + K^+ - Cl^-$.
+
+Front: Significance of a negative Urinary Anion Gap in NAGMA?
+
+Back: Suggests the kidney is appropriately excreting $NH_4Cl$ (e.g., diarrhea).
+
+Front: Significance of a positive Urinary Anion Gap in NAGMA?
+
+Back: Suggests a renal defect in $H^+$ excretion (e.g., Renal Tubular Acidosis).
+
+Front: Primary renal compensation for Chronic Respiratory Alkalosis?
+
+Back: Decreased $HCO_3^-$ reabsorption in the proximal tubule.
+
+XXX. Specialized Morphology & Molecular Markers
+
+Front: Staining method to identify the basement membrane "spikes" in Membranous Nephropathy?
+
+Back: Jones Silver Stain.
+
+Front: Difference between "Primary" and "Secondary" FSGS?
+
+Back: Primary is podocyte injury (effacement); Secondary is due to reduced nephron mass and hyperfiltration.
+
+Front: Major ultrastructural difference between MCD and FSGS?
+
+Back: MCD shows diffuse foot process effacement; FSGS shows effacement plus focal detachment of podocytes from the GBM.
+
+Front: Characterize "Collapsing Glomerulopathy"?
+
+Back: A severe variant of FSGS typically associated with HIV or APOL1 high-risk genotypes.
+
+Front: Function of the "Mesangial Cell"?
+
+Back: Contractile cell that provides structural support and regulates GFR surface area.
+
+XXXI. Clinical Syndromes & Manifestations
+
+Front: Definition of "Fractional Excretion of Urea" (FEUrea)?
+
+Back: Used instead of FENA when the patient is on diuretics; <35% suggests prerenal etiology.
+
+Front: Relationship between GFR and Serum Creatinine?
+
+Back: Non-linear/Inversely proportional; a doubling of Creatinine represents a ~50% loss of GFR.
+
+Front: Most common electrolyte cause of Nephrogenic Diabetes Insipidus?
+
+Back: Hypercalcemia or Hypokalemia.
+
+Front: Clinical finding of "Asterixis" in a renal patient indicates?
+
+Back: Uremic Encephalopathy (an urgent indication for dialysis).
+
+Front: The "AEIOU" indications for urgent Dialysis?
+
+Back: Acidosis, Electrolytes (Hyperkalemia), Ingestions (Toxins), Overload (Volume), and Uremia.
+
+XXXII. Final "Mastery" Cards
+
+Front: Distinction between "Isolated Hematuria" and "Nephritic Syndrome"?
+
+Back: Isolated hematuria (e.g., IgA, Thin Basement Membrane) lacks HTN, edema, or impaired GFR.
+
+Front: Thin Basement Membrane Disease (Benign Familial Hematuria) cause?
+
+Back: Mutation in Type IV Collagen (alpha-3 or alpha-4 chains), but milder than Alport.
+
+Front: Common renal complication of Sarcoidosis?
+
+Back: Hypercalciuria and Hypercalcemia (due to 1-alpha-hydroxylase activity in granulomas).
+
+Front: Mechanism of "Salt-Wasting" in Medullary Cystic Kidney Disease?
+
+Back: Inability of damaged distal tubules to reabsorb sodium, leading to polyuria and hypotension.
+
+Front: Renal cell type responsible for EPO (Erythropoietin) production?
+
+Back: Interstitial cells in the peritubular capillary bed of the renal cortex.
+
+Front: Most common use for the "PAS (Periodic Acid-Schiff)" stain in renal pathology?
+
+Back: Highlighting the Basement Membrane and mesangial matrix (stains glycogen and mucopolysaccharides).
+
+Front: Histological appearance of "Fibrinoid Necrosis" in the kidney?
+
+Back: Smudgy, bright pink (eosinophilic) areas in the vessel wall, typically seen in Malignant HTN or Vasculitis.
+
+Front: What does "Mesangial Matrix Expansion" look like on Light Microscopy?
+
+Back: Increased pink material between glomerular capillaries, seen in Diabetes and Amyloidosis.
+
+Front: Significance of "Extracapillary Proliferation"?
+
+Back: Synonym for Crescent formation in RPGN.
+
+Front: Appearance of "Subepithelial Deposits" on EM?
+
+Back: Electron-dense deposits located between the visceral epithelial cell (podocyte) and the GBM.
+
+XXXIV. Pediatric & Developmental Renal Pathology
+
+Front: Most common cause of "Multicystic Dysplastic Kidney" (MCDK)?
+
+Back: Atresia of the ureteric bud during development.
+
+Front: Is Multicystic Dysplastic Kidney (MCDK) usually unilateral or bilateral?
+
+Back: Usually unilateral; bilateral is incompatible with life.
+
+Front: Clinical finding in "Ureterocele"?
+
+Back: Cystic dilation of the terminal ureter, often presenting with a "cobra head" sign on imaging.
+
+Front: Define "Prune Belly Syndrome" (Eagle-Barrett)?
+
+Back: Triad of abdominal muscle deficiency, undescended testes, and urinary tract anomalies (e.g., megaureter).
+
+Front: Pathogenesis of "Megaureter"?
+
+Back: Aperistaltic distal ureteral segment causing functional obstruction and dilation.
+
+XXXV. Advanced Renal Vascular Physiology-Pathology
+
+Front: Mechanism of "Pressure Natriuresis"?
+
+Back: Increase in sodium excretion by the kidney in response to an elevated arterial pressure.
+
+Front: Define "Autoregulation" of GFR?
+
+Back: The ability of the kidney to maintain constant GFR between Mean Arterial Pressures of 80–180 mmHg.
+
+Front: Myogenic mechanism of GFR regulation?
+
+Back: Afferent arteriole constricts in response to high stretch (increased pressure) to protect the glomerulus.
+
+Front: Tubuloglomerular Feedback (TGF) mechanism?
+
+Back: Macula densa senses high $NaCl$ → releases adenosine → constricts afferent arteriole to decrease GFR.
+
+Front: Primary renal site of "Dopamine" synthesis?
+
+Back: Proximal tubule cells.
+
+Front: Effect of low-dose Dopamine on renal blood flow?
+
+Back: Dilates interlobular arteries and afferent/efferent arterioles, increasing RBF.
+
+XXXVI. Metabolic and Rare Systemic States
+
+Front: Renal manifestation of "Fabry Disease"?
+
+Back: Accumulation of Gb3 in podocytes (appears as "Zebra bodies" on EM), leading to ESRD.
+
+Front: Typical urinary finding in "Alkaptonuria"?
+
+Back: Urine turns black when left standing (Homogentisic acid oxidation).
+
+Front: Renal pathology in "Cystinosis"?
+
+Back: Accumulation of cystine crystals in lysosomes, leading to PCT damage and Fanconi Syndrome.
+
+Front: Distinction between "Primary Hyperoxaluria" and "Enteric Hyperoxaluria"?
+
+Back: Primary is a liver enzyme defect; Enteric is due to increased fat malabsorption (e.g., Crohn's) binding calcium and leaving oxalate free for absorption.
+
+XXXVII. Integrated Pharmacology Fine Print
+
+Front: Class of drugs that can cause "Retroperitoneal Fibrosis"?
+
+Back: Ergot alkaloids (e.g., Methysergide) and certain Beta-blockers.
+
+Front: Renal effect of "Cyclosporine" toxicity?
+
+Back: Potent vasoconstriction of afferent arterioles leading to chronic interstitial fibrosis.
+
+Front: Difference in mechanism between "Conivaptan" and "Furosemide"?
+
+Back: Conivaptan is a V2-receptor antagonist (aquaretic); Furosemide is a natriuretic.
+
+Front: Effect of "Spironolactone" on the heart in CKD?
+
+Back: Reduces cardiac fibrosis but carries a high risk of life-threatening hyperkalemia.
+
+Front: Mechanism of "Sevelamer"?
+
+Back: Non-absorbable phosphate binder used in CKD to prevent hyperphosphatemia.
+
+XXXVIII. Final "Red Flag" Clinical Findings
+
+Front: Presence of "Pneumaturia" (air in urine) suggests?
+
+Back: Vesicocolic fistula (often from Diverticulitis) or emphysematous cystitis.
+
+Front: "Hard" prostate on DRE with elevated PSA and "Blastic" bone lesions?
+
+Back: Metastatic Prostate Adenocarcinoma.
+
+Front: "Soft" boggy prostate with exquisite tenderness and fever?
+
+Back: Acute Prostatitis (usually E. coli).
+
+Front: Definition of "Microscopic Hematuria"?
+
+Back: >3 RBCs per high-power field in a settled urine sediment.
+
+Front: Key difference between "Primary" and "Secondary" Hyperaldosteronism?
+
+Back: Primary has low Renin (Conn’s); Secondary has high Renin (e.g., Renal Artery Stenosis).
+
+Front: Most common renal manifestation of Systemic Sclerosis (Scleroderma)?
+
+Back: Scleroderma Renal Crisis (abrupt malignant hypertension and oligo-anuric AKI).
+
+Front: Histological hallmark of Scleroderma Renal Crisis?
+
+Back: "Onion-skin" hyperplastic arteriolosclerosis and thrombotic microangiopathy.
+
+Front: Mechanism of "Churg-Strauss" (EGPA) renal involvement?
+
+Back: Necrotizing glomerulonephritis (pauci-immune) associated with asthma and peripheral eosinophilia.
+
+Front: Difference in ANCA specificity for GPA vs. MPA?
+
+Back: GPA is typically PR3-ANCA (c-ANCA); MPA is typically MPO-ANCA (p-ANCA).
+
+Front: Target of the autoantibody in Anti-GBM Disease?
+
+Back: The NC1 domain of the alpha-3 chain of Type IV Collagen.
+
+XL. Rare Syndromes and Hereditary Conditions
+
+Front: Gitelman Syndrome vs. Bartter Syndrome: Primary difference in urinary calcium?
+
+Back: Gitelman has hypocalciuria; Bartter has hypercalciuria (or normal).
+
+Front: Clinical features of "Liddle Syndrome"?
+
+Back: Early-onset hypertension, hypokalemia, and metabolic alkalosis with low renin and low aldosterone.
+
+Front: Treatment for Liddle Syndrome?
+
+Back: Amiloride or Triamterene (to block the overactive ENaC channels).
+
+Front: Genetic defect in "Syndrome of Apparent Mineralocorticoid Excess" (SAME)?
+
+Back: Deficiency of 11$\beta$-HSD2 enzyme, allowing cortisol to activate mineralocorticoid receptors.
+
+Front: Substance in black licorice that mimics "SAME"?
+
+Back: Glycyrrhetinic acid (inhibits 11$\beta$-HSD2).
+
+XLI. Advanced Tubular & Interstitial Fine Print
+
+Front: Renal "Tylosis" (thickening) is associated with which rare condition?
+
+Back: Howel-Evans Syndrome (also associated with esophageal cancer).
+
+Front: Most common cause of "Granulomatous Interstitial Nephritis"?
+
+Back: Sarcoidosis or Tuberculosis.
+
+Front: What are "Balkan Endemic Nephropathy" risks?
+
+Back: Aristolochic acid exposure; leads to interstitial fibrosis and high risk of Urothelial Carcinoma.
+
+Front: Mechanism of "Lead Nephropathy"?
+
+Back: Chronic tubulointerstitial nephritis and "saturnine gout" due to reduced urate excretion.
+
+Front: Diagnostic finding in Lead poisoning histology?
+
+Back: Eosinophilic intranuclear inclusion bodies in proximal tubule cells.
+
+XLII. Complex Electrolyte & Acid-Base Scenarios
+
+Front: Definition of "Type 3 RTA"?
+
+Back: A rare combination of Type 1 and Type 2 RTA (usually due to Carbonic Anhydrase II deficiency).
+
+Front: Renal response to "Hypokalemia"?
+
+Back: $K^+$ is reabsorbed in exchange for $H^+$ in the alpha-intercalated cells, potentially causing metabolic alkalosis.
+
+Front: What is the "Osmolar Gap" in renal toxicology?
+
+Back: Measured Osmolality minus Calculated Osmolality; >10 suggests presence of unmeasured toxins (e.g., Ethanol, Ethylene Glycol).
+
+Front: Effect of Hypermagnesemia on the kidney?
+
+Back: Acts as a calcium-channel blocker; inhibits PTH release and can lead to hypocalcemia.
+
+XLIII. Final Neoplasia and Surgical Pathology
+
+Front: Difference between "Cystic Nephroma" and "Multilocular Cystic RCC"?
+
+Back: Cystic Nephroma is benign; Multilocular Cystic RCC is a low-malignant-potential tumor.
+
+Front: Defining feature of "Medullary Thyroid Carcinoma" in MEN 2A/2B?
+
+Back: Not renal, but often associated with Pheochromocytoma, which causes secondary renal hypertension.
+
+Front: Most common site for a "Ureteral Calculi" to lodge?
+
+Back: The Ureterovesical Junction (UVJ).
+
+Front: Hallmark of "Xanthogranulomatous Pyelonephritis" on CT?
+
+Back: "Bear Paw Sign" (dilated calyces mimicking a paw print).
+
+Front: Characteristic IHC marker for Renal Cell Carcinoma?
+
+Back: PAX8 (positive in most renal and thyroid tumors).
+
+Front: Appearance of "Hobnail Cells" in the kidney?
+
+Back: Suggestive of Collecting Duct Carcinoma or Clear Cell Adenocarcinoma of the urinary tract.
+
+XLIV. Wrap-Up High-Yield Facts
+
+Front: Normal value for the "Albumin-to-Creatinine Ratio" (ACR)?
+
+Back: < 30 mg/g.
+
+Front: Definition of "Macroscopic Proteinuria"?
+
+Back: > 300 mg/day.
+
+Front: Common renal side effect of "VEGF Inhibitors" (e.g., Bevacizumab)?
+
+Back: Hypertension and Thrombotic Microangiopathy (TMA).
+
+Front: Distinction between "Ureteritis Cystica" and "Cystitis Cystica"?
+
+Back: Location; Ureteritis Cystica occurs in the ureter, often due to chronic inflammation/stones.
+
+Front: Primary nerve responsible for bladder contraction?
+
+Back: Pelvic Splanchnic Nerves (Parasympathetic S2-S4).
+
+Front: Definition of "Pseudohypoaldosteronism Type I"?
+
+Back: Genetic resistance to aldosterone; presents with salt-wasting, hyperkalemia, and high renin/aldosterone.
+
+Front: Difference between "Primary" and "Secondary" Pseudohypoaldosteronism?
+
+Back: Primary is a genetic receptor defect; Secondary is often due to urinary tract obstruction or infection in infants.
+
+Front: Genetic defect in "Gitelman Syndrome"?
+
+Back: Mutation in the $SLC12A3$ gene encoding the $Na^+-Cl^-$ cotransporter in the distal tubule.
+
+Front: Typical urinary $Ca^{2+}$ finding in Bartter Syndrome?
+
+Back: Hypercalciuria (leads to nephrocalcinosis).
+
+Front: Major electrolyte risk when rapidly correcting Hyponatremia?
+
+Back: Osmotic Demyelination Syndrome (Central Pontine Myelinolysis).
+
+Front: Major electrolyte risk when rapidly correcting Hypernatremia?
+
+Back: Cerebral Edema.
+
+XLVI. Advanced Vascular & Ischemic Pathology
+
+Front: Pathophysiology of "Atheroembolic Renal Disease"?
+
+Back: Cholesterol crystals break off from the aorta (often after catheterization) and lodge in small renal arteries.
+
+Front: Pathognomonic histological finding in Atheroembolic Renal Disease?
+
+Back: Biconvex, needle-shaped "cholesterol clefts" within the arterial lumen.
+
+Front: Classic "triad" of physical findings in Atheroembolic Disease?
+
+Back: Livedo reticularis, eosinophilia, and acute/subacute renal failure.
+
+Front: Definition of "Abdominal Compartment Syndrome" in renal failure?
+
+Back: Intra-abdominal pressure > 20 mmHg causing extrinsic compression of renal veins and decreased GFR.
+
+XLVII. Pregnancy-Related Renal Physiology
+
+Front: What happens to Serum Creatinine levels in normal pregnancy?
+
+Back: They decrease (typical range 0.4–0.8 mg/dL) due to increased GFR.
+
+Front: Cause of "Acute Fatty Liver of Pregnancy" (AFLP) renal involvement?
+
+Back: Microvesicular steatosis can lead to hepatorenal-like syndrome and AKI.
+
+Front: Primary risk factor for "Renal Cortical Necrosis"?
+
+Back: Massive obstetric hemorrhage or abruptio placentae causing vasospasm and DIC.
+
+XLVIII. Clinical Signs and Physical Exam Correlation
+
+Front: Meaning of a "Positive Lloyd's Sign"?
+
+Back: Costovertebral angle tenderness (CVAT), indicative of pyelonephritis or renal calculi.
+
+Front: Cause of "Bruit" heard over the renal arteries?
+
+Back: Turbulent blood flow due to Renal Artery Stenosis.
+
+Front: Significance of "Palpable Kidneys" in a neonate?
+
+Back: Often represents Multicystic Dysplastic Kidney or ARPKD.
+
+XLIX. Specialized Diagnostic Tests
+
+Front: What is the "Water Deprivation Test" used for?
+
+Back: Distinguishing between Central Diabetes Insipidus, Nephrogenic DI, and Primary Polydipsia.
+
+Front: Result of Water Deprivation Test in Primary Polydipsia?
+
+Back: Increase in urine osmolality (> 800 mOsm/kg) after water restriction alone.
+
+Front: Response to Desmopressin (dDAVP) in Central Diabetes Insipidus?
+
+Back: Significant increase in urine osmolality (> 50% increase).
+
+Front: Response to Desmopressin (dDAVP) in Nephrogenic Diabetes Insipidus?
+
+Back: No or minimal change in urine osmolality.
+
+L. Final Comprehensive Summary Cards
+
+Front: Mnemonic for the causes of Renal Papillary Necrosis?
+
+Back: POSTCARDS: Pyelonephritis, Obstruction, Sickle cell, Tuberculosis, Cirrhosis, Analgesics, Renal vein thrombosis, Diabetes, Systemic vasculitis.
+
+Front: Difference between "Hypertrophy" and "Hyperplasia" in the remaining kidney after a nephrectomy?
+
+Back: The remaining kidney undergoes compensatory hypertrophy (increase in cell size) to increase GFR.
+
+Front: Most common location of "Vesicoureteral Reflux" (VUR) damage?
+
+Back: The poles of the kidney (superior and inferior), where compound papillae allow retrograde flow.
+
+Front: Key clinical distinction between "Cystitis" and "Pyelonephritis"?
+
+Back: Pyelonephritis presents with systemic symptoms (fever, chills) and CVAT; Cystitis is localized to the bladder.
+
+Front: Effect of "Hypomagnesemia" on Potassium?
+
+Back: Makes hypokalemia refractory to treatment; Mg is required as a cofactor to inhibit ROMK channels (potassium secretion).
+
+Front: Part of the nephron where the most water and sodium are reabsorbed?
+
+Back: Proximal Convoluted Tubule (~65%).
+
+Front: Mechanism of sodium reabsorption in the Thick Ascending Limb?
+
+Back: $Na^+/K^+/2Cl^-$ cotransporter (NKCC2).
+
+Front: Driving force for paracellular Calcium and Magnesium reabsorption in the Loop of Henle?
+
+Back: The lumen-positive potential created by $K^+$ back-leak through ROMK channels.
+
+Front: Primary site of Action for Antidiuretic Hormone (ADH)?
+
+Back: V2 receptors on the Principal cells of the Collecting Duct.
+
+Front: Effect of ADH on Aquaporin-2?
+
+Back: Triggers insertion of Aquaporin-2 channels into the apical membrane to increase water permeability.
+
+Front: Electrolyte hallmark of "Fanconi-Bickel Syndrome"?
+
+Back: Proximal tubular dysfunction combined with glycogen storage issues (GLUT2 mutation).
+
+LII. Rare Deposition & Systemic Renal Pathology
+
+Front: Renal pathology seen in "Light Chain Deposition Disease" (LCDD)?
+
+Back: Nodular glomerulosclerosis (resembling Kimmelstiel-Wilson) but Congo Red negative.
+
+Front: What is "Cryoglobulinemic Glomerulonephritis"?
+
+Back: A Type II or III MPGN-like pattern often associated with Hepatitis C.
+
+Front: Characteristic EM finding in Cryoglobulinemic GN?
+
+Back: Subendothelial deposits with "curvilinear" or "fingerprint" patterns.
+
+Front: Type of amyloidosis associated with chronic inflammatory diseases (e.g., RA, IBD)?
+
+Back: AA Amyloid (Serum Amyloid A).
+
+Front: Location of "Medullary Nephrocalcinosis" on imaging?
+
+Back: Calcium deposits within the renal pyramids.
+
+LIII. Microbiology & Infections of the Urinary Tract
+
+Front: Primary virulence factor for Uropathogenic E. coli (UPEC)?
+
+Back: P-fripriae (allow adherence to urothelium).
+
+Front: Organism associated with "Struvite" stones that produces a "swarming" pattern on agar?
+
+Back: Proteus mirabilis.
+
+Front: Most common cause of fungal UTI in catheterized or diabetic patients?
+
+Back: Candida albicans.
+
+Front: Classic renal complication of "Secondary Syphilis"?
+
+Back: Membranous Nephropathy.
+
+Front: Effect of "Schistosoma haematobium" on bladder cytology?
+
+Back: Causes squamous metaplasia leading to Squamous Cell Carcinoma.
+
+LIV. Advanced Clinical Indices & Formulas
+
+Front: Mnemonic for "High Anion Gap" Metabolic Acidosis?
+
+Back: GOLD MARK (Glycols, Oxoproline, L-lactate, D-lactate, Methanol, Aspirin, Renal failure, Ketoacidosis).
+
+Front: What does "FENA > 2%" indicate?
+
+Back: Intrinsic renal damage (e.g., ATN) where the kidney cannot reabsorb sodium.
+
+Front: Formula for "Creatinine Clearance" ($C_{Cr}$)?
+
+Back: $C = (U \times V) / P$ (Urine concentration $\times$ Urine flow rate / Plasma concentration).
+
+Front: Relationship between Serum Potassium and $pH$?
+
+Back: Acidosis leads to hyperkalemia (intercellular exchange of $H^+$ for $K^+$).
+
+LV. Urothelial & Scrotal-Renal Links
+
+Front: Significance of "Hydrocele" in a patient with a renal mass?
+
+Back: Can indicate lymphatic obstruction or a reactive process to a nearby tumor.
+
+Front: Most common location for "Ectopic Ureteral" insertion in males?
+
+Back: Prostatic urethra or seminal vesicles.
+
+Front: Definition of "Vesicoureteral Reflux" (VUR) Grade V?
+
+Back: Severe dilation and tortuosity of the ureter with significant blunting of calyces.
+
+Front: Primary risk factor for "Transitional Cell Carcinoma" of the renal pelvis?
+
+Back: Smoking and exposure to phenacetin.
+
+LVI. Final High-Yield Integration
+
+Front: Difference between "Primary" and "Secondary" Hyperoxaluria?
+
+Back: Primary is a liver enzyme defect (glyoxylate metabolism); Secondary is usually dietary or malabsorption.
+
+Front: Most common renal side effect of "Gold salts" or "Penicillamine"?
+
+Back: Membranous Nephropathy.
+
+Front: What is the "White Line of Toldt"?
+
+Back: A surgical landmark for reflecting the colon to access the kidney (useful for surgery/anatomy-pathology crossover).
+
+Front: Cause of "Toxemic" (Preeclamptic) renal changes?
+
+Back: Placental ischemia leads to the release of sFlt-1, which neutralizes VEGF, damaging glomerular endothelium.
+
+Front: Effect of "Hypokalemia" on the EKG?
+
+Back: U-waves and flattened T-waves.
+
+Front: Effect of "Hyperkalemia" on the EKG?
+
+Back: Peaked T-waves, widened QRS, and loss of P-waves.
