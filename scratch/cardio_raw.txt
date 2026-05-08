@@ -1,0 +1,871 @@
+Front: Embryologic origin of the ascending aorta and pulmonary trunk?
+
+Back: Truncus arteriosus.
+
+Front: Embryologic origin of the smooth parts (outflow tracts) of the left and right ventricles?
+
+Back: Bulbus cordis.
+
+Front: Adult remnant of the ductus arteriosus?
+
+Back: Ligamentum arteriosum.
+
+Front: Structure that divides the atrium into right and left halves?
+
+Back: Septum primum and septum secundum.
+
+Front: Most common site of a Ventricular Septal Defect (VSD)?
+
+Back: Membranous septum.
+
+Front: Vessel that carries oxygenated blood from the placenta to the fetus?
+
+Back: Umbilical vein.
+
+Front: Fetal shunt that allows blood to bypass the liver?
+
+Back: Ductus venosus.
+
+Front: Fetal shunt that allows blood to bypass the lungs by entering the left atrium?
+
+Back: Foramen ovale.
+
+Front: Mechanism of Foramen Ovale closure at birth?
+
+Back: Increased left atrial pressure pushes septum primum against septum secundum.
+
+Front: Artery that usually supplies the SA and AV nodes?
+
+Back: Right Coronary Artery (RCA).
+
+Front: Coronary artery that determines "cardiac dominance"?
+
+Back: Posterior Descending Artery (PDA).
+
+Part 2: Physiology & Hemodynamics
+
+Front: Definition of Cardiac Output (CO)?
+
+Back: Stroke Volume × Heart Rate.
+
+Front: Formula for Mean Arterial Pressure (MAP)?
+
+Back: $2/3 \text{ Diastolic Pressure} + 1/3 \text{ Systolic Pressure}$.
+
+Front: Variable representing the "stretch" on the heart before contraction?
+
+Back: Preload.
+
+Front: Effect of Nitroglycerin on preload and afterload?
+
+Back: Primarily decreases preload via venodilation.
+
+Front: The Frank-Starling Law relationship?
+
+Back: Increased end-diastolic volume leads to increased stroke volume.
+
+Front: Primary factor determining resistance in Poiseuille’s Law?
+
+Back: Vessel radius (to the 4th power).
+
+Front: Effect of Sympathetic stimulation on the Starling curve?
+
+Back: Shifts the curve upward and to the left (increased contractility).
+
+Front: Phase 0 of the ventricular action potential?
+
+Back: Rapid depolarization via voltage-gated $Na^+$ channels.
+
+Front: Phase 2 (plateau) of the ventricular action potential?
+
+Back: Influx of $Ca^{2+}$ balanced by efflux of $K^+$.
+
+Front: Unique ion current responsible for the SA node "pacemaker" potential?
+
+Back: $I_f$ (funny current) sodium channels.
+
+Front: Normal PR interval duration?
+
+Back: 120 to 200 milliseconds.
+
+Front: Effect of carotid sinus massage on the heart?
+
+Back: Increases baroreceptor firing, increasing vagal tone to slow the HR.
+
+Part 3: Pathology - Valvular & Structural
+
+Front: Classic triad of Aortic Stenosis symptoms?
+
+Back: Syncope, Angina, and Dyspnea (SAD).
+
+Front: Murmur description for Aortic Stenosis?
+
+Back: Crescendo-decrescendo systolic ejection murmur.
+
+Front: Murmur associated with Mitral Regurgitation?
+
+Back: Holosystolic, high-pitched "blowing" murmur at the apex.
+
+Front: Most common cause of Mitral Stenosis?
+
+Back: Chronic Rheumatic Heart Disease.
+
+Front: Murmur associated with an Atrial Septal Defect (ASD)?
+
+Back: Mid-systolic murmur with a wide, fixed split S2.
+
+Front: Physical exam finding in Coarctation of the Aorta?
+
+Back: Brachial-femoral pulse delay and rib notching on X-ray.
+
+Front: Four components of Tetralogy of Fallot?
+
+Back: Pulmonary stenosis, RVH, Overriding aorta, VSD.
+
+Front: Pathognomonic histological finding in Rheumatic Heart Disease?
+
+Back: Aschoff bodies (containing Anitschkow cells).
+
+Part 4: Ischemic Heart Disease & Heart Failure
+
+Front: Definition of Unstable Angina?
+
+Back: Angina at rest or increasing in frequency/severity without enzyme elevation.
+
+Front: EKG finding in Prinzmetal (variant) angina?
+
+Back: Transient ST-segment elevation.
+
+Front: Gold standard biomarker for myocardial infarction (MI)?
+
+Back: Cardiac Troponin I or T.
+
+Front: MI biomarker that returns to normal first (useful for re-infarction)?
+
+Back: CK-MB.
+
+Front: Most common cause of death in the first 24 hours post-MI?
+
+Back: Arrhythmia (usually Ventricular Fibrillation).
+
+Front: Timing of free wall rupture or papillary muscle rupture post-MI?
+
+Back: 3 to 14 days.
+
+Front: Name of the friction rub-associated pericarditis occurring weeks after an MI?
+
+Back: Dressler Syndrome (Autoimmune).
+
+Front: Definition of Heart Failure with Preserved Ejection Fraction (HFpEF)?
+
+Back: Diastolic dysfunction (impaired filling) with EF $\geq$ 50%.
+
+Front: Key compensatory mechanism in Chronic Heart Failure?
+
+Back: Activation of the Renin-Angiotensin-Aldosterone System (RAAS).
+
+Front: Interpretation of an elevated B-type Natriuretic Peptide (BNP)?
+
+Back: Indicates ventricular wall stretch/volume overload.
+
+Part 5: Cardiomyopathies & Inflammatory Disease
+
+Front: Most common cause of Dilated Cardiomyopathy?
+
+Back: Idiopathic (or Alcohol, Beriberi, Coxsackie B, Chagas).
+
+Front: Inheritance pattern of Hypertrophic Obstructive Cardiomyopathy (HOCM)?
+
+Back: Autosomal Dominant (Sarcomere protein mutations).
+
+Front: Beck's Triad for Cardiac Tamponade?
+
+Back: Hypotension, Distended neck veins, Muffled heart sounds.
+
+Front: Classic EKG finding in Cardiac Tamponade?
+
+Back: Electrical alternans.
+
+Front: Kussmaul sign?
+
+Back: Increase in JVP on inspiration (seen in constrictive pericarditis).
+
+Front: Most common organism in Subacute Bacterial Endocarditis?
+
+Back: Viridans group streptococci.
+
+Front: Most common organism in Acute Endocarditis (IV drug users)?
+
+Back: Staphylococcus aureus.
+
+Front: Physical signs of infective endocarditis on the hands/eyes?
+
+Back: Osler nodes, Janeway lesions, and Roth spots.
+
+Part 6: Vascular & Hypertension
+
+Front: Definition of Hypertensive Emergency?
+
+Back: BP >180/120 mmHg with evidence of end-organ damage.
+
+Front: Characteristic of Monckeberg Sclerosis?
+
+Back: Medial calcific sclerosis that does not obstruct blood flow.
+
+Front: Histological appearance of malignant hypertension in vessels?
+
+Back: Hyperplastic arteriolosclerosis ("onion skinning").
+
+Front: Classic presentation of Aortic Dissection?
+
+Back: Sudden onset "tearing" chest pain radiating to the back.
+
+Front: Most important risk factor for Aortic Dissection?
+
+Back: Hypertension.
+
+Front: Giant Cell Arteritis is associated with which systemic condition?
+
+Back: Polymyalgia Rheumatica.
+
+Front: Classic triad of Wegener’s (Granulomatosis with Polyangiitis)?
+
+Back: Nasopharynx, Lung, and Kidney involvement.
+
+Front: Vascular disease associated with "String of Beads" on angiography?
+
+Back: Fibromuscular Dysplasia.
+
+Part 7: Pharmacology
+
+Front: Mechanism of action of Statins?
+
+Back: HMG-CoA reductase inhibitors.
+
+Front: Side effects of ACE Inhibitors?
+
+Back: Cough, Angioedema, Hyperkalemia (CATCH).
+
+Front: Preferred drug for hypertensive emergency in pregnancy?
+
+Back: Hydralazine or Labetalol.
+
+Front: Mechanism of Class I Antiarrhythmics?
+
+Back: Sodium ($Na^+$) channel blockers.
+
+Front: Mechanism of Class III Antiarrhythmics (e.g., Amiodarone)?
+
+Back: Potassium ($K^+$) channel blockers (prolong repolarization).
+
+Front: Common side effect of Dihydropyridine Calcium Channel Blockers (e.g., Amlodipine)?
+
+Back: Peripheral edema.
+
+Front: Reversal agent for Heparin?
+
+Back: Protamine sulfate.
+
+Front: Reversal agent for Warfarin?
+
+Back: Vitamin K (delayed) or Fresh Frozen Plasma (rapid).
+
+Front: Clinical use of Digoxin?
+
+Back: Heart failure and Atrial Fibrillation (slows AV conduction).
+
+Front: Characteristic EKG change of Digoxin toxicity?
+
+Back: "Scooped" ST segments.
+
+Front: Drug of choice for paroxysmal supraventricular tachycardia (PSVT)?
+
+Back: Adenosine.
+
+Part 8: Clinical Skills & Diagnostics
+
+Front: Significance of a Fourth Heart Sound (S4)?
+
+Back: Atrial kick into a stiff ventricle (e.g., hypertrophy).
+
+Front: Significance of a Third Heart Sound (S3)?
+
+Back: Rapid ventricular filling in a dilated ventricle (e.g., HF).
+
+Front: EKG criteria for Left Ventricular Hypertrophy?
+
+Back: Deep S in V1 + Tall R in V5 > 35mm.
+
+Front: Appearance of "Water-bottle" heart on Chest X-ray?
+
+Back: Large pericardial effusion.
+
+Front: Diagnosis for "Boot-shaped heart" on X-ray?
+
+Back: Tetralogy of Fallot.
+
+Front: Meaning of "Pulsus Paradoxus"?
+
+Back: Drop in systolic BP > 10 mmHg during inspiration.
+
+Part 9: Advanced Topics (Braunwald/Lilly Focus)
+
+Front: Primary mechanism of Prinzmetal Angina?
+
+Back: Coronary artery vasospasm.
+
+Front: Pathophysiology of "Stunned Myocardium"?
+
+Back: Reversible contractile dysfunction after temporary ischemia.
+
+Front: Characteristic of "Hibernating Myocardium"?
+
+Back: Chronic ischemia leading to downregulated function, reversible with revascularization.
+
+Front: Key hemodynamic difference between restrictive cardiomyopathy and constrictive pericarditis?
+
+Back: Restrictive CM usually has higher BNP and pulmonary pressures.
+
+Front: EKG finding in Wolff-Parkinson-White (WPW) syndrome?
+
+Back: Short PR interval and Delta wave (slurred upstroke of QRS).
+
+Front: Major criteria for Jones criteria (Rheumatic Fever)?
+
+Back: Joints (polyarthritis), Carditis, Nodules, Erythema marginatum, Sydenham chorea.
+
+Front: Most common primary cardiac tumor in adults?
+
+Back: Atrial Myxoma (usually left atrium).
+
+Front: Most common primary cardiac tumor in children?
+
+Back: Rhabdomyoma (associated with Tuberous Sclerosis).
+
+Front: Mechanism of Nitrate tolerance?
+
+Back: Depletion of sulfhydryl groups required for NO release.
+
+Front: Most common cause of sudden cardiac death in young athletes?
+
+Back: Hypertrophic Cardiomyopathy.
+
+Part 10: Summary & Integration
+
+Front: Effect of inspiration on Right-sided murmurs?
+
+Back: Increases intensity (due to increased venous return).
+
+Front: Effect of Valsalva maneuver on HOCM murmur?
+
+Back: Increases intensity (decreased preload).
+
+Front: Effect of Squatting on HOCM murmur?
+
+Back: Decreases intensity (increased preload and afterload).
+
+Front: First-line treatment for stable chronic angina?
+
+Back: Beta-blockers.
+
+Front: Drug used to close a Patent Ductus Arteriosus (PDA)?
+
+Back: Indomethacin (NSAID).
+
+Front: Drug used to keep a PDA open?
+
+Back: Prostaglandin E1.
+
+Front: Definitive treatment for Third-degree (Complete) Heart Block?
+
+Back: Permanent pacemaker.
+
+Front: "Thumbprint" sign on abdominal X-ray suggests?
+
+Back: Ischemic colitis (often secondary to low CO or vascular disease).
+
+Front: Most common site of Myocardial Infarction?
+
+Back: Left Anterior Descending (LAD) artery ("Widowmaker").
+
+Front: Complication of high-flow oxygen in a patient with COPD and cor pulmonale?
+
+Back: CO2 retention and respiratory acidosis (loss of hypoxic drive).
+
+Front: Definition of Brugada Syndrome?
+
+Back: Autosomal dominant disorder with pseudo-right bundle branch block and ST elevations in V1-V3; risk of V-fib.
+
+Front: Distinguishing feature of Mobitz Type I (Wenckebach) AV block?
+
+Back: Progressive PR interval lengthening until a QRS is dropped.
+
+Front: Distinguishing feature of Mobitz Type II AV block?
+
+Back: Dropped QRS complexes without PR interval lengthening; usually involves His-Purkinje system.
+
+Front: Treatment of choice for Torsades de Pointes?
+
+Back: Intravenous Magnesium Sulfate.
+
+Front: Most common cause of Long QT Syndrome?
+
+Back: Congenital mutations in $K^+$ or $Na^+$ channels (e.g., Romano-Ward or Jervell and Lange-Nielsen).
+
+Front: EKG finding in Multifocal Atrial Tachycardia (MAT)?
+
+Back: At least 3 different P-wave morphologies; often seen in COPD patients.
+
+Front: Definition of the "Ashman Phenomenon"?
+
+Back: A long R-R interval followed by a short R-R interval, often causing an aberrant QRS (usually RBBB) in A-fib.
+
+Part 12: Congenital Heart Disease (Detailed)
+
+Front: Direction of shunt in Eisenmenger Syndrome?
+
+Back: Right-to-Left (reversal of a chronic Left-to-Right shunt).
+
+Front: Common cardiac defect in Down Syndrome?
+
+Back: Atrioventricular (AV) canal defect.
+
+Front: Cardiac defect associated with Turner Syndrome?
+
+Back: Bicuspid aortic valve or Preductal Coarctation of the aorta.
+
+Front: Neonatal presentation of Transposition of the Great Vessels?
+
+Back: Early cyanosis (blue baby) that is not corrected by supplemental oxygen.
+
+Front: Pathophysiology of Ebstein Anomaly?
+
+Back: Displaced tricuspid valve leaflets into the right ventricle ("atrialization" of the RV).
+
+Front: Maternal drug exposure associated with Ebstein Anomaly?
+
+Back: Lithium.
+
+Front: X-ray finding in Total Anomalous Pulmonary Venous Return (TAPVR)?
+
+Back: "Snowman" sign (dilated vertical vein and SVC).
+
+Part 13: Clinical Management & Guidelines
+
+Front: First-line treatment for acute pericarditis?
+
+Back: NSAIDs and Colchicine.
+
+Front: Recommended door-to-balloon time for STEMI?
+
+Back: Within 90 minutes.
+
+Front: Contraindication for Nitrate use in MI?
+
+Back: Right Ventricular infarction or recent Phosphodiesterase inhibitor (Viagra) use.
+
+Front: Goal LDL for a patient with established ASCVD (Very High Risk)?
+
+Back: Less than 55 mg/dL.
+
+Front: Indication for SGLT2 inhibitors in Cardiology?
+
+Back: Heart failure (both HFrEF and HFpEF), regardless of diabetes status.
+
+Front: Class of drugs that improve mortality in HFrEF?
+
+Back: ACEi/ARNI, Beta-blockers, Mineralocorticoid receptor antagonists (MRA), and SGLT2 inhibitors.
+
+Front: Major side effect of Hydralazine?
+
+Back: Drug-induced Lupus Erythematosus.
+
+Part 14: Rare & High-Yield Pathologies
+
+Front: Typical patient demographic for Takotsubo Cardiomyopathy?
+
+Back: Post-menopausal women following extreme emotional or physical stress.
+
+Front: Cardiac complication of Kawasaki Disease?
+
+Back: Coronary artery aneurysms.
+
+Front: Diagnostic test for Syphilitic Aneurysm?
+
+Back: Tree-barking of the aorta (endarteritis of vasa vasorum).
+
+Front: Common cause of Myocarditis in South America?
+
+Back: Trypanosoma cruzi (Chagas Disease).
+
+Front: Histological finding in Giant Cell Myocarditis?
+
+Back: Extensive necrosis with multinucleated giant cells and lymphocytic infiltrate.
+
+Front: Classic EKG finding in Pulmonary Embolism?
+
+Back: S1Q3T3 (Deep S in I, Q wave in III, inverted T in III).
+
+Part 15: Pressure-Volume Loops & Curves
+
+Front: Effect of increased Afterload on the Pressure-Volume loop?
+
+Back: Increased peak systolic pressure and decreased Stroke Volume (narrower loop).
+
+Front: Effect of increased Inotropy on the Pressure-Volume loop?
+
+Back: Increased Stroke Volume and decreased End-Systolic Volume (loop shifts left).
+
+Front: Point on the PV loop where the Mitral Valve opens?
+
+Back: Bottom left corner (following isovolumetric relaxation).
+
+Front: Point on the PV loop where the Aortic Valve closes?
+
+Back: Top left corner.
+
+Part 16: Physical Exam Nuances (Chizner/Lilly)
+
+Front: Heart sound heard in Mitral Stenosis?
+
+Back: Opening Snap (OS) followed by a mid-diastolic rumble.
+
+Front: Significance of a shortened A2-OS interval?
+
+Back: Indicates more severe Mitral Stenosis.
+
+Front: Murmur of Pulmonic Regurgitation?
+
+Back: Graham Steell murmur (high-pitched, decrescendo diastolic murmur).
+
+Front: Character of the pulse in Aortic Regurgitation?
+
+Back: Water-hammer pulse (Corrigan pulse) or bounding pulses.
+
+Front: Pulsus Alternans is a sign of?
+
+Back: Severe Left Ventricular systolic failure.
+
+Front: Pulsus Bisferiens is seen in which conditions?
+
+Back: Aortic Regurgitation or Hypertrophic Obstructive Cardiomyopathy.
+
+Front: Effect of Handgrip on Aortic Stenosis murmur?
+
+Back: Decreases intensity (increased afterload decreases flow across the valve).
+
+Front: Effect of Handgrip on Mitral Regurgitation murmur?
+
+Back: Increases intensity (increased afterload increases backward flow).
+
+Part 17: Summary Statistics & Trivia
+
+Front: Most common cause of heart failure worldwide?
+
+Back: Coronary Artery Disease.
+
+Front: Most common cause of constrictive pericarditis in developing countries?
+
+Back: Tuberculosis.
+
+Front: Percentage of people with a Patent Foramen Ovale (PFO)?
+
+Back: Approximately 25%.
+
+Front: Most common site of an Aortic Aneurysm?
+
+Back: Abdominal Aorta (infrarenal).
+
+Front: Major risk factor for Abdominal Aortic Aneurysm (AAA)?
+
+Back: Tobacco smoking.
+
+Front: Standard screening for AAA?
+
+Back: One-time ultrasound in men aged 65–75 who have ever smoked.
+
+Front: Classic EKG progression in STEMI?
+
+Back: Hyperacute T-waves $\rightarrow$ ST elevation $\rightarrow$ Q waves $\rightarrow$ T-wave inversion.
+
+Front: Most common complication of Mitral Valve Prolapse?
+
+Back: Mitral Regurgitation.
+
+Front: "Early peaking" systolic murmur suggests?
+
+Back: Mild Aortic Stenosis.
+
+Front: "Late peaking" systolic murmur suggests?
+
+Back: Severe Aortic Stenosis.
+
+Front: Apoprotein that mediates extrahepatic uptake of LDL?
+
+Back: Apo B-100.
+
+Front: Primary function of Apo A-I?
+
+Back: Activates LCAT to catalyze cholesterol esterification in HDL (Reverse cholesterol transport).
+
+Front: Deficiency in Familial Hypercholesterolemia (Type IIa)?
+
+Back: Absent or defective LDL receptors.
+
+Front: Physical finding pathognomonic for Hypertriglyceridemia?
+
+Back: Eruptive xanthomas.
+
+Front: Physical finding pathognomonic for Type II Hyperlipidemia?
+
+Back: Tendon xanthomas (especially Achilles).
+
+Front: Key enzyme inhibited by Fibrates?
+
+Back: They activate PPAR-$\alpha$ to increase LPL activity.
+
+Front: Primary side effect of Niacin treatment?
+
+Back: Cutaneous flushing (mediated by prostaglandins).
+
+Part 19: Metabolic & Endocrine Effects on the Heart
+
+Front: Cardiac effect of Hyperthyroidism?
+
+Back: Increased B1-receptor expression leading to tachycardia and high-output heart failure.
+
+Front: Most common cardiac manifestation of Sarcoidosis?
+
+Back: Restrictive cardiomyopathy or sudden cardiac death due to AV block.
+
+Front: "Orphan Annie eye" nuclei in a thyroid met are unrelated, but what is the cardiac "Orphan" sign?
+
+Back: There is none; however, "Soldier’s Heart" refers to Autonomic Dystonia (Da Costa's Syndrome).
+
+Front: Effect of Hypocalcemia on the EKG?
+
+Back: QT interval prolongation.
+
+Front: Effect of Hyperkalemia on the EKG?
+
+Back: Peaked T-waves, dropped P-waves, and widened QRS (sine wave).
+
+Front: Cardiovascular complication of Acromegaly?
+
+Back: Biventricular hypertrophy and cardiomyopathy.
+
+Part 20: Advanced Pathology & Morphology (Robbins Focus)
+
+Front: Definition of a "Stary" lesion in atherosclerosis?
+
+Back: A fatty streak (the earliest visible lesion).
+
+Front: Most common site of a Syphilitic (Luetic) Aneurysm?
+
+Back: Ascending Aorta and Aortic Arch.
+
+Front: Histological term for debris-filled plaque in a coronary artery?
+
+Back: Atheroma with a necrotic core (cholesterol clefts).
+
+Front: Difference between a "True" and "False" (Pseudo) aneurysm?
+
+Back: A true aneurysm involves all three layers of the arterial wall.
+
+Front: Primary location of a "Nutmeg Liver"?
+
+Back: Central veins (due to Right Heart Failure/Passive Congestion).
+
+Front: Pathophysiology of Cardiac Amyloidosis?
+
+Back: Deposition of misfolded proteins (AL or TTR) in the myocardium.
+
+Front: Cardiac finding in Carcinoid Syndrome?
+
+Back: Endocardial fibrosis of the Right Heart (Tricuspid/Pulmonic) valves.
+
+Part 21: High-Yield Physics & Formulas
+
+Front: Formula for Stroke Volume?
+
+Back: $EDV - ESV$.
+
+Front: Formula for Ejection Fraction?
+
+Back: $(SV / EDV) \times 100$.
+
+Front: Relationship between Wall Stress and Pressure (Law of Laplace)?
+
+Back: $\text{Wall Stress} = (\text{Pressure} \times \text{Radius}) / (2 \times \text{Wall Thickness})$.
+
+Front: Effect of increased radius on wall stress?
+
+Back: Increases wall stress (why dilated hearts fail).
+
+Front: Factor that determines the "Velocity of Shortening" in muscle?
+
+Back: Afterload (inversely proportional).
+
+Part 22: Clinical Exam & "Buzzwords"
+
+Front: "Double apical impulse" is a hallmark of?
+
+Back: Hypertrophic Cardiomyopathy (HOCM).
+
+Front: "Machine-like" murmur heard throughout the cardiac cycle?
+
+Back: Patent Ductus Arteriosus (PDA).
+
+Front: "Early diastolic blowing murmur" at the left sternal border?
+
+Back: Aortic Regurgitation.
+
+Front: "Mid-systolic click" followed by a murmur?
+
+Back: Mitral Valve Prolapse (MVP).
+
+Front: What maneuver makes an MVP click occur earlier?
+
+Back: Standing or Valsalva (decreased preload).
+
+Front: Significance of the "Cannon A-wave" in JVP?
+
+Back: Right atrium contracting against a closed tricuspid valve (Complete Heart Block/V-tach).
+
+Front: "Delta wave" on EKG?
+
+Back: Wolff-Parkinson-White (WPW) Syndrome.
+
+Front: "Osborn Wave" (J-wave) on EKG?
+
+Back: Hypothermia.
+
+Part 23: Integration (Pharmacology + Pathology)
+
+Front: Class of antiarrhythmics that exhibit "Use-Dependence"?
+
+Back: Class IC (Flecainide, Propafenone).
+
+Front: Antiarrhythmic drug known for causing pulmonary fibrosis?
+
+Back: Amiodarone.
+
+Front: Antiarrhythmic drug known for causing Cinchonism (tinnitus/headache)?
+
+Back: Quinidine.
+
+Front: Mechanism of Ezetimibe?
+
+Back: Prevents cholesterol absorption at the small intestine brush border.
+
+Front: Preferred treatment for Hypertrophic Cardiomyopathy symptoms?
+
+Back: Beta-blockers or Non-dihydropyridine Calcium Channel Blockers (Verapamil).
+
+Front: Drug used to decrease mortality in African American patients with HFrEF?
+
+Back: Isosorbide Dinitrate + Hydralazine (BiDil).
+
+Front: Primary risk of using Sodium Nitroprusside?
+
+Back: Cyanide toxicity.
+
+Front: Most common cause of myocarditis in the USA?
+
+Back: Adenovirus and Coxsackie B virus.
+
+Front: Formula for Pulmonary Vascular Resistance (PVR)?
+
+Back: $PVR = (MPAP - PCWP) / CO$.
+
+Front: Normal value for Pulmonary Capillary Wedge Pressure (PCWP)?
+
+Back: 4 to 12 mmHg.
+
+Front: Condition where PCWP is elevated?
+
+Back: Left heart failure or Mitral Stenosis.
+
+Front: Condition where Mean Pulmonary Artery Pressure is high but PCWP is normal?
+
+Back: Pulmonary Arterial Hypertension (Group 1).
+
+Front: Effect of a Left-to-Right shunt on Oxygen Saturation in the Right Atrium?
+
+Back: Increased O2 saturation in the Right Atrium (characteristic of ASD).
+
+Part 25: Advanced Anatomy & Radiology
+
+Front: Vessel most likely to be compressed by a Left Atrial enlargement?
+
+Back: Esophagus (causing dysphagia) or Left Recurrent Laryngeal Nerve (causing hoarseness/Ortner Syndrome).
+
+Front: Most common location for a Traumatic Aortic Rupture?
+
+Back: Aortic Isthmus (just distal to the origin of the left subclavian artery).
+
+Front: "Egg-on-a-string" appearance on Chest X-ray?
+
+Back: Transposition of the Great Vessels.
+
+Front: "Rib notching" on X-ray is due to collateral circulation through which vessels?
+
+Back: Intercostal arteries (seen in Coarctation of the Aorta).
+
+Part 26: Specific Clinical Syndromes (Braunwald/Chizner)
+
+Front: Definition of Heyde Syndrome?
+
+Back: Association between Aortic Stenosis and GI bleeding from colonic angiodysplasia.
+
+Front: Classic EKG finding in Wellens Syndrome?
+
+Back: Deeply inverted or biphasic T-waves in V2-V3 (signifies critical proximal LAD stenosis).
+
+Front: Definition of Cardiac Index?
+
+Back: Cardiac Output divided by Body Surface Area (BSA).
+
+Front: Most common site of origin for Atrial Flutter?
+
+Back: Cavotricuspid isthmus in the Right Atrium.
+
+Front: Primary treatment for Symptomatic Bradycardia?
+
+Back: Atropine.
+
+Part 27: Pathology Tidbits (Robbins)
+
+Front: Definition of "Cor Pulmonale"?
+
+Back: Right ventricular hypertrophy and failure resulting from primary pulmonary hypertension or lung disease.
+
+Front: Most common cause of a Paradoxical Embolus?
+
+Back: Patent Foramen Ovale (PFO) or ASD.
+
+Front: Microscopic finding in Viral Myocarditis?
+
+Back: Lymphocytic infiltrate with focal myocyte necrosis.
+
+Front: Histological hallmark of Monckeberg Medial Calcific Sclerosis?
+
+Back: Ring-like calcifications in the media of medium-sized arteries; no lumen narrowing.
+
+Part 28: Critical Pharmacology Nuances
+
+Front: Drug of choice for Beta-blocker overdose?
+
+Back: Glucagon (increases cAMP in myocytes via non-beta receptors).
+
+Front: Mechanism of Ranolazine?
+
+Back: Inhibits the late inward sodium current, reducing diastolic wall tension and O2 consumption.
+
+Front: Why are ACE inhibitors contraindicated in Bilateral Renal Artery Stenosis?
+
+Back: They inhibit efferent arteriole constriction, causing a sharp drop in GFR and acute renal failure.
+
+Front: Main toxicity of Nitroprusside in patients with renal failure?
+
+Back: Thiocyanate toxicity (presents as psychosis, seizures, or delirium).
