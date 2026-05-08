@@ -1,0 +1,1131 @@
+Front: Embryologic origin of the respiratory diverticulum (lung bud)?
+
+Back: Outgrowth of the foregut endoderm.
+
+Front: Structure that separates the respiratory bud from the esophagus?
+
+Back: Tracheoesophageal septum.
+
+Front: Most common type of Tracheoesophageal Fistula (TEF)?
+
+Back: Esophageal atresia with distal TEF (85% of cases).
+
+Front: Clinical presentation of a neonate with TEF?
+
+Back: Drooling, choking, and cyanosis with first feeding.
+
+Front: Stages of lung development in chronological order?
+
+Back: Pseudoglandular, Canalicular, Saccular, Alveolar.
+
+Front: Lung development stage where respiration becomes possible?
+
+Back: Canalicular stage (weeks 16–25).
+
+Front: Cell type responsible for secreting pulmonary surfactant?
+
+Back: Type II pneumocytes.
+
+Front: Primary component of pulmonary surfactant?
+
+Back: Dipalmitoylphosphatidylcholine (Lecithin).
+
+Front: Used to screen for fetal lung maturity in amniotic fluid?
+
+Back: Lecithin-to-sphingomyelin (L/S) ratio > 2.0.
+
+Front: Anatomical location of the horizontal fissure (right lung)?
+
+Back: Level of the 4th rib.
+
+Front: Relationship of the pulmonary artery to the bronchus in the Left lung hilum?
+
+Back: Superior (mnemonic: RALS - Right Anterior, Left Superior).
+
+Front: Most common site for aspirated foreign bodies?
+
+Back: Right lower lobe (due to wider, shorter, more vertical bronchus).
+
+Front: Structures piercing the diaphragm at T10?
+
+Back: Esophagus and Vagus nerves.
+
+Front: Vertebral level where the IVC passes through the diaphragm?
+
+Back: T8.
+
+Front: Muscles used for quiet inspiration?
+
+Back: Diaphragm and external intercostals.
+
+II. Physiology & Mechanics
+
+Front: Definition of Residual Volume (RV)?
+
+Back: Air remaining in lungs after maximal expiration.
+
+Front: Formula for Functional Residual Capacity (FRC)?
+
+Back: $FRC = ERV + RV$.
+
+Front: Changes in FRC in a patient with emphysema?
+
+Back: FRC increases due to loss of elastic recoil.
+
+Front: Definition of physiologic dead space?
+
+Back: Total volume of gas not participating in gas exchange (Anatomic + Alveolar).
+
+Front: Effect of exercise on the hemoglobin-oxygen dissociation curve?
+
+Back: Right shift (increased $H^+$, $CO_2$, temperature, and 2,3-BPG).
+
+Front: Form in which the majority of $CO_2$ is transported in the blood?
+
+Back: Bicarbonate ($HCO_3^-$).
+
+Front: Enzyme that converts $CO_2$ and $H_2O$ to $H_2CO_3$ in RBCs?
+
+Back: Carbonic anhydrase.
+
+Front: Definition of the Haldane effect?
+
+Back: Deoxygenation of blood increases its ability to carry $CO_2$.
+
+Front: High altitude compensation: Erythropoietin levels?
+
+Back: Increased (leads to polycythemia).
+
+Front: Perfusion vs. Ventilation at the apex of the lung?
+
+Back: Both are lower than the base, but $V/Q$ is higher (approx. 3.0).
+
+Front: Response of pulmonary vasculature to hypoxia?
+
+Back: Hypoxic pulmonary vasoconstriction (shunts blood to ventilated areas).
+
+III. Obstructive Lung Diseases
+
+Front: Cardinal PFT finding in obstructive lung disease?
+
+Back: Decreased $FEV_1/FVC$ ratio (< 0.7).
+
+Front: Reid Index definition?
+
+Back: Ratio of the thickness of the mucous gland layer to the thickness of the wall (epithelium to cartilage).
+
+Front: Diagnostic Reid Index value for Chronic Bronchitis?
+
+Back: > 50%.
+
+Front: Pathogenesis of Centriacinar emphysema?
+
+Back: Smoking-induced inflammation and protease release.
+
+Front: Genetic deficiency associated with Panacinar emphysema?
+
+Back: Alpha-1 antitrypsin deficiency.
+
+Front: Classic physical exam finding in emphysema ("Pink Puffers")?
+
+Back: Pursed-lip breathing to maintain airway pressure.
+
+Front: Charcot-Leyden crystals in sputum represent?
+
+Back: Eosinophilic breakdown (Asthma).
+
+Front: Curschmann spirals are found in which condition?
+
+Back: Asthma (whorled mucous plugs).
+
+Front: Permanent dilation of bronchi due to chronic necrotizing infection?
+
+Back: Bronchiectasis.
+
+Front: Primary ciliary dyskinesia with situs inversus?
+
+Back: Kartagener Syndrome.
+
+Front: Common cause of bronchiectasis in a child with malabsorption?
+
+Back: Cystic Fibrosis.
+
+IV. Restrictive Lung Diseases
+
+Front: PFT findings in Restrictive Lung Disease?
+
+Back: Decreased TLC, decreased FVC, normal or increased $FEV_1/FVC$ ratio.
+
+Front: Pathological hallmark of Idiopathic Pulmonary Fibrosis?
+
+Back: Honeycomb lung (subpleural fibrosis).
+
+Front: Standard medication used to slow progression of IPF?
+
+Back: Pirfenidone or Nintedanib.
+
+Front: Histologic finding in Sarcoidosis?
+
+Back: Non-caseating granulomas.
+
+Front: Common chest X-ray finding in Sarcoidosis?
+
+Back: Bilateral hilar lymphadenopathy.
+
+Front: Serum marker often elevated in Sarcoidosis?
+
+Back: Angiotensin-converting enzyme (ACE).
+
+Front: Asteroid bodies and Schaumann bodies are seen in?
+
+Back: Sarcoidosis.
+
+Front: Pneumoconiosis associated with shipyards and insulation?
+
+Back: Asbestosis.
+
+Front: Characteristic pleural finding in Asbestosis?
+
+Back: Calcified pleural plaques.
+
+Front: Most common malignancy associated with asbestos exposure?
+
+Back: Bronchogenic carcinoma (more common than mesothelioma).
+
+Front: Pneumoconiosis showing "eggshell" calcification of hilar nodes?
+
+Back: Silicosis.
+
+Front: Silicosis increases the risk of which infection?
+
+Back: Tuberculosis (impairs macrophage function).
+
+Front: Pneumoconiosis associated with aerospace and manufacturing?
+
+Back: Berylliosis (mimics sarcoidosis).
+
+V. Vascular & Circulatory
+
+Front: Definition of Pulmonary Hypertension?
+
+Back: Mean pulmonary artery pressure $\ge 20$ mmHg at rest.
+
+Front: Gene mutation associated with primary (idiopathic) pulmonary arterial hypertension?
+
+Back: $BMPR2$ (leads to smooth muscle proliferation).
+
+Front: Most common source of a Pulmonary Embolism (PE)?
+
+Back: Deep vein thrombosis (DVT) from proximal leg veins.
+
+Front: Classic EKG finding in PE (though insensitive)?
+
+Back: S1Q3T3.
+
+Front: Gold standard for diagnosing Pulmonary Embolism?
+
+Back: CT Pulmonary Angiography (CTPA).
+
+Front: Virchow’s Triad components?
+
+Back: Stasis, Hypercoagulability, Endothelial injury.
+
+Front: Lines of Zahn indicate?
+
+Back: Thrombus formed before death (alternating layers of platelets/fibrin and RBCs).
+
+Front: Most common cause of community-acquired pneumonia (CAP)?
+
+Back: Streptococcus pneumoniae.
+
+Front: "Currant jelly" sputum is associated with?
+
+Back: Klebsiella pneumoniae.
+
+Front: Common cause of pneumonia in CF patients and intubated patients?
+
+Back: Pseudomonas aeruginosa.
+
+Front: Cause of "walking pneumonia" with cold agglutinins?
+
+Back: Mycoplasma pneumoniae.
+
+Front: Pneumonia associated with air conditioning or water towers?
+
+Back: Legionella pneumophila.
+
+Front: Stain used to identify Mycobacterium tuberculosis?
+
+Back: Ziehl-Neelsen (Acid-fast) stain.
+
+Front: Definition of a Ghon complex?
+
+Back: Ghon focus (subpleural granuloma) plus hilar lymph node involvement.
+
+Front: Location in the lung most commonly affected by Secondary TB?
+
+Back: Apex (high oxygen tension).
+
+Front: Primary treatment for active TB (RIPE)?
+
+Back: Rifampin, Isoniazid, Pyrazinamide, Ethambutol.
+
+Front: Side effect of Ethambutol?
+
+Back: Optic neuritis (red-green color blindness).
+
+Front: Opportunistic pneumonia in AIDS with "ground glass" opacities?
+
+Back: Pneumocystis jirovecii.
+
+VII. Neoplasia
+
+Front: Most common lung cancer in non-smokers?
+
+Back: Adenocarcinoma.
+
+Front: Lung cancer associated with hypercalcemia (PTHrP)?
+
+Back: Squamous cell carcinoma.
+
+Front: Central lung cancer showing "keratin pearls" histologically?
+
+Back: Squamous cell carcinoma.
+
+Front: Highly aggressive neuroendocrine lung tumor?
+
+Back: Small cell carcinoma.
+
+Front: Small cell carcinoma is associated with which paraneoplastic syndromes?
+
+Back: ACTH (Cushing), ADH (SIADH), Lambert-Eaton.
+
+Front: Lung cancer associated with $EGFR$ or $ALK$ mutations?
+
+Back: Adenocarcinoma.
+
+Front: Definition of a Pancoast tumor?
+
+Back: Superior sulcus tumor that can cause Horner Syndrome.
+
+Front: Symptoms of Horner Syndrome?
+
+Back: Ptosis, Miosis, Anhydrosis.
+
+Front: Tumor of the pleura associated with asbestos?
+
+Back: Mesothelioma.
+
+VIII. Critical Care & Miscellaneous
+
+Front: Pathogenesis of ARDS?
+
+Back: Diffuse alveolar damage (DAD) leading to hyaline membrane formation.
+
+Front: Characteristic ABG finding in early Pulmonary Embolism?
+
+Back: Respiratory alkalosis (due to hyperventilation).
+
+Front: Definition of a Tension Pneumothorax?
+
+Back: Air enters pleural space but cannot exit, causing mediastinal shift.
+
+Front: Direction of tracheal deviation in Tension Pneumothorax?
+
+Back: Away from the side of the lesion.
+
+Front: Definition of Chylothorax?
+
+Back: Pleural effusion containing lymph (milky appearance), usually from thoracic duct injury.
+
+Front: Light’s Criteria: Protein ratio for exudative effusion?
+
+Back: Pleural fluid protein / Serum protein > 0.5.
+
+Front: Obstructive Sleep Apnea (OSA) is associated with?
+
+Back: Obesity, loud snoring, daytime somnolence, and systemic hypertension.
+
+Front: First-line treatment for OSA?
+
+Back: CPAP (Continuous Positive Airway Pressure).
+
+Front: Effect of Carbon Monoxide (CO) on the oxygen dissociation curve?
+
+Back: Left shift (inhibits oxygen unloading).
+
+Front: Physical exam finding in CO poisoning?
+
+Back: "Cherry-red" skin discoloration (rarely seen in living patients).
+
+Front: Treatment for Cyanide poisoning?
+
+Back: Nitrites (to induce methemoglobin), Thiosulfate, or Hydroxocobalamin.
+
+Front: Difference between Hypoxemia and Hypoxia?
+
+Back: Hypoxemia is low $PaO_2$; Hypoxia is low $O_2$ delivery to tissues.
+
+Front: Formula for A-a gradient?
+
+Back: $PAO_2 - PaO_2$.
+
+Front: Causes of hypoxemia with a NORMAL A-a gradient?
+
+Back: Hypoventilation and High Altitude.
+
+Front: Mechanism of action of Albuterol?
+
+Back: $\beta_2$-agonist (bronchodilation).
+
+Front: Mechanism of action of Tiotropium?
+
+Back: Long-acting Muscarinic Antagonist (LAMA).
+
+Front: Mechanism of action of Montelukast?
+
+Back: Leukotriene receptor antagonist.
+
+Front: Major side effect of inhaled corticosteroids?
+
+Back: Oral candidiasis (thrush).
+
+Front: Drug of choice for immediate relief of acute asthma symptoms?
+
+Back: Short-acting $\beta_2$-agonist (SABA).
+
+Front: First-line long-term therapy for persistent asthma?
+
+Back: Inhaled corticosteroids (ICS).
+
+Front: Definition of Compliance?
+
+Back: Change in volume divided by change in pressure ($\Delta V / \Delta P$).
+
+Front: Condition characterized by pathologically increased lung compliance?
+
+Back: Emphysema.
+
+Front: Condition characterized by pathologically decreased lung compliance?
+
+Back: Pulmonary fibrosis.
+
+Front: Primary factor determining airway resistance?
+
+Back: Airway radius (Resistance $\propto 1/r^4$).
+
+Front: Part of the tracheobronchial tree with the highest individual airway resistance?
+
+Back: Medium-sized bronchi (generations 2–5).
+
+Front: Part of the tracheobronchial tree with the lowest total resistance?
+
+Back: Terminal bronchioles (due to massive parallel arrangement).
+
+Front: Equal Pressure Point (EPP) in healthy lungs during forced expiration?
+
+Back: Occurs in cartilaginous airways to prevent collapse.
+
+Front: Shift of the Equal Pressure Point in emphysema?
+
+Back: Moves distally toward smaller, non-cartilaginous airways (leading to airway collapse).
+
+Front: Primary determinant of $PAO_2$ (Alveolar Oxygen)?
+
+Back: The Alveolar Gas Equation: $PAO_2 = FiO_2(P_{atm} - PH_2O) - (PaCO_2 / R)$.
+
+Front: Normal value for the A-a gradient in a young adult?
+
+Back: 5–15 mmHg.
+
+Front: Calculation for the age-adjusted upper limit of normal A-a gradient?
+
+Back: $(Age / 4) + 4$.
+
+Front: Only cause of hypoxemia that cannot be corrected with 100% $O_2$?
+
+Back: Right-to-Left Shunt.
+
+Front: Oxygen content formula ($CaO_2$)?
+
+Back: $(1.34 \times Hb \times SaO_2) + (0.003 \times PaO_2)$.
+
+X. Detailed Pathology (Robbins Focus)
+
+Front: Microscopic appearance of "Heart Failure Cells"?
+
+Back: Hemosiderin-laden macrophages in the alveoli.
+
+Front: Pathogenesis of "Brown Induration" of the lungs?
+
+Back: Chronic pulmonary congestion due to left-sided heart failure.
+
+Front: Histologic hallmark of Goodpasture Syndrome?
+
+Back: Linear IgG deposits along the alveolar basement membrane.
+
+Front: Classic triad of Wegener Granulomatosis (Granulomatosis with Polyangiitis)?
+
+Back: Focal necrotizing vasculitis, necrotizing granulomas of the lung, and necrotizing glomerulonephritis.
+
+Front: Serological marker for Granulomatosis with Polyangiitis?
+
+Back: c-ANCA (PR3-ANCA).
+
+Front: Serological marker for Churg-Strauss Syndrome (Eosinophilic Granulomatosis with Polyangiitis)?
+
+Back: p-ANCA (MPO-ANCA).
+
+Front: Type of hypersensitivity reaction in Hypersensitivity Pneumonitis?
+
+Back: Mixed Type III and Type IV.
+
+Front: Common name for Hypersensitivity Pneumonitis caused by actinomycetes in hay?
+
+Back: Farmer’s Lung.
+
+Front: Most common location for Intralobar Sequestration?
+
+Back: Left lower lobe.
+
+Front: Difference between Sequestration and normal lung tissue?
+
+Back: Sequestration lacks communication with the tracheobronchial tree and has systemic arterial supply.
+
+Front: Definition of Resorption Atelectasis?
+
+Back: Lung collapse due to complete obstruction of an airway.
+
+Front: Most common cause of Compression Atelectasis?
+
+Back: Accumulation of fluid (effusion), blood, or air within the pleural cavity.
+
+XI. Detailed Microbiology & Clinical Presentations
+
+Front: Pneumonia in an alcoholic with "Current Jelly" sputum?
+
+Back: Klebsiella pneumoniae.
+
+Front: Common cause of pneumonia following a viral influenza infection?
+
+Back: Staphylococcus aureus.
+
+Front: Only DNA virus causing lower respiratory tract infections in children?
+
+Back: Adenovirus.
+
+Front: Major virulence factor of Streptococcus pneumoniae?
+
+Back: Polysaccharide capsule.
+
+Front: Lab finding in Legionella pneumonia?
+
+Back: Hyponatremia (low sodium).
+
+Front: Culture medium required for Legionella pneumophila?
+
+Back: Charcoal Yeast Extract (CYE) agar buffered with iron and cysteine.
+
+Front: Morphological stage of Lobar Pneumonia characterized by fibrinous exudate and RBCs?
+
+Back: Red Hepatization.
+
+Front: Morphological stage of Lobar Pneumonia where RBCs disintegrate but fibrin remains?
+
+Back: Gray Hepatization.
+
+Front: Common cause of Nosocomial (hospital-acquired) pneumonia?
+
+Back: Pseudomonas aeruginosa or MRSA.
+
+Front: Primary risk factor for developing a Lung Abscess?
+
+Back: Aspiration (often due to alcoholism, epilepsy, or poor dentition).
+
+Front: Most common organisms isolated from Lung Abscesses?
+
+Back: Anaerobes (Bacteroides, Fusobacterium, Peptostreptococcus).
+
+XII. Pharmacology (Standard Board Prep)
+
+Front: Mechanism of action of Theophylline?
+
+Back: Phosphodiesterase inhibition (increases cAMP) and adenosine receptor antagonism.
+
+Front: Major limiting side effect of Theophylline?
+
+Back: Narrow therapeutic index (cardiotoxicity and neurotoxicity/seiers).
+
+Front: Mechanism of action of Cromolyn sodium?
+
+Back: Stabilizes mast cell membranes to prevent degranulation.
+
+Front: Monoclonal antibody used in severe, refractory asthma?
+
+Back: Omalizumab.
+
+Front: Target of Omalizumab?
+
+Back: IgE (binds unbound IgE to prevent mast cell sensitization).
+
+Front: Mechanism of Mepolizumab?
+
+Back: IL-5 antagonist (inhibits eosinophil recruitment).
+
+Front: Drug of choice for treating exercise-induced bronchospasm?
+
+Back: Albuterol (SABA).
+
+Front: First-line treatment for a COPD exacerbation?
+
+Back: SABA (Albuterol) + SAMA (Ipratropium).
+
+Front: Use of Guaifenesin?
+
+Back: Expectorant (thins respiratory secretions).
+
+Front: Mechanism of action of N-acetylcysteine in CF patients?
+
+Back: Mucolytic (breaks disulfide bonds in mucus).
+
+Front: Antidote for Acetaminophen toxicity?
+
+Back: N-acetylcysteine (replenishes glutathione).
+
+Front: Primary toxicity of Isoniazid?
+
+Back: Hepatotoxicity and peripheral neuropathy (B6 deficiency).
+
+Front: Reason for adding Vitamin B6 (Pyridoxine) to Isoniazid therapy?
+
+Back: To prevent peripheral neuropathy.
+
+Front: Drug causing "Red-Orange" discoloration of body fluids?
+
+Back: Rifampin.
+
+XIII. Radiography & Physical Exam Signs
+
+Front: Radiographic sign for Croup (Laryngotracheobronchitis)?
+
+Back: Steeple Sign (subglottic narrowing).
+
+Front: Radiographic sign for Epiglottitis?
+
+Back: Thumbprint Sign (swollen epiglottis).
+
+Front: Most common cause of Epiglottitis?
+
+Back: Haemophilus influenzae type b (Hib).
+
+Front: Physical exam finding: Increased tactile fremitus?
+
+Back: Consolidation (e.g., Lobar Pneumonia).
+
+Front: Physical exam finding: Decreased tactile fremitus with hyperresonance?
+
+Back: Pneumothorax or Emphysema.
+
+Front: Physical exam finding: Decreased tactile fremitus with dullness to percussion?
+
+Back: Pleural Effusion.
+
+Front: Definition of Egophony?
+
+Back: "E" to "A" change heard over areas of lung consolidation.
+
+Front: Appearance of Pulmonary Edema on Chest X-ray?
+
+Back: Kerley B lines, cephalization of vessels, and perihilar "Batwing" opacities.
+
+Front: Definition of the "Westermark Sign" on CXR?
+
+Back: Regional oligemia (decreased vascularity) distal to a pulmonary embolism.
+
+Front: Definition of "Hampton’s Hump" on CXR?
+
+Back: Shallow, wedge-shaped opacification in the periphery (represents lung infarction).
+
+XIV. Respiratory Acid-Base
+
+Front: Primary disturbance in Respiratory Acidosis?
+
+Back: Increased $PaCO_2$ (> 40 mmHg).
+
+Front: Common causes of Respiratory Alkalosis?
+
+Back: Hyperventilation (anxiety, PE, high altitude, salicylate poisoning early).
+
+Front: Renal compensation for chronic respiratory acidosis?
+
+Back: Increased $HCO_3^-$ reabsorption and $H^+$ excretion.
+
+Front: Metabolic disturbance in Salicylate (Aspirin) overdose?
+
+Back: Mixed Respiratory Alkalosis and Anion Gap Metabolic Acidosis.
+
+Front: Histologic finding in Small Cell Carcinoma?
+
+Back: Small blue cells with "Azzopardi effect" (DNA staining of vessel walls).
+
+Front: Most common lung cancer associated with non-smokers and $EGFR$ mutations?
+
+Back: Adenocarcinoma.
+
+Front: Histologic appearance of Bronchioloalveolar Carcinoma (Adenocarcinoma in situ)?
+
+Back: Tall, columnar cells growing along existing alveolar septa (lepidic growth).
+
+Front: Definition of a Hamartoma in the lung?
+
+Back: Benign tumor composed of "disorganized" lung tissue, often containing cartilage and fat.
+
+Front: Radiographic appearance of a Hamartoma?
+
+Back: "Popcorn" calcification on CT or CXR.
+
+Front: Most common primary site for "cannonball" metastases to the lung?
+
+Back: Renal cell carcinoma or Choriocarcinoma.
+
+Front: Definition of a "Pleural Tail" on imaging?
+
+Back: Linear opacity extending from a peripheral lung nodule to the visceral pleura.
+
+Front: Pathogenesis of Silicotic nodules?
+
+Back: Macrophages ingest silica, die, and release fibrogenic factors.
+
+Front: Major risk factor for developing Mesothelioma?
+
+Back: Asbestos exposure (long latency period of 25–40 years).
+
+Front: Histologic marker for Mesothelioma?
+
+Back: Calretinin positive and long, slender microvilli on electron microscopy.
+
+XVI. West's Respiratory Physiology: Gas Exchange & Transport
+
+Front: Definition of Diffusing Capacity ($DL_{CO}$)?
+
+Back: Measurement of the lung's ability to transfer gas from inspired air to RBCs using Carbon Monoxide.
+
+Front: Condition that increases $DL_{CO}$?
+
+Back: Alveolar hemorrhage (e.g., Goodpasture) or polycythemia.
+
+Front: Conditions that decrease $DL_{CO}$?
+
+Back: Emphysema, Pulmonary Fibrosis, and Pulmonary Embolism.
+
+Front: Oxygen transport: Definition of Methemoglobinemia?
+
+Back: Iron in hemoglobin is in the $Fe^{3+}$ (ferric) state instead of $Fe^{2+}$ (ferrous).
+
+Front: Classic clinical sign of Methemoglobinemia?
+
+Back: Cyanosis unresponsive to supplemental oxygen and "chocolate-colored" blood.
+
+Front: Treatment for Methemoglobinemia?
+
+Back: Methylene blue or Vitamin C.
+
+Front: Definition of the Bohr Effect?
+
+Back: Increased $CO_2$ and decreased pH lower hemoglobin's affinity for $O_2$.
+
+Front: Effect of 2,3-BPG on the Oxygen-Hemoglobin dissociation curve?
+
+Back: Stabilizes the T-state (deoxygenated) and shifts the curve to the right.
+
+Front: Respiratory center responsible for the rhythm of breathing?
+
+Back: Pre-Bötzinger complex in the medulla.
+
+Front: Primary stimulus for central chemoreceptors?
+
+Back: $H^+$ concentration in the brain extracellular fluid (derived from arterial $CO_2$).
+
+Front: Primary stimulus for peripheral chemoreceptors (Carotid/Aortic bodies)?
+
+Back: Decreased $PaO_2$ (< 60 mmHg).
+
+XVII. Clinical Syndromes & Emergencies
+
+Front: Definition of Sleep Apnea-Hypopnea Syndrome?
+
+Back: Repeated episodes of obstructive or central airflow cessation during sleep.
+
+Front: Common complication of untreated Obstructive Sleep Apnea?
+
+Back: Pulmonary hypertension and Cor Pulmonale.
+
+Front: Clinical triad of Fat Embolism Syndrome?
+
+Back: Hypoxemia, neurologic abnormalities, and petechial rash.
+
+Front: Common trigger for Fat Embolism?
+
+Back: Fracture of long bones (e.g., femur).
+
+Front: Definition of Scimitar Syndrome?
+
+Back: Anomalous pulmonary venous return from the right lung to the IVC.
+
+Front: Classic presentation of Loffler Syndrome?
+
+Back: Transient pulmonary opacities and eosinophilia, often due to parasitic migration.
+
+Front: Primary treatment for Anaphylaxis causing airway obstruction?
+
+Back: Intramuscular Epinephrine.
+
+Front: Definition of Kartagener Syndrome?
+
+Back: Triad of Situs inversus, chronic sinusitis, and bronchiectasis.
+
+Front: Underlying defect in Kartagener Syndrome?
+
+Back: Dynein arm defect in cilia.
+
+XVIII. Detailed Pharmacology (High-Yield Additions)
+
+Front: Mechanism of action of Bosentan?
+
+Back: Endothelin-1 receptor antagonist (used for Pulmonary HTN).
+
+Front: Mechanism of action of Sildenafil in pulmonary context?
+
+Back: PDE-5 inhibitor; increases cGMP to cause vasodilation.
+
+Front: Mechanism of action of Epoprostenol?
+
+Back: Prostacyclin ($PGI_2$) analog with direct vasodilatory effects.
+
+Front: Drug used to treat respiratory depression in opioid overdose?
+
+Back: Naloxone (Mu-opioid receptor antagonist).
+
+Front: Major side effect of Bleomycin?
+
+Back: Pulmonary fibrosis.
+
+Front: Major side effect of Amiodarone regarding the lungs?
+
+Back: Chronic interstitial pneumonitis (Pulmonary fibrosis).
+
+Front: Mechanism of action of Dextromethorphan?
+
+Back: Antitussive; NMDA receptor antagonist.
+
+Front: First-line treatment for Pneumocystis jirovecii pneumonia?
+
+Back: Trimethoprim-sulfamethoxazole (TMP-SMX).
+
+XIX. Physical Exam & Diagnostics
+
+Front: Sound heard on auscultation in Pleuritis?
+
+Back: Pleural friction rub.
+
+Front: Definition of Bronchophony?
+
+Back: Patient's voice remains loud and distinct over areas of consolidation.
+
+Front: Sign of a large Pleural Effusion on physical exam?
+
+Back: Tracheal deviation away from the affected side.
+
+Front: Sign of massive Atelectasis on physical exam?
+
+Back: Tracheal deviation toward the affected side.
+
+Front: Meaning of "Percussion Dullness" at the lung base?
+
+Back: Presence of fluid (effusion) or solid (consolidation/tumor).
+
+Front: Meaning of "Hyperresonance" on percussion?
+
+Back: Excess air in the pleural space (pneumothorax) or lungs (emphysema).
+
+Front: Primary clearance mechanism for particles < 2 micrometers in the alveoli?
+
+Back: Alveolar macrophages (mucociliary escalator only goes to terminal bronchioles).
+
+Front: Protein deficiency in Kartagener syndrome?
+
+Back: Dynein arms (structural component of microtubule doublets).
+
+Front: Major chemotactic factor for neutrophils in the lung?
+
+Back: Interleukin-8 (IL-8).
+
+Front: Cell type that proliferates to repair alveolar epithelium after Type I pneumocyte injury?
+
+Back: Type II pneumocytes.
+
+Front: Primary antioxidant enzyme in the lung?
+
+Back: Superoxide dismutase.
+
+XXI. Rare Pathologies & Specialized Syndromes
+
+Front: Definition of Pulmonary Langerhans Cell Histiocytosis?
+
+Back: Smoking-related interstitial lung disease characterized by "Birbeck granules" (tennis racket shape) on EM.
+
+Front: Classic radiographic finding in Pulmonary Alveolar Proteinosis?
+
+Back: "Crazy paving" pattern (ground-glass opacities with thickened interlobular septa).
+
+Front: Treatment for Pulmonary Alveolar Proteinosis?
+
+Back: Whole-lung lavage.
+
+Front: Definition of Lymphangioleiomyomatosis (LAM)?
+
+Back: Cystic lung disease in women of childbearing age associated with tuberous sclerosis.
+
+Front: Marker used to identify LAM cells?
+
+Back: HMB-45 (a melanoma marker).
+
+Front: Cause of "Inhalation Anthrax"?
+
+Back: Bacillus anthracis (presents with widened mediastinum on CXR).
+
+Front: Pathogenesis of Alpha-1 Antitrypsin (AAT) deficiency-related liver disease?
+
+Back: Misfolding of the AAT protein (PiZ allele) which accumulates in the ER of hepatocytes.
+
+XXII. Advanced Physiology & Gas Laws
+
+Front: Meaning of a "Left Shift" in the P50 of hemoglobin?
+
+Back: Hemoglobin has a higher affinity for $O_2$ (holds on tighter).
+
+Front: Boyle’s Law application in the lungs?
+
+Back: Pressure and volume are inversely proportional; used to measure FRC via plethysmography.
+
+Front: Definition of "Closing Volume"?
+
+Back: The volume at which the airways in the dependent (lower) parts of the lung begin to close.
+
+Front: Effect of aging on Closing Volume?
+
+Back: Closing volume increases with age.
+
+Front: Definition of Physiological Shunt ($Q_s/Q_t$)?
+
+Back: The fraction of the total cardiac output that traverses the systemic circulation without being oxygenated.
+
+XXIII. High-Yield Microbiology & Fungal Infections
+
+Front: Fungal pneumonia common in the Southwestern US (California/Arizona)?
+
+Back: Coccidioides immitis.
+
+Front: Microscopic hallmark of Coccidioides in tissue?
+
+Back: Spherules filled with endospores.
+
+Front: Fungal pneumonia associated with bird or bat droppings (Ohio/Mississippi River Valleys)?
+
+Back: Histoplasma capsulatum.
+
+Front: Microscopic hallmark of Histoplasma?
+
+Back: Small yeast cells residing within macrophages.
+
+Front: Fungal pneumonia with "broad-based budding" yeast?
+
+Back: Blastomyces dermatitidis.
+
+Front: Opportunistic fungus causing a "fungus ball" (Aspergilloma) in pre-existing cavities?
+
+Back: Aspergillus fumigatus.
+
+Front: Condition characterized by hypersensitivity to Aspergillus in asthma/CF patients?
+
+Back: Allergic Bronchopulmonary Aspergillosis (ABPA).
+
+XXIV. Acid-Base & Ventilation-Perfusion
+
+Front: Formula for Alveolar Ventilation ($V_A$)?
+
+Back: $V_A = (Tidal Volume - Dead Space) \times Respiratory Rate$.
+
+Front: Effect of Pulmonary Embolism on Dead Space?
+
+Back: Increases physiological dead space (ventilation without perfusion).
+
+Front: Calculation of Anion Gap?
+
+Back: $Na^+ - (Cl^- + HCO_3^-)$.
+
+Front: Normal Anion Gap value?
+
+Back: 8 to 12 mEq/L.
+
+Front: Winter’s Formula for respiratory compensation in metabolic acidosis?
+
+Back: $Expected PaCO_2 = 1.5[HCO_3^-] + 8 \pm 2$.
+
+XXV. Pharmacology: Extra High-Yield
+
+Front: Mechanism of action of Varenicline?
+
+Back: Nicotinic ACh receptor partial agonist (used for smoking cessation).
+
+Front: Mechanism of action of Benralizumab?
+
+Back: IL-5 receptor alpha antagonist (depletes eosinophils).
+
+Front: Drug used to prevent Respiratory Syncytial Virus (RSV) in high-risk infants?
+
+Back: Palivizumab (monoclonal antibody against RSV F protein).
+
+Front: Effect of Beta-blockers (non-selective) on asthmatic patients?
+
+Back: Bronchoconstriction (blocks $\beta_2$ receptors).
+
+XXVI. Clinical Pearls & Physical Diagnosis
+
+Front: Definition of "Kussmaul breathing"?
+
+Back: Deep, labored breathing pattern often associated with severe metabolic acidosis (DKA).
+
+Front: Definition of "Cheyne-Stokes respiration"?
+
+Back: Cycles of crescendo-decrescendo breathing followed by apnea (seen in heart failure or stroke).
+
+Front: Significance of a pleural fluid pH < 7.2?
+
+Back: Suggests an empyema or complicated parapneumonic effusion (requires drainage).
+
+Front: Significance of "pulsus paradoxus" in status asthmaticus?
+
+Back: Drop in systolic BP > 10 mmHg during inspiration; indicates severe airway obstruction.
+
+Front: Most common cause of superior vena cava (SVC) syndrome?
+
+Back: Lung cancer (especially Small Cell Carcinoma).
+
+Front: Safe zone for needle thoracostomy (tension pneumothorax)?
+
+Back: Second intercostal space at the midclavicular line.
+
+Front: Level for performing a thoracentesis (needle decompression of effusion)?
+
+Back: Between ribs 6 and 8 (midaxillary line) or 8 and 10 (paravertebral line).
+
+Front: Structure most at risk during a thoracentesis if the needle is inserted below the rib?
+
+Back: The intercostal nerve, artery, and vein (VAN bundle).
+
+Front: Proper placement of a chest tube (tube thoracostomy)?
+
+Back: 4th or 5th intercostal space at the anterior axillary line.
+
+Front: Level at which the trachea bifurcates (Carina)?
+
+Back: T4 vertebral level (sternal angle).
+
+XXVIII. Advanced Clinical Pathophysiology
+
+Front: Definition of the "Shunt Equation"?
+
+Back: $Qs/Qt = (CcO_2 - CaO_2) / (CcO_2 - CvO_2)$.
+
+Front: Primary cause of hypoxemia in a patient with a massive pulmonary embolism?
+
+Back: $V/Q$ mismatch (increased dead space).
+
+Front: The "Haldane Effect" describes $CO_2$ release in which organ?
+
+Back: The lungs (binding of $O_2$ to Hb promotes $CO_2$ dissociation).
+
+Front: Definition of "Orthodeoxia"?
+
+Back: Hypoxemia that worsens when moving from a supine to an upright position (seen in Hepatopulmonary Syndrome).
+
+Front: Definition of "Platypnea"?
+
+Back: Dyspnea that worsens when upright.
+
+XXIX. Specific Histopathology & Cytology
+
+Front: Cytological finding in Bronchoalveolar Lavage (BAL) of a patient with Asbestosis?
+
+Back: Ferruginous bodies (asbestos fibers coated with iron).
+
+Front: Histological finding in Silicosis?
+
+Back: Whorled collagenous nodules with peripheral "eggshell" calcification.
+
+Front: Appearance of Coal Worker’s Pneumoconiosis (CWP) on histology?
+
+Back: Carbon-laden macrophages (coal macules) around bronchioles.
+
+Front: Most common location for "Caplan Syndrome" nodules?
+
+Back: Peripheral lung (seen in patients with both Rheumatoid Arthritis and Pneumoconiosis).
+
+XXX. Pulmonary Pharmacology: Toxicity & Interactions
+
+Front: Drug-induced interstitial lung disease: Mechanism of Amiodarone?
+
+Back: Phospholipidosis (accumulation of foamy macrophages in the alveoli).
+
+Front: Respiratory side effect of Methotrexate?
+
+Back: Hypersensitivity pneumonitis (granulomatous reaction).
+
+Front: Mechanism of Nitrofurantoin-induced lung injury?
+
+Back: Direct oxidative damage to lung parenchyma (can be acute or chronic).
+
+Front: Why is the use of 100% Oxygen avoided in patients with Paraquat poisoning?
+
+Back: Oxygen exacerbates the oxidative lung injury caused by Paraquat.
+
+XXXI. High-Yield Pediatric Respiratory Facts
+
+Front: Most common cause of bronchiolitis in infants?
+
+Back: Respiratory Syncytial Virus (RSV).
+
+Front: Common complication of Neonatal Respiratory Distress Syndrome (NRDS) treatment?
+
+Back: Bronchopulmonary Dysplasia (due to oxygen toxicity and barotrauma).
+
+Front: Most common cause of Stridor in a neonate?
+
+Back: Laryngomalacia (collapsible supraglottic structures).
+
+Front: Character of the cough in Bordetella pertussis?
+
+Back: Paroxysmal cough followed by an inspiratory "whoop."
+
+XXXII. Final "Board-Style" Rapid Fire
+
+Front: Most likely diagnosis: Smoker, hypercalcemia, central lung mass?
+
+Back: Squamous cell carcinoma.
+
+Front: Most likely diagnosis: Non-smoker, female, peripheral lung mass?
+
+Back: Adenocarcinoma.
+
+Front: Most likely diagnosis: Weight loss, night sweats, apical cavitary lesion?
+
+Back: Reactivation (Secondary) Tuberculosis.
+
+Front: Most likely diagnosis: Sudden pleuritic chest pain, tall thin male, hyperresonance?
+
+Back: Spontaneous Pneumothorax.
+
+Front: Most likely diagnosis: 24 hours post-femur fracture, confusion, petechiae?
+
+Back: Fat Embolism Syndrome.
