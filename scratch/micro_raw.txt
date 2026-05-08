@@ -1,0 +1,1206 @@
+Front: Bacterial cell wall component unique to Gram-positives?
+
+Back: Teichoic acid (lipoteichoic acid induces TNF-$\alpha$ and IL-1).
+
+Front: Function of the bacterial capsule?
+
+Back: Antiphagocytic; protects against opsonization.
+
+Front: Location of the bacterial "Endotoxin"?
+
+Back: Outer membrane of Gram-negative bacteria (Lipid A of LPS).
+
+Front: Only bacteria with Polypeptide capsule (D-glutamate)?
+
+Back: Bacillus anthracis.
+
+Front: Bacteria that do not Gram stain well because they are intracellular?
+
+Back: Legionella, Chlamydia, Rickettsia.
+
+Front: Visualization method for Treponema pallidum?
+
+Back: Dark-field microscopy or Fluorescent antibody stain.
+
+Front: Media used to isolate N. gonorrhoeae?
+
+Back: Thayer-Martin (VPN) agar.
+
+Front: Media used for C. diphtheriae?
+
+Back: Löffler medium or Tellurite agar.
+
+Front: Metabolic requirement of H. influenzae?
+
+Back: Factors V (NAD+) and X (Hematin).
+
+Front: Function of Protein A in S. aureus?
+
+Back: Binds Fc region of IgG; prevents opsonization and phagocytosis.
+
+Front: Mechanism of Diphtheria toxin?
+
+Back: Inactivation of EF-2 via ADP-ribosylation (inhibits protein synthesis).
+
+Front: Mechanism of Cholera toxin?
+
+Back: Permanently activates Gs, increasing cAMP, leading to Cl- and $H_2O$ secretion.
+
+Front: Mechanism of Shiga toxin?
+
+Back: Cleaves 28S rRNA (60S ribosome subunit); inhibits protein synthesis.
+
+Front: Common characteristic of Clostridium species?
+
+Back: Gram-positive, spore-forming, obligate anaerobic bacilli.
+
+Front: Mechanism of Tetanospasmin?
+
+Back: Cleaves SNARE proteins; inhibits release of GABA and glycine from Renshaw cells.
+
+Front: Effect of Botulinum toxin?
+
+Back: Cleaves SNARE proteins; inhibits ACh release at the neuromuscular junction (flaccid paralysis).
+
+Front: Primary reservoir for Listeria monocytogenes?
+
+Back: Unpasteurized dairy, cold deli meats, transplacental/vaginal transmission.
+
+Section 2: Clinical Bacteriology (Systemic)
+
+Front: Major virulence factor of S. pyogenes?
+
+Back: M protein (antiphagocytic, mimics myosin).
+
+Front: Criteria for diagnosing Rheumatic Fever?
+
+Back: JONES criteria (Joints, Carditis, Nodules, Erythema marginatum, Sydenham chorea).
+
+Front: Most common cause of subacute bacterial endocarditis?
+
+Back: Viridans group streptococci (e.g., S. sanguinis).
+
+Front: Identification of S. pneumoniae?
+
+Back: Catalase (-), alpha-hemolytic, lancet-shaped diplococci, bile soluble, Optochin sensitive.
+
+Front: Gold standard test for C. difficile diagnosis?
+
+Back: PCR for toxin genes or stool toxin assay.
+
+Front: Characteristic appearance of Actinomyces israelii?
+
+Back: Yellow "sulfur granules" in abscesses/sinus tracts.
+
+Front: Treatment for Nocardia vs. Actinomyces?
+
+Back: SNAP: Sulfa for Nocardia, Actinomyces use Penicillin.
+
+Front: Primary screening test for Tuberculosis?
+
+Back: PPD (Type IV Hypersensitivity) or IGRA (Interferon-gamma release assay).
+
+Front: Classic presentation of Secondary TB?
+
+Back: Fibrocavitary lesions in the upper lobes of the lung.
+
+Front: Most common cause of UTIs?
+
+Back: Escherichia coli (Uropathogenic strains).
+
+Front: Identifying feature of Klebsiella pneumoniae?
+
+Back: Large mucoid capsule; "currant jelly" sputum in alcoholics/diabetics.
+
+Front: Identifying feature of Proteus mirabilis?
+
+Back: Swarming motility on agar; produces urease (struvite stones).
+
+Front: Common source of Salmonella typhi?
+
+Back: Humans only (gallbladder carriage in chronic carriers).
+
+Front: Classic sign of Vibrio vulnificus infection?
+
+Back: Cellulitis/bullous lesions after exposure to seawater or raw oysters (high risk in liver disease).
+
+Front: Triad of Rocky Mountain Spotted Fever?
+
+Back: Headache, fever, rash (starts at wrists/ankles and spreads centrally).
+
+Section 3: Virology
+
+Front: Only DNA virus that is NOT double-stranded?
+
+Back: Parvoviridae (ssDNA).
+
+Front: Only RNA virus that is NOT single-stranded?
+
+Back: Reoviridae (dsRNA, e.g., Rotavirus).
+
+Front: Site of replication for DNA viruses?
+
+Back: Nucleus (Exception: Poxvirus replicates in cytoplasm).
+
+Front: Site of replication for RNA viruses?
+
+Back: Cytoplasm (Exceptions: Influenza and Retroviruses replicate in nucleus).
+
+Front: Tzanck prep findings in HSV/VZV?
+
+Back: Multinucleated giant cells.
+
+Front: Classic triad of EBV Mononucleosis?
+
+Back: Fever, pharyngitis, lymphadenopathy (posterior cervical).
+
+Front: Cancers associated with EBV?
+
+Back: Burkitt lymphoma, Nasopharyngeal carcinoma, Hodgkin lymphoma.
+
+Front: Most common cause of congenital infection?
+
+Back: Cytomegalovirus (CMV).
+
+Front: Mechanism of Antigenic Shift?
+
+Back: Reassortment of viral genome segments (leads to Pandemics).
+
+Front: High-risk HPV strains for cervical cancer?
+
+Back: HPV 16 and 18 (E6 inhibits p53; E7 inhibits Rb).
+
+Front: Typical finding in Negri bodies?
+
+Back: Rabies virus (cytoplasmic inclusions in Purkinje cells/hippocampus).
+
+Front: Diagnostic finding for Measles (Rubeola)?
+
+Back: Koplik spots (white spots on buccal mucosa).
+
+Front: Sequence of events in HIV infection?
+
+Back: gp120 binds CD4 and CCR5/CXCR4; gp41 mediates fusion.
+
+Section 4: Mycology & Parasitology
+
+Front: Form of fungi at body temperature ($37^\circ\text{C}$)?
+
+Back: Yeast. (Mnemonic: Mold in the Cold, Yeast in the Heat).
+
+Front: Geographic location for Histoplasmosis?
+
+Back: Ohio and Mississippi River Valleys (Bird/Bat droppings).
+
+Front: Morphology of Aspergillus fumigatus?
+
+Back: Septate hyphae with branching at acute angles ($45^\circ$).
+
+Front: Finding in Pneumocystis jirovecii pneumonia?
+
+Back: Ground-glass opacities on CXR; "crushed ping-pong ball" cysts on silver stain.
+
+Front: Treatment for most systemic mycoses?
+
+Back: Amphotericin B (severe) or Itraconazole (mild/local).
+
+Front: Classic triad of Giardia lamblia?
+
+Back: Bloating, flatulence, foul-smelling fatty stools (steatorrhea).
+
+Front: Flask-shaped ulcers in the colon?
+
+Back: Entamoeba histolytica.
+
+Front: Finding in "Malaria" paroxysms?
+
+Back: Cyclic fever, chills, anemia, splenomegaly.
+
+Front: Vector for Trypanosoma cruzi (Chagas)?
+
+Back: Reduviid bug ("kissing bug").
+
+Front: Characteristic of Enterobius vermicularis?
+
+Back: Pinworms; perianal pruritus (Scotch tape test).
+
+Front: Organism causing "Swiss cheese" appearance in the brain?
+
+Back: Taenia solium (Neurocysticercosis).
+
+Section 5: Antimicrobials & Resistance
+
+Front: Mechanism of Beta-lactams?
+
+Back: Bind Penicillin-Binding Proteins (PBPs); inhibit peptidoglycan cross-linking.
+
+Front: Mechanism of Vancomycin?
+
+Back: Binds D-ala-D-ala portion of cell wall precursors.
+
+Front: Side effect of Aminoglycosides?
+
+Back: Nephrotoxicity, Ototoxicity, Teratogen.
+
+Front: Mechanism of Macrolides?
+
+Back: Bind 50S subunit; inhibit translocation.
+
+Front: Major side effect of Fluoroquinolones?
+
+Back: Tendon rupture (Achilles); cartilage damage in children.
+
+Front: Antibiotic associated with Grey Baby Syndrome?
+
+Back: Chloramphenicol.
+
+Front: Resistance mechanism for MRSA?
+
+Back: Altered PBP (PBP2a) encoded by mecA gene.
+
+Section 6: Immunology Basics (Micro-related)
+
+Front: Cells that release Interferon-gamma (IFN-$\gamma$)?
+
+Back: Th1 cells and NK cells.
+
+Front: Function of Secretory IgA?
+
+Back: Prevents attachment of bacteria/viruses to mucous membranes.
+
+Front: Mechanism of Type I Hypersensitivity?
+
+Back: IgE-mediated mast cell degranulation.
+
+Front: MHC class found on all nucleated cells?
+
+Back: MHC I (presents to CD8+ T cells).
+
+Front: Components of the MAC (Membrane Attack Complex)?
+
+Back: C5b, C6, C7, C8, C9.
+
+Front: Deficiency of C1 esterase inhibitor results in?
+
+Back: Hereditary Angioedema (high bradykinin).
+
+Section 7: Higher-Level Synthesis (Bugs & Clinical Findings)
+
+Front: Bug associated with Guillain-Barré Syndrome?
+
+Back: Campylobacter jejuni.
+
+Front: Most common cause of "Atypical" (walking) pneumonia?
+
+Back: Mycoplasma pneumoniae.
+
+Front: Finding in "Waterhouse-Friderichsen Syndrome"?
+
+Back: Adrenal hemorrhage due to Neisseria meningitidis septicemia.
+
+Front: "Rice-water" stools?
+
+Back: Vibrio cholerae.
+
+Front: "Strawberry cervix"?
+
+Back: Trichomonas vaginalis.
+
+Front: Maltese cross appearance in RBCs?
+
+Back: Babesia microti.
+
+Front: Primary cause of Epiglottitis?
+
+Back: Haemophilus influenzae type b.
+
+Front: "Slapped cheek" rash in children?
+
+Back: Parvovirus B19 (Erythema infectiosum).
+
+Front: Associated bug with staghorn calculi?
+
+Back: Proteus mirabilis.
+
+Front: "Wool-sorter’s disease"?
+
+Back: Pulmonary Anthrax (B. anthracis).
+
+Front: Leading cause of neonatal meningitis?
+
+Back: Group B Streptococcus (S. agalactiae).
+
+Front: Culture requirements for Legionella?
+
+Back: Charcoal yeast extract (BCYE) with Iron and Cysteine.
+
+Front: Typical patient for Pseudomonas infection?
+
+Back: Burn victims, Cystic Fibrosis patients, Intravenous drug users (IVDU).
+
+Front: "Hand-foot-mouth" disease virus?
+
+Back: Coxsackievirus A.
+
+Front: Chronic infection with Schistosoma haematobium increases risk of?
+
+Back: Squamous cell carcinoma of the bladder.
+
+Front: Mechanism of Sulfonamides?
+
+Back: Inhibit dihydropteroate synthase (Dihydropteroate synthase).
+
+Front: Difference between naked and enveloped viruses?
+
+Back: Naked viruses are more resistant to heat/detergents; enveloped viruses acquire membrane from host cell.
+
+Front: Definition of Prion?
+
+Back: Infectious protein (PrPsc) that causes misfolding of normal PrPc proteins.
+
+Front: Primary feature of Borrelia burgdorferi (Lyme)?
+
+Back: Erythema migrans (bull’s-eye rash).
+
+Front: Reservoir for Leptospira interrogans?
+
+Back: Animal urine (often in water/soil).
+
+Front: Major side effect of Amphotericin B?
+
+Back: Nephrotoxicity (electrolyte wasting: $K^+$, $Mg^{2+}$).
+
+Front: Primary prevention for H. influenzae type b?
+
+Back: Conjugate vaccine (capsular polysaccharide + protein).
+
+Front: Identification of Enterococcus species?
+
+Back: Growth in 6.5% NaCl and bile.
+
+Front: Complication of E. coli O157:H7?
+
+Back: HUS (Hemolytic Uremic Syndrome).
+
+Front: Mode of transmission for Toxoplasma gondii?
+
+Back: Cysts in meat or oocysts in cat feces; transplacental.
+
+Front: Classic feature of Bartonella henselae?
+
+Back: Cat-scratch disease (regional lymphadenopathy).
+
+Front: Shape of Vibrio bacteria?
+
+Back: Comma-shaped.
+
+Front: Differentiation of Staph and Strep?
+
+Back: Catalase test (Staph is +, Strep is -).
+
+Front: Differentiation of S. aureus from other Staphylococci?
+
+Back: Coagulase test (S. aureus is +, others are -).
+
+Front: Differentiation of S. epidermidis and S. saprophyticus?
+
+Back: Novobiocin (S. epi is sensitive, S. sapro is resistant).
+
+Front: "Fried-egg" appearance of colonies?
+
+Back: Mycoplasma pneumoniae.
+
+Front: Leading cause of traveler's diarrhea?
+
+Back: ETEC (Enterotoxigenic E. coli).
+
+Front: Characteristic of H. pylori?
+
+Back: Curved rod, Urease positive (used for breath test).
+
+Front: Common symptom of Ascaris lumbricoides?
+
+Back: Loeffler syndrome (pulmonary eosinophilia during lung migration).
+
+Front: Mechanism of Acyclovir?
+
+Back: Guanosine analog; phosphorylated by viral thymidine kinase (chain termination).
+
+Front: Drug of choice for Syphilis?
+
+Back: Penicillin G.
+
+Front: Common cause of viral croup?
+
+Back: Parainfluenza virus (Steeple sign on X-ray).
+
+Front: "Spaghetti and meatballs" appearance on KOH prep?
+
+Back: Tinea versicolor (Malassezia furfur).
+
+Front: Classic sign of Gardnerella vaginalis?
+
+Back: Clue cells; fishy odor (Whiff test).
+
+Front: Most common cause of osteomyelitis in sickle cell patients?
+
+Back: Salmonella.
+
+Front: Finding in Francisella tularensis?
+
+Back: Ulceroglandular disease; transmitted by ticks/rabbits.
+
+Front: "Satellite phenomenon" of H. influenzae?
+
+Back: Growth around S. aureus (which provides NAD+).
+
+Front: Major virulence factor of Cryptococcus neoformans?
+
+Back: Thick polysaccharide capsule (India Ink positive).
+
+Front: Best treatment for Giardiasis?
+
+Back: Metronidazole.
+
+Front: Drug used to treat CMV retinitis?
+
+Back: Ganciclovir.
+
+Front: What is the "window period" in HBV infection?
+
+Back: Period where HBsAg and anti-HBs are both negative; Anti-HBc IgM is positive.
+
+Front: Marker of high infectivity in HBV?
+
+Back: HBeAg.
+
+Front: Mechanism of Metronidazole?
+
+Back: Forms toxic free radicals that damage DNA (anaerobes and protozoa).
+
+Front: Primary treatment for MRSA?
+
+Back: Vancomycin, Daptomycin, or Linezolid.
+
+Front: Appearance of E. coli on EMB agar?
+
+Back: Green metallic sheen.
+
+Front: Bacteria that require Cysteine for growth?
+
+Back: The Four Sisters: Francisella, Brucella, Legionella, and Pasteurella.
+
+Front: Bacteria that are "Obligate Aerobes"?
+
+Back: Nagging Pests Must Breathe: Nocardia, Pseudomonas, Mycobacterium tuberculosis, Bacillus anthracis.
+
+Front: Name the "Obligate Anaerobes"?
+
+Back: Anaerobes Can’t Breathe Fresh Air: Clostridium, Bacteroides, Fusobacterium, Actinomyces.
+
+Front: Distinction between E. coli and Enterobacter on MacConkey?
+
+Back: Both are lactose fermenters (pink), but E. coli is indole positive.
+
+Front: Significance of "Sulfur Granules" in a tissue specimen?
+
+Back: Pathognomonic for Actinomyces israelii.
+
+Front: Identification of Bacillus anthracis on agar?
+
+Back: "Medusa head" appearance (non-hemolytic, filamentous colonies).
+
+Section 9: Zoonotic & Vector-Borne Diseases
+
+Front: Transmission of Brucella?
+
+Back: Unpasteurized dairy products or contact with infected livestock (undulant fever).
+
+Front: Cause of "Rabbit Fever" (Tularemia)?
+
+Back: Francisella tularensis.
+
+Front: Primary vector for Borrelia burgdorferi?
+
+Back: Ixodes tick (also carries Babesia and Anaplasma).
+
+Front: Common infection following a dog or cat bite?
+
+Back: Pasteurella multocida (cellulitis within 24 hours).
+
+Front: Organism causing "Q Fever"?
+
+Back: Coxiella burnetii (atypical pneumonia, no rash, negative Weil-Felix).
+
+Front: Presentation of Leptospira interrogans (Weil Disease)?
+
+Back: Jaundice, photophobia, conjunctival suffusion (redness without exudate).
+
+Front: Vector for Leishmaniasis?
+
+Back: Sandfly.
+
+Section 10: Respiratory & Enteric Pathogens
+
+Front: Definition of "Cold Agglutinins"?
+
+Back: IgM antibodies that agglutinate RBCs at low temperatures; seen in Mycoplasma pneumoniae.
+
+Front: Mechanism of Vibrio cholerae diarrhea?
+
+Back: Permanent activation of Gs protein $\rightarrow$ $\uparrow$ cAMP $\rightarrow$ secretion of Cl- into gut lumen.
+
+Front: Most common cause of bacterial enterocolitis in the US?
+
+Back: Campylobacter jejuni.
+
+Front: Bug associated with reactive arthritis (Reiter’s Syndrome)?
+
+Back: Shigella, Salmonella, Campylobacter, Chlamydia.
+
+Front: Identifying feature of Corynebacterium diphtheriae?
+
+Back: Gram-positive rods with "Chinese letter" or club-shaped appearance; metachromatic granules.
+
+Section 11: Helminths & Ectoparasites
+
+Front: Cause of "Biliary Tract Disease" and Cholangiocarcinoma in Asia?
+
+Back: Clonorchis sinensis (Chinese liver fluke).
+
+Front: Mechanism of Vitamin B12 deficiency via parasite?
+
+Back: Diphyllobothrium latum (Fish tapeworm) competes for B12 in the intestine.
+
+Front: Parasite associated with Portal Hypertension and Splenomegaly?
+
+Back: Schistosoma mansoni or Schistosoma japonicum (eggs in mesenteric veins).
+
+Front: Classic symptom of Sarcoptes scabiei?
+
+Back: Intense pruritus (worse at night) and serpiginous burrows in finger webs/wrists.
+
+Front: Finding in Strongyloides stercoralis infection?
+
+Back: Rhabditiform larvae in the stool (can cause hyperinfection syndrome in immunocompromised).
+
+Section 12: High-Yield Mycology
+
+Front: Appearance of Coccidioides immitis in tissue?
+
+Back: Spherules filled with endospores (found in Southwestern US/San Joaquin Valley).
+
+Front: Culture method for most fungi?
+
+Back: Sabouraud dextrose agar.
+
+Front: "Captain's Wheel" yeast formation?
+
+Back: Paracoccidiodes brasiliensis (Latin America).
+
+Front: Primary risk factor for Mucor or Rhizopus infection?
+
+Back: Diabetic Ketoacidosis (DKA) or neutropenia (fungus invades cribriform plate).
+
+Section 13: Clinical Syndromes & High-Yield Links
+
+Front: Bug associated with "Currant Jelly" sputum?
+
+Back: Klebsiella pneumoniae.
+
+Front: Cause of "Water-house Friderichsen Syndrome"?
+
+Back: Neisseria meningitidis (leads to adrenal insufficiency/hemorrhage).
+
+Front: Most common cause of "Otitis Externa"?
+
+Back: Pseudomonas aeruginosa.
+
+Front: Characteristic rash of "Secondary Syphilis"?
+
+Back: Maculopapular rash on palms and soles; condylomata lata.
+
+Front: Finding in "Congenital Syphilis"?
+
+Back: Hutchinson teeth, saddle nose, saber shins, deafness.
+
+Front: "Double zone of hemolysis" on blood agar?
+
+Back: Clostridium perfringens.
+
+Section 14: Antibiotic Mechanisms & Resistance (Advanced)
+
+Front: Mechanism of Vancomycin resistance?
+
+Back: Mutation of D-Ala-D-Ala to D-Ala-D-Lac.
+
+Front: Mechanism of Tetracyclines?
+
+Back: Bind 30S subunit; prevent attachment of aminoacyl-tRNA.
+
+Front: Effect of Rifampin on the liver?
+
+Back: Potent inducer of Cytochrome P450 (interacts with Warfarin, OCPs).
+
+Front: Mechanism of Trimethoprim?
+
+Back: Inhibits dihydrofolate reductase (DHFR).
+
+Front: Which antibiotic causes "Red Man Syndrome"?
+
+Back: Vancomycin (due to rapid histamine release; prevented by slow infusion).
+
+Front: Unique side effect of Linezolid?
+
+Back: Bone marrow suppression (thrombocytopenia) and Serotonin Syndrome.
+
+Section 15: General Virology (DNA & RNA)
+
+Front: Family of Hepatitis C Virus?
+
+Back: Flaviviridae.
+
+Front: Marker of "Immunity" to Hepatitis B?
+
+Back: Anti-HBs antibody (and negative HBsAg).
+
+Front: Virus causing "Hemorrhagic Cystitis"?
+
+Back: Adenovirus (usually types 11 or 21).
+
+Front: Major characteristic of Reovirus (Rotavirus)?
+
+Back: Segmented, double-stranded RNA virus; major cause of infantile diarrhea.
+
+Front: Virus associated with "Progressive Multifocal Leukoencephalopathy" (PML)?
+
+Back: JC Virus (Polyomavirus).
+
+Front: Which RNA virus is "Ambisese"?
+
+Back: Arenavirus (e.g., Lassa fever).
+
+Front: Defining feature of Prion diseases on histology?
+
+Back: Spongiform encephalopathy (vacuolation of neurons).
+
+Section 16: Systemic High-Yields (Mixed)
+
+Front: Bug associated with infective endocarditis in Colorectal Cancer?
+
+Back: Streptococcus bovis (now S. gallolyticus).
+
+Front: Cause of "Lemierre Syndrome"?
+
+Back: Fusobacterium necrophorum (internal jugular vein thrombosis following pharyngitis).
+
+Front: "Fried-egg" appearance of colonies?
+
+Back: Mycoplasma species.
+
+Front: Common cause of food poisoning from "Reheated Rice"?
+
+Back: Bacillus cereus.
+
+Front: Bug associated with "Rose Spots" on the abdomen?
+
+Back: Salmonella typhi.
+
+Front: Morphology of Neisseria?
+
+Back: Gram-negative "kidney-bean" shaped diplococci.
+
+Front: Cause of "Pseudoappendicitis"?
+
+Back: Yersinia enterocolitica.
+
+
+Front: Patient with "descending paralysis" after eating home-canned food?
+
+Back: Clostridium botulinum (Botulism).
+
+Front: Child with "barking" cough and "steeple sign" on X-ray?
+
+Back: Parainfluenza virus (Croup).
+
+Front: "Thumbprint sign" on lateral neck X-ray?
+
+Back: Epiglottitis (typically Haemophilus influenzae type b).
+
+Front: Patient with "watery diarrhea" after traveling to Mexico; Lab shows "comma-shaped" organisms?
+
+Back: Vibrio cholerae.
+
+Front: "Currant jelly" sputum in an alcoholic patient?
+
+Back: Klebsiella pneumoniae.
+
+Front: High fever and login-bradycardia (Faget sign) with "rose spots" on abdomen?
+
+Back: Salmonella typhi (Typhoid fever).
+
+Front: "Bulging fontanelle" and stiff neck in a 2-week-old neonate?
+
+Back: Streptococcus agalactiae (Group B Strep), E. coli, or Listeria.
+
+Front: Facial "sulfur granules" draining from a jaw abscess?
+
+Back: Actinomyces israelii.
+
+Front: Splenic rupture following a sore throat and extreme fatigue?
+
+Back: Epstein-Barr Virus (Infectious Mononucleosis).
+
+Section 18: Mycology & Parasitology (Advanced)
+
+Front: "Owl’s eye" intranuclear inclusions in a biopsy?
+
+Back: Cytomegalovirus (CMV).
+
+Front: "Spaghetti and meatballs" appearance on KOH prep?
+
+Back: Malassezia furfur (Tinea versicolor).
+
+Front: Yeast with "narrow-based budding" and a thick capsule?
+
+Back: Cryptococcus neoformans.
+
+Front: "Maltese cross" inside Red Blood Cells?
+
+Back: Babesia microti.
+
+Front: Flask-shaped colonic ulcers?
+
+Back: Entamoeba histolytica.
+
+Front: Peri-anal itching in a child, diagnosed with a "Scotch Tape" test?
+
+Back: Enterobius vermicularis (Pinworm).
+
+Front: Worm infection associated with B12 deficiency?
+
+Back: Diphyllobothrium latum (Fish tapeworm).
+
+Front: Organism causing "Mega-colon" and "Mega-esophagus" in South America?
+
+Back: Trypanosoma cruzi (Chagas disease).
+
+Section 19: Antibiotics & Resistance Mechanisms
+
+Front: Antibiotic that causes "Yellow Teeth" in children?
+
+Back: Tetracyclines.
+
+Front: Mechanism of Methicillin resistance in S. aureus (MRSA)?
+
+Back: Alteration of Penicillin-Binding Protein (PBP 2a) via mecA gene.
+
+Front: Antibiotic associated with "Red Man Syndrome"?
+
+Back: Vancomycin (infusion-related histamine release).
+
+Front: Antibiotic class that can cause Achilles tendon rupture?
+
+Back: Fluoroquinolones (e.g., Ciprofloxacin).
+
+Front: Medication used for "prophylaxis" in someone exposed to Neisseria meningitidis?
+
+Back: Rifampin (or Ciprofloxacin/Ceftriaxone).
+
+Front: Treatment for Pneumocystis jirovecii pneumonia (PCP)?
+
+Back: Trimethoprim-Sulfamethoxazole (TMP-SMX).
+
+Front: Mechanism of Macrolide resistance?
+
+Back: Methylation of the 23S rRNA binding site.
+
+Section 20: Viral Essentials
+
+Front: Viral family of HIV?
+
+Back: Retroviridae (Lentivirus genus).
+
+Front: Only DNA virus that replicates in the cytoplasm?
+
+Back: Poxvirus (e.g., Smallpox, Molluscum contagiosum).
+
+Front: Only RNA virus that replicates in the nucleus?
+
+Back: Orthomyxovirus (Influenza) and Retroviruses.
+
+Front: Definition of "Antigenic Shift" in Influenza?
+
+Back: Genetic reassortment of segments (causes pandemics).
+
+Front: Definition of "Antigenic Drift" in Influenza?
+
+Back: Random mutation of Hemagglutinin/Neuraminidase (causes epidemics/seasonal flu).
+
+Front: Virus causing "slapped cheek" rash (Erythema Infectiosum)?
+
+Back: Parvovirus B19.
+
+Front: High-risk HPV types for cervical cancer?
+
+Back: HPV 16 and 18.
+
+Front: Viral cause of "Hemorrhagic Cystitis"?
+
+Back: Adenovirus (Types 11 and 21).
+
+Section 21: High-Yield Culture & Staining
+
+Front: Staining method for Mycobacterium tuberculosis?
+
+Back: Ziehl-Neelsen (Acid-Fast) stain.
+
+Front: Medium used to culture Corynebacterium diphtheriae?
+
+Back: Löffler’s medium or Tellurite agar.
+
+Front: Medium used to culture Neisseria species?
+
+Back: Thayer-Martin (VPN) Agar.
+
+Front: Organism that requires "Charcoal Yeast Extract" agar?
+
+Back: Legionella pneumophila.
+
+Front: "Fried-egg" appearance on culture?
+
+Back: Mycoplasma pneumoniae.
+
+Front: Which bug is "Urease Positive"?
+
+Back: Proteus, H. pylori, Ureaplasma, Nocardia, Cryptococcus, S. saprophyticus. (Mnemonic: PUNCH).
+
+Section 22: Essential Zoonotics
+
+Front: Infection from a "Dog or Cat bite"?
+
+Back: Pasteurella multocida.
+
+Front: "Undulant fever" from unpasteurized dairy?
+
+Back: Brucella species.
+
+Front: Infection from skinning rabbits?
+
+Back: Francisella tularensis.
+
+Front: Vector for "Lyme Disease"?
+
+Back: Ixodes tick.
+
+Front: Vector for "Rocky Mountain Spotted Fever"?
+
+Back: Dermacentor tick.
+
+Section 23: Niche Gram-Negative & Respiratory Pathogens
+
+Front: Diagnostic test for Legionella pneumophila?
+
+Back: Urine antigen test (fastest) or culture on BCYE agar.
+
+Front: Virulence factor of H. influenzae type b (Hib)?
+
+Back: Polyribosylribitol phosphate (PRP) capsule.
+
+Front: Why is Pseudomonas aeruginosa common in Cystic Fibrosis?
+
+Back: It forms a mucoid polysaccharide biofilm (alginate) in the lungs.
+
+Front: "Whooping cough" toxin mechanism?
+
+Back: Pertussis toxin: Disables Gi, increasing cAMP (leads to impaired phagocytosis).
+
+Front: Difference between H. influenzae and H. ducreyi?
+
+Back: H. influenzae causes respiratory issues; H. ducreyi causes "painful" chancroid (STD).
+
+Section 24: High-Yield Viral Complications
+
+Front: Late neurological complication of Measles (Rubeola)?
+
+Back: Subacute Sclerosing Panencephalitis (SSPE) occurring years later.
+
+Front: Virus associated with "Nasopharyngeal Carcinoma"?
+
+Back: Epstein-Barr Virus (EBV).
+
+Front: Typical CBC finding in Infectious Mononucleosis?
+
+Back: Atypical lymphocytes (reactive CD8+ T cells) on peripheral smear.
+
+Front: Only RNA virus with a "Double-Stranded" genome?
+
+Back: Reovirus (Rotavirus).
+
+Front: Most common cause of "Bronchiolitis" in infants?
+
+Back: Respiratory Syncytial Virus (RSV).
+
+Front: Leading cause of "Fatal Sporadic Encephalitis" in the US?
+
+Back: Herpes Simplex Virus-1 (HSV-1) (affects temporal lobes).
+
+Section 25: Clinical "Best Initial" vs. "Most Accurate" Tests
+
+Front: Best initial test for suspected C. difficile?
+
+Back: Stool PCR or Enzyme Immunoassay (EIA) for toxins A and B.
+
+Front: Gold standard test for "Malaria"?
+
+Back: Thick and thin blood smears.
+
+Front: Most sensitive test for "Chlamydia" and "Gonorrhea"?
+
+Back: Nucleic Acid Amplification Test (NAAT).
+
+Front: Diagnostic test for "Pinworm" (Enterobius)?
+
+Back: Cellulose tape (Scotch tape) test to find eggs perianally.
+
+Section 26: High-Yield Parasitology (Blood & Tissue)
+
+Front: Appearance of Plasmodium falciparum on blood smear?
+
+Back: Crescent-shaped (banana-shaped) gametocytes and multiple ring forms.
+
+Front: Intermediate host of Schistosoma species?
+
+Back: Freshwater snails.
+
+Front: Parasite causing "Elephantiasis" (lymphatic filariasis)?
+
+Back: Wuchereria bancrofti.
+
+Front: Treatment for "Neurocysticercosis" (T. solium)?
+
+Back: Albendazole and Praziquantel (+ steroids to reduce inflammation).
+
+Section 27: Immunology & Micro Crossover
+
+Front: Cytokine that stimulates "Isotype Switching" to IgE?
+
+Back: IL-4.
+
+Front: Immune deficiency making patients susceptible to "Catalase Positive" organisms?
+
+Back: Chronic Granulomatous Disease (CGD) due to NADPH oxidase deficiency.
+
+Front: "Opsonins" that enhance phagocytosis?
+
+Back: IgG and C3b.
+
+Front: Mechanism of "Type II" Hypersensitivity?
+
+Back: Cytotoxic: Antibodies (IgG/IgM) bind to antigens on cell surfaces (e.g., Rheumatic Fever).
+
+Front: Component of Gram-negative cell walls that triggers "Septic Shock"?
+
+Back: Lipid A (part of Lipopolysaccharide/LPS).
+
+Section 28: Miscellaneous Board Favorites
+
+Front: "Saber shins" and "Hutchinson teeth" are signs of?
+
+Back: Congenital Syphilis.
+
+Front: Bug associated with "Reiter Syndrome" (can't see, can't spit, can't climb a tree)?
+
+Back: Chlamydia trachomatis.
+
+Front: Most common cause of "Subacute Endocarditis" after dental work?
+
+Back: Viridans group Streptococci.
+
+Front: Bacteria that causes "Struvite" (Staghorn) renal stones?
+
+Back: Proteus mirabilis (via Urease production).
+
+Front: "Ecthyma gangrenosum" is pathognomonic for?
+
+Back: Pseudomonas aeruginosa sepsis.
+
+Front: "Waterhouse-Friderichsen Syndrome" involves which gland?
+
+Back: Adrenal glands (hemorrhagic necrosis).
+
+Section 29: Pharmacological Targets
+
+Front: Mechanism of "Sulfonamides"?
+
+Back: PABA antimetabolites; inhibit Dihydropteroate synthase.
+
+Front: Mechanism of "Trimethoprim"?
+
+Back: Inhibits Dihydrofolate reductase.
+
+Front: Side effect of "Ethambutol"?
+
+Back: Optic neuritis (red-green color blindness).
+
+Front: Mechanism of "Amphotericin B"?
+
+Back: Binds ergosterol and forms pores in the fungal cell membrane.
+
+Front: Mechanism of "Caspo-fungin"?
+
+Back: Inhibits synthesis of $\beta$-glucan in the fungal cell wall.
+
+Front: Definition of Bacterial "Transformation"?
+
+Back: Uptake of naked DNA from the environment (notably S. pneumoniae, H. influenzae, Neisseria).
+
+Front: Mechanism of Specialized Transduction?
+
+Back: Lysogenic phage packages specific bacterial genes (e.g., Shiga toxin, Diphtheria toxin).
+
+Front: Function of the bacterial "Sex Pilus"?
+
+Back: Mediates conjugation (transfer of plasmids from $F^+$ to $F^-$ cells).
+
+Front: Difference between "Exotoxin" and "Endotoxin"?
+
+Back: Exotoxins are secreted proteins (high toxicity); Endotoxin is Lipid A of the cell wall (triggers cytokines).
+
+Section 31: Specific Gram-Positive Distinctions
+
+Front: Most common cause of "Prosthetic Valve" Endocarditis?
+
+Back: Staphylococcus epidermidis.
+
+Front: Identification of Streptococcus agalactiae (GBS)?
+
+Back: CAMP test positive (enlarges area of hemolysis formed by S. aureus).
+
+Front: Complication of S. pyogenes that follows only pharyngitis?
+
+Back: Rheumatic Fever (PSGN can follow both pharyngitis and impetigo).
+
+Front: Bug associated with "Gas Gangrene" and "Myonecrosis"?
+
+Back: Clostridium perfringens (Alpha toxin/Lecithinase).
+
+Section 32: Enteric & Gram-Negative Nuances
+
+Front: Distinction between Salmonella and Shigella?
+
+Back: Salmonella is motile and produces $H_2S$ (black on Hektoen); Shigella is non-motile and no $H_2S$.
+
+Front: Main virulence factor of E. coli causing neonatal meningitis?
+
+Back: K1 capsular antigen.
+
+Front: "Comma-shaped" rod that grows at $42^\circ\text{C}$?
+
+Back: Campylobacter jejuni.
+
+Front: Mechanism of Pseudomonas Exotoxin A?
+
+Back: Inactivates Elongation Factor-2 (EF-2) (same mechanism as Diphtheria toxin).
+
+Front: Bug causing "Cat Scratch Disease" vs. "Bacillary Angiomatosis"?
+
+Back: Both caused by Bartonella henselae (Angiomatosis occurs in immunocompromised).
+
+Section 33: Specialized Virology (Hepatitis & HIV)
+
+Front: Which Hepatitis virus requires HBV for coinfection?
+
+Back: Hepatitis D (Deltavirus).
+
+Front: Mode of transmission for Hepatitis E?
+
+Back: Fecal-oral (Enteric); high mortality in pregnant women.
+
+Front: Key structural protein used to diagnose early HIV infection?
+
+Back: p24 capsid protein.
+
+Front: Which HIV gene encodes for Reverse Transcriptase, Protease, and Integrase?
+
+Back: pol gene.
+
+Front: Target of the "Maraviroc" drug in HIV?
+
+Back: CCR5 co-receptor on the host cell.
+
+Section 34: Systemic Mycology "Look-Alikes"
+
+Front: Fungus with "Broad-based budding" found in the Great Lakes region?
+
+Back: Blastomyces dermatitidis.
+
+Front: "Cigar-shaped" yeast associated with rose bushes/gardening?
+
+Back: Sporothrix schenckii.
+
+Front: Distinguishing feature of Mucor vs. Aspergillus?
+
+Back: Mucor has non-septate hyphae with wide-angle ($90^\circ$) branching.
+
+Front: Soap bubble lesions in the brain (Virchow-Robin spaces)?
+
+Back: Cryptococcus neoformans.
+
+Section 35: High-Yield Parasitology Vignettes
+
+Front: Parasite associated with "Squamous Cell Carcinoma of the Bladder"?
+
+Back: Schistosoma haematobium.
+
+Front: Treatment for Toxoplasma gondii?
+
+Back: Sulfadiazine + Pyrimethamine.
+
+Front: "Anchovy paste" liver abscess?
+
+Back: Entamoeba histolytica.
+
+Front: Periorbital edema and muscle pain after eating "undercooked wild game"?
+
+Back: Trichinella spiralis.
+
+Section 36: Antimicrobial Side Effects (Final Round)
+
+Front: Antibiotic that causes "Disulfiram-like reaction" with alcohol?
+
+Back: Metronidazole (also some Cephalosporins).
+
+Front: Classic side effect of "Dapsone"?
+
+Back: Hemolysis in G6PD deficiency.
+
+Front: Unique side effect of "Rifampin"?
+
+Back: Orange-colored body fluids (tears, urine, sweat).
+
+Front: Side effect of "Tetracyclines" involving the skin?
+
+Back: Photosensitivity.
+
+Front: Which antibiotic class causes "Fanconi Syndrome" if expired?
+
+Back: Tetracyclines.
+
+Section 37: Laboratory Diagnostics (Rapid Fire)
+
+Front: "Quellung Reaction" positive?
+
+Back: S. pneumoniae, H. influenzae, N. meningitidis, Klebsiella (Encapsulated bugs).
+
+Front: "Nagler Reaction" identifies?
+
+Back: Clostridium perfringens (Alpha toxin).
+
+Front: "Weil-Felix Reaction" used for?
+
+Back: Rickettsial infections (cross-reacts with Proteus antigens).
+
+Front: "Cold Agglutinin" titer is used for?
+
+Back: Mycoplasma pneumoniae and EBV.

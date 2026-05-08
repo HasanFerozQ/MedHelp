@@ -1,0 +1,1142 @@
+[
+  {
+    "q": "Bacterial cell wall component unique to Gram-positives?",
+    "a": "<b>Teichoic acid</b> (lipoteichoic acid induces TNF-&alpha; and IL-1)."
+  },
+  {
+    "q": "Function of the bacterial capsule?",
+    "a": "Antiphagocytic; protects against opsonization."
+  },
+  {
+    "q": "Location of the bacterial \"Endotoxin\"?",
+    "a": "Outer membrane of Gram-negative bacteria (<b>Lipid A</b> of <b>LPS</b>)."
+  },
+  {
+    "q": "Only bacteria with <b>Polypeptide capsule</b> (D-glutamate)?",
+    "a": "<i>Bacillus anthracis</i>."
+  },
+  {
+    "q": "Bacteria that do not Gram stain well because they are intracellular?",
+    "a": "<i>Legionella</i>, <i>Chlamydia</i>, <i>Rickettsia</i>."
+  },
+  {
+    "q": "Visualization method for <i>Treponema pallidum</i>?",
+    "a": "Dark-field microscopy or Fluorescent antibody stain."
+  },
+  {
+    "q": "Media used to isolate <i>N. gonorrhoeae</i>?",
+    "a": "<b>Thayer-Martin</b> (<b>VPN</b>) agar."
+  },
+  {
+    "q": "Media used for <i>C. diphtheriae</i>?",
+    "a": "<b>L\u00f6ffler</b> medium or <b>Tellurite</b> agar."
+  },
+  {
+    "q": "Metabolic requirement of <i>H. influenzae</i>?",
+    "a": "Factors V (NAD+) and X (Hematin)."
+  },
+  {
+    "q": "Function of <b>Protein A</b> in <i>S. aureus</i>?",
+    "a": "Binds Fc region of IgG; prevents opsonization and phagocytosis."
+  },
+  {
+    "q": "Mechanism of <b>Diphtheria toxin</b>?",
+    "a": "Inactivation of EF-2 via ADP-ribosylation (inhibits protein synthesis)."
+  },
+  {
+    "q": "Mechanism of <b>Cholera toxin</b>?",
+    "a": "Permanently activates Gs, increasing cAMP, leading to Cl<sup>-</sup> and H_2O secretion."
+  },
+  {
+    "q": "Mechanism of <b>Shiga toxin</b>?",
+    "a": "Cleaves 28S rRNA (60S ribosome subunit); inhibits protein synthesis."
+  },
+  {
+    "q": "Common characteristic of <i>Clostridium</i> species?",
+    "a": "Gram-positive, spore-forming, obligate anaerobic bacilli."
+  },
+  {
+    "q": "Mechanism of <b>Tetanospasmin</b>?",
+    "a": "Cleaves SNARE proteins; inhibits release of GABA and glycine from Renshaw cells."
+  },
+  {
+    "q": "Effect of <b>Botulinum toxin</b>?",
+    "a": "Cleaves SNARE proteins; inhibits ACh release at the neuromuscular junction (flaccid paralysis)."
+  },
+  {
+    "q": "Primary reservoir for <i>Listeria monocytogenes</i>?",
+    "a": "Unpasteurized dairy, cold deli meats, transplacental/vaginal transmission."
+  },
+  {
+    "q": "Major virulence factor of <i>S. pyogenes</i>?",
+    "a": "M protein (antiphagocytic, mimics myosin)."
+  },
+  {
+    "q": "Criteria for diagnosing Rheumatic Fever?",
+    "a": "<b>JONES criteria</b> (Joints, Carditis, Nodules, Erythema marginatum, Sydenham chorea)."
+  },
+  {
+    "q": "Most common cause of subacute bacterial endocarditis?",
+    "a": "Viridans group streptococci (e.g., <i>S. sanguinis</i>)."
+  },
+  {
+    "q": "Identification of <i>S. pneumoniae</i>?",
+    "a": "Catalase (-), alpha-hemolytic, lancet-shaped diplococci, bile soluble, <b>Optochin</b> sensitive."
+  },
+  {
+    "q": "Gold standard test for <i>C. difficile</i> diagnosis?",
+    "a": "PCR for toxin genes or stool toxin assay."
+  },
+  {
+    "q": "Characteristic appearance of <i><i>Actinomyces</i> israelii</i>?",
+    "a": "Yellow \"<b>sulfur granules</b>\" in abscesses/sinus tracts."
+  },
+  {
+    "q": "Treatment for <i>Nocardia</i> vs. <i>Actinomyces</i>?",
+    "a": "<b>SNAP</b>: Sulfa for <i>Nocardia</i>, <i>Actinomyces</i> use Penicillin."
+  },
+  {
+    "q": "Primary screening test for Tuberculosis?",
+    "a": "<b>PPD</b> (Type IV Hypersensitivity) or <b>IGRA</b> (Interferon-gamma release assay)."
+  },
+  {
+    "q": "Classic presentation of Secondary TB?",
+    "a": "Fibrocavitary lesions in the upper lobes of the lung."
+  },
+  {
+    "q": "Most common cause of <b>UTIs</b>?",
+    "a": "<i>Escherichia coli</i> (Uropathogenic strains)."
+  },
+  {
+    "q": "Identifying feature of <i>Klebsiella pneumoniae</i>?",
+    "a": "Large mucoid capsule; \"currant jelly\" sputum in alcoholics/diabetics."
+  },
+  {
+    "q": "Identifying feature of <i>Proteus mirabilis</i>?",
+    "a": "Swarming motility on agar; produces <b>urease</b> (struvite stones)."
+  },
+  {
+    "q": "Common source of <i><i>Salmonella</i> typhi</i>?",
+    "a": "Humans only (gallbladder carriage in chronic carriers)."
+  },
+  {
+    "q": "Classic sign of <i><i>Vibrio</i> vulnificus</i> infection?",
+    "a": "Cellulitis/bullous lesions after exposure to seawater or raw oysters (high risk in liver disease)."
+  },
+  {
+    "q": "Triad of Rocky Mountain Spotted Fever?",
+    "a": "Headache, fever, rash (starts at wrists/ankles and spreads centrally)."
+  },
+  {
+    "q": "Only DNA virus that is NOT double-stranded?",
+    "a": "Parvoviridae (ssDNA)."
+  },
+  {
+    "q": "Only RNA virus that is NOT single-stranded?",
+    "a": "Reoviridae (dsRNA, e.g., Rotavirus)."
+  },
+  {
+    "q": "Site of replication for DNA viruses?",
+    "a": "Nucleus (Exception: <i>Poxvirus</i> replicates in cytoplasm)."
+  },
+  {
+    "q": "Site of replication for RNA viruses?",
+    "a": "Cytoplasm (Exceptions: <i>Influenza</i> and <i>Retroviruses</i> replicate in nucleus)."
+  },
+  {
+    "q": "<b>Tzanck prep</b> findings in HSV/VZV?",
+    "a": "Multinucleated giant cells."
+  },
+  {
+    "q": "Classic triad of EBV <b>Mononucleosis</b>?",
+    "a": "Fever, pharyngitis, lymphadenopathy (posterior cervical)."
+  },
+  {
+    "q": "Cancers associated with EBV?",
+    "a": "Burkitt lymphoma, Nasopharyngeal carcinoma, Hodgkin lymphoma."
+  },
+  {
+    "q": "Most common cause of congenital infection?",
+    "a": "Cytomegalovirus (CMV)."
+  },
+  {
+    "q": "Mechanism of <b>Antigenic Shift</b>?",
+    "a": "Reassortment of viral genome segments (leads to Pandemics)."
+  },
+  {
+    "q": "High-risk <b>HPV</b> strains for cervical cancer?",
+    "a": "<b>HPV</b> 16 and 18 (E6 inhibits p53; E7 inhibits Rb)."
+  },
+  {
+    "q": "Typical finding in <b>Negri bodies</b>?",
+    "a": "Rabies virus (cytoplasmic inclusions in Purkinje cells/hippocampus)."
+  },
+  {
+    "q": "Diagnostic finding for Measles (Rubeola)?",
+    "a": "<b>Koplik spots</b> (white spots on buccal mucosa)."
+  },
+  {
+    "q": "Sequence of events in HIV infection?",
+    "a": "gp120 binds CD4 and CCR5/CXCR4; gp41 mediates fusion."
+  },
+  {
+    "q": "Form of fungi at body temperature (37&deg;C)?",
+    "a": "Yeast. (Mnemonic: Mold in the Cold, Yeast in the Heat)."
+  },
+  {
+    "q": "Geographic location for <i>Histoplasmosis</i>?",
+    "a": "Ohio and Mississippi River Valleys (Bird/Bat droppings)."
+  },
+  {
+    "q": "Morphology of <i>Aspergillus fumigatus</i>?",
+    "a": "Septate hyphae with branching at acute angles (45&deg;)."
+  },
+  {
+    "q": "Finding in <i>Pneumocystis jirovecii</i> pneumonia?",
+    "a": "Ground-glass opacities on CXR; \"crushed ping-pong ball\" cysts on silver stain."
+  },
+  {
+    "q": "Treatment for most systemic mycoses?",
+    "a": "<b>Amphotericin B</b> (severe) or Itraconazole (mild/local)."
+  },
+  {
+    "q": "Classic triad of <i>Giardia lamblia</i>?",
+    "a": "Bloating, flatulence, foul-smelling fatty stools (<b>steatorrhea</b>)."
+  },
+  {
+    "q": "Flask-shaped ulcers in the colon?",
+    "a": "<i>Entamoeba histolytica</i>."
+  },
+  {
+    "q": "Finding in \"Malaria\" paroxysms?",
+    "a": "Cyclic fever, chills, anemia, splenomegaly."
+  },
+  {
+    "q": "Vector for <i>Trypanosoma cruzi</i> (<b>Chagas</b>)?",
+    "a": "Reduviid bug (\"kissing bug\")."
+  },
+  {
+    "q": "Characteristic of <i>Enterobius vermicularis</i>?",
+    "a": "Pinworms; perianal pruritus (Scotch tape test)."
+  },
+  {
+    "q": "Organism causing \"Swiss cheese\" appearance in the brain?",
+    "a": "<i>Taenia solium</i> (Neurocysticercosis)."
+  },
+  {
+    "q": "Mechanism of <b>Beta-lactams</b>?",
+    "a": "Bind Penicillin-Binding Proteins (PBPs); inhibit peptidoglycan cross-linking."
+  },
+  {
+    "q": "Mechanism of <b>Vancomycin</b>?",
+    "a": "Binds D-ala-D-ala portion of cell wall precursors."
+  },
+  {
+    "q": "Side effect of <b>Aminoglycosides</b>?",
+    "a": "Nephrotoxicity, Ototoxicity, Teratogen."
+  },
+  {
+    "q": "Mechanism of <b>Macrolides</b>?",
+    "a": "Bind 50S subunit; inhibit translocation."
+  },
+  {
+    "q": "Major side effect of <b>Fluoroquinolones</b>?",
+    "a": "Tendon rupture (Achilles); cartilage damage in children."
+  },
+  {
+    "q": "Antibiotic associated with <b>Grey Baby Syndrome</b>?",
+    "a": "<b>Chloramphenicol</b>."
+  },
+  {
+    "q": "Resistance mechanism for <b>MRSA</b>?",
+    "a": "Altered PBP (PBP2a) encoded by mecA gene."
+  },
+  {
+    "q": "Cells that release Interferon-gamma (IFN-&gamma;)?",
+    "a": "Th1 cells and NK cells."
+  },
+  {
+    "q": "Function of Secretory IgA?",
+    "a": "Prevents attachment of bacteria/viruses to mucous membranes."
+  },
+  {
+    "q": "Mechanism of Type I Hypersensitivity?",
+    "a": "IgE-mediated mast cell degranulation."
+  },
+  {
+    "q": "<b>MHC</b> class found on all nucleated cells?",
+    "a": "<b>MHC</b> I (presents to CD8+ T cells)."
+  },
+  {
+    "q": "Components of the <b>MAC</b> (Membrane Attack Complex)?",
+    "a": "C5b, C6, C7, C8, C9."
+  },
+  {
+    "q": "Deficiency of C1 esterase inhibitor results in?",
+    "a": "Hereditary Angioedema (high bradykinin)."
+  },
+  {
+    "q": "Bug associated with <b>Guillain-Barr\u00e9</b> Syndrome?",
+    "a": "<i>Campylobacter jejuni</i>."
+  },
+  {
+    "q": "Most common cause of \"Atypical\" (walking) pneumonia?",
+    "a": "<i>Mycoplasma pneumoniae</i>."
+  },
+  {
+    "q": "Finding in \"<b>Waterhouse-Friderichsen</b> Syndrome\"?",
+    "a": "Adrenal hemorrhage due to <i>Neisseria meningitidis</i> septicemia."
+  },
+  {
+    "q": "\"<b>Rice-water</b>\" stools?",
+    "a": "<i><i>Vibrio</i> cholerae</i>."
+  },
+  {
+    "q": "\"Strawberry cervix\"?",
+    "a": "<i>Trichomonas vaginalis</i>."
+  },
+  {
+    "q": "<b>Maltese cross</b> appearance in RBCs?",
+    "a": "<i>Babesia microti</i>."
+  },
+  {
+    "q": "Primary cause of Epiglottitis?",
+    "a": "<i>Haemophilus influenzae</i> type b."
+  },
+  {
+    "q": "\"<b>Slapped cheek</b>\" rash in children?",
+    "a": "<i>Parvovirus B19</i> (Erythema infectiosum)."
+  },
+  {
+    "q": "Associated bug with staghorn calculi?",
+    "a": "<i>Proteus mirabilis</i>."
+  },
+  {
+    "q": "\"Wool-sorter\u2019s disease\"?",
+    "a": "Pulmonary Anthrax (B. anthracis)."
+  },
+  {
+    "q": "Leading cause of neonatal meningitis?",
+    "a": "Group B Streptococcus (<i>S. agalactiae</i>)."
+  },
+  {
+    "q": "Culture requirements for <i>Legionella</i>?",
+    "a": "Charcoal yeast extract (BCYE) with Iron and Cysteine."
+  },
+  {
+    "q": "Typical patient for <i>Pseudomonas</i> infection?",
+    "a": "Burn victims, Cystic Fibrosis patients, Intravenous drug users (IVDU)."
+  },
+  {
+    "q": "\"Hand-foot-mouth\" disease virus?",
+    "a": "<i>Coxsackievirus A</i>."
+  },
+  {
+    "q": "Chronic infection with <i>Schistosoma haematobium</i> increases risk of?",
+    "a": "Squamous cell carcinoma of the bladder."
+  },
+  {
+    "q": "Mechanism of Sulfonamides?",
+    "a": "Inhibit dihydropteroate synthase (Dihydropteroate synthase)."
+  },
+  {
+    "q": "Difference between naked and enveloped viruses?",
+    "a": "Naked viruses are more resistant to heat/detergents; enveloped viruses acquire membrane from host cell."
+  },
+  {
+    "q": "Definition of Prion?",
+    "a": "Infectious protein (PrPsc) that causes misfolding of normal PrPc proteins."
+  },
+  {
+    "q": "Primary feature of <i>Borrelia burgdorferi</i> (Lyme)?",
+    "a": "Erythema migrans (bull\u2019s-eye rash)."
+  },
+  {
+    "q": "Reservoir for <i>Leptospira interrogans</i>?",
+    "a": "Animal urine (often in water/soil)."
+  },
+  {
+    "q": "Major side effect of <b>Amphotericin B</b>?",
+    "a": "Nephrotoxicity (electrolyte wasting: K^+, Mg^{2+)."
+  },
+  {
+    "q": "Primary prevention for <i>H. influenzae</i> type b?",
+    "a": "Conjugate vaccine (capsular polysaccharide + protein)."
+  },
+  {
+    "q": "Identification of <i>Enterococcus</i> species?",
+    "a": "Growth in 6.5% NaCl and bile."
+  },
+  {
+    "q": "Complication of E. coli O157:H7?",
+    "a": "<b>HUS</b> (Hemolytic Uremic Syndrome)."
+  },
+  {
+    "q": "Mode of transmission for Toxoplasma gondii?",
+    "a": "Cysts in meat or oocysts in cat feces; transplacental."
+  },
+  {
+    "q": "Classic feature of <i>Bartonella henselae</i>?",
+    "a": "Cat-scratch disease (regional lymphadenopathy)."
+  },
+  {
+    "q": "Shape of <i>Vibrio</i> bacteria?",
+    "a": "Comma-shaped."
+  },
+  {
+    "q": "Differentiation of Staph and Strep?",
+    "a": "Catalase test (Staph is +, Strep is -)."
+  },
+  {
+    "q": "Differentiation of <i>S. aureus</i> from other Staphylococci?",
+    "a": "Coagulase test (<i>S. aureus</i> is +, others are -)."
+  },
+  {
+    "q": "Differentiation of <i>S. epidermidis</i> and <i>S. saprophyticus</i>?",
+    "a": "Novobiocin (S. epi is sensitive, S. sapro is resistant)."
+  },
+  {
+    "q": "\"Fried-egg\" appearance of colonies?",
+    "a": "<i>Mycoplasma pneumoniae</i>."
+  },
+  {
+    "q": "Leading cause of traveler's diarrhea?",
+    "a": "ETEC (Enterotoxigenic E. coli)."
+  },
+  {
+    "q": "Characteristic of H. pylori?",
+    "a": "Curved rod, <b>Urease</b> positive (used for breath test)."
+  },
+  {
+    "q": "Common symptom of Ascaris lumbricoides?",
+    "a": "Loeffler syndrome (pulmonary eosinophilia during lung migration)."
+  },
+  {
+    "q": "Mechanism of Acyclovir?",
+    "a": "Guanosine analog; phosphorylated by viral thymidine kinase (chain termination)."
+  },
+  {
+    "q": "Drug of choice for Syphilis?",
+    "a": "Penicillin G."
+  },
+  {
+    "q": "Common cause of viral croup?",
+    "a": "Parainfluenza virus (Steeple sign on X-ray)."
+  },
+  {
+    "q": "\"Spaghetti and meatballs\" appearance on KOH prep?",
+    "a": "<i>Tinea versicolor</i> (<i>Malassezia furfur</i>)."
+  },
+  {
+    "q": "Classic sign of <i>Gardnerella vaginalis</i>?",
+    "a": "Clue cells; fishy odor (Whiff test)."
+  },
+  {
+    "q": "Most common cause of osteomyelitis in sickle cell patients?",
+    "a": "<i>Salmonella</i>."
+  },
+  {
+    "q": "Finding in <i><i>Francisella</i> tularensis</i>?",
+    "a": "Ulceroglandular disease; transmitted by ticks/rabbits."
+  },
+  {
+    "q": "\"Satellite phenomenon\" of <i>H. influenzae</i>?",
+    "a": "Growth around <i>S. aureus</i> (which provides NAD+)."
+  },
+  {
+    "q": "Major virulence factor of <i>Cryptococcus neoformans</i>?",
+    "a": "Thick polysaccharide capsule (India Ink positive)."
+  },
+  {
+    "q": "Best treatment for Giardiasis?",
+    "a": "Metronidazole."
+  },
+  {
+    "q": "Drug used to treat CMV retinitis?",
+    "a": "Ganciclovir."
+  },
+  {
+    "q": "What is the \"window period\" in HBV infection?",
+    "a": "Period where HBsAg and anti-HBs are both negative; Anti-HBc IgM is positive."
+  },
+  {
+    "q": "Marker of high infectivity in HBV?",
+    "a": "HBeAg."
+  },
+  {
+    "q": "Mechanism of Metronidazole?",
+    "a": "Forms toxic free radicals that damage DNA (anaerobes and protozoa)."
+  },
+  {
+    "q": "Primary treatment for <b>MRSA</b>?",
+    "a": "<b>Vancomycin</b>, Daptomycin, or Linezolid."
+  },
+  {
+    "q": "Appearance of E. coli on EMB agar?",
+    "a": "Green metallic sheen."
+  },
+  {
+    "q": "Bacteria that require Cysteine for growth?",
+    "a": "The Four Sisters: <i>Francisella</i>, <i>Brucella</i>, <i>Legionella</i>, and <i>Pasteurella</i>."
+  },
+  {
+    "q": "Bacteria that are \"Obligate Aerobes\"?",
+    "a": "Nagging Pests Must Breathe: <i>Nocardia</i>, <i>Pseudomonas</i>, Mycobacterium tuberculosis, <i>Bacillus anthracis</i>."
+  },
+  {
+    "q": "Name the \"Obligate Anaerobes\"?",
+    "a": "Anaerobes Can\u2019t Breathe Fresh Air: <i>Clostridium</i>, <i>Bacteroides</i>, <i>Fusobacterium</i>, <i>Actinomyces</i>."
+  },
+  {
+    "q": "Distinction between E. coli and Enterobacter on MacConkey?",
+    "a": "Both are lactose fermenters (pink), but E. coli is <b>indole</b> positive."
+  },
+  {
+    "q": "Significance of \"<b>Sulfur Granules</b>\" in a tissue specimen?",
+    "a": "Pathognomonic for <i><i>Actinomyces</i> israelii</i>."
+  },
+  {
+    "q": "Identification of <i>Bacillus anthracis</i> on agar?",
+    "a": "\"<b>Medusa head</b>\" appearance (non-hemolytic, filamentous colonies)."
+  },
+  {
+    "q": "Transmission of <i>Brucella</i>?",
+    "a": "Unpasteurized dairy products or contact with infected livestock (undulant fever)."
+  },
+  {
+    "q": "Cause of \"Rabbit Fever\" (Tularemia)?",
+    "a": "<i><i>Francisella</i> tularensis</i>."
+  },
+  {
+    "q": "Primary vector for <i>Borrelia burgdorferi</i>?",
+    "a": "<i>Ixodes</i> tick (also carries Babesia and Anaplasma)."
+  },
+  {
+    "q": "Common infection following a dog or cat bite?",
+    "a": "<i>Pasteurella</i> multocida (cellulitis within 24 hours)."
+  },
+  {
+    "q": "Organism causing \"Q Fever\"?",
+    "a": "<i>Coxiella burnetii</i> (atypical pneumonia, no rash, negative Weil-Felix)."
+  },
+  {
+    "q": "Presentation of <i>Leptospira interrogans</i> (<b>Weil Disease</b>)?",
+    "a": "Jaundice, photophobia, conjunctival suffusion (redness without exudate)."
+  },
+  {
+    "q": "Vector for Leishmaniasis?",
+    "a": "Sandfly."
+  },
+  {
+    "q": "Definition of \"<b>Cold Agglutinins</b>\"?",
+    "a": "IgM antibodies that agglutinate RBCs at low temperatures; seen in <i>Mycoplasma pneumoniae</i>."
+  },
+  {
+    "q": "Mechanism of <i><i>Vibrio</i> cholerae</i> diarrhea?",
+    "a": "Permanent activation of Gs protein \\rightarrow \\uparrow cAMP \\rightarrow secretion of Cl<sup>-</sup> into gut lumen."
+  },
+  {
+    "q": "Most common cause of bacterial enterocolitis in the US?",
+    "a": "<i>Campylobacter jejuni</i>."
+  },
+  {
+    "q": "Bug associated with reactive arthritis (Reiter\u2019s Syndrome)?",
+    "a": "Shigella, <i>Salmonella</i>, Campylobacter, <i>Chlamydia</i>."
+  },
+  {
+    "q": "Identifying feature of Corynebacterium diphtheriae?",
+    "a": "Gram-positive rods with \"Chinese letter\" or club-shaped appearance; metachromatic granules."
+  },
+  {
+    "q": "Cause of \"<b>Biliary Tract Disease</b>\" and Cholangiocarcinoma in Asia?",
+    "a": "<i>Clonorchis sinensis</i> (Chinese liver fluke)."
+  },
+  {
+    "q": "Mechanism of Vitamin B12 deficiency via parasite?",
+    "a": "<i>Diphyllobothrium latum</i> (Fish tapeworm) competes for B12 in the intestine."
+  },
+  {
+    "q": "Parasite associated with Portal Hypertension and Splenomegaly?",
+    "a": "<i>Schistosoma mansoni</i> or <i>Schistosoma japonicum</i> (eggs in mesenteric veins)."
+  },
+  {
+    "q": "Classic symptom of <i>Sarcoptes scabiei</i>?",
+    "a": "Intense pruritus (worse at night) and serpiginous burrows in finger webs/wrists."
+  },
+  {
+    "q": "Finding in <i>Strongyloides stercoralis</i> infection?",
+    "a": "Rhabditiform larvae in the stool (can cause hyperinfection syndrome in immunocompromised)."
+  },
+  {
+    "q": "Appearance of <i>Coccidioides immitis</i> in tissue?",
+    "a": "Spherules filled with endospores (found in Southwestern US/San Joaquin Valley)."
+  },
+  {
+    "q": "Culture method for most fungi?",
+    "a": "Sabouraud dextrose agar."
+  },
+  {
+    "q": "\"Captain's Wheel\" yeast formation?",
+    "a": "<i>Paracoccidiodes brasiliensis</i> (Latin America)."
+  },
+  {
+    "q": "Primary risk factor for <i>Mucor</i> or <i>Rhizopus</i> infection?",
+    "a": "Diabetic Ketoacidosis (DKA) or neutropenia (fungus invades cribriform plate)."
+  },
+  {
+    "q": "Bug associated with \"Currant Jelly\" sputum?",
+    "a": "<i>Klebsiella pneumoniae</i>."
+  },
+  {
+    "q": "Cause of \"Water-house Friderichsen Syndrome\"?",
+    "a": "<i>Neisseria meningitidis</i> (leads to adrenal insufficiency/hemorrhage)."
+  },
+  {
+    "q": "Most common cause of \"Otitis Externa\"?",
+    "a": "<i>Pseudomonas</i> aeruginosa."
+  },
+  {
+    "q": "Characteristic rash of \"Secondary Syphilis\"?",
+    "a": "Maculopapular rash on palms and soles; condylomata lata."
+  },
+  {
+    "q": "Finding in \"Congenital Syphilis\"?",
+    "a": "<b>Hutchinson teeth</b>, saddle nose, <b>saber shins</b>, deafness."
+  },
+  {
+    "q": "\"<b>Double zone of hemolysis</b>\" on blood agar?",
+    "a": "<i>Clostridium</i> perfringens."
+  },
+  {
+    "q": "Mechanism of <b>Vancomycin</b> resistance?",
+    "a": "Mutation of D-Ala-D-Ala to D-Ala-D-Lac."
+  },
+  {
+    "q": "Mechanism of Tetracyclines?",
+    "a": "Bind 30S subunit; prevent attachment of aminoacyl-tRNA."
+  },
+  {
+    "q": "Effect of Rifampin on the liver?",
+    "a": "Potent inducer of Cytochrome P450 (interacts with Warfarin, OCPs)."
+  },
+  {
+    "q": "Mechanism of Trimethoprim?",
+    "a": "Inhibits dihydrofolate reductase (DHFR)."
+  },
+  {
+    "q": "Which antibiotic causes \"<b>Red Man Syndrome</b>\"?",
+    "a": "<b>Vancomycin</b> (due to rapid histamine release; prevented by slow infusion)."
+  },
+  {
+    "q": "Unique side effect of Linezolid?",
+    "a": "Bone marrow suppression (thrombocytopenia) and Serotonin Syndrome."
+  },
+  {
+    "q": "Family of Hepatitis C Virus?",
+    "a": "Flaviviridae."
+  },
+  {
+    "q": "Marker of \"Immunity\" to Hepatitis B?",
+    "a": "Anti-HBs antibody (and negative HBsAg)."
+  },
+  {
+    "q": "Virus causing \"Hemorrhagic Cystitis\"?",
+    "a": "Adenovirus (usually types 11 or 21)."
+  },
+  {
+    "q": "Major characteristic of Reovirus (Rotavirus)?",
+    "a": "Segmented, double-stranded RNA virus; major cause of infantile diarrhea."
+  },
+  {
+    "q": "Virus associated with \"Progressive Multifocal Leukoencephalopathy\" (PML)?",
+    "a": "JC Virus (Polyomavirus)."
+  },
+  {
+    "q": "Which RNA virus is \"Ambisese\"?",
+    "a": "Arenavirus (e.g., Lassa fever)."
+  },
+  {
+    "q": "Defining feature of Prion diseases on histology?",
+    "a": "Spongiform encephalopathy (vacuolation of neurons)."
+  },
+  {
+    "q": "Bug associated with infective endocarditis in Colorectal Cancer?",
+    "a": "Streptococcus bovis (now <i>S. gallolyticus</i>)."
+  },
+  {
+    "q": "Cause of \"Lemierre Syndrome\"?",
+    "a": "<i>Fusobacterium</i> necrophorum (internal jugular vein thrombosis following pharyngitis)."
+  },
+  {
+    "q": "\"Fried-egg\" appearance of colonies?",
+    "a": "Mycoplasma species."
+  },
+  {
+    "q": "Common cause of food poisoning from \"Reheated Rice\"?",
+    "a": "<i>Bacillus cereus</i>."
+  },
+  {
+    "q": "Bug associated with \"Rose Spots\" on the abdomen?",
+    "a": "<i><i>Salmonella</i> typhi</i>."
+  },
+  {
+    "q": "Morphology of Neisseria?",
+    "a": "Gram-negative \"kidney-bean\" shaped diplococci."
+  },
+  {
+    "q": "Cause of \"Pseudoappendicitis\"?",
+    "a": "<i>Yersinia enterocolitica</i>."
+  },
+  {
+    "q": "Patient with \"descending paralysis\" after eating home-canned food?",
+    "a": "<i>Clostridium</i> botulinum (Botulism)."
+  },
+  {
+    "q": "Child with \"barking\" cough and \"steeple sign\" on X-ray?",
+    "a": "Parainfluenza virus (Croup)."
+  },
+  {
+    "q": "\"Thumbprint sign\" on lateral neck X-ray?",
+    "a": "Epiglottitis (typically <i>Haemophilus influenzae</i> type b)."
+  },
+  {
+    "q": "Patient with \"watery diarrhea\" after traveling to Mexico; Lab shows \"comma-shaped\" organisms?",
+    "a": "<i><i>Vibrio</i> cholerae</i>."
+  },
+  {
+    "q": "\"Currant jelly\" sputum in an alcoholic patient?",
+    "a": "<i>Klebsiella pneumoniae</i>."
+  },
+  {
+    "q": "High fever and login-bradycardia (Faget sign) with \"rose spots\" on abdomen?",
+    "a": "<i><i>Salmonella</i> typhi</i> (Typhoid fever)."
+  },
+  {
+    "q": "\"Bulging fontanelle\" and stiff neck in a 2-week-old neonate?",
+    "a": "Streptococcus agalactiae (Group B Strep), E. coli, or Listeria."
+  },
+  {
+    "q": "Facial \"<b>sulfur granules</b>\" draining from a jaw abscess?",
+    "a": "<i><i>Actinomyces</i> israelii</i>."
+  },
+  {
+    "q": "Splenic rupture following a sore throat and extreme fatigue?",
+    "a": "Epstein-Barr Virus (Infectious <b>Mononucleosis</b>)."
+  },
+  {
+    "q": "\"Owl\u2019s eye\" intranuclear inclusions in a biopsy?",
+    "a": "Cytomegalovirus (CMV)."
+  },
+  {
+    "q": "\"Spaghetti and meatballs\" appearance on KOH prep?",
+    "a": "<i>Malassezia furfur</i> (<i>Tinea versicolor</i>)."
+  },
+  {
+    "q": "Yeast with \"narrow-based budding\" and a thick capsule?",
+    "a": "<i>Cryptococcus neoformans</i>."
+  },
+  {
+    "q": "\"<b>Maltese cross</b>\" inside Red Blood Cells?",
+    "a": "<i>Babesia microti</i>."
+  },
+  {
+    "q": "Flask-shaped colonic ulcers?",
+    "a": "<i>Entamoeba histolytica</i>."
+  },
+  {
+    "q": "Peri-anal itching in a child, diagnosed with a \"Scotch Tape\" test?",
+    "a": "<i>Enterobius vermicularis</i> (Pinworm)."
+  },
+  {
+    "q": "Worm infection associated with B12 deficiency?",
+    "a": "<i>Diphyllobothrium latum</i> (Fish tapeworm)."
+  },
+  {
+    "q": "Organism causing \"Mega-colon\" and \"Mega-esophagus\" in South America?",
+    "a": "<i>Trypanosoma cruzi</i> (<b>Chagas</b> disease)."
+  },
+  {
+    "q": "Antibiotic that causes \"Yellow Teeth\" in children?",
+    "a": "Tetracyclines."
+  },
+  {
+    "q": "Mechanism of Methicillin resistance in <i>S. aureus</i> (<b>MRSA</b>)?",
+    "a": "Alteration of Penicillin-Binding Protein (PBP 2a) via mecA gene."
+  },
+  {
+    "q": "Antibiotic associated with \"<b>Red Man Syndrome</b>\"?",
+    "a": "<b>Vancomycin</b> (infusion-related histamine release)."
+  },
+  {
+    "q": "Antibiotic class that can cause Achilles tendon rupture?",
+    "a": "<b>Fluoroquinolones</b> (e.g., Ciprofloxacin)."
+  },
+  {
+    "q": "Medication used for \"prophylaxis\" in someone exposed to <i>Neisseria meningitidis</i>?",
+    "a": "Rifampin (or Ciprofloxacin/Ceftriaxone)."
+  },
+  {
+    "q": "Treatment for <i>Pneumocystis jirovecii</i> pneumonia (PCP)?",
+    "a": "Trimethoprim-Sulfamethoxazole (TMP-SMX)."
+  },
+  {
+    "q": "Mechanism of Macrolide resistance?",
+    "a": "Methylation of the 23S rRNA binding site."
+  },
+  {
+    "q": "Viral family of HIV?",
+    "a": "Retroviridae (Lentivirus genus)."
+  },
+  {
+    "q": "Only DNA virus that replicates in the cytoplasm?",
+    "a": "<i>Poxvirus</i> (e.g., Smallpox, Molluscum contagiosum)."
+  },
+  {
+    "q": "Only RNA virus that replicates in the nucleus?",
+    "a": "Orthomyxovirus (<i>Influenza</i>) and <i>Retroviruses</i>."
+  },
+  {
+    "q": "Definition of \"<b>Antigenic Shift</b>\" in <i>Influenza</i>?",
+    "a": "Genetic reassortment of segments (causes pandemics)."
+  },
+  {
+    "q": "Definition of \"<b>Antigenic Drift</b>\" in <i>Influenza</i>?",
+    "a": "Random mutation of Hemagglutinin/Neuraminidase (causes epidemics/seasonal flu)."
+  },
+  {
+    "q": "Virus causing \"<b>slapped cheek</b>\" rash (Erythema Infectiosum)?",
+    "a": "<i>Parvovirus B19</i>."
+  },
+  {
+    "q": "High-risk <b>HPV</b> types for cervical cancer?",
+    "a": "<b>HPV</b> 16 and 18."
+  },
+  {
+    "q": "Viral cause of \"Hemorrhagic Cystitis\"?",
+    "a": "Adenovirus (Types 11 and 21)."
+  },
+  {
+    "q": "Staining method for Mycobacterium tuberculosis?",
+    "a": "Ziehl-Neelsen (Acid-Fast) stain."
+  },
+  {
+    "q": "Medium used to culture Corynebacterium diphtheriae?",
+    "a": "<b>L\u00f6ffler</b>\u2019s medium or <b>Tellurite</b> agar."
+  },
+  {
+    "q": "Medium used to culture Neisseria species?",
+    "a": "<b>Thayer-Martin</b> (<b>VPN</b>) Agar."
+  },
+  {
+    "q": "Organism that requires \"Charcoal Yeast Extract\" agar?",
+    "a": "<i>Legionella</i> pneumophila."
+  },
+  {
+    "q": "\"Fried-egg\" appearance on culture?",
+    "a": "<i>Mycoplasma pneumoniae</i>."
+  },
+  {
+    "q": "Which bug is \"<b>Urease</b> Positive\"?",
+    "a": "Proteus, H. pylori, Ureaplasma, <i>Nocardia</i>, Cryptococcus, <i>S. saprophyticus</i>. (Mnemonic: PUNCH)."
+  },
+  {
+    "q": "Infection from a \"Dog or Cat bite\"?",
+    "a": "<i>Pasteurella</i> multocida."
+  },
+  {
+    "q": "\"Undulant fever\" from unpasteurized dairy?",
+    "a": "<i>Brucella</i> species."
+  },
+  {
+    "q": "Infection from skinning rabbits?",
+    "a": "<i><i>Francisella</i> tularensis</i>."
+  },
+  {
+    "q": "Vector for \"Lyme Disease\"?",
+    "a": "<i>Ixodes</i> tick."
+  },
+  {
+    "q": "Vector for \"Rocky Mountain Spotted Fever\"?",
+    "a": "<i>Dermacentor</i> tick."
+  },
+  {
+    "q": "Diagnostic test for <i>Legionella</i> pneumophila?",
+    "a": "Urine antigen test (fastest) or culture on BCYE agar."
+  },
+  {
+    "q": "Virulence factor of <i>H. influenzae</i> type b (Hib)?",
+    "a": "Polyribosylribitol phosphate (PRP) capsule."
+  },
+  {
+    "q": "Why is <i>Pseudomonas</i> aeruginosa common in Cystic Fibrosis?",
+    "a": "It forms a mucoid polysaccharide biofilm (alginate) in the lungs."
+  },
+  {
+    "q": "\"Whooping cough\" toxin mechanism?",
+    "a": "Pertussis toxin: Disables Gi, increasing cAMP (leads to impaired phagocytosis)."
+  },
+  {
+    "q": "Difference between <i>H. influenzae</i> and H. ducreyi?",
+    "a": "<i>H. influenzae</i> causes respiratory issues; H. ducreyi causes \"painful\" chancroid (STD)."
+  },
+  {
+    "q": "Late neurological complication of Measles (Rubeola)?",
+    "a": "Subacute Sclerosing Panencephalitis (SSPE) occurring years later."
+  },
+  {
+    "q": "Virus associated with \"Nasopharyngeal Carcinoma\"?",
+    "a": "Epstein-Barr Virus (EBV)."
+  },
+  {
+    "q": "Typical CBC finding in Infectious <b>Mononucleosis</b>?",
+    "a": "Atypical lymphocytes (reactive CD8+ T cells) on peripheral smear."
+  },
+  {
+    "q": "Only RNA virus with a \"Double-Stranded\" genome?",
+    "a": "Reovirus (Rotavirus)."
+  },
+  {
+    "q": "Most common cause of \"Bronchiolitis\" in infants?",
+    "a": "Respiratory Syncytial Virus (RSV)."
+  },
+  {
+    "q": "Leading cause of \"Fatal Sporadic Encephalitis\" in the US?",
+    "a": "Herpes Simplex Virus-1 (HSV-1) (affects temporal lobes)."
+  },
+  {
+    "q": "Best initial test for suspected <i>C. difficile</i>?",
+    "a": "Stool PCR or Enzyme Immunoassay (EIA) for toxins A and B."
+  },
+  {
+    "q": "Gold standard test for \"Malaria\"?",
+    "a": "Thick and thin blood smears."
+  },
+  {
+    "q": "Most sensitive test for \"<i>Chlamydia</i>\" and \"Gonorrhea\"?",
+    "a": "Nucleic Acid Amplification Test (NAAT)."
+  },
+  {
+    "q": "Diagnostic test for \"Pinworm\" (Enterobius)?",
+    "a": "Cellulose tape (Scotch tape) test to find eggs perianally."
+  },
+  {
+    "q": "Appearance of Plasmodium falciparum on blood smear?",
+    "a": "Crescent-shaped (banana-shaped) gametocytes and multiple ring forms."
+  },
+  {
+    "q": "Intermediate host of Schistosoma species?",
+    "a": "Freshwater snails."
+  },
+  {
+    "q": "Parasite causing \"<b>Elephantiasis</b>\" (lymphatic filariasis)?",
+    "a": "Wuchereria bancrofti."
+  },
+  {
+    "q": "Treatment for \"Neurocysticercosis\" (T. solium)?",
+    "a": "Albendazole and Praziquantel (+ steroids to reduce inflammation)."
+  },
+  {
+    "q": "Cytokine that stimulates \"Isotype Switching\" to IgE?",
+    "a": "IL-4."
+  },
+  {
+    "q": "Immune deficiency making patients susceptible to \"Catalase Positive\" organisms?",
+    "a": "Chronic Granulomatous Disease (CGD) due to NADPH oxidase deficiency."
+  },
+  {
+    "q": "\"Opsonins\" that enhance phagocytosis?",
+    "a": "IgG and C3b."
+  },
+  {
+    "q": "Mechanism of \"Type II\" Hypersensitivity?",
+    "a": "Cytotoxic: Antibodies (IgG/IgM) bind to antigens on cell surfaces (e.g., Rheumatic Fever)."
+  },
+  {
+    "q": "Component of Gram-negative cell walls that triggers \"Septic Shock\"?",
+    "a": "<b>Lipid A</b> (part of Lipopolysaccharide/<b>LPS</b>)."
+  },
+  {
+    "q": "\"<b>Saber shins</b>\" and \"<b>Hutchinson teeth</b>\" are signs of?",
+    "a": "Congenital Syphilis."
+  },
+  {
+    "q": "Bug associated with \"Reiter Syndrome\" (can't see, can't spit, can't climb a tree)?",
+    "a": "<i>Chlamydia</i> trachomatis."
+  },
+  {
+    "q": "Most common cause of \"Subacute Endocarditis\" after dental work?",
+    "a": "Viridans group Streptococci."
+  },
+  {
+    "q": "Bacteria that causes \"Struvite\" (Staghorn) renal stones?",
+    "a": "<i>Proteus mirabilis</i> (via <b>Urease</b> production)."
+  },
+  {
+    "q": "\"<b>Ecthyma gangrenosum</b>\" is pathognomonic for?",
+    "a": "<i>Pseudomonas</i> aeruginosa sepsis."
+  },
+  {
+    "q": "\"<b>Waterhouse-Friderichsen</b> Syndrome\" involves which gland?",
+    "a": "Adrenal glands (hemorrhagic necrosis)."
+  },
+  {
+    "q": "Mechanism of \"Sulfonamides\"?",
+    "a": "PABA antimetabolites; inhibit Dihydropteroate synthase."
+  },
+  {
+    "q": "Mechanism of \"Trimethoprim\"?",
+    "a": "Inhibits Dihydrofolate reductase."
+  },
+  {
+    "q": "Side effect of \"Ethambutol\"?",
+    "a": "Optic neuritis (red-green color blindness)."
+  },
+  {
+    "q": "Mechanism of \"<b>Amphotericin B</b>\"?",
+    "a": "Binds ergosterol and forms pores in the fungal cell membrane."
+  },
+  {
+    "q": "Mechanism of \"Caspo-fungin\"?",
+    "a": "Inhibits synthesis of &beta;-glucan in the fungal cell wall."
+  },
+  {
+    "q": "Definition of Bacterial \"Transformation\"?",
+    "a": "Uptake of naked DNA from the environment (notably <i>S. pneumoniae</i>, <i>H. influenzae</i>, Neisseria)."
+  },
+  {
+    "q": "Mechanism of Specialized Transduction?",
+    "a": "Lysogenic phage packages specific bacterial genes (e.g., <b>Shiga toxin</b>, <b>Diphtheria toxin</b>)."
+  },
+  {
+    "q": "Function of the bacterial \"Sex Pilus\"?",
+    "a": "Mediates conjugation (transfer of plasmids from F^+ to F^- cells)."
+  },
+  {
+    "q": "Difference between \"Exotoxin\" and \"Endotoxin\"?",
+    "a": "Exotoxins are secreted proteins (high toxicity); Endotoxin is <b>Lipid A</b> of the cell wall (triggers cytokines)."
+  },
+  {
+    "q": "Most common cause of \"Prosthetic Valve\" Endocarditis?",
+    "a": "Staphylococcus epidermidis."
+  },
+  {
+    "q": "Identification of Streptococcus agalactiae (GBS)?",
+    "a": "CAMP test positive (enlarges area of hemolysis formed by <i>S. aureus</i>)."
+  },
+  {
+    "q": "Complication of <i>S. pyogenes</i> that follows only pharyngitis?",
+    "a": "Rheumatic Fever (PSGN can follow both pharyngitis and impetigo)."
+  },
+  {
+    "q": "Bug associated with \"Gas Gangrene\" and \"Myonecrosis\"?",
+    "a": "<i>Clostridium</i> perfringens (Alpha toxin/Lecithinase)."
+  },
+  {
+    "q": "Distinction between <i>Salmonella</i> and Shigella?",
+    "a": "<i>Salmonella</i> is motile and produces H_2S (black on Hektoen); Shigella is non-motile and no H_2S."
+  },
+  {
+    "q": "Main virulence factor of E. coli causing neonatal meningitis?",
+    "a": "K1 capsular antigen."
+  },
+  {
+    "q": "\"Comma-shaped\" rod that grows at 42&deg;C?",
+    "a": "<i>Campylobacter jejuni</i>."
+  },
+  {
+    "q": "Mechanism of <i>Pseudomonas</i> Exotoxin A?",
+    "a": "Inactivates Elongation Factor-2 (EF-2) (same mechanism as <b>Diphtheria toxin</b>)."
+  },
+  {
+    "q": "Bug causing \"Cat Scratch Disease\" vs. \"Bacillary Angiomatosis\"?",
+    "a": "Both caused by <i>Bartonella henselae</i> (Angiomatosis occurs in immunocompromised)."
+  },
+  {
+    "q": "Which Hepatitis virus requires HBV for coinfection?",
+    "a": "Hepatitis D (Deltavirus)."
+  },
+  {
+    "q": "Mode of transmission for Hepatitis E?",
+    "a": "Fecal-oral (Enteric); high mortality in pregnant women."
+  },
+  {
+    "q": "Key structural protein used to diagnose early HIV infection?",
+    "a": "p24 capsid protein."
+  },
+  {
+    "q": "Which HIV gene encodes for Reverse Transcriptase, Protease, and Integrase?",
+    "a": "pol gene."
+  },
+  {
+    "q": "Target of the \"Maraviroc\" drug in HIV?",
+    "a": "CCR5 co-receptor on the host cell."
+  },
+  {
+    "q": "Fungus with \"Broad-based budding\" found in the Great Lakes region?",
+    "a": "<i>Blastomyces dermatitidis</i>."
+  },
+  {
+    "q": "\"Cigar-shaped\" yeast associated with rose bushes/gardening?",
+    "a": "<i>Sporothrix schenckii</i>."
+  },
+  {
+    "q": "Distinguishing feature of <i>Mucor</i> vs. Aspergillus?",
+    "a": "<i>Mucor</i> has non-septate hyphae with wide-angle (90&deg;) branching."
+  },
+  {
+    "q": "Soap bubble lesions in the brain (Virchow-Robin spaces)?",
+    "a": "<i>Cryptococcus neoformans</i>."
+  },
+  {
+    "q": "Parasite associated with \"Squamous Cell Carcinoma of the Bladder\"?",
+    "a": "<i>Schistosoma haematobium</i>."
+  },
+  {
+    "q": "Treatment for Toxoplasma gondii?",
+    "a": "Sulfadiazine + Pyrimethamine."
+  },
+  {
+    "q": "\"Anchovy paste\" liver abscess?",
+    "a": "<i>Entamoeba histolytica</i>."
+  },
+  {
+    "q": "Periorbital edema and muscle pain after eating \"undercooked wild game\"?",
+    "a": "<i>Trichinella spiralis</i>."
+  },
+  {
+    "q": "Antibiotic that causes \"Disulfiram-like reaction\" with alcohol?",
+    "a": "Metronidazole (also some Cephalosporins)."
+  },
+  {
+    "q": "Classic side effect of \"Dapsone\"?",
+    "a": "Hemolysis in G6PD deficiency."
+  },
+  {
+    "q": "Unique side effect of \"Rifampin\"?",
+    "a": "Orange-colored body fluids (tears, urine, sweat)."
+  },
+  {
+    "q": "Side effect of \"Tetracyclines\" involving the skin?",
+    "a": "Photosensitivity."
+  },
+  {
+    "q": "Which antibiotic class causes \"Fanconi Syndrome\" if expired?",
+    "a": "Tetracyclines."
+  },
+  {
+    "q": "\"<b>Quellung Reaction</b>\" positive?",
+    "a": "<i>S. pneumoniae</i>, <i>H. influenzae</i>, N. meningitidis, Klebsiella (Encapsulated bugs)."
+  },
+  {
+    "q": "\"<b>Nagler Reaction</b>\" identifies?",
+    "a": "<i>Clostridium</i> perfringens (Alpha toxin)."
+  },
+  {
+    "q": "\"<b>Weil-Felix Reaction</b>\" used for?",
+    "a": "Rickettsial infections (cross-reacts with Proteus antigens)."
+  },
+  {
+    "q": "\"Cold Agglutinin\" titer is used for?",
+    "a": "<i>Mycoplasma pneumoniae</i> and EBV."
+  }
+]
