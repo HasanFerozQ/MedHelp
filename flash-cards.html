@@ -5271,7 +5271,70 @@
             { q: "MOA of Methotrexate in Crohn's Disease?", a: "<b>Inhibits Dihydrofolate Reductase (DHFR)</b> → <b>↓</b> DNA synthesis; also <b>↑</b> Adenosine (anti-inflammatory)." },
             { q: "MOA of Natalizumab's GI benefit?", a: "<b>Blocks α₄-integrin</b> → prevents leukocyte adhesion and migration into gut tissue." }
           ]
+        },
+        {
+          topic: 'General Pathology',
+          icon: 'microscope',
+          cards: [
+            { q: "Define Hypertrophy vs Hyperplasia.", a: "<b>Hypertrophy:</b> Increase in cell size.<br><b>Hyperplasia:</b> Increase in cell number." },
+            { q: "Definition of Metaplasia?", a: "Reversible change in which one adult cell type is replaced by another (e.g., Barrett's Esophagus)." },
+            { q: "What is Dystrophic Calcification?", a: "Calcium deposition in <b>dead or dying</b> tissues; serum calcium levels are <b>normal</b>." },
+            { q: "What is Metastatic Calcification?", a: "Calcium deposition in <b>normal</b> tissues due to <b>hypercalcemia</b> (e.g., hyperparathyroidism)." },
+            { q: "Mechanism of Apoptosis vs Necrosis?", a: "<b>Apoptosis:</b> Programmed cell death; no inflammation.<br><b>Necrosis:</b> Accidental cell death; significant inflammation." }
+          ]
+        },
+        {
+          topic: 'Microbiology',
+          icon: 'bug',
+          cards: [
+            { q: "Gram-positive Cocci in clusters?", a: "<i>Staphylococcus aureus</i>." },
+            { q: "Gram-positive Cocci in chains?", a: "<i>Streptococcus</i> species." },
+            { q: "Key virulence factor of S. pneumoniae?", a: "<b>Polysaccharide capsule</b> (anti-phagocytic)." },
+            { q: "Treatment for MRSA?", a: "<b>Vancomycin</b>, Linezolid, or Daptomycin." },
+            { q: "MOA of Penicillin?", a: "Inhibits <b>Transpeptidase</b> (PBPs) → blocks cell wall cross-linking." }
+          ]
         }
+      ],
+      'year3': [
+        {
+          topic: 'Internal Medicine',
+          icon: 'stethoscope',
+          cards: [
+            { q: "First-line treatment for Hypertension?", a: "<b>ACE inhibitors, ARBs, Thiazides, or CCBs.</b>" },
+            { q: "Classic triad of Meningitis?", a: "Fever, Nuchal rigidity, Altered mental status." },
+            { q: "Most common cause of Community-Acquired Pneumonia?", a: "<i>Streptococcus pneumoniae</i>." }
+          ]
+        },
+        {
+          topic: 'General Surgery',
+          icon: 'scissors',
+          cards: [
+            { q: "What is McBurney's Point?", a: "1/3 the distance from ASIS to Umbilicus; point of maximal tenderness in <b>Appendicitis</b>." },
+            { q: "Signs of Cholecystitis?", a: "<b>Murphy's Sign</b> (arrest of inspiration on RUQ palpation)." }
+          ]
+        },
+        {
+          topic: 'Pediatrics',
+          icon: 'baby',
+          cards: [
+            { q: "Most common cause of Croup?", a: "<b>Parainfluenza virus</b>." },
+            { q: "Characteristic finding in Pyloric Stenosis?", a: "<b>Olive-shaped mass</b> in the epigastrium; projectile vomiting." }
+          ]
+        }
+      ],
+      'year4': [
+        {
+          topic: 'Emergency Medicine',
+          icon: 'ambulance',
+          cards: [
+            { q: "Definition of Shock?", a: "Inadequate tissue perfusion (oxygen delivery < demand)." },
+            { q: "Treatment for Anaphylaxis?", a: "<b>Intramuscular Epinephrine</b> (0.3mg in adults)." }
+          ]
+        }
+      ],
+      'usmle1': [],
+      'usmle2': [],
+      'usmle3': []
     };
 
     let currentTab = 'year1';
@@ -5351,32 +5414,41 @@
     }
 
     function renderTopics() {
-      const topics = FLASH_DATA[currentTab];
-      topicGrid.innerHTML = '';
-      
-      if (topics && topics.length > 0) {
-        emptyState.classList.add('hidden');
-        topicGrid.classList.remove('hidden');
+      try {
+        const topics = FLASH_DATA[currentTab];
+        topicGrid.innerHTML = '';
         
-        topics.forEach((t, idx) => {
-          const isFreeDemo = (idx === 0);
-          const card = document.createElement('div');
-          card.className = 'topic-card-item';
-          card.innerHTML = `
-            ${isFreeDemo ? '<div style="position:absolute; top:12px; right:12px; background:var(--accent); color:white; font-size:9px; font-weight:800; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px; z-index:1;">Free Demo</div>' : ''}
-            <div class="topic-card-icon">
-              <i data-lucide="${t.icon || 'book'}"></i>
-            </div>
-            <div class="topic-card-title">${t.topic}</div>
-            <div class="topic-card-count">${t.cards.length} Cards</div>
-          `;
-          card.onclick = () => startStudyMode(idx, isFreeDemo);
-          topicGrid.appendChild(card);
-        });
-        
-        // Initialize Lucide icons
-        lucide.createIcons();
-      } else {
+        if (topics && topics.length > 0) {
+          emptyState.classList.add('hidden');
+          topicGrid.classList.remove('hidden');
+          
+          topics.forEach((t, idx) => {
+            if (!t) return;
+            const isFreeDemo = (idx === 0);
+            const card = document.createElement('div');
+            card.className = 'topic-card-item';
+            card.innerHTML = `
+              ${isFreeDemo ? '<div style="position:absolute; top:12px; right:12px; background:var(--accent); color:white; font-size:9px; font-weight:800; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px; z-index:1;">Free Demo</div>' : ''}
+              <div class="topic-card-icon">
+                <i data-lucide="${t.icon || 'book'}"></i>
+              </div>
+              <div class="topic-card-title">${t.topic || 'Untitled Topic'}</div>
+              <div class="topic-card-count">${(t.cards || []).length} Cards</div>
+            `;
+            card.onclick = () => startStudyMode(idx, isFreeDemo);
+            topicGrid.appendChild(card);
+          });
+          
+          // Initialize Lucide icons with error catching
+          if (window.lucide) {
+            lucide.createIcons();
+          }
+        } else {
+          topicGrid.classList.add('hidden');
+          emptyState.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error("MediHelp FlashCards Error:", err);
         topicGrid.classList.add('hidden');
         emptyState.classList.remove('hidden');
       }
