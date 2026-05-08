@@ -5520,12 +5520,424 @@
           topic: 'General Pathology',
           icon: 'microscope',
           cards: [
-            { q: "Define Hypertrophy vs Hyperplasia.", a: "<b>Hypertrophy:</b> Increase in cell size.<br><b>Hyperplasia:</b> Increase in cell number." },
-            { q: "Definition of Metaplasia?", a: "Reversible change in which one adult cell type is replaced by another (e.g., Barrett's Esophagus)." },
-            { q: "What is Dystrophic Calcification?", a: "Calcium deposition in <b>dead or dying</b> tissues; serum calcium levels are <b>normal</b>." },
-            { q: "What is Metastatic Calcification?", a: "Calcium deposition in <b>normal</b> tissues due to <b>hypercalcemia</b> (e.g., hyperparathyroidism)." },
-            { q: "Mechanism of Apoptosis vs Necrosis?", a: "<b>Apoptosis:</b> Programmed cell death; no inflammation.<br><b>Necrosis:</b> Accidental cell death; significant inflammation." }
+            {
+              "q": "Definition of <b>Hypertrophy</b>?",
+              "a": "Increase in the size of cells resulting in an increase in the size of the organ; no new cells."
+            },
+            {
+              "q": "Definition of <b>Hyperplasia</b>?",
+              "a": "Increase in the number of cells in an organ or tissue in response to a stimulus."
+            },
+            {
+              "q": "What is <b>Metaplasia</b>?",
+              "a": "A reversible change in which one adult cell type is replaced by another adult cell type (e.g., Barrett esophagus)."
+            },
+            {
+              "q": "Hallmarks of irreversible cell injury?",
+              "a": "Profound mitochondrial dysfunction and severe disturbances in membrane function (plasma and lysosomal)."
+            },
+            {
+              "q": "Features of Pyknosis?",
+              "a": "Nuclear shrinkage and increased basophilia."
+            },
+            {
+              "q": "Features of Karyorrhexis?",
+              "a": "Fragmentation of the pyknotic nucleus."
+            },
+            {
+              "q": "Features of Karyolysis?",
+              "a": "Fading of nuclear basophilia due to DNA degradation by endonucleases."
+            },
+            {
+              "q": "Mechanism of Coagulative <b>Necrosis</b>?",
+              "a": "Denaturation of structural proteins and enzymes, preserving the architecture of dead tissue for days (common in infarcts, except brain)."
+            },
+            {
+              "q": "Main characteristic of Liquefactive <b>Necrosis</b>?",
+              "a": "Digestion of dead cells into a liquid viscous mass; seen in focal bacterial/fungal infections and CNS hypoxic death."
+            },
+            {
+              "q": "Definition of Caseous <b>Necrosis</b>?",
+              "a": "\"Cheese-like\" friable white appearance; characteristic of a focus of inflammation known as a <b>granuloma</b> (e.g., Tuberculosis)."
+            },
+            {
+              "q": "What is Fat <b>Necrosis</b>?",
+              "a": "Focal areas of fat destruction typically resulting from the release of activated pancreatic lipases (saponification)."
+            },
+            {
+              "q": "Fundamental mechanism of Fibrinoid <b>Necrosis</b>?",
+              "a": "Complexes of antigens and antibodies deposited in the walls of arteries, appearing bright pink and amorphous on H&E."
+            },
+            {
+              "q": "Pathological trigger for the Intrinsic (Mitochondrial) Pathway of <b>Apoptosis</b>?",
+              "a": "Increased permeability of the mitochondrial outer membrane leading to the release of cytochrome c into the cytosol."
+            },
+            {
+              "q": "Executioner Caspases in <b>Apoptosis</b>?",
+              "a": "Caspase-3 and Caspase-6."
+            },
+            {
+              "q": "Definition of <b>Dystrophic Calcification</b>?",
+              "a": "Deposition of calcium salts in dead or dying tissues; occurs despite normal serum calcium levels."
+            },
+            {
+              "q": "Definition of <b>Metastatic Calcification</b>?",
+              "a": "Deposition of calcium salts in normal tissues due to hypercalcemia (e.g., hyperparathyroidism)."
+            },
+            {
+              "q": "Five cardinal signs of <b>Acute Inflammation</b>?",
+              "a": "Rubor (redness), Calor (heat), Tumor (swelling), Dolor (pain), and Functio laesa (loss of function)."
+            },
+            {
+              "q": "Primary mediator of increased vascular permeability in immediate transient responses?",
+              "a": "Histamine (acting on postcapillary venules)."
+            },
+            {
+              "q": "Sequence of Leukocyte Extravasation?",
+              "a": "1. Margination/Rolling, 2. Adhesion, 3. Transmigration (Diapedesis), 4. Chemotaxis."
+            },
+            {
+              "q": "Molecules responsible for Leukocyte Rolling?",
+              "a": "Selectins (E-selectin, P-selectin, L-selectin)."
+            },
+            {
+              "q": "Molecules responsible for Firm Adhesion of leukocytes?",
+              "a": "Integrins (e.g., VLA-4, LFA-1) binding to ICAM-1 and VCAM-1."
+            },
+            {
+              "q": "Major Opsonins in <b>phagocytosis</b>?",
+              "a": "IgG, C3b, and Mannose-binding lectin."
+            },
+            {
+              "q": "Key enzyme in the Respiratory Burst?",
+              "a": "NADPH Oxidase (converts O<sub>2</sub> to Superoxide)."
+            },
+            {
+              "q": "Genetic defect in Chronic Granulomatous Disease (CGD)?",
+              "a": "Deficiency in NADPH Oxidase."
+            },
+            {
+              "q": "Principal mediator of Pain in <b>acute inflammation</b>?",
+              "a": "Bradykinin and Prostaglandins (PGE<sub>2</sub>)."
+            },
+            {
+              "q": "Definition of a <b>Granuloma</b>?",
+              "a": "A collection of activated macrophages (epithelioid cells) rimmed by lymphocytes; a form of <b>chronic inflammation</b>."
+            },
+            {
+              "q": "Cytokine primarily responsible for attracting and activating neutrophils?",
+              "a": "IL-8."
+            },
+            {
+              "q": "Cytokines responsible for the Systemic Acute-Phase Response (Fever)?",
+              "a": "TNF, IL-1, and IL-6."
+            },
+            {
+              "q": "Function of Metalloproteinases (MMPs) in tissue repair?",
+              "a": "Degrade collagen and other ECM components to allow for remodeling of the scar."
+            },
+            {
+              "q": "Components of Granulation Tissue?",
+              "a": "Fibroblasts, delicate capillaries (angiogenesis), and scattered inflammatory cells."
+            },
+            {
+              "q": "Difference between Primary and Secondary Union (Intention)?",
+              "a": "<b>Primary:</b> Clean surgical incision; Secondary: Large tissue defect requiring extensive contraction and scarring."
+            },
+            {
+              "q": "Definition of Anasarca?",
+              "a": "Severe and generalized edema with widespread subcutaneous tissue swelling."
+            },
+            {
+              "q": "Virchow<sub>s</sub> Triad for Thrombosis?",
+              "a": "1. Endothelial injury, 2. Stasis or turbulent blood flow, 3. Hypercoagulability."
+            },
+            {
+              "q": "Define \"Lines of Zahn\"?",
+              "a": "Laminations in a thrombus representing alternating layers of platelets/fibrin (pale) and RBCs (dark); signifies formation in flowing blood."
+            },
+            {
+              "q": "Most common source of Pulmonary Embolism?",
+              "a": "Deep Vein Thrombosis (DVT) in the leg (above the knee)."
+            },
+            {
+              "q": "Definition of a \"Paradoxical Embolus\"?",
+              "a": "A systemic embolus that originates in the venous circulation but enters the arterial system through a septal defect (e.g., PFO)."
+            },
+            {
+              "q": "Common clinical triad of Fat Embolism Syndrome?",
+              "a": "Hypoxemia, Neurologic symptoms, and Petechial rash (24-72 hours post-fracture)."
+            },
+            {
+              "q": "Definition of Red (Hemorrhagic) Infarct?",
+              "a": "Occurs in venous occlusions, loose tissues (lung), or tissues with dual circulation (liver/small intestine)."
+            },
+            {
+              "q": "Definition of White (Anemic) Infarct?",
+              "a": "Occurs in arterial occlusions in solid organs with end-arterial circulation (heart, spleen, kidney)."
+            },
+            {
+              "q": "The three stages of Shock?",
+              "a": "1. Nonprogressive (compensated), 2. Progressive (hypoperfusion/metabolic imbalance), 3. Irreversible."
+            },
+            {
+              "q": "Mode of inheritance for Marfan Syndrome?",
+              "a": "Autosomal Dominant (Mutation in FBN1 gene, encoding Fibrillin-1)."
+            },
+            {
+              "q": "Biochemical defect in Tay-Sachs Disease?",
+              "a": "Hexosaminidase A deficiency (accumulation of GM2 ganglioside)."
+            },
+            {
+              "q": "Characteristic physical finding in Tay-Sachs and Niemann-Pick?",
+              "a": "Cherry-red spot on the macula."
+            },
+            {
+              "q": "Mode of inheritance for Cystic Fibrosis?",
+              "a": "Autosomal Recessive (CFTR gene mutation)."
+            },
+            {
+              "q": "Karyotype for Klinefelter Syndrome?",
+              "a": "47,XXY."
+            },
+            {
+              "q": "Karyotype for Turner Syndrome?",
+              "a": "45,X."
+            },
+            {
+              "q": "Definition of Type I Hypersensitivity?",
+              "a": "Immediate (IgE-mediated); Mast cell degranulation (e.g., Anaphylaxis)."
+            },
+            {
+              "q": "Definition of Type II Hypersensitivity?",
+              "a": "Antibody-mediated; IgG/IgM bind to fixed antigens on cells (e.g., Goodpasture syndrome)."
+            },
+            {
+              "q": "Definition of Type III Hypersensitivity?",
+              "a": "Immune complex-mediated; Deposition of antigen-antibody complexes (e.g., SLE, Arthus reaction)."
+            },
+            {
+              "q": "Definition of Type IV Hypersensitivity?",
+              "a": "Cell-mediated; T-lymphocyte driven (e.g., Contact dermatitis, TB skin test)."
+            },
+            {
+              "q": "Pathognomonic cell for Hodgkin Lymphoma?",
+              "a": "Reed-Sternberg cell (\"Owl-eye\" appearance)."
+            },
+            {
+              "q": "Diagnostic criteria for SLE (Serology)?",
+              "a": "Positive ANA (sensitive) and Anti-dsDNA or Anti-Smith (specific)."
+            },
+            {
+              "q": "Primary defect in DiGeorge Syndrome?",
+              "a": "22q11.2 deletion; failure of 3rd and 4th pharyngeal pouch development (Thymic hypoplasia)."
+            },
+            {
+              "q": "Deficiency in X-linked Agammaglobulinemia (Bruton<sub>s</sub>)?",
+              "a": "Mutation in Bruton Tyrosine Kinase (BTK); failure of B-cell maturation."
+            },
+            {
+              "q": "Defining feature of Amyloidosis?",
+              "a": "Extracellular deposition of misfolded proteins that stain with Congo Red and show apple-green birefringence under polarized light."
+            },
+            {
+              "q": "Definition of <b>Anaplasia</b>?",
+              "a": "Lack of differentiation; a hallmark of malignancy."
+            },
+            {
+              "q": "Difference between Benign and Malignant tumors regarding borders?",
+              "a": "<b>Benign:</b> Circumscribed/Encapsulated; Malignant: Poorly defined/Invasive."
+            },
+            {
+              "q": "Definition of <b>Choristoma</b>?",
+              "a": "Ectopic rest of normal tissue (e.g., pancreatic tissue in the stomach wall)."
+            },
+            {
+              "q": "Definition of <b>Hamartoma</b>?",
+              "a": "Disorganized but benign mass of cells indigenous to the particular site."
+            },
+            {
+              "q": "TNM Staging System components?",
+              "a": "<b>T:</b> Size/Extent of primary tumor; N: Involvement of regional lymph nodes; M: Distant <b>metastasis</b>."
+            },
+            {
+              "q": "<b>Most important factor in tumor prognosis:</b> Grade or Stage?",
+              "a": "Stage."
+            },
+            {
+              "q": "Primary route of <b>Carcinoma</b> spread?",
+              "a": "Lymphatics."
+            },
+            {
+              "q": "Primary route of <b>Sarcoma</b> spread?",
+              "a": "Hematogenous."
+            },
+            {
+              "q": "The \"Two-Hit\" Hypothesis refers to which type of genes?",
+              "a": "Tumor Suppressor Genes (e.g., RB gene)."
+            },
+            {
+              "q": "Function of the p53 gene?",
+              "a": "\"Guardian of the Genome\"; senses DNA damage and induces cell cycle arrest or <b>apoptosis</b>."
+            },
+            {
+              "q": "Function of BCL2 in follicular lymphoma?",
+              "a": "Anti-apoptotic protein; overexpressed due to t(14;18) translocation."
+            },
+            {
+              "q": "Paraneoplastic syndrome associated with Squamous Cell Lung <b>Carcinoma</b>?",
+              "a": "Hypercalcemia (due to PTHrP)."
+            },
+            {
+              "q": "Common tumor marker for Colon Cancer?",
+              "a": "CEA (Carcinoembryonic Antigen) - used for monitoring, not screening."
+            },
+            {
+              "q": "Common tumor marker for Ovarian Cancer?",
+              "a": "CA-125."
+            },
+            {
+              "q": "Leading cause of preventable death in the US?",
+              "a": "Smoking."
+            },
+            {
+              "q": "Primary organ affected by Aflatoxin B<sub>1</sub> exposure?",
+              "a": "Liver (leads to Hepatocellular <b>Carcinoma</b>)."
+            },
+            {
+              "q": "Difference between Marasmus and Kwashiorkor?",
+              "a": "<b>Marasmus:</b> Total calorie deficiency (wasting); Kwashiorkor: Protein deficiency (edema, \"flaky paint\" skin)."
+            },
+            {
+              "q": "Vitamin C deficiency symptoms (Scurvy)?",
+              "a": "Bone pain, hemorrhages, and \"corkscrew\" hair due to impaired collagen synthesis (hydroxylation)."
+            },
+            {
+              "q": "Vitamin D deficiency in children vs. adults?",
+              "a": "<b>Children:</b> Rickets; Adults: Osteomalacia."
+            },
+            {
+              "q": "Characteristics of \"Labile\" tissues?",
+              "a": "Continuously dividing (e.g., surface epithelia, hematopoietic cells)."
+            },
+            {
+              "q": "Characteristics of \"Stable\" tissues?",
+              "a": "Quiescent (G<sub>0</sub> phase) but can divide in response to injury (e.g., Liver, Kidney)."
+            },
+            {
+              "q": "Characteristics of \"Permanent\" tissues?",
+              "a": "Terminally differentiated; non-proliferative (e.g., Neurons, Cardiac myocytes)."
+            },
+            {
+              "q": "Definition of Hypercalcemia of Malignancy?",
+              "a": "Result of PTHrP secretion or osteolytic bone metastases."
+            },
+            {
+              "q": "What is \"<b>Atrophy</b>\"?",
+              "a": "Shrinkage in the size of the cell by loss of cell substance."
+            },
+            {
+              "q": "Role of Ubiquitin-Proteasome pathway in <b>atrophy</b>?",
+              "a": "Degrades nuclear and cytosolic proteins when cells are under-stimulated or malnourished."
+            },
+            {
+              "q": "Mechanism of Steatosis (Fatty Change)?",
+              "a": "Abnormal accumulation of triglycerides within parenchymal cells (most common in liver)."
+            },
+            {
+              "q": "Definition of Hemosiderosis?",
+              "a": "Systemic overload of iron without associated tissue damage."
+            },
+            {
+              "q": "Definition of Hemochromatosis?",
+              "a": "Genetic or acquired iron overload resulting in tissue damage (liver, heart, pancreas)."
+            },
+            {
+              "q": "Function of Telomerase in cancer?",
+              "a": "Maintains telomere length, providing \"immortality\" to cancer cells by avoiding replicative senescence."
+            },
+            {
+              "q": "Most common paraneoplastic syndrome?",
+              "a": "Hypercalcemia."
+            },
+            {
+              "q": "Definition of Cachexia?",
+              "a": "Progressive loss of body fat and lean body mass, accompanied by profound weakness and anorexia (mediated by TNF)."
+            },
+            {
+              "q": "Primary mediator of the Vasodilation phase of inflammation?",
+              "a": "Histamine and Nitric Oxide (NO)."
+            },
+            {
+              "q": "Cell type that predominates in <b>Chronic Inflammation</b>?",
+              "a": "Macrophages."
+            },
+            {
+              "q": "Cytokine that induces Cachexia?",
+              "a": "TNF-alpha."
+            },
+            {
+              "q": "What is \"Desmoplasia\"?",
+              "a": "Abundant collagenous stroma induced by certain tumors (e.g., breast cancer), making them feel hard/gritty."
+            },
+            {
+              "q": "Definition of \"<b>Carcinoma</b> in situ\"?",
+              "a": "Full-thickness <b>dysplasia</b> of the epithelium without penetration of the basement membrane."
+            },
+            {
+              "q": "Significance of the c-MYC oncogene?",
+              "a": "Transcription factor involved in cell cycle progression; associated with Burkitt Lymphoma t(8;14)."
+            },
+            {
+              "q": "Definition of \"Transudate\"?",
+              "a": "Fluid with low protein content and low specific gravity; result of hydrostatic/oncotic pressure imbalance."
+            },
+            {
+              "q": "Definition of \"Exudate\"?",
+              "a": "Fluid with high protein content and cellular debris; result of increased vascular permeability (inflammation)."
+            },
+            {
+              "q": "Most common type of embolus?",
+              "a": "Thromboembolus."
+            },
+            {
+              "q": "What are \"Heart Failure Cells\"?",
+              "a": "Hemosiderin-laden macrophages in the lungs resulting from chronic pulmonary congestion."
+            },
+            {
+              "q": "Effect of Aspirin on the Arachidonic Acid pathway?",
+              "a": "Irreversible inhibition of Cyclooxygenase (COX-1 and COX-2)."
+            },
+            {
+              "q": "Key cytokine for Fibrosis and Scarring?",
+              "a": "TGF-beta."
+            },
+            {
+              "q": "Primary enzyme in Neutrophil granules that produces HOCl?",
+              "a": "Myeloperoxidase (MPO)."
+            },
+            {
+              "q": "Definition of <b>Dysplasia</b>?",
+              "a": "Disordered growth; loss of cellular uniformity and architectural orientation (often pre-neoplastic)."
+            },
+            {
+              "q": "What is an \"Infarct\"?",
+              "a": "An area of ischemic <b>necrosis</b> caused by occlusion of either the arterial supply or the venous drainage."
+            },
+            {
+              "q": "Typical outcome of Septic Shock?",
+              "a": "Multiple Organ Dysfunction Syndrome (MODS)."
+            },
+            {
+              "q": "Role of P-glycoprotein in cancer cells?",
+              "a": "An efflux pump that can expel chemotherapeutic drugs, leading to multi-drug resistance."
+            },
+            {
+              "q": "Cause of \"Nutmeg Liver\"?",
+              "a": "Chronic passive congestion of the liver due to right-sided heart failure."
+            }
           ]
+
         },
         {
           topic: 'Microbiology',
