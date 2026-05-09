@@ -122,6 +122,13 @@ function switchTab(tabId, btn) {
 
 // 6. MediHelp Global Namespace & Advanced Fetch (v4.6)
 const MediHelp = {
+  initTheme: function() {
+    const saved = localStorage.getItem('mh-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+  },
+
   fetchBlogs: async function() {
     console.log('MediHelp: Fetching authoritative blog content from local storage...');
     try {
