@@ -14,15 +14,23 @@ if (window.supabase) {
   window.dbClient.auth.onAuthStateChange(async (event, session) => {
     console.log(`MediHelp Auth: ${event}`, session?.user?.email);
     if (session?.user) {
-      // Sync license from user metadata if not already active locally
-      const userLicense = session.user.user_metadata?.mh_license_key;
-      if (userLicense && !MediHelp.License.isActivated()) {
-         console.log("MediHelp: Syncing license from user profile...");
-         try {
-           await MediHelp.License.verify(userLicense, session.user.email);
-         } catch (e) {
-           console.warn("MediHelp: Auth-based license sync failed.");
-         }
+      // Sync license from licenses table if not already active locally
+      if (!MediHelp.License.isActivated()) {
+        try {
+          const { data: licenses, error } = await window.dbClient
+            .from('licenses')
+            .select('license_key, email')
+            .eq('user_id', session.user.id)
+            .eq('status', 'active')
+            .single();
+          
+          if (licenses && !error) {
+            console.log("MediHelp: Syncing license from database...");
+            await MediHelp.License.activate(licenses.license_key, licenses.email);
+          }
+        } catch (e) {
+          console.warn("MediHelp: Database license sync failed.");
+        }
       }
     }
   });
@@ -397,13 +405,26 @@ const MediHelp = {
       if (key && email) {
         localStorage.setItem(this.DATA_KEY, JSON.stringify({ key, email }));
         
-        // If user is logged in, sync to Supabase metadata
+        // Insert into licenses table if user is logged in
         if (window.dbClient) {
           const { data: { user } } = await window.dbClient.auth.getUser();
           if (user) {
-            await window.dbClient.auth.updateUser({
-              data: { mh_license_key: key }
-            });
+            try {
+              const { error } = await window.dbClient
+                .from('licenses')
+                .upsert({
+                  user_id: user.id,
+                  license_key: key,
+                  email: email,
+                  status: 'active',
+                  source: 'gumroad'
+                }, {
+                  onConflict: 'license_key'
+                });
+              if (error) console.warn("License table insert failed:", error);
+            } catch (e) {
+              console.warn("License table insert error:", e);
+            }
           }
         }
       }

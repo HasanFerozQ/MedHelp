@@ -67,7 +67,7 @@ INSERT INTO public.mcqs (topic_id, question, options, correct_index, explanation
 
 ((SELECT id FROM topics WHERE slug = 'em-neurological' LIMIT 1),
 'A patient presents with a "cluster" of 3 seizures in 4 hours. Is this status epilepticus?',
-'["Yes", "No, but it is a "seizure cluster" and carries a high risk of progressing to status", "Yes, if they were $> 1$ minute long", "Only if the patient is old"]'::jsonb,
+'["Yes", "No, but it is a \"seizure cluster\" and carries a high risk of progressing to status", "Yes, if they were $> 1$ minute long", "Only if the patient is old"]'::jsonb,
 1,
 'Seizure clusters (or "flurry" seizures) are defined as multiple seizures within a short period with return to consciousness in between. They require proactive management.'),
 
@@ -103,7 +103,7 @@ INSERT INTO public.mcqs (topic_id, question, options, correct_index, explanation
 
 ((SELECT id FROM topics WHERE slug = 'em-neurological' LIMIT 1),
 'What is the primary "danger" of using neuromuscular blockers (like Rocuronium) in a seizing patient?',
-'["They cause brain damage", "They stop the motor activity but DO NOT stop the seizure activity in the brain, potentially leading to a "missed" status", "They cause hyperkalemia", "They interact with tPA"]'::jsonb,
+'["They cause brain damage", "They stop the motor activity but DO NOT stop the seizure activity in the brain, potentially leading to a \"missed\" status", "They cause hyperkalemia", "They interact with tPA"]'::jsonb,
 1,
 'Paralyzing the patient hides the physical signs of the seizure, making EEG monitoring mandatory to ensure the brain has stopped seizing.'),
 

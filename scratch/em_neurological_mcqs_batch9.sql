@@ -199,7 +199,7 @@ INSERT INTO public.mcqs (topic_id, question, options, correct_index, explanation
 
 ((SELECT id FROM topics WHERE slug = 'em-neurological' LIMIT 1),
 'What is the most common "imaging" finding in chronic Neurocysticercosis?',
-'["Large abscess", "Multiple "starry sky" calcifications (calcified granulomas)", "Normal scan", "Midline shift"]'::jsonb,
+'["Large abscess", "Multiple \"starry sky\" calcifications (calcified granulomas)", "Normal scan", "Midline shift"]'::jsonb,
 1,
 'The "starry sky" appearance of multiple small calcified lesions is classic.'),
 

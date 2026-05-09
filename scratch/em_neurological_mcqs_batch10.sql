@@ -201,7 +201,7 @@ INSERT INTO public.mcqs (topic_id, question, options, correct_index, explanation
 'Which of the following is a "Red Flag" for headache that requires imaging?',
 '["Sudden onset (Thunderclap)", "New headache in a patient > 50", "Headache with fever and stiff neck", "All of the above"]'::jsonb,
 3,
-'SNOOP mnemonic for red flags: Systemic signs, Neurological deficits, Onset (sudden), Older age, Progression.');
+'SNOOP mnemonic for red flags: Systemic signs, Neurological deficits, Onset (sudden), Older age, Progression.'),
 ((SELECT id FROM topics WHERE slug = 'em-neurological' LIMIT 1),
 'What is the goal of the "Epley maneuver"?',
 '["To diagnose BPPV", "To move displaced otoconia out of the semicircular canal and back into the utricle", "To check the pulse", "To stop a seizure"]'::jsonb,
