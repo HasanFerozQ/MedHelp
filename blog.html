@@ -145,15 +145,19 @@
 
   <!-- Previous Posts Grid -->
   <div class="container" id="blog-grid-container" style="display:none;">
-    <h2 style="margin-bottom: 12px;">Latest Blogs</h2>
+    <h2 id="blog-grid-heading" style="margin-bottom: 12px;">Latest Blogs</h2>
     <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 600px;">Our latest articles cover how to check hospital bills, understand CPT codes, avoid overcharges, reduce medical expenses, Guidance on Health, Health Awareness and Technology regarding Healthcare.</p>
     <div class="blog-grid" id="blog-grid"></div>
     <noscript>
       <div style="padding: 20px; background: var(--bg-card); border-radius: 12px; margin-top: 20px;">
         <h3 style="margin-bottom: 12px;">All Blog Posts</h3>
         <ul style="line-height: 1.8;">
+          <li><a href="/blog-post?slug=Hantavirus_Another_Pandemic">Hantavirus Outbreak 2026: Is the New Cluster the Next Pandemic?</a></li>
           <li><a href="/blog-post?slug=fish-oil-warning-tbi-omega3-2026">The Fish Oil Warning That Has Scientists Rethinking Everything</a></li>
           <li><a href="/blog-post?slug=graphene-superbug-killer-antibiotics-2026">Graphene: The Microscopic Superbug Killer That Could Replace Antibiotics Forever</a></li>
+          <li><a href="/blog-post?slug=microplastics-brain-human-health-2026">Microplastics in the Human Brain</a></li>
+          <li><a href="/blog-post?slug=cardiac-arrest-first-aid-ginger-2026">Cardiac Arrest First Aid Without a Doctor</a></li>
+          <li><a href="/blog-post?slug=ozempic-bone-loss-research-2026">Ozempic and Bone Loss Research 2026</a></li>
           <li><a href="/blog-post?slug=7-natural-remedies-diabetes-2026">7 Natural Remedies for Diabetes</a></li>
           <li><a href="/blog-post?slug=diabetes-drug-mimics-exercise-2026">New Diabetes Drug Mimics Exercise</a></li>
           <li><a href="/blog-post?slug=optimal-blood-pressure-target-2026">Optimal Blood Pressure Target</a></li>
@@ -168,6 +172,8 @@
           <li><a href="/blog-post?slug=ai-medical-diagnostics">AI in Medical Diagnostics</a></li>
           <li><a href="/blog-post?slug=surprise-billing-advocacy">Surprise Billing Advocacy</a></li>
           <li><a href="/blog-post?slug=russia-cancer-vaccine">Russia Cancer Vaccine Progress</a></li>
+          <li><a href="/blog-post?slug=medical-marijuana-schedule-iii-changes-2026">Medical Marijuana Schedule III Changes 2026</a></li>
+          <li><a href="/blog-post?slug=hospital-overbilling-7-common-charges-2026">Hospital Overbilling: 7 Common Charges</a></li>
         </ul>
       </div>
     </noscript>
@@ -280,11 +286,14 @@
             </div>
           </a>`;
 
-        // Render Grid
-        const prev = posts.slice(1, 10);
+        // Render Grid — show ALL posts (no arbitrary cap)
+        const prev = posts.slice(1);
         if (prev.length > 0) {
           console.log('MediHelp Blog: Casting grid:', prev.length, 'posts');
           gridContainer.style.display = 'block';
+          // Update heading to show total count
+          const heading = document.getElementById('blog-grid-heading');
+          if (heading) heading.textContent = `All Articles (${posts.length})`;
           grid.innerHTML = prev.map(p => `
             <a href="blog-post.html?slug=${encodeURIComponent(p.slug)}" class="blog-card">
               <img class="blog-card-img" src="${p.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'}" alt="${p.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
