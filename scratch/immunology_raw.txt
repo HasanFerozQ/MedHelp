@@ -1,0 +1,1297 @@
+Front: Primary lymphoid organs?
+
+Back: Bone marrow and Thymus.
+
+Front: Cell type that links innate and adaptive immunity?
+
+Back: Dendritic cells.
+
+Front: Toll-like receptor (TLR) that recognizes Lipopolysaccharide (LPS)?
+
+Back: TLR4.
+
+Front: Transcription factor activated by TLR signaling to produce cytokines?
+
+Back: NF-$\kappa$B.
+
+Front: Mechanism of Neutrophil Extracellular Traps (NETs)?
+
+Back: Release of chromatin and antimicrobial proteins following cell death (NETosis).
+
+Front: Component of the MAC (Membrane Attack Complex)?
+
+Back: C5b, C6, C7, C8, C9.
+
+Front: Most potent anaphylatoxins in the complement cascade?
+
+Back: C3a, C4a, and C5a.
+
+Front: Primary opsonins in the complement system?
+
+Back: C3b and IgG.
+
+Front: Function of Decay-Accelerating Factor (CD55)?
+
+Back: Prevents formation of C3 convertase on host cells.
+
+Front: Deficiency associated with Paroxysmal Nocturnal Hemoglobinuria (PNH)?
+
+Back: CD55 and CD59 (MIRL) deficiency.
+
+Front: Result of C1 esterase inhibitor deficiency?
+
+Back: Hereditary Angioedema (due to elevated Bradykinin).
+
+Front: Classic trigger for the Lectin pathway?
+
+Back: Mannose-binding lectin (MBL) binding to microbial carbohydrates.
+
+II. MHC & Antigen Presentation
+
+Front: MHC Class I structure?
+
+Back: One heavy chain and one $\beta_2$-microglobulin.
+
+Front: MHC Class II structure?
+
+Back: One $\alpha$ chain and one $\beta$ chain.
+
+Front: Cellular distribution of MHC Class I?
+
+Back: All nucleated cells and platelets (not RBCs).
+
+Front: Origin of peptides loaded onto MHC Class I?
+
+Back: Endogenous (cytosolic) proteins processed by proteasomes.
+
+Front: Origin of peptides loaded onto MHC Class II?
+
+Back: Exogenous (extracellular) proteins processed in acidified endosomes.
+
+Front: Function of the Invariant Chain (Ii) in MHC II?
+
+Back: Prevents premature binding of endogenous peptides to the MHC II cleft.
+
+Front: HLA association: B27?
+
+Back: Seronegative Spondyloarthropathies (e.g., Ankylosing Spondylitis).
+
+Front: HLA association: DR3 and DR4?
+
+Back: Type 1 Diabetes Mellitus.
+
+Front: HLA association: DR2?
+
+Back: Multiple Sclerosis, Hay Fever, SLE, Goodpasture syndrome.
+
+Front: HLA association: DQ2/DQ8?
+
+Back: Celiac Disease.
+
+III. T-Cell Development & Activation
+
+Front: Location of T-cell positive selection?
+
+Back: Thymic cortex.
+
+Front: Criterion for T-cell positive selection?
+
+Back: Ability to bind self-MHC.
+
+Front: Location of T-cell negative selection?
+
+Back: Thymic medulla.
+
+Front: Function of the AIRE protein?
+
+Back: Expression of self-antigens in the thymus for negative selection.
+
+Front: Result of AIRE deficiency?
+
+Back: Autoimmune Polyendocrine Syndrome Type 1 (APS-1).
+
+Front: Signal 1 for T-cell activation?
+
+Back: MHC-peptide complex binding to TCR.
+
+Front: Signal 2 (Costimulation) for T-cell activation?
+
+Back: B7 (CD80/86) on APC binding to CD28 on T-cell.
+
+Front: Cytokine that drives Th1 differentiation?
+
+Back: IL-12 and IFN-$\gamma$.
+
+Front: Cytokine that drives Th2 differentiation?
+
+Back: IL-4.
+
+Front: Cytokine that drives Th17 differentiation?
+
+Back: TGF-$\beta$ and IL-6.
+
+Front: Primary function of Th1 cells?
+
+Back: Activate macrophages and cytotoxic T-cells.
+
+Front: Primary function of Th2 cells?
+
+Back: Activate B-cells and eosinophils (Type I hypersensitivity).
+
+Front: Characteristic markers of Regulatory T-cells (Tregs)?
+
+Back: CD4, CD25, and FOXP3.
+
+Front: Cytokines secreted by Tregs to suppress immune response?
+
+Back: IL-10 and TGF-$\beta$.
+
+IV. B-Cell Development & Antibodies
+
+Front: Location of B-cell VDJ recombination?
+
+Back: Bone marrow.
+
+Front: Enzyme responsible for VDJ recombination?
+
+Back: RAG-1 and RAG-2.
+
+Front: Signal 1 for B-cell activation?
+
+Back: Antigen binding to surface IgM/IgD.
+
+Front: Signal 2 for B-cell activation (T-cell dependent)?
+
+Back: CD40 on B-cell binding to CD40L on Th cell.
+
+Front: Enzyme required for somatic hypermutation and isotype switching?
+
+Back: Activation-induced Cytidine Deaminase (AID).
+
+Front: Only antibody isotype that crosses the placenta?
+
+Back: IgG.
+
+Front: Most abundant antibody produced in the body (secretions)?
+
+Back: IgA.
+
+Front: Antibody isotype found as a pentamer in serum?
+
+Back: IgM.
+
+Front: Part of the antibody that determines the isotype (class)?
+
+Back: Fc region (heavy chain constant region).
+
+Front: Part of the antibody that binds the antigen?
+
+Back: Fab region (Variable light and heavy chains).
+
+V. Cytokines & Cellular Communication
+
+Front: "Hot T-bone stEAK" mnemonic for IL-1 through IL-6?
+
+Back: IL-1: Fever; IL-2: T-cells; IL-3: Bone marrow; IL-4: IgE; IL-5: IgA; IL-6: aKute phase reactants.
+
+Front: Primary cytokine for neutrophil chemotaxis?
+
+Back: IL-8.
+
+Front: Cytokines that inhibit viral replication in neighbor cells?
+
+Back: IFN-$\alpha$ and IFN-$\beta$.
+
+Front: Major macrophage-activating cytokine?
+
+Back: IFN-$\gamma$.
+
+Front: Major proinflammatory cytokine in cachexia?
+
+Back: TNF-$\alpha$.
+
+Front: Cytokines involved in the "Isotype switch" to IgE?
+
+Back: IL-4 and IL-13.
+
+VI. Hypersensitivity Reactions
+
+Front: Type I Hypersensitivity mechanism?
+
+Back: IgE mediated; mast cell and basophil degranulation.
+
+Front: Type II Hypersensitivity mechanism?
+
+Back: Cytotoxic; IgG/IgM antibodies against cell surface antigens.
+
+Front: Type III Hypersensitivity mechanism?
+
+Back: Immune complex deposition (Ag-Ab complexes) activating complement.
+
+Front: Type IV Hypersensitivity mechanism?
+
+Back: Delayed-type; T-cell mediated (not antibody).
+
+Front: Example of Type II hypersensitivity (non-cytotoxic)?
+
+Back: Graves disease or Myasthenia Gravis.
+
+Front: Example of Type III hypersensitivity?
+
+Back: SLE, Polyarteritis nodosa, Poststreptococcal glomerulonephritis.
+
+Front: Example of Type IV hypersensitivity?
+
+Back: Contact dermatitis, PPD test, Graft-versus-host disease.
+
+VII. Immunodeficiencies
+
+Front: Defect in X-linked Agammaglobulinemia (Bruton)?
+
+Back: Mutation in BTK (Bruton Tyrosine Kinase); no B-cell maturation.
+
+Front: Most common primary immunodeficiency?
+
+Back: Selective IgA deficiency.
+
+Front: Presentation of Common Variable Immunodeficiency (CVID)?
+
+Back: Decreased plasma cells and immunoglobulins; increased risk of autoimmune disease and lymphoma.
+
+Front: Triad of DiGeorge Syndrome?
+
+Back: Thymic aplasia (T-cell def), Hypocalcemia (Parathyroid aplasia), Conotruncal heart defects.
+
+Front: Chromosomal deletion in DiGeorge Syndrome?
+
+Back: 22q11.
+
+Front: Defect in Severe Combined Immunodeficiency (SCID) (X-linked)?
+
+Back: IL-2R gamma chain defect.
+
+Front: Defect in SCID (Autosomal Recessive)?
+
+Back: Adenosine Deaminase (ADA) deficiency.
+
+Front: Triad of Wiskott-Aldrich Syndrome?
+
+Back: Thrombocytopenia, Eczema, Recurrent pyogenic infections (WATER).
+
+Front: Defect in Hyper-IgM Syndrome?
+
+Back: Defective CD40L on Th cells.
+
+Front: Defect in Chronic Granulomatous Disease (CGD)?
+
+Back: NADPH oxidase deficiency; failure of respiratory burst.
+
+Front: Pathogens associated with CGD?
+
+Back: Catalase-positive organisms (e.g., S. aureus, Aspergillus, Nocardia).
+
+Front: Screening test for CGD?
+
+Back: Dihydrorhodamine (DHR) flow cytometry (preferred) or Nitroblue Tetrazolium (NBT) test.
+
+Front: Defect in Leukocyte Adhesion Deficiency (Type 1)?
+
+Back: LFA-1 integrin (CD18) defect.
+
+Front: Clinical hallmark of Leukocyte Adhesion Deficiency?
+
+Back: Delayed separation of the umbilical cord.
+
+Front: Defect in Chédiak-Higashi Syndrome?
+
+Back: LYST gene mutation; lysosomal trafficking defect.
+
+Front: Classic biopsy finding in Chédiak-Higashi?
+
+Back: Giant granules in neutrophils and platelets.
+
+VIII. Transplant & Tolerance
+
+Front: Hyperacute transplant rejection timing?
+
+Back: Within minutes.
+
+Front: Hyperacute transplant rejection mechanism?
+
+Back: Preformed recipient antibodies against donor graft (Type II hypersensitivity).
+
+Front: Acute transplant rejection mechanism?
+
+Back: Host T-cells sensitized against donor HLA (Cellular) or antibodies (Humoral).
+
+Front: Chronic transplant rejection mechanism?
+
+Back: T-cell mediated secretion of cytokines leading to vascular smooth muscle proliferation and fibrosis.
+
+Front: Mechanism of Graft-versus-Host Disease (GVHD)?
+
+Back: Grafted T-cells (donor) attack host (recipient) tissues.
+
+Front: Organs commonly affected by GVHD?
+
+Back: Skin (rash), Liver (jaundice), and GI tract (diarrhea).
+
+IX. Autoimmunity & Serology
+
+Front: Autoantibody for SLE (Highly Specific)?
+
+Back: Anti-dsDNA and Anti-Smith.
+
+Front: Autoantibody for Drug-induced Lupus?
+
+Back: Anti-histone.
+
+Front: Autoantibody for Rheumatoid Arthritis (More Specific)?
+
+Back: Anti-CCP (Cyclic Citrullinated Peptide).
+
+Front: Autoantibody for Scleroderma (Diffuse)?
+
+Back: Anti-Scl-70 (Anti-DNA topoisomerase I).
+
+Front: Autoantibody for CREST Syndrome (Limited Scleroderma)?
+
+Back: Anti-centromere.
+
+Front: Autoantibody for Sjögren Syndrome?
+
+Back: Anti-Ro (SSA) and Anti-La (SSB).
+
+Front: Autoantibody for Mixed Connective Tissue Disease?
+
+Back: Anti-U1 RNP.
+
+Front: Autoantibody for Wegener (GPA)?
+
+Back: c-ANCA (PR3-ANCA).
+
+Front: Autoantibody for Microscopic Polyangiitis or Churg-Strauss?
+
+Back: p-ANCA (MPO-ANCA).
+
+Front: Autoantibody for Hashimoto Thyroiditis?
+
+Back: Anti-TPO (Thyroperoxidase) and Anti-thyroglobulin.
+
+Front: Autoantibody for Primary Biliary Cholangitis?
+
+Back: Anti-mitochondrial (AMA).
+
+Front: Autoantibody for Autoimmune Hepatitis (Type 1)?
+
+Back: Anti-smooth muscle (ASMA).
+
+X. Pharmacotherapy
+
+Front: Mechanism of Cyclosporine?
+
+Back: Binds cyclophilin; inhibits calcineurin; prevents IL-2 transcription.
+
+Front: Major side effect of Cyclosporine?
+
+Back: Nephrotoxicity.
+
+Front: Mechanism of Tacrolimus (FK506)?
+
+Back: Binds FKBP; inhibits calcineurin; prevents IL-2 transcription.
+
+Front: Mechanism of Sirolimus (Rapamycin)?
+
+Back: Binds FKBP; inhibits mTOR; prevents response to IL-2 (not production).
+
+Front: Mechanism of Azathioprine?
+
+Back: Antimetabolite precursor of 6-mercaptopurine; inhibits purine synthesis.
+
+Front: Drug interaction with Azathioprine?
+
+Back: Allopurinol (inhibits Xanthine Oxidase, increasing toxicity).
+
+Front: Mechanism of Mycophenolate Mofetil?
+
+Back: Reversibly inhibits IMP dehydrogenase; prevents purine synthesis in B/T cells.
+
+Front: Target of Infliximab/Adalimumab?
+
+Back: TNF-$\alpha$.
+
+Front: Target of Rituximab?
+
+Back: CD20 (found on B-cells).
+
+Front: Target of Abatacept?
+
+Back: CTLA-4 (binds B7 to block T-cell costimulation).
+
+Front: Target of Natalizumab?
+
+Back: $\alpha_4$-integrin.
+
+Front: Risk associated with Natalizumab therapy?
+
+Back: Progressive Multifocal Leukoencephalopathy (PML) via JC virus reactivation.
+
+Front: Target of Ustekinumab?
+
+Back: IL-12 and IL-23.
+
+Front: Target of Denosumab?
+
+Back: RANKL (mimics osteoprotegerin).
+
+XI. Miscellaneous High-Yield
+
+Front: Type of vaccine that induces a strong CD8+ T-cell response?
+
+Back: Live attenuated vaccines.
+
+Front: Benefit of Conjugated vaccines (e.g., H. influenzae)?
+
+Back: Converts polysaccharide to a T-cell dependent antigen to induce memory.
+
+Front: Cell type responsible for the "Paracortex" expansion in lymph nodes during infection?
+
+Back: T-cells.
+
+Front: Name of the specialized post-capillary venules in the lymph node paracortex?
+
+Back: High Endothelial Venules (HEVs).
+
+Front: Mechanism of Passive Immunity?
+
+Back: Receiving preformed antibodies (short-lived, no memory).
+
+Front: Serum sickness is which type of hypersensitivity?
+
+Back: Type III.
+
+Front: Arthus reaction is which type of hypersensitivity?
+
+Back: Type III (local).
+
+Front: Function of Fas-Fas Ligand interaction?
+
+Back: Extrinsic pathway of apoptosis (eliminates self-reactive lymphocytes).
+
+Front: Cytokine primarily responsible for stimulating Acute Phase Reactants (e.g., CRP)?
+
+Back: IL-6.
+
+Front: Negative acute phase reactant (decreases during inflammation)?
+
+Back: Albumin and Transferrin.
+
+Front: Component of the TCR complex responsible for signal transduction?
+
+Back: CD3 (consisting of $\gamma$, $\delta$, $\epsilon$, and $\zeta$ chains).
+
+Front: The "Zap-70" protein associates with which part of the TCR?
+
+Back: Phosphorylated ITAMs on the $\zeta$ (zeta) chains.
+
+Front: Role of Lck in T-cell signaling?
+
+Back: Tyrosine kinase that phosphorylates ITAMs upon MHC-TCR binding.
+
+Front: Major inhibitory receptor on T-cells that binds B7 (high affinity)?
+
+Back: CTLA-4.
+
+Front: Inhibitory receptor on T-cells that binds PD-L1/PD-L2 on tumor cells?
+
+Back: PD-1.
+
+Front: Result of "Anergy" in T-cells?
+
+Back: Functional unresponsiveness due to Signal 1 (MHC-TCR) without Signal 2 (Costimulation).
+
+XIII. Clinical Serology & Lab Techniques
+
+Front: Direct Coombs Test detects what?
+
+Back: Antibodies bound directly to the surface of Red Blood Cells.
+
+Front: Indirect Coombs Test detects what?
+
+Back: Unbound antibodies in the patient's serum.
+
+Front: Laboratory technique used to quantify specific cytokines or proteins in a fluid?
+
+Back: ELISA (Enzyme-Linked Immunosorbent Assay).
+
+Front: Technique used to determine the size, granularity, and surface markers of individual cells?
+
+Back: Flow Cytometry.
+
+Front: Type of test used to confirm a positive HIV ELISA?
+
+Back: Western Blot (detects specific proteins/antibodies).
+
+Front: What does "Titer" represent in serology?
+
+Back: The highest dilution of serum that still yields a positive reaction.
+
+XIV. Histology & Lymphoid Anatomy
+
+Front: Location of B-cell proliferation and somatic hypermutation in lymph nodes?
+
+Back: Germinal Centers (within follicles).
+
+Front: Lymph node structure missing in X-linked Agammaglobulinemia?
+
+Back: Germinal centers and follicles.
+
+Front: Specific area of the spleen where T-cells reside?
+
+Back: Periarteriolar Lymphoid Sheath (PALS).
+
+Front: Specific area of the spleen where B-cells reside?
+
+Back: Splenic follicles (within the White Pulp).
+
+Front: Function of "M cells" in Peyer’s Patches?
+
+Back: Transcytosis of antigens from the gut lumen to underlying APCs.
+
+Front: Lymphatic drainage of the scrotum?
+
+Back: Superficial inguinal lymph nodes.
+
+Front: Lymphatic drainage of the testes?
+
+Back: Para-aortic lymph nodes.
+
+XV. Pathogen Evasion & Specialized Defense
+
+Front: How do Superantigens (e.g., TSST-1) activate T-cells?
+
+Back: Cross-link the $\beta$-variable region of TCR to the MHC II molecule (outside the peptide groove).
+
+Front: Percentage of T-cells activated by a typical antigen vs. a superantigen?
+
+Back: <0.001% (Antigen) vs. up to 20% (Superantigen).
+
+Front: Mechanism of "Antigenic Variation" in Trypanosomes?
+
+Back: Periodic changes in surface glycoproteins to evade antibody recognition.
+
+Front: Mechanism of "Antigenic Shift" in Influenza?
+
+Back: Reassortment of genomic segments (causes pandemics).
+
+Front: Mechanism of "Antigenic Drift" in Influenza?
+
+Back: Point mutations in Hemagglutinin or Neuraminidase (causes epidemics).
+
+Front: Primary immune cell responsible for destroying Helminths?
+
+Back: Eosinophils (via Antibody-Dependent Cellular Cytotoxicity).
+
+Front: Major basic protein (MBP) is released by which cell?
+
+Back: Eosinophils.
+
+XVI. Advanced Immunodeficiencies & Syndromes
+
+Front: Defect in Ataxia-Telangiectasia?
+
+Back: Defect in the ATM gene (failure to repair DNA double-strand breaks).
+
+Front: Clinical triad of Ataxia-Telangiectasia?
+
+Back: Cerebellar ataxia, Telangiectasias (spider angiomas), and IgA deficiency.
+
+Front: Findings in Job Syndrome (Hyper-IgE Syndrome)?
+
+Back: FATED: coarse Facies, Cold staph Abscesses, retained primary Teeth, increased IgE, Dermatologic (eczema).
+
+Front: Genetic defect in Job Syndrome?
+
+Back: STAT3 mutation (leads to deficiency in Th17 cells).
+
+Front: Primary concern in patients with Terminal Complement Deficiency (C5-C9)?
+
+Back: Recurrent Neisseria infections.
+
+Front: Why are asplenic patients susceptible to encapsulated organisms?
+
+Back: Loss of splenic macrophages and decreased opsonization (IgM/complement).
+
+XVII. Hypersensitivity & Autoimmunity Details
+
+Front: Pathogenesis of Goodpasture Syndrome?
+
+Back: Autoantibodies against Type IV Collagen in glomerular and alveolar basement membranes.
+
+Front: Immunofluorescence pattern in Goodpasture Syndrome?
+
+Back: Linear IgG deposition.
+
+Front: Immunofluorescence pattern in Poststreptococcal Glomerulonephritis?
+
+Back: Granular ("Lumpy-Bumpy") deposition (Type III Hypersensitivity).
+
+Front: Pathogenesis of Pemphigus Vulgaris?
+
+Back: Antibodies against Desmoglein (Type II Hypersensitivity).
+
+Front: Pathogenesis of Bullous Pemphigoid?
+
+Back: Antibodies against Hemidesmosomes (Type II Hypersensitivity).
+
+Front: Primary mediator of "Late-phase" Type I Hypersensitivity?
+
+Back: Leukotrienes.
+
+XVIII. Transplant & Oncology
+
+Front: Syngeneic graft (Isograft) definition?
+
+Back: Graft between genetically identical individuals (e.g., monozygotic twins).
+
+Front: Xenograft definition?
+
+Back: Graft between different species.
+
+Front: Mechanism of Rituximab in B-cell lymphoma?
+
+Back: Monoclonal antibody against CD20 leads to B-cell lysis via ADCC and complement.
+
+Front: Function of CAR-T cell therapy?
+
+Back: Patient's T-cells are engineered to express a chimeric receptor targeting a specific tumor antigen (e.g., CD19).
+
+Front: Tumor marker associated with yolk sac tumors and hepatoma?
+
+Back: $\alpha$-fetoprotein (AFP).
+
+XIX. Immunomodulators (Mabs & Nibs)
+
+Front: Target of Omalizumab?
+
+Back: IgE (prevents binding to Fc$\epsilon$RI).
+
+Front: Target of Palivizumab?
+
+Back: RSV F protein (used for prophylaxis in high-risk infants).
+
+Front: Target of Eculizumab?
+
+Back: Complement C5 (used in PNH).
+
+Front: Mechanism of Abciximab?
+
+Back: Antagonist of GPIIb/IIIa receptors (antiplatelet).
+
+Front: Target of Vedolizumab?
+
+Back: $\alpha_4\beta_7$ integrin (gut-specific immunosuppression for IBD).
+
+XX. Final Integration (High-Yield Potpourri)
+
+Front: Primary cytokine that stimulates liver synthesis of fibrinogen?
+
+Back: IL-6.
+
+Front: Primary receptor for HIV on T-cells?
+
+Back: CD4.
+
+Front: Coreceptors required for HIV entry?
+
+Back: CCR5 (early/macrophages) or CXCR4 (late/T-cells).
+
+Front: Protective mutation against HIV infection?
+
+Back: CCR5 $\Delta$32 mutation.
+
+Front: Mechanism of "Central Tolerance" in B-cells?
+
+Back: Receptor editing (re-expression of RAG genes to change light chain).
+
+Front: Process by which B-cells change the light chain to avoid self-reactivity?
+
+Back: Receptor Editing.
+
+Front: The two primary proteins required for TCR gene rearrangement?
+
+Back: RAG-1 and RAG-2.
+
+Front: Primary marker used to distinguish Hematopoietic Stem Cells?
+
+Back: CD34.
+
+Front: Surface marker found on all Mature T-cells but not B-cells?
+
+Back: CD3.
+
+Front: Surface marker for the LPS receptor on Macrophages?
+
+Back: CD14.
+
+Front: Co-receptor on B-cells that enhances signaling (part of the CD19/CD21/CD81 complex)?
+
+Back: CD21 (also the receptor for Epstein-Barr Virus).
+
+Front: Transcription factor required for Th17 development?
+
+Back: ROR$\gamma$t.
+
+Front: Transcription factor required for Th2 development?
+
+Back: GATA-3.
+
+Front: Transcription factor required for Th1 development?
+
+Back: T-bet.
+
+XXII. Complement & Innate Nuances
+
+Front: Molecule that prevents the assembly of the MAC on host cells?
+
+Back: CD59 (Protectin).
+
+Front: Factor that cleaves C3b into its inactive form (iC3b)?
+
+Back: Factor I (with Factor H as a cofactor).
+
+Front: Clinical finding in Factor H deficiency?
+
+Back: Atypical Hemolytic Uremic Syndrome (aHUS).
+
+Front: Major chemotactic factor for Eosinophils?
+
+Back: Eotaxin (and IL-5).
+
+Front: Enzyme in neutrophils that produces Hypochlorous acid (bleach)?
+
+Back: Myeloperoxidase (MPO).
+
+Front: Identifying feature of Natural Killer (NK) cells?
+
+Back: CD16 (Fc$\gamma$RIII) and CD56; lack of CD3.
+
+Front: Mechanism by which NK cells recognize "missing self"?
+
+Back: Detection of downregulated MHC Class I on virally infected or tumor cells.
+
+XXIII. Clinical Immunology & Serology
+
+Front: Prozone Effect in serology?
+
+Back: False negative result due to antibody excess (prevents cross-linking).
+
+Front: Test used to diagnose Chronic Granulomatous Disease via fluorescence?
+
+Back: Dihydrorhodamine (DHR) 123 flow cytometry.
+
+Front: Type of hypersensitivity involved in the Arthus Reaction?
+
+Back: Type III (local immune complex vasculitis).
+
+Front: Mechanism of the "Wheal and Flare" reaction?
+
+Back: Type I hypersensitivity (immediate mast cell degranulation).
+
+Front: Target antigen in Bullous Pemphigoid?
+
+Back: BP180 or BP230 (Hemidesmosomes).
+
+Front: Target antigen in Pemphigus Vulgaris?
+
+Back: Desmoglein 1 and 3 (Desmosomes).
+
+XXIV. Microbial Evasion of Immunity
+
+Front: Viral protein produced by HSV to block TAP transporters?
+
+Back: ICP47 (prevents peptide loading onto MHC I).
+
+Front: Mechanism used by Mycobacteria to survive inside macrophages?
+
+Back: Inhibition of phagosome-lysosome fusion.
+
+Front: Method used by Neisseria gonorrhoeae to evade antibodies?
+
+Back: Pilin antigenic variation and IgA protease secretion.
+
+Front: Primary immune defense against Giardia lamblia?
+
+Back: Secretory IgA.
+
+Front: Immune cell type that forms the core of a granuloma?
+
+Back: Epithelioid macrophages (activated by Th1 IFN-$\gamma$).
+
+XXV. Immunopathology & Genetics
+
+Front: Deficiency associated with SLE-like symptoms and recurrent infections?
+
+Back: Early complement component deficiency (C1q, C2, C4).
+
+Front: Genetics of Agammaglobulinemia (Bruton)?
+
+Back: X-linked recessive.
+
+Front: Gene defect in IPEX Syndrome?
+
+Back: FOXP3 mutation (leads to lack of Tregs).
+
+Front: Clinical triad of IPEX Syndrome?
+
+Back: Immune dysregulation, Polyendocrinopathy, Enteropathy, X-linked.
+
+Front: Genetic defect in Hyper-IgE (Job) Syndrome?
+
+Back: STAT3 mutation.
+
+Front: Mechanism of Autoimmune Lymphoproliferative Syndrome (ALPS)?
+
+Back: Defect in Fas/FasL (impaired apoptosis of self-reactive lymphocytes).
+
+XXVI. Pharmacology (The "Mabs" and "Nibs")
+
+Front: Target of Basiliximab?
+
+Back: IL-2 receptor (CD25).
+
+Front: Target of Bortezomib?
+
+Back: 26S Proteasome (used in Multiple Myeloma).
+
+Front: Target of Cetuximab?
+
+Back: EGFR (Epidermal Growth Factor Receptor).
+
+Front: Target of Trastuzumab?
+
+Back: HER2/neu.
+
+Front: Target of Bevacizumab?
+
+Back: VEGF (inhibits angiogenesis).
+
+Front: Target of Secukinumab?
+
+Back: IL-17A (used in Psoriasis).
+
+Front: Target of Dupilumab?
+
+Back: IL-4 receptor $\alpha$ (inhibits both IL-4 and IL-13 signaling).
+
+Front: Mechanism of Methotrexate in immunology?
+
+Back: Dihydrofolate reductase inhibitor; inhibits lymphocyte proliferation.
+
+XXVII. Transplant & Tissue Specifics
+
+Front: The "Direct Pathway" of allorecognition?
+
+Back: Recipient T-cells recognize intact donor MHC on donor APCs.
+
+Front: The "Indirect Pathway" of allorecognition?
+
+Back: Recipient APCs process donor MHC and present it to recipient T-cells.
+
+Front: Major cytokine responsible for the fibrosis in chronic graft rejection?
+
+Back: TGF-$\beta$.
+
+Front: Type of vaccine that should never be given to a SCID patient?
+
+Back: Live attenuated vaccines (e.g., Rotavirus, MMR, Varicella).
+
+Front: Primary antibody isotype in Breast Milk?
+
+Back: IgA.
+
+XXVIII. Specialized Markers & Concepts
+
+Front: What is "Clonal Ignorance"?
+
+Back: Self-reactive T-cells that ignore antigens because they are sequestered (e.g., Blood-Brain Barrier).
+
+Front: Definition of "Molecular Mimicry"?
+
+Back: Microbial antigens resembling self-antigens (e.g., Rheumatic Fever).
+
+Front: Marker for Follicular Dendritic Cells (FDCs)?
+
+Back: CD21 (used to trap immune complexes for B-cells).
+
+Front: Function of the "Poly-Ig Receptor"?
+
+Back: Transports IgA across epithelial cells into the lumen.
+
+Front: Major component of the "Secretory Component" of IgA?
+
+Back: A fragment of the Poly-Ig receptor.
+
+Front: Difference between "Affinity" and "Avidity"?
+
+Back: Affinity is the strength of a single bond; Avidity is the overall strength of multiple bonds (e.g., IgM has high avidity).
+
+Front: Major protein that initiates the Classical Complement Pathway?
+
+Back: C1 complex (C1q, C1r, C1s).
+
+Front: Number of IgG molecules required to activate C1?
+
+Back: Two (must be in close proximity).
+
+Front: Number of IgM molecules required to activate C1?
+
+Back: One (in the "staple" conformation).
+
+Front: Primary signaling pathway used by most cytokine receptors?
+
+Back: JAK/STAT pathway.
+
+Front: STAT protein activated by IL-12 to drive Th1 differentiation?
+
+Back: STAT4.
+
+Front: STAT protein activated by IL-4 to drive Th2 differentiation?
+
+Back: STAT6.
+
+Front: STAT protein activated by IL-6 to drive Th17 differentiation?
+
+Back: STAT3.
+
+Front: Function of ITIMs (Immunoreceptor Tyrosine-based Inhibitory Motifs)?
+
+Back: Recruit phosphatases (like SHP-1) to turn off lymphocyte activation.
+
+Front: Which inhibitory receptors contain ITIMs?
+
+Back: CTLA-4 and PD-1.
+
+XXX. Advanced Tolerance & Anergy
+
+Front: Main mechanism of Central Tolerance for T-cells?
+
+Back: Apoptosis (Negative Selection) in the Thymus.
+
+Front: Two main mechanisms of Peripheral Tolerance?
+
+Back: Anergy and Suppression by Tregs.
+
+Front: Fate of a B-cell that recognizes soluble self-antigen in the bone marrow?
+
+Back: It becomes anergic (unresponsive).
+
+Front: Fate of a B-cell that recognizes multivalent self-antigen on a cell surface in the bone marrow?
+
+Back: Receptor Editing (altering the light chain) or Apoptosis.
+
+XXXI. Specialized Cells & Functions
+
+Front: Primary function of Plasmacytoid Dendritic Cells (pDCs)?
+
+Back: Massive production of Type I Interferons ($\alpha$ and $\beta$) during viral infections.
+
+Front: Only lymphocyte that does not require clonal expansion/differentiation to function?
+
+Back: Natural Killer (NK) cells.
+
+Front: Cell type that expresses the receptor "RANK"?
+
+Back: Osteoclast precursors (activated by RANKL from T-cells/Osteoblasts).
+
+Front: Primary cell responsible for the "Alternative" activation of macrophages (M2)?
+
+Back: Th2 cells (via IL-4 and IL-13).
+
+Front: Role of M2 (Alternatively Activated) macrophages?
+
+Back: Tissue repair, fibrosis, and anti-inflammatory effects.
+
+XXXII. Clinical Immunology & Genetic Defects
+
+Front: Genetic defect in Bare Lymphocyte Syndrome Type II?
+
+Back: Mutations in transcription factors for MHC Class II expression (e.g., CIITA).
+
+Front: Result of Bare Lymphocyte Syndrome Type II?
+
+Back: Profound CD4+ T-cell deficiency (SCID-like presentation).
+
+Front: Genetic defect in Bare Lymphocyte Syndrome Type I?
+
+Back: TAP1 or TAP2 deficiency (leads to low MHC Class I and low CD8+ T-cells).
+
+Front: Characteristic lab finding in Wiskott-Aldrich Syndrome?
+
+Back: Small platelets and low platelet count (thrombocytopenia).
+
+Front: Cytokine deficiency that leads to "Disseminated Mycobacterial Infections"?
+
+Back: IL-12 receptor deficiency or IFN-$\gamma$ receptor deficiency.
+
+Front: Immunodeficiency associated with a 1q21.1 or 22q11.2 deletion?
+
+Back: DiGeorge Syndrome.
+
+XXXIII. Serology & Diagnostic Tests
+
+Front: Purpose of the CH50 assay?
+
+Back: Measures the total hemolytic complement activity (tests the Classical Pathway).
+
+Front: What does a low CH50 with normal C3/C4 suggest?
+
+Back: Deficiency in the terminal complement components (C5-C9).
+
+Front: Meaning of "Antinuclear Antibody (ANA)" pattern: Peripheral/Rim?
+
+Back: Highly suggestive of SLE (Anti-dsDNA).
+
+Front: Meaning of "Antinuclear Antibody (ANA)" pattern: Nucleolar?
+
+Back: Suggestive of Systemic Sclerosis (Scleroderma).
+
+Front: Test used to detect Chronic Granulomatous Disease before DHR became standard?
+
+Back: Nitroblue Tetrazolium (NBT) test.
+
+XXXIV. Immunotherapy & Biologicals (High-Yield Expansion)
+
+Front: Target of Belimumab?
+
+Back: B-cell activating factor (BAFF/BLyS); used in SLE.
+
+Front: Target of Tocilizumab?
+
+Back: IL-6 receptor; used in Rheumatoid Arthritis and Cytokine Release Syndrome.
+
+Front: Target of Canakinumab?
+
+Back: IL-1$\beta$; used in periodic fever syndromes and Gout.
+
+Front: Target of Abciximab?
+
+Back: Glycoprotein IIb/IIIa on platelets.
+
+Front: Target of Denosumab?
+
+Back: RANKL; used to treat Osteoporosis.
+
+XXXV. "Classic" Board Integration (First Aid Style)
+
+Front: Mnemonic for the 4 Ts of Type IV Hypersensitivity?
+
+Back: T-cells, Transplant (Rejection), TB (PPD), Touching (Contact Dermatitis).
+
+Front: Differentiation between "Opsonization" and "Neutralization"?
+
+Back: Opsonization marks for phagocytosis; Neutralization blocks binding to host cells.
+
+Front: Part of the IgA molecule that prevents its degradation by proteases?
+
+Back: Secretory Component.
+
+Front: Major antibody isotype found in the primary (early) immune response?
+
+Back: IgM.
+
+Front: Major antibody isotype found in the secondary (amnestic) immune response?
+
+Back: IgG.
+
+Front: Location of "Margination" in the inflammatory process?
+
+Back: Blood vessel wall (leukocytes move to the periphery).
+
+Front: Proteins responsible for leukocyte "Rolling"?
+
+Back: E-selectin and P-selectin on endothelium; Sialyl-Lewis X on leukocytes.
+
+Front: Proteins responsible for leukocyte "Tight Adhesion"?
+
+Back: ICAM-1 on endothelium; LFA-1 (Integrin) on leukocytes.
+
+Front: Protein responsible for leukocyte "Diapedesis" (Transmigration)?
+
+Back: PECAM-1 (CD31).
+
+XXXVI. Final High-Yield Nuggets
+
+Front: Name for the specialized macrophages in the Liver?
+
+Back: Kupffer cells.
+
+Front: Name for the specialized macrophages in the Brain?
+
+Back: Microglia.
+
+Front: Name for the specialized macrophages in the Lung?
+
+Back: Alveolar macrophages (Dust cells).
+
+Front: Function of "Properdin" in the complement system?
+
+Back: Stabilizes C3 convertase (C3bBb) in the Alternative pathway.
+
+Front: Result of "C3 deficiency"?
+
+Back: Increased susceptibility to Type III hypersensitivity and recurrent pyogenic infections.
+
+Front: Primary cytokine involved in "Class Switching" to IgA?
+
+Back: TGF-$\beta$ (and IL-5 in some species).
+
+Front: Cytokine that induces the production of "Acute Phase Reactants" from the liver?
+
+Back: IL-6.
+
+Front: HLA association: B51?
+
+Back: Behcet disease.
+
+Front: HLA association: DR4?
+
+Back: Rheumatoid arthritis (Mnemonic: 4 walls in a "Rheum").
+
+Front: HLA association: A3?
+
+Back: Hemochromatosis.
+
+Front: HLA association: B*5701?
+
+Back: Abacavir hypersensitivity.
+
+Front: HLA association: DR5?
+
+Back: Hashimoto thyroiditis and Pernicious anemia.
+
+XXXVIII. Advanced Intracellular Signaling
+
+Front: Protein that acts as a "molecular switch" in TCR signaling by cycling between GTP and GDP?
+
+Back: Ras.
+
+Front: The three primary pathways activated by the TCR complex?
+
+Back: MAP kinase (Ras/Raf), Calcium-Calmodulin (NFAT), and PKC-$\theta$ (NF-$\kappa$B).
+
+Front: Enzyme inhibited by Cyclosporine and Tacrolimus?
+
+Back: Calcineurin (a phosphatase).
+
+Front: Target of the drug Sirolimus (Rapamycin) within the cell?
+
+Back: mTOR (Mammalian Target of Rapamycin).
+
+Front: Role of DAG (Diacylglycerol) in T-cell activation?
+
+Back: Activates Protein Kinase C (PKC).
+
+XXXIX. Mucosal & Cutaneous Immunity
+
+Front: Specialized epithelial cells that transport IgA across the basement membrane?
+
+Back: Enterocytes (via the Poly-Ig receptor).
+
+Front: Primary antibody isotype in the urogenital and respiratory tracts?
+
+Back: Secretory IgA.
+
+Front: Major cytokine responsible for "Oral Tolerance"?
+
+Back: TGF-$\beta$.
+
+Front: Name of the dendritic cells found specifically in the epidermis?
+
+Back: Langerhans cells.
+
+Front: Characteristic electron microscopy finding in Langerhans cells?
+
+Back: Birbeck granules (tennis racket shape).
+
+XL. Tumor Immunology & Immunotherapy
+
+Front: Mechanism of "Immune Subversion" by tumors via TGF-$\beta$?
+
+Back: Induction of Tregs and inhibition of CTL/NK cell activity.
+
+Front: Two common tumor-associated antigens used in clinical monitoring (not screening)?
+
+Back: CEA (Carcinoembryonic antigen) and PSA (Prostate-specific antigen).
+
+Front: Class of drugs that include Ipilimumab?
+
+Back: Checkpoint inhibitors (specifically Anti-CTLA-4).
+
+Front: Target of Nivolumab and Pembrolizumab?
+
+Back: PD-1 (Programmed Cell Death Protein 1).
+
+Front: Primary cytokine used in the treatment of Renal Cell Carcinoma and Melanoma?
+
+Back: IL-2 (Aldesleukin).
+
+XLI. Laboratory "High-Yields"
+
+Front: Test used to identify the specific HLA alleles of a transplant patient?
+
+Back: HLA Typing (PCR or Flow Cytometry).
+
+Front: Significance of a "Positive Crossmatch" in transplantation?
+
+Back: Recipient has preformed antibodies against donor HLA; contraindication to transplant.
+
+Front: Difference between "Direct" and "Indirect" Immunofluorescence?
+
+Back: Direct uses a labeled primary antibody; Indirect uses a labeled secondary antibody.
+
+Front: Diagnostic use of Nitroblue Tetrazolium (NBT) reduction?
+
+Back: Assessment of the oxidative burst in neutrophils (remains yellow in CGD).
+
+XLII. Final Clinical Integration
+
+Front: Mechanism of "Molecular Mimicry" in Rheumatic Fever?
+
+Back: Antibodies against Group A Strep M-protein cross-react with cardiac myosin.
+
+Front: Why do patients with IgA deficiency have an increased risk of anaphylaxis during blood transfusions?
+
+Back: They may have anti-IgA antibodies (IgE class) that react to IgA in the donor blood.
+
+Front: Definition of "Hapten"?
+
+Back: A small molecule that is only immunogenic when attached to a large carrier protein.
+
+Front: Why are patients with "Early" complement deficiencies (C1, C2, C4) at risk for SLE?
+
+Back: Impaired clearance of apoptotic cells and immune complexes.
+
+Front: Primary immune response to a "Superantigen" (toxic shock)?
+
+Back: Massive release of IFN-$\gamma$ and IL-2 (T-cells) and TNF-$\alpha$ and IL-1 (Macrophages).
+
+Front: Location of "T-cell independent" B-cell activation?
+
+Back: Splenic marginal zone (responses to polysaccharide capsules).
+
+Front: Most common cause of death in patients with SCID (if untreated)?
+
+Back: Opportunistic infections (e.g., Pneumocystis jirovecii or Candida) in the first year of life.
+
+Front: Primary mediator of the "Anamnestic" (memory) response?
+
+Back: Memory B and T cells.
+
+Front: Enzyme that creates the "N-nucleotide" diversity during VDJ recombination?
+
+Back: TdT (Terminal Deoxynucleotidyl Transferase).
+
+Front: Primary clinical use of Rho(D) Immune Globulin (RhoGAM)?
+
+Back: Prevents Hemolytic Disease of the Newborn by opsonizing fetal RBCs in maternal circulation.
