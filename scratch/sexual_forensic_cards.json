@@ -1,0 +1,1526 @@
+[
+  {
+    "q": "Most common cause of <b>Condyloma Acuminatum</b>?",
+    "a": "HPV types 6 and 11."
+  },
+  {
+    "q": "Histological hallmark of HPV infection in the cervix?",
+    "a": "Koilocytes (cells with wrinkled \"raisin\" nuclei and perinuclear halos)."
+  },
+  {
+    "q": "Definition of <b>Extramammary Paget Disease</b> of the vulva?",
+    "a": "Malignant epithelial cells in the epidermis, staining PAS+, Keratin+, and S100-."
+  },
+  {
+    "q": "Distinguishing feature of Vulvar Melanoma from Paget Disease?",
+    "a": "Melanoma is PAS- and S100+."
+  },
+  {
+    "q": "Cause of <b>Sarcoma Botryoides</b> (Embryonal Rhabdomyosarcoma)?",
+    "a": "Proliferation of immature skeletal muscle (rhabdomyoblasts) in girls < 5 years old."
+  },
+  {
+    "q": "Pathognomonic finding in <b>Sarcoma Botryoides</b>?",
+    "a": "Cytoplasmic cross-striations and \"grape-like\" vaginal mass."
+  },
+  {
+    "q": "Classic risk factor for Vaginal <b>Clear Cell Adenocarcinoma</b>?",
+    "a": "In-utero exposure to Diethylstilbestrol (DES)."
+  },
+  {
+    "q": "Defining characteristic of <b>Cervical Intraepithelial Neoplasia</b> (CIN) III?",
+    "a": "Dysplasia involving the entire thickness of the epithelium (Carcinoma in situ)."
+  },
+  {
+    "q": "Most common location for cervical cancer to arise?",
+    "a": "Transformation zone (squamocolumnar junction)."
+  },
+  {
+    "q": "Mechanism of HPV E6 protein in oncogenesis?",
+    "a": "Promotes degradation of the p53 tumor suppressor protein."
+  },
+  {
+    "q": "Mechanism of HPV E7 protein in oncogenesis?",
+    "a": "Binds and inactivates the Rb (Retinoblastoma) protein."
+  },
+  {
+    "q": "Definition of <b>Asherman Syndrome</b>?",
+    "a": "Secondary amenorrhea due to loss of the basalis layer and subsequent scarring."
+  },
+  {
+    "q": "Components of the \"Classic Triad\" of <b>Endometriosis</b>?",
+    "a": "Dysmenorrhea, dyspareunia, and infertility."
+  },
+  {
+    "q": "Most common site of <b>Endometriosis</b>?",
+    "a": "Ovary (forming a \"Chocolate Cyst\")."
+  },
+  {
+    "q": "Pathological definition of <b>Adenomyosis</b>?",
+    "a": "Presence of endometrial glands and stroma within the uterine myometrium."
+  },
+  {
+    "q": "Defining feature of Endometrial <b>Hyperplasia</b>?",
+    "a": "Increased proliferation of endometrial glands relative to stroma, caused by unopposed estrogen."
+  },
+  {
+    "q": "Most important predictor for progression of Endometrial <b>Hyperplasia</b> to Carcinoma?",
+    "a": "Cellular atypia."
+  },
+  {
+    "q": "Most common pelvic tumor in females?",
+    "a": "<b>Leiomyoma</b> (Fibroid)."
+  },
+  {
+    "q": "Distinguishing feature of Leiomyosarcoma from <b>Leiomyoma</b>?",
+    "a": "Arises de novo (not from fibroids) and shows <b>necrosis</b>, atypia, and high mitotic activity."
+  },
+  {
+    "q": "Common hormone profile in <b>Polycystic Ovarian Syndrome</b> (PCOS)?",
+    "a": "Increased LH, decreased FSH (LH:FSH ratio > 3), and increased androgens."
+  },
+  {
+    "q": "Most common type of ovarian tumor?",
+    "a": "Surface epithelial tumors (Serous and Mucinous)."
+  },
+  {
+    "q": "Serum marker used to monitor response to therapy in epithelial ovarian cancer?",
+    "a": "CA-125."
+  },
+  {
+    "q": "Most common germ cell tumor in females?",
+    "a": "<b>Cystic Teratoma</b> (Dermoid Cyst)."
+  },
+  {
+    "q": "Definition of <b>Struma Ovarii</b>?",
+    "a": "A specialized teratoma composed primarily of thyroid tissue, potentially causing hyperthyroidism."
+  },
+  {
+    "q": "Female equivalent of a male <b>Seminoma</b>?",
+    "a": "<b>Dysgerminoma</b>."
+  },
+  {
+    "q": "Tumor marker for Ovarian <b>Dysgerminoma</b>?",
+    "a": "LDH (Lactate Dehydrogenase)."
+  },
+  {
+    "q": "Characteristic histological finding in <b>Yolk Sac Tumors</b>?",
+    "a": "Schiller-Duval bodies (glomeruloid-like structures)."
+  },
+  {
+    "q": "Tumor marker for Yolk Sac (Endodermal Sinus) Tumors?",
+    "a": "AFP (Alpha-fetoprotein)."
+  },
+  {
+    "q": "Histological hallmark of <b>Granulosa Cell Tumors</b>?",
+    "a": "Call-Exner bodies (small follicles filled with eosinophilic material)."
+  },
+  {
+    "q": "Characteristic sign of <b>Meigs Syndrome</b>?",
+    "a": "Ovarian fibroma, ascites, and pleural effusion."
+  },
+  {
+    "q": "Definition of a <b>Krukenberg Tumor</b>?",
+    "a": "Metastatic mucinous tumor to the ovaries, usually from a gastric (signet ring cell) primary."
+  },
+  {
+    "q": "Most common cause of Ectopic Pregnancy?",
+    "a": "Scarring from Pelvic Inflammatory Disease (PID)."
+  },
+  {
+    "q": "Classic \"Snowstorm\" appearance on ultrasound indicates?",
+    "a": "<b>Hydatidiform Mole</b>."
+  },
+  {
+    "q": "Genetic makeup of a Complete <b>Hydatidiform Mole</b>?",
+    "a": "46,XX (usually); all chromosomes are paternal in origin."
+  },
+  {
+    "q": "Risk of <b>Choriocarcinoma</b> is higher in which mole type?",
+    "a": "Complete <b>Hydatidiform Mole</b>."
+  },
+  {
+    "q": "Definition of <b>Cryptorchidism</b>?",
+    "a": "Failure of one or both testes to descend into the scrotum."
+  },
+  {
+    "q": "Primary complication of untreated <b>Cryptorchidism</b>?",
+    "a": "Increased risk of Germ Cell Tumors and infertility."
+  },
+  {
+    "q": "Most common cause of <b>Orchitis</b> in young adults?",
+    "a": "Chlamydia trachomatis (D-K) or Neisseria gonorrhoeae."
+  },
+  {
+    "q": "Cause of <b>Orchitis</b> in older men?",
+    "a": "E. coli and Pseudomonas (associated with UTI/BPH)."
+  },
+  {
+    "q": "Defining feature of a <b>Hydrocele</b>?",
+    "a": "Fluid collection within the tunica vaginalis that transilluminates."
+  },
+  {
+    "q": "Definition of a <b>Varicocele</b>?",
+    "a": "Dilation of the pampiniform plexus of veins (\"bag of worms\")."
+  },
+  {
+    "q": "Why are Varicoceles more common on the left side?",
+    "a": "Left spermatic vein drains into the left renal vein at a 90-degree angle."
+  },
+  {
+    "q": "Most common testicular tumor in men aged 15\u201340?",
+    "a": "Germ Cell Tumor."
+  },
+  {
+    "q": "Characteristic of <b>Seminoma</b> on gross pathology?",
+    "a": "Homogeneous mass with no hemorrhage or <b>necrosis</b>; \"fried egg\" cells on histology."
+  },
+  {
+    "q": "Most common testicular tumor in infants and children?",
+    "a": "Yolk Sac Tumor."
+  },
+  {
+    "q": "Difference between <b>Seminoma</b> and Non-<b>Seminoma</b> regarding radiosensitivity?",
+    "a": "Seminomas are highly radiosensitive; Non-Seminomas are not."
+  },
+  {
+    "q": "Most common testicular tumor in men > 60?",
+    "a": "Diffuse Large B-cell Lymphoma (Metastatic)."
+  },
+  {
+    "q": "Primary location of Benign Prostatic <b>Hyperplasia</b> (BPH)?",
+    "a": "Transitional zone (periurethral)."
+  },
+  {
+    "q": "Primary location of <b>Prostate Adenocarcinoma</b>?",
+    "a": "Peripheral zone (posterior aspect)."
+  },
+  {
+    "q": "Best screening tool for Prostate Cancer?",
+    "a": "Digital Rectal Exam (DRE) and PSA > 4 ng/mL."
+  },
+  {
+    "q": "System used to grade Prostate Cancer based on architecture?",
+    "a": "Gleason Grading System."
+  },
+  {
+    "q": "Common site of Prostate Cancer metastasis?",
+    "a": "Lumbar spine (Osteoblastic metastases)."
+  },
+  {
+    "q": "Definition of <b>Algor Mortis</b>?",
+    "a": "Post-mortem cooling of the body to ambient temperature."
+  },
+  {
+    "q": "Definition of <b>Livor Mortis</b>?",
+    "a": "Purple discoloration of dependent body parts due to gravity-induced blood settling."
+  },
+  {
+    "q": "When does <b>Rigor Mortis</b> typically peak?",
+    "a": "12 hours after death."
+  },
+  {
+    "q": "Difference between an Abrasion and a Laceration?",
+    "a": "Abrasion is a superficial scrape; Laceration is a tear caused by blunt force (shows tissue bridging)."
+  },
+  {
+    "q": "Defining feature of an Incised Wound?",
+    "a": "A clean-cut wound longer than it is deep, caused by a sharp object (no tissue bridging)."
+  },
+  {
+    "q": "Characteristics of a Contact Gunshot Wound?",
+    "a": "Muzzle imprint, soot, and seared skin; \"stellate\" appearance over bone."
+  },
+  {
+    "q": "What is \"Stippling\" or \"Tattooing\" in forensics?",
+    "a": "Small abrasions on skin caused by unburnt gunpowder particles in intermediate-range GSWs."
+  },
+  {
+    "q": "Primary finding in <b>Carbon Monoxide</b> (CO) poisoning?",
+    "a": "Cherry-red discoloration of skin and organs."
+  },
+  {
+    "q": "Primary finding in <b>Cyanide</b> poisoning?",
+    "a": "Bitter almond odor and \"brick-red\" skin."
+  },
+  {
+    "q": "Characteristics of a 1st-degree burn?",
+    "a": "Epidermis only; painful, red, no blisters."
+  },
+  {
+    "q": "Characteristics of a 2nd-degree burn?",
+    "a": "Epidermis and dermis; painful with blisters."
+  },
+  {
+    "q": "Definition of \"Rule of Nines\"?",
+    "a": "Method used to estimate the total body surface area (TBSA) affected by burns."
+  },
+  {
+    "q": "Typical finding in exit wounds of GSWs?",
+    "a": "Larger, irregular, and lack soot or stippling."
+  },
+  {
+    "q": "Definition of <b>Cadaveric Spasm</b>?",
+    "a": "Instantaneous onset of <b>rigor mortis</b> in a specific muscle group, usually associated with violent death."
+  },
+  {
+    "q": "Main forensic finding in Drowning?",
+    "a": "Frothy fluid in airways and \"washerwoman\" skin (though non-specific)."
+  },
+  {
+    "q": "Finding in \"Dry Drowning\"?",
+    "a": "Laryngospasm prevents water from entering the lungs."
+  },
+  {
+    "q": "Difference between \"Manner of Death\" and \"Cause of Death\"?",
+    "a": "Cause is the injury/disease (e.g., GSW); Manner is the legal category (e.g., Homicide, Suicide, Accident)."
+  },
+  {
+    "q": "Common finding in Manual Strangulation?",
+    "a": "Fractured hyoid bone and petechial hemorrhages in the conjunctiva."
+  },
+  {
+    "q": "Forensic indicator of Antemortem vs. Postmortem bruising?",
+    "a": "Antemortem bruises show cellular infiltration and inflammatory response."
+  },
+  {
+    "q": "Definition of <b>Saponification</b> (Adipocere)?",
+    "a": "Conversion of body fat to a waxy, soap-like substance in moist, anaerobic environments."
+  },
+  {
+    "q": "Definition of <b>Mummification</b>?",
+    "a": "Drying and shriveling of the body in hot, dry conditions."
+  },
+  {
+    "q": "What are <b>Tardieu Spots</b>?",
+    "a": "Subpleural/subpericardial petechiae seen in cases of mechanical asphyxia."
+  },
+  {
+    "q": "<b>Determining range of fire:</b> Absence of soot/stippling indicates?",
+    "a": "Distant range GSW (usually > 3 feet)."
+  },
+  {
+    "q": "Sign of defensive wounds?",
+    "a": "Lacerations or incisions on the palms, ulnar surface of forearms, or shins."
+  },
+  {
+    "q": "What defines a \"Stab Wound\"?",
+    "a": "A sharp-force injury that is deeper than it is long on the skin surface."
+  },
+  {
+    "q": "Forensic significance of a \"Hilt Mark\"?",
+    "a": "Patterned abrasion from the handle of a knife, indicating full-depth penetration."
+  },
+  {
+    "q": "Primary indicator of lightning strike (thermal injury)?",
+    "a": "Lichtenberg figures (arborescent/fern-like skin patterns)."
+  },
+  {
+    "q": "Characteristics of an Entry GSW?",
+    "a": "Abrasion ring/collar around the hole."
+  },
+  {
+    "q": "Effect of Arsenic poisoning on the skin?",
+    "a": "Hyperkeratosis and \"raindrop\" hyperpigmentation."
+  },
+  {
+    "q": "What is \"<b>Putrefaction</b>\"?",
+    "a": "Decomposition of proteins by bacterial action, leading to green discoloration and bloating."
+  },
+  {
+    "q": "Significance of \"Marbling\" in decomposition?",
+    "a": "Breakdown of hemoglobin in vessels creating a branched pattern on the skin."
+  },
+  {
+    "q": "Most common cause of sudden cardiac death in athletes?",
+    "a": "Hypertrophic Cardiomyopathy (HCM)."
+  },
+  {
+    "q": "Defining feature of a Contusion?",
+    "a": "Bruising caused by blunt force that ruptures small blood vessels without breaking the skin."
+  },
+  {
+    "q": "Distinguishing Suicidal vs. Homicidal cut-throat wounds?",
+    "a": "Suicide often shows \"hesitation marks\"; Homicide often shows deep, singular, or jagged defense-related cuts."
+  },
+  {
+    "q": "Mechanism of death in hanging?",
+    "a": "Cerebral ischemia due to compression of carotid arteries (rather than airway obstruction)."
+  },
+  {
+    "q": "Post-mortem finding in Hypothermia?",
+    "a": "Wischnewski spots (multiple small hemorrhages in the gastric mucosa)."
+  },
+  {
+    "q": "Definition of \"Diatom Test\"?",
+    "a": "Detection of silica-shelled algae in bone marrow to support a diagnosis of drowning."
+  },
+  {
+    "q": "Forensic finding in Shaken Baby Syndrome?",
+    "a": "Retinal hemorrhages, subdural hematoma, and diffuse axonal injury."
+  },
+  {
+    "q": "Characteristics of high-voltage electrical burns?",
+    "a": "Small entry/exit points with massive deep tissue destruction."
+  },
+  {
+    "q": "Significance of \"Blow-back\" in forensics?",
+    "a": "Blood and tissue found inside the barrel of a gun in contact shots."
+  },
+  {
+    "q": "Sequence of color changes in a bruise?",
+    "a": "Red/Purple (Hb) -> Blue/Black -> Green (Biliverdin) -> Yellow/Brown (Bilirubin/Hemosiderin)."
+  },
+  {
+    "q": "Timeframe for \"fixed\" <b>Livor Mortis</b>?",
+    "a": "Usually after 8\u201312 hours; it no longer blanches with pressure."
+  },
+  {
+    "q": "Primary feature of Pulmonary Thromboembolism at autopsy?",
+    "a": "Lines of Zahn (alternating layers of platelets/fibrin and RBCs) in the clot."
+  },
+  {
+    "q": "Distinguishing Premortem vs. Postmortem clots?",
+    "a": "Premortem clots are friable and have Lines of Zahn; Postmortem clots are \"chicken fat\" (yellow) or \"currant jelly\" (red)."
+  },
+  {
+    "q": "Common fracture site in motor vehicle accidents (pedestrian vs car)?",
+    "a": "\"Bumper fracture\" (tibial/fibular fractures at the level of the car bumper)."
+  },
+  {
+    "q": "Primary chemical change used for post-mortem interval (PMI) in the eye?",
+    "a": "Increasing Potassium (K<sup>+</sup>) concentration in the vitreous humor."
+  },
+  {
+    "q": "Definition of \"Triage\" in forensic mass disasters?",
+    "a": "Prioritizing victims based on the severity of injuries and likelihood of survival."
+  },
+  {
+    "q": "Finding in \"Coupe\" vs \"Contre-coupe\" brain injury?",
+    "a": "Coupe is at the site of impact; Contre-coupe is on the opposite side (common in falls)."
+  },
+  {
+    "q": "Forensic significance of a \"Dicing\" pattern?",
+    "a": "Small, squared-off abrasions caused by shattered tempered side-glass in car accidents."
+  },
+  {
+    "q": "Most reliable method for identifying a skeletonized body?",
+    "a": "Dental records or DNA analysis."
+  },
+  {
+    "q": "<b>Characteristics of Skeletal remains:</b> Female Pelvis?",
+    "a": "Wider sub-pubic angle (> 90&deg;), wider sciatic notch, and oval-shaped pelvic inlet."
+  },
+  {
+    "q": "<b>Characteristics of Skeletal remains:</b> Male Pelvis?",
+    "a": "Narrow sub-pubic angle (< 90&deg;), heart-shaped pelvic inlet."
+  },
+  {
+    "q": "Definition of \"<b>Exsanguination</b>\"?",
+    "a": "Death due to extreme blood loss (usually > 40% of blood volume)."
+  },
+  {
+    "q": "Key finding in Heat Stroke?",
+    "a": "Body temperature > 40\u00b0C (104\u00b0F) and anhidrosis (lack of sweating)."
+  },
+  {
+    "q": "Sign of a \"Graze Wound\"?",
+    "a": "Bullet moves tangential to the skin, causing an elongated abrasion without entering the body."
+  },
+  {
+    "q": "Significance of \"Soot\" in the airway?",
+    "a": "Indicates the person was alive and breathing during a fire (Antemortem burn)."
+  },
+  {
+    "q": "Most common toxicological finding in forensic autopsies?",
+    "a": "Ethanol (Alcohol)."
+  },
+  {
+    "q": "Rule for calculating blood alcohol clearance?",
+    "a": "Average rate is 15\u201320 mg/dL per hour."
+  },
+  {
+    "q": "Most common cause of Pelvic Inflammatory Disease (PID)?",
+    "a": "Chlamydia trachomatis and Neisseria gonorrhoeae."
+  },
+  {
+    "q": "Definition of Fitz-Hugh-Curtis Syndrome?",
+    "a": "Inflammation of the liver capsule (\"violin-string\" adhesions) following PID."
+  },
+  {
+    "q": "Classic histological finding in Syphilitic Chancre (Primary)?",
+    "a": "Endarteritis obliterans with a plasma cell-rich infiltrate."
+  },
+  {
+    "q": "Identifying feature of Lymphogranuloma Venereum (LGV)?",
+    "a": "Necrotizing granulomatous inflammation of inguinal lymph nodes (stellate abscesses)."
+  },
+  {
+    "q": "Causative agent of \"Strawberry Cervix\"?",
+    "a": "Trichomonas vaginalis."
+  },
+  {
+    "q": "Most common cause of nipple discharge (bloody or serous)?",
+    "a": "Intraductal papilloma."
+  },
+  {
+    "q": "Distinction between Intraductal Papilloma and Papillary Carcinoma?",
+    "a": "Papilloma has a double layer of cells (epithelial and myoepithelial); Carcinoma lacks the myoepithelial layer."
+  },
+  {
+    "q": "Risk factor for Fat <b>Necrosis</b> of the breast?",
+    "a": "Trauma (presents as a fixed, firm mass mimicking cancer)."
+  },
+  {
+    "q": "Defining feature of Sclerosing Adenosis?",
+    "a": "Increased acini and intralobular fibrosis, often associated with calcifications."
+  },
+  {
+    "q": "Most common benign tumor of the female breast?",
+    "a": "Fibroadenoma."
+  },
+  {
+    "q": "Characteristic of Phyllodes Tumor?",
+    "a": "\"Leaf-like\" projections on histology with increased stromal cellularity."
+  },
+  {
+    "q": "Most common location for breast cancer?",
+    "a": "Upper outer quadrant."
+  },
+  {
+    "q": "Defining histological feature of Invasive Ductal Carcinoma (IDC)?",
+    "a": "Nest and cords of tumor cells in a dense, desmoplastic stroma."
+  },
+  {
+    "q": "Hallmark of Invasive Lobular Carcinoma?",
+    "a": "\"Single-file\" pattern of cells due to loss of E-cadherin."
+  },
+  {
+    "q": "Clinical presentation of Inflammatory Breast Cancer?",
+    "a": "Peau d'orange (orange peel skin) due to lymphatic obstruction by tumor emboli."
+  },
+  {
+    "q": "Pathogenesis of Balanitis Xerotica Obliterans?",
+    "a": "Lichen sclerosus of the glans penis; presents as white patches and can cause phimosis."
+  },
+  {
+    "q": "Definition of Peyronie Disease?",
+    "a": "Fibrous plaque within the tunica albuginea leading to abnormal penile curvature."
+  },
+  {
+    "q": "Distinguishing feature of Bowen Disease (Penis)?",
+    "a": "Carcinoma in situ presenting as a leukoplakic (white) plaque on the shaft."
+  },
+  {
+    "q": "Definition of Erythroplasia of Queyrat?",
+    "a": "Carcinoma in situ presenting as a red plaque on the glans."
+  },
+  {
+    "q": "Tumor marker for <b>Choriocarcinoma</b> in males?",
+    "a": "Beta-hCG (may cause gynecomastia due to LH-like activity)."
+  },
+  {
+    "q": "Most common cause of scrotal swelling in newborns?",
+    "a": "Congenital <b>hydrocele</b> (incomplete closure of processus vaginalis)."
+  },
+  {
+    "q": "Definition of Spermatocele?",
+    "a": "Cystic dilation of the efferent ductules containing sperm."
+  },
+  {
+    "q": "Definition of \"Chain of Custody\"?",
+    "a": "The chronological documentation of the seizure, control, and analysis of physical evidence."
+  },
+  {
+    "q": "What is \"Post-mortem Redistribution\"?",
+    "a": "The change in drug concentrations after death as drugs diffuse from organs into the blood."
+  },
+  {
+    "q": "Definition of an \"Incised Wound\" vs. \"Stab Wound\"?",
+    "a": "Incised is longer than it is deep; Stab is deeper than it is long."
+  },
+  {
+    "q": "What is a \"D\u00e9fense Wound\" on the hands?",
+    "a": "Cuts on the palmar surface or ulnar borders, indicating an attempt to grab a weapon or shield the body."
+  },
+  {
+    "q": "Appearance of a \"Star-shaped\" (Stellate) entry wound?",
+    "a": "Contact GSW over a bony prominence (e.g., the skull) due to expanding gases."
+  },
+  {
+    "q": "Definition of \"Muzzle Imprint\"?",
+    "a": "An abrasion mirroring the gun barrel's end, seen in hard-contact wounds."
+  },
+  {
+    "q": "Typical color of <b>Livor Mortis</b> in <b>Cyanide</b> poisoning?",
+    "a": "Bright cherry-red or pink."
+  },
+  {
+    "q": "Typical color of <b>Livor Mortis</b> in Nitrite or Chlorate poisoning?",
+    "a": "Chocolate brown (due to methemoglobinemia)."
+  },
+  {
+    "q": "What is \"Somatice Death\"?",
+    "a": "The irreversible cessation of the functions of the brain, heart, and lungs."
+  },
+  {
+    "q": "What is \"Molecular Death\"?",
+    "a": "The death of individual tissues and cells, occurring hours after somatic death."
+  },
+  {
+    "q": "Definition of \"Kiernan\u2019s Sign\" (Forensics)?",
+    "a": "Hemorrhage into the intermediate lobe of the pituitary in cases of hypothermia."
+  },
+  {
+    "q": "Difference between \"Primary\" and \"Secondary\" Blast Injuries?",
+    "a": "Primary is due to the pressure wave (affects hollow organs); Secondary is due to flying debris/shrapnel."
+  },
+  {
+    "q": "What is \"Tertiary\" Blast Injury?",
+    "a": "Injury resulting from the victim being thrown by the blast wind against a hard surface."
+  },
+  {
+    "q": "Common autopsy finding in anaphylactic shock?",
+    "a": "Laryngeal edema and mucus plugging of the bronchi."
+  },
+  {
+    "q": "Definition of \"Manner of Death: Undetermined\"?",
+    "a": "Used when there is insufficient information or conflicting evidence to choose a specific manner."
+  },
+  {
+    "q": "Definition of \"Exhumation\"?",
+    "a": "The legal disinterment of a body for re-examination or identification."
+  },
+  {
+    "q": "What is \"Petrifaction\" in forensic entomology?",
+    "a": "The use of insect life cycles (e.g., blowflies) to estimate the time since death."
+  },
+  {
+    "q": "Characteristic of \"Exit Wounds\" in GSW?",
+    "a": "Irregular shape, absence of an abrasion ring, and no soot or stippling."
+  },
+  {
+    "q": "Definition of \"Diatom Test\" significance?",
+    "a": "If diatoms are found in closed circulation (bone marrow/brain), it suggests the person drowned while alive."
+  },
+  {
+    "q": "Finding in \"Garrotting\"?",
+    "a": "Form of strangulation using a cord or wire, often tightened with a stick."
+  },
+  {
+    "q": "Indicator of \"Manual Strangulation\"?",
+    "a": "Fingernail abrasions on the neck and bruising of the deep neck muscles."
+  },
+  {
+    "q": "What is the \"Boxer\u2019s Posture\" (Pugilistic Attitude)?",
+    "a": "Flexion of limbs in fire victims due to heat-induced coagulation of muscle proteins."
+  },
+  {
+    "q": "Difference between \"Antemortem\" and \"Postmortem\" burns?",
+    "a": "Antemortem burns show a red line of inflammation (vital reaction) and soot in the lungs."
+  },
+  {
+    "q": "Definition of \"Neglect\" in geriatric/pediatric forensics?",
+    "a": "Failure of a caregiver to provide necessary food, clothing, shelter, or medical care."
+  },
+  {
+    "q": "What is a \"Choke\" in a shotgun?",
+    "a": "The partial constriction of the bore at the muzzle to control the spread of the shot."
+  },
+  {
+    "q": "Significance of \"Wadding\" in shotgun wounds?",
+    "a": "It can enter the wound at close range and help determine the distance of fire."
+  },
+  {
+    "q": "Definition of \"<b>Sudden Infant Death Syndrome</b>\" (SIDS)?",
+    "a": "Sudden death of an infant < 1 year that remains unexplained after a thorough investigation/autopsy."
+  },
+  {
+    "q": "Common finding in \"Air Embolism\"?",
+    "a": "Frothy blood in the right ventricle; usually diagnosed by opening the heart under water."
+  },
+  {
+    "q": "Primary finding in \"Fat Embolism Syndrome\"?",
+    "a": "Petechial rash, respiratory distress, and CNS dysfunction after a long-bone fracture."
+  },
+  {
+    "q": "Definition of \"Asphyxia\"?",
+    "a": "Interference with the uptake or utilization of oxygen."
+  },
+  {
+    "q": "Forensic significance of the \"Hyoid Bone\"?",
+    "a": "Fractures are highly suggestive of manual strangulation in adults."
+  },
+  {
+    "q": "Timeframe for \"Gastric Emptying\" in forensics?",
+    "a": "Light meals usually leave the stomach in 2 hours; heavy meals in 4-6 hours (highly variable)."
+  },
+  {
+    "q": "What is \"Tache Noire\"?",
+    "a": "A reddish-brown horizontal band on the eyeball when the eyes remain open after death."
+  },
+  {
+    "q": "Difference between \"Self-inflicted\" and \"Homicidal\" stab wounds?",
+    "a": "Self-inflicted are often clustered in a reachable area (e.g., left chest) and may have hesitation marks."
+  },
+  {
+    "q": "What is \"Simulated Suicide\"?",
+    "a": "A homicide made to look like a suicide by the perpetrator (e.g., moving the body or weapon)."
+  },
+  {
+    "q": "Indicators of \"High-Velocity\" rifle wounds?",
+    "a": "Massive tissue destruction and \"explosive\" exit wounds due to cavitation."
+  },
+  {
+    "q": "What is \"Casper\u2019s Dictum\"?",
+    "a": "A body decomposes in air twice as fast as in water and eight times as fast as in earth."
+  },
+  {
+    "q": "Define \"Negative Autopsy\"?",
+    "a": "An autopsy where no gross or microscopic cause of death can be found (e.g., some arrhythmias)."
+  },
+  {
+    "q": "Definition of \"Medicolegal Autopsy\"?",
+    "a": "An autopsy performed under the authority of the state to determine cause and manner of death."
+  },
+  {
+    "q": "Common finding in \"Drowning in Salt Water\"?",
+    "a": "Pulmonary edema and hemoconcentration (due to osmotic shift of fluid into lungs)."
+  },
+  {
+    "q": "Common finding in \"Drowning in Fresh Water\"?",
+    "a": "Hemodilution, hemolysis, and potential hyperkalemia."
+  },
+  {
+    "q": "Definition of \"Whiplash Injury\"?",
+    "a": "Cervical strain/sprain caused by sudden hyperextension followed by hyperflexion."
+  },
+  {
+    "q": "Key feature of \"Scald Burns\"?",
+    "a": "Caused by hot liquids; characterized by \"tidemark\" patterns and absence of singed hair."
+  },
+  {
+    "q": "What is \"Pressure Pallor\"?",
+    "a": "Areas of the skin that remain pale because they were compressed against a surface during <b>livor mortis</b>."
+  },
+  {
+    "q": "Significance of \"Toxicology Screening\" in Forensic Pathology?",
+    "a": "To identify poisons or drugs that may have caused or contributed to death."
+  },
+  {
+    "q": "Definition of \"Bolus Death\"?",
+    "a": "Choking on a large piece of food, leading to sudden airway obstruction and vagal inhibition."
+  },
+  {
+    "q": "Forensic finding in \"Electrocution\"?",
+    "a": "Joule burn (entry mark) showing a crater with raised, pale edges."
+  },
+  {
+    "q": "What is \"Post-mortem Lividity\" (another name for)?",
+    "a": "<b>Livor mortis</b>."
+  },
+  {
+    "q": "Most common location for \"Defense Wounds\"?",
+    "a": "Palmar surface of hands and outer aspect of forearms."
+  },
+  {
+    "q": "Defining feature of \"Slash\" wounds?",
+    "a": "Sharp force injury where length is greater than depth."
+  },
+  {
+    "q": "What is \"Smudging\" in GSW?",
+    "a": "The deposit of soot around the entry wound, typical of close-range fire."
+  },
+  {
+    "q": "What is \"Stippling\" (Tattooing)?",
+    "a": "Small punctate abrasions from unburned powder, typical of intermediate-range GSW."
+  },
+  {
+    "q": "Range for \"Intermediate-range\" GSW stippling?",
+    "a": "Usually between 1 centimeter to 1 meter (approx. 3 feet)."
+  },
+  {
+    "q": "Indicator of \"Hard Contact\" GSW?",
+    "a": "Muzzle imprint and \"blowback\" of tissue into the barrel."
+  },
+  {
+    "q": "Definition of \"Laceration\" vs \"Incision\"?",
+    "a": "Lacerations are blunt force (ragged edges, tissue bridges); Incisions are sharp force (clean edges, no bridges)."
+  },
+  {
+    "q": "Definition of \"Abraded Skin\"?",
+    "a": "Superficial injury where the epidermis is removed by friction."
+  },
+  {
+    "q": "Definition of \"Ecchymosis\"?",
+    "a": "A medical term for a bruise or contusion."
+  },
+  {
+    "q": "Most common cause of death in \"House Fires\"?",
+    "a": "<b>Carbon monoxide</b> poisoning/smoke inhalation (not thermal burns)."
+  },
+  {
+    "q": "Percentage of COHb usually fatal in a healthy adult?",
+    "a": "Greater than 50-60%."
+  },
+  {
+    "q": "Characteristics of \"Exit Wounds\" vs \"Entry Wounds\"?",
+    "a": "Entry has an abrasion collar; Exit is usually larger and more irregular without a collar."
+  },
+  {
+    "q": "Definition of a Brenner Tumor?",
+    "a": "An ovarian surface epithelial tumor containing bladder-like transitional epithelium."
+  },
+  {
+    "q": "Histological finding in a Sertoli-Leydig cell tumor?",
+    "a": "Reinke crystals (pink, rod-shaped cytoplasmic inclusions)."
+  },
+  {
+    "q": "Most common location for an Ectopic Pregnancy?",
+    "a": "The ampulla of the fallopian tube."
+  },
+  {
+    "q": "Define \"Decidualization\" of the stroma?",
+    "a": "Transformation of endometrial stroma into plump, secretory cells under the influence of progesterone."
+  },
+  {
+    "q": "What is \"Arias-Stella Reaction\"?",
+    "a": "Endometrial changes (hyperchromatic, enlarged nuclei) associated with pregnancy or ectopic pregnancy."
+  },
+  {
+    "q": "Definition of Placenta Accreta?",
+    "a": "Improper implantation of the placenta directly onto the myometrium without intervening decidua."
+  },
+  {
+    "q": "Definition of Placenta Percreta?",
+    "a": "Placental invasion through the entire myometrium and into the serosa or adjacent organs (e.g., bladder)."
+  },
+  {
+    "q": "Most common cause of Postpartum Hemorrhage?",
+    "a": "Uterine atony."
+  },
+  {
+    "q": "Characteristic of HELLP Syndrome?",
+    "a": "Hemolysis, Elevated Liver enzymes, and Low Platelets (a severe form of Preeclampsia)."
+  },
+  {
+    "q": "Definition of Vulvar Lichen Sclerosus?",
+    "a": "Thinning of the epidermis and \"parchment-like\" vulvar skin with a slight risk of Squamous Cell Carcinoma."
+  },
+  {
+    "q": "Definition of Lichen Simplex Chronicus?",
+    "a": "<b>Hyperplasia</b> of vulvar squamous epithelium due to chronic scratching; no increased risk of cancer."
+  },
+  {
+    "q": "Pathogenesis of \"Chocolate Cysts\"?",
+    "a": "Blood-filled cysts in the ovary caused by repeated cyclic hemorrhage of ectopic endometrial tissue."
+  },
+  {
+    "q": "Typical presentation of <b>Sarcoma Botryoides</b>?",
+    "a": "A \"bunch of grapes\" mass protruding from the vagina of a child."
+  },
+  {
+    "q": "Most common benign tumor of the male breast?",
+    "a": "Gynecomastia."
+  },
+  {
+    "q": "Primary risk factor for Male Breast Cancer?",
+    "a": "BRCA2 mutation and Klinefelter Syndrome."
+  },
+  {
+    "q": "Definition of <b>Extramammary Paget Disease</b>?",
+    "a": "Malignant cells in the vulvar epidermis (PAS+, Keratin+) that do not usually indicate an underlying cancer."
+  },
+  {
+    "q": "Most common cause of Granulomatous <b>Orchitis</b>?",
+    "a": "Tuberculosis (caseating) or idiopathic (non-caseating)."
+  },
+  {
+    "q": "Classic hormone finding in <b>Choriocarcinoma</b>?",
+    "a": "Extremely high Beta-hCG levels."
+  },
+  {
+    "q": "Identifying feature of Endodermal Sinus (Yolk Sac) tumor in males?",
+    "a": "Schiller-Duval bodies and elevated Alpha-fetoprotein (AFP)."
+  },
+  {
+    "q": "Definition of Paratesticular Rhabdomyosarcoma?",
+    "a": "A highly malignant tumor of the spermatic cord, typically occurring in children."
+  },
+  {
+    "q": "What is \"Paradoxical Undressing\"?",
+    "a": "A phenomenon in hypothermia where the victim removes clothes due to a false sensation of burning heat."
+  },
+  {
+    "q": "Forensic significance of \"Post-mortem Teeth Pinkness\"?",
+    "a": "Often associated with <b>carbon monoxide</b> poisoning, drowning, or hypothermia."
+  },
+  {
+    "q": "Definition of \"Excited Delirium Syndrome\"?",
+    "a": "A state of extreme agitation, hyperthermia, and superhuman strength, often leading to sudden death during restraint."
+  },
+  {
+    "q": "Finding in \"Air Embolism\" at autopsy?",
+    "a": "Air bubbles in the coronary arteries or frothy blood in the right heart."
+  },
+  {
+    "q": "What are \"Lines of Zahn\"?",
+    "a": "Laminated patterns in a thrombus formed by alternating layers of platelets/fibrin and RBCs."
+  },
+  {
+    "q": "Definition of \"Agonal Thrombus\"?",
+    "a": "A thrombus formed in the heart during the process of dying."
+  },
+  {
+    "q": "What is \"Embalming Artifact\"?",
+    "a": "Changes to the body (e.g., tissue firmness, chemical odors) that interfere with post-mortem toxicology and histology."
+  },
+  {
+    "q": "Significance of \"Vitreous Glucose\" post-mortem?",
+    "a": "High levels suggest poorly controlled diabetes or diabetic ketoacidosis before death."
+  },
+  {
+    "q": "Typical finding in Ethylene Glycol poisoning?",
+    "a": "Calcium oxalate crystals in the renal tubules."
+  },
+  {
+    "q": "What is \"Methanol\" poisoning hallmark?",
+    "a": "Putaminal <b>necrosis</b> and retinal damage (formic acid toxicity)."
+  },
+  {
+    "q": "Forensic finding in Chronic Lead Poisoning?",
+    "a": "Lead lines on gums (Burton lines) and \"lead lines\" on epiphyses of long bones in X-rays."
+  },
+  {
+    "q": "Definition of \"Pathergy\" in forensics?",
+    "a": "An exaggerated skin response to minor trauma, occasionally seen in specific systemic diseases."
+  },
+  {
+    "q": "What is \"Kiernan\u2019s Sign\"?",
+    "a": "Hemorrhages in the anterior pituitary stalk, often seen in hanging."
+  },
+  {
+    "q": "Characteristic of \"Shotgun\" entrance at close range?",
+    "a": "A single large hole (\"cookie cutter\" appearance) with charred edges."
+  },
+  {
+    "q": "What is \"Rat-hole\" entrance?",
+    "a": "An irregular shotgun entry wound where the individual pellets begin to diverge (intermediate range)."
+  },
+  {
+    "q": "Significance of the \"Pelvis\" in age determination?",
+    "a": "Changes in the pubic symphyseal surface are the most reliable skeletal indicators of age in adults."
+  },
+  {
+    "q": "Definition of \"<b>Livor Mortis</b>\" fixation?",
+    "a": "Occurs when blood becomes trapped in the capillaries and no longer shifts with body movement."
+  },
+  {
+    "q": "Finding in \"Ligature Strangulation\"?",
+    "a": "A horizontal mark on the neck, usually below the larynx, often encircling the entire neck."
+  },
+  {
+    "q": "Distinction between \"Hanging\" and \"Ligature Strangulation\" marks?",
+    "a": "Hanging marks are usually inverted \"V\" shapes and incomplete; Ligature marks are horizontal and continuous."
+  },
+  {
+    "q": "What is \"Post-mortem Caloric Production\"?",
+    "a": "A temporary rise in body temperature after death due to continued metabolic activity or infection."
+  },
+  {
+    "q": "Definition of \"Individualization\" in forensics?",
+    "a": "The process of proving that a sample came from a unique source (e.g., fingerprints, DNA)."
+  },
+  {
+    "q": "Finding in \"Aspiration of Gastric Contents\"?",
+    "a": "Food particles and acidic fluid found in the terminal bronchioles."
+  },
+  {
+    "q": "Indicator of \"Premortem\" Bruising?",
+    "a": "Microscopic evidence of inflammatory cells (neutrophils) and fibrin."
+  },
+  {
+    "q": "Definition of \"Vagal Inhibition\" death?",
+    "a": "Sudden cardiac arrest caused by stimulation of the vagus nerve (e.g., pressure on the neck/carotid sinus)."
+  },
+  {
+    "q": "What is \"Tardieu\u2019s Spots\"?",
+    "a": "Small petechial hemorrhages beneath the pleura or epicardium in asphyxial deaths."
+  },
+  {
+    "q": "Mechanism of \"Stab\" wound death?",
+    "a": "Internal hemorrhage leading to hypovolemic shock."
+  },
+  {
+    "q": "Definition of \"Manner of Death: Natural\"?",
+    "a": "Death caused exclusively by disease or the aging process."
+  },
+  {
+    "q": "Definition of \"Manner of Death: Accidental\"?",
+    "a": "Death resulting from an unintentional action or event (e.g., a fall)."
+  },
+  {
+    "q": "Definition of \"Manner of Death: Homicide\"?",
+    "a": "Death resulting from a volitional act committed by another person."
+  },
+  {
+    "q": "What is \"<b>Cadaveric Spasm</b>\"?",
+    "a": "Immediate muscle stiffening at death, usually occurring during intense physical or emotional stress."
+  },
+  {
+    "q": "Definition of <b>Meigs Syndrome</b>?",
+    "a": "Triad of ovarian fibroma, ascites, and hydrothorax (pleural effusion)."
+  },
+  {
+    "q": "Most common location for an accessory breast (polymastia)?",
+    "a": "Along the \"milk line\" (from the axilla to the vulva)."
+  },
+  {
+    "q": "Pathogenesis of Fat <b>Necrosis</b> of the breast?",
+    "a": "Trauma or surgery leads to <b>saponification</b> of fat and a localized inflammatory response."
+  },
+  {
+    "q": "Definition of Comedocarcinoma?",
+    "a": "A subtype of DCIS characterized by high-grade cells and central \"cheese-like\" <b>necrosis</b>."
+  },
+  {
+    "q": "Most common cause of Vaginitis with a \"fishy\" odor?",
+    "a": "Bacterial vaginosis (Gardnerella vaginalis)."
+  },
+  {
+    "q": "Defining characteristic of \"Clue Cells\"?",
+    "a": "Vaginal epithelial cells covered in Gardnerella bacteria, giving them a fuzzy appearance."
+  },
+  {
+    "q": "Definition of Brenner Tumor?",
+    "a": "A surface epithelial tumor of the ovary containing transitional (urothelial) cells."
+  },
+  {
+    "q": "What are Reinke Crystals?",
+    "a": "Eosinophilic, rod-shaped inclusions found in Leydig cell tumors."
+  },
+  {
+    "q": "Primary difference between Partial and Complete Hydatidiform Moles?",
+    "a": "Partial moles contain fetal parts and result from 2 sperm fertilizing 1 egg (69,XXX/XXY)."
+  },
+  {
+    "q": "Histological finding in <b>Choriocarcinoma</b>?",
+    "a": "Proliferation of cytotrophoblasts and syncytiotrophoblasts without chorionic villi."
+  },
+  {
+    "q": "Definition of Endometrial Polyp?",
+    "a": "Benign growth of endometrial glands and stroma, often associated with Tamoxifen use."
+  },
+  {
+    "q": "Most common subtype of Cervical Cancer?",
+    "a": "Squamous cell carcinoma (80%)."
+  },
+  {
+    "q": "Mechanism of Koilocytic change?",
+    "a": "HPV infection causes nuclear enlargement, hyperchromasia, and a clear perinuclear halo."
+  },
+  {
+    "q": "Definition of Spermatocele?",
+    "a": "A painless, sperm-containing cyst of the epididymis."
+  },
+  {
+    "q": "Most common cause of Acute Prostatitis in men < 35?",
+    "a": "Chlamydia trachomatis and Neisseria gonorrhoeae."
+  },
+  {
+    "q": "Definition of \"Lichtenberg Figures\"?",
+    "a": "Fern-like skin patterns caused by a lightning strike (not a true burn)."
+  },
+  {
+    "q": "What is a \"Dicing\" injury?",
+    "a": "Small, L-shaped or square abrasions from tempered glass fragments in motor vehicle accidents."
+  },
+  {
+    "q": "Definition of \"Brush Burn\"?",
+    "a": "A large, friction-induced abrasion caused by a body sliding across a rough surface."
+  },
+  {
+    "q": "Difference between \"Primary\" and \"Secondary\" impact in pedestrian accidents?",
+    "a": "Primary is the initial hit by the car; Secondary is when the pedestrian hits the ground."
+  },
+  {
+    "q": "Significance of \"Pink Teeth\" in forensics?",
+    "a": "Post-mortem artifact often seen in drowning or <b>carbon monoxide</b> poisoning due to hemoglobin breakdown."
+  },
+  {
+    "q": "Definition of \"Somatice Death\"?",
+    "a": "The irreversible cessation of heart, lung, and brain function."
+  },
+  {
+    "q": "What is \"Molecular (Cellular) Death\"?",
+    "a": "The death of individual tissues and cells, occurring hours after somatic death."
+  },
+  {
+    "q": "Definition of \"Adipocere\" (Grave Wax)?",
+    "a": "A waxy, soap-like substance formed by the anaerobic hydrolysis of body fat in moist environments."
+  },
+  {
+    "q": "Forensic finding in \"Chronic Arsenic Poisoning\"?",
+    "a": "Mees\u2019 lines (white transverse lines) on the fingernails and \"raindrop\" skin pigmentation."
+  },
+  {
+    "q": "Definition of \"Burking\"?",
+    "a": "A method of homicidal asphyxia involving sitting on the chest while covering the nose and mouth."
+  },
+  {
+    "q": "What is the \"Pugilistic Attitude\"?",
+    "a": "A defensive-looking posture in fire victims caused by heat-induced shrinkage of muscle fibers."
+  },
+  {
+    "q": "Finding in \"<b>Carbon Monoxide</b>\" poisoning (Blood)?",
+    "a": "Carboxyhemoglobin levels > 50% are typically lethal."
+  },
+  {
+    "q": "Definition of \"Post-mortem Redistribution\"?",
+    "a": "Movement of drugs from tissues into the blood after death, which can skew toxicology results."
+  },
+  {
+    "q": "Most common site of \"Hyoid Bone\" fracture?",
+    "a": "The greater horns, typically occurring in manual strangulation."
+  },
+  {
+    "q": "Definition of \"Whiplash\" injury?",
+    "a": "Acceleration-deceleration injury of the cervical spine."
+  },
+  {
+    "q": "Difference between \"True\" and \"False\" Aneurysm in trauma?",
+    "a": "True involves all three layers of the vessel wall; False (pseudoaneurysm) is a hematoma contained by adventitia."
+  },
+  {
+    "q": "Definition of \"Tache Noire\"?",
+    "a": "Dark, horizontal bands across the eyes when they remain open after death."
+  },
+  {
+    "q": "Significance of \"Vitreous Potassium\"?",
+    "a": "Levels increase at a predictable rate after death, used to estimate the post-mortem interval."
+  },
+  {
+    "q": "What is a \"Joule Burn\"?",
+    "a": "An electrical entry wound characterized by a central crater and firm, pale edges."
+  },
+  {
+    "q": "Definition of \"<b>Sudden Infant Death Syndrome</b>\" (SIDS)?",
+    "a": "Sudden death of an infant under 1 year that remains unexplained after full autopsy and scene investigation."
+  },
+  {
+    "q": "Characteristic of \"Hard Contact\" GSW?",
+    "a": "Muzzle imprint and searing of the skin edges."
+  },
+  {
+    "q": "Definition of \"Exhumation\"?",
+    "a": "The legal disinterment of a body for examination or evidence collection."
+  },
+  {
+    "q": "Finding in \"<b>Cyanide</b>\" poisoning (Internal)?",
+    "a": "Bright red blood and organs with a bitter almond odor."
+  },
+  {
+    "q": "Definition of \"Manner of Death\"?",
+    "a": "The legal classification of death (Natural, Accident, Suicide, Homicide, or Undetermined)."
+  },
+  {
+    "q": "Definition of \"Cause of Death\"?",
+    "a": "The specific injury or disease that leads to physiological collapse (e.g., Gunshot wound to the head)"
+  },
+  {
+    "q": "Definition of Fat <b>Necrosis</b> of the breast?",
+    "a": "A benign, firm mass caused by trauma or surgery, showing necrotic adipocytes and lipid-laden macrophages."
+  },
+  {
+    "q": "Characteristics of Sclerosing Adenosis?",
+    "a": "Increased number of acini and intralobular fibrosis, often associated with calcifications."
+  },
+  {
+    "q": "Most common benign tumor of the female breast?",
+    "a": "Fibroadenoma."
+  },
+  {
+    "q": "Typical behavior of a Fibroadenoma?",
+    "a": "Estrogen-sensitive; grows during pregnancy and shrinks after menopause."
+  },
+  {
+    "q": "Defining feature of a Phyllodes Tumor?",
+    "a": "Large, \"leaf-like\" stromal projections with higher cellularity than a fibroadenoma."
+  },
+  {
+    "q": "Definition of Intraductal Papilloma?",
+    "a": "A benign growth in a large duct, presenting with serous or bloody nipple discharge in premenopausal women."
+  },
+  {
+    "q": "Pathological distinction of Ductal Carcinoma In Situ (DCIS)?",
+    "a": "Malignant proliferation of cells in ducts with no invasion of the basement membrane."
+  },
+  {
+    "q": "Definition of Paget Disease of the Breast?",
+    "a": "DCIS that extends up the lactiferous ducts to the skin of the nipple, causing a crusty, eczematous lesion."
+  },
+  {
+    "q": "Most common location for breast cancer?",
+    "a": "Upper outer quadrant."
+  },
+  {
+    "q": "Defining feature of Invasive Lobular Carcinoma?",
+    "a": "\"Single-file\" pattern of cells due to the loss of E-cadherin expression."
+  },
+  {
+    "q": "Hormone receptor status often seen in Medullary Carcinoma of the breast?",
+    "a": "Often \"Triple Negative\" (ER-, PR-, and HER2-)."
+  },
+  {
+    "q": "Most common cause of spontaneous abortion?",
+    "a": "Fetal chromosomal abnormalities (especially Trisomy 16)."
+  },
+  {
+    "q": "Definition of Placenta Previa?",
+    "a": "Implantation of the placenta over the internal cervical os, presenting as painless third-trimester bleeding."
+  },
+  {
+    "q": "Definition of Abruptio Placentae?",
+    "a": "Premature separation of the placenta from the uterine wall, presenting as painful third-trimester bleeding."
+  },
+  {
+    "q": "Classic \"triad\" of Preeclampsia?",
+    "a": "Hypertension, proteinuria, and edema (though edema is no longer a strict diagnostic criterion)."
+  },
+  {
+    "q": "Definition of \"Paradoxical Undressing\"?",
+    "a": "A phenomenon in hypothermia where a victim removes clothes due to a false sensation of heat from peripheral vasodilation."
+  },
+  {
+    "q": "Forensic indicator of Hypothermia?",
+    "a": "Wischnewski spots (multiple small, dark gastric mucosal hemorrhages)."
+  },
+  {
+    "q": "Defining feature of \"Dry Drowning\"?",
+    "a": "Death from asphyxia due to intense laryngospasm without significant water aspiration."
+  },
+  {
+    "q": "Significance of \"Diatoms\" in drowning?",
+    "a": "Finding silica-shelled algae in closed organs (like bone marrow) suggests the victim was alive during submersion."
+  },
+  {
+    "q": "Most common finding in \"Choking on Food\" (Bolus Death)?",
+    "a": "Sudden cardiac arrest due to vagal inhibition from laryngeal stimulation."
+  },
+  {
+    "q": "Definition of \"Excited Delirium Syndrome\"?",
+    "a": "State of extreme agitation, hyperthermia, and superhuman strength, often leading to sudden death during restraint."
+  },
+  {
+    "q": "Characteristic of \"Lichtenberg Figures\"?",
+    "a": "Transient, fern-like skin patterns caused by a lightning strike."
+  },
+  {
+    "q": "Finding in \"<b>Carbon Monoxide</b>\" poisoning?",
+    "a": "Cherry-red discoloration of the skin, muscles, and blood."
+  },
+  {
+    "q": "Most reliable method for identifying a skeletonized body?",
+    "a": "Comparison of dental records or DNA profiling."
+  },
+  {
+    "q": "Definition of \"Antemortem\" injury?",
+    "a": "An injury sustained before death, characterized by vital reactions like inflammation, bruising, or bleeding."
+  },
+  {
+    "q": "Definition of \"Postmortem\" injury?",
+    "a": "An injury sustained after death, typically lacking a vital inflammatory response."
+  },
+  {
+    "q": "Identifying feature of \"Exit Wounds\" in GSW?",
+    "a": "Larger, irregular shape, and absence of soot, stippling, or an abrasion collar."
+  },
+  {
+    "q": "Finding in \"Manual Strangulation\"?",
+    "a": "Petechial hemorrhages in the eyes, bruising of neck muscles, and potential fracture of the hyoid bone."
+  },
+  {
+    "q": "Definition of \"Manner of Death: Undetermined\"?",
+    "a": "A classification used when there is insufficient information or evidence to assign a specific manner (e.g., suicide vs. accident)."
+  },
+  {
+    "q": "What is the \"Rule of Nines\"?",
+    "a": "A clinical tool used in burn forensics to estimate the total body surface area affected."
+  },
+  {
+    "q": "Typical finding in \"High-Voltage\" electrical injury?",
+    "a": "Extensive deep-tissue destruction and potential \"blow-out\" wounds at exit points."
+  },
+  {
+    "q": "Sign of \"Smoke Inhalation\" at autopsy?",
+    "a": "Soot in the larynx, trachea, and bronchi, indicating the person was alive during the fire."
+  },
+  {
+    "q": "Definition of \"Ligature Mark\"?",
+    "a": "A furrow in the neck produced by a cord or wire, typically horizontal in strangulation."
+  },
+  {
+    "q": "Difference between \"Primary\" and \"Secondary\" blast injuries?",
+    "a": "Primary is due to the pressure wave (hollow organs); Secondary is due to shrapnel/debris."
+  },
+  {
+    "q": "Definition of \"<b>Mummification</b>\"?",
+    "a": "Drying and shriveling of a body in hot, dry, and airy conditions."
+  },
+  {
+    "q": "Most common location for an Ectopic Pregnancy?",
+    "a": "The Ampulla of the Fallopian Tube."
+  },
+  {
+    "q": "Definition of the \"Arias-Stella Reaction\"?",
+    "a": "Benign endometrial nuclear hyperchromasia and pleomorphism associated with pregnancy."
+  },
+  {
+    "q": "What is a Brenner Tumor of the ovary?",
+    "a": "A rare surface epithelial tumor containing transitional epithelium (urothelium)."
+  },
+  {
+    "q": "Defining feature of a <b>Struma Ovarii</b>?",
+    "a": "A specialized teratoma composed entirely of mature thyroid tissue."
+  },
+  {
+    "q": "What is the most common germ cell tumor in children under 3?",
+    "a": "Yolk Sac Tumor (Endodermal Sinus Tumor)."
+  },
+  {
+    "q": "Diagnostic histological feature of <b>Yolk Sac Tumors</b>?",
+    "a": "Schiller-Duval bodies (glomerulus-like structures)."
+  },
+  {
+    "q": "Most common testicular tumor in men over age 60?",
+    "a": "Diffuse Large B-cell Lymphoma (usually metastatic)."
+  },
+  {
+    "q": "Primary difference between a <b>Seminoma</b> and a <b>Dysgerminoma</b>?",
+    "a": "<b>Seminoma</b> occurs in the testes; <b>Dysgerminoma</b> occurs in the ovary (histologically identical)."
+  },
+  {
+    "q": "What are Reinke Crystals?",
+    "a": "Rod-shaped cytoplasmic inclusions found in Leydig cell tumors."
+  },
+  {
+    "q": "Definition of Call-Exner Bodies?",
+    "a": "Small, gland-like follicles filled with eosinophilic material seen in <b>Granulosa Cell Tumors</b>."
+  },
+  {
+    "q": "Hormone produced by <b>Granulosa Cell Tumors</b>?",
+    "a": "Estrogen (often presents with precocious puberty or postmenopausal bleeding)."
+  },
+  {
+    "q": "Definition of Bowenoid Papulosis?",
+    "a": "Multiple reddish-brown papules on the penis caused by HPV 16; histologically CIS but rarely progresses."
+  },
+  {
+    "q": "Difference between Phimosis and Paraphimosis?",
+    "a": "Phimosis is inability to retract the foreskin; Paraphimosis is a retracted foreskin that cannot be returned, causing ischemia."
+  },
+  {
+    "q": "Common cause of \"Non-gonococcal Urethritis\"?",
+    "a": "Chlamydia trachomatis (serotypes D-K)."
+  },
+  {
+    "q": "Definition of \"Post-mortem Redistribution\"?",
+    "a": "Changes in drug concentration after death due to diffusion from tissue reservoirs into the blood."
+  },
+  {
+    "q": "Forensic significance of Vitreous Humor?",
+    "a": "It is an isolated fluid used to test for electrolytes, glucose, and alcohol post-mortem."
+  },
+  {
+    "q": "Finding in the stomach indicating Insulin Overdose?",
+    "a": "Usually none; diagnosis requires testing for elevated insulin/C-peptide ratios at the injection site."
+  },
+  {
+    "q": "Appearance of \"Lichtenberg Figures\"?",
+    "a": "Arborescent (fern-like) skin patterns pathognomonic for lightning strikes."
+  },
+  {
+    "q": "Difference between \"Primary\" and \"Secondary\" blast injury?",
+    "a": "Primary is due to the blast wave (pressure); Secondary is due to flying shrapnel."
+  },
+  {
+    "q": "What is a \"Tertiary\" blast injury?",
+    "a": "Injury caused by the body being physically thrown against an object by the blast wind."
+  },
+  {
+    "q": "Definition of \"Somatice Death\"?",
+    "a": "The irreversible cessation of the functions of the brain, heart, and lungs."
+  },
+  {
+    "q": "Definition of \"Molecular Death\"?",
+    "a": "The death of individual tissues and cells occurring at different rates after somatic death."
+  },
+  {
+    "q": "Significance of \"Marbling\" in decomposition?",
+    "a": "Hemolysis of blood in vessels reacting with hydrogen sulfide, creating a visible venous network."
+  },
+  {
+    "q": "What is \"Adipocere\"?",
+    "a": "A waxy substance (grave wax) formed by the anaerobic hydrolysis of fat in wet environments."
+  },
+  {
+    "q": "Defining feature of a \"Stellate\" GSW entry?",
+    "a": "A star-shaped wound caused by gas expansion under the skin in a contact shot over bone."
+  },
+  {
+    "q": "What is \"Sooting\" (Smudging)?",
+    "a": "Carbon deposits on the skin indicating a near-contact or close-range gunshot wound."
+  },
+  {
+    "q": "Definition of \"Tattooing\" (Stippling)?",
+    "a": "Small punctate abrasions caused by unburnt gunpowder hitting the skin in intermediate-range GSWs."
+  },
+  {
+    "q": "Common autopsy finding in chronic Lead poisoning?",
+    "a": "\"Lead lines\" (Burton lines) on the gums and basophilic stippling of RBCs."
+  },
+  {
+    "q": "Post-mortem finding in Ethylene Glycol poisoning?",
+    "a": "Calcium oxalate crystals in the renal tubules (viewed under polarized light)."
+  },
+  {
+    "q": "Forensic finding in <b>Cyanide</b> poisoning?",
+    "a": "Bright red \"cherry\" lividity and a bitter almond odor from the cavities."
+  },
+  {
+    "q": "Significance of \"Hyoid Bone\" fracture?",
+    "a": "A strong indicator of manual strangulation in adults."
+  },
+  {
+    "q": "Definition of \"Tache Noire\"?",
+    "a": "A brown, horizontal band across the sclera occurring when the eyes remain open after death."
+  },
+  {
+    "q": "What is \"<b>Cadaveric Spasm</b>\"?",
+    "a": "Immediate onset of <b>rigor mortis</b> at the moment of death, usually during violent struggle."
+  },
+  {
+    "q": "Definition of \"Manner of Death\"?",
+    "a": "The legal category of death: Natural, Accident, Suicide, Homicide, or Undetermined."
+  },
+  {
+    "q": "Definition of Placenta Accreta?",
+    "a": "Placenta attaches directly to the myometrium without penetrating it; often due to a prior C-section scar."
+  },
+  {
+    "q": "Definition of Placenta Increta?",
+    "a": "Placental villi invade into the uterine myometrium."
+  },
+  {
+    "q": "Definition of Placenta Percreta?",
+    "a": "Placental villi invade through the entire myometrium and may attach to the bladder or rectum."
+  },
+  {
+    "q": "Risk factor for Placental Abruption?",
+    "a": "Maternal hypertension, smoking, and cocaine use."
+  },
+  {
+    "q": "Classic presentation of Vasa Previa?",
+    "a": "Painless vaginal bleeding and fetal bradycardia following the rupture of membranes."
+  },
+  {
+    "q": "Definition of Velamentous Cord Insertion?",
+    "a": "The umbilical cord inserts into the fetal membranes rather than the placenta itself."
+  },
+  {
+    "q": "Most common cause of Gestational <b>Choriocarcinoma</b>?",
+    "a": "Preceding <b>Hydatidiform Mole</b> (50% of cases)."
+  },
+  {
+    "q": "Hallmark finding of Preeclampsia on renal biopsy?",
+    "a": "Glomerular endotheliosis (swelling of endothelial cells)."
+  },
+  {
+    "q": "Distinction between Preeclampsia and Eclampsia?",
+    "a": "Eclampsia includes the onset of new-onset grand mal seizures."
+  },
+  {
+    "q": "Definition of \"Hydrops Fetalis\"?",
+    "a": "Accumulation of fluid (edema) in at least two fetal compartments, often due to severe Rh incompatibility."
+  },
+  {
+    "q": "Definition of \"Shaken Baby Syndrome\"?",
+    "a": "A form of abusive head trauma characterized by the triad of subdural hematoma, retinal hemorrhages, and encephalopathy."
+  },
+  {
+    "q": "Forensic finding in \"Immersion Burns\" (Abuse)?",
+    "a": "\"Stocking and glove\" pattern with a sharp line of demarcation and no splash marks."
+  },
+  {
+    "q": "Significance of a \"Spiral Fracture\" in a non-ambulatory infant?",
+    "a": "Highly suggestive of non-accidental trauma (physical abuse)."
+  },
+  {
+    "q": "Definition of \"SIDS\" (<b>Sudden Infant Death Syndrome</b>)?",
+    "a": "Sudden death of an infant < 1 year that remains unexplained after a thorough scene investigation and autopsy."
+  },
+  {
+    "q": "What is \"Munchausen Syndrome by Proxy\"?",
+    "a": "A form of child abuse where a caregiver feigns or induces illness in a child for attention."
+  },
+  {
+    "q": "Definition of \"Post-mortem Interval\" (PMI)?",
+    "a": "The estimated time that has elapsed since a person has died."
+  },
+  {
+    "q": "Most accurate skeletal indicator for determining biological sex?",
+    "a": "The pelvis (specifically the sub-pubic angle and sciatic notch)."
+  },
+  {
+    "q": "Definition of \"Negligent Homicide\"?",
+    "a": "A death resulting from criminal negligence rather than a deliberate intent to kill."
+  },
+  {
+    "q": "What is a \"Dying Declaration\"?",
+    "a": "A statement made by a person who believes they are about to die, often admissible as evidence in court."
+  },
+  {
+    "q": "Definition of \"Medical Examiner\" vs. \"Coroner\"?",
+    "a": "A Medical Examiner is typically a forensic pathologist; a Coroner is an elected official who may not have medical training."
+  },
+  {
+    "q": "What is \"Trace Evidence\"?",
+    "a": "Microscopic materials (hair, fibers, soil) transferred during a crime."
+  },
+  {
+    "q": "Definition of \"Locard\u2019s Exchange Principle\"?",
+    "a": "The concept that every contact leaves a trace."
+  },
+  {
+    "q": "Forensic finding in \"Air Embolism\"?",
+    "a": "Presence of air in the right ventricle of the heart, often diagnosed by opening the heart under water."
+  },
+  {
+    "q": "Definition of \"<b>Exsanguination</b>\"?",
+    "a": "Death caused by the loss of blood to the point where life cannot be sustained."
+  },
+  {
+    "q": "Most common cause of \"Sudden Natural Death\" in adults?",
+    "a": "Ischemic heart disease (Coronary Artery Disease)."
+  },
+  {
+    "q": "What is a \"Hesitation Wound\"?",
+    "a": "Superficial sharp-force injuries (incisions) near a fatal wound, indicative of suicide."
+  },
+  {
+    "q": "Definition of \"<b>Livor Mortis</b>\" Blanching?",
+    "a": "Pressure on the skin that turns the purple area white; indicates that the <b>livor mortis</b> is not yet \"fixed.\""
+  },
+  {
+    "q": "Difference between \"Primary\" and \"Secondary\" Flaccidity?",
+    "a": "Primary occurs immediately after death; Secondary occurs after <b>Rigor Mortis</b> has passed due to decomposition."
+  },
+  {
+    "q": "Definition of \"<b>Saponification</b>\"?",
+    "a": "The process of turning body fat into adipocere."
+  },
+  {
+    "q": "Defining feature of a \"Near-Contact\" Gunshot Wound?",
+    "a": "Presence of soot on the skin but no muzzle imprint or stellate tearing."
+  }
+]
