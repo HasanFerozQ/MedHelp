@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Supabase Debugger</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body style="font-family: monospace; padding: 20px;">
+  <h2>Debugging Year 4 Topics</h2>
+  <div id="output" style="white-space: pre-wrap; background: #eee; padding: 15px; border-radius: 5px;">Loading...</div>
+
+  <script>
+    const SUPABASE_URL  = 'https://bisqgousuvljttesjkkm.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function runTest() {
+      const output = document.getElementById('output');
+      try {
+        // Query 1: EXACTLY what the frontend runs (with joins)
+        const { data: q1Data, error: q1Err } = await client
+          .from('topics')
+          .select('*, mcqs(id), case_studies(id, case_questions(id))')
+          .eq('year_id', 4)
+          .is('usmle_step', null)
+          .order('order', { ascending: true });
+
+        // Query 2: Get ALL Year 4 topics ignoring usmle_step
+        const { data: q2Data, error: q2Err } = await client
+          .from('topics')
+          .select('title, year_id, usmle_step')
+          .eq('year_id', 4);
+
+        let result = "=== QUERY 1 (Frontend Logic) ===\n";
+        result += `Error: ${JSON.stringify(q1Err)}\n`;
+        result += `Row Count: ${q1Data ? q1Data.length : 0}\n\n`;
+
+        result += "=== QUERY 2 (Raw Year 4 Check) ===\n";
+        result += `Error: ${JSON.stringify(q2Err)}\n`;
+        result += `Row Count: ${q2Data ? q2Data.length : 0}\n`;
+        
+        if (q2Data && q2Data.length > 0) {
+            result += `Sample Data: \n${JSON.stringify(q2Data.slice(0, 3), null, 2)}\n`;
+        }
+
+        output.textContent = result;
+      } catch (err) {
+        output.textContent = "CRITICAL ERROR: " + err.message;
+      }
+    }
+
+    runTest();
+  </script>
+</body>
+</html>
