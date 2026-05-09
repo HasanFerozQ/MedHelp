@@ -88,7 +88,7 @@ INSERT INTO public.mcqs (topic_id, question, options, correct_index, explanation
 1, 
 'Celiac disease can present solely as growth failure and delayed puberty. Screening with tTG-IgA antibodies should be considered in any child with unexplained short stature.'),
 
-((SELECT id FROM topics Weights id="topics" WHERE slug = 'peds-nephro-endo' LIMIT 1), 
+((SELECT id FROM topics WHERE slug = 'peds-nephro-endo' LIMIT 1), 
 'A 9-year-old child presents with a sudden drop in growth velocity. He also complains of constipation, dry skin, and cold intolerance. What is the most likely cause of his growth failure?', 
 '["Growth hormone deficiency", "Acquired Hypothyroidism (e.g., Hashimoto thyroiditis)", "Cushing syndrome", "Nutritional deficiency"]'::jsonb, 
 1, 

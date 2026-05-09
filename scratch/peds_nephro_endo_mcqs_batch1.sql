@@ -114,12 +114,12 @@ INSERT INTO public.mcqs (topic_id, question, options, correct_index, explanation
 
 ((SELECT id FROM topics WHERE slug = 'peds-nephro-endo' LIMIT 1), 
 'On renal biopsy of a patient with PSGN, what is the characteristic finding on electron microscopy?', 
-'["Linear IgG deposits", "Subepithelial electron-dense \"humps\"", "Tram-track appearance of the GBM", "Foot process effacement"]'::jsonb, 
+'["Linear IgG deposits", "Subepithelial electron-dense ''humps''", "Tram-track appearance of the GBM", "Foot process effacement"]'::jsonb, 
 1, 
 'Electron microscopy in PSGN shows large, subepithelial electron-dense "humps," which represent deposits of antigen-antibody complexes. Immunofluorescence shows a "starry sky" or "lumpy-bumpy" pattern of IgG and C3.'),
 
 ((SELECT id FROM topics WHERE slug = 'peds-nephro-endo' LIMIT 1), 
-'A 4-year-old child with Minimal Change Disease has been on high-dose prednisone for 4 weeks. He has developed a "moon-face," a "buffalo hump," and abdominal striae. What is the term for this constellation of findings?', 
+'A 4-year-old child with Minimal Change Disease has been on high-dose prednisone for 4 weeks. He has developed a ''moon-face,'' a ''buffalo hump,'' and abdominal striae. What is the term for this constellation of findings?', 
 '["Addisonian crisis", "Iatrogenic Cushing syndrome", "Congenital adrenal hyperplasia", "Metabolic syndrome"]'::jsonb, 
 1, 
 'Prolonged high-dose corticosteroid use leads to iatrogenic Cushing syndrome, characterized by fat redistribution (moon face, buffalo hump, truncal obesity) and skin changes (striae, easy bruising).'),

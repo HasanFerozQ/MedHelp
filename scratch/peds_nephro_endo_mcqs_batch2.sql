@@ -42,7 +42,7 @@ INSERT INTO public.mcqs (topic_id, question, options, correct_index, explanation
 
 ((SELECT id FROM topics WHERE slug = 'peds-nephro-endo' LIMIT 1), 
 'What is the characteristic electron microscopy finding in Alport syndrome?', 
-'["Subepithelial humps", "Foot process effacement", "Irregular thinning and thickening of the GBM with a \"basket-weave\" appearance", "Linear IgG deposition"]'::jsonb, 
+'["Subepithelial humps", "Foot process effacement", "Irregular thinning and thickening of the GBM with a ''basket-weave'' appearance", "Linear IgG deposition"]'::jsonb, 
 2, 
 'The defect in Type IV collagen in Alport syndrome leads to a characteristic "basket-weave" appearance on electron microscopy, caused by irregular splitting and lamellation of the glomerular basement membrane (GBM).'),
 
@@ -180,7 +180,7 @@ INSERT INTO public.mcqs (topic_id, question, options, correct_index, explanation
 
 ((SELECT id FROM topics WHERE slug = 'peds-nephro-endo' LIMIT 1), 
 'A child with HUS has a platelet count of 25,000/mm3 but is NOT bleeding. What is the recommendation regarding platelet transfusion?', 
-'["Transfuse immediately to get count above 100,000", "Platelet transfusion is generally avoided as it may "fuel the fire" of microthrombi formation", "Give aspirin instead", "None"]'::jsonb, 
+'["Transfuse immediately to get count above 100,000", "Platelet transfusion is generally avoided as it may ''fuel the fire'' of microthrombi formation", "Give aspirin instead", "None"]'::jsonb, 
 1, 
 'In HUS, platelet transfusions are generally avoided unless there is active, clinically significant bleeding, as they may theoretically worsen the microvascular thrombosis.'),
 

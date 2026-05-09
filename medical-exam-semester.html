@@ -742,9 +742,18 @@
       return str.replace(/'/g, "\\'");
     }
 
+    function escapeAttr(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
     // --- DASHBOARD LOGIC ---
     const YEAR_LABELS = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
     let lastLoadId = 0;
+    const yearTopicsCache = {};
 
     function getYearSuffix(n) {
       const s = ['th','st','nd','rd'];
@@ -772,6 +781,18 @@
         dropdown.onchange = (e) => switchYear(parseInt(e.target.value));
       }
 
+      document.getElementById('topic-grid').addEventListener('click', (e) => {
+        const card = e.target.closest('.topic-card');
+        if (!card) return;
+        e.preventDefault();
+        const topicId = card.dataset.topicId;
+        const title = card.dataset.topicTitle || card.querySelector('h3')?.textContent || '';
+        const isFreeDemo = card.dataset.freeDemo === 'true';
+        const newUrl = window.location.pathname + `?topic_id=${topicId}`;
+        window.history.pushState({ path: newUrl }, '', newUrl);
+        startQuiz(topicId, title, isFreeDemo);
+      });
+
       loadTopics(currentYear);
     }
 
@@ -788,10 +809,14 @@
 
     async function loadTopics(yearId) {
       const currentLoadId = ++lastLoadId;
-      console.log('Loading topics for Year:', yearId, 'ReqID:', currentLoadId);
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
-      
+
+      if (yearTopicsCache[yearId]) {
+        renderTopics(yearId, yearTopicsCache[yearId]);
+        return;
+      }
+
       grid.innerHTML = '';
       loader.classList.remove('hidden');
 
@@ -802,20 +827,33 @@
         .is('usmle_step', null)
         .order('order', { ascending: true });
 
-      // If another request started after this one, ignore these results
       if (currentLoadId !== lastLoadId) return;
-
-      console.log('Supabase Data:', data);
-      if (error) console.error('Supabase Error:', error);
-
       loader.classList.add('hidden');
 
-      if (error || !data || !data.length) {
+      if (error) {
+        console.error('Supabase Error:', error);
+      }
+
+      if (!data || !data.length) {
         grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
         return;
       }
 
-      // Group by section
+      yearTopicsCache[yearId] = data;
+      renderTopics(yearId, data);
+      prefetchOtherYears(yearId);
+    }
+
+    function renderTopics(yearId, data) {
+      const grid = document.getElementById('topic-grid');
+      const loader = document.getElementById('topic-loading');
+      loader.classList.add('hidden');
+
+      if (!data || !data.length) {
+        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
+        return;
+      }
+
       const sectionsMap = {};
       data.forEach(t => {
         const s = t.section || 'General';
@@ -824,17 +862,15 @@
       });
 
       let globalIndex = 0;
+      let html = '';
+
       for (const [sectionName, topics] of Object.entries(sectionsMap)) {
-        // Only show header if there are multiple sections or it's not "General"
         if (sectionName !== 'General' || Object.keys(sectionsMap).length > 1) {
-          const header = document.createElement('div');
-          header.className = 'section-header';
-          header.textContent = sectionName;
-          grid.appendChild(header);
+          html += `<div class="section-header">${escapeHtml(sectionName)}</div>`;
         }
 
         topics.forEach((topic) => {
-          const isFreeDemo = (globalIndex === 0); // The first topic of any year is the free demo
+          const isFreeDemo = (globalIndex === 0);
           globalIndex++;
 
           const allMcqs = topic.mcqs || [];
@@ -843,58 +879,66 @@
           const totalCases = caseStudies.length;
 
           const topicProg = userProgress[topic.id] || {};
-          
-          // Progress
           const progMcqCount = allMcqs.filter(m => topicProg[m.id]).length;
-          
+
           let attemptedCases = 0;
+          let totalCaseQuestions = 0;
           caseStudies.forEach(cs => {
-            const qIds = cs.case_questions.map(q => q.id);
+            const qIds = (cs.case_questions || []).map(q => q.id);
+            totalCaseQuestions += qIds.length;
             const answered = qIds.filter(id => topicProg[id]).length;
             if (qIds.length > 0 && answered > 0) attemptedCases++;
           });
 
-          const totalQ = totalMcqs + caseStudies.flatMap(cs => cs.case_questions).length;
+          const totalQ = totalMcqs + totalCaseQuestions;
           const totalCorrect = Object.values(topicProg).filter(v => v.correct).length;
           const percent = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
 
-          const card = document.createElement('a');
-          card.className = 'topic-card';
-          card.href = `?topic_id=${topic.id}`;
-          card.style.textDecoration = 'none';
-          card.innerHTML = `
-            <div>
-              ${isFreeDemo ? '<span style="display:inline-block; background:var(--accent); color:#fff; font-size:10px; font-weight:800; padding:2px 8px; border-radius:4px; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">Free Demo</span>' : ''}
-              <h3 style="margin-bottom: 8px;">${escapeHtml(topic.title)}</h3>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px;">
-                Practice high-yield <strong>${escapeHtml(topic.title)}</strong> questions with clinical relevance for your medical boards.
-              </p>
-            </div>
-            <div class="topic-progress">
-              <div class="topic-stats-row">
-                <span style="color:var(--success)">• ${progMcqCount} / ${totalMcqs} MCQs</span>
-                <span>${percent}%</span>
+          html += `
+            <a class="topic-card" href="?topic_id=${topic.id}" data-topic-id="${escapeAttr(topic.id)}" data-topic-title="${escapeAttr(topic.title)}" data-free-demo="${isFreeDemo}">
+              <div>
+                ${isFreeDemo ? '<span style="display:inline-block; background:var(--accent); color:#fff; font-size:10px; font-weight:800; padding:2px 8px; border-radius:4px; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">Free Demo</span>' : ''}
+                <h3 style="margin-bottom: 8px;">${escapeHtml(topic.title)}</h3>
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px;">
+                  Practice high-yield <strong>${escapeHtml(topic.title)}</strong> questions with clinical relevance for your medical boards.
+                </p>
               </div>
-              ${totalCases > 0 ? `
-              <div class="topic-stats-row">
-                <span style="color:#a855f7">• ${attemptedCases} / ${totalCases} Cases</span>
+              <div class="topic-progress">
+                <div class="topic-stats-row">
+                  <span style="color:var(--success)">• ${progMcqCount} / ${totalMcqs} MCQs</span>
+                  <span>${percent}%</span>
+                </div>
+                ${totalCases > 0 ? `
+                <div class="topic-stats-row">
+                  <span style="color:#a855f7">• ${attemptedCases} / ${totalCases} Cases</span>
+                </div>
+                ` : ''}
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill" style="width: ${percent}%;"></div>
+                </div>
               </div>
-              ` : ''}
-              <div class="progress-bar-bg">
-                <div class="progress-bar-fill" style="width: ${percent}%;"></div>
-              </div>
-            </div>
+            </a>
           `;
-          card.onclick = (e) => {
-            e.preventDefault();
-            // Update URL without reload
-            const newUrl = window.location.pathname + `?topic_id=${topic.id}`;
-            window.history.pushState({ path: newUrl }, '', newUrl);
-            startQuiz(topic.id, topic.title, isFreeDemo);
-          };
-          grid.appendChild(card);
         });
       }
+
+      grid.innerHTML = html;
+    }
+
+    function prefetchOtherYears(currentYearId) {
+      [1, 2, 3, 4].forEach(async (year) => {
+        if (year === currentYearId || yearTopicsCache[year]) return;
+        const { data, error } = await window.dbClient
+          .from('topics')
+          .select('*, mcqs(id), case_studies(id, case_questions(id))')
+          .eq('year_id', year)
+          .is('usmle_step', null)
+          .order('order', { ascending: true });
+
+        if (!error && data && data.length) {
+          yearTopicsCache[year] = data;
+        }
+      });
     }
 
     // --- QUIZ LOGIC ---
