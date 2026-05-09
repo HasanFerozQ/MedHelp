@@ -224,5 +224,56 @@ The favicon now displays in browser tabs for all medical exam pages.
 - **Add admin panel** — Dashboard for license management and revocation
 - **Integrate Gumroad webhooks** — Automatic license creation/update on purchase
 - **Implement server-side license validation** — Supabase RLS policies on protected content
-- **Add license tier system** — Support multiple license types (basic, pro, enterprise)</content>
+- **Add license tier system** — Support multiple license types (basic, pro, enterprise)
+
+---
+
+## Bug Fix — Topic Loading Regression (May 9, 2026)
+
+### Problem
+After the licensing changes, topics were no longer loading inside the year tabs on `medical-exam-semester.html`.
+
+### Root Cause
+A **race condition / execution order bug** in `core.js`:
+
+The original code registered the `onAuthStateChange` listener **at the top of the file (line ~14)**, immediately after creating `window.dbClient`. The callback referenced `MediHelp.License.isActivated()` — but `MediHelp` was only **defined later at line ~124**.
+
+Supabase's `onAuthStateChange` fires the `INITIAL_SESSION` event synchronously (or near-synchronously) during listener registration. If a user was **logged in**, the callback fired immediately, hit `MediHelp.License.isActivated()`, threw a **`ReferenceError: MediHelp is not defined`**, and this unhandled error disrupted the Supabase client initialization — breaking all subsequent `window.dbClient` queries including the topics fetch.
+
+**Before (broken):**
+```javascript
+// TOP OF FILE — MediHelp not defined yet!
+if (window.supabase) {
+  window.dbClient = window.supabase.createClient(...);
+  window.dbClient.auth.onAuthStateChange(async (event, session) => {
+    if (!MediHelp.License.isActivated()) { // 💥 ReferenceError if session fires synchronously
+      ...
+    }
+  });
+}
+```
+
+### Fix
+Moved the `onAuthStateChange` registration to **inside the `DOMContentLoaded` callback** at the bottom of `core.js`, where `MediHelp` is guaranteed to be fully defined.
+
+**After (fixed):**
+```javascript
+// BOTTOM OF FILE — MediHelp fully defined here ✅
+document.addEventListener('DOMContentLoaded', () => {
+  MediHelp.initFeedbackWidget();
+  if (window.dbClient) {
+    window.dbClient.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user && !MediHelp.License.isActivated()) {
+        // Safe — MediHelp is defined before this runs
+      }
+    });
+  }
+});
+```
+
+### Files Changed
+- `core.js` — Removed `onAuthStateChange` from top-level init block; re-registered it inside `DOMContentLoaded`
+
+### Status
+✅ Bug fixed — Topics load correctly for all users (logged in or not)</content>
 <parameter name="filePath">c:\Users\Hasan-PC\Desktop\MedHelp\licensing_security_changes.md

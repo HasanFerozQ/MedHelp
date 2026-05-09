@@ -9,31 +9,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 if (window.supabase) {
   window.dbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  
-  // Listen for Auth changes for persistence
-  window.dbClient.auth.onAuthStateChange(async (event, session) => {
-    console.log(`MediHelp Auth: ${event}`, session?.user?.email);
-    if (session?.user) {
-      // Sync license from licenses table if not already active locally
-      if (!MediHelp.License.isActivated()) {
-        try {
-          const { data: licenses, error } = await window.dbClient
-            .from('licenses')
-            .select('license_key, email')
-            .eq('user_id', session.user.id)
-            .eq('status', 'active')
-            .single();
-          
-          if (licenses && !error) {
-            console.log("MediHelp: Syncing license from database...");
-            await MediHelp.License.activate(licenses.license_key, licenses.email);
-          }
-        } catch (e) {
-          console.warn("MediHelp: Database license sync failed.");
-        }
-      }
-    }
-  });
+  // NOTE: Auth state listener is registered AFTER MediHelp is defined (see DOMContentLoaded below)
 }
 
 // 2. Global Theme (Dark/Light) Logic
@@ -677,6 +653,34 @@ const MediHelp = {
 document.addEventListener('DOMContentLoaded', () => {
   MediHelp.initFeedbackWidget();
   // MediHelp.initAuthModal(); // Disabled - revert to original topic loading
+
+  // Register auth state listener HERE — after MediHelp is fully defined
+  // This prevents a ReferenceError when onAuthStateChange fires with INITIAL_SESSION
+  if (window.dbClient) {
+    window.dbClient.auth.onAuthStateChange(async (event, session) => {
+      console.log(`MediHelp Auth: ${event}`, session?.user?.email);
+      if (session?.user) {
+        // Sync license from licenses table if not already active locally
+        if (!MediHelp.License.isActivated()) {
+          try {
+            const { data: licenses, error } = await window.dbClient
+              .from('licenses')
+              .select('license_key, email')
+              .eq('user_id', session.user.id)
+              .eq('status', 'active')
+              .single();
+
+            if (licenses && !error) {
+              console.log('MediHelp: Syncing license from database...');
+              await MediHelp.License.activate(licenses.license_key, licenses.email);
+            }
+          } catch (e) {
+            console.warn('MediHelp: Database license sync failed.', e);
+          }
+        }
+      }
+    });
+  }
 });
 
 // Export to window
