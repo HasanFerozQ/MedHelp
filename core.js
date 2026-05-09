@@ -391,6 +391,193 @@ const MediHelp = {
     footer.parentNode.insertBefore(wrap, footer);
   },
 
+  initAuthModal: function() {
+    // Add modal to body
+    const modal = document.createElement('div');
+    modal.id = 'auth-modal';
+    modal.className = 'auth-modal';
+    modal.innerHTML = `
+      <div class="auth-modal-content">
+        <button class="auth-close" onclick="MediHelp.hideAuthModal()">&times;</button>
+        <h2 id="auth-title">Sign In to MediHelp</h2>
+        <form id="auth-form" class="auth-form">
+          <input type="email" id="auth-email" placeholder="Email" required>
+          <input type="password" id="auth-password" placeholder="Password" required>
+          <button type="submit" class="btn btn-primary" id="auth-submit">Sign In</button>
+        </form>
+        <div class="auth-toggle" onclick="MediHelp.toggleAuthMode()">Don't have an account? Sign Up</div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+      .auth-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+      .auth-modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .auth-modal-content {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 40px;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        position: relative;
+      }
+      .auth-modal h2 {
+        margin-bottom: 20px;
+        color: var(--text-h);
+      }
+      .auth-form input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .auth-form .btn {
+        width: 100%;
+        margin: 10px 0;
+      }
+      .auth-toggle {
+        margin-top: 20px;
+        color: var(--text-muted);
+        cursor: pointer;
+      }
+      .auth-toggle:hover {
+        color: var(--accent);
+      }
+      .auth-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--text-muted);
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Auth logic
+    this.isSignUp = false;
+
+    // Form submit
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('auth-email').value;
+      const password = document.getElementById('auth-password').value;
+      const submitBtn = document.getElementById('auth-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = this.isSignUp ? 'Signing Up...' : 'Signing In...';
+
+      try {
+        let result;
+        if (this.isSignUp) {
+          result = await window.dbClient.auth.signUp({ email, password });
+        } else {
+          result = await window.dbClient.auth.signInWithPassword({ email, password });
+        }
+        if (result.error) throw result.error;
+        this.hideAuthModal();
+        alert(this.isSignUp ? 'Check your email to confirm your account!' : 'Signed in successfully!');
+      } catch (error) {
+        alert('Error: ' + error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = this.isSignUp ? 'Sign Up' : 'Sign In';
+      }
+    });
+
+    // Auth state change
+    window.dbClient.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        this.hideAuthModal();
+        this.updateAuthButton();
+      } else {
+        this.showAuthModal();
+        this.updateAuthButton();
+      }
+    });
+
+    // Add signin button to navbar
+    this.updateAuthButton();
+  },
+
+  showAuthModal: function() {
+    document.getElementById('auth-modal').classList.add('active');
+  },
+
+  hideAuthModal: function() {
+    document.getElementById('auth-modal').classList.remove('active');
+  },
+
+  toggleAuthMode: function() {
+    this.isSignUp = !this.isSignUp;
+    const title = document.getElementById('auth-title');
+    const submitBtn = document.getElementById('auth-submit');
+    const toggleText = document.querySelector('.auth-toggle');
+    if (this.isSignUp) {
+      title.textContent = 'Sign Up for MediHelp';
+      submitBtn.textContent = 'Sign Up';
+      toggleText.textContent = 'Already have an account? Sign In';
+    } else {
+      title.textContent = 'Sign In to MediHelp';
+      submitBtn.textContent = 'Sign In';
+      toggleText.textContent = "Don't have an account? Sign Up";
+    }
+  },
+
+  updateAuthButton: async function() {
+    const navActions = document.querySelector('.nav-actions');
+    if (!navActions) return;
+
+    // Remove existing auth button
+    const existing = navActions.querySelector('.auth-btn');
+    if (existing) existing.remove();
+
+    const { data: { user } } = await window.dbClient.auth.getUser();
+    if (user) {
+      // Show logout button
+      const logoutBtn = document.createElement('button');
+      logoutBtn.className = 'btn btn-ghost auth-btn';
+      logoutBtn.textContent = 'Logout';
+      logoutBtn.onclick = async () => {
+        await window.dbClient.auth.signOut();
+        alert('Logged out successfully!');
+      };
+      navActions.insertBefore(logoutBtn, navActions.querySelector('.theme-btn'));
+    } else {
+      // Show signin button
+      const signinBtn = document.createElement('button');
+      signinBtn.className = 'btn btn-ghost auth-btn';
+      signinBtn.textContent = 'Sign In';
+      signinBtn.onclick = () => this.showAuthModal();
+      navActions.insertBefore(signinBtn, navActions.querySelector('.theme-btn'));
+    }
+  },
+
   // 7. Global Licensing Logic (Gumroad)
   License: {
     STORAGE_KEY: 'mh_license_active',
@@ -482,6 +669,7 @@ const MediHelp = {
 // 7. Auto-init on Load
 document.addEventListener('DOMContentLoaded', () => {
   MediHelp.initFeedbackWidget();
+  // MediHelp.initAuthModal(); // Disabled - revert to original topic loading
 });
 
 // Export to window

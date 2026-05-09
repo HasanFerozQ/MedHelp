@@ -7,20 +7,22 @@ def check_semicolons(directory):
 
     for filename in files:
         path = os.path.join(directory, filename)
+        # print(f"Checking {filename}...")
         with open(path, 'r', encoding='utf-8') as f:
-            lines = f.readlines()
-            
-            terminators = []
-            for i, line in enumerate(lines):
-                if line.strip().endswith(');'):
-                    terminators.append(i + 1)
+            content = f.read()
+            # Look for ); that is NOT at the end of the file (allowing for whitespace)
+            # Or just count );
+            terminators = re.findall(r'\);', content)
             
             if len(terminators) > 1:
-                print(f"Error in {filename}: Found {len(terminators)} line terminators (');'). Expected 1 at the end.")
-                for line_num in terminators:
-                    print(f"  Line {line_num}: {lines[line_num-1].strip()}")
+                print(f"Error in {filename}: Found {len(terminators)} terminators (');'). Expected 1.")
+                # Show context
+                lines = content.splitlines()
+                for i, line in enumerate(lines):
+                    if line.strip().endswith(');'):
+                        print(f"  Line {i+1}: {line.strip()}")
             elif len(terminators) == 0:
-                print(f"Error in {filename}: No line terminator (');') found.")
+                print(f"Error in {filename}: No terminator (');') found.")
 
 if __name__ == "__main__":
     check_semicolons(r'c:\Users\Hasan-PC\Desktop\MedHelp\scratch')
