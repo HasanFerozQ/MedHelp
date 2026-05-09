@@ -6,7 +6,7 @@ import os
 
 PAGES = {
     'index.html':                    '/',
-    'audit.html':                    '/audit',
+    'medical-bill-audit.html':       '/medical-bill-audit',
     'blog.html':                     '/blog',
     'blog-post.html':                '/blog',
     'claim-denial-codes.html':       '/claim-denial-codes',
@@ -41,7 +41,7 @@ def make_nav(active_page):
       <div class="nav-links">
         <a href="/"{"" if active_page != "/" else ' class="active"'}>Home</a>
         <a href="/medical-exam-preparation"{"" if active_page != "/medical-exam-preparation" else ' class="active"'}>Medical Exams</a>
-        <a href="/audit"{"" if active_page != "/audit" else ' class="active"'}>Medical Bill Audit</a>
+        <a href="/medical-bill-audit"{"" if active_page != "/medical-bill-audit" else ' class="active"'}>Medical Bill Audit</a>
         <a href="/cpt-code-search"{"" if active_page != "/cpt-code-search" else ' class="active"'}>CPT Codes</a>
         <a href="/claim-denial-codes"{"" if active_page != "/claim-denial-codes" else ' class="active"'}>Denial Codes</a>
         <div class="nav-dropdown">
