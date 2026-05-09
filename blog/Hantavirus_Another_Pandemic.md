@@ -1,7 +1,7 @@
 ---
 title: Hantavirus Outbreak 2026: Is the New Cluster the Next Pandemic?
 date: 2026-05-08
-thumbnail: C:\Users\Hasan-PC\Desktop\MedHelp\vision\Hantavirus.jpg
+thumbnail: https://images.unsplash.com/photo-1685122003845-96289873614b?q=80&w=900&auto=format&fit=crop
 category: Global Health News
 summary: With a deadly hantavirus cluster making headlines in May 2026, the world is on edge. Explore the latest figures, transmission facts, and why experts say this "silent killer" remains a unique threat.
 ---
