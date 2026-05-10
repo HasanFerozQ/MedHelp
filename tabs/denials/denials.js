@@ -122,7 +122,7 @@ async function showSuggestions(q) {
     const { data } = await window.dbClient
       .from('carc_codes')
       .select('code, description')
-      .or(`code.ilike.${normQ}%,code.ilike.${cleanQ}%,description.ilike.%${safeDescQ}%`)
+      .or(`code.ilike."${normQ}%",code.ilike."${cleanQ}%",description.ilike."%${safeDescQ}%"`)
       .limit(3);
 
     if (searchId !== currentDenialSearchId) return;
@@ -175,12 +175,12 @@ async function searchDenials(query) {
     let dbQueryRarc = window.dbClient.from('rarc_codes').select('*');
 
     // Cross-field OR logic for all tokens + code variants
-    const allOrs = new Set([`code.ilike.${normQ}%`, `code.ilike.${cleanQ}%`]);
+    const allOrs = new Set([`code.ilike."${normQ}%"`, `code.ilike."${cleanQ}%"`]);
     
     tokens.forEach(tok => {
       const t = tok.toUpperCase();
-      allOrs.add(`description.ilike.%${tok}%`);
-      if (SYNONYMS[t]) allOrs.add(`description.ilike.%${SYNONYMS[t]}%`);
+      allOrs.add(`description.ilike."%${tok}%"`);
+      if (SYNONYMS[t]) allOrs.add(`description.ilike."%${SYNONYMS[t]}%"`);
     });
 
     const orCondition = Array.from(allOrs).join(',');
