@@ -829,7 +829,14 @@
 
       const { data, error } = await window.dbClient
         .from('topics')
-        .select('*, mcqs(id), case_studies(id, case_questions(id))')
+        .select(`
+          *,
+          mcqs:mcqs(id),
+          case_studies:case_studies(
+            id, 
+            case_questions:case_questions(id)
+          )
+        `)
         .eq('year_id', yearId)
         .is('usmle_step', null)
         .order('order', { ascending: true });
@@ -848,7 +855,7 @@
 
       yearTopicsCache[yearId] = data;
       renderTopics(yearId, data);
-      prefetchOtherYears(yearId);
+      // Removed prefetchOtherYears(yearId); to prevent network congestion
     }
 
     function renderTopics(yearId, data) {

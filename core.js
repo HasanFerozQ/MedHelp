@@ -598,17 +598,16 @@ const MediHelp = {
   },
 
   isAuthPage: function() {
+    const path = window.location.pathname;
     const authPages = [
       'medical-exam-preparation',
       'medical-exam-semester',
-      'medical-exam-usmle',
-      'medical-exam-nbme',
-      'medical-exam-mock',
-      'medical-exam-simulator',
-      'flash-cards'
+      'flash-cards',
+      'cpt-code-search',
+      'claim-denial-codes',
+      'medical-bill-audit'
     ];
-    const path = window.location.pathname;
-    return authPages.some(page => path.includes(page));
+    return authPages.some(p => path.includes(p)) || path === '/' || path.endsWith('.html');
   },
 
   showAuthModal: function() {
