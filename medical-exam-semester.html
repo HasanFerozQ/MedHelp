@@ -699,6 +699,9 @@
     let currentCaseQuestionIds = [];
     let currentLoadedCases = [];
 
+    let lastLoadId = 0;
+    let yearTopicsCache = {};
+
     function saveProgress() {
       localStorage.setItem('mh_prep_progress', JSON.stringify(userProgress));
     }
@@ -760,8 +763,6 @@
 
     // --- DASHBOARD LOGIC ---
     const YEAR_LABELS = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
-    let lastLoadId = 0;
-    const yearTopicsCache = {};
 
     function getYearSuffix(n) {
       const s = ['th','st','nd','rd'];
@@ -860,10 +861,7 @@
           .rpc('get_year_stats', { target_year: yearId });
 
         if (rError) {
-          console.warn('RPC get_year_stats failed, falling back to manual fetch...', rError);
-          // Fallback logic if RPC doesn't exist yet
-          const { data: mcqs } = await window.dbClient.from('mcqs').select('id, topic_id');
-          // ... (simplified fallback for brevity)
+          console.warn('RPC get_year_stats failed, using zero-count fallback...', rError);
           topics.forEach(t => { t.mcqs = []; t.case_studies = []; });
         } else {
           // Step 3: Map RPC results back to topics
@@ -872,11 +870,8 @@
 
           topics.forEach(t => {
             const s = statsMap[t.id] || { mcq_count: 0, case_count: 0 };
-            // Mocking arrays to satisfy existing renderTopics logic
             t.mcqs = new Array(Number(s.mcq_count || 0)).fill({ id: 0 });
             t.case_studies = new Array(Number(s.case_count || 0)).fill({ id: 0, case_questions: [] });
-            // Note: Since renderTopics uses .filter on mcqs for progress, 
-            // we need to be careful. Let's adjust renderTopics instead.
           });
         }
         console.timeEnd('loadTopics-rpc');
