@@ -551,14 +551,14 @@ const MediHelp = {
           // Show beautiful banner and redirect
           this.showNotification(
             'Account Created!', 
-            'Redirecting you to the secure licensing portal to finalize your access...',
+            'Opening the secure licensing portal in a new tab. Please get your key and return here to activate.',
             'success',
-            { url: GUMROAD_URL, text: 'Proceed to Full Access' }
+            { url: GUMROAD_URL, text: 'Open License Portal' }
           );
           
           setTimeout(() => {
-            window.location.href = GUMROAD_URL;
-          }, 3000);
+            window.open(GUMROAD_URL, '_blank');
+          }, 2000);
 
           this.hideAuthModal();
         } else {
@@ -730,6 +730,16 @@ const MediHelp = {
       return localStorage.getItem(this.STORAGE_KEY) === 'true';
     },
 
+    showActivator: function() {
+      const modal = document.getElementById('premium-modal');
+      if (modal) {
+        modal.classList.add('visible');
+      } else {
+        // Redirect to a page that has it if not present on current page
+        window.location.href = '/medical-exam-semester?showActivation=true';
+      }
+    },
+
     activate: async function(key, email) {
       localStorage.setItem(this.STORAGE_KEY, 'true');
       if (key && email) {
@@ -808,9 +818,14 @@ const MediHelp = {
     }
   },
 
+  _cachedUser: null,
   isPremium: async function() {
-    const { data: { user } } = await window.dbClient.auth.getUser();
-    if (!user) return false;
+    if (!window.dbClient) return false;
+    if (!this._cachedUser) {
+      const { data: { user } } = await window.dbClient.auth.getUser();
+      this._cachedUser = user;
+    }
+    if (!this._cachedUser) return false;
     return this.License.isActivated();
   }
 };

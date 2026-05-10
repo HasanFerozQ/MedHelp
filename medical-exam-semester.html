@@ -372,6 +372,7 @@
             <a href="/rx-savings">Rx Savings</a>
             <a href="/providers">Provider Search</a>
             <a href="/blog">Blog</a>
+            <a href="#" onclick="MediHelp.License.showActivator(); return false;" style="color: var(--expert-amber); font-weight: 800;">Activate License</a>
           </div>
         </div>
       </div>
@@ -800,6 +801,11 @@
         startQuiz(topicId, title, isFreeDemo);
       });
 
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('showActivation') === 'true') {
+        openPremiumModal();
+      }
+
       loadTopics(currentYear);
     }
 
@@ -861,19 +867,21 @@
     function renderTopics(yearId, data) {
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
-      loader.classList.add('hidden');
+      
+      try {
+        loader.classList.add('hidden');
 
-      if (!data || !data.length) {
-        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
-        return;
-      }
+        if (!data || !data.length) {
+          grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
+          return;
+        }
 
-      const sectionsMap = {};
-      data.forEach(t => {
-        const s = t.section || 'General';
-        if (!sectionsMap[s]) sectionsMap[s] = [];
-        sectionsMap[s].push(t);
-      });
+        const sectionsMap = {};
+        data.forEach(t => {
+          const s = t.section || 'General';
+          if (!sectionsMap[s]) sectionsMap[s] = [];
+          sectionsMap[s].push(t);
+        });
 
       let globalIndex = 0;
       let html = '';
@@ -937,6 +945,11 @@
       }
 
       grid.innerHTML = html;
+      } catch (err) {
+        console.error("MediHelp Render Error:", err);
+        loader.classList.add('hidden');
+        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">An error occurred while displaying topics. Please refresh the page.</p>';
+      }
     }
 
     function prefetchOtherYears(currentYearId) {
