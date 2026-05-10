@@ -545,7 +545,7 @@ const MediHelp = {
           if (result.error) throw result.error;
           
           // Redirect to Gumroad after signup
-          alert('Account created! Redirecting to secure licensing...');
+          alert('Account created! Please check your email to confirm your account.\n\nRedirecting to secure licensing...');
           window.open(GUMROAD_URL, '_blank');
           this.hideAuthModal();
         } else {
@@ -558,6 +558,10 @@ const MediHelp = {
                 submitBtn.textContent = 'Sign Up';
                 return;
               }
+            }
+            if (result.error.message.toLowerCase().includes('email not confirmed')) {
+              alert('Please check your email and confirm your account before signing in.');
+              return;
             }
             throw result.error;
           }
