@@ -872,7 +872,7 @@
         }
 
         topics.forEach((topic) => {
-          const isFreeDemo = (globalIndex === 0);
+          const isFreeDemo = topic.is_free_demo;
           globalIndex++;
 
           const allMcqs = topic.mcqs || [];
@@ -945,10 +945,17 @@
 
     // --- QUIZ LOGIC ---
     async function startQuiz(topicId, title, isFreeDemo = false) {
-      if (!isFreeDemo && !isPremium()) {
-        console.log('Access Denied: Premium Required');
-        openPremiumModal();
-        return;
+      if (!isFreeDemo) {
+        const premium = await MediHelp.isPremium();
+        if (!premium) {
+          const { data: { user } } = await window.dbClient.auth.getUser();
+          if (!user) {
+            MediHelp.showAuthModal();
+          } else {
+            openPremiumModal();
+          }
+          return;
+        }
       }
       currentTopicId = topicId;
       document.getElementById('dashboard-view').classList.add('hidden');
@@ -958,8 +965,8 @@
       loadMcqs(topicId);
     }
 
-    function isPremium() {
-      return MediHelp.License.isActivated();
+    async function isPremium() {
+      return await MediHelp.isPremium();
     }
 
     function openPremiumModal() {
@@ -1342,7 +1349,7 @@
              }
              
              const { data: oldestTopics } = await checkQuery;
-             if (oldestTopics && oldestTopics.length > 0 && oldestTopics[0].id === data.id) {
+             if (data.is_free_demo) {
                isFreeDemo = true;
              }
            }

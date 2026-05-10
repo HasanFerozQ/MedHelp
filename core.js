@@ -495,12 +495,9 @@ const MediHelp = {
 
     // Auth state change
     window.dbClient.auth.onAuthStateChange((event, session) => {
+      this.updateAuthButton();
       if (session?.user) {
         this.hideAuthModal();
-        this.updateAuthButton();
-      } else {
-        this.showAuthModal();
-        this.updateAuthButton();
       }
     });
 
@@ -548,7 +545,10 @@ const MediHelp = {
       logoutBtn.textContent = 'Logout';
       logoutBtn.onclick = async () => {
         await window.dbClient.auth.signOut();
+        localStorage.removeItem(MediHelp.License.STORAGE_KEY);
+        localStorage.removeItem(MediHelp.License.DATA_KEY);
         alert('Logged out successfully!');
+        window.location.reload();
       };
       navActions.insertBefore(logoutBtn, navActions.querySelector('.theme-btn'));
     } else {
@@ -646,13 +646,19 @@ const MediHelp = {
         throw e;
       }
     }
+  },
+
+  isPremium: async function() {
+    const { data: { user } } = await window.dbClient.auth.getUser();
+    if (!user) return false;
+    return this.License.isActivated();
   }
 };
 
 // 7. Auto-init on Load
 document.addEventListener('DOMContentLoaded', () => {
   MediHelp.initFeedbackWidget();
-  // MediHelp.initAuthModal(); // Disabled - revert to original topic loading
+  MediHelp.initAuthModal(); // Enabled - rollout secure licensing
 
   // Register auth state listener HERE — after MediHelp is fully defined
   // This prevents a ReferenceError when onAuthStateChange fires with INITIAL_SESSION

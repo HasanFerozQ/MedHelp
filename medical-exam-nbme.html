@@ -196,7 +196,7 @@
       }
 
       data.forEach((topic, index) => {
-        const isFreeDemo = (index === 0);
+        const isFreeDemo = topic.is_free_demo;
         // Calculate total questions: Standalone MCQs + All questions inside Case Studies
         let caseQuestionCount = 0;
         if (topic.case_studies) {

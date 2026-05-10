@@ -231,8 +231,9 @@
   <!-- SIMULATOR UI -->
   <div id="sim-ui">
     <header class="sim-header">
-      <div style="display: flex; gap: 20px; align-items: center;">
+      <div style="display: flex; gap: 12px; align-items: center;">
         <button class="btn btn-danger" id="quit-exam-btn" onclick="quitAndSave()" style="background: #ef4444; font-size: 11px; padding: 8px 14px; height: auto;">Quit & Save</button>
+        <button class="btn btn-secondary" id="end-exam-btn" onclick="endExam()" style="background: #6b7280; color: white; font-size: 11px; padding: 8px 14px; height: auto;">End Exam</button>
         <div class="block-status" id="block-dots">
           <!-- 7 dots -->
         </div>
@@ -361,6 +362,13 @@
       }
     }
 
+    function endExam() {
+      if (confirm("Are you sure you want to end the exam now? All progress will be reset and you will return to the USMLE dashboard.")) {
+        localStorage.removeItem('mh_sim_state');
+        window.location.href = 'medical-exam-usmle.html';
+      }
+    }
+
     // --- SIMULATOR ENGINE ---
     async function initSimulator() {
       const loader = document.getElementById('loading-msg');
@@ -457,9 +465,10 @@
     }
 
     // --- UI RENDER ---
-    function initUI() {
+    async function initUI() {
       // PAYWALL CHECK
-      if (!MediHelp.License.isActivated()) {
+      const premium = await MediHelp.isPremium();
+      if (!premium) {
         document.getElementById('paywall-overlay').classList.remove('hidden');
         document.getElementById('sim-ui').classList.add('hidden');
         return;
@@ -728,6 +737,11 @@
     }
 
     async function validateLicense() {
+      const { data: { user } } = await window.dbClient.auth.getUser();
+      if (!user) {
+        MediHelp.showAuthModal();
+        return;
+      }
       const key = document.getElementById('license-key').value.trim();
       const email = document.getElementById('license-email').value.trim();
       const btn = document.getElementById('unlock-btn');
