@@ -639,6 +639,11 @@ const MediHelp = {
 
   updateAuthButton: async function() {
     if (!this.isAuthPage()) return;
+    if (!window.dbClient) {
+      console.warn('MediHelp: dbClient not initialized yet. Retrying in 100ms...');
+      setTimeout(() => this.updateAuthButton(), 100);
+      return;
+    }
     const containers = document.querySelectorAll('.nav-actions');
     if (containers.length === 0) return;
 

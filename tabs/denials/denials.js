@@ -185,10 +185,27 @@ async function searchDenials(query) {
 
     const orCondition = Array.from(allOrs).join(',');
 
-    const [carcRes, rarcRes] = await Promise.all([
+    const searchPromise = Promise.all([
       dbQueryCarc.or(orCondition).limit(100),
       dbQueryRarc.or(orCondition).limit(100)
     ]);
+
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('timeout')), 8000)
+    );
+
+    let carcRes, rarcRes;
+    try {
+      const [c, r] = await Promise.race([searchPromise, timeoutPromise]);
+      carcRes = c;
+      rarcRes = r;
+    } catch (e) {
+      if (e.message === 'timeout') {
+        denialResults.innerHTML = '<div class="empty-state" style="color:var(--text-warning)">Search is taking longer than expected. Please refine your query or check your connection.</div>';
+        return;
+      }
+      throw e;
+    }
 
     if (searchId !== currentDenialSearchId) return;
 

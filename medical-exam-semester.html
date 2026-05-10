@@ -830,7 +830,7 @@
       const { data, error } = await window.dbClient
         .from('topics')
         .select(`
-          *,
+          id, title, section, is_free_demo, order, year_id,
           mcqs:mcqs(id),
           case_studies:case_studies(
             id, 
