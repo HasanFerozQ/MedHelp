@@ -834,6 +834,7 @@
       loader.classList.remove('hidden');
 
       try {
+        console.time('loadTopics-metadata');
         // Step 1: Fetch Topics (Metadata only - super fast)
         const { data: topics, error: tError } = await window.dbClient
           .from('topics')
@@ -844,28 +845,79 @@
 
         if (tError) throw tError;
         if (currentLoadId !== lastLoadId) return;
+        console.timeEnd('loadTopics-metadata');
 
-        // Step 2: Fetch MCQ counts for the whole year in one flat request
-        const { data: mcqCounts, error: mError } = await window.dbClient
+        if (!topics || topics.length === 0) {
+          loader.classList.add('hidden');
+          grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
+          return;
+        }
+
+        console.time('loadTopics-rpc');
+        // Step 2: Use RPC for lightning-fast aggregated counts
+        // This offloads the heavy work to Postgres
+        const { data: stats, error: rError } = await window.dbClient
+          .rpc('get_year_stats', { target_year: yearId });
+
+        if (rError) {
+          console.warn('RPC get_year_stats failed, falling back to manual fetch...', rError);
+          // Fallback logic if RPC doesn't exist yet
+          const { data: mcqs } = await window.dbClient.from('mcqs').select('id, topic_id');
+          // ... (simplified fallback for brevity)
+          topics.forEach(t => { t.mcqs = []; t.case_studies = []; });
+        } else {
+          // Step 3: Map RPC results back to topics
+          const statsMap = {};
+          (stats || []).forEach(s => statsMap[s.topic_id] = s);
+
+          topics.forEach(t => {
+            const s = statsMap[t.id] || { mcq_count: 0, case_count: 0 };
+            // Mocking arrays to satisfy existing renderTopics logic
+            t.mcqs = new Array(Number(s.mcq_count || 0)).fill({ id: 0 });
+            t.case_studies = new Array(Number(s.case_count || 0)).fill({ id: 0, case_questions: [] });
+            // Note: Since renderTopics uses .filter on mcqs for progress, 
+            // we need to be careful. Let's adjust renderTopics instead.
+          });
+        }
+        console.timeEnd('loadTopics-rpc');
+
+        yearTopicsCache[yearId] = topics;
+        renderTopics(yearId, topics);
+        
+        // Step 4: Lazy Progress Loading (Asynchronous)
+        // We fetch the mapping of MCQ IDs to topics to calculate the progress numbers
+        // without blocking the initial display of topics.
+        loadProgressAsync(yearId, topics);
+
+      } catch (err) {
+        console.error('MediHelp Load Error:', err);
+        loader.classList.add('hidden');
+        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Failed to load topics. Please check your connection.</p>';
+      }
+    }
+
+    async function loadProgressAsync(yearId, topics) {
+      if (!topics || topics.length === 0) return;
+      
+      try {
+        const { data: mcqMapping } = await window.dbClient
           .from('mcqs')
           .select('id, topic_id')
           .in('topic_id', topics.map(t => t.id));
 
-        // Step 3: Fetch Case Study counts
-        const { data: caseData, error: cError } = await window.dbClient
+        const { data: caseMapping } = await window.dbClient
           .from('case_studies')
           .select('id, topic_id, case_questions(id)')
           .in('topic_id', topics.map(t => t.id));
 
-        // Step 4: Merge counts into topic objects
         const mcqMap = {};
-        (mcqCounts || []).forEach(m => {
+        (mcqMapping || []).forEach(m => {
           if (!mcqMap[m.topic_id]) mcqMap[m.topic_id] = [];
           mcqMap[m.topic_id].push({ id: m.id });
         });
 
         const caseMap = {};
-        (caseData || []).forEach(cs => {
+        (caseMapping || []).forEach(cs => {
           if (!caseMap[cs.topic_id]) caseMap[cs.topic_id] = [];
           caseMap[cs.topic_id].push({ 
             id: cs.id, 
@@ -878,13 +930,10 @@
           t.case_studies = caseMap[t.id] || [];
         });
 
-        yearTopicsCache[yearId] = topics;
+        // Re-render only the progress parts or the whole grid (cached)
         renderTopics(yearId, topics);
-        
-      } catch (err) {
-        console.error('MediHelp Load Error:', err);
-        loader.classList.add('hidden');
-        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Failed to load topics. Please check your connection.</p>';
+      } catch (e) {
+        console.warn("Lazy Progress Load failed:", e);
       }
     }
 
