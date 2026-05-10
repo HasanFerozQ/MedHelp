@@ -836,10 +836,10 @@
 
       try {
         console.time('loadTopics-metadata');
-        // Step 1: Fetch Topics (Metadata only - super fast)
+        // Step 1: Fetch Topics (Now including cached counts!)
         const { data: topics, error: tError } = await window.dbClient
           .from('topics')
-          .select('id, title, section, is_free_demo, order, year_id')
+          .select('id, title, section, is_free_demo, order, year_id, mcq_count, case_count')
           .eq('year_id', yearId)
           .is('usmle_step', null)
           .order('order', { ascending: true });
@@ -854,34 +854,19 @@
           return;
         }
 
-        console.time('loadTopics-rpc');
-        // Step 2: Use RPC for lightning-fast aggregated counts
-        // This offloads the heavy work to Postgres
-        const { data: stats, error: rError } = await window.dbClient
-          .rpc('get_year_stats', { target_year: yearId });
-
-        if (rError) {
-          console.warn('RPC get_year_stats failed, using zero-count fallback...', rError);
-          topics.forEach(t => { t.mcqs = []; t.case_studies = []; });
-        } else {
-          // Step 3: Map RPC results back to topics
-          const statsMap = {};
-          (stats || []).forEach(s => statsMap[s.topic_id] = s);
-
-          topics.forEach(t => {
-            const s = statsMap[t.id] || { mcq_count: 0, case_count: 0 };
-            t.mcqs = new Array(Number(s.mcq_count || 0)).fill({ id: 0 });
-            t.case_studies = new Array(Number(s.case_count || 0)).fill({ id: 0, case_questions: [] });
-          });
-        }
-        console.timeEnd('loadTopics-rpc');
+        // Step 2: Initialize topics with their cached counts
+        topics.forEach(t => {
+          // Initialize mock arrays with the cached counts to satisfy UI rendering
+          // while real IDs load in the background
+          t.mcqs = new Array(Number(t.mcq_count || 0)).fill({ id: 0 });
+          t.case_studies = new Array(Number(t.case_count || 0)).fill({ id: 0, case_questions: [] });
+        });
 
         yearTopicsCache[yearId] = topics;
         renderTopics(yearId, topics);
         
-        // Step 4: Lazy Progress Loading (Asynchronous)
-        // We fetch the mapping of MCQ IDs to topics to calculate the progress numbers
-        // without blocking the initial display of topics.
+        // Step 3: Lazy Progress Loading (Asynchronous)
+        // This still fetches real IDs to calculate the "X / Y Done" progress
         loadProgressAsync(yearId, topics);
 
       } catch (err) {
