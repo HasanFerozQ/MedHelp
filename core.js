@@ -548,9 +548,18 @@ const MediHelp = {
           result = await window.dbClient.auth.signUp({ email, password });
           if (result.error) throw result.error;
           
-          // Redirect to Gumroad after signup
-          alert('Account created successfully! Redirecting you to the secure licensing portal...');
-          window.open(GUMROAD_URL, '_blank');
+          // Show beautiful banner and redirect
+          this.showNotification(
+            'Account Created!', 
+            'Redirecting you to the secure licensing portal to finalize your access...',
+            'success',
+            { url: GUMROAD_URL, text: 'Proceed to Full Access' }
+          );
+          
+          setTimeout(() => {
+            window.location.href = GUMROAD_URL;
+          }, 3000);
+
           this.hideAuthModal();
         } else {
           result = await window.dbClient.auth.signInWithPassword({ email, password });
@@ -565,11 +574,11 @@ const MediHelp = {
             }
             throw result.error;
           }
-          alert('Signed in successfully!');
+          this.showNotification('Welcome Back!', 'You have signed in successfully.');
           this.hideAuthModal();
         }
       } catch (error) {
-        alert('Auth Error: ' + error.message);
+        this.showNotification('Auth Error', error.message, 'error');
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = this.isSignUp ? 'Sign Up' : 'Sign In';
@@ -671,6 +680,41 @@ const MediHelp = {
         container.appendChild(authBtn);
       }
     });
+  },
+
+  showNotification: function(title, message, type = 'success', action = null) {
+    let container = document.querySelector('.mh-notification-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.className = 'mh-notification-container';
+      document.body.appendChild(container);
+    }
+
+    const notif = document.createElement('div');
+    notif.className = `mh-notification ${type}`;
+    
+    const icon = type === 'success' 
+      ? `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`
+      : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+
+    notif.innerHTML = `
+      <div class="mh-notif-icon">${icon}</div>
+      <div class="mh-notif-content">
+        <div class="mh-notif-h">${title}</div>
+        <div class="mh-notif-p">${message}</div>
+        ${action ? `<a href="${action.url}" class="mh-notif-btn">${action.text}</a>` : ''}
+      </div>
+    `;
+
+    container.appendChild(notif);
+
+    // Auto-remove after 6 seconds unless it has an action
+    if (!action) {
+      setTimeout(() => {
+        notif.classList.add('fade-out');
+        setTimeout(() => notif.remove(), 400);
+      }, 6000);
+    }
   },
 
   // 7. Global Licensing Logic (Gumroad)
