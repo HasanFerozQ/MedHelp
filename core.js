@@ -385,7 +385,13 @@ const MediHelp = {
         <h2 id="auth-title">Sign In to MediHelp</h2>
         <form id="auth-form" class="auth-form">
           <input type="email" id="auth-email" placeholder="Email" required>
-          <input type="password" id="auth-password" placeholder="Password" required>
+          <div class="password-wrapper">
+            <input type="password" id="auth-password" placeholder="Password" required>
+            <button type="button" class="password-toggle" id="password-toggle" title="Show/Hide Password">👁️</button>
+          </div>
+          <div id="password-rules" class="password-rules hidden">
+            Password must be 8+ characters with uppercase, lowercase, and a number.
+          </div>
           <button type="submit" class="btn btn-primary" id="auth-submit">Sign In</button>
         </form>
         <div class="auth-toggle" onclick="MediHelp.toggleAuthMode()">Don't have an account? Sign Up</div>
@@ -442,6 +448,32 @@ const MediHelp = {
         width: 100%;
         margin: 10px 0;
       }
+      .password-wrapper {
+        position: relative;
+        width: 100%;
+      }
+      .password-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        padding: 0;
+        color: var(--text-muted);
+        opacity: 0.7;
+      }
+      .password-toggle:hover { opacity: 1; }
+      .password-rules {
+        font-size: 11px;
+        color: var(--text-muted);
+        text-align: left;
+        margin: -5px 0 10px 4px;
+        line-height: 1.4;
+      }
+      .password-rules.hidden { display: none; }
       .auth-toggle {
         margin-top: 20px;
         color: var(--text-muted);
@@ -464,11 +496,28 @@ const MediHelp = {
     document.head.appendChild(style);
 
     const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const validatePassword = (password) => password.length >= 6;
+    const validatePassword = (password) => {
+      const rules = {
+        length: password.length >= 8,
+        upper: /[A-Z]/.test(password),
+        lower: /[a-z]/.test(password),
+        number: /[0-9]/.test(password)
+      };
+      return rules.length && rules.upper && rules.lower && rules.number;
+    };
     const GUMROAD_URL = "https://prodat.gumroad.com/l/medical-exam-mastery";
 
     // Auth logic
     this.isSignUp = false;
+
+    // Toggle Password Visibility
+    const passInput = document.getElementById('auth-password');
+    const passToggle = document.getElementById('password-toggle');
+    passToggle.onclick = () => {
+      const isPass = passInput.type === 'password';
+      passInput.type = isPass ? 'text' : 'password';
+      passToggle.textContent = isPass ? '🔒' : '👁️';
+    };
 
     // Form submit
     document.getElementById('auth-form').addEventListener('submit', async (e) => {
@@ -481,8 +530,8 @@ const MediHelp = {
         alert('Please enter a valid email address.');
         return;
       }
-      if (!validatePassword(password)) {
-        alert('Password must be at least 6 characters long.');
+      if (this.isSignUp && !validatePassword(password)) {
+        alert('Password does not meet requirements:\n- At least 8 characters\n- At least one uppercase letter\n- At least one lowercase letter\n- At least one number');
         return;
       }
 
@@ -562,14 +611,17 @@ const MediHelp = {
     const title = document.getElementById('auth-title');
     const submitBtn = document.getElementById('auth-submit');
     const toggleText = document.querySelector('.auth-toggle');
+    const rulesHint = document.getElementById('password-rules');
     if (this.isSignUp) {
       title.textContent = 'Sign Up for MediHelp';
       submitBtn.textContent = 'Sign Up';
       toggleText.textContent = 'Already have an account? Sign In';
+      rulesHint.classList.remove('hidden');
     } else {
       title.textContent = 'Sign In to MediHelp';
       submitBtn.textContent = 'Sign In';
       toggleText.textContent = "Don't have an account? Sign Up";
+      rulesHint.classList.add('hidden');
     }
   },
 
