@@ -822,6 +822,12 @@
     }
 
     async function loadTopics(yearId) {
+      if (!window.dbClient) {
+        console.warn('MediHelp: dbClient not ready, waiting 200ms...');
+        setTimeout(() => loadTopics(yearId), 200);
+        return;
+      }
+      
       const currentLoadId = ++lastLoadId;
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
@@ -836,15 +842,27 @@
 
       try {
         console.time('loadTopics-metadata');
-        // Step 1: Fetch Topics (Now including cached counts!)
-        const { data: topics, error: tError } = await window.dbClient
+        // Step 1: Fetch Topics (Try to include cached counts)
+        let { data: topics, error: tError } = await window.dbClient
           .from('topics')
           .select('id, title, section, is_free_demo, order, year_id, mcq_count, case_count')
           .eq('year_id', yearId)
           .is('usmle_step', null)
           .order('order', { ascending: true });
 
-        if (tError) throw tError;
+        // If the query fails (e.g. columns don't exist yet), fall back to basic select
+        if (tError) {
+          console.warn('MediHelp: Topic cache columns missing, falling back to basic select...', tError);
+          const fallback = await window.dbClient
+            .from('topics')
+            .select('id, title, section, is_free_demo, order, year_id')
+            .eq('year_id', yearId)
+            .is('usmle_step', null)
+            .order('order', { ascending: true });
+          
+          if (fallback.error) throw fallback.error;
+          topics = fallback.data;
+        }
         if (currentLoadId !== lastLoadId) return;
         console.timeEnd('loadTopics-metadata');
 
@@ -1371,6 +1389,20 @@
 
     // Init
     document.addEventListener('DOMContentLoaded', async () => {
+      // Wait for dbClient
+      const waitForDb = async () => {
+        if (window.dbClient) return true;
+        return new Promise(resolve => {
+          const interval = setInterval(() => {
+            if (window.dbClient) {
+              clearInterval(interval);
+              resolve(true);
+            }
+          }, 50);
+        });
+      };
+      await waitForDb();
+
       // Detect if Quiz Header is stuck
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.quiz-header');
