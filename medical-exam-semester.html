@@ -833,35 +833,59 @@
       grid.innerHTML = '';
       loader.classList.remove('hidden');
 
-      const { data, error } = await window.dbClient
-        .from('topics')
-        .select(`
-          id, title, section, is_free_demo, order, year_id,
-          mcqs:mcqs(id),
-          case_studies:case_studies(
-            id, 
-            case_questions:case_questions(id)
-          )
-        `)
-        .eq('year_id', yearId)
-        .is('usmle_step', null)
-        .order('order', { ascending: true });
+      try {
+        // Step 1: Fetch Topics (Metadata only - super fast)
+        const { data: topics, error: tError } = await window.dbClient
+          .from('topics')
+          .select('id, title, section, is_free_demo, order, year_id')
+          .eq('year_id', yearId)
+          .is('usmle_step', null)
+          .order('order', { ascending: true });
 
-      if (currentLoadId !== lastLoadId) return;
-      loader.classList.add('hidden');
+        if (tError) throw tError;
+        if (currentLoadId !== lastLoadId) return;
 
-      if (error) {
-        console.error('Supabase Error:', error);
+        // Step 2: Fetch MCQ counts for the whole year in one flat request
+        const { data: mcqCounts, error: mError } = await window.dbClient
+          .from('mcqs')
+          .select('id, topic_id')
+          .in('topic_id', topics.map(t => t.id));
+
+        // Step 3: Fetch Case Study counts
+        const { data: caseData, error: cError } = await window.dbClient
+          .from('case_studies')
+          .select('id, topic_id, case_questions(id)')
+          .in('topic_id', topics.map(t => t.id));
+
+        // Step 4: Merge counts into topic objects
+        const mcqMap = {};
+        (mcqCounts || []).forEach(m => {
+          if (!mcqMap[m.topic_id]) mcqMap[m.topic_id] = [];
+          mcqMap[m.topic_id].push({ id: m.id });
+        });
+
+        const caseMap = {};
+        (caseData || []).forEach(cs => {
+          if (!caseMap[cs.topic_id]) caseMap[cs.topic_id] = [];
+          caseMap[cs.topic_id].push({ 
+            id: cs.id, 
+            case_questions: cs.case_questions || [] 
+          });
+        });
+
+        topics.forEach(t => {
+          t.mcqs = mcqMap[t.id] || [];
+          t.case_studies = caseMap[t.id] || [];
+        });
+
+        yearTopicsCache[yearId] = topics;
+        renderTopics(yearId, topics);
+        
+      } catch (err) {
+        console.error('MediHelp Load Error:', err);
+        loader.classList.add('hidden');
+        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Failed to load topics. Please check your connection.</p>';
       }
-
-      if (!data || !data.length) {
-        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
-        return;
-      }
-
-      yearTopicsCache[yearId] = data;
-      renderTopics(yearId, data);
-      // Removed prefetchOtherYears(yearId); to prevent network congestion
     }
 
     function renderTopics(yearId, data) {
@@ -952,21 +976,7 @@
       }
     }
 
-    function prefetchOtherYears(currentYearId) {
-      [1, 2, 3, 4].forEach(async (year) => {
-        if (year === currentYearId || yearTopicsCache[year]) return;
-        const { data, error } = await window.dbClient
-          .from('topics')
-          .select('*, mcqs(id), case_studies(id, case_questions(id))')
-          .eq('year_id', year)
-          .is('usmle_step', null)
-          .order('order', { ascending: true });
-
-        if (!error && data && data.length) {
-          yearTopicsCache[year] = data;
-        }
-      });
-    }
+    // Prefetching removed to optimize initial load performance
 
     // --- QUIZ LOGIC ---
     async function startQuiz(topicId, title, isFreeDemo = false) {
