@@ -634,31 +634,43 @@ const MediHelp = {
     const navActions = document.querySelector('.nav-actions');
     if (!navActions) return;
 
-    // Remove existing auth button
-    const existing = navActions.querySelector('.auth-btn');
+    // Remove any existing auth button to prevent duplicates
+    const existing = document.getElementById('nav-auth-btn');
     if (existing) existing.remove();
+    // Safety: also remove by class
+    navActions.querySelectorAll('.auth-btn').forEach(el => el.remove());
 
     const { data: { user } } = await window.dbClient.auth.getUser();
+    
+    const authBtn = document.createElement('button');
+    authBtn.id = 'nav-auth-btn';
+    authBtn.className = 'btn btn-ghost auth-btn';
+    authBtn.style.padding = '8px 18px';
+    authBtn.style.fontSize = '14px';
+    authBtn.style.borderRadius = '10px';
+
     if (user) {
-      // Show logout button
-      const logoutBtn = document.createElement('button');
-      logoutBtn.className = 'btn btn-ghost auth-btn';
-      logoutBtn.textContent = 'Logout';
-      logoutBtn.onclick = async () => {
-        await window.dbClient.auth.signOut();
-        localStorage.removeItem(MediHelp.License.STORAGE_KEY);
-        localStorage.removeItem(MediHelp.License.DATA_KEY);
-        alert('Logged out successfully!');
-        window.location.reload();
+      authBtn.textContent = 'Logout';
+      authBtn.onclick = async () => {
+        if (confirm('Are you sure you want to logout?')) {
+          await window.dbClient.auth.signOut();
+          localStorage.removeItem(MediHelp.License.STORAGE_KEY);
+          localStorage.removeItem(MediHelp.License.DATA_KEY);
+          alert('Logged out successfully!');
+          window.location.reload();
+        }
       };
-      navActions.insertBefore(logoutBtn, navActions.querySelector('.theme-btn'));
     } else {
-      // Show signin button
-      const signinBtn = document.createElement('button');
-      signinBtn.className = 'btn btn-ghost auth-btn';
-      signinBtn.textContent = 'Sign In';
-      signinBtn.onclick = () => this.showAuthModal();
-      navActions.insertBefore(signinBtn, navActions.querySelector('.theme-btn'));
+      authBtn.textContent = 'Login / Sign Up';
+      authBtn.onclick = () => this.showAuthModal();
+    }
+
+    // Insert before theme toggle or at the end
+    const themeBtn = navActions.querySelector('.theme-btn');
+    if (themeBtn) {
+      navActions.insertBefore(authBtn, themeBtn);
+    } else {
+      navActions.appendChild(authBtn);
     }
   },
 
