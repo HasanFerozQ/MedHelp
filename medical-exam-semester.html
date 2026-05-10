@@ -966,24 +966,23 @@
           const isFreeDemo = topic.is_free_demo;
           globalIndex++;
 
+          const mcqCount = topic.mcq_count || 0;
+          const caseCount = topic.case_count || 0;
           const allMcqs = topic.mcqs || [];
-          const totalMcqs = allMcqs.length;
-          const caseStudies = topic.case_studies || [];
-          const totalCases = caseStudies.length;
-
+          
           const topicProg = userProgress[topic.id] || {};
-          const progMcqCount = allMcqs.filter(m => topicProg[m.id]).length;
+          // Only count progress if we have the real IDs from lazy load
+          const progMcqCount = allMcqs.filter(m => m && m.id && topicProg[m.id]).length;
 
           let attemptedCases = 0;
-          let totalCaseQuestions = 0;
+          const caseStudies = topic.case_studies || [];
           caseStudies.forEach(cs => {
             const qIds = (cs.case_questions || []).map(q => q.id);
-            totalCaseQuestions += qIds.length;
             const answered = qIds.filter(id => topicProg[id]).length;
             if (qIds.length > 0 && answered > 0) attemptedCases++;
           });
 
-          const totalQ = totalMcqs + totalCaseQuestions;
+          const totalQ = mcqCount + caseCount;
           const totalCorrect = Object.values(topicProg).filter(v => v.correct).length;
           const percent = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
 
@@ -998,12 +997,12 @@
               </div>
               <div class="topic-progress">
                 <div class="topic-stats-row">
-                  <span style="color:var(--success)">• ${progMcqCount} / ${totalMcqs} MCQs</span>
+                  <span style="color:var(--success)">• ${progMcqCount} / ${mcqCount} MCQs</span>
                   <span>${percent}%</span>
                 </div>
-                ${totalCases > 0 ? `
+                ${caseCount > 0 ? `
                 <div class="topic-stats-row">
-                  <span style="color:#a855f7">• ${attemptedCases} / ${totalCases} Cases</span>
+                  <span style="color:#a855f7">• ${attemptedCases} / ${caseCount} Cases</span>
                 </div>
                 ` : ''}
                 <div class="progress-bar-bg">
