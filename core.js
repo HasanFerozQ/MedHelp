@@ -463,30 +463,60 @@ const MediHelp = {
     `;
     document.head.appendChild(style);
 
+    const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const validatePassword = (password) => password.length >= 6;
+    const GUMROAD_URL = "https://prodat.gumroad.com/l/medical-exam-mastery";
+
     // Auth logic
     this.isSignUp = false;
 
     // Form submit
     document.getElementById('auth-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('auth-email').value;
+      const email = document.getElementById('auth-email').value.trim();
       const password = document.getElementById('auth-password').value;
       const submitBtn = document.getElementById('auth-submit');
+
+      if (!validateEmail(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      if (!validatePassword(password)) {
+        alert('Password must be at least 6 characters long.');
+        return;
+      }
+
       submitBtn.disabled = true;
-      submitBtn.textContent = this.isSignUp ? 'Signing Up...' : 'Signing In...';
+      submitBtn.textContent = this.isSignUp ? 'Creating Account...' : 'Signing In...';
 
       try {
         let result;
         if (this.isSignUp) {
           result = await window.dbClient.auth.signUp({ email, password });
+          if (result.error) throw result.error;
+          
+          // Redirect to Gumroad after signup
+          alert('Account created! Redirecting to secure licensing...');
+          window.open(GUMROAD_URL, '_blank');
+          this.hideAuthModal();
         } else {
           result = await window.dbClient.auth.signInWithPassword({ email, password });
+          if (result.error) {
+            if (result.error.message.toLowerCase().includes('invalid login credentials')) {
+              if (confirm('Account not found with these credentials. Would you like to Sign Up instead?')) {
+                this.toggleAuthMode();
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign Up';
+                return;
+              }
+            }
+            throw result.error;
+          }
+          alert('Signed in successfully!');
+          this.hideAuthModal();
         }
-        if (result.error) throw result.error;
-        this.hideAuthModal();
-        alert(this.isSignUp ? 'Check your email to confirm your account!' : 'Signed in successfully!');
       } catch (error) {
-        alert('Error: ' + error.message);
+        alert('Auth Error: ' + error.message);
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = this.isSignUp ? 'Sign Up' : 'Sign In';

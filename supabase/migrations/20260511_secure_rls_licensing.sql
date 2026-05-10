@@ -6,16 +6,22 @@ BEGIN;
 -- 1. Add Column: is_free_demo to topics
 ALTER TABLE topics ADD COLUMN IF NOT EXISTS is_free_demo BOOLEAN DEFAULT false;
 
--- 2. Backfill Data: Set is_free_demo = true for the first topic in each year.
--- We'll use a subquery to find the minimum order for each year_id.
+-- 2. Backfill Data: Set is_free_demo = true for the first topic in each year AND each USMLE step.
 WITH first_topics AS (
     SELECT id FROM (
         SELECT id, ROW_NUMBER() OVER (PARTITION BY year_id ORDER BY "order" ASC, id ASC) as rank
         FROM topics
         WHERE usmle_step IS NULL
     ) t WHERE rank = 1
+),
+first_usmle_topics AS (
+    SELECT id FROM (
+        SELECT id, ROW_NUMBER() OVER (PARTITION BY usmle_step ORDER BY "order" ASC, id ASC) as rank
+        FROM topics
+        WHERE usmle_step IS NOT NULL
+    ) t WHERE rank = 1
 )
-UPDATE topics SET is_free_demo = true WHERE id IN (SELECT id FROM first_topics);
+UPDATE topics SET is_free_demo = true WHERE id IN (SELECT id FROM first_topics) OR id IN (SELECT id FROM first_usmle_topics);
 
 -- 3. Enable RLS on topics, mcqs, and case_studies
 ALTER TABLE topics ENABLE ROW LEVEL SECURITY;
