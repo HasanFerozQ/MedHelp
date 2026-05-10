@@ -535,6 +535,20 @@ const MediHelp = {
     this.updateAuthButton();
   },
 
+  isAuthPage: function() {
+    const authPages = [
+      'medical-exam-preparation',
+      'medical-exam-semester',
+      'medical-exam-usmle',
+      'medical-exam-nbme',
+      'medical-exam-mock',
+      'medical-exam-simulator',
+      'flash-cards'
+    ];
+    const path = window.location.pathname;
+    return authPages.some(page => path.includes(page));
+  },
+
   showAuthModal: function() {
     document.getElementById('auth-modal').classList.add('active');
   },
@@ -560,6 +574,7 @@ const MediHelp = {
   },
 
   updateAuthButton: async function() {
+    if (!this.isAuthPage()) return;
     const navActions = document.querySelector('.nav-actions');
     if (!navActions) return;
 
@@ -688,7 +703,10 @@ const MediHelp = {
 // 7. Auto-init on Load
 document.addEventListener('DOMContentLoaded', () => {
   MediHelp.initFeedbackWidget();
-  MediHelp.initAuthModal(); // Enabled - rollout secure licensing
+  
+  if (MediHelp.isAuthPage()) {
+    MediHelp.initAuthModal(); // Enabled - rollout secure licensing
+  }
 
   // Register auth state listener HERE — after MediHelp is fully defined
   // This prevents a ReferenceError when onAuthStateChange fires with INITIAL_SESSION
