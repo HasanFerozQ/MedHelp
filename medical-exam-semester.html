@@ -934,20 +934,31 @@
       }, 5000);
 
       try {
-        console.log(`MediHelp: Fetching topics for Year ${yearId}...`);
+        console.log(`DIAGNOSTIC: Checking Supabase connection for Year ${yearId}...`);
         
-        // Simulate middle progress
-        setTimeout(() => { if (progressBar.style.width === '30%') progressBar.style.width = '60%'; }, 200);
+        // Test connection with a 1-row query
+        const testConn = await window.dbClient.from('topics').select('id').limit(1);
+        if (testConn.error) {
+          console.error('DIAGNOSTIC: Connection Test Failed!', testConn.error);
+          throw new Error(`Database connection failed: ${testConn.error.message}`);
+        }
+        console.log('DIAGNOSTIC: Connection OK. Fetching actual data...');
 
-        // Step 1: Bulletproof Query (Bare Essentials)
-        const { data: topics, error } = await window.dbClient
+        // Step 1: Bulletproof Query with 15-second timeout
+        const queryPromise = window.dbClient
           .from('topics')
           .select('id, title, section, is_free_demo, year_id')
           .eq('year_id', yearId)
-          .is('usmle_step', null)
-          .order('title', { ascending: true }); // Using title order as fallback
+          .order('title', { ascending: true });
+
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('TIMEOUT: Database did not respond within 15 seconds.')), 15000)
+        );
+
+        const { data: topics, error } = await Promise.race([queryPromise, timeoutPromise]);
 
         if (error) throw error;
+        console.log(`DIAGNOSTIC: Success! Received ${topics?.length || 0} topics.`);
 
         // Finish Progress
         progressBar.style.width = '100%';
