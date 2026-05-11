@@ -1249,7 +1249,7 @@
       currentCaseQuestionIds = [];
       currentLoadedCases = [];
 
-      if ((mError || !mcqs.length) && (cError || !cases.length)) {
+      if ((mcqRes.error || !mcqs.length) && (caseRes.error || !cases.length)) {
         list.innerHTML = '<p style="text-align:center; padding: 40px;">No questions found for this topic.</p>';
         return;
       }
@@ -1315,6 +1315,11 @@
       }
 
       updateQuizHeader();
+      } catch (err) {
+        console.error('MediHelp Quiz Load Error:', err);
+        loader.classList.add('hidden');
+        list.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-danger);">Failed to load questions. Please try again.</p>';
+      }
     }
 
     function renderCaseBlock(cs, index) {
