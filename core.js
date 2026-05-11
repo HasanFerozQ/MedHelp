@@ -375,6 +375,8 @@ const MediHelp = {
   },
 
   initAuthModal: function() {
+    if (document.getElementById('auth-modal')) return;
+
     // Add modal to body
     const modal = document.createElement('div');
     modal.id = 'auth-modal';
@@ -599,23 +601,26 @@ const MediHelp = {
 
   isAuthPage: function() {
     const path = window.location.pathname;
-    const authPages = [
-      'medical-exam-preparation',
-      'medical-exam-semester',
-      'flash-cards',
-      'cpt-code-search',
-      'claim-denial-codes',
-      'medical-bill-audit'
-    ];
-    return authPages.some(p => path.includes(p)) || path === '/' || path.endsWith('.html');
+    return path.includes('medical-exam') ||
+      path.includes('flash-cards') ||
+      path.includes('cpt-code-search') ||
+      path.includes('claim-denial-codes') ||
+      path.includes('medical-bill-audit') ||
+      path === '/' ||
+      path.endsWith('.html');
   },
 
   showAuthModal: function() {
-    document.getElementById('auth-modal').classList.add('active');
+    if (!document.getElementById('auth-modal')) {
+      this.initAuthModal();
+    }
+    const modal = document.getElementById('auth-modal');
+    if (modal) modal.classList.add('active');
   },
 
   hideAuthModal: function() {
-    document.getElementById('auth-modal').classList.remove('active');
+    const modal = document.getElementById('auth-modal');
+    if (modal) modal.classList.remove('active');
   },
 
   toggleAuthMode: function() {
