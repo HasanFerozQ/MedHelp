@@ -141,6 +141,16 @@
     .score-badge.case { border-left: 4px solid #a855f7; }
     
     .hidden { display: none; }
+    .topic-loading-message {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-muted);
+      text-align: center;
+      font-size: 14px;
+    }
 
     /* SEARCH BAR STYLES - UI FIX */
     .search-container { position: relative; max-width: 600px; margin-top: 24px; }
@@ -500,6 +510,7 @@
           <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
           <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
         </div>
+        <div id="topic-loading-message" class="topic-loading-message hidden"></div>
       </div>
       <div class="topic-grid" id="topic-grid">
         <!-- Injected Topics -->
@@ -834,8 +845,15 @@
         openPremiumModal();
       }
 
-      loadTopics(currentYear);
+      loadTopics(currentYear).finally(() => prefetchRemainingYears());
       initPrefetching();
+    }
+
+    function prefetchRemainingYears() {
+      [1, 2, 3, 4].forEach((yearId, index) => {
+        if (yearId === currentYear || yearTopicsCache[yearId]) return;
+        setTimeout(() => loadTopicsSilent(yearId), 400 * index);
+      });
     }
 
     // Phase 2.3: Debounced Switcher
@@ -876,12 +894,18 @@
     async function loadTopicsSilent(yearId) {
       if (yearTopicsCache[yearId]) return;
       try {
-        const { data } = await window.dbClient.from('topics').select('*').eq('year_id', yearId).is('usmle_step', null).order('order');
+        const { data } = await window.dbClient.from('topics')
+          .select('id, title, section, is_free_demo, "order", year_id, mcq_count, case_count')
+          .eq('year_id', yearId)
+          .is('usmle_step', null)
+          .order('order', { ascending: true });
         if (data) {
           yearTopicsCache[yearId] = data;
           localStorage.setItem(`mh_topics_cache_year_${yearId}`, JSON.stringify({ topics: data, timestamp: Date.now() }));
         }
-      } catch (e) {}
+      } catch (e) {
+        console.warn('MediHelp: Silent prefetch failed for year', yearId, e);
+      }
     }
 
     async function loadTopics(yearId) {
@@ -893,6 +917,7 @@
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
       const progressBar = document.getElementById('top-progress-bar');
+      const loaderMessage = document.getElementById('topic-loading-message');
 
       // 1. Start Progress
       grid.innerHTML = '';
@@ -996,9 +1021,13 @@
     function renderTopics(yearId, data) {
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
+      const loaderMessage = document.getElementById('topic-loading-message');
       
       try {
         loader.classList.add('hidden');
+        if (loaderMessage) {
+          loaderMessage.classList.add('hidden');
+          loaderMessage.textContent = '';
 
         if (!data || !data.length) {
           grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
