@@ -337,9 +337,24 @@
     .toast-msg.success { border-color: var(--success); }
     .toast-msg.error { border-color: var(--danger); }
     .mobile-year-select { display: none; }
+
+    /* TOP LOADING BAR */
+    #top-progress-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999;
+      background: transparent; pointer-events: none;
+    }
+    #top-progress-bar {
+      height: 100%; width: 0%; background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      transition: width 0.4s cubic-bezier(0.1, 0.5, 0.5, 1);
+    }
   </style>
 </head>
 <body>
+
+  <div id="top-progress-container">
+    <div id="top-progress-bar"></div>
+  </div>
 
   <!-- Custom Confirm Modal -->
   <div id="confirm-modal">
@@ -871,128 +886,71 @@
 
     async function loadTopics(yearId) {
       if (!window.dbClient) {
-        console.warn('MediHelp: dbClient not ready, waiting 200ms...');
         setTimeout(() => loadTopics(yearId), 200);
         return;
       }
       
-      const currentLoadId = ++lastLoadId;
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
+      const progressBar = document.getElementById('top-progress-bar');
 
-      // Safety: Auto-hide loader after 10 seconds to prevent getting stuck
-      const safetyTimeout = setTimeout(() => {
-        if (currentLoadId === lastLoadId && !loader.classList.contains('hidden')) {
-          console.warn("MediHelp: loadTopics is still pending after 10s.");
-          loader.textContent = 'Still loading topics... this may take a few extra seconds. Please wait.';
-        }
-      }, 10000);
-
-      if (yearTopicsCache[yearId]) {
-        clearTimeout(safetyTimeout);
-        renderTopics(yearId, yearTopicsCache[yearId]);
-        return;
-      }
-
-      // Check LocalStorage Cache (Phase 2.2)
-      const cachedData = localStorage.getItem(`mh_topics_cache_year_${yearId}`);
-      if (cachedData) {
-        try {
-          const { topics, timestamp } = JSON.parse(cachedData);
-          const ageInHours = (Date.now() - timestamp) / (1000 * 60 * 60);
-          if (ageInHours < 24) { // Use cache if less than 24h old
-            console.log(`MediHelp: Using local cache for year ${yearId}`);
-            yearTopicsCache[yearId] = topics;
-            renderTopics(yearId, topics);
-            // Still fetch in background to refresh cache
-            backgroundRefreshTopics(yearId, currentLoadId, safetyTimeout);
-            return;
-          }
-        } catch (e) { console.error("Cache parse error", e); }
-      }
-
+      // 1. Start Progress
       grid.innerHTML = '';
       loader.classList.remove('hidden');
-
-      async function backgroundRefreshTopics(yId, loadId, timeout) {
-        try {
-          const { data } = await window.dbClient.from('topics').select('*').eq('year_id', yId).is('usmle_step', null).order('order');
-          if (data && loadId === lastLoadId) {
-            localStorage.setItem(`mh_topics_cache_year_${yId}`, JSON.stringify({ topics: data, timestamp: Date.now() }));
-            yearTopicsCache[yId] = data;
-            renderTopics(yId, data);
-          }
-        } catch (err) { console.warn("Background refresh failed", err); }
-      }
+      progressBar.style.width = '30%';
+      progressBar.style.opacity = '1';
 
       try {
-        console.time('loadTopics-metadata');
-        console.log(`MediHelp: Fetching topics for year ${yearId}...`);
-        // Step 1: Fetch Topics (Try to include cached counts)
-        let { data: topics, error: tError } = await window.dbClient
+        console.log(`MediHelp: Fetching topics for Year ${yearId}...`);
+        
+        // Simulate middle progress
+        setTimeout(() => { if (progressBar.style.width === '30%') progressBar.style.width = '60%'; }, 200);
+
+        // Step 1: Fetch Topics
+        const { data: topics, error } = await window.dbClient
           .from('topics')
           .select('id, title, section, is_free_demo, order, year_id, mcq_count, case_count')
           .eq('year_id', yearId)
           .is('usmle_step', null)
           .order('order', { ascending: true });
 
-        if (tError) {
-          console.warn('MediHelp: Topic query error:', tError);
-          const fallback = await window.dbClient
-            .from('topics')
-            .select('id, title, section, is_free_demo, order, year_id')
-            .eq('year_id', yearId)
-            .is('usmle_step', null)
-            .order('order', { ascending: true });
-          
-          if (fallback.error) {
-            console.error('MediHelp: Fallback query error:', fallback.error);
-            throw fallback.error;
-          }
-          topics = fallback.data;
-        }
-        
-        console.log(`MediHelp: Received ${topics?.length || 0} topics for year ${yearId}`);
-        if (currentLoadId !== lastLoadId) {
-          console.log("MediHelp: Load ID mismatch, skipping render.");
-          return;
-        }
+        if (error) throw error;
 
-        // Update Local Cache (Phase 2.2)
-        localStorage.setItem(`mh_topics_cache_year_${yearId}`, JSON.stringify({
-          topics: topics,
-          timestamp: Date.now()
-        }));
-
-        console.timeEnd('loadTopics-metadata');
+        // Finish Progress
+        progressBar.style.width = '100%';
 
         if (!topics || topics.length === 0) {
           loader.classList.add('hidden');
           grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
+          setTimeout(() => { progressBar.style.opacity = '0'; }, 500);
           return;
         }
 
-        // Step 2: Initialize topics with their cached counts
+        // Initialize progress arrays
         topics.forEach(t => {
-          // Initialize mock arrays with the cached counts to satisfy UI rendering
-          // while real IDs load in the background
-          t.mcqs = new Array(Number(t.mcq_count || 0)).fill({ id: 0 });
-          t.case_studies = new Array(Number(t.case_count || 0)).fill({ id: 0, case_questions: [] });
+          t.mcqs = [];
+          t.case_studies = [];
         });
 
         yearTopicsCache[yearId] = topics;
-        clearTimeout(safetyTimeout);
         renderTopics(yearId, topics);
+        loader.classList.add('hidden');
         
-        // Step 3: Lazy Progress Loading (Asynchronous)
-        loadProgressAsync(yearId, topics);
+        // Reset bar after a delay
+        setTimeout(() => { 
+          progressBar.style.opacity = '0';
+          setTimeout(() => { progressBar.style.width = '0%'; }, 400);
+        }, 500);
 
       } catch (err) {
         console.error('MediHelp Load Error:', err);
-        clearTimeout(safetyTimeout);
+        progressBar.style.width = '100%';
+        progressBar.style.background = 'var(--danger)';
         loader.classList.add('hidden');
         grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Failed to load topics. Please check your connection.</p>';
+        setTimeout(() => { progressBar.style.opacity = '0'; }, 2000);
       }
+    }
     }
 
     async function loadProgressAsync(yearId, topics) {
