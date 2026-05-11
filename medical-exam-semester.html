@@ -925,6 +925,14 @@
       progressBar.style.width = '30%';
       progressBar.style.opacity = '1';
 
+      // 2. Safety Feedback (if database is slow)
+      const safetyTimeout = setTimeout(() => {
+        if (!loader.classList.contains('hidden') && loaderMessage) {
+          loaderMessage.classList.remove('hidden');
+          loaderMessage.textContent = 'Still loading topics... This may take a few extra seconds on slow connections.';
+        }
+      }, 5000);
+
       try {
         console.log(`MediHelp: Fetching topics for Year ${yearId}...`);
         
@@ -962,6 +970,7 @@
         loader.classList.add('hidden');
         
         // Reset bar after a delay
+        clearTimeout(safetyTimeout);
         setTimeout(() => { 
           progressBar.style.opacity = '0';
           setTimeout(() => { progressBar.style.width = '0%'; }, 400);
@@ -969,6 +978,7 @@
 
       } catch (err) {
         console.error('MediHelp Load Error:', err);
+        clearTimeout(safetyTimeout);
         progressBar.style.width = '100%';
         progressBar.style.background = 'var(--danger)';
         loader.classList.add('hidden');
@@ -1028,6 +1038,7 @@
         if (loaderMessage) {
           loaderMessage.classList.add('hidden');
           loaderMessage.textContent = '';
+        }
 
         if (!data || !data.length) {
           grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
