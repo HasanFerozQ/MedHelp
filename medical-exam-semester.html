@@ -894,28 +894,6 @@
         return;
       }
 
-      // Early Auth Gate (Phase 3.3)
-      // Prevent unauthenticated or unlicensed users from triggering RLS hangs on Year 2+
-      if (yearId > 1) {
-        const isPremium = MediHelp.isPremiumSync();
-        if (isPremium === false) { // Explicitly false (not null, which means still loading)
-          console.warn(`MediHelp: Early block for Year ${yearId} — Not Premium.`);
-          clearTimeout(safetyTimeout);
-          loader.classList.add('hidden');
-          grid.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; background: var(--bg-card); border: 1px solid var(--border-accent); border-radius: var(--radius);">
-              <div style="font-size: 40px; margin-bottom: 20px;">🔒</div>
-              <h2 style="color: var(--text-h); margin-bottom: 12px;">Premium Curriculum</h2>
-              <p style="color: var(--text-muted); margin-bottom: 24px; max-width: 400px; margin-left: auto; margin-right: auto;">
-                Year ${yearId} topics are part of our high-yield premium curriculum. Activate your license to unlock full access.
-              </p>
-              <button onclick="MediHelp.License.showActivator()" class="btn btn-primary" style="padding: 12px 32px; font-weight: 800;">Activate Full Access</button>
-            </div>
-          `;
-          return;
-        }
-      }
-
       // Check LocalStorage Cache (Phase 2.2)
       const cachedData = localStorage.getItem(`mh_topics_cache_year_${yearId}`);
       if (cachedData) {
