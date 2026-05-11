@@ -647,7 +647,8 @@ const MediHelp = {
     const containers = document.querySelectorAll('.nav-actions');
     if (containers.length === 0) return;
 
-    const { data: { user } } = await window.dbClient.auth.getUser();
+    const { data, error } = await window.dbClient.auth.getUser();
+    const user = data?.user;
     
     containers.forEach(container => {
       // 1. Remove ANY existing auth button in THIS specific container
@@ -821,12 +822,17 @@ const MediHelp = {
   _cachedUser: null,
   isPremium: async function() {
     if (!window.dbClient) return false;
-    if (!this._cachedUser) {
-      const { data: { user } } = await window.dbClient.auth.getUser();
-      this._cachedUser = user;
+    try {
+      if (!this._cachedUser) {
+        const { data, error } = await window.dbClient.auth.getUser();
+        this._cachedUser = data?.user || null;
+      }
+      if (!this._cachedUser) return false;
+      return this.License.isActivated();
+    } catch (e) {
+      console.warn("MediHelp: isPremium check failed", e);
+      return false;
     }
-    if (!this._cachedUser) return false;
-    return this.License.isActivated();
   }
 };
 

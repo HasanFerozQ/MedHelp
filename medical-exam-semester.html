@@ -6,6 +6,11 @@
   <title>Medical Exam Preparation Guide for Doctors (USMLE, MBBS, & US MD) | MediHelp</title>
   <meta name="description" content="Prepare for USMLE, MBBS, and US MD exams with MediHelp’s comprehensive medical exam preparation guide. High-yield MCQs, case scenarios, and licensing exam study plans." />
   <meta name="keywords" content="medical exam preparation, USMLE preparation guide, MBBS exam questions, US MD boards preparation, medical licensing exam study plan" />
+  <link rel="canonical" href="https://www.medihelp.live/medical-exam-semester">
+  <meta property="og:title" content="Medical Exam Semester Preparation | MediHelp" />
+  <meta property="og:description" content="Comprehensive medical exam preparation for doctors and students." />
+  <meta property="og:url" content="https://www.medihelp.live/medical-exam-semester" />
+  <meta property="og:type" content="website" />
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
@@ -832,7 +837,19 @@
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
 
+      // Safety: Auto-hide loader after 10 seconds to prevent getting stuck
+      const safetyTimeout = setTimeout(() => {
+        if (currentLoadId === lastLoadId && !loader.classList.contains('hidden')) {
+          console.warn("MediHelp: loadTopics timed out. Hiding loader.");
+          loader.classList.add('hidden');
+          if (grid.innerHTML === '') {
+            grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">Loading is taking longer than expected. Please refresh or try again later.</p>';
+          }
+        }
+      }, 10000);
+
       if (yearTopicsCache[yearId]) {
+        clearTimeout(safetyTimeout);
         renderTopics(yearId, yearTopicsCache[yearId]);
         return;
       }
@@ -842,6 +859,7 @@
 
       try {
         console.time('loadTopics-metadata');
+        console.log(`MediHelp: Fetching topics for year ${yearId}...`);
         // Step 1: Fetch Topics (Try to include cached counts)
         let { data: topics, error: tError } = await window.dbClient
           .from('topics')
@@ -850,9 +868,8 @@
           .is('usmle_step', null)
           .order('order', { ascending: true });
 
-        // If the query fails (e.g. columns don't exist yet), fall back to basic select
         if (tError) {
-          console.warn('MediHelp: Topic cache columns missing, falling back to basic select...', tError);
+          console.warn('MediHelp: Topic query error:', tError);
           const fallback = await window.dbClient
             .from('topics')
             .select('id, title, section, is_free_demo, order, year_id')
@@ -860,10 +877,18 @@
             .is('usmle_step', null)
             .order('order', { ascending: true });
           
-          if (fallback.error) throw fallback.error;
+          if (fallback.error) {
+            console.error('MediHelp: Fallback query error:', fallback.error);
+            throw fallback.error;
+          }
           topics = fallback.data;
         }
-        if (currentLoadId !== lastLoadId) return;
+        
+        console.log(`MediHelp: Received ${topics?.length || 0} topics for year ${yearId}`);
+        if (currentLoadId !== lastLoadId) {
+          console.log("MediHelp: Load ID mismatch, skipping render.");
+          return;
+        }
         console.timeEnd('loadTopics-metadata');
 
         if (!topics || topics.length === 0) {
@@ -881,14 +906,15 @@
         });
 
         yearTopicsCache[yearId] = topics;
+        clearTimeout(safetyTimeout);
         renderTopics(yearId, topics);
         
         // Step 3: Lazy Progress Loading (Asynchronous)
-        // This still fetches real IDs to calculate the "X / Y Done" progress
         loadProgressAsync(yearId, topics);
 
       } catch (err) {
         console.error('MediHelp Load Error:', err);
+        clearTimeout(safetyTimeout);
         loader.classList.add('hidden');
         grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Failed to load topics. Please check your connection.</p>';
       }
@@ -1029,7 +1055,8 @@
       if (!isFreeDemo) {
         const premium = await MediHelp.isPremium();
         if (!premium) {
-          const { data: { user } } = await window.dbClient.auth.getUser();
+          const { data, error } = await window.dbClient.auth.getUser();
+          const user = data?.user;
           if (!user) {
             MediHelp.showAuthModal();
           } else {
