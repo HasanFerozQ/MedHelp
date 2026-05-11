@@ -825,19 +825,33 @@ const MediHelp = {
   },
 
   _cachedUser: null,
+  _isPremiumCache: null,
   isPremium: async function() {
     if (!window.dbClient) return false;
+    
+    // Return cache if available (Phase 3.1)
+    if (this._isPremiumCache !== null) return this._isPremiumCache;
+
     try {
       if (!this._cachedUser) {
         const { data, error } = await window.dbClient.auth.getUser();
         this._cachedUser = data?.user || null;
       }
-      if (!this._cachedUser) return false;
-      return this.License.isActivated();
+      if (!this._cachedUser) {
+        this._isPremiumCache = false;
+        return false;
+      }
+      
+      this._isPremiumCache = this.License.isActivated();
+      return this._isPremiumCache;
     } catch (e) {
       console.warn("MediHelp: isPremium check failed", e);
       return false;
     }
+  },
+  // New: Simple sync check for UI rendering
+  isPremiumSync: function() {
+    return this._isPremiumCache === true;
   }
 };
 
@@ -854,6 +868,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.dbClient) {
     window.dbClient.auth.onAuthStateChange(async (event, session) => {
       console.log(`MediHelp Auth: ${event}`, session?.user?.email);
+      
+      // Update global cache (Phase 3.1)
+      MediHelp._cachedUser = session?.user || null;
+      MediHelp._isPremiumCache = MediHelp.License.isActivated();
+
       if (session?.user) {
         // Sync license from licenses table if not already active locally
         if (!MediHelp.License.isActivated()) {
@@ -868,11 +887,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (licenses && !error) {
               console.log('MediHelp: Syncing license from database...');
               await MediHelp.License.activate(licenses.license_key, licenses.email);
+              MediHelp._isPremiumCache = true;
             }
           } catch (e) {
             console.warn('MediHelp: Database license sync failed.', e);
           }
         }
+      } else {
+        // Reset cache on sign out
+        MediHelp._isPremiumCache = false;
       }
     });
   }

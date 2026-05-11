@@ -478,7 +478,14 @@
         <!-- Injected Years -->
       </div>
 
-      <div id="topic-loading" style="text-align:center; padding: 40px; color: var(--text-muted);">Loading topics...</div>
+      <div id="topic-loading" class="hidden" style="padding: 0 0 40px;">
+        <div class="skeleton-grid">
+          <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
+          <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
+          <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
+          <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
+        </div>
+      </div>
       <div class="topic-grid" id="topic-grid">
         <!-- Injected Topics -->
       </div>
@@ -813,17 +820,53 @@
       }
 
       loadTopics(currentYear);
+      initPrefetching();
     }
 
+    // Phase 2.3: Debounced Switcher
+    const debouncedLoadTopics = debounce((id) => loadTopics(id), 300);
+
     function switchYear(id) {
+      if (currentYear === id) return;
       currentYear = id;
       localStorage.setItem('mh_prep_current_year', id);
+      
+      // Update UI
       document.querySelectorAll('.year-tab').forEach(t => {
         t.classList.toggle('active', parseInt(t.dataset.year) === id);
       });
       const dropdown = document.getElementById('mobile-year-dropdown');
       if (dropdown) dropdown.value = id;
-      loadTopics(id);
+
+      // Clear grid and show skeleton immediately (Phase 2.1)
+      document.getElementById('topic-grid').innerHTML = '';
+      document.getElementById('topic-loading').classList.remove('hidden');
+
+      debouncedLoadTopics(id);
+    }
+
+    // Phase 2.2: Hover Pre-fetching
+    function initPrefetching() {
+      document.querySelectorAll('.year-tab').forEach(tab => {
+        tab.addEventListener('mouseenter', () => {
+          const id = parseInt(tab.dataset.year);
+          if (id !== currentYear && !yearTopicsCache[id]) {
+            console.log(`MediHelp: Pre-fetching year ${id}...`);
+            loadTopicsSilent(id);
+          }
+        });
+      });
+    }
+
+    async function loadTopicsSilent(yearId) {
+      if (yearTopicsCache[yearId]) return;
+      try {
+        const { data } = await window.dbClient.from('topics').select('*').eq('year_id', yearId).is('usmle_step', null).order('order');
+        if (data) {
+          yearTopicsCache[yearId] = data;
+          localStorage.setItem(`mh_topics_cache_year_${yearId}`, JSON.stringify({ topics: data, timestamp: Date.now() }));
+        }
+      } catch (e) {}
     }
 
     async function loadTopics(yearId) {
@@ -851,8 +894,36 @@
         return;
       }
 
+      // Check LocalStorage Cache (Phase 2.2)
+      const cachedData = localStorage.getItem(`mh_topics_cache_year_${yearId}`);
+      if (cachedData) {
+        try {
+          const { topics, timestamp } = JSON.parse(cachedData);
+          const ageInHours = (Date.now() - timestamp) / (1000 * 60 * 60);
+          if (ageInHours < 24) { // Use cache if less than 24h old
+            console.log(`MediHelp: Using local cache for year ${yearId}`);
+            yearTopicsCache[yearId] = topics;
+            renderTopics(yearId, topics);
+            // Still fetch in background to refresh cache
+            backgroundRefreshTopics(yearId, currentLoadId, safetyTimeout);
+            return;
+          }
+        } catch (e) { console.error("Cache parse error", e); }
+      }
+
       grid.innerHTML = '';
       loader.classList.remove('hidden');
+
+      async function backgroundRefreshTopics(yId, loadId, timeout) {
+        try {
+          const { data } = await window.dbClient.from('topics').select('*').eq('year_id', yId).is('usmle_step', null).order('order');
+          if (data && loadId === lastLoadId) {
+            localStorage.setItem(`mh_topics_cache_year_${yId}`, JSON.stringify({ topics: data, timestamp: Date.now() }));
+            yearTopicsCache[yId] = data;
+            renderTopics(yId, data);
+          }
+        } catch (err) { console.warn("Background refresh failed", err); }
+      }
 
       try {
         console.time('loadTopics-metadata');
@@ -886,6 +957,13 @@
           console.log("MediHelp: Load ID mismatch, skipping render.");
           return;
         }
+
+        // Update Local Cache (Phase 2.2)
+        localStorage.setItem(`mh_topics_cache_year_${yearId}`, JSON.stringify({
+          topics: topics,
+          timestamp: Date.now()
+        }));
+
         console.timeEnd('loadTopics-metadata');
 
         if (!topics || topics.length === 0) {

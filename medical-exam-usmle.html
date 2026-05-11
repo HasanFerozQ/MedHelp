@@ -103,6 +103,25 @@
       }
     }
     .mobile-step-select { display: none; }
+
+    /* SKELETON LOADER */
+    .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; width: 100%; }
+    .skeleton-card { 
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; 
+      padding: 24px; height: 180px; display: flex; flex-direction: column; gap: 16px;
+      position: relative; overflow: hidden;
+    }
+    .skeleton-card::after {
+      content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer { 100% { transform: translateX(100%); } }
+    .skeleton-line { background: var(--bg-elevated); border-radius: 4px; }
+    .skeleton-title { height: 24px; width: 80%; }
+    .skeleton-text { height: 14px; width: 60%; }
+    .skeleton-stats { height: 30px; width: 100%; margin-top: auto; }
   </style>
 </head>
 <body>
@@ -192,7 +211,13 @@
       <div class="step-tab active" data-step="1">USMLE Step 1</div>
     </div>
 
-    <div id="topic-loading" style="text-align:center; padding: 40px; color: var(--text-muted);">Loading topics...</div>
+    <div id="topic-loading" class="hidden" style="padding: 0 0 40px;">
+      <div class="skeleton-grid">
+        <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
+        <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
+        <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
+      </div>
+    </div>
     <div class="topic-grid" id="topic-grid">
       <!-- Topics injected here -->
     </div>
@@ -278,11 +303,31 @@
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
       
+      // Phase 2.2: Local Caching
+      const cacheKey = `mh_usmle_cache_step_${stepId}`;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        try {
+          const { topics, timestamp } = JSON.parse(cached);
+          if (Date.now() - timestamp < 1000 * 60 * 60 * 24) { // 24h cache
+            renderUsmleTopics(topics);
+            backgroundRefreshUsmle(stepId, cacheKey);
+            return;
+          }
+        } catch (e) {}
+      }
+
       grid.innerHTML = '';
       loader.classList.remove('hidden');
 
-      // Fetch topics where usmle_step == stepId (Exclude internal mock pool)
-      // We explicitly fetch counts for both standalone MCQs and nested Case Questions
+      async function backgroundRefreshUsmle(sId, key) {
+        const { data } = await window.dbClient.from('topics').select('*, mcqs(id), case_studies(id, case_questions(id))').eq('usmle_step', sId).neq('slug', 'usmle-1-mock-pool-hidden').order('order');
+        if (data) {
+          localStorage.setItem(key, JSON.stringify({ topics: data, timestamp: Date.now() }));
+          renderUsmleTopics(data);
+        }
+      }
+
       const { data, error } = await window.dbClient
         .from('topics')
         .select(`
@@ -300,12 +345,26 @@
 
       loader.classList.add('hidden');
 
+      if (data) {
+        localStorage.setItem(cacheKey, JSON.stringify({ topics: data, timestamp: Date.now() }));
+        renderUsmleTopics(data);
+      }
+
       if (error || !data || !data.length) {
-        grid.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">
-          No topics found for Step 1 yet. Placeholders will appear once matching the database.
-        </p>`;
+        if (!grid.innerHTML) { // Only show error if no cached content
+          grid.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">
+            No topics found for Step ${stepId} yet.
+          </p>`;
+        }
         return;
       }
+    }
+
+    function renderUsmleTopics(data) {
+      const grid = document.getElementById('topic-grid');
+      const loader = document.getElementById('topic-loading');
+      grid.innerHTML = '';
+      loader.classList.add('hidden');
 
       data.forEach((topic, index) => {
         const isFreeDemo = topic.is_free_demo;
