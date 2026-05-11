@@ -919,69 +919,52 @@
       const progressBar = document.getElementById('top-progress-bar');
       const loaderMessage = document.getElementById('topic-loading-message');
 
-      // 1. Start Progress
-      grid.innerHTML = '';
+      // 1. Instant Hydration: Try to load from cache first (0ms)
+      const cached = localStorage.getItem(`mh_topics_v3_${yearId}`);
+      if (cached) {
+        try {
+          const { topics } = JSON.parse(cached);
+          console.log(`MediHelp: Hydrating Year ${yearId} from local cache.`);
+          yearTopicsCache[yearId] = topics;
+          renderTopics(yearId, topics);
+          // Don't hide loader yet, we'll refresh in background
+        } catch (e) { console.error("Cache Error", e); }
+      }
+
+      // 2. Visual Start
+      if (!cached) grid.innerHTML = '';
       loader.classList.remove('hidden');
       progressBar.style.width = '30%';
       progressBar.style.opacity = '1';
 
-      // 2. Safety Feedback (if database is slow)
       const safetyTimeout = setTimeout(() => {
         if (!loader.classList.contains('hidden') && loaderMessage) {
           loaderMessage.classList.remove('hidden');
-          loaderMessage.textContent = 'Still loading topics... This may take a few extra seconds on slow connections.';
+          loaderMessage.textContent = 'Refreshing curriculum data... Hang tight.';
         }
       }, 5000);
 
       try {
-        console.log(`DIAGNOSTIC: Checking Supabase connection for Year ${yearId}...`);
-        
-        // Test connection with a 1-row query
-        const testConn = await window.dbClient.from('topics').select('id').limit(1);
-        if (testConn.error) {
-          console.error('DIAGNOSTIC: Connection Test Failed!', testConn.error);
-          throw new Error(`Database connection failed: ${testConn.error.message}`);
-        }
-        console.log('DIAGNOSTIC: Connection OK. Fetching actual data...');
-
-        // Step 1: Bulletproof Query with 15-second timeout
-        const queryPromise = window.dbClient
+        // 3. Optimized Fetch
+        const { data: topics, error } = await window.dbClient
           .from('topics')
-          .select('id, title, section, is_free_demo, year_id')
+          .select('id, title, section, is_free_demo, order, year_id, mcq_count, case_count')
           .eq('year_id', yearId)
-          .order('title', { ascending: true });
-
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('TIMEOUT: Database did not respond within 15 seconds.')), 15000)
-        );
-
-        const { data: topics, error } = await Promise.race([queryPromise, timeoutPromise]);
+          .is('usmle_step', null)
+          .order('order', { ascending: true });
 
         if (error) throw error;
-        console.log(`DIAGNOSTIC: Success! Received ${topics?.length || 0} topics.`);
 
-        // Finish Progress
-        progressBar.style.width = '100%';
-
-        if (!topics || topics.length === 0) {
-          loader.classList.add('hidden');
-          grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
-          setTimeout(() => { progressBar.style.opacity = '0'; }, 500);
-          return;
-        }
-
-        // Initialize progress arrays
-        topics.forEach(t => {
-          t.mcqs = [];
-          t.case_studies = [];
-        });
-
+        // 4. Update Cache and UI
+        localStorage.setItem(`mh_topics_v3_${yearId}`, JSON.stringify({ topics, ts: Date.now() }));
         yearTopicsCache[yearId] = topics;
         renderTopics(yearId, topics);
-        loader.classList.add('hidden');
-        
-        // Reset bar after a delay
+
         clearTimeout(safetyTimeout);
+        progressBar.style.width = '100%';
+        loader.classList.add('hidden');
+        if (loaderMessage) loaderMessage.classList.add('hidden');
+        
         setTimeout(() => { 
           progressBar.style.opacity = '0';
           setTimeout(() => { progressBar.style.width = '0%'; }, 400);
@@ -990,11 +973,10 @@
       } catch (err) {
         console.error('MediHelp Load Error:', err);
         clearTimeout(safetyTimeout);
-        progressBar.style.width = '100%';
-        progressBar.style.background = 'var(--danger)';
+        if (!cached) {
+          grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Failed to connect. Please refresh.</p>';
+        }
         loader.classList.add('hidden');
-        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Failed to load topics. Please check your connection.</p>';
-        setTimeout(() => { progressBar.style.opacity = '0'; }, 2000);
       }
     }
 
@@ -1241,30 +1223,24 @@
       list.innerHTML = '';
       loader.classList.remove('hidden');
 
-      // 1. Fetch High-Yield Standalone MCQs
-      const { data: mcqs, error: mError } = await window.dbClient
-        .from('mcqs')
-        .select('*')
-        .eq('topic_id', topicId)
-        .order('created_at', { ascending: true });
+      try {
+        // Parallel Fetch for Speed
+        const [mcqRes, caseRes] = await Promise.all([
+          window.dbClient.from('mcqs').select('*').eq('topic_id', topicId).order('created_at', { ascending: true }),
+          window.dbClient.from('case_studies').select('*, case_questions(*)').eq('topic_id', topicId).order('order', { ascending: true })
+        ]);
 
-      // Sort by explicitly numbering in the string to fix batch insert randomization
-      if (mcqs && mcqs.length > 0) {
-        mcqs.sort((a, b) => {
-          const numA = parseInt(a.question.match(/^\d+/)?.[0] || 0, 10);
-          const numB = parseInt(b.question.match(/^\d+/)?.[0] || 0, 10);
-          // Only sort if both have numbers, otherwise keep original order
-          if (numA && numB) return numA - numB;
-          return 0;
-        });
-      }
+        const mcqs = mcqRes.data || [];
+        const cases = caseRes.data || [];
 
-      // 2. Fetch Clinical Case Studies
-      const { data: cases, error: cError } = await window.dbClient
-        .from('case_studies')
-        .select('*, case_questions(*)')
-        .eq('topic_id', topicId)
-        .order('order', { ascending: true });
+        if (mcqs.length > 0) {
+          mcqs.sort((a, b) => {
+            const numA = parseInt(a.question.match(/^\d+/)?.[0] || 0, 10);
+            const numB = parseInt(b.question.match(/^\d+/)?.[0] || 0, 10);
+            if (numA && numB) return numA - numB;
+            return 0;
+          });
+        }
 
       loader.classList.add('hidden');
 
