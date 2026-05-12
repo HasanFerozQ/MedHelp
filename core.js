@@ -671,10 +671,6 @@ const MediHelp = {
         authBtn.onclick = async () => {
           if (confirm('Are you sure you want to logout?')) {
             await window.dbClient.auth.signOut();
-            localStorage.removeItem(MediHelp.License.STORAGE_KEY);
-            localStorage.removeItem(MediHelp.License.DATA_KEY);
-            alert('Logged out successfully!');
-            window.location.reload();
           }
         };
       } else {
@@ -882,9 +878,23 @@ document.addEventListener('DOMContentLoaded', () => {
     window.dbClient.auth.onAuthStateChange(async (event, session) => {
       console.log(`MediHelp Auth: ${event}`, session?.user?.email);
       
-      // Update global cache (Phase 3.1)
+      const wasPremium = MediHelp._isPremiumCache;
+
+      // Update global cache
       MediHelp._cachedUser = session?.user || null;
       MediHelp._isPremiumCache = MediHelp.License.isActivated();
+
+      if (event === 'SIGNED_OUT') {
+        console.log('MediHelp: User signed out. Clearing storage and performing HARD REFRESH...');
+        localStorage.removeItem(MediHelp.License.STORAGE_KEY);
+        localStorage.removeItem(MediHelp.License.DATA_KEY);
+        MediHelp._isPremiumCache = false;
+        
+        // Hard Refresh: Redirect to current path with a cache-busting timestamp
+        const cleanPath = window.location.pathname;
+        window.location.href = cleanPath + '?cache_bust=' + Date.now();
+        return;
+      }
 
       if (session?.user) {
         // Sync license from licenses table if not already active locally
@@ -901,14 +911,12 @@ document.addEventListener('DOMContentLoaded', () => {
               console.log('MediHelp: Syncing license from database...');
               await MediHelp.License.activate(licenses.license_key, licenses.email);
               MediHelp._isPremiumCache = true;
+              if (!wasPremium) window.location.reload(); // Reload to unlock premium UI if newly synced
             }
           } catch (e) {
             console.warn('MediHelp: Database license sync failed.', e);
           }
         }
-      } else {
-        // Reset cache on sign out
-        MediHelp._isPremiumCache = false;
       }
     });
   }
