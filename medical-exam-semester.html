@@ -913,9 +913,11 @@
       });
     }
 
+    const loadingYears = new Set();
     async function loadTopicsSilent(yearId) {
-      if (yearTopicsCache[yearId]) return;
+      if (yearTopicsCache[yearId] || loadingYears.has(yearId)) return;
       try {
+        loadingYears.add(yearId);
         const { data } = await window.dbClient.from('topics')
           .select('id, title, section, is_free_demo, "order", year_id, mcq_count, case_count')
           .eq('year_id', yearId)
@@ -927,16 +929,21 @@
         }
       } catch (e) {
         console.warn('MediHelp: Silent prefetch failed for year', yearId, e);
+      } finally {
+        loadingYears.delete(yearId);
       }
     }
 
     async function loadTopics(yearId) {
+      if (loadingYears.has(yearId)) return;
+      
       const startTime = performance.now();
       if (!window.dbClient) {
         setTimeout(() => loadTopics(yearId), 200);
         return;
       }
       
+      loadingYears.add(yearId);
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
       const progressBar = document.getElementById('top-progress-bar');
@@ -946,7 +953,7 @@
       if (cached) {
         try {
           const { topics } = JSON.parse(cached);
-          console.log(`MediHelp Perf: Hydrating Year ${yearId} from local cache in ${Math.round(performance.now() - startTime)}ms`);
+          console.log(`MediHelp Perf: Hydrating Year ${yearId} from local cache`);
           yearTopicsCache[yearId] = topics;
           renderTopics(yearId, topics);
         } catch (e) { console.error("Cache Error", e); }
@@ -954,20 +961,12 @@
 
       if (!cached) grid.innerHTML = '';
       loader.classList.remove('hidden');
-      progressBar.style.width = '30%';
-      progressBar.style.opacity = '1';
-
-      const safetyTimeout = setTimeout(() => {
-        if (!loader.classList.contains('hidden') && loaderMessage) {
-          loaderMessage.classList.remove('hidden');
-          loaderMessage.textContent = 'Network is slow. Attempting auto-reconnection...';
-          // SMART RETRY: Fetch again if still stuck after 10s
-          setTimeout(() => { if (!loader.classList.contains('hidden')) loadTopics(yearId); }, 5000);
-        }
-      }, 5000);
+      if (progressBar) {
+        progressBar.style.width = '30%';
+        progressBar.style.opacity = '1';
+      }
 
       try {
-        // 3. Optimized Fetch
         const { data: topics, error } = await window.dbClient
           .from('topics')
           .select('id, title, section, is_free_demo, order, year_id, mcq_count, case_count')
@@ -977,31 +976,32 @@
 
         if (error) throw error;
 
-        // 4. Update Cache and UI
         localStorage.setItem(`mh_topics_v3_${yearId}`, JSON.stringify({ topics, ts: Date.now() }));
         yearTopicsCache[yearId] = topics;
         renderTopics(yearId, topics);
 
         const endTime = performance.now();
-        console.log(`MediHelp Perf: Year ${yearId} fully loaded and rendered in ${Math.round(endTime - startTime)}ms`);
+        console.log(`MediHelp Perf: Year ${yearId} fetched and rendered in ${Math.round(endTime - startTime)}ms`);
 
-        clearTimeout(safetyTimeout);
-        progressBar.style.width = '100%';
+        if (progressBar) {
+          progressBar.style.width = '100%';
+          setTimeout(() => { 
+            progressBar.style.opacity = '0';
+            setTimeout(() => { progressBar.style.width = '0%'; }, 400);
+          }, 500);
+        }
+        
         loader.classList.add('hidden');
         if (loaderMessage) loaderMessage.classList.add('hidden');
-        
-        setTimeout(() => { 
-          progressBar.style.opacity = '0';
-          setTimeout(() => { progressBar.style.width = '0%'; }, 400);
-        }, 500);
 
       } catch (err) {
         console.error('MediHelp Load Error:', err);
-        clearTimeout(safetyTimeout);
         if (!cached) {
           grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Failed to connect. Please refresh.</p>';
         }
         loader.classList.add('hidden');
+      } finally {
+        loadingYears.delete(yearId);
       }
     }
 
