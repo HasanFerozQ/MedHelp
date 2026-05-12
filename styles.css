@@ -150,6 +150,10 @@ select option {
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* Global Hover & Focus Reset — Clean premium feel */
+a, button, [role="button"], select, input, textarea {
+  text-decoration: none !important;
+}
+
 a:hover, button:hover, [role="button"]:hover, select:hover, input:hover, textarea:hover,
 a:focus, button:focus, [role="button"]:focus, select:focus, input:focus, textarea:focus,
 a:focus-visible, button:focus-visible, [role="button"]:focus-visible,
@@ -938,7 +942,7 @@ a {
   transition: var(--transition);
 }
 a:hover {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 /* --- Problem Box --- */
