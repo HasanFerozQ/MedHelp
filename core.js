@@ -712,16 +712,19 @@ const MediHelp = {
         <div class="mh-notif-p">${message}</div>
         ${action ? `<a href="${action.url}" class="mh-notif-btn">${action.text}</a>` : ''}
       </div>
+      <button class="mh-notif-close" style="background:none; border:none; color:inherit; opacity:0.5; cursor:pointer; padding:5px; margin-left:10px; font-size:18px;" onclick="this.parentElement.remove()">×</button>
     `;
 
     container.appendChild(notif);
 
-    // Auto-remove after 6 seconds unless it has an action
+    // Auto-remove after 8 seconds unless it has an action
     if (!action) {
       setTimeout(() => {
-        notif.classList.add('fade-out');
-        setTimeout(() => notif.remove(), 400);
-      }, 6000);
+        if (notif.parentElement) {
+          notif.classList.add('fade-out');
+          setTimeout(() => { if (notif.parentElement) notif.remove(); }, 400);
+        }
+      }, 8000);
     }
   },
 
