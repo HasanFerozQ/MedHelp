@@ -786,7 +786,11 @@ const MediHelp = {
     verify: async function(key, email) {
       if (!key || !email) throw new Error("License key and email are required.");
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+
       try {
+        console.log("MediHelp License: Verifying with Edge Function...");
         const response = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/verify-license', {
           method: 'POST',
           headers: { 
@@ -794,14 +798,19 @@ const MediHelp = {
             'apikey': SUPABASE_ANON_KEY,
             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
           },
-          body: JSON.stringify({ license_key: key, email: email })
+          body: JSON.stringify({ license_key: key, email: email }),
+          signal: controller.signal
         });
+
+        clearTimeout(timeoutId);
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
+          console.error("MediHelp License: Server returned error", response.status, errorData);
+          
           if (response.status === 403 || (errorData && errorData.message === "LICENSE_LIMIT_REACHED")) {
             throw new Error("LICENSE_LIMIT_REACHED");
-          } else if (response.status === 401) {
+          } else if (response.status === 401 || response.status === 404) {
             throw new Error("INVALID_KEY");
           } else {
             throw new Error(errorData.message || "SERVER_ERROR");
@@ -815,9 +824,13 @@ const MediHelp = {
           return true;
         }
         
-        // If we got here, success was false or data was missing
         throw new Error(data.message || "INVALID_KEY");
       } catch (e) {
+        clearTimeout(timeoutId);
+        if (e.name === 'AbortError') {
+          console.error("MediHelp License: Verification timed out after 15s");
+          throw new Error("TIMEOUT");
+        }
         console.error("MediHelp License: Verification failed", e);
         throw e;
       }

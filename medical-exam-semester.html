@@ -1209,6 +1209,8 @@
           showToast('License limit reached (5 devices max).', 'error');
         } else if (e.message === "INVALID_KEY") {
           showToast('Invalid license key or email.', 'error');
+        } else if (e.message === "TIMEOUT") {
+          showToast('Verification timed out. Check your connection.', 'error');
         } else {
           showToast('Connection error. Please try again.', 'error');
         }
