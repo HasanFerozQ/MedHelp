@@ -935,10 +935,17 @@
     }
 
     async function loadTopics(yearId) {
-      if (loadingYears.has(yearId)) return;
+      if (loadingYears.has(yearId)) {
+        console.warn(`MediHelp: Load already in progress for Year ${yearId}. Skipping.`);
+        // Ensure loader is hidden if we are skipping
+        const loader = document.getElementById('topic-loading');
+        if (loader) loader.classList.add('hidden');
+        return;
+      }
       
       const startTime = performance.now();
       if (!window.dbClient) {
+        console.warn('MediHelp: dbClient not ready, retrying in 200ms...');
         setTimeout(() => loadTopics(yearId), 200);
         return;
       }
@@ -949,6 +956,13 @@
       const progressBar = document.getElementById('top-progress-bar');
       const loaderMessage = document.getElementById('topic-loading-message');
 
+      // 1. Initial State
+      if (loader) loader.classList.remove('hidden');
+      if (loaderMessage) {
+        loaderMessage.classList.add('hidden');
+        loaderMessage.textContent = '';
+      }
+
       const cached = localStorage.getItem(`mh_topics_v3_${yearId}`);
       if (cached) {
         try {
@@ -956,32 +970,45 @@
           console.log(`MediHelp Perf: Hydrating Year ${yearId} from local cache`);
           yearTopicsCache[yearId] = topics;
           renderTopics(yearId, topics);
+          // If we have cache, we can hide loader early if we want, 
+          // but we usually wait for fresh data sync.
         } catch (e) { console.error("Cache Error", e); }
       }
 
       if (!cached) grid.innerHTML = '';
-      loader.classList.remove('hidden');
       if (progressBar) {
         progressBar.style.width = '30%';
         progressBar.style.opacity = '1';
       }
 
+      // 2. Fetch with Timeout
+      const controller = new AbortController();
+      const fetchTimeout = setTimeout(() => {
+        controller.abort();
+        console.error("MediHelp: Topic fetch timed out after 20s");
+      }, 20000);
+
       try {
+        console.log(`MediHelp: Fetching fresh topics for Year ${yearId}...`);
         const { data: topics, error } = await window.dbClient
           .from('topics')
           .select('id, title, section, is_free_demo, order, year_id, mcq_count, case_count')
           .eq('year_id', yearId)
           .is('usmle_step', null)
-          .order('order', { ascending: true });
+          .order('order', { ascending: true })
+          .abortSignal(controller.signal);
+
+        clearTimeout(fetchTimeout);
 
         if (error) throw error;
 
+        console.log(`MediHelp: Received ${topics?.length} topics for Year ${yearId}`);
         localStorage.setItem(`mh_topics_v3_${yearId}`, JSON.stringify({ topics, ts: Date.now() }));
         yearTopicsCache[yearId] = topics;
         renderTopics(yearId, topics);
 
         const endTime = performance.now();
-        console.log(`MediHelp Perf: Year ${yearId} fetched and rendered in ${Math.round(endTime - startTime)}ms`);
+        console.log(`MediHelp Perf: Year ${yearId} fully synced and rendered in ${Math.round(endTime - startTime)}ms`);
 
         if (progressBar) {
           progressBar.style.width = '100%';
@@ -990,18 +1017,17 @@
             setTimeout(() => { progressBar.style.width = '0%'; }, 400);
           }, 500);
         }
-        
-        loader.classList.add('hidden');
-        if (loaderMessage) loaderMessage.classList.add('hidden');
 
       } catch (err) {
-        console.error('MediHelp Load Error:', err);
+        console.error('MediHelp Load Error:', err.message || err);
         if (!cached) {
-          grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Failed to connect. Please refresh.</p>';
+          grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Connection issue. Please check your internet and refresh.</p>';
         }
-        loader.classList.add('hidden');
       } finally {
         loadingYears.delete(yearId);
+        if (loader) loader.classList.add('hidden');
+        if (loaderMessage) loaderMessage.classList.add('hidden');
+        clearTimeout(fetchTimeout);
       }
     }
 
