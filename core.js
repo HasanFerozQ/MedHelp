@@ -560,6 +560,8 @@ const MediHelp = {
           
           setTimeout(() => {
             window.open(GUMROAD_URL, '_blank');
+            // Open the activator modal so it's waiting for them when they return
+            this.License.showActivator();
           }, 2000);
 
           this.hideAuthModal();

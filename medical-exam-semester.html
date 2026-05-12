@@ -1546,6 +1546,10 @@
         slug = pathParts[1];
       }
       
+      if (urlParams.get('showActivation') === 'true') {
+        openPremiumModal();
+      }
+
       if (initialTopicId || slug) {
         let query = window.dbClient.from('topics').select('id, title, year_id, usmle_step');
         if (initialTopicId) query = query.eq('id', initialTopicId);
