@@ -931,6 +931,7 @@
     }
 
     async function loadTopics(yearId) {
+      const startTime = performance.now();
       if (!window.dbClient) {
         setTimeout(() => loadTopics(yearId), 200);
         return;
@@ -945,7 +946,7 @@
       if (cached) {
         try {
           const { topics } = JSON.parse(cached);
-          console.log(`MediHelp: Hydrating Year ${yearId} from local cache.`);
+          console.log(`MediHelp Perf: Hydrating Year ${yearId} from local cache in ${Math.round(performance.now() - startTime)}ms`);
           yearTopicsCache[yearId] = topics;
           renderTopics(yearId, topics);
         } catch (e) { console.error("Cache Error", e); }
@@ -980,6 +981,9 @@
         localStorage.setItem(`mh_topics_v3_${yearId}`, JSON.stringify({ topics, ts: Date.now() }));
         yearTopicsCache[yearId] = topics;
         renderTopics(yearId, topics);
+
+        const endTime = performance.now();
+        console.log(`MediHelp Perf: Year ${yearId} fully loaded and rendered in ${Math.round(endTime - startTime)}ms`);
 
         clearTimeout(safetyTimeout);
         progressBar.style.width = '100%';
@@ -1508,7 +1512,9 @@
     });
 
     // Init
+    const pageStartTime = performance.now();
     document.addEventListener('DOMContentLoaded', async () => {
+      console.log('MediHelp: Initializing curriculum dashboard...');
       // Wait for dbClient
       const waitForDb = async () => {
         if (window.dbClient) return true;
@@ -1522,6 +1528,7 @@
         });
       };
       await waitForDb();
+      console.log(`MediHelp Perf: System initialized in ${Math.round(performance.now() - pageStartTime)}ms`);
 
       // Detect if Quiz Header is stuck
       window.addEventListener('scroll', () => {
