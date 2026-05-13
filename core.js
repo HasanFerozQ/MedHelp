@@ -841,9 +841,17 @@ const MediHelp = {
 
   _cachedUser: null,
   _isPremiumCache: null,
+  _authSyncPromise: null, // Track background license sync
+  
   isPremium: async function() {
     if (!window.dbClient) return false;
     
+    // If background sync is happening, wait for it
+    if (this._authSyncPromise) {
+      console.log("MediHelp: isPremium waiting for background sync...");
+      await this._authSyncPromise;
+    }
+
     // Return cache if available (Phase 3.1)
     if (this._isPremiumCache !== null) return this._isPremiumCache;
 
@@ -905,23 +913,42 @@ document.addEventListener('DOMContentLoaded', () => {
       if (session?.user) {
         // Sync license from licenses table if not already active locally
         if (!MediHelp.License.isActivated()) {
-          try {
-            const { data: licenses, error } = await window.dbClient
-              .from('licenses')
-              .select('license_key, email')
-              .eq('user_id', session.user.id)
-              .eq('status', 'active')
-              .single();
+          console.log('MediHelp: Local license missing, checking cloud sync...');
+          
+          MediHelp._authSyncPromise = (async () => {
+            try {
+              const { data: licenseRows, error } = await window.dbClient
+                .from('licenses')
+                .select('license_key, email')
+                .eq('user_id', session.user.id)
+                .eq('status', 'active')
+                .limit(1);
 
-            if (licenses && !error) {
-              console.log('MediHelp: Syncing license from database...');
-              await MediHelp.License.activate(licenses.license_key, licenses.email);
-              MediHelp._isPremiumCache = true;
-              if (!wasPremium) window.location.reload(); // Reload to unlock premium UI if newly synced
+              if (licenseRows && licenseRows.length > 0 && !error) {
+                const license = licenseRows[0];
+                console.log('MediHelp: Valid cloud license found. Activating locally...');
+                await MediHelp.License.activate(license.license_key, license.email);
+                MediHelp._isPremiumCache = true;
+                
+                // If we are on a page that needs a refresh to show premium content
+                if (!wasPremium && !MediHelp.isAuthPage()) {
+                   console.log('MediHelp: Refreshing to unlock premium features...');
+                   window.location.reload();
+                }
+              } else {
+                console.log('MediHelp: No active cloud license found for this user.');
+                MediHelp._isPremiumCache = false;
+              }
+            } catch (e) {
+              console.warn('MediHelp: Database license sync failed.', e);
+            } finally {
+              MediHelp._authSyncPromise = null;
             }
-          } catch (e) {
-            console.warn('MediHelp: Database license sync failed.', e);
-          }
+          })();
+          
+          await MediHelp._authSyncPromise;
+        } else {
+          MediHelp._isPremiumCache = true;
         }
       }
     });
