@@ -671,8 +671,14 @@ const MediHelp = {
       if (user) {
         authBtn.textContent = 'Logout';
         authBtn.onclick = async () => {
-          if (confirm('Are you sure you want to logout?')) {
+          const confirmed = await MediHelp.confirm("Are you sure you want to logout?", {
+            title: "Sign Out",
+            confirmText: "Logout",
+            cancelText: "Stay Logged In"
+          });
+          if (confirmed) {
             await window.dbClient.auth.signOut();
+            // Hard Refresh is handled in onAuthStateChange
           }
         };
       } else {
@@ -726,6 +732,55 @@ const MediHelp = {
         }
       }, 8000);
     }
+  },
+
+  /**
+   * New: Premium Global Confirm Dialog
+   * Replaces browser's standard confirm()
+   */
+  confirm: function(message, options = {}) {
+    return new Promise((resolve) => {
+      let overlay = document.querySelector('.mh-confirm-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'mh-confirm-overlay';
+        overlay.innerHTML = `
+          <div class="mh-confirm-card">
+            <h3 class="mh-confirm-title"></h3>
+            <p class="mh-confirm-text"></p>
+            <div class="mh-confirm-btns">
+              <button class="mh-confirm-btn mh-confirm-btn-ghost cancel-btn"></button>
+              <button class="mh-confirm-btn mh-confirm-btn-primary confirm-btn"></button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+      }
+
+      const titleEl = overlay.querySelector('.mh-confirm-title');
+      const textEl = overlay.querySelector('.mh-confirm-text');
+      const confirmBtn = overlay.querySelector('.confirm-btn');
+      const cancelBtn = overlay.querySelector('.cancel-btn');
+
+      titleEl.textContent = options.title || "Are you sure?";
+      textEl.textContent = message;
+      confirmBtn.textContent = options.confirmText || "Confirm";
+      cancelBtn.textContent = options.cancelText || "Cancel";
+
+      const close = (result) => {
+        overlay.classList.remove('visible');
+        setTimeout(() => {
+          resolve(result);
+        }, 300);
+      };
+
+      confirmBtn.onclick = () => close(true);
+      cancelBtn.onclick = () => close(false);
+      overlay.onclick = (e) => { if (e.target === overlay) close(false); };
+
+      // Trigger animation
+      requestAnimationFrame(() => overlay.classList.add('visible'));
+    });
   },
 
   // 7. Global Licensing Logic (Gumroad)

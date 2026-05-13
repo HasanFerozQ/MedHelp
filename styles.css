@@ -3856,3 +3856,26 @@ html, body {
   .mh-notification-container { top: 20px; padding: 0 16px; }
   .mh-notification { padding: 18px; }
 }
+
+/* Global Confirmation Modal (Premium) */
+.mh-confirm-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); z-index: 10000; display: flex; align-items: center; 
+  justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mh-confirm-overlay.visible { opacity: 1; visibility: visible; }
+.mh-confirm-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 40px; max-width: 440px; width: 90%; text-align: center; box-shadow: var(--shadow-2xl);
+  transform: translateY(20px) scale(0.95); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-top: 4px solid var(--accent);
+}
+.mh-confirm-overlay.visible .mh-confirm-card { transform: translateY(0) scale(1); }
+.mh-confirm-title { font-size: 22px; font-weight: 900; color: var(--text-h); margin-bottom: 12px; letter-spacing: -0.5px; }
+.mh-confirm-text { color: var(--text-muted); font-size: 15px; margin-bottom: 32px; line-height: 1.6; }
+.mh-confirm-btns { display: flex; gap: 16px; justify-content: center; }
+.mh-confirm-btn { padding: 12px 28px; font-weight: 800; font-size: 14px; border-radius: 12px; cursor: pointer; transition: var(--transition); border: 1px solid var(--border); }
+.mh-confirm-btn-primary { background: var(--accent); color: #000 !important; border-color: var(--accent); }
+.mh-confirm-btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: var(--shadow-accent); }
+.mh-confirm-btn-ghost { background: transparent; color: var(--text-muted); }
+.mh-confirm-btn-ghost:hover { background: rgba(255,255,255,0.05); color: var(--text-h); }
