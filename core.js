@@ -7,10 +7,17 @@
 const SUPABASE_URL  = 'https://bisqgousuvljttesjkkm.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
 
-if (window.supabase) {
-  window.dbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  // NOTE: Auth state listener is registered AFTER MediHelp is defined (see DOMContentLoaded below)
-}
+// 1. Initialize Supabase globally with retry logic
+window.initDbClient = function() {
+  if (window.dbClient) return window.dbClient;
+  if (window.supabase) {
+    window.dbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log("MediHelp: dbClient initialized.");
+    return window.dbClient;
+  }
+  return null;
+};
+window.initDbClient();
 
 // 2. Global Theme (Dark/Light) Logic
 (function initTheme() {
@@ -589,14 +596,6 @@ const MediHelp = {
       }
     });
 
-    // Auth state change
-    window.dbClient.auth.onAuthStateChange((event, session) => {
-      this.updateAuthButton();
-      if (session?.user) {
-        this.hideAuthModal();
-      }
-    });
-
     // Add signin button to navbar
     this.updateAuthButton();
   },
@@ -899,26 +898,31 @@ const MediHelp = {
   _authSyncPromise: null, // Track background license sync
   
   isPremium: async function() {
-    if (!window.dbClient) return false;
+    const db = window.initDbClient();
+    if (!db) return false;
     
-    // If background sync is happening, wait for it
-    if (this._authSyncPromise) {
-      console.log("MediHelp: isPremium waiting for background sync...");
-      await this._authSyncPromise;
+    // 1. Quick check local storage first for instant feedback
+    if (this.License.isActivated()) {
+      this._isPremiumCache = true;
+      return true;
     }
 
-    // Return cache if available (Phase 3.1)
+    // 2. If we have a sync in progress, wait for it (but with a timeout safety)
+    if (this._authSyncPromise) {
+      console.log("MediHelp: isPremium waiting for background sync...");
+      const timeoutPromise = new Promise(res => setTimeout(() => res(false), 3000));
+      await Promise.race([this._authSyncPromise, timeoutPromise]);
+    }
+
+    // 3. Re-check cache after potential sync
     if (this._isPremiumCache !== null) return this._isPremiumCache;
 
     try {
       if (!this._cachedUser) {
-        const { data, error } = await window.dbClient.auth.getUser();
+        const { data } = await db.auth.getUser();
         this._cachedUser = data?.user || null;
       }
-      if (!this._cachedUser) {
-        this._isPremiumCache = false;
-        return false;
-      }
+      if (!this._cachedUser) return false;
       
       this._isPremiumCache = this.License.isActivated();
       return this._isPremiumCache;
@@ -934,73 +938,59 @@ const MediHelp = {
 };
 
 // 7. Auto-init on Load
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   MediHelp.initFeedbackWidget();
   
   if (MediHelp.isAuthPage()) {
-    MediHelp.initAuthModal(); // Enabled - rollout secure licensing
+    MediHelp.initAuthModal();
   }
 
-  // Register auth state listener HERE — after MediHelp is fully defined
-  // This prevents a ReferenceError when onAuthStateChange fires with INITIAL_SESSION
-  if (window.dbClient) {
-    window.dbClient.auth.onAuthStateChange(async (event, session) => {
-      console.log(`MediHelp Auth: ${event}`, session?.user?.email);
+  // Ensure dbClient is ready
+  const db = window.initDbClient();
+  if (db) {
+    // SINGLE AUTHORITATIVE AUTH LISTENER
+    db.auth.onAuthStateChange(async (event, session) => {
+      console.log(`MediHelp Auth Event: ${event}`, session?.user?.email || 'no-user');
       
       const wasPremium = MediHelp._isPremiumCache;
-
-      // Update global cache
       MediHelp._cachedUser = session?.user || null;
-      MediHelp._isPremiumCache = MediHelp.License.isActivated();
+      
+      // Update UI button
+      MediHelp.updateAuthButton();
 
       if (event === 'SIGNED_OUT') {
-        console.log('MediHelp: User signed out. Clearing storage and performing HARD REFRESH...');
         localStorage.removeItem(MediHelp.License.STORAGE_KEY);
         localStorage.removeItem(MediHelp.License.DATA_KEY);
         MediHelp._isPremiumCache = false;
-        
-        // Hard Refresh: Redirect to current path with a cache-busting timestamp
         const cleanPath = window.location.pathname;
-        window.location.href = cleanPath + '?cache_bust=' + Date.now();
+        window.location.href = cleanPath + '?logout=true&cb=' + Date.now();
         return;
       }
 
       if (session?.user) {
-        // Sync license from licenses table if not already active locally
+        MediHelp.hideAuthModal();
+        
+        // Background sync if not active locally
         if (!MediHelp.License.isActivated()) {
-          console.log('MediHelp: Local license missing, checking cloud sync...');
-          
           MediHelp._authSyncPromise = (async () => {
             try {
-              const { data: licenseRows, error } = await window.dbClient
-                .from('licenses')
+              const { data: rows } = await db.from('licenses')
                 .select('license_key, email')
                 .eq('user_id', session.user.id)
                 .eq('status', 'active')
                 .limit(1);
 
-              if (licenseRows && licenseRows.length > 0 && !error) {
-                const license = licenseRows[0];
-                console.log('MediHelp: Valid cloud license found. Activating locally...');
-                await MediHelp.License.activate(license.license_key, license.email);
+              if (rows && rows.length > 0) {
+                console.log('MediHelp: License synced from cloud.');
+                await MediHelp.License.activate(rows[0].license_key, rows[0].email);
                 MediHelp._isPremiumCache = true;
-                
-                // If we are on a page that needs a refresh to show premium content
-                if (!wasPremium && !MediHelp.isAuthPage()) {
-                   console.log('MediHelp: Refreshing to unlock premium features...');
-                   window.location.reload();
-                }
+                if (!wasPremium && !MediHelp.isAuthPage()) window.location.reload();
               } else {
-                console.log('MediHelp: No active cloud license found for this user.');
                 MediHelp._isPremiumCache = false;
               }
-            } catch (e) {
-              console.warn('MediHelp: Database license sync failed.', e);
-            } finally {
-              MediHelp._authSyncPromise = null;
-            }
+            } catch (e) { console.warn('Sync error:', e); }
+            finally { MediHelp._authSyncPromise = null; }
           })();
-          
           await MediHelp._authSyncPromise;
         } else {
           MediHelp._isPremiumCache = true;
