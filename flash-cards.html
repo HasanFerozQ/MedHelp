@@ -227,9 +227,10 @@
 
         <div class="license-entry">
           <p>Already have a license? Enter it below:</p>
-          <div style="display: flex; gap: 8px; margin-top: 8px;">
-            <input type="text" id="license-key" placeholder="Gumroad License Key" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-h);">
-            <button class="btn btn-secondary" onclick="verifyLicense()">Activate</button>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+            <input type="text" id="license-key" placeholder="Gumroad License Key" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-h); font-size: 14px;">
+            <input type="email" id="license-email" placeholder="Email Address" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-h); font-size: 14px;">
+            <button class="btn btn-secondary" onclick="verifyLicense()" style="width: 100%; padding: 12px; border-radius: 12px; font-weight: 700; margin-top: 4px;">Activate Access</button>
           </div>
         </div>
       </div>
@@ -20973,7 +20974,12 @@
 
     async function verifyLicense() {
       const key = document.getElementById('license-key').value.trim();
-      if (!key) return;
+      const email = document.getElementById('license-email').value.trim();
+      
+      if (!key || !email) {
+        alert("Please enter both license key and email.");
+        return;
+      }
       
       const btn = document.querySelector('.license-entry .btn-secondary');
       if (btn) {
@@ -20981,13 +20987,22 @@
         btn.disabled = true;
       }
 
-      const success = await MediHelp.License.activate(key);
-      if (success) {
-        location.reload();
-      } else {
-        alert("Invalid license key. Please check and try again.");
+      try {
+        const success = await MediHelp.License.verify(key, email);
+        if (success) {
+          location.reload();
+        } else {
+          throw new Error("Verification failed");
+        }
+      } catch (e) {
+        console.error("License Verification Error:", e);
+        let msg = "Invalid license key or email. Please check and try again.";
+        if (e.message === "LICENSE_LIMIT_REACHED") msg = "License limit reached (5 devices max).";
+        if (e.message === "TIMEOUT") msg = "Verification timed out. Check your connection.";
+        
+        alert(msg);
         if (btn) {
-          btn.textContent = "Activate";
+          btn.textContent = "Activate Access";
           btn.disabled = false;
         }
       }

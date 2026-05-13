@@ -125,6 +125,33 @@
        <button class="btn btn-primary" onclick="document.getElementById('denial-search-input').focus();">Search Denial Codes</button>
        <a href="/medical-bill-audit" class="btn btn-ghost">Start Free Audit</a>
     </div>
+
+    <!-- Denial Search Tool Relocated Here -->
+    <section id="suite" style="margin-top: 40px; margin-bottom: 20px;">
+      <div class="tool-card" style="max-width: 1000px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <h2 style="margin-bottom: 12px; font-size: 32px; letter-spacing: -0.5px;">Search CARC & RARC Codes</h2>
+          <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto 16px; font-size: 16px;">
+            Use this free claim denial code lookup tool to search CARC and RARC codes instantly and understand what each code means.
+          </p>
+          <p style="color: var(--text-h); font-weight: 600; font-size: 14px; opacity: 0.9;">
+            This helps you identify why your insurance claim was denied and what action to take next.
+          </p>
+        </div>
+
+        <!-- DENIAL LOOKUP PANEL -->
+        <div id="denials" class="tab-panel active">
+          <div class="search-wrapper">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="denial-search-input" class="tool-input" placeholder="e.g. CO-45, N362, or 'timely filing'..." autocomplete="off">
+            <div id="denial-suggestions" class="suggestions-list"></div>
+          </div>
+          <div id="denial-results" class="results-area" style="min-height: 200px; margin-top: 40px;">
+            <p class="status-msg">Search CARC and RARC denial codes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </section>
 
   <!-- ── SEO FOUNDATION ── -->
@@ -146,33 +173,6 @@
   </section>
 
   <!-- ── TOOL SUITE ── -->
-  <!-- ── TOOL SECTION ── -->
-  <section id="suite" class="container" style="margin-bottom: 80px;">
-    <div class="tool-card" style="max-width: 1000px; margin: 0 auto;">
-      <div style="text-align: center; margin-bottom: 40px;">
-        <h2 style="margin-bottom: 12px; font-size: 32px; letter-spacing: -0.5px;">Search CARC & RARC Codes</h2>
-        <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto 16px; font-size: 16px;">
-          Use this free claim denial code lookup tool to search CARC and RARC codes instantly and understand what each code means.
-        </p>
-        <p style="color: var(--text-h); font-weight: 600; font-size: 14px; opacity: 0.9;">
-          This helps you identify why your insurance claim was denied and what action to take next.
-        </p>
-      </div>
-
-      <!-- DENIAL LOOKUP PANEL -->
-      <div id="denials" class="tab-panel active">
-        <div class="search-wrapper">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="denial-search-input" class="tool-input" placeholder="e.g. CO-45, N362, or 'timely filing'..." autocomplete="off">
-          <div id="denial-suggestions" class="suggestions-list"></div>
-        </div>
-        <div id="denial-results" class="results-area" style="min-height: 200px; margin-top: 40px;">
-          <p class="status-msg">Search CARC and RARC denial codes.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
 
   <!-- ── HIGH TRAFFIC SECTION ── -->
   <section class="container" style="padding: 40px 20px; max-width: 1000px; text-align: left; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); margin-bottom: 60px;">

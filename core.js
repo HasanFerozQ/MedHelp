@@ -752,29 +752,29 @@ const MediHelp = {
       if (key && email) {
         localStorage.setItem(this.DATA_KEY, JSON.stringify({ key, email }));
         
-        // Insert into licenses table if user is logged in
-        if (window.dbClient) {
-          const { data: { user } } = await window.dbClient.auth.getUser();
-          if (user) {
-            try {
-              const { error } = await window.dbClient
-                .from('licenses')
-                .upsert({
-                  user_id: user.id,
-                  license_key: key,
-                  email: email,
-                  status: 'active',
-                  source: 'gumroad'
-                }, {
-                  onConflict: 'license_key'
-                });
-              if (error) console.warn("License table insert failed:", error);
-            } catch (e) {
-              console.warn("License table insert error:", e);
-            }
-          }
-        }
+        // Background sync — do not await to prevent blocking the UI
+        this._syncToCloud(key, email).catch(e => console.warn("Background sync failed:", e));
       }
+      return true;
+    },
+
+    _syncToCloud: async function(key, email) {
+      if (!window.dbClient) return;
+      const { data: { user } } = await window.dbClient.auth.getUser();
+      if (!user) return;
+
+      const { error } = await window.dbClient
+        .from('licenses')
+        .upsert({
+          user_id: user.id,
+          license_key: key,
+          email: email,
+          status: 'active',
+          source: 'gumroad'
+        }, {
+          onConflict: 'license_key'
+        });
+      if (error) throw error;
     },
 
     restore: async function() {
@@ -819,7 +819,8 @@ const MediHelp = {
         }
 
         const data = await response.json();
-        if (data && data.success) {
+        // Be flexible with success indicators
+        if (data && (data.success === true || data.verified === true || data.ok === true || data.status === 'active')) {
           await this.activate(key, email);
           console.log("MediHelp License: Activation successful.");
           return true;

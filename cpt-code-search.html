@@ -123,6 +123,32 @@
        <button class="btn btn-primary" onclick="document.getElementById('code-search-input').focus();">Search CPT Codes Online Free</button>
        <a href="/medical-bill-audit" class="btn btn-ghost">Start Free Audit</a>
     </div>
+
+    <!-- CPT Search Tool Relocated Here -->
+    <section id="suite" style="margin-top: 40px; margin-bottom: 20px;">
+      <div class="tool-card" style="max-width: 1000px; margin: 0 auto; padding-bottom: 40px;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <h2 style="margin-bottom: 12px; font-size: 32px; letter-spacing: -0.5px;">Search CPT Codes Instantly</h2>
+          <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 12px; font-size: 16px;">Use this free CPT code lookup tool to search medical billing codes instantly and understand what each charge means.</p>
+          <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 14px; opacity: 0.8;">This helps you verify charges on your medical bill and identify possible errors manually or with expert help.</p>
+        </div>
+
+        <div class="tool-toggle-group">
+          <button class="tool-toggle-btn active" data-region="US" onclick="selectRegion(this, 'US')">US (ICD-10-CM)</button>
+          <button class="tool-toggle-btn" data-region="UK" onclick="selectRegion(this, 'UK')">UK (ICD-10 WHO)</button>
+          <button class="tool-toggle-btn" data-region="ME" onclick="selectRegion(this, 'ME')">Middle East (WHO)</button>
+        </div>
+
+        <div class="search-wrapper">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="code-search-input" class="tool-input" placeholder="e.g. 99214 or 'Chest Pain'...">
+        </div>
+
+        <div id="search-results-list" class="results-area" style="min-height: 200px; margin-top: 40px;">
+          <p class="status-msg">Start typing to search 74,000+ medical codes.</p>
+        </div>
+      </div>
+    </section>
   </section>
 
   <!-- Mid-page Strategic Connectivity Hub -->
@@ -163,31 +189,6 @@
     </p>
   </section>
 
-  <!-- ── TOOL SECTION ── -->
-  <section id="suite" class="container" style="margin-bottom: 80px;">
-    <div class="tool-card" style="max-width: 1000px; margin: 0 auto; padding-bottom: 40px;">
-      <div style="text-align: center; margin-bottom: 40px;">
-        <h2 style="margin-bottom: 12px; font-size: 32px; letter-spacing: -0.5px;">Search CPT Codes Instantly</h2>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 12px; font-size: 16px;">Use this free CPT code lookup tool to search medical billing codes instantly and understand what each charge means.</p>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 14px; opacity: 0.8;">This helps you verify charges on your medical bill and identify possible errors manually or with expert help.</p>
-      </div>
-
-      <div class="tool-toggle-group">
-        <button class="tool-toggle-btn active" data-region="US" onclick="selectRegion(this, 'US')">US (ICD-10-CM)</button>
-        <button class="tool-toggle-btn" data-region="UK" onclick="selectRegion(this, 'UK')">UK (ICD-10 WHO)</button>
-        <button class="tool-toggle-btn" data-region="ME" onclick="selectRegion(this, 'ME')">Middle East (WHO)</button>
-      </div>
-
-      <div class="search-wrapper">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="code-search-input" class="tool-input" placeholder="e.g. 99214 or 'Chest Pain'...">
-      </div>
-
-      <div id="search-results-list" class="results-area" style="min-height: 200px; margin-top: 40px;">
-        <p class="status-msg">Start typing to search 74,000+ medical codes.</p>
-      </div>
-    </div>
-  </section>
 
   <!-- ── VALUE SECTION ── -->
   <section class="container" style="padding: 40px 20px; max-width: 1000px; text-align: left;">

@@ -1,5 +1,4 @@
-<script>
-    const FLASH_DATA = {
+const FLASH_DATA = {
       'year1': [
         {
           topic: 'Thorax',
@@ -5007,7 +5006,12 @@
 
     async function verifyLicense() {
       const key = document.getElementById('license-key').value.trim();
-      if (!key) return;
+      const email = document.getElementById('license-email').value.trim();
+      
+      if (!key || !email) {
+        alert("Please enter both license key and email.");
+        return;
+      }
       
       const btn = document.querySelector('.license-entry .btn-secondary');
       if (btn) {
@@ -5015,13 +5019,22 @@
         btn.disabled = true;
       }
 
-      const success = await MediHelp.License.activate(key);
-      if (success) {
-        location.reload();
-      } else {
-        alert("Invalid license key. Please check and try again.");
+      try {
+        const success = await MediHelp.License.verify(key, email);
+        if (success) {
+          location.reload();
+        } else {
+          throw new Error("Verification failed");
+        }
+      } catch (e) {
+        console.error("License Verification Error:", e);
+        let msg = "Invalid license key or email. Please check and try again.";
+        if (e.message === "LICENSE_LIMIT_REACHED") msg = "License limit reached (5 devices max).";
+        if (e.message === "TIMEOUT") msg = "Verification timed out. Check your connection.";
+        
+        alert(msg);
         if (btn) {
-          btn.textContent = "Activate";
+          btn.textContent = "Activate Access";
           btn.disabled = false;
         }
       }
