@@ -813,22 +813,37 @@ const MediHelp = {
     },
 
     _syncToCloud: async function(key, email) {
-      if (!window.dbClient) return;
-      const { data: { user } } = await window.dbClient.auth.getUser();
-      if (!user) return;
+      const db = window.initDbClient();
+      if (!db) return;
 
-      const { error } = await window.dbClient
-        .from('licenses')
-        .upsert({
-          user_id: user.id,
-          license_key: key,
-          email: email,
-          status: 'active',
-          source: 'gumroad'
-        }, {
-          onConflict: 'license_key'
-        });
-      if (error) throw error;
+      try {
+        const { data: { user } } = await db.auth.getUser();
+        if (!user) {
+          console.warn("MediHelp: License activated but not synced (Not logged in).");
+          return;
+        }
+
+        console.log("MediHelp: Syncing license to cloud for user:", user.email);
+        const { error } = await db
+          .from('licenses')
+          .upsert({
+            user_id: user.id,
+            license_key: key,
+            email: email,
+            status: 'active',
+            source: 'gumroad'
+          }, {
+            onConflict: 'license_key'
+          });
+
+        if (error) {
+          console.error("MediHelp: Cloud sync error:", error.message);
+        } else {
+          console.log("MediHelp: License successfully synced to cloud.");
+        }
+      } catch (e) {
+        console.warn("MediHelp: Background sync failed:", e.message);
+      }
     },
 
     restore: async function() {
@@ -974,22 +989,37 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!MediHelp.License.isActivated()) {
           MediHelp._authSyncPromise = (async () => {
             try {
-              const { data: rows } = await db.from('licenses')
-                .select('license_key, email')
+              const { data: rows, error } = await db.from('licenses')
+                .select('license_key, email, status')
                 .eq('user_id', session.user.id)
-                .eq('status', 'active')
                 .limit(1);
 
+              if (error) {
+                console.error('MediHelp Sync Error (RLS or Table Issue?):', error.message);
+                throw error;
+              }
+
               if (rows && rows.length > 0) {
-                console.log('MediHelp: License synced from cloud.');
-                await MediHelp.License.activate(rows[0].license_key, rows[0].email);
-                MediHelp._isPremiumCache = true;
-                if (!wasPremium && !MediHelp.isAuthPage()) window.location.reload();
+                const license = rows[0];
+                console.log(`MediHelp: Cloud license found (Status: ${license.status}).`);
+                
+                if (license.status === 'active') {
+                  await MediHelp.License.activate(license.license_key, license.email);
+                  MediHelp._isPremiumCache = true;
+                  if (!wasPremium && !MediHelp.isAuthPage()) window.location.reload();
+                } else {
+                  console.warn('MediHelp: Cloud license found but it is NOT active.');
+                  MediHelp._isPremiumCache = false;
+                }
               } else {
+                console.log('MediHelp: No license record found in cloud for this user ID.');
                 MediHelp._isPremiumCache = false;
               }
-            } catch (e) { console.warn('Sync error:', e); }
-            finally { MediHelp._authSyncPromise = null; }
+            } catch (e) { 
+              console.warn('MediHelp: Cloud sync failed.', e.message); 
+            } finally { 
+              MediHelp._authSyncPromise = null; 
+            }
           })();
           await MediHelp._authSyncPromise;
         } else {
