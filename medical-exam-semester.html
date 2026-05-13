@@ -1178,11 +1178,20 @@
     // --- QUIZ LOGIC ---
     async function startQuiz(topicId, title, isFreeDemo = false) {
       if (!isFreeDemo) {
+        const loader = document.getElementById('topic-loading');
+        const loaderMsg = document.getElementById('topic-loading-message');
+        if (loader) {
+          loader.classList.remove('hidden');
+          if (loaderMsg) loaderMsg.textContent = 'Verifying premium access...';
+        }
+
         const premium = await MediHelp.isPremium();
+        
+        if (loader) loader.classList.add('hidden');
+
         if (!premium) {
-          const { data, error } = await window.dbClient.auth.getUser();
-          const user = data?.user;
-          if (!user) {
+          const { data } = await window.dbClient.auth.getUser();
+          if (!data?.user) {
             MediHelp.showAuthModal();
           } else {
             openPremiumModal();
