@@ -898,12 +898,19 @@ const MediHelp = {
   _isPremiumCache: null,
   _authSyncPromise: null, // Track background license sync
   
+  _authReadyResolver: null,
+  authReady: null, // Promise that resolves when initial auth & sync is done
+  
   isPremium: async function() {
     if (!window.dbClient) return false;
     
-    // If background sync is happening, wait for it
+    // Ensure we've at least attempted an initial auth check/sync
+    if (this.authReady) {
+      await this.authReady;
+    }
+
+    // If a specific background sync is happening, wait for it
     if (this._authSyncPromise) {
-      console.log("MediHelp: isPremium waiting for background sync...");
       await this._authSyncPromise;
     }
 
@@ -944,6 +951,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Register auth state listener HERE — after MediHelp is fully defined
   // This prevents a ReferenceError when onAuthStateChange fires with INITIAL_SESSION
   if (window.dbClient) {
+    // Initialize the authReady promise
+    MediHelp.authReady = new Promise(resolve => {
+      MediHelp._authReadyResolver = resolve;
+    });
+
     window.dbClient.auth.onAuthStateChange(async (event, session) => {
       console.log(`MediHelp Auth: ${event}`, session?.user?.email);
       
@@ -966,8 +978,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (session?.user) {
-        // Sync license from licenses table if not already active locally
-        if (!MediHelp.License.isActivated()) {
+        const isLocallyActive = MediHelp.License.isActivated();
+        
+        if (isLocallyActive) {
+          // 1. UPLOAD: If active locally, ensure it's in the cloud for this user
+          console.log('MediHelp: Ensuring local license is synced to cloud...');
+          const data = localStorage.getItem(MediHelp.License.DATA_KEY);
+          if (data) {
+            const { key, email } = JSON.parse(data);
+            MediHelp.License._syncToCloud(key, email).catch(e => console.warn("Background upload failed:", e));
+          }
+          MediHelp._isPremiumCache = true;
+        } else {
+          // 2. DOWNLOAD: If not active locally, check cloud sync
           console.log('MediHelp: Local license missing, checking cloud sync...');
           
           MediHelp._authSyncPromise = (async () => {
@@ -985,7 +1008,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 await MediHelp.License.activate(license.license_key, license.email);
                 MediHelp._isPremiumCache = true;
                 
-                // If we are on a page that needs a refresh to show premium content
                 if (!wasPremium && !MediHelp.isAuthPage()) {
                    console.log('MediHelp: Refreshing to unlock premium features...');
                    window.location.reload();
@@ -1002,9 +1024,13 @@ document.addEventListener('DOMContentLoaded', () => {
           })();
           
           await MediHelp._authSyncPromise;
-        } else {
-          MediHelp._isPremiumCache = true;
         }
+      }
+
+      // Signal that we are ready
+      if (MediHelp._authReadyResolver) {
+        MediHelp._authReadyResolver();
+        MediHelp._authReadyResolver = null;
       }
     });
   }
