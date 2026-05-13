@@ -678,9 +678,7 @@ const MediHelp = {
           });
           if (confirmed) {
             await window.dbClient.auth.signOut();
-            // Force immediate hard refresh after sign out success
-            const cleanPath = window.location.pathname;
-            window.location.href = cleanPath + '?cache_bust=' + Date.now();
+            // Hard Refresh is handled in onAuthStateChange
           }
         };
       } else {
@@ -974,8 +972,8 @@ document.addEventListener('DOMContentLoaded', () => {
         MediHelp._isPremiumCache = false;
         
         // Hard Refresh: Redirect to current path with a cache-busting timestamp
-        const cleanPath = window.location.origin + window.location.pathname;
-        window.location.replace(cleanPath + '?logout=' + Date.now());
+        const cleanPath = window.location.pathname;
+        window.location.href = cleanPath + '?cache_bust=' + Date.now();
         return;
       }
 
