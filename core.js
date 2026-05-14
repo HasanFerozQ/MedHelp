@@ -791,14 +791,14 @@ const MediHelp = {
         authBtn.textContent = 'Sign in / Sign up';
         authBtn.setAttribute('aria-label', 'Sign in or sign up');
         authBtn.onclick = () => this.showAuthModal();
-      }
 
-      // 2. Insert before theme toggle or at the end of THIS container
-      const themeBtn = container.querySelector('.theme-btn');
-      if (themeBtn) {
-        container.insertBefore(authBtn, themeBtn);
-      } else {
-        container.appendChild(authBtn);
+        // Insert before theme toggle or append at end of container
+        const themeBtn = container.querySelector('.theme-btn');
+        if (themeBtn) {
+          container.insertBefore(authBtn, themeBtn);
+        } else {
+          container.appendChild(authBtn);
+        }
       }
     });
   },
