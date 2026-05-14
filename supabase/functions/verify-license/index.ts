@@ -31,44 +31,27 @@ Deno.serve(async (req: Request) => {
     );
 
     // 3. Verify with Gumroad
-    // The permalink is the URL slug from: gumroad.com/l/<permalink>
-    const productPermalink = Deno.env.get("GUMROAD_PRODUCT_PERMALINK") ?? "medical-exam-mastery";
+    // IMPORTANT: Gumroad API requires 'product_id' with the INTERNAL hash ID (not the URL permalink).
+    // The correct value was confirmed from Gumroad's own error: "Please set 'product_id' to 'xGFF04xgo4rpezVD6BupmA=='"
+    const productId = Deno.env.get("GUMROAD_PRODUCT_ID") ?? "xGFF04xgo4rpezVD6BupmA==";
     
-    console.log(`Verifying key: ${license_key} | permalink: ${productPermalink} | email: ${email}`);
+    console.log(`Verifying key: ${license_key} | product_id: ${productId} | email: ${email}`);
 
-    // Try with product_permalink field (current Gumroad API)
     const gumroadRes = await fetch("https://api.gumroad.com/v2/licenses/verify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
-        product_permalink: productPermalink,
+        product_id: productId,
         license_key: license_key,
         increment_uses_count: "false",
       }),
     });
 
     const gumroadText = await gumroadRes.text();
-    console.log(`Gumroad raw response (status ${gumroadRes.status}): ${gumroadText}`);
+    console.log(`Gumroad response (status ${gumroadRes.status}): ${gumroadText}`);
 
     let data: any = {};
     try { data = JSON.parse(gumroadText); } catch (_) {}
-
-    // If product_permalink field didn't work, try legacy product_id field
-    if (!data.success && data.message && data.message.toLowerCase().includes("product")) {
-      console.log("Retrying with legacy product_id field...");
-      const retry = await fetch("https://api.gumroad.com/v2/licenses/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          product_id: productPermalink,
-          license_key: license_key,
-          increment_uses_count: "false",
-        }),
-      });
-      const retryText = await retry.text();
-      console.log(`Gumroad retry response: ${retryText}`);
-      try { data = JSON.parse(retryText); } catch (_) {}
-    }
 
     console.log(`Gumroad success: ${data.success} | uses: ${data.uses}`);
 
