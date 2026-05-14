@@ -28,17 +28,18 @@ Deno.serve(async (req: Request) => {
     );
 
     // 3. Verify with Gumroad (Proxy)
-    const productId = Deno.env.get("GUMROAD_PRODUCT_ID") ?? "xGFFO4xgo4rpezVD6BupmA==";
+    // product_permalink is the URL slug (e.g. "medical-exam-mastery" from gumroad.com/l/medical-exam-mastery)
+    const productPermalink = Deno.env.get("GUMROAD_PRODUCT_PERMALINK") ?? "medical-exam-mastery";
     
-    console.log(`Verifying license: ${license_key} for product: ${productId}`);
+    console.log(`Verifying license: ${license_key} for permalink: ${productPermalink}`);
 
     const gumroadRes = await fetch("https://api.gumroad.com/v2/licenses/verify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
-        product_id: productId,
+        product_permalink: productPermalink,
         license_key: license_key,
-        increment_uses_count: "true",
+        increment_uses_count: "false",
       }),
     });
 
