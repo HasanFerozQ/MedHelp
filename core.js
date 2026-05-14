@@ -560,16 +560,21 @@ const MediHelp = {
           
           this.hideAuthModal();
 
-          // Show banner with Gumroad link
+          // Show a clear instruction notification (no action link — the panel is opening)
           this.showNotification(
-            'Account Created! 🎉', 
-            'Check your email to confirm your account, then purchase a license key to unlock premium access.',
-            'success',
-            { url: 'https://prodat.gumroad.com/l/medical-exam-mastery', text: 'Get License Key' }
+            'Account Created! 🎉',
+            'Gumroad is opening in a new tab. After purchase, return here and paste your license key in the panel that just opened.',
+            'success'
           );
-          
-          // Open Gumroad in background tab
-          setTimeout(() => window.open('https://prodat.gumroad.com/l/medical-exam-mastery', '_blank'), 1000);
+
+          // Open Gumroad in a NEW tab, and simultaneously open the license
+          // activation panel on THIS tab so it is waiting when the user returns.
+          setTimeout(() => {
+            window.open('https://prodat.gumroad.com/l/medical-exam-mastery', '_blank');
+            // showActivator() opens #premium-modal if it exists on this page,
+            // or redirects to /medical-exam-semester?showActivation=true which opens it there.
+            this.License.showActivator();
+          }, 800);
 
         } else {
           result = await window.dbClient.auth.signInWithPassword({ email, password });
