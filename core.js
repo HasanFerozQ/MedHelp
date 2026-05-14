@@ -1,7 +1,7 @@
 /**
  * MediHelp — core.js
  * Global Utilities: Shared Supabase init, Theme toggling, FAQ rendering, and common UI helpers.
- * v4.7 — Navbar auth scope, premium sync after login, license verify JWT, cloud upsert fallbacks.
+ * v4.8 — Nav slot fallback (pages without .nav-actions), verify timeout + cloud recovery, delayed nav mount.
  */
 
 // 1. Initialize Supabase globally
@@ -623,12 +623,52 @@ const MediHelp = {
     }
 
     if (path.startsWith('/medical-exam-semester')) return true;
+    if (path.startsWith('/medical-exam-preparation')) return true;
+    if (path.startsWith('/medical-exam-usmle')) return true;
     if (path.startsWith('/flash-cards')) return true;
     if (path.includes('medical-exam')) return true;
     if (path.includes('flash-cards')) return true;
     if (path.endsWith('.html') && (path.includes('medical-exam') || path.includes('flash-cards'))) return true;
 
     return false;
+  },
+
+  /**
+   * Some static pages omit .nav-actions; create a slot beside the theme toggle so Login still appears.
+   */
+  _getNavAuthContainers: function() {
+    const found = Array.from(document.querySelectorAll('.nav-actions'));
+    if (found.length) return found;
+
+    const theme = document.querySelector(
+      '#theme-toggle, button#theme-toggle, .theme-btn, button.theme-btn, [data-theme-toggle]'
+    );
+    if (theme && theme.parentElement) {
+      let slot = theme.parentElement.querySelector('.mh-nav-auth-slot');
+      if (!slot) {
+        slot = document.createElement('div');
+        slot.className = 'nav-actions mh-nav-auth-slot';
+        slot.setAttribute('data-mh-injected-nav', '1');
+        slot.style.cssText = 'display:inline-flex;align-items:center;gap:10px;margin-right:8px;flex-shrink:0;';
+        theme.parentElement.insertBefore(slot, theme);
+      }
+      return [slot];
+    }
+
+    const header = document.querySelector('header, .site-header, .navbar, .top-bar');
+    if (header) {
+      let slot = header.querySelector('.mh-nav-auth-slot');
+      if (!slot) {
+        slot = document.createElement('div');
+        slot.className = 'nav-actions mh-nav-auth-slot';
+        slot.setAttribute('data-mh-injected-nav', '1');
+        slot.style.cssText = 'display:inline-flex;align-items:center;gap:10px;margin-left:auto;';
+        header.appendChild(slot);
+      }
+      return [slot];
+    }
+
+    return [];
   },
 
   showAuthModal: function() {
@@ -670,8 +710,10 @@ const MediHelp = {
       setTimeout(() => this.updateAuthButton(), 100);
       return;
     }
-    const containers = document.querySelectorAll('.nav-actions');
-    if (containers.length === 0) return;
+    const containers = this._getNavAuthContainers();
+    if (containers.length === 0) {
+      return;
+    }
 
     const { data, error } = await window.dbClient.auth.getUser();
     const user = data?.user;
@@ -701,7 +743,8 @@ const MediHelp = {
           }
         };
       } else {
-        authBtn.textContent = 'Login';
+        authBtn.textContent = 'Sign in / Sign up';
+        authBtn.setAttribute('aria-label', 'Sign in or sign up');
         authBtn.onclick = () => this.showAuthModal();
       }
 
@@ -802,6 +845,64 @@ const MediHelp = {
     });
   },
 
+  /**
+   * If verify-license is slow or times out, the Edge Function may still have written `licenses`.
+   * Restore premium from Supabase for the signed-in user (matches saved email + key on the server).
+   */
+  syncPremiumFromCloud: async function() {
+    const db = window.initDbClient();
+    if (!db) return false;
+    const { data: { user } } = await db.auth.getUser();
+    if (!user) return false;
+    try {
+      let { data: rows, error } = await db
+        .from('licenses')
+        .select('license_key, email, status')
+        .eq('user_id', user.id)
+        .limit(1);
+
+      if (error) {
+        console.warn('MediHelp syncPremiumFromCloud:', error.message);
+        return false;
+      }
+      if (!rows || !rows.length) {
+        const r2 = await db
+          .from('licenses')
+          .select('license_key, email, status, user_id')
+          .ilike('email', user.email)
+          .limit(1);
+        if (!r2.error && r2.data && r2.data.length) {
+          rows = r2.data;
+        }
+      }
+
+      if (!rows || !rows.length) return false;
+
+      const license = rows[0];
+      const st = String(license.status || '').toLowerCase();
+      if (st === 'inactive' || st === 'revoked' || st === 'cancelled') {
+        console.warn('MediHelp syncPremiumFromCloud: license not usable:', license.status);
+        return false;
+      }
+
+      await this.License.activate(license.license_key, license.email);
+      this._isPremiumCache = true;
+      console.log('MediHelp: Premium restored from Supabase (cloud row).');
+      return true;
+    } catch (e) {
+      console.warn('MediHelp syncPremiumFromCloud failed', e);
+    }
+    return false;
+  },
+
+  syncPremiumFromCloudWithRetry: async function() {
+    for (let attempt = 0; attempt < 4; attempt++) {
+      if (await this.syncPremiumFromCloud()) return true;
+      await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+    }
+    return false;
+  },
+
   // 7. Global Licensing Logic (Gumroad)
   License: {
     STORAGE_KEY: 'mh_license_active',
@@ -881,32 +982,39 @@ const MediHelp = {
     verify: async function(key, email) {
       if (!key || !email) throw new Error("License key and email are required.");
 
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+      const VERIFY_MS = 90000;
+
+      const runFetch = async () => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), VERIFY_MS);
+        try {
+          const db = window.initDbClient();
+          let authHeader = `Bearer ${SUPABASE_ANON_KEY}`;
+          if (db) {
+            const { data: { session } } = await db.auth.getSession();
+            if (session?.access_token) {
+              authHeader = `Bearer ${session.access_token}`;
+            }
+          }
+
+          console.log("MediHelp License: Verifying with Edge Function (up to " + (VERIFY_MS / 1000) + "s)...");
+          return await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/verify-license', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': authHeader
+            },
+            body: JSON.stringify({ license_key: key, email: email }),
+            signal: controller.signal
+          });
+        } finally {
+          clearTimeout(timeoutId);
+        }
+      };
 
       try {
-        const db = window.initDbClient();
-        let authHeader = `Bearer ${SUPABASE_ANON_KEY}`;
-        if (db) {
-          const { data: { session } } = await db.auth.getSession();
-          if (session?.access_token) {
-            authHeader = `Bearer ${session.access_token}`;
-          }
-        }
-
-        console.log("MediHelp License: Verifying with Edge Function...");
-        const response = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/verify-license', {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': authHeader
-          },
-          body: JSON.stringify({ license_key: key, email: email }),
-          signal: controller.signal
-        });
-
-        clearTimeout(timeoutId);
+        let response = await runFetch();
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
@@ -922,7 +1030,6 @@ const MediHelp = {
         }
 
         const data = await response.json();
-        // Be flexible with success indicators
         if (data && (data.success === true || data.verified === true || data.ok === true || data.status === 'active')) {
           await this.activate(key, email);
           console.log("MediHelp License: Activation successful.");
@@ -931,9 +1038,14 @@ const MediHelp = {
         
         throw new Error(data.message || "INVALID_KEY");
       } catch (e) {
-        clearTimeout(timeoutId);
         if (e.name === 'AbortError') {
-          console.error("MediHelp License: Verification timed out after 15s");
+          console.warn("MediHelp License: Verification timed out — checking Supabase for a saved license row...");
+          if (await MediHelp.syncPremiumFromCloudWithRetry()) {
+            console.log("MediHelp License: Recovered from Supabase after slow verify.");
+            setTimeout(() => window.location.reload(), 400);
+            return true;
+          }
+          console.error("MediHelp License: Verification timed out after " + (VERIFY_MS / 1000) + "s");
           throw new Error("TIMEOUT");
         }
         console.error("MediHelp License: Verification failed", e);
@@ -1000,7 +1112,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   if (MediHelp.isAuthPage()) {
     MediHelp.initAuthModal();
+    const am = document.getElementById('auth-modal');
+    if (am) am.classList.remove('active');
   }
+
+  [0, 200, 600, 1500, 3200].forEach((ms) => {
+    setTimeout(() => MediHelp.updateAuthButton(), ms);
+  });
 
   // Ensure dbClient is ready
   const db = window.initDbClient();
