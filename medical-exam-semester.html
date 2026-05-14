@@ -641,10 +641,21 @@
         <a class="premium-btn" href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank">Purchase Yearly Access</a>
         
         <div class="unlock-section" style="border-top: 1px solid var(--border); padding-top: 24px; margin-top: 24px;">
-          <p style="font-size: 13px; font-weight: 700; color: var(--text-h); margin-bottom: 12px; text-align: left;">Already purchased? Activate access:</p>
+          <p style="font-size: 13px; font-weight: 700; color: var(--text-h); margin-bottom: 10px; text-align: left;">Already purchased? Activate access:</p>
+
+          <!-- Email key reminder -->
+          <div style="display:flex; align-items:flex-start; gap:10px; background:rgba(34,197,94,0.07); border:1px solid rgba(34,197,94,0.25); border-radius:10px; padding:12px 14px; margin-bottom:14px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" style="flex-shrink:0; margin-top:1px;"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <div style="font-size:12px; color:var(--text-muted); line-height:1.55;">
+              <strong style="color:var(--accent); display:block; margin-bottom:2px;">Use the key from your confirmation email</strong>
+              After purchasing on Gumroad, check your inbox for an email from <em>noreply@customers.gumroad.com</em>. 
+              Copy the <strong>License key</strong> shown in that email — <em>not</em> the one on the Gumroad receipt page.
+            </div>
+          </div>
+
           <div style="display: flex; flex-direction: column; gap: 10px;">
-            <input type="text" id="access-key-input" class="unlock-input" placeholder="Paste License Key (e.g. CA1BB...)" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; color: var(--text-h); font-size: 14px;">
-            <input type="email" id="access-email-input" class="unlock-input" placeholder="Your Purchase Email" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; color: var(--text-h); font-size: 14px;">
+            <input type="text" id="access-key-input" class="unlock-input" placeholder="Paste License Key from email (e.g. 1B31A3AD-FF364AFF-...)" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; color: var(--text-h); font-size: 14px;">
+            <input type="email" id="access-email-input" class="unlock-input" placeholder="Your Gumroad purchase email" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; color: var(--text-h); font-size: 14px;">
             <button id="verify-btn" class="premium-btn" style="margin-top: 6px; margin-bottom: 0; background: linear-gradient(135deg, var(--accent), #10b981); box-shadow: 0 4px 15px rgba(34,197,94,0.3);" onclick="verifyAccessKey()">Unlock Now</button>
             <button id="restore-btn" class="secondary-btn" style="padding: 12px; font-size: 12px; opacity: 0.8;" onclick="restorePurchase()">Restore Purchase on this Device</button>
           </div>
