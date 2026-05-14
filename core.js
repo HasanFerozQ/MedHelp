@@ -1,7 +1,7 @@
 /**
  * MediHelp — core.js
  * Global Utilities: Shared Supabase init, Theme toggling, FAQ rendering, and common UI helpers.
- * v4.9 — Same as v4.8; keep in sync with medical-exam-semester / flash-cards (verify UI must not short-circuit Edge Function).
+ * v4.9 — Nav slot, verify recovery, longer auth-sync wait for isPremium (20s).
  */
 
 // 1. Initialize Supabase globally
@@ -1071,7 +1071,7 @@ const MediHelp = {
       console.log("MediHelp: isPremium waiting for background sync...");
       await Promise.race([
         this._authSyncPromise,
-        new Promise((res) => setTimeout(() => res(), 10000))
+        new Promise((res) => setTimeout(() => res(), 20000))
       ]);
     }
 

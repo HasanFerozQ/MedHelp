@@ -855,16 +855,40 @@
         dropdown.onchange = (e) => switchYear(parseInt(e.target.value));
       }
 
-      document.getElementById('topic-grid').addEventListener('click', (e) => {
+      document.getElementById('topic-grid').addEventListener('click', async (e) => {
         const card = e.target.closest('.topic-card');
         if (!card) return;
         e.preventDefault();
         const topicId = card.dataset.topicId;
         const title = card.dataset.topicTitle || card.querySelector('h3')?.textContent || '';
         const isFreeDemo = card.dataset.freeDemo === 'true';
-        const newUrl = window.location.pathname + `?topic_id=${topicId}`;
-        window.history.pushState({ path: newUrl }, '', newUrl);
-        startQuiz(topicId, title, isFreeDemo);
+
+        // Full page navigation = same reliability as a hard refresh (clean Supabase + auth state).
+        const goTopic = () => {
+          const u = `${window.location.pathname}?topic_id=${encodeURIComponent(topicId)}&cb=${Date.now()}`;
+          window.location.assign(u);
+        };
+
+        if (isFreeDemo) {
+          goTopic();
+          return;
+        }
+
+        const premium = await MediHelp.isPremium();
+        if (premium) {
+          goTopic();
+          return;
+        }
+
+        currentTopicId = topicId;
+        const titleEl = document.getElementById('current-topic-title');
+        if (titleEl) titleEl.textContent = title;
+        const { data } = await window.dbClient.auth.getUser();
+        if (!data?.user) {
+          MediHelp.showAuthModal();
+        } else {
+          openPremiumModal();
+        }
       });
 
       const urlParams = new URLSearchParams(window.location.search);
@@ -1236,12 +1260,13 @@
       // Do NOT use a short UI timeout here: MediHelp.License.verify can take up to ~90s (Edge Function + Gumroad).
       // A 10s timeout was resetting the button while verify was still running, causing "stuck verifying" / races.
 
+      let navigated = false;
       try {
         await MediHelp.License.verify(key, email);
         showToast('Premium Access Activated!', 'success');
         closePremiumModal();
-        // Full navigation resets quiz state and re-runs topic bootstrap (fixes half-loaded MCQ views).
         const tid = currentTopicId ? encodeURIComponent(currentTopicId) : '';
+        navigated = true;
         window.location.href = window.location.pathname + (tid ? ('?topic_id=' + tid + '&cb=' + Date.now()) : ('?cb=' + Date.now()));
       } catch (e) {
         console.error("License Verification Error:", e.message);
@@ -1255,8 +1280,10 @@
           showToast(e.message || 'Connection error. Please try again.', 'error');
         }
       } finally {
-        btn.disabled = false;
-        btn.textContent = 'Unlock Now';
+        if (!navigated) {
+          btn.disabled = false;
+          btn.textContent = 'Unlock Now';
+        }
       }
     }
 
@@ -1329,8 +1356,32 @@
           }
         });
 
-        if (mcqs.length > 0) {
-          mcqs.sort((a, b) => {
+        let mcqsArr = mcqs;
+        if (!mcqsArr.length && !cases.length && !mcqRes.error && !caseRes.error) {
+          console.warn('MediHelp: Empty MCQ/case payload on first try — retrying once (cold start).');
+          await new Promise((r) => setTimeout(r, 500));
+          const [rMcq, rCase] = await Promise.all([
+            window.dbClient.from('mcqs').select('*').eq('topic_id', topicId).order('created_at', { ascending: true }),
+            window.dbClient.from('case_studies').select('*, case_questions(*)').eq('topic_id', topicId).order('created_at', { ascending: true })
+          ]);
+          mcqRes = rMcq;
+          caseRes = rCase;
+          mcqsArr = rMcq.data || [];
+          cases = rCase.data || [];
+          cases.forEach((cs) => {
+            if (cs.case_questions && Array.isArray(cs.case_questions)) {
+              cs.case_questions.sort((a, b) => {
+                const ao = typeof a.order === 'number' ? a.order : parseInt(a.order, 10) || 0;
+                const bo = typeof b.order === 'number' ? b.order : parseInt(b.order, 10) || 0;
+                if (ao !== bo) return ao - bo;
+                return String(a.created_at || '').localeCompare(String(b.created_at || ''));
+              });
+            }
+          });
+        }
+
+        if (mcqsArr.length > 0) {
+          mcqsArr.sort((a, b) => {
             const numA = parseInt(a.question.match(/^\d+/)?.[0] || 0, 10);
             const numB = parseInt(b.question.match(/^\d+/)?.[0] || 0, 10);
             if (numA && numB) return numA - numB;
@@ -1345,7 +1396,7 @@
       currentCaseQuestionIds = [];
       currentLoadedCases = [];
 
-      if ((mcqRes.error || !mcqs.length) && !cases.length) {
+      if ((mcqRes.error || !mcqsArr.length) && !cases.length) {
         if (mcqRes.error) console.error('MediHelp mcqs error:', mcqRes.error);
         if (caseRes.error) console.error('MediHelp case_studies error:', caseRes.error);
         list.innerHTML = '<p style="text-align:center; padding: 40px;">No questions found for this topic.</p>';
@@ -1353,14 +1404,14 @@
       }
 
       // Render Standalone MCQs
-      if (mcqs && mcqs.length > 0) {
-        currentStandaloneIds = mcqs.map(m => m.id);
+      if (mcqsArr && mcqsArr.length > 0) {
+        currentStandaloneIds = mcqsArr.map(m => m.id);
         const header = document.createElement('div');
         header.className = 'section-divider';
         header.textContent = 'High-Yield MCQs';
         list.appendChild(header);
         
-        mcqs.forEach((mcq, idx) => {
+        mcqsArr.forEach((mcq, idx) => {
           list.appendChild(renderMcqCard(mcq, idx, 'mcq'));
         });
       }
@@ -1596,7 +1647,24 @@
         });
       };
       await waitForDb();
+      try {
+        await window.dbClient.auth.getSession();
+      } catch (_) {}
       console.log(`MediHelp Perf: System initialized in ${Math.round(performance.now() - pageStartTime)}ms`);
+
+      const urlParamsEarly = new URLSearchParams(window.location.search);
+      const deepTopic = !!(urlParamsEarly.get('topic_id') || urlParamsEarly.get('slug') ||
+        (() => {
+          const p = window.location.pathname.split('/').filter(Boolean);
+          return p.length >= 2 && p[0] === 'medical-exam-preparation' && p[1];
+        })());
+
+      // Heavy all-topics query competes with MCQ/case fetches — defer when opening a topic from URL.
+      if (deepTopic) {
+        setTimeout(() => { initSearch().catch(err => console.warn('MediHelp: initSearch deferred', err)); }, 2200);
+      } else {
+        initSearch();
+      }
 
       // Detect if Quiz Header is stuck
       window.addEventListener('scroll', () => {
@@ -1607,9 +1675,6 @@
         const isStuck = header.getBoundingClientRect().top <= 72;
         header.classList.toggle('stuck', isStuck && window.scrollY > 100);
       }, { passive: true });
-
-      initSearch();
-      
 
       const urlParams = new URLSearchParams(window.location.search);
       const initialTopicId = urlParams.get('topic_id');
