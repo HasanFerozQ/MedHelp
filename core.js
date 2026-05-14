@@ -1,6 +1,7 @@
 /**
  * MediHelp — core.js
  * Global Utilities: Shared Supabase init, Theme toggling, FAQ rendering, and common UI helpers.
+ * v4.7 — Navbar auth scope, premium sync after login, license verify JWT, cloud upsert fallbacks.
  */
 
 // 1. Initialize Supabase globally
@@ -103,7 +104,7 @@ function switchTab(tabId, btn) {
   if (target) target.classList.add('active');
 }
 
-// 6. MediHelp Global Namespace & Advanced Fetch (v4.6)
+// 6. MediHelp Global Namespace & Advanced Fetch (v4.7)
 const MediHelp = {
   initTheme: function() {
     const saved = localStorage.getItem('mh-theme') || 'dark';
@@ -585,6 +586,7 @@ const MediHelp = {
             }
             throw result.error;
           }
+          MediHelp._isPremiumCache = null;
           this.showNotification('Welcome Back!', 'You have signed in successfully.');
           this.hideAuthModal();
         }
@@ -600,15 +602,33 @@ const MediHelp = {
     this.updateAuthButton();
   },
 
+  /**
+   * Exam prep + flashcards zone: navbar Login/Logout and auth modal.
+   * Explicitly excludes marketing and free-tool routes per site requirements.
+   */
   isAuthPage: function() {
-    const path = window.location.pathname;
-    return path.includes('medical-exam') ||
-      path.includes('flash-cards') ||
-      path.includes('cpt-code-search') ||
-      path.includes('claim-denial-codes') ||
-      path.includes('medical-bill-audit') ||
-      path === '/' ||
-      path.endsWith('.html');
+    const path = window.location.pathname || '';
+    if (!path || path === '/') return false;
+
+    const excludedPrefixes = [
+      '/medical-bill-audit',
+      '/cpt-code-search',
+      '/claim-denial-codes',
+      '/rx-savings',
+      '/providers',
+      '/blog'
+    ];
+    for (const p of excludedPrefixes) {
+      if (path === p || path.startsWith(p + '/')) return false;
+    }
+
+    if (path.startsWith('/medical-exam-semester')) return true;
+    if (path.startsWith('/flash-cards')) return true;
+    if (path.includes('medical-exam')) return true;
+    if (path.includes('flash-cards')) return true;
+    if (path.endsWith('.html') && (path.includes('medical-exam') || path.includes('flash-cards'))) return true;
+
+    return false;
   },
 
   showAuthModal: function() {
@@ -668,20 +688,20 @@ const MediHelp = {
       authBtn.style.borderRadius = '10px';
 
       if (user) {
-        authBtn.textContent = 'Logout';
+        authBtn.textContent = 'Log out';
         authBtn.onclick = async () => {
-          const confirmed = await MediHelp.confirm("Are you sure you want to logout?", {
+          const confirmed = await MediHelp.confirm("Are you sure you want to log out?", {
             title: "Sign Out",
-            confirmText: "Logout",
-            cancelText: "Stay Logged In"
+            confirmText: "Log out",
+            cancelText: "Stay signed in"
           });
           if (confirmed) {
             await window.dbClient.auth.signOut();
-            // Hard Refresh is handled in onAuthStateChange
+            // Hard refresh is handled in onAuthStateChange (SIGNED_OUT)
           }
         };
       } else {
-        authBtn.textContent = 'Login / Sign Up';
+        authBtn.textContent = 'Login';
         authBtn.onclick = () => this.showAuthModal();
       }
 
@@ -823,18 +843,23 @@ const MediHelp = {
           return;
         }
 
+        const row = {
+          user_id: user.id,
+          license_key: key,
+          email: email,
+          status: 'active',
+          source: 'gumroad'
+        };
+
         console.log("MediHelp: Syncing license to cloud for user:", user.email);
-        const { error } = await db
+        let { error } = await db
           .from('licenses')
-          .upsert({
-            user_id: user.id,
-            license_key: key,
-            email: email,
-            status: 'active',
-            source: 'gumroad'
-          }, {
-            onConflict: 'license_key'
-          });
+          .upsert(row, { onConflict: 'license_key' });
+
+        if (error) {
+          console.warn("MediHelp: upsert on license_key failed, retrying on user_id:", error.message);
+          ({ error } = await db.from('licenses').upsert(row, { onConflict: 'user_id' }));
+        }
 
         if (error) {
           console.error("MediHelp: Cloud sync error:", error.message);
@@ -860,13 +885,22 @@ const MediHelp = {
       const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
 
       try {
+        const db = window.initDbClient();
+        let authHeader = `Bearer ${SUPABASE_ANON_KEY}`;
+        if (db) {
+          const { data: { session } } = await db.auth.getSession();
+          if (session?.access_token) {
+            authHeader = `Bearer ${session.access_token}`;
+          }
+        }
+
         console.log("MediHelp License: Verifying with Edge Function...");
         const response = await fetch('https://bisqgousuvljttesjkkm.supabase.co/functions/v1/verify-license', {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',
             'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            'Authorization': authHeader
           },
           body: JSON.stringify({ license_key: key, email: email }),
           signal: controller.signal
@@ -916,39 +950,47 @@ const MediHelp = {
     const db = window.initDbClient();
     if (!db) return false;
     
-    // 1. Quick check local storage first for instant feedback
     if (this.License.isActivated()) {
       this._isPremiumCache = true;
       return true;
     }
 
-    // 2. If we have a sync in progress, wait for it (but with a timeout safety)
     if (this._authSyncPromise) {
       console.log("MediHelp: isPremium waiting for background sync...");
-      const timeoutPromise = new Promise(res => setTimeout(() => res(false), 3000));
-      await Promise.race([this._authSyncPromise, timeoutPromise]);
+      await Promise.race([
+        this._authSyncPromise,
+        new Promise((res) => setTimeout(() => res(), 10000))
+      ]);
     }
 
-    // 3. Re-check cache after potential sync
-    if (this._isPremiumCache !== null) return this._isPremiumCache;
+    if (this.License.isActivated()) {
+      this._isPremiumCache = true;
+      return true;
+    }
+
+    if (this._isPremiumCache === true) return true;
 
     try {
       if (!this._cachedUser) {
         const { data } = await db.auth.getUser();
         this._cachedUser = data?.user || null;
       }
-      if (!this._cachedUser) return false;
+      if (!this._cachedUser) {
+        this._isPremiumCache = false;
+        return false;
+      }
       
       this._isPremiumCache = this.License.isActivated();
       return this._isPremiumCache;
     } catch (e) {
       console.warn("MediHelp: isPremium check failed", e);
-      return false;
+      this._isPremiumCache = this.License.isActivated();
+      return !!this._isPremiumCache;
     }
   },
   // New: Simple sync check for UI rendering
   isPremiumSync: function() {
-    return this._isPremiumCache === true;
+    return this._isPremiumCache === true || this.License.isActivated();
   }
 };
 
@@ -967,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     db.auth.onAuthStateChange(async (event, session) => {
       console.log(`MediHelp Auth Event: ${event}`, session?.user?.email || 'no-user');
       
-      const wasPremium = MediHelp._isPremiumCache;
+      const wasPremium = MediHelp._isPremiumCache === true || MediHelp.License.isActivated();
       MediHelp._cachedUser = session?.user || null;
       
       // Update UI button
@@ -1006,7 +1048,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (license.status === 'active') {
                   await MediHelp.License.activate(license.license_key, license.email);
                   MediHelp._isPremiumCache = true;
-                  if (!wasPremium && !MediHelp.isAuthPage()) window.location.reload();
+                  // Always reload once when premium is restored from cloud so exam/flash UIs re-read access.
+                  if (!wasPremium && MediHelp.License.isActivated()) {
+                    window.location.reload();
+                  }
                 } else {
                   console.warn('MediHelp: Cloud license found but it is NOT active.');
                   MediHelp._isPremiumCache = false;
