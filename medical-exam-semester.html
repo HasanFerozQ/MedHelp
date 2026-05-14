@@ -961,11 +961,10 @@
     }
 
     async function loadTopics(yearId) {
+      // If a load is already running for this year, wait for it then render from cache
       if (loadingYears.has(yearId)) {
-        console.warn(`MediHelp: Load already in progress for Year ${yearId}. Skipping.`);
-        // Ensure loader is hidden if we are skipping
-        const loader = document.getElementById('topic-loading');
-        if (loader) loader.classList.add('hidden');
+        console.warn(`MediHelp: Load already in progress for Year ${yearId}. Retrying in 800ms.`);
+        setTimeout(() => loadTopics(yearId), 800);
         return;
       }
       
@@ -1647,9 +1646,9 @@
         });
       };
       await waitForDb();
-      try {
-        await window.dbClient.auth.getSession();
-      } catch (_) {}
+      // Kick off session check in the background — do NOT block topic loading on it
+      window.dbClient.auth.getSession().catch(() => {});
+
       console.log(`MediHelp Perf: System initialized in ${Math.round(performance.now() - pageStartTime)}ms`);
 
       const urlParamsEarly = new URLSearchParams(window.location.search);
