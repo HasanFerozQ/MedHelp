@@ -733,18 +733,36 @@ const MediHelp = {
     
     containers.forEach(container => {
       // 1. Remove ANY existing auth button in THIS specific container
-      container.querySelectorAll('.auth-btn').forEach(el => el.remove());
-
-      const authBtn = document.createElement('button');
-      // Use class for multiple instances, not ID
-      authBtn.className = 'btn btn-ghost auth-btn';
-      authBtn.style.padding = '8px 18px';
-      authBtn.style.fontSize = '14px';
-      authBtn.style.borderRadius = '10px';
+      container.querySelectorAll('.auth-btn, .auth-user-chip').forEach(el => el.remove());
 
       if (user) {
-        authBtn.textContent = 'Log out';
-        authBtn.onclick = async () => {
+        // Show email chip + logout button when logged in
+        const emailShort = user.email.length > 22
+          ? user.email.substring(0, 20) + '…'
+          : user.email;
+
+        const chip = document.createElement('div');
+        chip.className = 'auth-user-chip';
+        chip.title = user.email;
+        chip.style.cssText = `
+          display:inline-flex; align-items:center; gap:8px;
+          background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.3);
+          border-radius:20px; padding:6px 14px; font-size:13px;
+          color:var(--accent); font-weight:700; white-space:nowrap;
+          cursor:default; max-width:220px;
+        `;
+        chip.innerHTML = `
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span style="overflow:hidden;text-overflow:ellipsis;">${emailShort}</span>
+        `;
+
+        const logoutBtn = document.createElement('button');
+        logoutBtn.className = 'btn btn-ghost auth-btn';
+        logoutBtn.textContent = 'Log out';
+        logoutBtn.style.cssText = 'padding:6px 14px; font-size:13px; border-radius:10px; color:var(--text-muted);';
+        logoutBtn.onclick = async () => {
           const confirmed = await MediHelp.confirm("Are you sure you want to log out?", {
             title: "Sign Out",
             confirmText: "Log out",
@@ -752,10 +770,24 @@ const MediHelp = {
           });
           if (confirmed) {
             await window.dbClient.auth.signOut();
-            // Hard refresh is handled in onAuthStateChange (SIGNED_OUT)
           }
         };
+
+        const themeBtn = container.querySelector('.theme-btn');
+        if (themeBtn) {
+          container.insertBefore(logoutBtn, themeBtn);
+          container.insertBefore(chip, logoutBtn);
+        } else {
+          container.appendChild(chip);
+          container.appendChild(logoutBtn);
+        }
+        return; // skip the shared authBtn append below
       } else {
+        const authBtn = document.createElement('button');
+        authBtn.className = 'btn btn-ghost auth-btn';
+        authBtn.style.padding = '8px 18px';
+        authBtn.style.fontSize = '14px';
+        authBtn.style.borderRadius = '10px';
         authBtn.textContent = 'Sign in / Sign up';
         authBtn.setAttribute('aria-label', 'Sign in or sign up');
         authBtn.onclick = () => this.showAuthModal();

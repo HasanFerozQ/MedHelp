@@ -1,4 +1,4 @@
-// Setup type definitions for built-in Supabase Runtime APIs
+// verify-license Edge Function
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
@@ -18,7 +18,10 @@ Deno.serve(async (req: Request) => {
     const { license_key, email } = await req.json();
 
     if (!license_key || !email) {
-      throw new Error("License key and email are required.");
+      return new Response(
+        JSON.stringify({ success: false, message: "License key and email are required." }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
+      );
     }
 
     // 2. Setup Supabase Admin Client
@@ -27,12 +30,13 @@ Deno.serve(async (req: Request) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
-    // 3. Verify with Gumroad (Proxy)
-    // product_permalink is the URL slug (e.g. "medical-exam-mastery" from gumroad.com/l/medical-exam-mastery)
+    // 3. Verify with Gumroad
+    // The permalink is the URL slug from: gumroad.com/l/<permalink>
     const productPermalink = Deno.env.get("GUMROAD_PRODUCT_PERMALINK") ?? "medical-exam-mastery";
     
-    console.log(`Verifying license: ${license_key} for permalink: ${productPermalink}`);
+    console.log(`Verifying key: ${license_key} | permalink: ${productPermalink} | email: ${email}`);
 
+    // Try with product_permalink field (current Gumroad API)
     const gumroadRes = await fetch("https://api.gumroad.com/v2/licenses/verify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -43,9 +47,32 @@ Deno.serve(async (req: Request) => {
       }),
     });
 
-    const data = await gumroadRes.json();
+    const gumroadText = await gumroadRes.text();
+    console.log(`Gumroad raw response (status ${gumroadRes.status}): ${gumroadText}`);
 
-    // 4. Custom Logic Check (device limit = 5)
+    let data: any = {};
+    try { data = JSON.parse(gumroadText); } catch (_) {}
+
+    // If product_permalink field didn't work, try legacy product_id field
+    if (!data.success && data.message && data.message.toLowerCase().includes("product")) {
+      console.log("Retrying with legacy product_id field...");
+      const retry = await fetch("https://api.gumroad.com/v2/licenses/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          product_id: productPermalink,
+          license_key: license_key,
+          increment_uses_count: "false",
+        }),
+      });
+      const retryText = await retry.text();
+      console.log(`Gumroad retry response: ${retryText}`);
+      try { data = JSON.parse(retryText); } catch (_) {}
+    }
+
+    console.log(`Gumroad success: ${data.success} | uses: ${data.uses}`);
+
+    // 4. Check device limit (max 5 activations)
     if (data.success) {
       if (data.uses > 5) {
         return new Response(
@@ -54,25 +81,32 @@ Deno.serve(async (req: Request) => {
         );
       }
 
-      // 5. Audit Log (as requested)
-      const clientIp = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || "unknown";
-      const userAgent = req.headers.get("user-agent") || "unknown";
-
-      await supabaseAdmin.from("license_activations").insert({
-        license_key: license_key,
-        email: email,
-        device_ip: clientIp,
-        user_agent: userAgent,
-        gumroad_uses: data.uses
-      });
+      // 5. Audit Log — non-fatal, don't crash if table doesn't exist
+      try {
+        const clientIp = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || "unknown";
+        const userAgent = req.headers.get("user-agent") || "unknown";
+        const { error: insertErr } = await supabaseAdmin.from("license_activations").insert({
+          license_key: license_key,
+          email: email,
+          device_ip: clientIp,
+          user_agent: userAgent,
+          gumroad_uses: data.uses
+        });
+        if (insertErr) console.warn("Audit log insert failed (non-fatal):", insertErr.message);
+      } catch (auditErr: any) {
+        console.warn("Audit log error (non-fatal):", auditErr.message);
+      }
 
       return new Response(
         JSON.stringify({ success: true, uses: data.uses }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
       );
     } else {
+      // Return the actual Gumroad message for debugging
+      const msg = data.message || "INVALID_LICENSE";
+      console.error(`Gumroad rejected key. Message: ${msg}`);
       return new Response(
-        JSON.stringify({ success: false, message: "INVALID_LICENSE" }),
+        JSON.stringify({ success: false, message: "INVALID_LICENSE", gumroad_message: msg }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 401 }
       );
     }
