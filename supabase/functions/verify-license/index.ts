@@ -32,8 +32,8 @@ Deno.serve(async (req: Request) => {
 
     // 3. Verify with Gumroad
     // IMPORTANT: Gumroad API requires 'product_id' with the INTERNAL hash ID (not the URL permalink).
-    // The correct value was confirmed from Gumroad's own error: "Please set 'product_id' to 'xGFF04xgo4rpezVD6BupmA=='"
-    const productId = Deno.env.get("GUMROAD_PRODUCT_ID") ?? "xGFF04xgo4rpezVD6BupmA==";
+    // Value confirmed from Gumroad dashboard (license key settings page).
+    const productId = Deno.env.get("GUMROAD_PRODUCT_ID") ?? "xGFFO4xgo4rpezVD6BupmA==";
     
     console.log(`Verifying key: ${license_key} | product_id: ${productId} | email: ${email}`);
 
