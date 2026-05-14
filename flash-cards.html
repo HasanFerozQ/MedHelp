@@ -20998,7 +20998,7 @@
         console.error("License Verification Error:", e);
         let msg = "Invalid license key or email. Please check and try again.";
         if (e.message === "LICENSE_LIMIT_REACHED") msg = "License limit reached (5 devices max).";
-        if (e.message === "TIMEOUT") msg = "Verification timed out. Check your connection.";
+        if (e.message === "TIMEOUT") msg = "Verification timed out. The server can take up to 90s. If a row was saved in Supabase, refresh the page in a few seconds.";
         
         alert(msg);
         if (btn) {

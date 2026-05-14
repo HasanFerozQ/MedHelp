@@ -1,7 +1,7 @@
 /**
  * MediHelp — core.js
  * Global Utilities: Shared Supabase init, Theme toggling, FAQ rendering, and common UI helpers.
- * v4.8 — Nav slot fallback (pages without .nav-actions), verify timeout + cloud recovery, delayed nav mount.
+ * v4.9 — Same as v4.8; keep in sync with medical-exam-semester / flash-cards (verify UI must not short-circuit Edge Function).
  */
 
 // 1. Initialize Supabase globally
@@ -104,7 +104,7 @@ function switchTab(tabId, btn) {
   if (target) target.classList.add('active');
 }
 
-// 6. MediHelp Global Namespace & Advanced Fetch (v4.7)
+// 6. MediHelp Global Namespace & Advanced Fetch (v4.9)
 const MediHelp = {
   initTheme: function() {
     const saved = localStorage.getItem('mh-theme') || 'dark';

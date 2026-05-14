@@ -994,7 +994,7 @@
         console.log(`MediHelp: Fetching fresh topics for Year ${yearId}...`);
         const { data: topics, error } = await window.dbClient
           .from('topics')
-          .select('id, title, section, is_free_demo, order, year_id, mcq_count, case_count')
+          .select('id, title, section, is_free_demo, "order", year_id, mcq_count, case_count')
           .eq('year_id', yearId)
           .is('usmle_step', null)
           .order('order', { ascending: true })
@@ -1177,6 +1177,11 @@
 
     // --- QUIZ LOGIC ---
     async function startQuiz(topicId, title, isFreeDemo = false) {
+      // Remember target topic even if we stop for auth/license — unlock flow reloads with ?topic_id=
+      currentTopicId = topicId;
+      const titleEl = document.getElementById('current-topic-title');
+      if (titleEl) titleEl.textContent = title;
+
       if (!isFreeDemo) {
         const premium = await MediHelp.isPremium();
         if (!premium) {
@@ -1190,10 +1195,8 @@
           return;
         }
       }
-      currentTopicId = topicId;
       document.getElementById('dashboard-view').classList.add('hidden');
       document.getElementById('mcq-view').classList.remove('hidden');
-      document.getElementById('current-topic-title').textContent = title;
       
       loadMcqs(topicId);
     }
@@ -1230,35 +1233,28 @@
       btn.disabled = true;
       btn.textContent = 'Verifying...';
 
-      // Safety timeout in case core.js logic hangs
-      const safetyTimeout = setTimeout(() => {
-        if (btn.disabled) {
-          btn.disabled = false;
-          btn.textContent = 'Unlock Now';
-          showToast('Connection timed out. Please try again.', 'error');
-        }
-      }, 10000);
+      // Do NOT use a short UI timeout here: MediHelp.License.verify can take up to ~90s (Edge Function + Gumroad).
+      // A 10s timeout was resetting the button while verify was still running, causing "stuck verifying" / races.
 
       try {
         await MediHelp.License.verify(key, email);
-        clearTimeout(safetyTimeout);
         showToast('Premium Access Activated!', 'success');
         closePremiumModal();
-        if (currentTopicId) startQuiz(currentTopicId, document.getElementById('current-topic-title').textContent);
+        // Full navigation resets quiz state and re-runs topic bootstrap (fixes half-loaded MCQ views).
+        const tid = currentTopicId ? encodeURIComponent(currentTopicId) : '';
+        window.location.href = window.location.pathname + (tid ? ('?topic_id=' + tid + '&cb=' + Date.now()) : ('?cb=' + Date.now()));
       } catch (e) {
-        clearTimeout(safetyTimeout);
         console.error("License Verification Error:", e.message);
         if (e.message === "LICENSE_LIMIT_REACHED") {
           showToast('License limit reached (5 devices max).', 'error');
         } else if (e.message === "INVALID_KEY") {
           showToast('Invalid license key or email.', 'error');
         } else if (e.message === "TIMEOUT") {
-          showToast('Verification timed out. Check your connection.', 'error');
+          showToast('Verification timed out. If you see a row in Supabase, wait a few seconds and use Refresh — or try again.', 'error');
         } else {
-          showToast('Connection error. Please try again.', 'error');
+          showToast(e.message || 'Connection error. Please try again.', 'error');
         }
       } finally {
-        clearTimeout(safetyTimeout);
         btn.disabled = false;
         btn.textContent = 'Unlock Now';
       }
@@ -1272,7 +1268,7 @@
         await MediHelp.License.restore();
         showToast('Access Restored Successfully!', 'success');
         closePremiumModal();
-        if (currentTopicId) startQuiz(currentTopicId, document.getElementById('current-topic-title').textContent);
+        window.location.href = window.location.pathname + (currentTopicId ? ('?topic_id=' + encodeURIComponent(currentTopicId) + '&cb=' + Date.now()) : ('?cb=' + Date.now()));
       } catch (e) {
         showToast(e.message || 'No saved license found.', 'error');
       } finally {
@@ -1298,14 +1294,40 @@
       loader.classList.remove('hidden');
 
       try {
-        // Parallel Fetch for Speed
-        const [mcqRes, caseRes] = await Promise.all([
-          window.dbClient.from('mcqs').select('*').eq('topic_id', topicId).order('created_at', { ascending: true }),
-          window.dbClient.from('case_studies').select('*, case_questions(*)').eq('topic_id', topicId).order('order', { ascending: true })
+        const fetchCtrl = new AbortController();
+        const fetchLimit = setTimeout(() => fetchCtrl.abort(), 60000);
+
+        let mcqRes, caseRes;
+        try {
+        // Parallel fetch; avoid .order('order') on case_studies — "order" is reserved and can break PostgREST.
+        [mcqRes, caseRes] = await Promise.all([
+          window.dbClient.from('mcqs').select('*').eq('topic_id', topicId).order('created_at', { ascending: true }).abortSignal(fetchCtrl.signal),
+          window.dbClient.from('case_studies').select('*, case_questions(*)').eq('topic_id', topicId).order('created_at', { ascending: true }).abortSignal(fetchCtrl.signal)
         ]);
+        } finally {
+          clearTimeout(fetchLimit);
+        }
 
         const mcqs = mcqRes.data || [];
-        const cases = caseRes.data || [];
+        let cases = caseRes.data || [];
+
+        if (caseRes.error) {
+          console.warn('MediHelp: case_studies primary query failed, retrying without order:', caseRes.error.message);
+          const full = await window.dbClient.from('case_studies').select('*, case_questions(*)').eq('topic_id', topicId);
+          cases = full.data || [];
+          if (full.error) console.error('MediHelp: case_studies retry failed:', full.error);
+        }
+
+        cases.forEach((cs) => {
+          if (cs.case_questions && Array.isArray(cs.case_questions)) {
+            cs.case_questions.sort((a, b) => {
+              const ao = typeof a.order === 'number' ? a.order : parseInt(a.order, 10) || 0;
+              const bo = typeof b.order === 'number' ? b.order : parseInt(b.order, 10) || 0;
+              if (ao !== bo) return ao - bo;
+              return String(a.created_at || '').localeCompare(String(b.created_at || ''));
+            });
+          }
+        });
 
         if (mcqs.length > 0) {
           mcqs.sort((a, b) => {
@@ -1323,7 +1345,9 @@
       currentCaseQuestionIds = [];
       currentLoadedCases = [];
 
-      if ((mcqRes.error || !mcqs.length) && (caseRes.error || !cases.length)) {
+      if ((mcqRes.error || !mcqs.length) && !cases.length) {
+        if (mcqRes.error) console.error('MediHelp mcqs error:', mcqRes.error);
+        if (caseRes.error) console.error('MediHelp case_studies error:', caseRes.error);
         list.innerHTML = '<p style="text-align:center; padding: 40px;">No questions found for this topic.</p>';
         return;
       }
@@ -1350,8 +1374,9 @@
 
         currentLoadedCases = cases;
         cases.forEach((cs, cIdx) => {
-          currentCaseQuestionIds.push(...cs.case_questions.map(q => q.id));
-          list.appendChild(renderCaseBlock(cs, cIdx));
+          const subQs = Array.isArray(cs.case_questions) ? cs.case_questions : [];
+          currentCaseQuestionIds.push(...subQs.map(q => q.id));
+          list.appendChild(renderCaseBlock({ ...cs, case_questions: subQs }, cIdx));
         });
       }
       
@@ -1392,7 +1417,10 @@
       } catch (err) {
         console.error('MediHelp Quiz Load Error:', err);
         loader.classList.add('hidden');
-        list.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-danger);">Failed to load questions. Please try again.</p>';
+        const msg = err && err.name === 'AbortError'
+          ? 'Loading timed out. Check your connection and try again, or use a smaller topic.'
+          : 'Failed to load questions. Please try again.';
+        list.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-danger);">' + msg + '</p>';
       }
     }
 
@@ -1598,28 +1626,30 @@
       }
 
       if (initialTopicId || slug) {
-        let query = window.dbClient.from('topics').select('id, title, year_id, usmle_step');
+        let query = window.dbClient.from('topics').select('id, title, year_id, usmle_step, is_free_demo');
         if (initialTopicId) query = query.eq('id', initialTopicId);
         else query = query.eq('slug', slug);
         
         const { data, error } = await query.single();
         if (data) {
-           const urlParams = new URLSearchParams(window.location.search);
-           let isFreeDemo = urlParams.get('free') === 'true';
-           
-           if (!isFreeDemo && (data.year_id || data.usmle_step)) {
-             let checkQuery = window.dbClient.from('topics').select('id').order('order', { ascending: true }).order('created_at', { ascending: true }).limit(1);
-             if (data.year_id) {
-               checkQuery = checkQuery.eq('year_id', data.year_id).is('usmle_step', null);
+           const urlParams2 = new URLSearchParams(window.location.search);
+           let isFreeDemo = urlParams2.get('free') === 'true';
+
+           // Always honor DB flag (was only applied inside year/usmle branch — missed some deep links).
+           if (data.is_free_demo) isFreeDemo = true;
+
+           // First topic in year / USMLE track is free demo even if the flag was not set on the row.
+           if (!isFreeDemo && (data.year_id != null || data.usmle_step != null)) {
+             let firstQ = window.dbClient.from('topics').select('id').order('order', { ascending: true }).order('created_at', { ascending: true }).limit(1);
+             if (data.year_id != null) {
+               firstQ = firstQ.eq('year_id', data.year_id).is('usmle_step', null);
              } else {
-               checkQuery = checkQuery.eq('usmle_step', data.usmle_step);
+               firstQ = firstQ.eq('usmle_step', data.usmle_step);
              }
-             
-             const { data: oldestTopics } = await checkQuery;
-             if (data.is_free_demo) {
-               isFreeDemo = true;
-             }
+             const { data: firstRow } = await firstQ.maybeSingle();
+             if (firstRow && firstRow.id === data.id) isFreeDemo = true;
            }
+
            startQuiz(data.id, data.title, isFreeDemo);
         } else {
            initYears();
