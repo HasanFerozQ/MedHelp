@@ -1,0 +1,12 @@
+<USER_REQUEST>
+we will continue but first please upload this blog in our format with our CTA
+Slug: fda-clears-ai-breast-cancer-chemotherapy-test-arteraai
+Meta Title: FDA Clears First AI Test to Guide Breast Cancer Chemo Decisions — What It Means for Patients
+Meta Description: The FDA just cleared ArteraAI Breast, the first AI-powered tool to help breast cancer patients decide if they need chemotherapy. Here's how it works and why it matters.
+Target Keywords: AI breast cancer test, FDA cleared ArteraAI Breast, breast cancer chemotherapy decision, AI oncology 2026, avoid unnecessary chemotherapy breast cancer
+Word Count: ~900
+Audience: General public / patients + healthcare professionals
+
+The FDA Just Cleared an AI Test That Helps Breast Cancer Patients Avoid Unnecessary Chemotherapy
+For the millions of women diagnosed with breast cancer each year, one of the most agonizing decisions comes early: do I need chemotherapy?
+<truncated 5544 bytes>
