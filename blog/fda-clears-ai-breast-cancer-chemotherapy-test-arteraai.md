@@ -1,7 +1,7 @@
 ---
 title: "FDA Clears First AI Test to Guide Breast Cancer Chemo Decisions — What It Means for Patients"
 date: 2026-05-15
-thumbnail: /artifacts/arteraai_breast_cancer_test_1778854358339.png
+thumbnail: https://images.unsplash.com/photo-1598885159329-9377168ac375?q=80&w=1173&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 category: Oncology & AI
 summary: The FDA just cleared ArteraAI Breast, the first AI-powered tool to help breast cancer patients decide if they need chemotherapy. Here's how it works and why it matters.
 ---
@@ -27,6 +27,8 @@ In early-stage breast cancer (Stage I or II), the primary treatment is usually s
 
 Until now, the "gold standard" for answering this question has been genomic testing. These tests look at the activity of specific genes in a tumor to determine how aggressive it is. While highly effective, they require specialized laboratory equipment, take 2–3 weeks for results, and can cost thousands of dollars.
 
+![Digital Pathology and AI Analysis](https://images.unsplash.com/photo-1676313127709-ffa38b94c545?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
+
 ## How ArteraAI Changes the Game
 
 Unlike genomic tests that require tissue to be sent to a specialized lab for molecular analysis, ArteraAI works with what is already available in every hospital: the **H&E (Hematoxylin and Eosin) slide**.
@@ -43,6 +45,8 @@ These are the standard glass slides pathologists use to look at cancer cells und
 The FDA clearance was backed by impressive data. Researchers trained the AI on over 27,000 digital pathology images from thousands of patients. The AI "learned" which visual patterns were associated with long-term survival and which were associated with a high risk of recurrence.
 
 In a landmark validation study, ArteraAI was used to analyze samples from previous clinical trials. The AI was able to successfully categorize patients into "low-risk" and "high-risk" groups. Most importantly, it identified a significant group of patients who were previously told they were in the "intermediate" or "gray" zone by genomic tests, providing them with a clearer path forward.
+
+![Personalized Oncology Consultation](https://plus.unsplash.com/premium_photo-1664297978773-c9a254287a1f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
 
 ## What This Means for You
 
