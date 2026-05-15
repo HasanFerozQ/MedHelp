@@ -61,8 +61,6 @@ However, it is important to note that ArteraAI is a *tool* to assist doctors, no
 
 ---
 
-![MediHelp — Free medical bill audit tool](https://www.medihelp.live/images/homepage-hero.png)
-
 > **Studies show 80% of medical bills contain errors.** MediHelp's free tools and expert human advocates help patients find and fight back before they pay.  
 > **[Run a Free Audit →](https://www.medihelp.live/audit)**
 
@@ -77,8 +75,6 @@ At **MediHelp**, we specialize in identifying these errors. Whether it's an "upc
 ### Need a Human Expert in Your Corner?
 
 For complex oncology bills — large hospital stays, denied claims, or bills you suspect are seriously wrong — our trained billing advocates go further than any automated tool.
-
-![MediHelp Human Expert Negotiation Service](https://www.medihelp.live/images/human-expert-card.png)
 
 Our advocates review every line of your bill, validate CPT codes, and negotiate directly with hospital billing departments. **You only pay if we save you money.**
 

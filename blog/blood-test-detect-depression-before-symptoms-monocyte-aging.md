@@ -62,8 +62,6 @@ The monocyte-specific epigenetic clock proved to be the key differentiator in th
 
 ---
 
-![MediHelp — Free medical bill audit tool](https://www.medihelp.live/images/homepage-hero.png)
-
 > **Studies show 80% of medical bills contain errors.** MediHelp's free tools and expert human advocates help patients find and fight back before they pay.  
 > **[Run a Free Audit →](https://www.medihelp.live/audit)**
 
@@ -101,7 +99,6 @@ At **MediHelp**, we believe you shouldn't have to fight your insurance company w
 
 If you've received a large hospital bill for mental health services or complex diagnostic testing, our human advocates are here to help. We review your CPT codes, check for "upcoding" errors, and negotiate directly with providers to reduce your out-of-pocket costs.
 
-![MediHelp Human Expert Negotiation Service](https://www.medihelp.live/images/human-expert-card.png)
 
 **[$15 to open your case · 15% of savings only · No savings = no charge](https://www.medihelp.live/pricing)**
 
