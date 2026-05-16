@@ -62,26 +62,23 @@ The medical profession is not being replaced by AI; it is being restructured aro
 
 <!-- 🏆 Medical Exam Mastery CTA (Universal Component) -->
 <div class="exam-mastery-banner" style="margin: 40px 0; background: linear-gradient(145deg, #1a1a1a 0%, rgba(34,197,94,0.05) 100%); border: 1px solid #22c55e; border-radius: 24px; padding: 40px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: left;">
-  <div style="position: absolute; top: 24px; right: -40px; background: #22c55e; color: #000; padding: 6px 48px; font-size: 11px; font-weight: 900; transform: rotate(45deg); letter-spacing: 1px;">BEST VALUE</div>
-  
-  <div style="display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
-    <div>
-      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(34,197,94,0.15); color: #22c55e; padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 800; margin-bottom: 16px; border: 1px solid rgba(34,197,94,0.3);">
-        UPDATED: May 2026 Mock Exams
-      </div>
-      <h2 style="font-size: 32px; font-weight: 900; margin: 0 0 12px; color: #fff; letter-spacing: -1px; border: none; padding: 0;">Medical Exam Mastery</h2>
-      <p style="font-size: 16px; color: #888; margin-bottom: 24px; line-height: 1.6;">Unlock the world's most affordable, high-yield Q-Bank for US MD, MBBS, and USMLE candidates.</p>
-    </div>
-    
-    <div style="text-align: center; background: rgba(255,255,255,0.03); padding: 24px; border-radius: 20px; border: 1px solid #333; min-width: 240px;">
-      <div style="font-size: 42px; font-weight: 900; color: #22c55e; letter-spacing: -2px;">$24<span style="font-size:20px;">.99</span></div>
-      <div style="font-size: 12px; color: #888; margin-bottom: 16px; font-weight: 600;">per year · cancel anytime</div>
-      
-      <a href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank" style="display: block; background: linear-gradient(135deg, #22c55e, #10b981); color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 10px; font-weight: 900; font-size: 14px; text-align: center;">
-        Unlock Instant Access
-      </a>
-    </div>
-  </div>
+<div style="position: absolute; top: 24px; right: -40px; background: #22c55e; color: #000; padding: 6px 48px; font-size: 11px; font-weight: 900; transform: rotate(45deg); letter-spacing: 1px;">BEST VALUE</div>
+<div style="display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
+<div>
+<div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(34,197,94,0.15); color: #22c55e; padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 800; margin-bottom: 16px; border: 1px solid rgba(34,197,94,0.3);">
+UPDATED: May 2026 Mock Exams
+</div>
+<h2 style="font-size: 32px; font-weight: 900; margin: 0 0 12px; color: #fff; letter-spacing: -1px; border: none; padding: 0;">Medical Exam Mastery</h2>
+<p style="font-size: 16px; color: #888; margin-bottom: 24px; line-height: 1.6;">Unlock the world's most affordable, high-yield Q-Bank for US MD, MBBS, and USMLE candidates.</p>
+</div>
+<div style="text-align: center; background: rgba(255,255,255,0.03); padding: 24px; border-radius: 20px; border: 1px solid #333; min-width: 240px;">
+<div style="font-size: 42px; font-weight: 900; color: #22c55e; letter-spacing: -2px;">$24<span style="font-size:20px;">.99</span></div>
+<div style="font-size: 12px; color: #888; margin-bottom: 16px; font-weight: 600;">per year · cancel anytime</div>
+<a href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank" style="display: block; background: linear-gradient(135deg, #22c55e, #10b981); color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 10px; font-weight: 900; font-size: 14px; text-align: center;">
+Unlock Instant Access
+</a>
+</div>
+</div>
 </div>
 
 ---
