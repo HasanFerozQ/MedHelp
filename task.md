@@ -35,3 +35,16 @@
 - [x] Generate `p6.sql`: Clinical Scenarios (50)
 - [x] Generate `p7.sql`: Final Review & Catch-up (30)
 - [x] Run Python JSON syntax verification script across all 7 files. (Result: 330 MCQs Validated)
+
+## Sports Medicine & Soft Tissue Injuries (300 MCQs)
+- [x] Generate `p1.sql`: General Principles & Shoulder (50) **[Includes Master Wipe]**
+- [x] Generate `p2.sql`: Elbow & Distal Biceps (50)
+- [x] Generate `p3.sql`: Wrist, Hand & Hip (50)
+- [x] Generate `p4.sql`: Knee Ligaments & PLC (50)
+- [x] Generate `p5.sql`: Ankle, Foot & Stress Fractures (50)
+- [x] Generate `p6.sql`: Pharmacology, Concussion & Biomechanics (50)
+- [x] Run Python JSON syntax verification script across all 6 files. (Result: 300 MCQs Validated)
+
+## UI/UX Enhancements
+- [x] Integrate Medical Exam Mastery CTA into Homepage (index.html)
+- [x] Implement pulse animation and responsive grid for homepage CTA
