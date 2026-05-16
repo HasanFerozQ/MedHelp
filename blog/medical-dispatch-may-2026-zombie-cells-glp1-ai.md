@@ -42,8 +42,18 @@ In 2022, effective obesity treatment meant a weekly injection or surgery. By May
 
 ![The GLP-1 Oral Pill Revolution](https://images.unsplash.com/photo-1631203884714-2eb146c2cccc?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
 
-### Small Molecules vs. Peptides
-The breakthrough lies in non-peptide agonists like orforglipron, which can be taken without the strict fasting requirements of previous oral versions. For medical students, this is a high-yield study of **incretin-based insulin secretion** and **arcuate nucleus appetite regulation**.
+### What Is a GLP-1 and Why Does It Work?
+GLP-1 stands for **Glucagon-Like Peptide-1** — an incretin hormone that signals the pancreas to release insulin, slows gastric emptying, and reduces appetite via the hypothalamus. GLP-1 receptor agonists are engineered versions that resist rapid degradation, providing sustained therapeutic effects.
+
+### The Two Oral GLP-1s That Changed Everything
+1. **Oral Semaglutide (25mg):** Approved in late 2025, demonstrating a 13.6% mean weight loss. It requires careful administration (empty stomach, small amount of water).
+2. **Orforglipron (Foundayo):** Approved in April 2026. As a non-peptide "small molecule," it can be taken anytime with or without food, offering a massive convenience advantage.
+
+### Is Bariatric Surgery Dead?
+Not quite. For Class 3 obesity (BMI ≥ 40), surgery still offers more durable long-term weight loss and rapid diabetes resolution. However, the threshold for surgery is shifting as pharmacotherapy becomes a viable first-line alternative for millions.
+
+### What Medical Students Need to Know
+For **USMLE** and **MBBS** exams, focus on the incretin effect, the role of the arcuate nucleus in appetite regulation, and the surgical consideration of delayed gastric emptying (aspiration risk).
 
 ---
 
