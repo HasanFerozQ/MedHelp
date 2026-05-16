@@ -79,5 +79,5 @@ BEGIN
     (v_topic_id, 'In a "Just Culture," human error is viewed as __________.', '["A failure of character", "A symptom of a system problem", "A reason for firing", "An intentional act"]', 1, 'The focus is on why the person made the error, not the error itself.'),
     (v_topic_id, 'The "Best" way to prevent medical errors is to:', '["Hire only the best people", "Design systems that make the right way easy and the wrong way hard", "Increase the number of lawsuits", "Write more rules"]', 1, 'Design (human factors) is stronger than discipline or policy.'),
     (v_topic_id, 'If you see a colleague not washing their hands before entering a room, you should:', '["Ignore it", "Report them to the board", "Briefly and professionally remind them (\"Peer-to-peer accountability\")", "Tell the patient"]', 2, 'Low-level, professional reminders are a hallmark of a healthy safety culture.'),
-    (v_topic_id, 'Patient safety is ultimately the responsibility of:', '["The nurses", "The doctors", "The administration", "Everyone in the healthcare organization"]', 3, 'Safety is a collective, organizational responsibility.')
+    (v_topic_id, 'Patient safety is ultimately the responsibility of:', '["The nurses", "The doctors", "The administration", "Everyone in the healthcare organization"]', 3, 'Safety is a collective, organizational responsibility.');
 END $$;

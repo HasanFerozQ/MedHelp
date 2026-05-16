@@ -81,5 +81,5 @@ BEGIN
     (v_topic_id, 'A hospital building a new surgical wing is an investment in __________.', '["Structure", "Process", "Outcome", "None of the above"]', 0, 'New facilities are structural improvements.'),
     (v_topic_id, 'Which measure is most sensitive to the "acuity" of the patient population?', '["Process", "Outcome (e.g., Mortality)", "Structure", "All are equally sensitive"]', 1, 'Outcomes are highly influenced by the patient''s baseline health and severity of illness.'),
     (v_topic_id, 'If a hospital has a 100% compliance rate with handwashing but a high rate of infections, the team should look at __________.', '["The accuracy of the process measurement", "Other processes or structural factors contributing to infection", "Both A and B", "Neither; the data is wrong"]', 2, 'Safety is multi-factorial; if one process is perfect but outcomes are poor, other causes must be explored.'),
-    (v_topic_id, 'The "Standard of Care" is a __________ measure.', '["Structure", "Process", "Outcome", "Legal"]', 1, 'Standard of care typically defines the processes (actions) that are expected for a given condition.')
+    (v_topic_id, 'The "Standard of Care" is a __________ measure.', '["Structure", "Process", "Outcome", "Legal"]', 1, 'Standard of care typically defines the processes (actions) that are expected for a given condition.');
 END $$;
