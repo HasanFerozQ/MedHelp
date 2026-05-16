@@ -73,7 +73,7 @@ UPDATED: May 2026 Mock Exams
 </div>
 <div style="text-align: center; background: rgba(255,255,255,0.03); padding: 24px; border-radius: 20px; border: 1px solid #333; min-width: 240px;">
 <div style="font-size: 42px; font-weight: 900; color: #22c55e; letter-spacing: -2px;">$24<span style="font-size:20px;">.99</span></div>
-<div style="font-size: 12px; color: #888; margin-bottom: 16px; font-weight: 600;">per year · cancel anytime</div>
+<div style="font-size: 12px; color: #888; margin-bottom: 16px; font-weight: 600;">per year · full clinical access</div>
 <a href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank" style="display: block; background: linear-gradient(135deg, #22c55e, #10b981); color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 10px; font-weight: 900; font-size: 14px; text-align: center;">
 Unlock Instant Access
 </a>
