@@ -145,6 +145,12 @@ function renderNPIResults(results, container) {
           <div class="npi-status-container">
             <span class="npi-status" style="color:${statusColor};">${status}</span>
             <code class="npi-number">NPI: ${p.number}</code>
+            <button class="npi-copy-btn" 
+                    data-details="${window.escapeHtml(name)} | NPI: ${p.number} | ${window.escapeHtml(taxonomy)} | ${window.escapeHtml(addressLine)}" 
+                    title="Copy details"
+                    style="margin-top: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: var(--transition);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
           </div>
         </div>
         
@@ -163,6 +169,23 @@ function renderNPIResults(results, container) {
       </div>
     `;
   }).join('');
+
+  // Add event listener for copy buttons
+  container.querySelectorAll('.npi-copy-btn').forEach(btn => {
+    btn.onclick = (e) => {
+      e.preventDefault();
+      const details = btn.dataset.details;
+      navigator.clipboard.writeText(details).then(() => {
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+        btn.style.borderColor = 'var(--success)';
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+          btn.style.borderColor = 'var(--border)';
+        }, 2000);
+      });
+    };
+  });
 }
 
 // Global hook for Search Button

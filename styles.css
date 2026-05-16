@@ -3203,6 +3203,7 @@ html, body {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  text-align: left;
 }
 
 .npi-card:hover {
@@ -3288,6 +3289,13 @@ html, body {
   align-items: flex-end;
   gap: 6px;
   min-width: 110px;
+}
+
+.npi-copy-btn:hover {
+  background: rgba(255,255,255,0.1) !important;
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  transform: scale(1.05);
 }
 
 .npi-status {
