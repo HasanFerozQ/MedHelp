@@ -55,8 +55,9 @@ function setupEventListeners() {
     const code = btn.getAttribute('data-code');
     const desc = btn.getAttribute('data-desc');
     
-    // If description is just the placeholder dash, ignore it for the copy text
-    const cleanDesc = (desc && desc !== '—') ? desc : '';
+    // Clean description for copy
+    const cleaned = cleanMedicalDescription(desc);
+    const cleanDesc = (cleaned && cleaned !== '—') ? cleaned : '';
     const textToCopy = cleanDesc ? `${code} : ${cleanDesc}` : code;
     
     navigator.clipboard.writeText(textToCopy)
@@ -204,7 +205,7 @@ async function performSearch(query) {
         grouped[key] = {
           code: r.code,
           type: type,
-          desc: r.short_description || '—',
+          desc: cleanMedicalDescription(r.short_description),
           regions: new Set([r.country || 'US'])
         };
       } else {
@@ -358,3 +359,27 @@ function renderNCCIResults(results, queryCode) {
   listContainer.innerHTML = html;
 }
 
+function cleanMedicalDescription(desc) {
+  if (!desc || desc === '—') return '—';
+  
+  // 1. Remove excessive internal whitespace (common in fixed-width CMS data)
+  let cleaned = desc.replace(/\s{2,}/g, ' ').trim();
+  
+  // 2. Remove trailing single character flags (I, J, M, etc.) common in Medicare files
+  // These usually indicate category flags (e.g. Cat II codes) or status indicators.
+  // We only remove if it's a single uppercase letter preceded by a space at the end.
+  // Exception: Common medical suffixes like 'A', 'B' (e.g., 'Type A') are usually part of a phrase.
+  // But flags like 'I', 'J', 'M' after "Bk pain" are definitely markers.
+  if (/\s[I-Z]$/.test(cleaned)) {
+    cleaned = cleaned.replace(/\s[I-Z]$/, '');
+  }
+  
+  return cleaned;
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
