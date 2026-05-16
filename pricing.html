@@ -61,6 +61,120 @@
   }
 }
   </script>
+  <style>
+    /* Premium Exam Card Styles */
+    .premium-exam-card {
+      background: linear-gradient(145deg, var(--bg-card) 0%, rgba(34,197,94,0.05) 100%);
+      border: 1px solid var(--accent);
+      border-radius: 24px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      transition: all 0.4s ease;
+    }
+    .premium-exam-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 60px rgba(34,197,94,0.15);
+      border-color: #4ade80;
+    }
+    .premium-exam-card::before {
+      content: 'BEST VALUE';
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: var(--accent);
+      color: #000;
+      padding: 8px 40px;
+      font-size: 10px;
+      font-weight: 900;
+      transform: rotate(45deg);
+      letter-spacing: 1px;
+    }
+    .update-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34,197,94,0.15);
+      color: var(--accent);
+      padding: 6px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      border: 1px solid rgba(34,197,94,0.3);
+    }
+    
+    /* Comparison Table */
+    .comparison-section {
+      margin-top: 100px;
+      padding: 60px;
+      background: var(--bg-elevated);
+      border-radius: 32px;
+      border: 1px solid var(--border);
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 32px;
+    }
+    .comparison-table th {
+      text-align: left;
+      padding: 20px;
+      font-size: 14px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .comparison-table td {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+    }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .col-feature { color: var(--text-h); }
+    .col-medihelp { color: var(--accent); font-weight: 800; }
+    .col-others { color: var(--text-muted); opacity: 0.6; }
+
+    .btn-instant {
+      background: linear-gradient(135deg, var(--accent), #10b981);
+      color: white !important;
+      text-decoration: none;
+      padding: 20px 40px;
+      border-radius: 16px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 25px rgba(34,197,94,0.4);
+      transition: all 0.3s ease;
+    }
+    .btn-instant:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 35px rgba(34,197,94,0.6);
+    }
+
+    /* Mobile Stacking Utility */
+    @media (max-width: 900px) {
+      .grid-stack-mobile {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+      }
+      .premium-exam-card {
+        padding: 32px 20px;
+      }
+      .premium-exam-card > div {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+      .comparison-section {
+        padding: 24px 16px;
+      }
+      .comparison-table th, .comparison-table td {
+        padding: 12px 8px;
+        font-size: 13px;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -175,11 +289,12 @@
   </section>
 
   <div id="pricing" class="container" style="padding-top: 60px; padding-bottom: 80px; max-width: 900px;">
-    <div class="section-label" style="text-align: left;">Financial Transparency</div>
-    <h1 style="margin-bottom: 24px;">Simple, Two-Step Pricing</h1>
-    <p style="color:var(--text-muted); font-size: 18px; margin-bottom: 48px; max-width: 600px;">Our automated tools (Audit, Provider Search) are always 100% free. For high-stakes negotiations, our human experts work on a performance-based model.</p>
+    <div class="section-label" style="text-align: left;">Transparent Pricing</div>
+    <h1 style="margin-bottom: 24px;">Simple, Value-Driven Services</h1>
+    <p style="color:var(--text-muted); font-size: 18px; margin-bottom: 48px; max-width: 700px;">Expert clinical advocacy for patient billing and high-yield preparation tools for medical professionals. <strong>We provide the world's most affordable medical academic resources.</strong></p>
 
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-bottom: 60px;">
+    <div class="section-label" style="text-align: center; margin-bottom: 40px;">Clinical Advocacy — For Patients</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-bottom: 80px;">
         <!-- Step 1 Card -->
         <div class="suite-wrapper" style="margin-bottom:0; padding: 40px; border: 1px solid var(--border); background: var(--bg-card); display: flex; flex-direction: column;">
             <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 8px;">Step 1: Initiation</div>
@@ -228,7 +343,117 @@
         </div>
     </div>
 
-    <div style="margin-top: 40px; font-size: 12px; color: var(--text-muted); text-align: center;">
+    </div>
+
+    <!-- NEW: Academic Pricing -->
+    <div class="section-label" style="text-align: center; margin: 80px 0 40px;">Medical Exam Prep — For Doctors</div>
+    
+    <div class="premium-exam-card">
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center;">
+            <div class="grid-stack-mobile">
+                <div class="update-badge" style="background: rgba(245,158,11,0.15); color: var(--expert-amber); border-color: rgba(245,158,11,0.3);">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    Market Leading Price — Guaranteed
+                </div>
+                <h2 style="font-size: 42px; font-weight: 900; margin: 0 0 16px; color: var(--text-h); letter-spacing: -1.5px;">Medical Exam Mastery</h2>
+                <div style="font-size: 14px; color: var(--accent); font-weight: 800; margin-bottom: 24px; display: flex; align-items: center; gap: 8px;">
+                    <span style="display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></span>
+                    NEW: Updated USMLE Mock Exams (May 2026)
+                </div>
+                <p style="font-size: 18px; color: var(--text-muted); margin-bottom: 32px; line-height: 1.6;">Access the world's most affordable, high-yield Q-Bank and Flashcard system. Designed for US MD, MBBS, and USMLE candidates who want board-certified quality without the board-certified price tag.</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px;">
+                    <div style="display: flex; align-items: center; gap: 12px; color: var(--text-h); font-weight: 700; font-size: 15px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        5,000+ High-Yield MCQs
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; color: var(--text-h); font-weight: 700; font-size: 15px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                        1,000+ Active Recall Cards
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; color: var(--text-h); font-weight: 700; font-size: 15px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        USMLE Step 1, 2 & 3 Support
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; color: var(--text-h); font-weight: 700; font-size: 15px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                        Monthly Mock Exams
+                    </div>
+                </div>
+
+                <a href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank" class="btn-instant">
+                    Get Instant Access — $24.99/yr
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <p style="margin-top: 16px; font-size: 12px; color: var(--text-muted); font-weight: 600;">
+                    🔓 No recurring contracts • Instant Activation • 24/7 Support
+                </p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; border: 1px solid var(--border);">
+                <div style="font-size: 12px; font-weight: 800; color: var(--text-muted); margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px;">Market Comparison</div>
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: var(--text-muted);">Traditional Q-Banks</span>
+                        <span style="color: var(--danger); font-weight: 800; font-size: 20px;">$500+ / yr</span>
+                    </div>
+                    <div style="height: 1px; background: var(--border);"></div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: var(--text-h); font-weight: 700;">MediHelp Mastery</span>
+                        <span style="color: var(--accent); font-weight: 900; font-size: 28px;">$24.99 / yr</span>
+                    </div>
+                </div>
+                <div style="margin-top: 32px; padding: 16px; background: rgba(34,197,94,0.08); border-radius: 12px; font-size: 13px; color: var(--accent); font-weight: 700; text-align: center;">
+                    Saving you 95% compared to major competitors
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Table Section -->
+    <div class="comparison-section">
+        <h3 style="margin: 0 0 8px; text-align: center;">Why MediHelp is the Smartest Choice</h3>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 40px;">Professional grade content. Unbeatable price.</p>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th class="col-feature">Feature</th>
+                    <th class="col-medihelp">MediHelp</th>
+                    <th class="col-others">Other Banks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-feature">High-Yield Questions</td>
+                    <td class="col-medihelp">5,000+</td>
+                    <td class="col-others">3,000 - 4,000</td>
+                </tr>
+                <tr>
+                    <td class="col-feature">Active Recall Flashcards</td>
+                    <td class="col-medihelp">Included (1,000+)</td>
+                    <td class="col-others">Extra $100+</td>
+                </tr>
+                <tr>
+                    <td class="col-feature">Monthly Mock Exams</td>
+                    <td class="col-medihelp">Yes</td>
+                    <td class="col-others">Rarely / Static</td>
+                </tr>
+                <tr>
+                    <td class="col-feature">Mobile/Desktop Sync</td>
+                    <td class="col-medihelp">Yes</td>
+                    <td class="col-others">Yes</td>
+                </tr>
+                <tr>
+                    <td class="col-feature">Annual Cost</td>
+                    <td class="col-medihelp" style="font-size: 20px;">$24.99</td>
+                    <td class="col-others">$499.00+</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 80px; font-size: 12px; color: var(--text-muted); text-align: center;">
         All financial terms are governed by our <a href="/refund" style="color:var(--accent); text-decoration:none;">Refund Policy</a> and <a href="/terms" style="color:var(--accent); text-decoration:none;">Terms of Service</a>.
     </div>
   </div>

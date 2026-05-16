@@ -52,9 +52,12 @@ function setupEventListeners() {
     const btn = e.target.closest('.copy-btn');
     if (!btn) return;
     
-    const code = btn.dataset.code;
-    const desc = btn.dataset.desc;
-    const textToCopy = desc ? `${code} : ${desc}` : code;
+    const code = btn.getAttribute('data-code');
+    const desc = btn.getAttribute('data-desc');
+    
+    // If description is just the placeholder dash, ignore it for the copy text
+    const cleanDesc = (desc && desc !== '—') ? desc : '';
+    const textToCopy = cleanDesc ? `${code} : ${cleanDesc}` : code;
     
     navigator.clipboard.writeText(textToCopy)
       .then(() => {
