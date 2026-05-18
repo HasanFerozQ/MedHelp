@@ -64,7 +64,7 @@
   <style>
     /* Premium Exam Card Styles */
     .premium-exam-card {
-      background: linear-gradient(145deg, var(--bg-card) 0%, rgba(34,197,94,0.05) 100%);
+      background: linear-gradient(145deg, var(--bg-card) 0%, rgba(var(--accent-rgb),0.05) 100%);
       border: 1px solid var(--accent);
       border-radius: 24px;
       padding: 48px;
@@ -75,8 +75,8 @@
     }
     .premium-exam-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 30px 60px rgba(34,197,94,0.15);
-      border-color: #4ade80;
+      box-shadow: 0 30px 60px rgba(var(--accent-rgb),0.15);
+      border-color: var(--accent-light);
     }
     .premium-exam-card::before {
       content: 'BEST VALUE';
@@ -95,14 +95,14 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(34,197,94,0.15);
+      background: rgba(var(--accent-rgb),0.15);
       color: var(--accent);
       padding: 6px 12px;
       border-radius: 100px;
       font-size: 11px;
       font-weight: 800;
       margin-bottom: 20px;
-      border: 1px solid rgba(34,197,94,0.3);
+      border: 1px solid rgba(var(--accent-rgb),0.3);
     }
     
     /* Comparison Table */
@@ -136,7 +136,7 @@
     .col-others { color: var(--text-muted); opacity: 0.6; }
 
     .btn-instant {
-      background: linear-gradient(135deg, var(--accent), #10b981);
+      background: linear-gradient(135deg, var(--accent), var(--accent-warm));
       color: white !important;
       text-decoration: none;
       padding: 20px 40px;
@@ -145,12 +145,12 @@
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 10px 25px rgba(34,197,94,0.4);
+      box-shadow: 0 10px 25px rgba(var(--accent-rgb),0.4);
       transition: all 0.3s ease;
     }
     .btn-instant:hover {
       transform: scale(1.05);
-      box-shadow: 0 15px 35px rgba(34,197,94,0.6);
+      box-shadow: 0 15px 35px rgba(var(--accent-rgb),0.6);
     }
 
     /* Mobile Stacking Utility */
@@ -270,11 +270,11 @@
           </div>
 
           <div style="display:flex; flex-direction:column; gap:16px; flex-shrink:0; min-width:200px;">
-            <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:16px; padding:24px; text-align:center;">
+            <div style="background:rgba(var(--amber-rgb),0.08); border:1px solid rgba(var(--amber-rgb),0.2); border-radius:16px; padding:24px; text-align:center;">
               <div style="font-size:36px; font-weight:900; color:var(--expert-amber); font-family:var(--font-display); letter-spacing:-1px;">$15</div>
               <div style="font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.4;">to open your case</div>
             </div>
-            <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:16px; padding:24px; text-align:center;">
+            <div style="background:rgba(var(--accent-rgb),0.08); border:1px solid rgba(var(--accent-rgb),0.2); border-radius:16px; padding:24px; text-align:center;">
               <div style="font-size:36px; font-weight:900; color:var(--accent); font-family:var(--font-display); letter-spacing:-1px;">15%</div>
               <div style="font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.4;">of savings only</div>
             </div>
@@ -310,7 +310,7 @@
 
         <!-- Step 2 Card -->
         <div class="suite-wrapper" style="margin-bottom:0; padding: 40px; border: 1px solid var(--accent); background: rgba(6,182,212,0.03); display: flex; flex-direction: column;">
-            <div style="font-size: 11px; font-weight: 700; color: #22c55e; text-transform: uppercase; margin-bottom: 8px;">Step 2: Performance</div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 8px;">Step 2: Performance</div>
             <h2 style="margin: 0 0 16px;">Success Fee</h2>
             <div style="font-size: 32px; font-weight: 800; margin-bottom: 20px;">15% <span style="font-size: 14px; font-weight: 400; color: var(--text-muted);">of gross savings</span></div>
             <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; flex-grow: 1;">Our experts negotiate directly with the hospital or provider on your behalf. If we don't save you money beyond the intake fee, you owe nothing more.</p>
@@ -351,7 +351,7 @@
     <div class="premium-exam-card">
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center;">
             <div class="grid-stack-mobile">
-                <div class="update-badge" style="background: rgba(245,158,11,0.15); color: var(--expert-amber); border-color: rgba(245,158,11,0.3);">
+                <div class="update-badge" style="background: rgba(var(--amber-rgb),0.15); color: var(--expert-amber); border-color: rgba(var(--amber-rgb),0.3);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                     Market Leading Price — Guaranteed
                 </div>
@@ -403,7 +403,7 @@
                         <span style="color: var(--accent); font-weight: 900; font-size: 28px;">$24.99 / yr</span>
                     </div>
                 </div>
-                <div style="margin-top: 32px; padding: 16px; background: rgba(34,197,94,0.08); border-radius: 12px; font-size: 13px; color: var(--accent); font-weight: 700; text-align: center;">
+                <div style="margin-top: 32px; padding: 16px; background: rgba(var(--accent-rgb),0.08); border-radius: 12px; font-size: 13px; color: var(--accent); font-weight: 700; text-align: center;">
                     Saving you 95% compared to major competitors
                 </div>
             </div>

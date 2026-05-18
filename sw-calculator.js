@@ -17,6 +17,7 @@ const ASSETS = [
   '/tabs/calculator/schemas-remaining.js',
   '/tabs/calculator/compute.js',
   '/tabs/calculator/compute-remaining.js',
+  '/tabs/calculator/clinical-grade.js',
   '/tabs/calculator/ui.js',
   '/core.js',
   '/icons/logo.png',

@@ -219,7 +219,7 @@ CalcClinicalData.apacheII = function(v) {
 };
 
 CalcClinicalData.hadlockEFW = function(ac, bpd) {
-  const logEfw = 1.326 - 0.00326 * ac * bpd + 0.0107 * ac + 0.0438 * bpd + 0.158 * bpd;
+  const logEfw = 1.33 - 0.00326 * ac * bpd + 0.0438 * ac + 0.158 * bpd;
   return Math.round(Math.pow(10, logEfw));
 };
 

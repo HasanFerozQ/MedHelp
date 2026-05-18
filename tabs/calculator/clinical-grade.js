@@ -5,28 +5,49 @@
 (function() {
   'use strict';
 
+  if (typeof CalcCompute === 'undefined' || typeof CalcClinicalData === 'undefined') {
+    console.warn('CalcCompute or CalcClinicalData not defined. Premium upgrades deferred.');
+    return;
+  }
+
   /** ACC/AHA 2013 Pooled Cohort Equations — full coefficient sets */
   CalcClinicalData.ascvdRiskPCE = function(age, sex, race, tc, hdl, sbp, treated, smoker, diabetic) {
     if (age < 40 || age > 79 || tc <= 0 || hdl <= 0 || sbp <= 0) return null;
     const aa = race === 'aa';
     const male = sex === 'male';
-    let b, mean, s10;
+    const lnAge = Math.log(age);
+    const lnTC = Math.log(tc);
+    const lnHDL = Math.log(hdl);
+    const lnSBP = Math.log(sbp);
+    let lp = 0, mean = 0, s10 = 0;
+
     if (male && !aa) {
-      b = { age: 12.344, tc: 11.853, hdl: -7.990, sbp: treated ? 1.797 : 1.764, smoke: 7.837, dm: 0.658 };
+      // White Male
+      lp = 12.344 * lnAge + 11.853 * lnTC - 2.664 * lnAge * lnTC - 7.990 * lnHDL
+        + 1.761 * lnAge * lnHDL + (treated ? 1.797 : 1.764) * lnSBP
+        + (smoker ? 7.837 - 1.795 * lnAge : 0) + (diabetic ? 0.658 : 0);
       mean = 61.18; s10 = 0.9144;
     } else if (male && aa) {
-      b = { age: 2.469, tc: 0.302, hdl: -0.307, sbp: treated ? 1.916 : 1.809, smoke: 0.549, dm: 0.645 };
+      // AA Male
+      lp = 2.469 * lnAge + 0.302 * lnTC - 0.307 * lnHDL
+        + (treated ? 1.916 : 1.809) * lnSBP
+        + (smoker ? 0.549 : 0) + (diabetic ? 0.645 : 0);
       mean = 19.54; s10 = 0.8954;
     } else if (!male && !aa) {
-      b = { age: -29.799, tc: 13.540, hdl: -13.578, sbp: treated ? 2.019 : 1.957, smoke: 7.574, dm: 0.661 };
+      // White Female
+      lp = -29.799 * lnAge + 4.884 * lnAge * lnAge + 13.540 * lnTC - 3.114 * lnAge * lnTC
+        - 13.578 * lnHDL + 3.149 * lnAge * lnHDL + (treated ? 2.019 : 1.957) * lnSBP
+        + (smoker ? 7.574 - 1.665 * lnAge : 0) + (diabetic ? 0.661 : 0);
       mean = -29.18; s10 = 0.9665;
     } else {
-      b = { age: 17.114, tc: 0.940, hdl: -18.920, sbp: treated ? 4.475 : 4.530, smoke: 0.691, dm: 0.874 };
+      // AA Female
+      lp = 17.114 * lnAge + 0.940 * lnTC - 18.920 * lnHDL + 4.475 * lnAge * lnHDL
+        + (treated ? 4.475 : 4.530) * lnSBP
+        + (smoker ? 0.691 : 0) + (diabetic ? 0.874 : 0);
       mean = 86.61; s10 = 0.9533;
     }
-    const lp = b.age * Math.log(age) + b.tc * Math.log(tc) + b.hdl * Math.log(hdl)
-      + b.sbp * Math.log(sbp) + (smoker ? b.smoke : 0) + (diabetic ? b.dm : 0);
-    return (1 - Math.pow(s10, Math.exp(lp - mean))) * 100;
+    const risk = (1 - Math.pow(s10, Math.exp(lp - mean))) * 100;
+    return Math.max(0, Math.min(100, risk));
   };
 
   /** Bhutani nomogram phototherapy thresholds (mg/dL) by age in hours — high-risk line approx */

@@ -136,16 +136,16 @@
       color: #e2e8f0 !important;
     }
     .audit-select option:checked {
-      background: #22c55e !important;
-      color: #052e16 !important;
+      background: var(--accent) !important;
+      color: #ffffff !important;
     }
     [data-theme="light"] .audit-select option {
       background: #ffffff !important;
       color: #0f172a !important;
     }
     [data-theme="light"] .audit-select option:checked {
-      background: #22c55e !important;
-      color: #052e16 !important;
+      background: var(--accent) !important;
+      color: #ffffff !important;
     }
     #interactive-grid-container select option {
       background: var(--bg-main) !important;
@@ -199,16 +199,16 @@
       margin-bottom: 8px;
     }
     .negotiation-cta-btn {
-      background: linear-gradient(135deg, #f59e0b, #facc15);
+      background: linear-gradient(135deg, var(--expert-amber), var(--expert-amber-dim));
       color: #111827;
       border: 1px solid rgba(255, 255, 255, 0.35);
-      box-shadow: 0 10px 24px rgba(245, 158, 11, 0.38);
+      box-shadow: 0 10px 24px rgba(var(--amber-rgb), 0.38);
       font-weight: 900;
       letter-spacing: 0.02em;
     }
     .negotiation-cta-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(245, 158, 11, 0.5);
+      box-shadow: 0 14px 30px rgba(var(--amber-rgb), 0.5);
       filter: brightness(1.03);
     }
     .negotiation-cta-points {
@@ -220,18 +220,18 @@
     }
     .negotiation-cta-points li { margin-bottom: 4px; }
     [data-theme="light"] .negotiation-cta-wrap {
-      border: 1px solid rgba(34, 197, 94, 0.35);
-      background: linear-gradient(135deg, rgba(240, 253, 244, 0.98), rgba(255, 255, 255, 0.99));
+      border: 1px solid rgba(var(--accent-rgb), 0.35);
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.06), rgba(255, 255, 255, 0.99));
       box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
     }
     [data-theme="light"] .negotiation-cta-kicker {
-      color: #166534;
-      border-color: rgba(34, 197, 94, 0.35);
+      color: var(--accent-dim);
+      border-color: rgba(var(--accent-rgb), 0.35);
       background: rgba(255, 255, 255, 0.9);
     }
     [data-theme="light"] .negotiation-cta-wrap p,
     [data-theme="light"] .negotiation-cta-points li {
-      color: #334155 !important;
+      color: var(--text-body) !important;
     }
     .neg-upload-grid {
       display: grid;
@@ -567,7 +567,7 @@
       <!-- PROBLEM SECTION — Theme-Aware Amber -->
       <section class="section section-alt" style="margin-bottom: 40px; border-radius: 16px;">
         <div class="problem-box">
-          <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); color:var(--expert-amber); font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:4px 12px; border-radius:100px; margin-bottom:20px;">
+          <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(var(--amber-rgb),0.1); border:1px solid rgba(var(--amber-rgb),0.25); color:var(--expert-amber); font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:4px 12px; border-radius:100px; margin-bottom:20px;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m12 9v4"/><path d="m12 17h.01"/><path d="m3.27 20a2 2 0 0 0 1.73 1h14a2 2 0 0 0 1.73-3L13.73 4a2 2 0 0 0-3.46 0l-7 13A2 2 0 0 0 3.27 20z"/></svg> Common Finding
           </div>
           <h2 style="color: var(--text-h); margin-bottom: 16px; font-size:24px; font-weight:900;">Most Medical Bills Contain Errors</h2>
@@ -653,11 +653,11 @@
               <p class="expert-price-note"><strong>$15</strong> initiation &middot; <strong>15%</strong> of savings only &middot; No savings = no charge</p>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;flex-shrink:0;">
-              <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:14px;padding:20px;text-align:center;min-width:140px;">
+              <div style="background:rgba(var(--amber-rgb),0.08);border:1px solid rgba(var(--amber-rgb),0.2);border-radius:14px;padding:20px;text-align:center;min-width:140px;">
                 <div style="font-size:30px;font-weight:900;color:var(--expert-amber);font-family:var(--font-display);">$15</div>
                 <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">to open your case</div>
               </div>
-              <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:14px;padding:20px;text-align:center;">
+              <div style="background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);border-radius:14px;padding:20px;text-align:center;">
                 <div style="font-size:30px;font-weight:900;color:var(--accent);font-family:var(--font-display);">15%</div>
                 <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">of savings only</div>
               </div>

@@ -51,7 +51,7 @@ window.CalcCompute = {
     const age = +v.age, weight = +v.weight, scr = +v.scr;
     if (!age || !weight || !scr) return { error: 'Fill all fields' };
     let crcl = ((140 - age) * weight) / (72 * scr);
-    if (v.sex === 'female') crcl *= 0.85;
+    if (v.sex === 'female') crcl = (+crcl.toFixed(1)) * 0.85;
     let status = 'normal';
     if (crcl < 30) status = 'critical';
     else if (crcl < 60) status = 'high';
@@ -400,7 +400,7 @@ window.CalcCompute = {
   },
 
   'iron-deficit'(v) {
-    const deficit = 0.544 * (+v.weight) * ((+v.targetHb) - (+v.currentHb));
+    const deficit = (+v.weight) * ((+v.targetHb) - (+v.currentHb)) * 2.4 + 500;
     return { primary: Math.max(0, deficit).toFixed(0) + ' mg', interpretation: 'Ganzoni iron deficit (simplified)', chip: 'normal' };
   },
 
@@ -481,7 +481,7 @@ window.CalcCompute = {
   },
 
   'blood-loss'(v) {
-    const ebl = (+v.bloodVol || 5000) * ((+v.preHb) - (+v.postHb)) / ((+v.preHb) + (+v.postHb) / 2);
+    const ebl = (+v.bloodVol || 5000) * ((+v.preHb) - (+v.postHb)) / (((+v.preHb) + (+v.postHb)) / 2);
     return { primary: Math.max(0, ebl).toFixed(0) + ' mL', interpretation: 'Estimated blood loss (Gross formula)', chip: ebl > 1500 ? 'critical' : 'normal' };
   },
 
@@ -544,11 +544,12 @@ window.CalcCompute = {
     if (v.age65) score++;
     if (v.risk3) score++;
     if (v.st) score++;
+    if (v.stDeviation) score++;
     if (v.angina) score++;
     if (v.asa) score++;
     if (v.enzymes) score++;
-    const risk = ['4.7%', '8.3%', '13.2%', '19.9%', '26.2%', '40.9%', '40.9%'];
-    return { primary: score + ' / 6', interpretation: '14-day event risk ~' + risk[score], chip: score >= 4 ? 'critical' : score >= 2 ? 'high' : 'normal' };
+    const risk = ['4.7%', '4.7%', '8.3%', '13.2%', '19.9%', '26.2%', '40.9%', '40.9%'];
+    return { primary: score + ' / 7', interpretation: '14-day event risk ~' + risk[score], chip: score >= 4 ? 'critical' : score >= 2 ? 'high' : 'normal' };
   },
 
   'heart-score'(v) {
@@ -581,7 +582,7 @@ window.CalcCompute = {
   },
 
   transfusion(v) {
-    const units = ((+v.targetHb) - (+v.currentHb)) * (+v.weight) * 0.3 / 300;
+    const units = ((+v.targetHb) - (+v.currentHb)) * (+v.weight) / 14.14;
     return { primary: Math.max(0, units).toFixed(1) + ' units PRBC', interpretation: 'Estimated transfusion requirement', chip: units > 4 ? 'critical' : 'normal' };
   },
 

@@ -152,12 +152,12 @@
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       color: white; font-size: 24px; margin-bottom: 20px;
       animation: pulse-ring 2s infinite ease-in-out;
-      box-shadow: 0 0 20px rgba(34,197,94,0.4);
+      box-shadow: 0 0 20px rgba(var(--accent-rgb),0.4);
     }
     @keyframes pulse-ring {
-      0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(34,197,94,0.7); }
-      70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(34,197,94,0); }
-      100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+      0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(var(--accent-rgb),0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(var(--accent-rgb),0); }
+      100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(var(--accent-rgb),0); }
     }
     .loading-text {
       font-weight: 800; font-size: 18px; color: var(--text-h);
@@ -502,10 +502,10 @@
       margin: -20px auto 30px;
       max-width: 800px;
       padding: 14px 20px;
-      background: linear-gradient(135deg, rgba(245,158,11,0.14), rgba(245,158,11,0.06));
-      border: 1px solid rgba(245,158,11,0.45);
+      background: linear-gradient(135deg, rgba(var(--amber-rgb),0.14), rgba(var(--amber-rgb),0.06));
+      border: 1px solid rgba(var(--amber-rgb),0.45);
       border-radius: 12px;
-      color: #fcd34d;
+      color: var(--amber-tint);
       font-size: 13px;
       font-weight: 600;
       text-align: center;
@@ -645,8 +645,8 @@
           <p style="font-size: 13px; font-weight: 700; color: var(--text-h); margin-bottom: 10px; text-align: left;">Already purchased? Activate access:</p>
 
           <!-- Email key reminder -->
-          <div style="display:flex; align-items:flex-start; gap:10px; background:rgba(34,197,94,0.07); border:1px solid rgba(34,197,94,0.25); border-radius:10px; padding:12px 14px; margin-bottom:14px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" style="flex-shrink:0; margin-top:1px;"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <div style="display:flex; align-items:flex-start; gap:10px; background:rgba(var(--accent-rgb),0.07); border:1px solid rgba(var(--accent-rgb),0.25); border-radius:10px; padding:12px 14px; margin-bottom:14px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0; margin-top:1px; color: var(--accent);"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             <div style="font-size:12px; color:var(--text-muted); line-height:1.55;">
               <strong style="color:var(--accent); display:block; margin-bottom:2px;">Use the key from your confirmation email</strong>
               After purchasing on Gumroad, check your inbox for an email from <em>noreply@customers.gumroad.com</em>. 
@@ -657,7 +657,7 @@
           <div style="display: flex; flex-direction: column; gap: 10px;">
             <input type="text" id="access-key-input" class="unlock-input" placeholder="Paste License Key from email (e.g. 1B31A3AD-FF364AFF-...)" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; color: var(--text-h); font-size: 14px;">
             <input type="email" id="access-email-input" class="unlock-input" placeholder="Your Gumroad purchase email" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; color: var(--text-h); font-size: 14px;">
-            <button id="verify-btn" class="premium-btn" style="margin-top: 6px; margin-bottom: 0; background: linear-gradient(135deg, var(--accent), #10b981); box-shadow: 0 4px 15px rgba(34,197,94,0.3);" onclick="verifyAccessKey()">Unlock Now</button>
+            <button id="verify-btn" class="premium-btn" style="margin-top: 6px; margin-bottom: 0; background: linear-gradient(135deg, var(--accent), var(--accent-warm)); box-shadow: 0 4px 15px rgba(var(--accent-rgb),0.3);" onclick="verifyAccessKey()">Unlock Now</button>
             <button id="restore-btn" class="secondary-btn" style="padding: 12px; font-size: 12px; opacity: 0.8;" onclick="restorePurchase()">Restore Purchase on this Device</button>
           </div>
         </div>
@@ -723,9 +723,9 @@
             </a>
           </div>
           <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
-            <span style="font-size:11px; background:rgba(34,197,94,0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(34,197,94,0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(var(--accent-rgb),0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--accent-rgb),0.2);">HIPAA-Safe</span>
             <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
-            <span style="font-size:11px; background:rgba(245,158,11,0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(245,158,11,0.2);">No Signup</span>
+            <span style="font-size:11px; background:rgba(var(--amber-rgb),0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--amber-rgb),0.2);">No Signup</span>
           </div>
         </div>
         <div class="footer-col">
@@ -1176,7 +1176,7 @@
           html += `
             <a class="topic-card" href="?topic_id=${topic.id}" data-topic-id="${escapeAttr(topic.id)}" data-topic-title="${escapeAttr(topic.title)}" data-free-demo="${isFreeDemo}">
               <div>
-                ${isFreeDemo ? '<span style="display:inline-block; background:var(--accent); color:#fff; font-size:10px; font-weight:800; padding:3px 10px; border-radius:6px; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; box-shadow:0 4px 12px rgba(34,197,94,0.3);">Free Demo</span>' : ''}
+                ${isFreeDemo ? '<span style="display:inline-block; background:var(--accent); color:#fff; font-size:10px; font-weight:800; padding:3px 10px; border-radius:6px; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; box-shadow:0 4px 12px rgba(var(--accent-rgb),0.3);">Free Demo</span>' : ''}
                 <h3 style="margin-bottom: 8px;">${escapeHtml(topic.title)}</h3>
                 <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px;">
                   Practice high-yield <strong>${escapeHtml(topic.title)}</strong> questions with clinical relevance for your medical boards.

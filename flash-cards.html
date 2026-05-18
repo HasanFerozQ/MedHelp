@@ -256,7 +256,7 @@
     .feature-icon { font-size: 24px; }
     .feature-text strong { display: block; color: var(--text-h); font-size: 15px; }
     .feature-text p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
-    .pricing-box { background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 24px; margin: 24px 0; text-align: center; }
+    .pricing-box { background: rgba(var(--accent-rgb),0.05); border: 1px solid rgba(var(--accent-rgb),0.2); border-radius: 16px; padding: 24px; margin: 24px 0; text-align: center; }
     .price-value { font-size: 32px; font-weight: 900; color: var(--accent); }
     .license-entry p { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   </style>
@@ -274,10 +274,10 @@
         margin: -10px auto 30px;
         max-width: 800px;
         padding: 14px 20px;
-        background: linear-gradient(135deg, rgba(245,158,11,0.14), rgba(245,158,11,0.06));
-        border: 1px solid rgba(245,158,11,0.45);
+        background: linear-gradient(135deg, rgba(var(--amber-rgb),0.14), rgba(var(--amber-rgb),0.06));
+        border: 1px solid rgba(var(--amber-rgb),0.45);
         border-radius: 12px;
-        color: #fcd34d;
+        color: var(--amber-tint);
         font-size: 13px;
         font-weight: 600;
         text-align: center;
@@ -383,9 +383,9 @@
             </a>
           </div>
           <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
-            <span style="font-size:11px; background:rgba(34,197,94,0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(34,197,94,0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(var(--accent-rgb),0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--accent-rgb),0.2);">HIPAA-Safe</span>
             <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
-            <span style="font-size:11px; background:rgba(245,158,11,0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(245,158,11,0.2);">No Signup</span>
+            <span style="font-size:11px; background:rgba(var(--amber-rgb),0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--amber-rgb),0.2);">No Signup</span>
           </div>
         </div>
         <div class="footer-col">
@@ -20932,7 +20932,7 @@
             const card = document.createElement('div');
             card.className = 'topic-card-item';
             card.innerHTML = `
-              ${isFreeDemo ? '<div style="position:absolute; top:12px; right:12px; background:var(--accent); color:white; font-size:10px; font-weight:800; padding:3px 10px; border-radius:6px; text-transform:uppercase; letter-spacing:1px; z-index:1; box-shadow:0 4px 12px rgba(34,197,94,0.3);">Free Demo</div>' : ''}
+              ${isFreeDemo ? '<div style="position:absolute; top:12px; right:12px; background:var(--accent); color:white; font-size:10px; font-weight:800; padding:3px 10px; border-radius:6px; text-transform:uppercase; letter-spacing:1px; z-index:1; box-shadow:0 4px 12px rgba(var(--accent-rgb),0.3);">Free Demo</div>' : ''}
               <div class="topic-card-icon">
                 <i data-lucide="${t.icon || 'book'}"></i>
               </div>

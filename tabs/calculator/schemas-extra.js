@@ -165,6 +165,7 @@
         { id: 'age65', label: { en: 'Age ≥65', es: 'Edad ≥65' }, type: 'toggle', default: false },
         { id: 'risk3', label: { en: '≥3 CAD risk factors', es: '≥3 factores riesgo EC' }, type: 'toggle', default: false },
         { id: 'st', label: { en: 'Known CAD stenosis ≥50%', es: 'Estenosis EC ≥50%' }, type: 'toggle', default: false },
+        { id: 'stDeviation', label: { en: 'ST deviation ≥0.5 mm', es: 'Desviación ST ≥0.5 mm' }, type: 'toggle', default: false },
         { id: 'angina', label: { en: '≥2 angina in 24h', es: '≥2 angina en 24h' }, type: 'toggle', default: false },
         { id: 'asa', label: { en: 'ASA use in past 7 days', es: 'AAS últimos 7 días' }, type: 'toggle', default: false },
         { id: 'enzymes', label: { en: 'Elevated cardiac enzymes', es: 'Enzimas cardíacas elevadas' }, type: 'toggle', default: false }

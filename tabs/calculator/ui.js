@@ -331,6 +331,11 @@ window.CalcUI = {
       const el = form.elements[k];
       vals[k] = el?.type === 'checkbox' ? el.checked : v;
     });
+    form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      if (cb.name && !cb.checked) {
+        vals[cb.name] = false;
+      }
+    });
     const all = JSON.parse(localStorage.getItem(this.STORAGE.values) || '{}');
     all[id] = vals;
     localStorage.setItem(this.STORAGE.values, JSON.stringify(all));

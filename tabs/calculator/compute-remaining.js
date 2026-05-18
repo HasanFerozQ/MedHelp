@@ -134,9 +134,15 @@
     },
 
     'trauma-score'(v) {
-      const rts = (+v.gcs) + (+v.sbp) + (+v.rr);
-      const prob = rts > 10 ? 'Low mortality' : rts > 6 ? 'Moderate mortality risk' : 'High mortality risk';
-      return { primary: rts + ' / 12 (RTS)', interpretation: prob, chip: rts <= 6 ? 'critical' : rts <= 10 ? 'high' : 'normal' };
+      const gcs = +v.gcs, sbp = +v.sbp, rr = +v.rr;
+      const sum = gcs + sbp + rr;
+      const rts = 0.9368 * gcs + 0.7326 * sbp + 0.2908 * rr;
+      const prob = sum > 10 ? 'Low mortality' : sum > 6 ? 'Moderate mortality risk' : 'High mortality risk';
+      return {
+        primary: sum + ' / 12 (Weighted: ' + rts.toFixed(4) + ')',
+        interpretation: prob,
+        chip: sum <= 6 ? 'critical' : sum <= 10 ? 'high' : 'normal'
+      };
     },
 
     'toxicology-dose'(v) {
@@ -429,6 +435,7 @@
 
     'paralytic-dose'(v) {
       const w = +v.weight, d = D().intubation[v.drug];
+      if (!d) return { error: 'Unknown or missing drug' };
       return { primary: (d.mgPerKg * w).toFixed(1) + ' mg', interpretation: v.drug + ' NMB dose', chip: 'normal' };
     },
 
@@ -553,13 +560,16 @@
         chip: 'normal',
         details: [{ label: 'Calories', value: v.tdee + ' kcal/day' }, { label: 'Protein', value: v.proteinG + ' g/day' }]
       };
+    },
+
+    'vancomycin-auc'(v) {
+      return { error: 'Premium clinical-grade.js module required' };
     }
   };
 
   Object.assign(CalcCompute, remaining);
 
   Object.assign(CalcCompute._aliases, {
-    'student-abg': 'abg-analyzer',
-    'diet-tpn': 'tpn'
+    'student-abg': 'abg-analyzer'
   });
 })();
