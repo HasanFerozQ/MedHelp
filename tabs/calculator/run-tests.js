@@ -46,8 +46,12 @@ function bootstrap() {
     'schemas.js',
     'schemas-extra.js',
     'schemas-remaining.js',
+    'schemas-new.js',
+    'schemas-new2.js',
     'compute.js',
     'compute-remaining.js',
+    'compute-new.js',
+    'compute-new2.js',
     'clinical-grade.js'
   ];
   order.forEach(f => loadScript(f, ctx));

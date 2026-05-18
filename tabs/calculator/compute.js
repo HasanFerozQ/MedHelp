@@ -16,7 +16,20 @@ window.CalcCompute = {
     'medication-dose': 'weight-based-dose', 'ped-weight-dose': 'weight-based-dose',
     'iv-infusion': 'iv-flow-rate', 'infusion-rate': 'iv-flow-rate',
     'diet-ibw': 'ibw',
-    'surg-burn': 'parkland'
+    'surg-burn': 'parkland',
+    'meld-meldna': 'meld-score',
+    'fib4': 'fib4-index',
+    'ottawa-ankle': 'ottawa-rules',
+    'ottawa-foot': 'ottawa-rules',
+    'ottawa-knee': 'ottawa-rules',
+    'geneva-revised': 'revised-geneva',
+    'grace-acs': 'grace-score',
+    'crcl-obese-adjbw': 'crcl-obese',
+    'phenytoin-corrected': 'phenytoin-correction',
+    'gcs-pediatric': 'ped-gcs',
+    'pews-monaghan': 'pews',
+    'preeclampsia-aspirin': 'preeclampsia-risk',
+    'gdm-thresholds': 'gdm-screening'
   },
 
   _chip(status) {
