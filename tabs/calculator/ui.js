@@ -354,7 +354,7 @@ window.CalcUI = {
       <span>${label}${inp.optional ? ' <em class="opt-label">Optional</em>' : ''}</span>
       <div class="stepper">
         <button type="button" class="step-minus">−</button>
-        <input type="number" name="${inp.id}" class="calc-input" value="${val}" min="${inp.min ?? ''}" max="${inp.max ?? ''}" step="${inp.step || 'any'}" inputmode="decimal" placeholder="${placeholder}">
+        <input type="number" name="${inp.id}" class="calc-input" value="${val}" min="${inp.min ?? ''}" max="${inp.max ?? ''}" step="any" data-step="${inp.step || 1}" inputmode="decimal" placeholder="${placeholder}">
         <button type="button" class="step-plus">+</button>
         ${unitBadge}
       </div>
@@ -363,7 +363,7 @@ window.CalcUI = {
 
   _step(wrap, dir) {
     const inp = wrap.querySelector('input');
-    const step = parseFloat(inp.step) || 1;
+    const step = parseFloat(inp.dataset.step) || 1;
     inp.value = (parseFloat(inp.value || 0) + dir * step).toFixed(step < 1 ? 1 : 0);
   },
 
