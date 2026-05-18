@@ -305,6 +305,9 @@ window.CalcUI = {
     if (inp.type === 'date') {
       return `<label class="calc-field"><span>${label}</span><input type="date" name="${inp.id}" class="calc-input" value="${val}"></label>`;
     }
+    if (inp.type === 'datetime-local') {
+      return `<label class="calc-field"><span>${label}</span><input type="datetime-local" name="${inp.id}" class="calc-input" value="${val}"></label>`;
+    }
     return `<label class="calc-field">
       <span>${label}${inp.unit ? ' (' + inp.unit + ')' : ''}</span>
       <div class="stepper">

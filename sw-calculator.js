@@ -2,18 +2,21 @@
  * MediHelp Calculator Service Worker — offline cache
  * Caches calculator assets only (no auth/patient data)
  */
-const CACHE = 'mh-calc-v1';
+const CACHE = 'mh-calc-v2';
 const ASSETS = [
   '/medical-calculator',
   '/medical-calculator.html',
   '/styles.css',
   '/tabs/calculator/calculator.css',
   '/tabs/calculator/formulas.js',
+  '/tabs/calculator/clinical-data.js',
   '/tabs/calculator/i18n.js',
   '/tabs/calculator/registry.js',
   '/tabs/calculator/schemas.js',
   '/tabs/calculator/schemas-extra.js',
+  '/tabs/calculator/schemas-remaining.js',
   '/tabs/calculator/compute.js',
+  '/tabs/calculator/compute-remaining.js',
   '/tabs/calculator/ui.js',
   '/core.js',
   '/icons/logo.png',

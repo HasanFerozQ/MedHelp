@@ -67,18 +67,14 @@ window.CalcCompute = {
   egfr(v) {
     const age = +v.age, scr = +v.scr;
     if (!age || !scr) return { error: 'Fill all fields' };
-    const k = v.sex === 'female' ? 0.7 : 0.9;
-    const a = v.sex === 'female' ? -0.241 : -0.302;
-    const alpha = v.sex === 'female' ? 1.012 : 1;
-    const ratio = scr / k;
-    const egfr = 142 * Math.pow(Math.min(ratio, 1), a) * Math.pow(Math.max(ratio, 1), -1.2) * Math.pow(0.9938, age) * alpha;
+    const egfr = CalcClinicalData.egfr2021(scr, age, v.sex === 'female');
     let stage = 'G1 (Normal)', status = 'normal';
     if (egfr < 15) { stage = 'G5 (Kidney failure)'; status = 'critical'; }
     else if (egfr < 30) { stage = 'G4 (Severe)'; status = 'critical'; }
     else if (egfr < 45) { stage = 'G3b (Moderate-severe)'; status = 'high'; }
     else if (egfr < 60) { stage = 'G3a (Mild-moderate)'; status = 'high'; }
     else if (egfr < 90) { stage = 'G2 (Mild)'; status = 'low'; }
-    return { primary: Math.round(egfr) + ' mL/min/1.73m²', interpretation: 'CKD Stage: ' + stage, chip: status };
+    return { primary: Math.round(egfr) + ' mL/min/1.73m²', interpretation: 'CKD-EPI 2021 — Stage: ' + stage, chip: status };
   },
 
   'chads2-vasc'(v) {
@@ -562,7 +558,7 @@ window.CalcCompute = {
     if (v.age) score += 2;
     if (v.risk) score += 2;
     if (v.troponin) score += 2;
-    const risk = score <= 3 ? 'Low (1.7% MACE)' : score <= 6 ? 'Moderate (16.6%)' : 'High (50%+ MACE)';
+    const risk = score <= 3 ? 'Low (1.7% MACE at 6 weeks)' : score <= 6 ? 'Moderate (16.6% MACE)' : 'High (50%+ MACE)';
     return { primary: score + ' / 10', interpretation: risk, chip: score >= 7 ? 'critical' : score >= 4 ? 'high' : 'normal' };
   },
 
