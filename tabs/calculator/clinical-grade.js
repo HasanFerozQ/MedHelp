@@ -78,9 +78,9 @@
     return Math.round(p * 100);
   };
 
-  /** Hadlock 4 — log10 EFW = 1.3596 − 0.00386(AC×BPD) + 0.0064(AC) + 0.00061(BPD×AC) + 0.0424(AC) + 0.174(BPD) */
-  CalcClinicalData.hadlockEFW = function(ac, bpd) {
-    const log10 = 1.3596 - 0.00386 * ac * bpd + 0.0064 * ac + 0.00061 * bpd * ac + 0.0424 * ac + 0.174 * bpd;
+  /** Hadlock 4 — log10 EFW = 1.3596 − 0.00386(AC×BPD) + 0.0064(HC) + 0.00061(BPD×HC) + 0.0424(AC) + 0.174(BPD) */
+  CalcClinicalData.hadlockEFW = function(ac, bpd, hc) {
+    const log10 = 1.3596 - 0.00386 * ac * bpd + 0.0064 * hc + 0.00061 * bpd * hc + 0.0424 * ac + 0.174 * bpd;
     return Math.round(Math.pow(10, log10));
   };
 
@@ -164,11 +164,13 @@
     },
     'vancomycin-auc'(v) {
       const auc = CalcClinicalData.vancomycinAUC(+v.trough, +v.peak || 0, +v.dose, +v.weight);
+      const isFallback = !v.peak;
       return {
         primary: auc.toFixed(0) + ' mg·h/L',
-        interpretation: auc >= 400 && auc <= 600 ? 'Within guideline AUC 400-600 target' : auc < 400 ? 'Below target — consider dose increase' : 'Above target — consider dose reduction',
+        interpretation: (auc >= 400 && auc <= 600 ? 'Within guideline AUC 400-600 target' : auc < 400 ? 'Below target — consider dose increase' : 'Above target — consider dose reduction') + 
+          (isFallback ? ' (Note: Trough-only fallback is a population estimate, not a formal PK/TDM calculation).' : ''),
         chip: auc < 400 ? 'low' : auc > 600 ? 'high' : 'normal',
-        details: [{ label: 'Method', value: v.peak ? 'Trapezoidal Css avg × 24' : '1-compartment estimate from dose/weight' }]
+        details: [{ label: 'Method', value: isFallback ? '1-compartment trough population estimate' : 'Trapezoidal Css avg × 24' }]
       };
     },
     'neonatal-bilirubin'(v) {
@@ -187,8 +189,8 @@
       return { primary: p + '% VBAC success', interpretation: p >= 60 ? 'Favorable for TOLAC counseling' : 'Discuss risks — consider repeat CS', chip: p >= 60 ? 'normal' : 'low' };
     },
     'fetal-weight'(v) {
-      const g = CalcClinicalData.hadlockEFW(+v.ac, +v.bpd);
-      return { primary: g + ' g (' + (g / 453.592).toFixed(2) + ' lb)', interpretation: 'Hadlock 4 (AC + BPD) — ultrasound EFW', chip: 'normal' };
+      const g = CalcClinicalData.hadlockEFW(+v.ac, +v.bpd, +v.hc);
+      return { primary: g + ' g (' + (g / 453.592).toFixed(2) + ' lb)', interpretation: 'Hadlock 4 (AC + BPD + HC) — ultrasound EFW', chip: 'normal' };
     },
     'growth-percentile'(v) {
       const z = CalcClinicalData.whoZScore(+v.ageMonths, +v.weight, v.sex);

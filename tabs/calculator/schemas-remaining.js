@@ -248,9 +248,10 @@
       num('bmi', 'BMI', 'IMC', 'kg/m²', 28),
       tog('laborInduced', 'Induced labor', 'Inducción')
     ]},
-    'fetal-weight': { formula: 'Hadlock EFW (AC + BPD)', inputs: [
+    'fetal-weight': { formula: 'Hadlock EFW (AC + BPD + HC)', inputs: [
       num('ac', 'Abdominal circumference', 'CA', 'cm', 30, { step: 0.1 }),
-      num('bpd', 'Biparietal diameter', 'DBP', 'cm', 8.5, { step: 0.1 })
+      num('bpd', 'Biparietal diameter', 'DBP', 'cm', 8.5, { step: 0.1 }),
+      num('hc', 'Head circumference', 'CC', 'cm', 32, { step: 0.1 })
     ]},
     'induction-dose': { formula: 'Induction agent mg/kg', inputs: [
       num('weight', 'Weight', 'Peso', 'kg', 70),

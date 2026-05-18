@@ -44,10 +44,6 @@ window.CalcUI = {
   },
 
   _bindEvents() {
-    document.getElementById('calc-search')?.addEventListener('input', (e) => this._onSearch(e.target.value));
-    document.getElementById('lang-en')?.addEventListener('click', () => { CalcI18n.setLang('en'); this.render(); });
-    document.getElementById('lang-es')?.addEventListener('click', () => { CalcI18n.setLang('es'); this.render(); });
-    document.getElementById('calc-back')?.addEventListener('click', () => this.goHome());
     window.addEventListener('popstate', () => { this._parseRoute(); this.render(); });
   },
 
@@ -89,7 +85,7 @@ window.CalcUI = {
 
   _addRecent(id) {
     let r = JSON.parse(localStorage.getItem(this.STORAGE.recents) || '[]');
-    r = [id, ...r.filter(x => x !== id)].slice(0, 10);
+    r = [id, ...r.filter(x => x !== id)].slice(0, 4);
     localStorage.setItem(this.STORAGE.recents, JSON.stringify(r));
   },
 
@@ -137,7 +133,7 @@ window.CalcUI = {
 
   _renderHome() {
     const favs = JSON.parse(localStorage.getItem(this.STORAGE.favs) || '[]');
-    const recents = JSON.parse(localStorage.getItem(this.STORAGE.recents) || '[]');
+    const recents = JSON.parse(localStorage.getItem(this.STORAGE.recents) || '[]').slice(0, 4);
     let html = `
       <div class="calc-hero">
         <h1 class="hero-h1">${CalcI18n.t('appTitle')}</h1>
@@ -149,6 +145,9 @@ window.CalcUI = {
         <div class="calc-lang">
           <button id="lang-en" class="lang-btn ${CalcI18n.lang === 'en' ? 'active' : ''}">EN</button>
           <button id="lang-es" class="lang-btn ${CalcI18n.lang === 'es' ? 'active' : ''}">ES</button>
+          <span class="lang-sep">|</span>
+          <button id="unit-us" class="lang-btn ${CalcUnits.system === 'US' ? 'active' : ''}" title="US units (lbs, in, mg/dL)">US</button>
+          <button id="unit-si" class="lang-btn ${CalcUnits.system === 'SI' ? 'active' : ''}" title="SI/metric units (kg, cm, µmol/L)">SI</button>
         </div>
         <div id="offline-badge" class="offline-badge">🟢 ${CalcI18n.t('offlineReady')}</div>
       </div>`;
@@ -169,6 +168,10 @@ window.CalcUI = {
     setTimeout(() => {
       document.querySelectorAll('.role-card').forEach(btn => btn.onclick = () => this.goRole(btn.dataset.role));
       document.getElementById('calc-search')?.addEventListener('input', (e) => this._onSearch(e.target.value));
+      document.getElementById('lang-en')?.addEventListener('click', () => { CalcI18n.setLang('en'); this.render(); });
+      document.getElementById('lang-es')?.addEventListener('click', () => { CalcI18n.setLang('es'); this.render(); });
+      document.getElementById('unit-us')?.addEventListener('click', () => { CalcUnits.setSystem('US'); this.render(); });
+      document.getElementById('unit-si')?.addEventListener('click', () => { CalcUnits.setSystem('SI'); this.render(); });
       this._bindCalcCards();
     }, 0);
     return html;
@@ -288,13 +291,40 @@ window.CalcUI = {
         s.querySelector('.step-minus')?.addEventListener('click', () => this._step(s, -1));
         s.querySelector('.step-plus')?.addEventListener('click', () => this._step(s, 1));
       });
+      // Unit badge toggle — switch unit and re-convert field value live
+      document.querySelectorAll('.unit-badge').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const grp = btn.dataset.group;
+          if (!grp) return;
+          const inp = document.querySelector(`[name="${btn.dataset.field}"]`);
+          if (!inp) return;
+          const currentVal = parseFloat(inp.value);
+          const currentSys = CalcUnits.system;
+          const newSys = currentSys === 'US' ? 'SI' : 'US';
+          CalcUnits.setSystem(newSys);
+          const g = CalcUnits.GROUPS[grp];
+          if (g && !isNaN(currentVal)) {
+            inp.value = newSys === 'US' ? g.toUS(currentSys === 'SI' ? currentVal : g.toSI(currentVal)) : g.toSI(currentSys === 'US' ? currentVal : g.toUS(currentVal));
+          }
+          btn.textContent = CalcUnits.getUnit(grp) + ' ⇆';
+        });
+      });
     }, 0);
     return html;
   },
 
   _inputHtml(inp, saved) {
-    const val = saved[inp.id] ?? inp.default ?? '';
+    const grp = inp.unitGroup;
+    const displayUnit = grp ? CalcUnits.getUnit(grp) : (inp.unit || '');
+    const siDefault = inp.default ?? '';
+    const displayDefault = (grp && siDefault !== '') ? CalcUnits.fromSI(siDefault, grp) : siDefault;
+    const savedRaw = saved[inp.id];
+    // If saved value exists and unit system changed, re-convert from SI stored value
+    const val = savedRaw !== undefined ? savedRaw : displayDefault;
     const label = inp.label[CalcI18n.lang] || inp.label.en;
+    const range = grp ? CalcUnits.getRange(grp) : (inp.min !== undefined ? inp.min + '–' + (inp.max || '') : '');
+    const placeholder = range ? 'Norm: ' + range : '';
+
     if (inp.type === 'select') {
       const opts = inp.options.map(o => `<option value="${o.v}" ${String(val) === String(o.v) ? 'selected' : ''}>${o.l[CalcI18n.lang] || o.l.en}</option>`).join('');
       return `<label class="calc-field"><span>${label}</span><select name="${inp.id}" class="calc-input">${opts}</select></label>`;
@@ -308,12 +338,14 @@ window.CalcUI = {
     if (inp.type === 'datetime-local') {
       return `<label class="calc-field"><span>${label}</span><input type="datetime-local" name="${inp.id}" class="calc-input" value="${val}"></label>`;
     }
+    const unitBadge = displayUnit ? `<button type="button" class="unit-badge" data-field="${inp.id}" data-group="${grp || ''}" title="Toggle unit">${displayUnit} ⇆</button>` : '';
     return `<label class="calc-field">
-      <span>${label}${inp.unit ? ' (' + inp.unit + ')' : ''}</span>
+      <span>${label}${inp.optional ? ' <em class="opt-label">Optional</em>' : ''}</span>
       <div class="stepper">
         <button type="button" class="step-minus">−</button>
-        <input type="number" name="${inp.id}" class="calc-input" value="${val}" min="${inp.min ?? ''}" max="${inp.max ?? ''}" step="${inp.step || 1}" inputmode="decimal">
+        <input type="number" name="${inp.id}" class="calc-input" value="${val}" min="${inp.min ?? ''}" max="${inp.max ?? ''}" step="${inp.step || 1}" inputmode="decimal" placeholder="${placeholder}">
         <button type="button" class="step-plus">+</button>
+        ${unitBadge}
       </div>
     </label>`;
   },
@@ -340,7 +372,11 @@ window.CalcUI = {
     all[id] = vals;
     localStorage.setItem(this.STORAGE.values, JSON.stringify(all));
 
-    const result = CalcCompute.compute(id, vals);
+    // Convert US display units → SI before calculation
+    const schema = CalcSchemas[id] || CalcSchemas[CalcCompute._aliases[id]];
+    const siVals = schema ? CalcUnits.convertFormToSI(vals, schema) : vals;
+
+    const result = CalcCompute.compute(id, siVals);
     const box = document.getElementById('calc-result');
     if (!box) return;
 

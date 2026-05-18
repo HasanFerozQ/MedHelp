@@ -22,7 +22,12 @@
         { id: 'platelets', label: { en: 'Platelets', es: 'Plaquetas' }, type: 'number', unit: '×10³/µL', default: 150 },
         { id: 'bilirubin', label: { en: 'Bilirubin', es: 'Bilirrubina' }, type: 'number', unit: 'mg/dL', default: 1.0, step: 0.1 },
         { id: 'map', label: { en: 'MAP', es: 'PAM' }, type: 'number', unit: 'mmHg', default: 80 },
-        { id: 'vasopressors', label: { en: 'Vasopressor level', es: 'Nivel vasopresor' }, type: 'select', options: [{ v: 0, l: { en: 'None', es: 'Ninguno' } }, { v: 1, l: { en: 'Low dose', es: 'Dosis baja' } }, { v: 2, l: { en: 'High dose', es: 'Dosis alta' } }], default: 0 },
+        { id: 'vasopressors', label: { en: 'Vasopressor level', es: 'Nivel vasopresor' }, type: 'select', options: [
+          { v: 0, l: { en: 'None', es: 'Ninguno' } },
+          { v: 1, l: { en: 'Dobutamine (any dose) or Dopamine ≤5 mcg/kg/min', es: 'Dobutamina o Dopamina ≤5 mcg/kg/min' } },
+          { v: 2, l: { en: 'Epi/Norepi ≤0.1 mcg/kg/min or Dopamine >5 mcg/kg/min', es: 'Epi/Norepi ≤0.1 mcg/kg/min o Dopamina >5 mcg/kg/min' } },
+          { v: 3, l: { en: 'Epi/Norepi >0.1 mcg/kg/min or Dopamine >15 mcg/kg/min', es: 'Epi/Norepi >0.1 mcg/kg/min o Dopamina >15 mcg/kg/min' } }
+        ], default: 0 },
         { id: 'gcs', label: { en: 'GCS', es: 'GCS' }, type: 'number', default: 15, min: 3, max: 15 },
         { id: 'creatinine', label: { en: 'Creatinine', es: 'Creatinina' }, type: 'number', unit: 'mg/dL', default: 1.0, step: 0.1 }
       ]
@@ -154,9 +159,10 @@
     'blood-loss': {
       formula: 'EBL = BV × (Hb₁ − Hb₂) / ((Hb₁ + Hb₂)/2)',
       inputs: [
+        { id: 'weight', label: { en: 'Weight (optional)', es: 'Peso (opcional)' }, type: 'number', unit: 'kg', default: '' },
         { id: 'preHb', label: { en: 'Pre-op Hb', es: 'Hb pre-op' }, type: 'number', unit: 'g/dL', default: 14 },
         { id: 'postHb', label: { en: 'Post-op Hb', es: 'Hb post-op' }, type: 'number', unit: 'g/dL', default: 10 },
-        { id: 'bloodVol', label: { en: 'Blood volume', es: 'Volumen sanguíneo' }, type: 'number', unit: 'mL', default: 5000, advanced: true }
+        { id: 'bloodVol', label: { en: 'Blood volume (override)', es: 'Volumen sanguíneo (anular)' }, type: 'number', unit: 'mL', default: '', advanced: true }
       ]
     },
     timi: {
@@ -294,7 +300,7 @@
     'oxygen-requirement': {
       formula: 'Approximate FiO₂ for target SpO₂',
       inputs: [{ id: 'targetSpo2', label: { en: 'Target SpO₂', es: 'SpO₂ objetivo' }, type: 'number', unit: '%', default: 94 }]
-    }
+    },
   });
 
   S['oxygen-delivery'] = S['fio2-calculator'];

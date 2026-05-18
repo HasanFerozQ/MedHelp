@@ -321,7 +321,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+  background: var(--accent);
   color: #fff;
   font-family: var(--font-main);
   font-size: 17px;
@@ -339,7 +339,7 @@ body {
 .btn-hero-primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 16px 48px rgba(var(--accent-rgb), 0.45);
-  filter: brightness(1.05);
+  background: var(--accent-hover);
   color: #fff;
 }
 
@@ -712,7 +712,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: linear-gradient(135deg, var(--expert-amber), var(--expert-amber-dim));
+  background: var(--expert-amber);
   color: #111827;
   font-family: var(--font-main);
   font-size: 18px;
@@ -730,7 +730,7 @@ body {
 .btn-expert-cta:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 60px rgba(var(--amber-rgb), 0.5);
-  filter: brightness(1.05);
+  background: var(--expert-amber-dim);
   color: #111827;
 }
 
@@ -1387,14 +1387,14 @@ a:hover {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+  background: var(--accent);
   color: #fff;
   border: none;
   box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.25);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--accent-dim), var(--accent-light));
+  background: var(--accent-hover);
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.4);

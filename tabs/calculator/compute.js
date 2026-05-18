@@ -51,7 +51,7 @@ window.CalcCompute = {
     const age = +v.age, weight = +v.weight, scr = +v.scr;
     if (!age || !weight || !scr) return { error: 'Fill all fields' };
     let crcl = ((140 - age) * weight) / (72 * scr);
-    if (v.sex === 'female') crcl = (+crcl.toFixed(1)) * 0.85;
+    if (v.sex === 'female') crcl = crcl * 0.85;
     let status = 'normal';
     if (crcl < 30) status = 'critical';
     else if (crcl < 60) status = 'high';
@@ -400,7 +400,8 @@ window.CalcCompute = {
   },
 
   'iron-deficit'(v) {
-    const deficit = (+v.weight) * ((+v.targetHb) - (+v.currentHb)) * 2.4 + 500;
+    const stores = (+v.weight) < 35 ? (15 * (+v.weight)) : 500;
+    const deficit = (+v.weight) * ((+v.targetHb) - (+v.currentHb)) * 2.4 + stores;
     return { primary: Math.max(0, deficit).toFixed(0) + ' mg', interpretation: 'Ganzoni iron deficit (simplified)', chip: 'normal' };
   },
 
@@ -481,8 +482,9 @@ window.CalcCompute = {
   },
 
   'blood-loss'(v) {
-    const ebl = (+v.bloodVol || 5000) * ((+v.preHb) - (+v.postHb)) / (((+v.preHb) + (+v.postHb)) / 2);
-    return { primary: Math.max(0, ebl).toFixed(0) + ' mL', interpretation: 'Estimated blood loss (Gross formula)', chip: ebl > 1500 ? 'critical' : 'normal' };
+    const ebv = +v.bloodVol || (+v.weight ? (+v.weight * 70) : 5000);
+    const ebl = ebv * ((+v.preHb) - (+v.postHb)) / (((+v.preHb) + (+v.postHb)) / 2);
+    return { primary: Math.max(0, ebl).toFixed(0) + ' mL', interpretation: 'Estimated blood loss (Gross formula) using EBV of ' + ebv.toFixed(0) + ' mL', chip: ebl > 1500 ? 'critical' : 'normal' };
   },
 
   'surg-blood-loss'(v) {
@@ -583,7 +585,11 @@ window.CalcCompute = {
 
   transfusion(v) {
     const units = ((+v.targetHb) - (+v.currentHb)) * (+v.weight) / 14.14;
-    return { primary: Math.max(0, units).toFixed(1) + ' units PRBC', interpretation: 'Estimated transfusion requirement', chip: units > 4 ? 'critical' : 'normal' };
+    return {
+      primary: Math.max(0, units).toFixed(1) + ' units PRBC',
+      interpretation: 'Estimated transfusion requirement (Oxford equation with 14.14 divisor). Standard adult rule: 1 unit PRBC raises Hb by ~1 g/dL.',
+      chip: units > 4 ? 'critical' : 'normal'
+    };
   },
 
   'burn-tbsa'(v) {
@@ -647,8 +653,10 @@ window.CalcCompute = {
     const bili = +v.bilirubin;
     if (bili >= 12) score += 4; else if (bili >= 6) score += 3; else if (bili >= 2) score += 2; else if (bili >= 1.2) score += 1;
     const map = +v.map;
-    if (map < 70) score += 1;
-    if (+v.vasopressors >= 2) score += 4; else if (+v.vasopressors >= 1) score += 3;
+    if (+v.vasopressors === 3) score += 4;
+    else if (+v.vasopressors === 2) score += 3;
+    else if (+v.vasopressors === 1) score += 2;
+    else if (map < 70) score += 1;
     const gcs = +v.gcs;
     if (gcs < 6) score += 4; else if (gcs < 10) score += 3; else if (gcs < 13) score += 2; else if (gcs < 15) score += 1;
     const cr = +v.creatinine;

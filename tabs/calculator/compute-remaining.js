@@ -425,8 +425,8 @@
     },
 
     'fetal-weight'(v) {
-      const g = D().hadlockEFW(+v.ac, +v.bpd);
-      return { primary: g + ' g', interpretation: 'Hadlock formula (AC + BPD) estimate', chip: 'normal' };
+      const g = D().hadlockEFW(+v.ac, +v.bpd, +v.hc);
+      return { primary: g + ' g', interpretation: 'Hadlock formula (AC + BPD + HC) estimate', chip: 'normal' };
     },
 
     'induction-dose'(v) {

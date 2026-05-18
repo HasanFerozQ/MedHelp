@@ -5,23 +5,23 @@ window.CalcSchemas = {
   bmi: {
     formula: 'BMI = weight (kg) / height (m)²',
     inputs: [
-      { id: 'weight', label: { en: 'Weight', es: 'Peso' }, type: 'number', unit: 'kg', min: 1, max: 500, default: 70, step: 0.1 },
-      { id: 'height', label: { en: 'Height', es: 'Altura' }, type: 'number', unit: 'cm', min: 50, max: 250, default: 170, step: 0.1 }
+      { id: 'weight', label: { en: 'Weight', es: 'Peso' }, type: 'number', unit: 'kg', unitGroup: 'weight', min: 1, max: 500, default: 70, step: 0.1 },
+      { id: 'height', label: { en: 'Height', es: 'Altura' }, type: 'number', unit: 'cm', unitGroup: 'height', min: 50, max: 250, default: 170, step: 0.1 }
     ]
   },
   bsa: {
     formula: 'BSA = √((height × weight) / 3600)',
     inputs: [
-      { id: 'weight', label: { en: 'Weight', es: 'Peso' }, type: 'number', unit: 'kg', default: 70 },
-      { id: 'height', label: { en: 'Height', es: 'Altura' }, type: 'number', unit: 'cm', default: 170 }
+      { id: 'weight', label: { en: 'Weight', es: 'Peso' }, type: 'number', unit: 'kg', unitGroup: 'weight', default: 70 },
+      { id: 'height', label: { en: 'Height', es: 'Altura' }, type: 'number', unit: 'cm', unitGroup: 'height', default: 170 }
     ]
   },
   'creatinine-clearance': {
     formula: 'CrCl = ((140−age) × weight × (0.85 if ♀)) / (72 × SCr)',
     inputs: [
       { id: 'age', label: { en: 'Age', es: 'Edad' }, type: 'number', unit: 'years', default: 65, min: 1, max: 120 },
-      { id: 'weight', label: { en: 'Weight', es: 'Peso' }, type: 'number', unit: 'kg', default: 70 },
-      { id: 'scr', label: { en: 'Serum Creatinine', es: 'Creatinina sérica' }, type: 'number', unit: 'mg/dL', default: 1.2, step: 0.1 },
+      { id: 'weight', label: { en: 'Weight', es: 'Peso' }, type: 'number', unit: 'kg', unitGroup: 'weight', default: 70 },
+      { id: 'scr', label: { en: 'Serum Creatinine', es: 'Creatinina sérica' }, type: 'number', unit: 'mg/dL', unitGroup: 'creatinine', default: 1.2, step: 0.1 },
       { id: 'sex', label: { en: 'Sex', es: 'Sexo' }, type: 'select', options: [{ v: 'male', l: { en: 'Male', es: 'Masculino' } }, { v: 'female', l: { en: 'Female', es: 'Femenino' } }], default: 'male' }
     ]
   },
@@ -29,7 +29,7 @@ window.CalcSchemas = {
     formula: 'CKD-EPI 2021 (creatinine-based)',
     inputs: [
       { id: 'age', label: { en: 'Age', es: 'Edad' }, type: 'number', unit: 'years', default: 55 },
-      { id: 'scr', label: { en: 'Serum Creatinine', es: 'Creatinina sérica' }, type: 'number', unit: 'mg/dL', default: 1.0, step: 0.1 },
+      { id: 'scr', label: { en: 'Serum Creatinine', es: 'Creatinina sérica' }, type: 'number', unit: 'mg/dL', unitGroup: 'creatinine', default: 1.0, step: 0.1 },
       { id: 'sex', label: { en: 'Sex', es: 'Sexo' }, type: 'select', options: [{ v: 'male', l: { en: 'Male', es: 'Masculino' } }, { v: 'female', l: { en: 'Female', es: 'Femenino' } }], default: 'male' }
     ]
   },

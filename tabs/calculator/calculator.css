@@ -1,4 +1,20 @@
 /* MediHelp Medical Calculator Styles */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../vision/Medical_Calc_BG.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.15;
+  z-index: -1;
+  pointer-events: none;
+}
+
 .calc-app { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; min-height: 70vh; }
 
 .calc-hero { text-align: center; margin-bottom: 40px; }
@@ -49,7 +65,23 @@
   display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
 }
 .role-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-accent); }
-.role-icon { font-size: 36px; }
+.role-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  transition: var(--transition);
+}
+.role-icon svg {
+  width: 32px;
+  height: 32px;
+}
+.role-card:hover .role-icon {
+  color: var(--accent-light);
+  transform: scale(1.08);
+}
 .role-name { font-weight: 800; color: var(--text-h); font-size: 14px; }
 .role-count { font-size: 11px; color: var(--text-muted); }
 .role-emergency { border-color: rgba(239,68,68,0.3); }
@@ -76,7 +108,18 @@
 .chip-soon { background: rgba(148,163,184,0.15); color: var(--text-muted); }
 
 .calc-role-header { margin-bottom: 32px; }
-.calc-role-header h1 { font-size: clamp(24px, 4vw, 36px); margin: 12px 0; }
+.calc-role-header h1 {
+  font-size: clamp(24px, 4vw, 36px);
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.calc-role-header h1 svg {
+  width: 36px;
+  height: 36px;
+  color: var(--accent);
+}
 .calc-role-header.emergency { background: rgba(239,68,68,0.05); padding: 20px; border-radius: var(--radius); border: 1px solid rgba(239,68,68,0.2); }
 
 .emergency-presets { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
@@ -168,3 +211,21 @@
 /* Emergency mode global overrides */
 .emergency-mode .calc-input, .emergency-mode select { font-size: 18px; min-height: 52px; }
 .emergency-mode .result-primary { font-size: clamp(40px, 8vw, 56px); }
+
+/* Unit toggle badge */
+.unit-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 700;
+  border: 1px solid var(--accent); color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.08); cursor: pointer;
+  transition: background 0.2s, color 0.2s; white-space: nowrap; flex-shrink: 0;
+}
+.unit-badge:hover { background: var(--accent); color: #fff; }
+.stepper { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+/* Lang / Unit separator */
+.lang-sep { color: var(--border); margin: 0 2px; user-select: none; }
+
+/* Optional label */
+.opt-label { font-size: 11px; font-weight: 600; color: var(--text-muted); font-style: normal; margin-left: 4px; }
+

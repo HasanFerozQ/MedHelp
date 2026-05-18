@@ -48,3 +48,8 @@
 ## UI/UX Enhancements
 - [x] Integrate Medical Exam Mastery CTA into Homepage (index.html)
 - [x] Implement pulse animation and responsive grid for homepage CTA
+- [x] Establish a consistent premium site-wide Footer in `medical-calculator.html`
+- [x] Remove gradient backgrounds on all primary buttons, utilizing professional solid colors on hover
+- [x] Limit recently used bedside calculators to exactly 4 items
+- [x] Swap out all child-like mobile emojis for beautiful vector SVG medical icons
+- [x] Fix multi-language (EN/ES) switch event listeners for bedside clinical calculators
