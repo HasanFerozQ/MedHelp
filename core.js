@@ -634,14 +634,17 @@ const MediHelp = {
     if (path.startsWith('/medical-exam-preparation')) return true;
     if (path.startsWith('/medical-exam-usmle')) return true;
     if (path.startsWith('/flash-cards')) return true;
+    if (path.startsWith('/medical-calculator')) return true;
     if (path.includes('medical-exam')) return true;
     if (path.includes('flash-cards')) return true;
+    if (path.includes('medical-calculator')) return true;
 
     // Match by full href (covers local file:// and localhost serving)
     if (href.includes('medical-exam-semester')) return true;
     if (href.includes('medical-exam-preparation')) return true;
     if (href.includes('medical-exam-usmle')) return true;
     if (href.includes('flash-cards')) return true;
+    if (href.includes('medical-calculator')) return true;
 
     return false;
   },

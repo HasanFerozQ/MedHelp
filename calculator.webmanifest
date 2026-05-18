@@ -1,0 +1,14 @@
+{
+  "name": "MediHelp Medical Calculator",
+  "short_name": "MediCalc",
+  "description": "Role-based clinical calculators — offline ready",
+  "start_url": "/medical-calculator",
+  "scope": "/medical-calculator",
+  "display": "standalone",
+  "background_color": "#030b14",
+  "theme_color": "#22c55e",
+  "icons": [
+    { "src": "/icons/logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

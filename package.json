@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/HasanFerozQ/MedHelp#readme",
   "dependencies": {
-    "@aws-sdk/client-textract": "^3.500.0",
     "@supabase/supabase-js": "^2.45.0",
     "cors": "^2.8.6",
     "csv-parser": "^3.0.0",
@@ -33,8 +32,7 @@
     "nodemailer": "^8.0.5",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^3.11.174",
-    "pdfkit": "^0.18.0",
-    "sharp": "^0.34.4"
+    "pdfkit": "^0.18.0"
   },
   "devDependencies": {
     "supabase": "^2.93.0"
