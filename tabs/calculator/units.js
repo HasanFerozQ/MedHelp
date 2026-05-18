@@ -23,11 +23,6 @@ window.CalcUnits = {
       toSI: v => +(v * 2.54).toFixed(1)
     },
     creatinine: {
-      siUnit: 'mg/dL', usUnit: 'mg/dL',   // US standard IS mg/dL; SI countries use µmol/L
-      siRange: '0.5–1.5', usRange: '0.5–1.5',
-      // US: mg/dL (same), non-US: µmol/L
-      // We'll use 'metric' vs 'us' interpretation:
-      // store toggle state separately; for creatinine the US unit = mg/dL, SI unit = µmol/L
       siUnit: 'µmol/L', usUnit: 'mg/dL',
       siRange: '45–130', usRange: '0.5–1.5',
       toUS: v => +(v / 88.42).toFixed(2),   // µmol/L → mg/dL
@@ -104,8 +99,20 @@ window.CalcUnits = {
   convertFormToSI(vals, schema) {
     const out = Object.assign({}, vals);
     (schema.inputs || []).forEach(inp => {
-      if (inp.unitGroup && out[inp.id] !== undefined && out[inp.id] !== '') {
-        out[inp.id] = this.toSI(+out[inp.id], inp.unitGroup);
+      let grp = inp.unitGroup;
+      if (!grp) {
+        const id = inp.id.toLowerCase();
+        const unit = (inp.unit || '').toLowerCase();
+        if (id.includes('weight') || unit === 'kg' || unit === 'lbs') grp = 'weight';
+        else if (id.includes('height') || unit === 'cm' || unit === 'in') grp = 'height';
+        else if (id === 'creatinine' || id === 'scr' || id === 'cr') grp = 'creatinine';
+        else if (id === 'bilirubin' || id === 'bili') grp = 'bilirubin';
+        else if (id === 'glucose') grp = 'glucose';
+        else if (unit === '°c' || unit === '°f' || id.includes('temp')) grp = 'temperature';
+        else if (id === 'na' || id === 'sodium') grp = 'sodium';
+      }
+      if (grp && out[inp.id] !== undefined && out[inp.id] !== '') {
+        out[inp.id] = this.toSI(+out[inp.id], grp);
       }
     });
     return out;

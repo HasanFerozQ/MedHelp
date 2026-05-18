@@ -149,13 +149,13 @@
     if (v.bleeding) score++;
     if (v.labileInr) score++;
     if (v.elderly) score++;
-    if (v.drugs) score++;
-    if (v.alcohol) score++;
-    // Max 9; each flag = 1pt (drugs and alcohol combined = 1pt max per original HAS-BLED)
-    // Use raw sum per simplified clinical version
+    
+    // Clamp drugs and alcohol to 1 point combined per user guidelines
+    if (v.drugs || v.alcohol) score++;
+    
     const risk = score >= 3 ? 'High bleeding risk — weigh carefully vs stroke risk' : score >= 2 ? 'Moderate — address modifiable risk factors' : 'Low bleeding risk';
     return {
-      primary: score + ' / 9 points',
+      primary: score + ' points',
       interpretation: risk,
       chip: score >= 3 ? 'critical' : score >= 2 ? 'high' : 'normal',
       details: [{ label: 'Note', value: '≥3 = high risk; anticoagulation may still be appropriate if stroke risk outweighs' }]

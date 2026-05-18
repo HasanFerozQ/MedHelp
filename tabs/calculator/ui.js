@@ -314,7 +314,18 @@ window.CalcUI = {
   },
 
   _inputHtml(inp, saved) {
-    const grp = inp.unitGroup;
+    let grp = inp.unitGroup;
+    if (!grp) {
+      const id = inp.id.toLowerCase();
+      const unit = (inp.unit || '').toLowerCase();
+      if (id.includes('weight') || unit === 'kg' || unit === 'lbs') grp = 'weight';
+      else if (id.includes('height') || unit === 'cm' || unit === 'in') grp = 'height';
+      else if (id === 'creatinine' || id === 'scr' || id === 'cr') grp = 'creatinine';
+      else if (id === 'bilirubin' || id === 'bili') grp = 'bilirubin';
+      else if (id === 'glucose') grp = 'glucose';
+      else if (unit === '°c' || unit === '°f' || id.includes('temp')) grp = 'temperature';
+      else if (id === 'na' || id === 'sodium') grp = 'sodium';
+    }
     const displayUnit = grp ? CalcUnits.getUnit(grp) : (inp.unit || '');
     const siDefault = inp.default ?? '';
     const displayDefault = (grp && siDefault !== '') ? CalcUnits.fromSI(siDefault, grp) : siDefault;

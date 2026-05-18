@@ -85,7 +85,7 @@
 
     'dialysis-adequacy'(v) {
       const R = (+v.postBun) / (+v.preBun);
-      const ktv = -Math.log(R - 0.008 * (+v.time)) + (4 - 3.5 * R) * ((+v.uf * 1000) / (+v.weight));
+      const ktv = -Math.log(R - 0.008 * (+v.time)) + (4 - 3.5 * R) * ((+v.uf) / (+v.weight));
       const adequate = ktv >= 1.2;
       return {
         primary: ktv.toFixed(2) + ' Kt/V',
@@ -134,7 +134,29 @@
     },
 
     'trauma-score'(v) {
-      const gcs = +v.gcs, sbp = +v.sbp, rr = +v.rr;
+      const rawGcs = +v.gcs, rawSbp = +v.sbp, rawRr = +v.rr;
+      
+      let gcs = 0;
+      if (rawGcs >= 13) gcs = 4;
+      else if (rawGcs >= 9) gcs = 3;
+      else if (rawGcs >= 6) gcs = 2;
+      else if (rawGcs >= 4) gcs = 1;
+      else gcs = 0;
+
+      let sbp = 0;
+      if (rawSbp > 89) sbp = 4;
+      else if (rawSbp >= 76) sbp = 3;
+      else if (rawSbp >= 50) sbp = 2;
+      else if (rawSbp >= 1) sbp = 1;
+      else sbp = 0;
+
+      let rr = 0;
+      if (rawRr >= 10 && rawRr <= 29) rr = 4;
+      else if (rawRr > 29) rr = 3;
+      else if (rawRr >= 6) rr = 2;
+      else if (rawRr >= 1) rr = 1;
+      else rr = 0;
+
       const sum = gcs + sbp + rr;
       const rts = 0.9368 * gcs + 0.7326 * sbp + 0.2908 * rr;
       const prob = sum > 10 ? 'Low mortality' : sum > 6 ? 'Moderate mortality risk' : 'High mortality risk';
@@ -176,14 +198,13 @@
       const now = v.now ? new Date(v.now) : new Date();
       const elapsedMin = (now - start) / 60000;
       const h1 = elapsedMin <= 60;
-      const h3 = elapsedMin <= 180;
       return {
         primary: elapsedMin.toFixed(0) + ' min elapsed',
-        interpretation: h1 ? 'Within 1-hour bundle window' : h3 ? 'Within 3-hour window — 1-hr bundle overdue' : 'Both bundle windows exceeded',
-        chip: h1 ? 'normal' : h3 ? 'high' : 'critical',
+        interpretation: h1 ? 'Within 1-hour Surviving Sepsis bundle window' : '1-hour bundle window exceeded (overdue)',
+        chip: h1 ? 'normal' : 'critical',
         details: [
-          { label: '1-hr bundle', value: h1 ? 'On time' : 'OVERDUE' },
-          { label: '3-hr bundle', value: h3 ? 'On time' : 'OVERDUE' }
+          { label: '1-Hour Bundle', value: h1 ? 'On track (within 60m)' : 'OVERDUE' },
+          { label: 'Key Actions Required', value: 'Measure lactate, blood cultures, broad antibiotics, 30mL/kg fluids if MAP <65 or lactate >=4, vasopressors if MAP <65 after fluids.' }
         ]
       };
     },

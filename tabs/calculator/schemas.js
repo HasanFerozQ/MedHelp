@@ -206,7 +206,7 @@ window.CalcSchemas = {
     ]
   },
   'corrected-sodium': {
-    formula: 'Na_corr = Na + 1.6 × ((glucose−100)/100)',
+    formula: 'Na_corr = Na + (1.6 or 2.4 if glucose > 400) × ((glucose−100)/100)',
     inputs: [
       { id: 'na', label: { en: 'Measured sodium', es: 'Sodio medido' }, type: 'number', unit: 'mEq/L', default: 135 },
       { id: 'glucose', label: { en: 'Glucose', es: 'Glucosa' }, type: 'number', unit: 'mg/dL', default: 300 }

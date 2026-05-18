@@ -30,8 +30,9 @@ window.CalcCompute = {
     let interp = 'Normal weight', status = 'normal';
     const t = CalcFormulas.THRESHOLDS.bmi;
     if (bmi < t.underweight) { interp = 'Underweight'; status = 'low'; }
-    else if (bmi >= t.overweight) { interp = 'Obese'; status = 'critical'; }
-    else if (bmi >= t.normal) { interp = 'Overweight'; status = 'high'; }
+    else if (bmi >= 40) { interp = 'Obese (Class III / Morbid)'; status = 'critical'; }
+    else if (bmi >= 30) { interp = 'Obese (Class I-II)'; status = 'high'; }
+    else if (bmi >= t.overweight) { interp = 'Overweight'; status = 'high'; }
     return {
       primary: bmi.toFixed(1) + ' kg/m²',
       interpretation: interp,
@@ -352,13 +353,31 @@ window.CalcCompute = {
   'opioid-conversion'(v) {
     const factors = CalcFormulas.DOSAGES.opioid_mme;
     const drug = v.drug;
-    let mme = (+v.dose) * (factors[drug] || 1);
-    if (drug === 'fentanyl') mme = (+v.dose) * factors.fentanyl_patch_mcg_hr;
+    const dose = +v.dose;
+    let factor = factors[drug] || 1;
+    
+    if (drug === 'methadone') {
+      if (dose > 60) factor = 12;
+      else if (dose > 40) factor = 10;
+      else if (dose > 20) factor = 8;
+      else if (dose > 0) factor = 4;
+    }
+    
+    let mme = dose * factor;
+    if (drug === 'fentanyl') mme = dose * factors.fentanyl_patch_mcg_hr;
+    
+    const details = [
+      { label: 'CDC caution', value: 'Careful titration when ≥50 MME/day; avoid ≥90 MME/day when possible' }
+    ];
+    if (drug === 'methadone') {
+      details.push({ label: 'Methadone MME Factor', value: `${factor}x (CDC variable factor based on daily dose)` });
+    }
+    
     return {
       primary: mme.toFixed(1) + ' MME/day',
       interpretation: 'Morphine milligram equivalents',
       chip: mme >= 90 ? 'critical' : mme >= 50 ? 'high' : 'normal',
-      details: [{ label: 'CDC caution', value: 'Careful titration when ≥50 MME/day; avoid ≥90 MME/day when possible' }]
+      details: details
     };
   },
 
@@ -562,7 +581,12 @@ window.CalcCompute = {
     if (v.risk) score += 2;
     if (v.troponin) score += 2;
     const risk = score <= 3 ? 'Low (1.7% MACE at 6 weeks)' : score <= 6 ? 'Moderate (16.6% MACE)' : 'High (50%+ MACE)';
-    return { primary: score + ' / 10', interpretation: risk, chip: score >= 7 ? 'critical' : score >= 4 ? 'high' : 'normal' };
+    return {
+      primary: score + ' / 10',
+      interpretation: risk,
+      chip: score >= 7 ? 'critical' : score >= 4 ? 'high' : 'normal',
+      details: [{ label: '⚠️ Scoring Note', value: 'This is a simplified binary model assigning 0 or 2 points per category. Consult formal 0/1/2 scoring for complex patients.' }]
+    };
   },
 
   'dopamine-infusion'(v) {

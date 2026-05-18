@@ -168,9 +168,12 @@
       return {
         primary: auc.toFixed(0) + ' mg·h/L',
         interpretation: (auc >= 400 && auc <= 600 ? 'Within guideline AUC 400-600 target' : auc < 400 ? 'Below target — consider dose increase' : 'Above target — consider dose reduction') + 
-          (isFallback ? ' (Note: Trough-only fallback is a population estimate, not a formal PK/TDM calculation).' : ''),
+          (isFallback ? ' (Note: Trough-only fallback is a population estimate).' : ''),
         chip: auc < 400 ? 'low' : auc > 600 ? 'high' : 'normal',
-        details: [{ label: 'Method', value: isFallback ? '1-compartment trough population estimate' : 'Trapezoidal Css avg × 24' }]
+        details: [
+          { label: 'Method', value: isFallback ? '1-compartment trough population estimate' : 'Trapezoidal Css avg × 24' },
+          ...(isFallback ? [{ label: '⚠️ PK Warning', value: 'Uses population constants (kel=0.06, Vd=0.7 L/kg). Highly variable, not validated PK modeling.' }] : [])
+        ]
       };
     },
     'neonatal-bilirubin'(v) {
