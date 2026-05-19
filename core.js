@@ -62,6 +62,22 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
+function formatMcqHtml(str) {
+  if (!str) return '';
+  return escapeHtml(str)
+    .replace(/&lt;br\s*\/?&gt;/gi, '<br>')
+    .replace(/&lt;b&gt;/gi, '<b>')
+    .replace(/&lt;\/b&gt;/gi, '</b>')
+    .replace(/&lt;strong&gt;/gi, '<strong>')
+    .replace(/&lt;\/strong&gt;/gi, '</strong>')
+    .replace(/&lt;ul&gt;/gi, '<ul>')
+    .replace(/&lt;\/ul&gt;/gi, '</ul>')
+    .replace(/&lt;li&gt;/gi, '<li>')
+    .replace(/&lt;\/li&gt;/gi, '</li>')
+    .replace(/&amp;bull;/gi, '&bull;')
+    .replace(/&amp;nbsp;/gi, '&nbsp;');
+}
+
 // 4. Shared Utils: FAQ Rendering
 function renderFAQ(containerId, items) {
   const el = document.getElementById(containerId);
@@ -1255,4 +1271,5 @@ window.renderFAQ = renderFAQ;
 window.toggleFAQ = toggleFAQ;
 window.switchTab = switchTab;
 window.escapeHtml = escapeHtml;
+window.formatMcqHtml = formatMcqHtml;
 window.sanitizeText = escapeHtml; // Alias for backward compatibility in audit modules
