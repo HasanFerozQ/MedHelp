@@ -16,6 +16,7 @@ DECLARE
         'optho-cataract',
         'optho-trauma',
         'geri-aging-changes',
+        'geri-pharmacokinetic-shifts',
         'geri-falls',
         'geri-delirium-dementia',
         'geri-incontinence',
