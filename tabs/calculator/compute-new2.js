@@ -16,9 +16,11 @@
     if (v.hx) score += 1;
     if (v.alternative) score -= 2;
 
+    // Score floored at 0 for display; -1 or -2 is clinically the same as 0 (unlikely)
+    const displayScore = Math.max(score, 0);
     const prob = score >= 2 ? 'DVT Likely' : 'DVT Unlikely';
     return {
-      primary: score + ' points',
+      primary: displayScore + ' points',
       interpretation: prob + (score >= 2 ? ' — Consider ultrasound.' : ' — Consider D-dimer if low probability.'),
       chip: score >= 2 ? 'high' : 'normal',
       details: [{ label: 'Risk Model', value: 'Wells Score for DVT (Simplified)' }]
@@ -95,7 +97,8 @@
 
   CalcCompute['glasgow-blatchford'] = function(v) {
     let score = 0;
-    const bun = +v.bun;
+    // BUN thresholds are in mg/dL; convert from mmol/L if SI mode
+    const bun = CalcUnits.system === 'SI' ? (+v.bun * 2.8) : +v.bun;  // mmol/L × 2.8 = mg/dL
     if (bun >= 18 && bun < 22.4) score += 2;
     else if (bun >= 22.4 && bun < 28) score += 3;
     else if (bun >= 28 && bun < 70) score += 4;
@@ -144,8 +147,18 @@
     else if (hb < 11) score += 2;
 
     if (+v.na < 135) score += 2;
-    if (+v.cr > 1.6) score += 2;
-    if (+v.glucose > 180) score += 1;
+
+    // Creatinine threshold is 1.6 mg/dL; convert µmol/L to mg/dL if SI mode
+    const crMgDl = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.creatinine.toUS(+v.cr)
+      : +v.cr;
+    if (crMgDl > 1.6) score += 2;
+
+    // Glucose threshold is 180 mg/dL; convert mmol/L to mg/dL if SI mode
+    const glucoseMgDl = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.glucose.toUS(+v.glucose)
+      : +v.glucose;
+    if (glucoseMgDl > 180) score += 1;
 
     let risk = score >= 8 ? 'High risk (≥75% probability of Necrotizing Fasciitis)' : score >= 6 ? 'Intermediate risk (50-75% probability)' : 'Low risk (<50% probability)';
     return {
@@ -225,6 +238,7 @@
   CalcCompute['rsbi'] = function(v) {
     const rr = +v.rr;
     const vt = +v.vt / 1000; // convert mL to L
+    if (!rr) return { error: 'Enter respiratory rate' };
     if (!vt) return { error: 'Tidal volume required' };
 
     const rsbi = rr / vt;
@@ -259,7 +273,13 @@
 
   // ── Renal / Acid-Base ──
   CalcCompute['fena-calculator'] = function(v) {
-    const una = +v.una, sna = +v.sna, ucr = +v.ucr, scr = +v.scr;
+    const una = +v.una, sna = +v.sna;
+    // SCr and UCr must be in the SAME unit; SCr goes through convertFormToSI but UCr (field 'ucr') does not
+    // We normalize both to mg/dL for calculation
+    const scr = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.creatinine.toUS(+v.scr)   // µmol/L → mg/dL
+      : +v.scr;
+    const ucr = +v.ucr; // Urine creatinine always entered in mg/dL by convention
     if (!una || !sna || !ucr || !scr) return { error: 'Fill all fields' };
 
     const fena = (una * scr) / (sna * ucr) * 100;
@@ -301,6 +321,18 @@
     if (!na || !cl || !hco3) return { error: 'Fill all fields' };
 
     const ag = na - (cl + hco3);
+    if (ag <= 12) return {
+      primary: 'AG: ' + ag.toFixed(1) + ' mEq/L',
+      interpretation: 'Anion gap is not elevated (≤12). Delta-gap ratio is undefined in the absence of an anion gap acidosis.',
+      chip: ag < 8 ? 'low' : 'normal',
+      details: [{ label: 'Note', value: 'Delta-gap ratio only applies when AG > 12' }]
+    };
+    if (hco3 >= 24) return {
+      primary: 'AG: ' + ag.toFixed(1) + ' mEq/L',
+      interpretation: 'HCO₃ ≥ 24 mEq/L: denominator is zero. No metabolic acidosis present.',
+      chip: 'normal',
+      details: [{ label: 'Note', value: 'Delta ratio undefined when HCO₃ ≥ 24' }]
+    };
     const deltaAG = ag - 12;
     const deltaRatio = deltaAG / (24 - hco3);
     const correctedHco3 = hco3 + deltaAG;

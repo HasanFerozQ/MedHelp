@@ -5,23 +5,25 @@
   // ── Ottawa Rules ──
   CalcCompute['ottawa-rules'] = function(v) {
     const area = v.area;
+    if (!area) return { error: 'Select area to assess (ankle, foot, or knee)' };
     let xray = false, reason = '';
 
     if (area === 'ankle') {
       xray = v.noWB || v.lateralMalleolus || v.medialMalleolus;
-      reason = xray
-        ? (v.noWB ? 'Unable to weight-bear' : 'Malleolar bone tenderness')
-        : 'No Ottawa criteria met — X-ray not indicated';
+      if (xray) {
+        reason = v.noWB ? 'Unable to weight-bear' :
+          (v.lateralMalleolus && v.medialMalleolus) ? 'Lateral and medial malleolar tenderness' :
+          v.lateralMalleolus ? 'Lateral malleolar bone tenderness' : 'Medial malleolar bone tenderness';
+      } else { reason = 'No Ottawa criteria met'; }
     } else if (area === 'foot') {
       xray = v.noWB || v.base5th || v.navicular;
-      reason = xray
-        ? (v.noWB ? 'Unable to weight-bear' : 'Midfoot bone tenderness')
-        : 'No Ottawa criteria met — X-ray not indicated';
+      if (xray) {
+        reason = v.noWB ? 'Unable to weight-bear' :
+          v.base5th ? '5th metatarsal base tenderness' : 'Navicular tenderness';
+      } else { reason = 'No Ottawa criteria met'; }
     } else if (area === 'knee') {
       xray = v.age55 || v.patellar || v.fibular || v.cantFlex90 || v.noWB;
-      reason = xray
-        ? 'Ottawa Knee criteria positive'
-        : 'No Ottawa criteria met — X-ray not indicated';
+      reason = xray ? 'Ottawa Knee criteria positive' : 'No Ottawa criteria met';
     }
 
     return {
@@ -96,7 +98,9 @@
 
   // ── Child-Pugh Score ──
   CalcCompute['child-pugh'] = function(v) {
-    const score = (+v.bilirubin) + (+v.albumin) + (+v.pt) + (+v.ascites) + (+v.encephalopathy);
+    const score = (+v.bilirubin || 0) + (+v.albumin || 0) + (+v.pt || 0) + (+v.ascites || 0) + (+v.encephalopathy || 0);
+    // Minimum valid score is 5 (all fields at lowest severity); blank form gives 0
+    if (score < 5) return { error: 'Fill all Child-Pugh fields (minimum score is 5)' };
     const cls = score <= 6 ? 'A' : score <= 9 ? 'B' : 'C';
     const survival = { A: '1-yr: 100%, 2-yr: 85%', B: '1-yr: 81%, 2-yr: 57%', C: '1-yr: 45%, 2-yr: 35%' };
     return {
@@ -109,13 +113,23 @@
 
   // ── MELD / MELD-Na Score ──
   CalcCompute['meld-score'] = function(v) {
-    const bili = Math.max(+v.bilirubin, 1);
+    // Bilirubin and creatinine: MELD formula uses mg/dL; convert from µmol/L if SI mode
+    const biliRaw = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.bilirubin.toUS(+v.bilirubin)
+      : +v.bilirubin;
+    const crRaw = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.creatinine.toUS(+v.creatinine)
+      : +v.creatinine;
+
+    const bili = Math.max(biliRaw, 1);
     const inr  = Math.max(+v.inr, 1);
-    const cr   = Math.min(Math.max(+v.creatinine, 1), 4);
+    const cr   = Math.min(Math.max(crRaw, 1), 4);   // capped at 4.0 mg/dL per UNOS
+    // Sodium clamped to 125-137 for MELD-Na calculation
     const na   = Math.min(Math.max(+v.sodium, 125), 137);
 
     const meld = Math.round(3.78 * Math.log(bili) + 11.2 * Math.log(inr) + 9.57 * Math.log(cr) + 6.43);
-    const meldNa = Math.round(meld + 1.32 * (137 - na) - (0.24 * meld * (137 - na)));
+    // UNOS MELD-Na formula (corrected): MELD - Na - (0.025 × MELD × (140 - Na)) + 140
+    const meldNa = Math.round(meld - na - (0.025 * meld * (140 - na)) + 140);
 
     return {
       primary: 'MELD ' + meld + ' | MELD-Na ' + meldNa,
@@ -256,6 +270,8 @@
 
   // ── Pediatric GCS ──
   CalcCompute['ped-gcs'] = function(v) {
+    // Minimum valid GCS is 3 (1+1+1); blank form gives 0 — must validate
+    if (!v.eye || !v.verbal || !v.motor) return { error: 'Select all three components (E/V/M)' };
     const total = (+v.eye || 0) + (+v.verbal || 0) + (+v.motor || 0);
     let interp = 'Normal neurological status', status = 'normal';
     if (total <= 8)  { interp = 'Severe brain injury — urgent airway management'; status = 'critical'; }
@@ -275,6 +291,10 @@
 
   // ── PEWS ──
   CalcCompute['pews'] = function(v) {
+    // Blank form with no selections gives 0, which looks like 'normal' but is invalid
+    if (v.behavior === undefined || v.cardiovascular === undefined || v.respiratory === undefined) {
+      return { error: 'Select a score for each category (Behavior, Cardiovascular, Respiratory)' };
+    }
     const score = (+v.behavior || 0) + (+v.cardiovascular || 0) + (+v.respiratory || 0);
     let action = score >= 4 ? 'IMMEDIATE escalation to senior clinician/PICU' : score >= 2 ? 'Urgent clinical review required' : 'Routine monitoring — reassess per protocol';
     return {

@@ -119,9 +119,10 @@
     'emergency-drug-dose'(v) {
       const w = +v.weight;
       const doses = {
+        // Applied Math.min() cap so the displayed number never exceeds the stated maximum
         epinephrine: (0.01 * w).toFixed(2) + ' mg IM (0.01 mg/kg)',
-        diphenhydramine: (1 * w).toFixed(0) + ' mg (1 mg/kg, max 50 mg)',
-        dexamethasone: (0.6 * w).toFixed(1) + ' mg (0.6 mg/kg, max 16 mg)',
+        diphenhydramine: Math.min(50, 1 * w).toFixed(0) + ' mg (1 mg/kg, max 50 mg)',
+        dexamethasone: Math.min(16, 0.6 * w).toFixed(1) + ' mg (0.6 mg/kg, max 16 mg)',
         lorazepam: (0.1 * w).toFixed(1) + ' mg (0.1 mg/kg)'
       };
       return { primary: doses[v.drug] || 'See reference', interpretation: 'Emergency dosing', chip: 'normal' };
@@ -348,6 +349,7 @@
       const kcal = (+v.weight) * (+v.caloriesPerKg);
       const prot = (+v.weight) * (+v.proteinPerKg);
       const nonProteinKcal = kcal - prot * 4;
+      if (nonProteinKcal < 0) return { error: 'Protein calories exceed total calories. Reduce protein or increase total calories per kg.' };
       const dextroseG = (nonProteinKcal * 0.6) / 3.4;
       const lipidG = (nonProteinKcal * 0.4) / 9;
       return {
@@ -413,8 +415,10 @@
     },
 
     'contraction-timer'(v) {
-      const freq = 60 / (+v.interval);
-      const active = (+v.interval) <= 5 && (+v.duration) >= 45;
+      const interval = +v.interval;
+      if (!interval) return { error: 'Enter contraction interval' };
+      const freq = 60 / interval;
+      const active = interval <= 5 && (+v.duration) >= 45;
       return {
         primary: freq.toFixed(1) + ' contractions/hr',
         interpretation: active ? 'Active labor pattern' : 'Early/irregular labor',
@@ -560,7 +564,8 @@
     },
 
     'qc-stats'(v) {
-      const vals = [+v.v1, +v.v2, +v.v3, +v.v4, +v.v5].filter(x => !isNaN(x));
+      const vals = [+v.v1, +v.v2, +v.v3, +v.v4, +v.v5].filter(x => x !== 0 && !isNaN(x));
+      if (vals.length < 2) return { error: 'Enter at least 2 values to calculate statistics' };
       const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
       const sd = Math.sqrt(vals.reduce((s, x) => s + (x - mean) ** 2, 0) / (vals.length - 1));
       const cv = (sd / mean) * 100;

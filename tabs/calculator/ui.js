@@ -260,7 +260,7 @@ window.CalcUI = {
     </div>
     <div class="calc-layout">
       <form id="calc-form" class="calc-form">
-        <div class="formula-box"><span>${CalcI18n.t('formula')}</span><code>${schema.formula}</code></div>`;
+        <div class="formula-box"><span>${CalcI18n.t('formula')}</span><code>${(schema.formula || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></div>`;
 
     const basic = schema.inputs.filter(i => !i.advanced);
     const advanced = schema.inputs.filter(i => i.advanced);
@@ -413,20 +413,29 @@ window.CalcUI = {
   },
 
   _applyPreset(preset) {
+    // SI defaults in kg; convert to current display unit before populating fields
     const defaults = { adult: { weight: 70 }, ped: { weight: 20 }, '70': { weight: 70 } };
     const vals = defaults[preset];
     if (!vals) return;
     Object.entries(vals).forEach(([k, v]) => {
       const el = document.querySelector(`[name="${k}"]`);
-      if (el) el.value = v;
+      if (!el) return;
+      // v is always in SI (kg); convert to display unit if US mode
+      const displayVal = (k === 'weight') ? CalcUnits.fromSI(v, 'weight') : v;
+      el.value = displayVal;
     });
   },
 
   _updateOfflineBadge() {
     const badge = document.getElementById('offline-badge');
     if (!badge) return;
-    if (navigator.onLine) badge.textContent = '🟢 ' + CalcI18n.t('offlineReady');
-    else badge.textContent = '🟢 ' + CalcI18n.t('offlineReady');
+    if (navigator.onLine) {
+      badge.textContent = '🟢 ' + CalcI18n.t('offlineReady');
+      badge.style.opacity = '1';
+    } else {
+      badge.textContent = '🔴 Offline — cached content available';
+      badge.style.opacity = '0.8';
+    }
   }
 };
 
@@ -440,8 +449,7 @@ async function verifyCalcLicense() {
     await MediHelp.License.verify(key, email);
     document.getElementById('calc-premium-modal')?.classList.remove('visible');
     CalcUI._premium = true;
-    CalcUI.render();
-    location.reload();
+    location.reload(); // reload fetches fresh premium state; in-memory render() before reload is wasted
   } catch (e) {
     alert(e.message || 'Invalid license');
   }

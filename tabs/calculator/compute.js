@@ -37,7 +37,9 @@ window.CalcCompute = {
   },
 
   bmi(v) {
-    const w = +v.weight, h = +v.height / 100;
+    // Convert to SI (kg / cm) before calculation regardless of display unit
+    const w = CalcUnits.toSI(+v.weight, 'weight');
+    const h = CalcUnits.toSI(+v.height, 'height') / 100;
     if (!w || !h) return { error: 'Enter weight and height' };
     const bmi = w / (h * h);
     let interp = 'Normal weight', status = 'normal';
@@ -55,16 +57,24 @@ window.CalcCompute = {
   },
 
   bsa(v) {
-    const w = +v.weight, h = +v.height;
+    // Mosteller formula requires height in cm, weight in kg
+    const w = CalcUnits.toSI(+v.weight, 'weight');
+    const h = CalcUnits.toSI(+v.height, 'height');
     if (!w || !h) return { error: 'Enter weight and height' };
     const bsa = Math.sqrt((h * w) / 3600);
     return { primary: bsa.toFixed(2) + ' m²', interpretation: 'Mosteller BSA', chip: 'normal' };
   },
 
   'creatinine-clearance'(v) {
-    const age = +v.age, weight = +v.weight, scr = +v.scr;
-    if (!age || !weight || !scr) return { error: 'Fill all fields' };
-    let crcl = ((140 - age) * weight) / (72 * scr);
+    const age = +v.age;
+    // Cockcroft-Gault requires weight in kg, scr in mg/dL
+    const weight = CalcUnits.toSI(+v.weight, 'weight');
+    // scr arrives as µmol/L in SI mode; formula needs mg/dL
+    const scrMgDl = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.creatinine.toUS(+v.scr)
+      : +v.scr;
+    if (!age || !weight || !scrMgDl) return { error: 'Fill all fields' };
+    let crcl = ((140 - age) * weight) / (72 * scrMgDl);
     if (v.sex === 'female') crcl = crcl * 0.85;
     let status = 'normal';
     if (crcl < 30) status = 'critical';
@@ -100,7 +110,7 @@ window.CalcCompute = {
     if (v.dm) score++;
     if (v.stroke) score += 2;
     if (v.vascular) score++;
-    if (v.sex) score++;
+    if (v.sex === 'female') score++; // Bug fix: 'male' is truthy too; must be explicit
     const risk = score === 0 ? 'Low (0%/yr stroke)' : score === 1 ? 'Low-moderate' : score === 2 ? 'Moderate (~2.2%/yr)' : 'High (≥3.2%/yr)';
     return { primary: score + ' points', interpretation: risk, chip: score >= 2 ? 'high' : 'normal' };
   },
@@ -135,10 +145,12 @@ window.CalcCompute = {
   },
 
   qsofa(v) {
+    // Guard blank fields — a blank SBP (0) must not score positive
+    if (!v.rr && !v.sbp && !v.gcs) return { error: 'Enter at least one vital sign' };
     let score = 0;
     if (+v.rr >= 22) score++;
-    if (+v.sbp <= 100) score++;
-    if (+v.gcs < 15) score++;
+    if (+v.sbp && +v.sbp <= 100) score++; // blank SBP (0) excluded
+    if (+v.gcs && +v.gcs < 15) score++;  // blank GCS (0) excluded
     return {
       primary: score + ' / 3',
       interpretation: score >= 2 ? 'Positive qSOFA — high risk, evaluate for sepsis' : 'Negative qSOFA',
@@ -181,7 +193,7 @@ window.CalcCompute = {
   },
 
   parkland(v) {
-    const w = +v.weight, tbsa = +v.tbsa;
+    const w = CalcUnits.toSI(+v.weight, 'weight'), tbsa = +v.tbsa;
     if (!w || !tbsa) return { error: 'Enter weight and TBSA' };
     const total = 4 * w * tbsa;
     const first8 = total / 2;
@@ -230,7 +242,9 @@ window.CalcCompute = {
   },
 
   ibw(v) {
-    const inches = (+v.height) / 2.54;
+    // Devine formula requires height in inches; height must first be in cm
+    const heightCm = CalcUnits.toSI(+v.height, 'height');
+    const inches = heightCm / 2.54;
     const base = v.sex === 'female' ? 45.5 : 50;
     const ibw = base + 2.3 * (inches - 60);
     const adj = Math.max(ibw, 0);
@@ -287,8 +301,9 @@ window.CalcCompute = {
 
   'anion-gap'(v) {
     const ag = (+v.na) - ((+v.cl) + (+v.hco3));
+    // Bug fix: chip threshold aligned with interpretation threshold (both >12)
     let status = 'normal';
-    if (ag > 16) status = 'high';
+    if (ag > 12) status = 'high';
     else if (ag < 8) status = 'low';
     return {
       primary: ag.toFixed(1) + ' mEq/L',
@@ -308,7 +323,11 @@ window.CalcCompute = {
   },
 
   'corrected-sodium'(v) {
-    const glucose = +v.glucose;
+    // Formula uses mg/dL; convert if SI mode provides mmol/L
+    const glucose = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.glucose.toUS(+v.glucose)
+      : +v.glucose;
+    // Threshold 400 mg/dL ≈ 22.2 mmol/L — comparison valid after conversion
     const factor = glucose >= 400 ? 2.4 : 1.6;
     const corr = (+v.na) + factor * ((glucose - 100) / 100);
     return {
@@ -334,12 +353,15 @@ window.CalcCompute = {
   },
 
   'defibrillation-energy'(v) {
-    const w = +v.weight;
+    const w = CalcUnits.toSI(+v.weight, 'weight');
     const attempt = +v.attempt;
     const jPerKg = attempt === 1 ? 2 : 4;
     let joules = w * jPerKg;
     if (!v.pediatric && joules > 360) joules = 360;
-    if (v.pediatric && joules > w * 10) joules = w * 10;
+    if (v.pediatric) {
+      if (joules > w * 10) joules = w * 10;  // 10 J/kg max
+      if (joules > 360) joules = 360;          // absolute adult ceiling per PALS
+    }
     return {
       primary: Math.round(joules) + ' J',
       interpretation: (attempt === 1 ? '1st' : '2nd+') + ' shock energy',
@@ -395,7 +417,10 @@ window.CalcCompute = {
   },
 
   'calorie-requirement'(v) {
-    const w = +v.weight, h = +v.height, age = +v.age;
+    // Mifflin-St Jeor requires weight in kg, height in cm
+    const w = CalcUnits.toSI(+v.weight, 'weight');
+    const h = CalcUnits.toSI(+v.height, 'height');
+    const age = +v.age;
     let bmr = v.sex === 'male'
       ? 10 * w + 6.25 * h - 5 * age + 5
       : 10 * w + 6.25 * h - 5 * age - 161;
@@ -409,12 +434,18 @@ window.CalcCompute = {
   },
 
   osmolality(v) {
-    const osm = 2 * (+v.na) + (+v.glucose / 18) + (+v.bun / 2.8);
+    // Divisors /18 and /2.8 convert mg/dL→mmol; not needed when already in mmol (SI)
+    const glucoseMgDl = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.glucose.toUS(+v.glucose)
+      : +v.glucose;
+    const bunMgDl = +v.bun; // BUN always entered in mg/dL (no SI toggle for BUN)
+    const osm = 2 * (+v.na) + (glucoseMgDl / 18) + (bunMgDl / 2.8);
     return { primary: osm.toFixed(1) + ' mOsm/kg', interpretation: 'Calculated serum osmolality', chip: osm > 320 ? 'high' : osm < 275 ? 'low' : 'normal' };
   },
 
   qtc(v) {
     const qt = +v.qt, hr = +v.hr;
+    if (!hr) return { error: 'Enter heart rate' };
     const rr = 60 / hr;
     const qtc = qt / Math.sqrt(rr);
     let status = qtc > 500 ? 'critical' : qtc > 470 ? 'high' : qtc > 450 ? 'low' : 'normal';
@@ -432,9 +463,13 @@ window.CalcCompute = {
   },
 
   'iron-deficit'(v) {
-    const stores = (+v.weight) < 35 ? (15 * (+v.weight)) : 500;
-    const deficit = (+v.weight) * ((+v.targetHb) - (+v.currentHb)) * 2.4 + stores;
-    return { primary: Math.max(0, deficit).toFixed(0) + ' mg', interpretation: 'Ganzoni iron deficit (simplified)', chip: 'normal' };
+    const w = CalcUnits.toSI(+v.weight, 'weight');
+    // Ganzoni formula assumes Hb in g/dL; if SI mode Hb may be g/L — divide by 10
+    const targetHb = +v.targetHb > 50 ? +v.targetHb / 10 : +v.targetHb;
+    const currentHb = +v.currentHb > 50 ? +v.currentHb / 10 : +v.currentHb;
+    const stores = w < 35 ? (15 * w) : 500;
+    const deficit = w * (targetHb - currentHb) * 2.4 + stores;
+    return { primary: Math.max(0, deficit).toFixed(0) + ' mg', interpretation: 'Ganzoni iron deficit (simplified) — Hb input treated as g/dL', chip: 'normal' };
   },
 
   'potassium-correction'(v) {
@@ -608,7 +643,13 @@ window.CalcCompute = {
   },
 
   'norepi-infusion'(v) {
-    return this['dopamine-infusion'](v);
+    const result = this['dopamine-infusion'](v);
+    if (!result.error) {
+      result.details = (result.details || []).concat([
+        { label: '⚠️ Concentration Warning', value: 'Norepinephrine standard concentration (4–8 mg/250 mL = 16–32 mcg/mL) differs greatly from dopamine (400 mg/250 mL = 1600 mcg/mL). Enter the correct norepinephrine concentration above.' }
+      ]);
+    }
+    return result;
   },
 
   insulin(v) {
@@ -660,7 +701,11 @@ window.CalcCompute = {
   },
 
   osmolarity(v) {
-    const osm = (+v.na) * 2 + (+v.glucose) / 18 + (+v.bun) / 2.8;
+    // Convert glucose to mg/dL if in SI mode (mmol/L) before applying divisors
+    const glucoseMgDl = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.glucose.toUS(+v.glucose)
+      : +v.glucose;
+    const osm = (+v.na) * 2 + glucoseMgDl / 18 + (+v.bun) / 2.8;
     return { primary: osm.toFixed(0) + ' mOsm/L', interpretation: 'Calculated osmolarity', chip: 'normal' };
   },
 
@@ -687,7 +732,10 @@ window.CalcCompute = {
     if (pao2fio2 < 100) score += 4; else if (pao2fio2 < 200) score += 3; else if (pao2fio2 < 300) score += 2; else if (pao2fio2 < 400) score += 1;
     const plt = +v.platelets;
     if (plt < 20) score += 4; else if (plt < 50) score += 3; else if (plt < 100) score += 2; else if (plt < 150) score += 1;
-    const bili = +v.bilirubin;
+    // Bilirubin thresholds are in mg/dL; convert from µmol/L if in SI mode
+    const bili = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.bilirubin.toUS(+v.bilirubin)
+      : +v.bilirubin;
     if (bili >= 12) score += 4; else if (bili >= 6) score += 3; else if (bili >= 2) score += 2; else if (bili >= 1.2) score += 1;
     const map = +v.map;
     if (+v.vasopressors === 3) score += 4;
@@ -696,7 +744,10 @@ window.CalcCompute = {
     else if (map < 70) score += 1;
     const gcs = +v.gcs;
     if (gcs < 6) score += 4; else if (gcs < 10) score += 3; else if (gcs < 13) score += 2; else if (gcs < 15) score += 1;
-    const cr = +v.creatinine;
+    // Creatinine thresholds are in mg/dL; convert from µmol/L if in SI mode
+    const cr = CalcUnits.system === 'SI'
+      ? CalcUnits.GROUPS.creatinine.toUS(+v.creatinine)
+      : +v.creatinine;
     if (cr >= 5) score += 4; else if (cr >= 3.5) score += 3; else if (cr >= 2) score += 2; else if (cr >= 1.2) score += 1;
     return {
       primary: score + ' points',
