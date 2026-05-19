@@ -232,7 +232,7 @@ while len(mcqs) < 300:
         exp_escaped = t['exp'].replace("'", "''")
         
         # We assume topic id exists, format exact same as other scripts
-        mcq_str = f"    (v_topic_id, 'Patient #{random.randint(10000, 99999)}: {q_text_escaped}', '{opts_json_escaped}'::jsonb, {new_ans_idx}, '{exp_escaped}')"
+        mcq_str = f"    (v_topic_id, '{q_text_escaped}', '{opts_json_escaped}'::jsonb, {new_ans_idx}, '{exp_escaped}')"
         
         if mcq_str not in mcqs:
             mcqs.append(mcq_str)
@@ -251,6 +251,9 @@ with open(out_file, "w", encoding="utf-8") as f:
     f.write("    IF v_topic_id IS NULL THEN\n")
     f.write(f"        RAISE EXCEPTION 'Topic {topic_slug} not found.';\n")
     f.write("    END IF;\n\n")
+    
+    f.write("    -- Clear existing MCQs for this topic to avoid duplicates\n")
+    f.write("    DELETE FROM mcqs WHERE topic_id = v_topic_id;\n\n")
     
     f.write("    INSERT INTO mcqs (topic_id, question, options, correct_index, explanation) VALUES\n")
     

@@ -521,7 +521,7 @@ while len(mcqs) < 350:
         opts_json_escaped = json.dumps(opts).replace("'", "''")
         exp_escaped = t['exp'].replace("'", "''")
         
-        mcq_str = f"    (v_topic_id, 'Patient #{random.randint(10000, 99999)}: {q_text_escaped}', '{opts_json_escaped}'::jsonb, {new_ans_idx}, '{exp_escaped}')"
+        mcq_str = f"    (v_topic_id, '{q_text_escaped}', '{opts_json_escaped}'::jsonb, {new_ans_idx}, '{exp_escaped}')"
         
         if mcq_str not in mcqs:
             mcqs.append(mcq_str)

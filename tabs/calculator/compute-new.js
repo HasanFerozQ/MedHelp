@@ -113,13 +113,8 @@
 
   // ── MELD / MELD-Na Score ──
   CalcCompute['meld-score'] = function(v) {
-    // Bilirubin and creatinine: MELD formula uses mg/dL; convert from µmol/L if SI mode
-    const biliRaw = CalcUnits.system === 'SI'
-      ? CalcUnits.GROUPS.bilirubin.toUS(+v.bilirubin)
-      : +v.bilirubin;
-    const crRaw = CalcUnits.system === 'SI'
-      ? CalcUnits.GROUPS.creatinine.toUS(+v.creatinine)
-      : +v.creatinine;
+    const biliRaw = +v.bilirubin;
+    const crRaw = +v.creatinine;
 
     const bili = Math.max(biliRaw, 1);
     const inr  = Math.max(+v.inr, 1);

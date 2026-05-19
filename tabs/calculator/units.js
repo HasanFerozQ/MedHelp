@@ -1,6 +1,7 @@
 /**
  * MediHelp — Unit Conversion Module
- * All calculations use SI internally; this module handles display conversion only.
+ * Display units (SI/US per field) are converted to canonical units before every calculation.
+ * Canonical units match clinical formulas: kg, cm, mg/dL (creatinine, glucose, bilirubin), °C.
  */
 window.CalcUnits = {
   _STORAGE: 'mh_unit_system',
@@ -8,7 +9,6 @@ window.CalcUnits = {
   get system() { return localStorage.getItem(this._STORAGE) || 'SI'; },
   setSystem(s) { localStorage.setItem(this._STORAGE, s); },
 
-  // Conversion factors: each entry = { si, us, toUS(v), toSI(v), siUnit, usUnit, siRange, usRange }
   GROUPS: {
     weight: {
       siUnit: 'kg', usUnit: 'lbs',
@@ -25,8 +25,8 @@ window.CalcUnits = {
     creatinine: {
       siUnit: 'µmol/L', usUnit: 'mg/dL',
       siRange: '45–130', usRange: '0.5–1.5',
-      toUS: v => +(v / 88.42).toFixed(2),   // µmol/L → mg/dL
-      toSI: v => +(v * 88.42).toFixed(1)    // mg/dL → µmol/L
+      toUS: v => +(v / 88.42).toFixed(2),
+      toSI: v => +(v * 88.42).toFixed(1)
     },
     bilirubin: {
       siUnit: 'µmol/L', usUnit: 'mg/dL',
@@ -43,78 +43,118 @@ window.CalcUnits = {
     temperature: {
       siUnit: '°C', usUnit: '°F',
       siRange: '35–42', usRange: '95–108',
-      toUS: v => +((v * 9/5) + 32).toFixed(1),
-      toSI: v => +((v - 32) * 5/9).toFixed(1)
+      toUS: v => +((v * 9 / 5) + 32).toFixed(1),
+      toSI: v => +((v - 32) * 5 / 9).toFixed(1)
     },
     sodium: {
       siUnit: 'mmol/L', usUnit: 'mEq/L',
       siRange: '135–145', usRange: '135–145',
-      toUS: v => +v,   // mmol/L = mEq/L for sodium; no real conversion
+      toUS: v => +v,
       toSI: v => +v
     }
   },
 
-  /**
-   * Get the current display unit for a group
-   */
-  getUnit(group) {
+  /** Groups where canonical (formula) unit is the US column (mg/dL, etc.) */
+  _CANONICAL_IS_US: { creatinine: true, bilirubin: true, glucose: true },
+
+  inferGroup(inp) {
+    if (!inp) return '';
+    if (inp.unitGroup) return inp.unitGroup;
+    const id = (inp.id || '').toLowerCase();
+    const unit = (inp.unit || '').toLowerCase();
+    if (id.includes('weight') || unit === 'kg' || unit === 'lbs' || unit === 'lb') return 'weight';
+    if (id.includes('height') || unit === 'cm' || unit === 'in') return 'height';
+    if (id === 'creatinine' || id === 'scr' || id === 'cr') return 'creatinine';
+    if (id === 'bilirubin' || id === 'bili') return 'bilirubin';
+    if (id === 'glucose') return 'glucose';
+    if (unit === '°c' || unit === '°f' || id.includes('temp')) return 'temperature';
+    if (id === 'na' || id === 'sodium') return 'sodium';
+    return '';
+  },
+
+  getUnit(group, displaySystem) {
     const g = this.GROUPS[group];
     if (!g) return '';
-    return this.system === 'US' ? g.usUnit : g.siUnit;
+    const sys = displaySystem || this.system;
+    return sys === 'US' ? g.usUnit : g.siUnit;
   },
 
-  /**
-   * Get the range string for placeholder display
-   */
-  getRange(group) {
+  getRange(group, displaySystem) {
     const g = this.GROUPS[group];
     if (!g) return '';
-    return this.system === 'US' ? g.usRange : g.siRange;
+    const sys = displaySystem || this.system;
+    return sys === 'US' ? g.usRange : g.siRange;
   },
 
   /**
-   * Convert a displayed value to SI for calculation
-   * @param {number} val - value in currently displayed unit
-   * @param {string} group - unitGroup name
-   * @returns {number} value in SI unit
+   * Convert displayed value → canonical formula unit (kg, cm, mg/dL, °C).
+   * @param {number} val
+   * @param {string} group
+   * @param {'SI'|'US'} displaySystem - unit system shown in the input field
    */
-  toSI(val, group) {
+  displayToCanonical(val, group, displaySystem) {
     const g = this.GROUPS[group];
-    if (!g || this.system === 'SI') return +val;
-    return g.toSI(+val);
+    if (!g || val === '' || val === undefined || isNaN(+val)) return +val;
+    const n = +val;
+    const canonicalIsUS = !!this._CANONICAL_IS_US[group];
+    if (displaySystem === 'US') {
+      return canonicalIsUS ? n : g.toSI(n);
+    }
+    return canonicalIsUS ? g.toUS(n) : n;
   },
 
   /**
-   * Convert a SI default to the current display unit (for populating input defaults)
+   * Convert canonical formula value → display unit for a field.
    */
+  canonicalToDisplay(val, group, displaySystem) {
+    const g = this.GROUPS[group];
+    if (!g || val === '' || val === undefined || isNaN(+val)) return val;
+    const n = +val;
+    const canonicalIsUS = !!this._CANONICAL_IS_US[group];
+    if (displaySystem === 'US') {
+      return canonicalIsUS ? n : g.toUS(n);
+    }
+    return canonicalIsUS ? g.toSI(n) : n;
+  },
+
+  /** @deprecated Use displayToCanonical — kept for any direct callers */
+  toSI(val, group, displaySystem) {
+    return this.displayToCanonical(val, group, displaySystem || this.system);
+  },
+
   fromSI(val, group) {
-    const g = this.GROUPS[group];
-    if (!g || this.system === 'SI') return +val;
-    return g.toUS(+val);
+    return this.canonicalToDisplay(val, group, this.system);
   },
 
   /**
-   * Convert all form values that have a unitGroup to SI before computation
+   * Convert all form values to canonical units before computation.
+   * @param {Object} vals - raw form values
+   * @param {Object} schema
+   * @param {Object} [displayUnits] - map fieldId → 'SI' | 'US' (per input data-display-unit)
    */
-  convertFormToSI(vals, schema) {
+  convertFormToSI(vals, schema, displayUnits) {
     const out = Object.assign({}, vals);
+    const units = displayUnits || {};
     (schema.inputs || []).forEach(inp => {
-      let grp = inp.unitGroup;
-      if (!grp) {
-        const id = inp.id.toLowerCase();
-        const unit = (inp.unit || '').toLowerCase();
-        if (id.includes('weight') || unit === 'kg' || unit === 'lbs') grp = 'weight';
-        else if (id.includes('height') || unit === 'cm' || unit === 'in') grp = 'height';
-        else if (id === 'creatinine' || id === 'scr' || id === 'cr') grp = 'creatinine';
-        else if (id === 'bilirubin' || id === 'bili') grp = 'bilirubin';
-        else if (id === 'glucose') grp = 'glucose';
-        else if (unit === '°c' || unit === '°f' || id.includes('temp')) grp = 'temperature';
-        else if (id === 'na' || id === 'sodium') grp = 'sodium';
-      }
-      if (grp && out[inp.id] !== undefined && out[inp.id] !== '') {
-        out[inp.id] = this.toSI(+out[inp.id], grp);
-      }
+      const grp = this.inferGroup(inp);
+      if (!grp || out[inp.id] === undefined || out[inp.id] === '') return;
+      const displaySys = units[inp.id] || this.system;
+      out[inp.id] = this.displayToCanonical(+out[inp.id], grp, displaySys);
     });
     return out;
+  },
+
+  /** Collect per-field display systems from a calculator form */
+  readDisplayUnits(form, schema) {
+    const units = {};
+    (schema.inputs || []).forEach(inp => {
+      const grp = this.inferGroup(inp);
+      if (!grp) return;
+      const el = form.elements[inp.id];
+      if (el && el.dataset.displayUnit) {
+        units[inp.id] = el.dataset.displayUnit;
+      }
+    });
+    return units;
   }
 };

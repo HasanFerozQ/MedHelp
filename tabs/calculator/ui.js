@@ -291,22 +291,22 @@ window.CalcUI = {
         s.querySelector('.step-minus')?.addEventListener('click', () => this._step(s, -1));
         s.querySelector('.step-plus')?.addEventListener('click', () => this._step(s, 1));
       });
-      // Unit badge toggle — switch unit and re-convert field value live
+      // Unit badge — toggle only this field's display unit (does not change global SI/US)
       document.querySelectorAll('.unit-badge').forEach(btn => {
         btn.addEventListener('click', () => {
           const grp = btn.dataset.group;
           if (!grp) return;
           const inp = document.querySelector(`[name="${btn.dataset.field}"]`);
           if (!inp) return;
+          const currentDisplay = inp.dataset.displayUnit || CalcUnits.system;
+          const newDisplay = currentDisplay === 'SI' ? 'US' : 'SI';
           const currentVal = parseFloat(inp.value);
-          const currentSys = CalcUnits.system;
-          const newSys = currentSys === 'US' ? 'SI' : 'US';
-          CalcUnits.setSystem(newSys);
-          const g = CalcUnits.GROUPS[grp];
-          if (g && !isNaN(currentVal)) {
-            inp.value = newSys === 'US' ? g.toUS(currentSys === 'SI' ? currentVal : g.toSI(currentVal)) : g.toSI(currentSys === 'US' ? currentVal : g.toUS(currentVal));
+          if (!isNaN(currentVal)) {
+            const canonical = CalcUnits.displayToCanonical(currentVal, grp, currentDisplay);
+            inp.value = CalcUnits.canonicalToDisplay(canonical, grp, newDisplay);
           }
-          btn.textContent = CalcUnits.getUnit(grp) + ' ⇆';
+          inp.dataset.displayUnit = newDisplay;
+          btn.textContent = CalcUnits.getUnit(grp, newDisplay) + ' ⇆';
         });
       });
     }, 0);
@@ -314,26 +314,18 @@ window.CalcUI = {
   },
 
   _inputHtml(inp, saved) {
-    let grp = inp.unitGroup;
-    if (!grp) {
-      const id = inp.id.toLowerCase();
-      const unit = (inp.unit || '').toLowerCase();
-      if (id.includes('weight') || unit === 'kg' || unit === 'lbs') grp = 'weight';
-      else if (id.includes('height') || unit === 'cm' || unit === 'in') grp = 'height';
-      else if (id === 'creatinine' || id === 'scr' || id === 'cr') grp = 'creatinine';
-      else if (id === 'bilirubin' || id === 'bili') grp = 'bilirubin';
-      else if (id === 'glucose') grp = 'glucose';
-      else if (unit === '°c' || unit === '°f' || id.includes('temp')) grp = 'temperature';
-      else if (id === 'na' || id === 'sodium') grp = 'sodium';
-    }
-    const displayUnit = grp ? CalcUnits.getUnit(grp) : (inp.unit || '');
+    const grp = CalcUnits.inferGroup(inp);
+    const savedUnits = saved._units || {};
+    const fieldDisplaySys = savedUnits[inp.id] || CalcUnits.system;
+    const displayUnit = grp ? CalcUnits.getUnit(grp, fieldDisplaySys) : (inp.unit || '');
     const siDefault = inp.default ?? '';
-    const displayDefault = (grp && siDefault !== '') ? CalcUnits.fromSI(siDefault, grp) : siDefault;
+    const displayDefault = (grp && siDefault !== '')
+      ? CalcUnits.canonicalToDisplay(siDefault, grp, fieldDisplaySys)
+      : siDefault;
     const savedRaw = saved[inp.id];
-    // If saved value exists and unit system changed, re-convert from SI stored value
     const val = savedRaw !== undefined ? savedRaw : displayDefault;
     const label = inp.label[CalcI18n.lang] || inp.label.en;
-    const range = grp ? CalcUnits.getRange(grp) : (inp.min !== undefined ? inp.min + '–' + (inp.max || '') : '');
+    const range = grp ? CalcUnits.getRange(grp, fieldDisplaySys) : (inp.min !== undefined ? inp.min + '–' + (inp.max || '') : '');
     const placeholder = range ? 'Norm: ' + range : '';
 
     if (inp.type === 'select') {
@@ -354,7 +346,7 @@ window.CalcUI = {
       <span>${label}${inp.optional ? ' <em class="opt-label">Optional</em>' : ''}</span>
       <div class="stepper">
         <button type="button" class="step-minus">−</button>
-        <input type="number" name="${inp.id}" class="calc-input" value="${val}" min="${inp.min ?? ''}" max="${inp.max ?? ''}" step="any" data-step="${inp.step || 1}" inputmode="decimal" placeholder="${placeholder}">
+        <input type="number" name="${inp.id}" class="calc-input" value="${val}" min="${inp.min ?? ''}" max="${inp.max ?? ''}" step="any" data-step="${inp.step || 1}" data-display-unit="${grp ? fieldDisplaySys : ''}" data-unit-group="${grp || ''}" inputmode="decimal" placeholder="${placeholder}">
         <button type="button" class="step-plus">+</button>
         ${unitBadge}
       </div>
@@ -379,13 +371,17 @@ window.CalcUI = {
         vals[cb.name] = false;
       }
     });
+    const displayUnits = {};
+    form.querySelectorAll('[data-display-unit]').forEach(el => {
+      if (el.name && el.dataset.displayUnit) displayUnits[el.name] = el.dataset.displayUnit;
+    });
+
     const all = JSON.parse(localStorage.getItem(this.STORAGE.values) || '{}');
-    all[id] = vals;
+    all[id] = Object.assign({ _units: displayUnits }, vals);
     localStorage.setItem(this.STORAGE.values, JSON.stringify(all));
 
-    // Convert US display units → SI before calculation
     const schema = CalcSchemas[id] || CalcSchemas[CalcCompute._aliases[id]];
-    const siVals = schema ? CalcUnits.convertFormToSI(vals, schema) : vals;
+    const siVals = schema ? CalcUnits.convertFormToSI(vals, schema, displayUnits) : vals;
 
     const result = CalcCompute.compute(id, siVals);
     const box = document.getElementById('calc-result');
@@ -421,7 +417,9 @@ window.CalcUI = {
       const el = document.querySelector(`[name="${k}"]`);
       if (!el) return;
       // v is always in SI (kg); convert to display unit if US mode
-      const displayVal = (k === 'weight') ? CalcUnits.fromSI(v, 'weight') : v;
+      const displaySys = el.dataset.displayUnit || CalcUnits.system;
+      const grp = el.dataset.unitGroup || (k === 'weight' ? 'weight' : '');
+      const displayVal = grp ? CalcUnits.canonicalToDisplay(v, grp, displaySys) : v;
       el.value = displayVal;
     });
   },

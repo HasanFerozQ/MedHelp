@@ -38,6 +38,12 @@ function bootstrap() {
   ctx.globalThis = ctx;
   vm.createContext(ctx);
 
+  ctx.localStorage = {
+    _data: { mh_unit_system: 'SI' },
+    getItem(k) { return this._data[k] ?? null; },
+    setItem(k, v) { this._data[k] = v; }
+  };
+
   const order = [
     'formulas.js',
     'clinical-data.js',
@@ -48,6 +54,7 @@ function bootstrap() {
     'schemas-remaining.js',
     'schemas-new.js',
     'schemas-new2.js',
+    'units.js',
     'compute.js',
     'compute-remaining.js',
     'compute-new.js',
@@ -60,7 +67,7 @@ function bootstrap() {
 
 function runTests() {
   const ctx = bootstrap();
-  const { CalcCompute, CalcRegistry } = ctx;
+  const { CalcCompute, CalcRegistry, CalcSchemas, CalcUnits } = ctx;
   const cases = JSON.parse(fs.readFileSync(path.join(CALC, 'test-cases.json'), 'utf8'));
   let passed = 0, failed = 0, skipped = 0;
   const failures = [];
@@ -74,7 +81,11 @@ function runTests() {
 
   cases.cases.forEach((tc, i) => {
     testedIds.add(tc.id);
-    const result = CalcCompute.compute(tc.id, tc.inputs);
+    const schema = CalcSchemas[tc.id] || CalcSchemas[CalcCompute._aliases?.[tc.id]];
+    const inputs = (schema && tc.displayUnits)
+      ? CalcUnits.convertFormToSI(tc.inputs, schema, tc.displayUnits)
+      : tc.inputs;
+    const result = CalcCompute.compute(tc.id, inputs);
     if (result.error) {
       failed++;
       failures.push({ tc, reason: 'Error: ' + result.error });

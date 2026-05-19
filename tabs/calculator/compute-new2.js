@@ -97,8 +97,7 @@
 
   CalcCompute['glasgow-blatchford'] = function(v) {
     let score = 0;
-    // BUN thresholds are in mg/dL; convert from mmol/L if SI mode
-    const bun = CalcUnits.system === 'SI' ? (+v.bun * 2.8) : +v.bun;  // mmol/L × 2.8 = mg/dL
+    const bun = +v.bun;
     if (bun >= 18 && bun < 22.4) score += 2;
     else if (bun >= 22.4 && bun < 28) score += 3;
     else if (bun >= 28 && bun < 70) score += 4;
@@ -148,17 +147,8 @@
 
     if (+v.na < 135) score += 2;
 
-    // Creatinine threshold is 1.6 mg/dL; convert µmol/L to mg/dL if SI mode
-    const crMgDl = CalcUnits.system === 'SI'
-      ? CalcUnits.GROUPS.creatinine.toUS(+v.cr)
-      : +v.cr;
-    if (crMgDl > 1.6) score += 2;
-
-    // Glucose threshold is 180 mg/dL; convert mmol/L to mg/dL if SI mode
-    const glucoseMgDl = CalcUnits.system === 'SI'
-      ? CalcUnits.GROUPS.glucose.toUS(+v.glucose)
-      : +v.glucose;
-    if (glucoseMgDl > 180) score += 1;
+    if (+v.cr > 1.6) score += 2;
+    if (+v.glucose > 180) score += 1;
 
     let risk = score >= 8 ? 'High risk (≥75% probability of Necrotizing Fasciitis)' : score >= 6 ? 'Intermediate risk (50-75% probability)' : 'Low risk (<50% probability)';
     return {
@@ -274,12 +264,8 @@
   // ── Renal / Acid-Base ──
   CalcCompute['fena-calculator'] = function(v) {
     const una = +v.una, sna = +v.sna;
-    // SCr and UCr must be in the SAME unit; SCr goes through convertFormToSI but UCr (field 'ucr') does not
-    // We normalize both to mg/dL for calculation
-    const scr = CalcUnits.system === 'SI'
-      ? CalcUnits.GROUPS.creatinine.toUS(+v.scr)   // µmol/L → mg/dL
-      : +v.scr;
-    const ucr = +v.ucr; // Urine creatinine always entered in mg/dL by convention
+    const scr = +v.scr;
+    const ucr = +v.ucr;
     if (!una || !sna || !ucr || !scr) return { error: 'Fill all fields' };
 
     const fena = (una * scr) / (sna * ucr) * 100;
