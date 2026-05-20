@@ -68,7 +68,10 @@
     if (v.malignancy) score += 2;
     if (v.unilateralPain) score += 3;
     if (v.hemoptysis) score += 2;
-    score += +v.hr;
+    // Accept either schema points (0/3/5) or raw bpm if passed by external callers.
+    const hrRaw = +v.hr;
+    const hrPoints = hrRaw >= 95 ? 5 : hrRaw >= 75 ? 3 : (hrRaw === 3 || hrRaw === 5 ? hrRaw : 0);
+    score += hrPoints;
     if (v.limbEdema) score += 4;
 
     let prob = score <= 3 ? 'Low probability (<8%)' : score <= 10 ? 'Intermediate probability (28–40%)' : 'High probability (>60%)';
@@ -122,7 +125,7 @@
     // Sodium clamped to 125-137 for MELD-Na calculation
     const na   = Math.min(Math.max(+v.sodium, 125), 137);
 
-    const meld = Math.round(3.78 * Math.log(bili) + 11.2 * Math.log(inr) + 9.57 * Math.log(cr) + 6.43);
+    const meld = Math.max(6, Math.round(3.78 * Math.log(bili) + 11.2 * Math.log(inr) + 9.57 * Math.log(cr) + 6.43));
     // UNOS MELD-Na formula (corrected): MELD - Na - (0.025 × MELD × (140 - Na)) + 140
     const meldNa = Math.round(meld - na - (0.025 * meld * (140 - na)) + 140);
 
@@ -159,8 +162,8 @@
     if (v.labileInr) score++;
     if (v.elderly) score++;
     
-    // Clamp drugs and alcohol to 1 point combined per user guidelines
-    if (v.drugs || v.alcohol) score++;
+    if (v.drugs) score++;
+    if (v.alcohol) score++;
     
     const risk = score >= 3 ? 'High bleeding risk — weigh carefully vs stroke risk' : score >= 2 ? 'Moderate — address modifiable risk factors' : 'Low bleeding risk';
     return {
@@ -287,7 +290,7 @@
   // ── PEWS ──
   CalcCompute['pews'] = function(v) {
     // Blank form with no selections gives 0, which looks like 'normal' but is invalid
-    if (v.behavior === undefined || v.cardiovascular === undefined || v.respiratory === undefined) {
+    if (v.behavior == null || v.behavior === '' || v.cardiovascular == null || v.cardiovascular === '' || v.respiratory == null || v.respiratory === '') {
       return { error: 'Select a score for each category (Behavior, Cardiovascular, Respiratory)' };
     }
     const score = (+v.behavior || 0) + (+v.cardiovascular || 0) + (+v.respiratory || 0);

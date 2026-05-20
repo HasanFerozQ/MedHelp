@@ -113,7 +113,8 @@ window.CalcCompute = {
     let score = 0;
     if (v.dvt) score += 3;
     if (v.peLikely) score += 3;
-    if (v.hr) score += 1.5;
+    // Backward compatible: accept either boolean criterion or numeric HR value.
+    if (v.hr === true || (+v.hr > 100)) score += 1.5;
     if (v.immob) score += 1.5;
     if (v.prevPe) score += 1.5;
     if (v.hemoptysis) score += 1;
@@ -153,6 +154,7 @@ window.CalcCompute = {
   },
 
   gcs(v) {
+    if (!v.eye || !v.verbal || !v.motor) return { error: 'Select all three GCS components (E/V/M)' };
     const total = (+v.eye || 0) + (+v.verbal || 0) + (+v.motor || 0);
     let interp = 'Minor head injury';
     let status = 'normal';
@@ -241,8 +243,8 @@ window.CalcCompute = {
     const inches = heightCm / 2.54;
     const base = v.sex === 'female' ? 45.5 : 50;
     const ibw = base + 2.3 * (inches - 60);
-    const adj = Math.max(ibw, 0);
-    return { primary: adj.toFixed(1) + ' kg', interpretation: 'Devine ideal body weight', chip: 'normal' };
+    if (ibw <= 0) return { error: 'Height too low for reliable Devine IBW calculation' };
+    return { primary: ibw.toFixed(1) + ' kg', interpretation: 'Devine ideal body weight', chip: 'normal' };
   },
 
   'tidal-volume'(v) {
@@ -317,10 +319,13 @@ window.CalcCompute = {
   },
 
   'corrected-sodium'(v) {
+    // Expected canonical glucose is mg/dL (convertFormToSI). If caller bypasses it and sends
+    // mmol/L-like values, normalize defensively to keep the 400 mg/dL threshold valid.
     const glucose = +v.glucose;
+    const glucoseMgDl = glucose > 0 && glucose < 30 ? glucose * 18.016 : glucose;
     // Threshold 400 mg/dL ≈ 22.2 mmol/L — comparison valid after conversion
-    const factor = glucose >= 400 ? 2.4 : 1.6;
-    const corr = (+v.na) + factor * ((glucose - 100) / 100);
+    const factor = glucoseMgDl >= 400 ? 2.4 : 1.6;
+    const corr = (+v.na) + factor * ((glucoseMgDl - 100) / 100);
     return {
       primary: corr.toFixed(1) + ' mEq/L',
       interpretation: 'Sodium corrected for hyperglycemia',
@@ -718,11 +723,11 @@ window.CalcCompute = {
     if (plt < 20) score += 4; else if (plt < 50) score += 3; else if (plt < 100) score += 2; else if (plt < 150) score += 1;
     const bili = +v.bilirubin;
     if (bili >= 12) score += 4; else if (bili >= 6) score += 3; else if (bili >= 2) score += 2; else if (bili >= 1.2) score += 1;
-    const map = +v.map;
+    const mapVal = +v.map;
     if (+v.vasopressors === 3) score += 4;
     else if (+v.vasopressors === 2) score += 3;
     else if (+v.vasopressors === 1) score += 2;
-    else if (map < 70) score += 1;
+    else if (mapVal < 70) score += 1;
     const gcs = +v.gcs;
     if (gcs < 6) score += 4; else if (gcs < 10) score += 3; else if (gcs < 13) score += 2; else if (gcs < 15) score += 1;
     const cr = +v.creatinine;

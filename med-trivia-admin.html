@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedTrivia Admin Scheduler</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+  <style>
+    .admin-wrap { max-width: 900px; margin: 42px auto 80px; padding: 0 20px; }
+    .admin-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .admin-grid { display: grid; gap: 10px; }
+    input, textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text-h); border-radius: 10px; padding: 10px; }
+    textarea { min-height: 320px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .hint { color: var(--text-muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <main class="admin-wrap">
+    <div class="admin-card admin-grid">
+      <h1 style="margin:0;">MedTrivia Admin Scheduler</h1>
+      <div class="hint">Provide exactly 10 questions as JSON array. Each item: prompt, options[4], correct_index, rationale, optional question_order.</div>
+      <input id="scheduled-date" type="date">
+      <input id="title" placeholder="Set title (optional)" value="MedTrivia Daily">
+      <input id="admin-secret" placeholder="TRIVIA_ADMIN_SECRET">
+      <textarea id="questions-json" placeholder='[{"question_order":1,"prompt":"...","options":["A","B","C","D"],"correct_index":0,"rationale":"..."}]'></textarea>
+      <label style="display:flex;align-items:center;gap:8px;"><input id="publish" type="checkbox" checked style="width:auto;"> Publish immediately (scheduled)</label>
+      <button id="submit" class="btn btn-primary">Upload Set</button>
+      <pre id="result" class="hint"></pre>
+    </div>
+  </main>
+  <script>
+    document.getElementById('submit').onclick = async () => {
+      const db = window.initDbClient();
+      const scheduledDate = document.getElementById('scheduled-date').value;
+      const title = document.getElementById('title').value.trim();
+      const adminSecret = document.getElementById('admin-secret').value.trim();
+      const publish = document.getElementById('publish').checked;
+      const result = document.getElementById('result');
+      if (!scheduledDate) return alert('Select a date');
+
+      let questions;
+      try {
+        questions = JSON.parse(document.getElementById('questions-json').value);
+      } catch (_) {
+        alert('Invalid JSON payload');
+        return;
+      }
+
+      result.textContent = 'Uploading...';
+      const { data, error } = await db.functions.invoke('trivia-admin-schedule', {
+        body: {
+          scheduled_date: scheduledDate,
+          title,
+          admin_secret: adminSecret,
+          publish,
+          questions
+        }
+      });
+      if (error) {
+        result.textContent = error.message;
+        return;
+      }
+      result.textContent = JSON.stringify(data, null, 2);
+    };
+  </script>
+</body>
+</html>

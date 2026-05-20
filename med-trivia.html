@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedTrivia Daily | MediHelp</title>
+  <meta name="description" content="Join the free daily MedTrivia challenge at 8:00 PM ET. 10 timed questions, instant explanations, and shareable score results.">
+  <link rel="canonical" href="https://www.medihelp.live/med-trivia">
+  <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+  <style>
+    .trivia-shell { max-width: 920px; margin: 40px auto 90px; padding: 0 20px; }
+    .trivia-hero { text-align: center; margin-bottom: 28px; }
+    .trivia-hero h1 { margin: 0 0 8px; font-size: clamp(30px, 4.6vw, 50px); }
+    .trivia-hero p { margin: 0; color: var(--text-muted); }
+    .trivia-topbar { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; margin: 18px 0 24px; }
+    .pill { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; font-weight: 700; }
+    .trivia-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 22px; }
+    .trivia-card h2 { margin-top: 0; }
+    .actions-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .hidden { display: none !important; }
+    .option-list { display: grid; gap: 10px; margin-top: 18px; }
+    .option-btn { text-align: left; border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-h); border-radius: 12px; padding: 12px; cursor: pointer; font-weight: 600; }
+    .option-btn:hover { border-color: var(--accent); }
+    .option-btn.correct { border-color: #10b981; background: rgba(16,185,129,0.12); }
+    .option-btn.wrong { border-color: #ef4444; background: rgba(239,68,68,0.12); }
+    .rationale-box { margin-top: 14px; background: rgba(var(--accent-rgb),0.08); border: 1px solid rgba(var(--accent-rgb),0.26); border-radius: 12px; padding: 12px; color: var(--text); }
+    .guest-form { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .guest-form input { flex: 1; min-width: 220px; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 10px; padding: 11px; }
+    .result-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.72); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .result-box { width: min(540px, 92vw); background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; text-align: center; }
+    .result-grid { white-space: pre-wrap; font-size: 20px; margin: 14px 0; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand"><img src="icons/logo.png?v=1.1" alt="MediHelp">MediHelp</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/medical-exam-preparation">Medical Exams</a>
+        <a href="/med-trivia" class="active">MedTrivia</a>
+        <a href="/medical-bill-audit">Medical Bill Audit</a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
+        <div class="nav-toggle" onclick="MediHelp.toggleMobileMenu()"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="trivia-shell">
+    <section class="trivia-hero">
+      <h1>MedTrivia Daily Live</h1>
+      <p>Free daily synchronized challenge at 8:00 PM ET. 10 questions. 60s each.</p>
+    </section>
+
+    <section class="trivia-topbar">
+      <div class="pill" id="trivia-state">State: loading</div>
+      <div class="pill" id="countdown">Loading...</div>
+      <button class="btn btn-ghost" id="mute-btn">Mute Sound</button>
+    </section>
+
+    <section class="trivia-card">
+      <h2>Waiting Room</h2>
+      <div id="waiting-count" style="color:var(--text-muted)">Waiting now: 0</div>
+      <div id="guest-form" class="guest-form hidden">
+        <input id="guest-username" maxlength="24" placeholder="Enter guest username (required if not signed in)">
+      </div>
+      <div class="actions-row">
+        <button class="btn btn-primary" id="join-btn">Join Live Session</button>
+      </div>
+    </section>
+
+    <section id="question-card" class="trivia-card hidden" style="margin-top: 14px;">
+      <div id="question-progress" style="font-weight:800;color:var(--accent)">Question 1 / 10</div>
+      <h2 id="question-prompt">Loading question...</h2>
+      <div id="question-options" class="option-list"></div>
+      <div id="rationale-box" class="rationale-box hidden">
+        <strong>Rationale:</strong>
+        <div id="rationale-text"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="result-modal" class="result-modal hidden">
+    <div class="result-box">
+      <h2>Session Complete</h2>
+      <p id="result-text"></p>
+      <div id="result-grid" class="result-grid"></div>
+      <p id="result-stats" style="color:var(--text-muted)"></p>
+      <button id="close-result" class="btn btn-primary">Close</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="justify-content:center; padding-top:22px; border-top:1px solid var(--border);">
+        <span>© 2026 MediHelp</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="med-trivia.js"></script>
+</body>
+</html>

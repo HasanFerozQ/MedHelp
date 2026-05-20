@@ -334,8 +334,8 @@
       const doseMap = { gentamicin: 7, tobramycin: 7, amikacin: 15 };
       let dose = (doseMap[v.drug] || 7) * w;
       const cr = +v.crcl;
-      if (cr < 60) dose *= 0.85;
-      if (cr < 40) dose *= 0.85;
+      if (cr < 40) dose *= 0.75;
+      else if (cr < 60) dose *= 0.85;
       return { primary: dose.toFixed(0) + ' mg q24h', interpretation: 'Hartford extended-interval (verify with local protocol)', chip: 'normal' };
     },
 
@@ -439,7 +439,6 @@
     },
 
     'oxytocin-infusion'(v) {
-      const mUmin = ((+v.mlHr) / 60) * (+v.unitsPerL) * 1000 / 1000;
       const mUminCalc = ((+v.mlHr) * (+v.unitsPerL) * 1000) / (60 * 1000);
       return { primary: mUminCalc.toFixed(1) + ' mU/min', interpretation: 'Oxytocin infusion rate', chip: mUminCalc > 20 ? 'high' : 'normal' };
     },
@@ -556,7 +555,7 @@
     'antibiotic-prophylaxis'(v) {
       const w = +v.weight;
       const doses = {
-        clean: v.allergy ? 'Clindamycin 600 mg IV' : 'Cefazolin ' + Math.min(2, (25 * w / 1000)).toFixed(1) + ' g IV',
+        clean: v.allergy ? 'Clindamycin 600 mg IV' : (w > 120 ? 'Cefazolin 3 g IV' : 'Cefazolin 2 g IV'),
         cleanContaminated: v.allergy ? 'Clindamycin + gentamicin' : 'Cefazolin 2 g IV (3 g if >120 kg)',
         colorectal: v.allergy ? 'Metronidazole + gentamicin' : 'Cefazolin + metronidazole per protocol'
       };

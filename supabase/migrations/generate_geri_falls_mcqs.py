@@ -153,6 +153,7 @@ genders_pool = [
 ]
 
 mcqs = []
+seen_questions = set()
 counter = 0
 
 # Target: 400 MCQs
@@ -252,7 +253,8 @@ while counter < 400:
         
         mcq_str = f"    (v_topic_id, '{q_text_escaped}', '{opts_json_escaped}'::jsonb, {new_ans_idx}, '{exp_escaped}')"
         
-        if mcq_str not in mcqs:
+        if q_text not in seen_questions:
+            seen_questions.add(q_text)
             mcqs.append(mcq_str)
             counter += 1
 

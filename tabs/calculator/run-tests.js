@@ -86,6 +86,17 @@ function runTests() {
       ? CalcUnits.convertFormToSI(tc.inputs, schema, tc.displayUnits)
       : tc.inputs;
     const result = CalcCompute.compute(tc.id, inputs);
+    if (tc.expectErrorContains) {
+      const err = String(result.error || '');
+      const okErr = err.toLowerCase().includes(String(tc.expectErrorContains).toLowerCase());
+      if (okErr) { passed++; console.log('  PASS  ' + tc.id + (tc.note ? ' — ' + tc.note : '')); }
+      else {
+        failed++;
+        failures.push({ tc, result, reason: 'Expected error containing "' + tc.expectErrorContains + '", got "' + err + '"' });
+        console.log('  FAIL  ' + tc.id);
+      }
+      return;
+    }
     if (result.error) {
       failed++;
       failures.push({ tc, reason: 'Error: ' + result.error });

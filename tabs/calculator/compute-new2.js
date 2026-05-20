@@ -82,7 +82,8 @@
   };
 
   CalcCompute['canadian-ct-head'] = function(v) {
-    const highRisk = v.gcs || v.fracture || v.basilar || v.vomiting || v.age;
+    const ageOver65 = v.age === true || +v.age >= 65;
+    const highRisk = v.gcs || v.fracture || v.basilar || v.vomiting || ageOver65;
     const medRisk = v.amnesia || v.mechanism;
     const ct = highRisk || medRisk;
 
@@ -244,6 +245,7 @@
 
   // ── Infectious Disease ──
   CalcCompute['centor-score'] = function(v) {
+    // `age` is the McIsaac age modifier from schema select (-1/0/+1), not raw age in years.
     let score = (+v.age || 0);
     if (v.fever) score += 1;
     if (v.exudate) score += 1;
@@ -307,17 +309,19 @@
     if (!na || !cl || !hco3) return { error: 'Fill all fields' };
 
     const ag = na - (cl + hco3);
+    const albumin = +v.albumin;
+    const correctedAg = albumin > 0 ? ag + 2.5 * (4 - albumin) : null;
     if (ag <= 12) return {
       primary: 'AG: ' + ag.toFixed(1) + ' mEq/L',
       interpretation: 'Anion gap is not elevated (≤12). Delta-gap ratio is undefined in the absence of an anion gap acidosis.',
       chip: ag < 8 ? 'low' : 'normal',
-      details: [{ label: 'Note', value: 'Delta-gap ratio only applies when AG > 12' }]
+      details: [{ label: 'Note', value: correctedAg == null ? 'Delta-gap ratio only applies when AG > 12. AG shown is not albumin-corrected.' : 'Delta-gap ratio only applies when AG > 12.' }]
     };
     if (hco3 >= 24) return {
       primary: 'AG: ' + ag.toFixed(1) + ' mEq/L',
       interpretation: 'HCO₃ ≥ 24 mEq/L: denominator is zero. No metabolic acidosis present.',
       chip: 'normal',
-      details: [{ label: 'Note', value: 'Delta ratio undefined when HCO₃ ≥ 24' }]
+      details: [{ label: 'Note', value: correctedAg == null ? 'Delta ratio undefined when HCO₃ ≥ 24. AG shown is not albumin-corrected.' : 'Delta ratio undefined when HCO₃ ≥ 24' }]
     };
     const deltaAG = ag - 12;
     const deltaRatio = deltaAG / (24 - hco3);
@@ -332,7 +336,10 @@
       primary: 'AG: ' + ag.toFixed(1) + ' | Δ/Δ: ' + deltaRatio.toFixed(2),
       interpretation: interp,
       chip: (deltaRatio < 0.8 || deltaRatio > 2.0) ? 'high' : 'normal',
-      details: [{ label: 'Corrected HCO₃ (Delta Gap)', value: correctedHco3.toFixed(1) + ' mEq/L' }]
+      details: [
+        { label: 'Corrected HCO₃ (Delta Gap)', value: correctedHco3.toFixed(1) + ' mEq/L' },
+        { label: 'AG correction', value: correctedAg == null ? 'Albumin not provided; AG not albumin-corrected' : ('Albumin-corrected AG: ' + correctedAg.toFixed(1) + ' mEq/L') }
+      ]
     };
   };
 
@@ -340,6 +347,7 @@
     const weight = +v.weight, na = +v.na;
     if (!weight || !na) return { error: 'Fill all fields' };
 
+    if (na <= 140) return { error: 'Free water deficit applies only in hypernatremia (Na > 140)' };
     const factor = v.sex === 'male' ? (v.age > 65 ? 0.5 : 0.6) : (v.age > 65 ? 0.45 : 0.5);
     const tbw = weight * factor;
     const deficit = tbw * ((na / 140) - 1);
