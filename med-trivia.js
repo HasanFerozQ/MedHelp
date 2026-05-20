@@ -281,11 +281,15 @@
     }
 
     const stateData = await loadState();
-    const isPlayable = ctx.state === "waiting_room" || ctx.state === "live";
+    // Playable when server says waiting_room/live, or when today's set exists (covers DB test-bypass returning live).
+    const isPlayable =
+      ctx.state === "waiting_room" ||
+      ctx.state === "live" ||
+      (!!ctx.todaySet?.set_id && ctx.state !== "no_content" && ctx.state !== "post_game");
     joinBtnEl.disabled = !isPlayable;
 
     if (ctx.state === "live") {
-      countdownEl.textContent = "Live now";
+      countdownEl.textContent = "Live now — open test window";
     } else if (ctx.state === "waiting_room") {
       const startAt = stateData?.today_set?.start_at || getEtNextStart().toISOString();
       clearInterval(ctx.waitingTicker);
