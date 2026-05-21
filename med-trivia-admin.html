@@ -26,9 +26,12 @@
     .badge-closed { background: rgba(239, 68, 68, 0.12); color: #f87171; }
     .mono { font-family: ui-monospace, monospace; font-size: 12px; color: var(--text-muted); }
     .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-    .secret-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; }
+    .login-row { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: end; max-width: 520px; }
+    .err { color: #f87171; font-size: 13px; margin-top: 8px; }
+    .hidden { display: none !important; }
     @media (max-width: 720px) {
       .history-table { display: block; overflow-x: auto; }
+      .login-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -38,65 +41,94 @@
       <div class="toolbar">
         <div>
           <h1 style="margin:0 0 6px;">MedTrivia Admin</h1>
-          <p class="hint" style="margin:0;">History of all sets (newest first). Upload uses <strong>scheduled date</strong> as the unique key — same date updates that set, a new date creates a new row (no duplicate for the same day).</p>
+          <p class="hint" style="margin:0;">Enter your <strong>Trivia Admin Secret</strong> to view quiz history and upload sets.</p>
         </div>
         <a href="/med-trivia" class="btn btn-ghost">← Live lobby</a>
       </div>
 
-      <div class="secret-row" style="margin-bottom: 14px;">
-        <label class="admin-grid" style="margin:0;">
-          <span class="hint">Admin secret (saved in this browser)</span>
-          <input id="admin-secret" type="password" placeholder="TRIVIA_ADMIN_SECRET" autocomplete="off">
+      <div id="login-gate">
+        <label class="admin-grid" style="max-width:520px;">
+          <span class="hint">Trivia Admin Secret</span>
+          <div class="login-row">
+            <input id="admin-secret" type="password" placeholder="Same value as TRIVIA_ADMIN_SECRET in Supabase" autocomplete="current-password">
+            <button type="button" id="unlock-btn" class="btn btn-primary">Unlock</button>
+            <button type="button" id="lock-btn" class="btn btn-ghost hidden">Lock</button>
+          </div>
         </label>
-        <button type="button" id="refresh-list" class="btn btn-primary">Refresh list</button>
-      </div>
-
-      <p id="list-status" class="hint">Loading sets…</p>
-      <div style="overflow-x:auto;">
-        <table class="history-table" id="sets-table">
-          <thead>
-            <tr>
-              <th>Quiz date</th>
-              <th>Title</th>
-              <th>Questions</th>
-              <th>Status</th>
-              <th>Created</th>
-              <th>Published</th>
-              <th>Set ID</th>
-            </tr>
-          </thead>
-          <tbody id="sets-body">
-            <tr><td colspan="7" class="hint">Loading…</td></tr>
-          </tbody>
-        </table>
+        <p id="login-error" class="err hidden"></p>
       </div>
     </div>
 
-    <div class="admin-card admin-grid">
-      <h2 style="margin:0;">Upload / update a set</h2>
-      <p class="hint">Exactly 10 questions as JSON. Re-uploading the <em>same scheduled date</em> replaces questions for that set only.</p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-        <label class="admin-grid" style="margin:0;">
-          <span class="hint">Scheduled date (unique key)</span>
-          <input id="scheduled-date" type="date">
-        </label>
-        <input id="title" placeholder="Set title" value="MedTrivia Daily">
+    <div id="admin-panel" class="hidden">
+      <div class="admin-card">
+        <div class="toolbar">
+          <h2 style="margin:0;">Quiz history</h2>
+          <button type="button" id="refresh-list" class="btn btn-ghost">Refresh</button>
+        </div>
+        <p class="hint" style="margin:0 0 12px;">Newest created first. Same <strong>scheduled date</strong> = one row (re-upload updates that set).</p>
+        <p id="list-status" class="hint">—</p>
+        <div style="overflow-x:auto;">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Quiz date</th>
+                <th>Title</th>
+                <th>Questions</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Published</th>
+                <th>Set ID</th>
+              </tr>
+            </thead>
+            <tbody id="sets-body">
+              <tr><td colspan="7" class="hint">—</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <textarea id="questions-json" placeholder='[{"question_order":1,"prompt":"...","options":["A","B","B","D"],"correct_index":0,"rationale":"..."}]'></textarea>
-      <label style="display:flex;align-items:center;gap:8px;"><input id="publish" type="checkbox" checked style="width:auto;"> Publish immediately (status → scheduled)</label>
-      <button id="submit" class="btn btn-primary">Upload set</button>
-      <pre id="result" class="hint" style="margin:0; white-space:pre-wrap;"></pre>
+
+      <div class="admin-card admin-grid">
+        <h2 style="margin:0;">Upload next quiz</h2>
+        <p class="hint">Exactly 10 questions as JSON. Pick a <strong>new scheduled date</strong> for a new quiz, or the same date to replace questions.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <label class="admin-grid" style="margin:0;">
+            <span class="hint">Scheduled date (unique key)</span>
+            <input id="scheduled-date" type="date">
+          </label>
+          <input id="title" placeholder="Set title" value="MedTrivia Daily">
+        </div>
+        <textarea id="questions-json" placeholder='[{"question_order":1,"prompt":"...","options":["A","B","C","D"],"correct_index":0,"rationale":"..."}]'></textarea>
+        <label style="display:flex;align-items:center;gap:8px;"><input id="publish" type="checkbox" checked style="width:auto;"> Publish immediately (status → scheduled)</label>
+        <button id="submit" class="btn btn-primary">Upload set</button>
+        <pre id="result" class="hint" style="margin:0; white-space:pre-wrap;"></pre>
+      </div>
     </div>
   </main>
 
   <script>
     const SECRET_KEY = 'mh_trivia_admin_secret';
+    const UNLOCK_KEY = 'mh_trivia_admin_unlocked';
 
     function getSecret() {
       const el = document.getElementById('admin-secret');
       const v = (el?.value || '').trim();
       if (v) localStorage.setItem(SECRET_KEY, v);
       return v || localStorage.getItem(SECRET_KEY) || '';
+    }
+
+    function setUnlocked(on) {
+      if (on) sessionStorage.setItem(UNLOCK_KEY, '1');
+      else sessionStorage.removeItem(UNLOCK_KEY);
+      document.getElementById('admin-panel').classList.toggle('hidden', !on);
+      document.getElementById('lock-btn').classList.toggle('hidden', !on);
+      document.getElementById('login-error').classList.add('hidden');
+    }
+
+    function showLoginError(msg) {
+      const el = document.getElementById('login-error');
+      el.textContent = msg;
+      el.classList.remove('hidden');
+      setUnlocked(false);
     }
 
     function fmtDate(iso) {
@@ -118,39 +150,63 @@
       return `<span class="badge ${cls}">${s}</span>`;
     }
 
-    async function loadHistory() {
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function adminInvokePayload(extra) {
+      return { admin_secret: getSecret(), ...extra };
+    }
+
+    function formatInvokeError(error, data) {
+      if (data?.error) return data.error;
+      const msg = error?.message || '';
+      if (/edge function/i.test(msg) || /Failed to send/i.test(msg)) {
+        return 'Admin API not reachable. Redeploy Supabase function: trivia-admin-schedule (see README in repo).';
+      }
+      return msg || 'Request failed';
+    }
+
+    async function invokeAdmin(extra) {
       const db = window.initDbClient();
+      const { data, error } = await db.functions.invoke('trivia-admin-schedule', {
+        body: adminInvokePayload(extra),
+      });
+      return { data, error };
+    }
+
+    async function loadHistory() {
       const statusEl = document.getElementById('list-status');
       const body = document.getElementById('sets-body');
-      const secret = getSecret();
-      if (!secret) {
-        statusEl.textContent = 'Enter admin secret and click Refresh list.';
-        body.innerHTML = '<tr><td colspan="7" class="hint">Admin secret required.</td></tr>';
-        return;
-      }
-
       statusEl.textContent = 'Loading…';
-      const { data, error } = await db.functions.invoke('trivia-admin-list', {
-        body: { admin_secret: secret },
-      });
+
+      const { data, error } = await invokeAdmin({ action: 'list' });
 
       if (error) {
-        statusEl.textContent = 'Failed to load list.';
-        body.innerHTML = `<tr><td colspan="7" class="hint">${error.message || 'Error'}</td></tr>`;
-        return;
+        const msg = formatInvokeError(error, data);
+        statusEl.textContent = msg;
+        body.innerHTML = `<tr><td colspan="7" class="hint">${escapeHtml(msg)}</td></tr>`;
+        if (/unauthorized/i.test(msg)) showLoginError('Wrong admin secret.');
+        return false;
       }
       if (!data?.ok) {
-        statusEl.textContent = data?.error || 'Unauthorized or failed.';
+        const msg = data?.error || 'Unauthorized';
+        statusEl.textContent = msg;
         body.innerHTML = '<tr><td colspan="7" class="hint">Could not load sets.</td></tr>';
-        return;
+        if (/unauthorized/i.test(msg)) showLoginError('Wrong admin secret.');
+        return false;
       }
 
       const sets = data.sets || [];
-      statusEl.textContent = `${sets.length} set(s) — sorted by most recently created (top = newest).`;
+      statusEl.textContent = `${sets.length} set(s) — newest created at top.`;
 
       if (!sets.length) {
-        body.innerHTML = '<tr><td colspan="7" class="hint">No sets yet. Run seed once or upload below.</td></tr>';
-        return;
+        body.innerHTML = '<tr><td colspan="7" class="hint">No sets yet. Upload below or run seed once in SQL.</td></tr>';
+        return true;
       }
 
       body.innerHTML = sets.map((row) => {
@@ -166,28 +222,34 @@
           <td class="mono">${row.set_id}</td>
         </tr>`;
       }).join('');
+      return true;
     }
 
-    function escapeHtml(s) {
-      return String(s)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+    async function unlockAdmin() {
+      const secret = getSecret();
+      if (!secret) {
+        showLoginError('Enter your Trivia Admin Secret.');
+        return;
+      }
+      document.getElementById('login-error').classList.add('hidden');
+      const ok = await loadHistory();
+      if (ok) setUnlocked(true);
     }
 
-    document.getElementById('admin-secret').addEventListener('change', () => getSecret());
+    document.getElementById('unlock-btn').onclick = () => unlockAdmin().catch((e) => showLoginError(e.message));
     document.getElementById('refresh-list').onclick = () => loadHistory().catch((e) => alert(e.message));
+    document.getElementById('lock-btn').onclick = () => {
+      setUnlocked(false);
+      document.getElementById('sets-body').innerHTML = '<tr><td colspan="7" class="hint">Locked.</td></tr>';
+    };
 
     document.getElementById('submit').onclick = async () => {
-      const db = window.initDbClient();
       const scheduledDate = document.getElementById('scheduled-date').value;
       const title = document.getElementById('title').value.trim();
       const publish = document.getElementById('publish').checked;
       const result = document.getElementById('result');
-      const secret = getSecret();
       if (!scheduledDate) return alert('Select a scheduled date');
-      if (!secret) return alert('Enter admin secret');
+      if (!getSecret()) return alert('Enter admin secret and unlock first');
 
       let questions;
       try {
@@ -198,17 +260,19 @@
       }
 
       result.textContent = 'Uploading…';
-      const { data, error } = await db.functions.invoke('trivia-admin-schedule', {
-        body: {
-          scheduled_date: scheduledDate,
-          title,
-          admin_secret: secret,
-          publish,
-          questions,
-        },
+      const { data, error } = await invokeAdmin({
+        action: 'upload',
+        scheduled_date: scheduledDate,
+        title,
+        publish,
+        questions,
       });
       if (error) {
-        result.textContent = error.message;
+        result.textContent = formatInvokeError(error, data);
+        return;
+      }
+      if (!data?.ok) {
+        result.textContent = data?.error || 'Upload failed';
         return;
       }
       result.textContent = JSON.stringify(data, null, 2);
@@ -218,13 +282,16 @@
     (function init() {
       const saved = localStorage.getItem(SECRET_KEY);
       if (saved) document.getElementById('admin-secret').value = saved;
-      const today = new Date();
-      const et = new Date(today.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+
+      const et = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
       const y = et.getFullYear();
       const m = String(et.getMonth() + 1).padStart(2, '0');
       const d = String(et.getDate()).padStart(2, '0');
       document.getElementById('scheduled-date').value = `${y}-${m}-${d}`;
-      loadHistory().catch(() => {});
+
+      if (sessionStorage.getItem(UNLOCK_KEY) === '1' && saved) {
+        unlockAdmin().catch(() => setUnlocked(false));
+      }
     })();
   </script>
 </body>

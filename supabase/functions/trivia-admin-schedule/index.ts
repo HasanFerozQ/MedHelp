@@ -1,14 +1,25 @@
-import { corsHeaders, getServiceClient, jsonResponse, methodNotAllowed } from "../_shared/trivia.ts";
+import {
+  checkAdminSecret,
+  corsHeaders,
+  getServiceClient,
+  jsonResponse,
+  listTriviaSetsForAdmin,
+  methodNotAllowed,
+} from "../_shared/trivia.ts";
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return methodNotAllowed();
 
   try {
-    const body = await req.json();
-    const adminSecret = Deno.env.get("TRIVIA_ADMIN_SECRET");
-    if (adminSecret && body.admin_secret !== adminSecret) {
-      return jsonResponse({ error: "Unauthorized" }, 401);
+    const body = await req.json().catch(() => ({}));
+    const denied = checkAdminSecret(body);
+    if (denied) return denied;
+
+    const action = (body.action as string) || "upload";
+
+    if (action === "list") {
+      return await listTriviaSetsForAdmin();
     }
 
     const scheduledDate = body.scheduled_date as string;
@@ -17,7 +28,7 @@ Deno.serve(async (req) => {
     const publish = Boolean(body.publish);
 
     if (!scheduledDate || !questions) {
-      return jsonResponse({ error: "scheduled_date and questions are required" }, 400);
+      return jsonResponse({ ok: false, error: "scheduled_date and questions are required" }, 400);
     }
 
     const admin = getServiceClient();
@@ -31,6 +42,6 @@ Deno.serve(async (req) => {
 
     return jsonResponse({ ok: true, set_id: setId, publish });
   } catch (error: any) {
-    return jsonResponse({ error: error.message ?? "Failed to schedule trivia set" }, 500);
+    return jsonResponse({ ok: false, error: error.message ?? "Admin request failed" }, 500);
   }
 });
