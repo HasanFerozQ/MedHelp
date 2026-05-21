@@ -148,6 +148,21 @@
 
               const data = await resp.json().catch(() => ({}));
               if (!resp.ok || !data.ok) {
+                if (data.fallback_mailto) {
+                  const to = data.support_email || 'supportdesk@medihelp.live';
+                  const subject = encodeURIComponent(`[MediHelp Contact] ${type} - ${name}`);
+                  const body = encodeURIComponent(
+                    `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nType: ${type}\n\n${msg}`
+                  );
+                  const useMailto = confirm(
+                    (data.error || 'Could not send message.') +
+                    '\n\nOpen your email app to send this to support instead?'
+                  );
+                  if (useMailto) {
+                    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+                    return;
+                  }
+                }
                 throw new Error(data.error || 'Could not send message.');
               }
 

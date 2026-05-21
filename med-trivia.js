@@ -2,7 +2,6 @@
   const QUESTION_TIME_MS = 60_000;
   const RATIONALE_PAUSE_MS = 5_000;
   const TOTAL_QUESTIONS = 10;
-  const ET_TIMEZONE = "America/New_York";
   const GUEST_KEY = "mh_trivia_guest";
   const MUTE_KEY = "mh_trivia_muted";
 
@@ -67,23 +66,41 @@
     audio[key].play().catch(() => {});
   }
 
-  async function invoke(fnName, payload) {
+  async function loadState() {
     const client = db();
     if (!client) throw new Error("Supabase client unavailable");
-    const { data, error } = await client.functions.invoke(fnName, { body: payload || {} });
-    if (error) throw new Error(error.message || `Failed calling ${fnName}`);
-    return data;
-  }
+    const nowIso = new Date().toISOString();
+    const [stateRes, setRes] = await Promise.all([
+      client.rpc("get_current_trivia_state", { now_tz: nowIso }),
+      client.rpc("get_today_set_for_play", {}),
+    ]);
+    if (stateRes.error) throw new Error(stateRes.error.message || "Failed to load trivia state");
+    if (setRes.error) throw new Error(setRes.error.message || "Failed to load today’s trivia set");
 
-  async function loadState() {
-    const data = await invoke("trivia-state");
-    ctx.state = data?.state || "no_content";
-    ctx.todaySet = data?.today_set || null;
+    const stateData = stateRes.data;
+    const rows = setRes.data;
+    const todayRow = Array.isArray(rows) ? rows[0] : rows;
+
+    ctx.state = typeof stateData === "string" ? stateData : "no_content";
+    ctx.todaySet = todayRow || null;
     stateEl.textContent = `State: ${ctx.state.replace("_", " ")}`;
-    resultStatsEl.textContent = data?.stats
-      ? `Participants: ${data.stats.participants} | Completers: ${data.stats.completers} | Perfect 10: ${data.stats.perfect_10}`
+
+    let stats = null;
+    if (ctx.todaySet?.set_id) {
+      const { data: statRow, error: statErr } = await client
+        .from("trivia_daily_stats")
+        .select("participants, completers, perfect_10, avg_score, refreshed_at")
+        .eq("set_id", ctx.todaySet.set_id)
+        .maybeSingle();
+      if (statErr) throw new Error(statErr.message || "Failed to load stats");
+      stats = statRow;
+    }
+
+    resultStatsEl.textContent = stats
+      ? `Participants: ${stats.participants} | Completers: ${stats.completers} | Perfect 10: ${stats.perfect_10}`
       : "No daily stats yet.";
-    return data;
+
+    return { state: ctx.state, today_set: ctx.todaySet, stats, now_iso: nowIso };
   }
 
   function getGuest() {
@@ -138,24 +155,26 @@
       guestFormEl.classList.add("hidden");
     }
 
-    const payload = {
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
-      guest_token: identity.isAuth ? null : guest.token,
-      guest_username: identity.isAuth ? null : guest.username,
-    };
-
-    const data = await invoke("trivia-join", payload);
+    const client = db();
+    const { data, error } = await client.rpc("trivia_join_session", {
+      p_guest_token: identity.isAuth ? null : guest.token,
+      p_guest_username: identity.isAuth ? null : guest.username,
+      p_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
+    });
+    if (error) throw new Error(error.message || "Failed to join trivia");
     ctx.session = data.session;
     ctx.questionOrder = 1;
     await startQuestionLoop();
   }
 
   async function renderQuestion(order) {
-    const data = await invoke("trivia-question", {
-      session_id: ctx.session.id,
-      question_order: order,
+    const client = db();
+    const { data: rows, error } = await client.rpc("get_trivia_question", {
+      p_session_id: ctx.session.id,
+      p_question_order: order,
     });
-    const q = data?.question;
+    if (error) throw new Error(error.message || "Failed to load question");
+    const q = rows?.[0];
     if (!q) throw new Error("Question unavailable");
 
     questionProgressEl.textContent = `Question ${order} / ${TOTAL_QUESTIONS}`;
@@ -203,15 +222,17 @@
     lockOptions();
     clearInterval(ctx.questionTicker);
     const idem = `${ctx.session.id}-${ctx.questionOrder}-${selectedIndex}`;
-    const data = await invoke("trivia-answer", {
-      session_id: ctx.session.id,
-      question_order: ctx.questionOrder,
-      selected_index: selectedIndex,
-      question_started_at: ctx.questionStartedAt,
-      idempotency_key: idem,
+    const client = db();
+    const { data: answerRows, error } = await client.rpc("record_trivia_answer", {
+      p_session_id: ctx.session.id,
+      p_question_order: ctx.questionOrder,
+      p_selected_index: selectedIndex,
+      p_question_started_at: ctx.questionStartedAt,
+      p_idempotency_key: idem,
     });
+    if (error) throw new Error(error.message || "Failed to record answer");
 
-    const result = data?.result;
+    const result = answerRows?.[0];
     if (!result) throw new Error("Answer response missing");
     if (result.is_correct) playAudio("correct");
     else playAudio("wrong");
@@ -237,35 +258,35 @@
   async function finishTrivia() {
     playAudio("bell");
     questionCardEl.classList.add("hidden");
-    const data = await invoke("trivia-finish", { session_id: ctx.session.id });
-    const session = data?.session;
+    const client = db();
+    const { data: finRows, error: finErr } = await client.rpc("finalize_trivia_session", {
+      p_session_id: ctx.session.id,
+    });
+    if (finErr) throw new Error(finErr.message || "Failed to finish session");
+    const row = finRows?.[0];
+    if (!row) throw new Error("Finish response missing");
+    const session = {
+      score: row.score,
+      total_questions: row.total_questions,
+      share_grid: row.share_grid,
+    };
+
+    let stats = null;
+    if (ctx.session?.set_id) {
+      const { data: statRow } = await client
+        .from("trivia_daily_stats")
+        .select("participants, completers, perfect_10, avg_score")
+        .eq("set_id", ctx.session.set_id)
+        .maybeSingle();
+      stats = statRow;
+    }
 
     resultTextEl.textContent = `Score: ${session.score}/${session.total_questions}`;
     resultGridEl.textContent = session.share_grid || "";
-    resultStatsEl.textContent = data?.stats
-      ? `Participants: ${data.stats.participants} | Avg Score: ${data.stats.avg_score}`
+    resultStatsEl.textContent = stats
+      ? `Participants: ${stats.participants} | Avg Score: ${stats.avg_score}`
       : "Stats unavailable.";
     resultModalEl.classList.remove("hidden");
-  }
-
-  function formatEtCountdown(targetIso) {
-    const diff = new Date(targetIso).getTime() - Date.now();
-    if (diff <= 0) return "00:00:00";
-    const s = Math.floor(diff / 1000);
-    const h = String(Math.floor(s / 3600)).padStart(2, "0");
-    const m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
-    const sec = String(s % 60).padStart(2, "0");
-    return `${h}:${m}:${sec}`;
-  }
-
-  function getEtNextStart() {
-    const now = new Date();
-    const etNow = new Date(now.toLocaleString("en-US", { timeZone: ET_TIMEZONE }));
-    const next = new Date(etNow);
-    next.setHours(20, 0, 0, 0);
-    if (etNow > next) next.setDate(next.getDate() + 1);
-    const offsetMs = now.getTime() - etNow.getTime();
-    return new Date(next.getTime() + offsetMs);
   }
 
   async function startQuestionLoop() {
@@ -280,30 +301,20 @@
       guestFormEl.classList.remove("hidden");
     }
 
-    const stateData = await loadState();
-    // Playable when server says waiting_room/live, or when today's set exists (covers DB test-bypass returning live).
-    const isPlayable =
-      ctx.state === "waiting_room" ||
-      ctx.state === "live" ||
-      (!!ctx.todaySet?.set_id && ctx.state !== "no_content" && ctx.state !== "post_game");
+    await loadState();
+    const hasSet = !!ctx.todaySet?.set_id;
+    const isPlayable = hasSet && ctx.state !== "no_content" && ctx.state !== "post_game";
     joinBtnEl.disabled = !isPlayable;
 
-    if (ctx.state === "live") {
-      countdownEl.textContent = "Live now — open test window";
-    } else if (ctx.state === "waiting_room") {
-      const startAt = stateData?.today_set?.start_at || getEtNextStart().toISOString();
-      clearInterval(ctx.waitingTicker);
-      ctx.waitingTicker = setInterval(() => {
-        countdownEl.textContent = `Starts in: ${formatEtCountdown(startAt)}`;
-      }, 1000);
-    } else if (ctx.state === "pre_hype") {
-      const nextStart = getEtNextStart().toISOString();
-      clearInterval(ctx.waitingTicker);
-      ctx.waitingTicker = setInterval(() => {
-        countdownEl.textContent = `Next 8:00 PM ET in: ${formatEtCountdown(nextStart)}`;
-      }, 1000);
+    clearInterval(ctx.waitingTicker);
+    ctx.waitingTicker = null;
+
+    if (ctx.state === "post_game") {
+      countdownEl.textContent = "Today’s set has ended.";
+    } else if (ctx.state === "no_content" || !hasSet) {
+      countdownEl.textContent = "No trivia published for today yet.";
     } else {
-      countdownEl.textContent = "No active trivia window.";
+      countdownEl.textContent = "Today’s set is open — join anytime.";
     }
 
     if (ctx.todaySet?.set_id) {

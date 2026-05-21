@@ -328,6 +328,15 @@ const MediHelp = {
     closeBtn.onclick = () => modal.classList.remove('active');
     window.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
 
+    function openFeedbackMailto(payload) {
+      const to = payload.support_email || 'supportdesk@medihelp.live';
+      const subject = encodeURIComponent(`[MediHelp Feedback] ${payload.type || 'General'}`);
+      const body = encodeURIComponent(
+        `Type: ${payload.type || 'General'}\nEmail: ${payload.email || ''}\n\n${payload.message || ''}`
+      );
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    }
+
     // 4. Form Handling (server-side delivery)
     const form = modal.querySelector('#global-feedback-form');
     form.onsubmit = async (e) => {
@@ -354,6 +363,18 @@ const MediHelp = {
 
         const data = await resp.json().catch(() => ({}));
         if (!resp.ok || !data.ok) {
+          if (data.fallback_mailto) {
+            const useMailto = confirm(
+              (data.error || 'Could not send feedback.') +
+              '\n\nOpen your email app to send this message to support instead?'
+            );
+            if (useMailto) {
+              openFeedbackMailto({ type, email, message: msg, support_email: data.support_email });
+              modal.classList.remove('active');
+              form.reset();
+              return;
+            }
+          }
           throw new Error(data.error || 'Could not send feedback.');
         }
 

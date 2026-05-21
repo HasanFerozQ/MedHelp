@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const { createSmtpTransport, friendlySmtpError, smtpConfig } = require('./_lib/smtp');
 
 function required(value) {
   return value !== undefined && value !== null && String(value).trim() !== '';
@@ -43,24 +43,9 @@ module.exports = async (req, res) => {
       return res.status(400).json({ ok: false, error: 'Phone is required for contact form submissions.' });
     }
 
-    const host = process.env.NEGOTIATION_SMTP_HOST || 'mail.privateemail.com';
-    const port = Number(process.env.NEGOTIATION_SMTP_PORT || 587);
-    const user = process.env.NEGOTIATION_SMTP_USER;
-    const pass = process.env.NEGOTIATION_SMTP_PASS;
-    const from = process.env.NEGOTIATION_FROM_EMAIL || user;
+    const { from } = smtpConfig('NEGOTIATION');
     const to = 'supportdesk@medihelp.live';
-
-    if (!user || !pass) {
-      throw new Error('SMTP credentials are missing. Set NEGOTIATION_SMTP_USER and NEGOTIATION_SMTP_PASS.');
-    }
-
-    const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure: port === 465,
-      auth: { user, pass },
-      requireTLS: port !== 465
-    });
+    const transporter = createSmtpTransport('NEGOTIATION');
 
     const subject = source === 'contact-form'
       ? `[MediHelp Contact] ${type} - ${name}`
@@ -87,6 +72,13 @@ module.exports = async (req, res) => {
 
     return res.status(200).json({ ok: true });
   } catch (err) {
-    return res.status(500).json({ ok: false, error: err.message || 'Failed to send message.' });
+    const friendly = friendlySmtpError(err);
+    const smtpAuthFailed = /login failed|535|authentication failed/i.test(friendly);
+    return res.status(500).json({
+      ok: false,
+      error: friendly,
+      fallback_mailto: smtpAuthFailed,
+      support_email: 'supportdesk@medihelp.live',
+    });
   }
 };
