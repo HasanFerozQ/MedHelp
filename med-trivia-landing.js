@@ -2,16 +2,37 @@
   const C = window.MedTriviaCore;
   if (!C) return;
 
-  const stateEl = document.getElementById("trivia-state");
+  const statusBadgeEl = document.getElementById("status-badge");
+  const setBadgeEl = document.getElementById("set-badge");
   const countdownEl = document.getElementById("countdown");
   const waitingCountEl = document.getElementById("waiting-count");
   const joinBtnEl = document.getElementById("join-btn");
+  const joinBtnLabelEl = document.getElementById("join-btn-label");
   const guestFormEl = document.getElementById("guest-form");
   const guestUsernameEl = document.getElementById("guest-username");
   const liveCountEl = document.getElementById("live-waiting-pill");
+  const userLabelEl = document.getElementById("user-label");
+  const userChipEl = document.getElementById("user-chip");
+  const retakeHintEl = document.getElementById("retake-hint");
+
+  function setStatus(kind, label, detail) {
+    const colors = {
+      live: "text-emerald-400",
+      wait: "text-amber-400",
+      off: "text-slate-500",
+      err: "text-rose-400",
+    };
+    statusBadgeEl.className = `text-sm font-semibold ${colors[kind] || colors.off}`;
+    statusBadgeEl.textContent = label;
+    if (detail) countdownEl.textContent = detail;
+  }
 
   async function paintInitialUi() {
     const identity = await C.ensureGuestIdentity();
+    const name = C.displayName(identity);
+    if (userLabelEl) userLabelEl.textContent = name;
+    if (userChipEl) userChipEl.classList.remove("hidden");
+
     if (!identity.isAuth && !identity.guest) {
       guestFormEl.classList.remove("hidden");
     }
@@ -21,14 +42,26 @@
     const isPlayable = hasSet && C.ctx.state !== "no_content" && C.ctx.state !== "post_game";
     joinBtnEl.disabled = !isPlayable;
 
-    stateEl.textContent = `State: ${C.ctx.state.replace("_", " ")}`;
+    const setDate = C.ctx.todaySet?.scheduled_date;
+    const title = setDate
+      ? new Date(setDate + "T12:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })
+      : "—";
+    setBadgeEl.textContent = hasSet ? `Set · ${title}` : "No set";
+
+    if (C.ctx.todaySet?.allow_retakes !== false) {
+      retakeHintEl.textContent = "Unlimited practice runs";
+    }
 
     if (C.ctx.state === "post_game") {
-      countdownEl.textContent = "Today’s set has ended.";
-    } else if (C.ctx.state === "no_content" || !hasSet) {
-      countdownEl.textContent = "No trivia published for today yet.";
+      setStatus("off", "Closed", "Today’s set has ended. Check back tomorrow.");
+      joinBtnLabelEl.textContent = "Set closed";
+    } else if (!hasSet || C.ctx.state === "no_content") {
+      setStatus("off", "Unavailable", "Publish a trivia set in Supabase (scheduled or live) to open the lobby.");
+      joinBtnLabelEl.textContent = "Not available";
     } else {
-      countdownEl.textContent = "Today’s set is open — join anytime.";
+      setStatus("live", "Live now", "Enter the quiz room — you can replay as many times as you need while testing.");
+      joinBtnLabelEl.textContent = "Enter live quiz";
+      if (liveCountEl) liveCountEl.textContent = "Open for players";
     }
 
     if (C.ctx.todaySet?.set_id) {
@@ -43,29 +76,28 @@
         .eq("set_id", C.ctx.todaySet.set_id)
         .gte("last_seen", fiveMinutesAgoIso);
       const n = (rows || []).length;
-      waitingCountEl.textContent = `Waiting now: ${n}`;
-      if (liveCountEl) liveCountEl.textContent = `${n} waiting`;
+      waitingCountEl.textContent = String(n);
     } else {
-      waitingCountEl.textContent = "Waiting now: 0";
-      if (liveCountEl) liveCountEl.textContent = "0 waiting";
+      waitingCountEl.textContent = "0";
     }
   }
 
   joinBtnEl.addEventListener("click", async () => {
     joinBtnEl.disabled = true;
-    joinBtnEl.textContent = "Joining…";
+    joinBtnLabelEl.textContent = "Starting…";
     try {
+      C.clearActiveSession();
       await C.joinSession(guestUsernameEl);
       window.location.href = "/med-trivia-quiz";
     } catch (e) {
       alert(e.message || "Failed to join trivia");
       joinBtnEl.disabled = false;
-      joinBtnEl.textContent = "Join Live Session";
+      joinBtnLabelEl.textContent = "Enter live quiz";
     }
   });
 
   paintInitialUi().catch((e) => {
-    stateEl.textContent = "State: error";
-    countdownEl.textContent = e.message || "Failed to initialize trivia";
+    setStatus("err", "Error", e.message || "Failed to load trivia");
+    joinBtnEl.disabled = true;
   });
 })();

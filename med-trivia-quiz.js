@@ -205,6 +205,11 @@
       window.location.replace("/med-trivia");
       return;
     }
+    if (C.ctx.session?.status === "finished") {
+      C.clearActiveSession();
+      window.location.replace("/med-trivia");
+      return;
+    }
 
     const identity = await C.ensureGuestIdentity();
     userLabelEl.textContent = C.displayName(identity);

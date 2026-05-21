@@ -357,7 +357,8 @@ const MediHelp = {
             source: 'feedback-widget',
             type,
             email,
-            message: msg
+            message: msg,
+            page_url: window.location.href
           })
         });
 
@@ -378,7 +379,7 @@ const MediHelp = {
           throw new Error(data.error || 'Could not send feedback.');
         }
 
-        alert('Thanks! Your feedback was sent to our support team.');
+        alert('Thanks! Your feedback was received. Our team will review it soon.');
         modal.classList.remove('active');
         form.reset();
       } catch (err) {

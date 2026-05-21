@@ -43,6 +43,7 @@ BEGIN
   SET
     scheduled_date = v_today,
     status = CASE WHEN status = 'closed' THEN status ELSE 'scheduled' END,
+    allow_retakes = true,
     published_at = COALESCE(published_at, now()),
     updated_at = now()
   WHERE id = v_set_id;

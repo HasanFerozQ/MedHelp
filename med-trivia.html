@@ -7,75 +7,122 @@
   <meta name="description" content="Join the free daily MedTrivia challenge. 10 timed questions, instant explanations, and shareable score results.">
   <link rel="canonical" href="https://www.medihelp.live/med-trivia">
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <script src="core.js"></script>
   <style>
-    .trivia-shell { max-width: 920px; margin: 40px auto 90px; padding: 0 20px; }
-    .trivia-hero { text-align: center; margin-bottom: 28px; }
-    .trivia-hero h1 { margin: 0 0 8px; font-size: clamp(30px, 4.6vw, 50px); }
-    .trivia-hero p { margin: 0; color: var(--text-muted); max-width: 640px; margin-left: auto; margin-right: auto; }
-    .trivia-topbar { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin: 18px 0 24px; }
-    .pill { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; font-weight: 700; }
-    .trivia-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 22px; }
-    .trivia-card h2 { margin-top: 0; }
-    .actions-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
     .hidden { display: none !important; }
-    .guest-form { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
-    .guest-form input { flex: 1; min-width: 220px; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 10px; padding: 11px; }
-    .live-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
-    .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    #join-btn:disabled { opacity: 0.45; cursor: not-allowed; }
   </style>
 </head>
-<body>
-  <nav class="navbar">
-    <div class="container nav-content">
-      <a href="/" class="nav-brand"><img src="icons/logo.png?v=1.1" alt="MediHelp">MediHelp</a>
-      <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/medical-exam-preparation">Medical Exams</a>
-        <a href="/med-trivia" class="active">MedTrivia</a>
-        <a href="/medical-bill-audit">Medical Bill Audit</a>
-      </div>
-      <div class="nav-actions">
-        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
-        <div class="nav-toggle" onclick="MediHelp.toggleMobileMenu()"><span></span><span></span><span></span></div>
-      </div>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased">
+
+  <header class="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+      <a href="/" class="flex items-center gap-2 no-underline shrink-0">
+        <img src="icons/logo.png?v=1.1" alt="" class="h-9 w-9 rounded-lg object-contain" onerror="this.style.display='none'">
+        <span class="text-lg font-bold text-white">MediHelp</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-slate-400">
+        <a href="/" class="hover:text-white transition">Home</a>
+        <a href="/medical-exam-preparation" class="hover:text-white transition">Medical Exams</a>
+        <a href="/med-trivia" class="text-emerald-400 font-semibold">MedTrivia</a>
+        <a href="/medical-bill-audit" class="hover:text-white transition">Bill Audit</a>
+      </nav>
+      <button id="theme-toggle" type="button" class="w-9 h-9 rounded-lg border border-slate-700 bg-slate-800 text-lg" title="Toggle theme">🌙</button>
     </div>
-  </nav>
+  </header>
 
-  <main class="trivia-shell">
-    <section class="trivia-hero">
-      <h1>MedTrivia Daily Live</h1>
-      <p>Free daily challenge — 10 questions, 60 seconds each. Join the waiting room, then enter the live quiz when today’s set is published.</p>
+  <main class="flex-grow">
+    <section class="relative overflow-hidden border-b border-slate-800/60">
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/10 via-slate-950 to-slate-950 pointer-events-none"></div>
+      <div class="absolute -top-24 right-0 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-5xl mx-auto px-4 py-12 sm:py-16 relative text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Daily live challenge
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4">
+          MedTrivia <span class="text-emerald-400">365</span>
+        </h1>
+        <p class="text-slate-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+          Ten high-yield questions, 60 seconds each. Join the lobby, then enter the live quiz room when today’s set is ready.
+        </p>
+        <div class="flex flex-wrap justify-center gap-3 mt-8">
+          <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/80 border border-slate-800 text-sm">
+            <i class="fa-solid fa-list-ol text-emerald-400"></i>
+            <span>10 questions</span>
+          </div>
+          <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/80 border border-slate-800 text-sm">
+            <i class="fa-solid fa-clock text-rose-400"></i>
+            <span>60s each</span>
+          </div>
+          <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/80 border border-slate-800 text-sm">
+            <i class="fa-solid fa-rotate text-sky-400"></i>
+            <span id="retake-hint">Practice runs enabled</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="trivia-topbar">
-      <div class="pill" id="trivia-state">State: loading</div>
-      <div class="pill" id="countdown">Loading...</div>
-    </section>
+    <section class="max-w-5xl mx-auto px-4 py-8 sm:py-10">
+      <div class="grid sm:grid-cols-3 gap-3 mb-8">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-center">
+          <p class="text-[10px] uppercase font-bold tracking-wider text-slate-500 mb-1">Status</p>
+          <p id="status-badge" class="text-sm font-semibold text-slate-300">Checking…</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-center">
+          <p class="text-[10px] uppercase font-bold tracking-wider text-slate-500 mb-1">Set</p>
+          <p id="set-badge" class="text-sm font-semibold text-slate-300">—</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-center">
+          <p class="text-[10px] uppercase font-bold tracking-wider text-slate-500 mb-1">In lobby</p>
+          <p id="waiting-count" class="text-2xl font-bold text-emerald-400 tabular-nums">0</p>
+        </div>
+      </div>
 
-    <section class="trivia-card">
-      <div class="live-pill"><span class="live-dot"></span><span id="live-waiting-pill">…</span></div>
-      <h2>Waiting Room</h2>
-      <div id="waiting-count" style="color:var(--text-muted)">Waiting now: 0</div>
-      <div id="guest-form" class="guest-form hidden">
-        <input id="guest-username" maxlength="24" placeholder="Enter guest username (required if not signed in)">
+      <div class="rounded-2xl sm:rounded-3xl border border-slate-800 bg-gradient-to-b from-slate-900/90 to-slate-900/40 shadow-2xl shadow-black/40 overflow-hidden">
+        <div class="px-6 sm:px-8 py-6 border-b border-slate-800/80 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="live-waiting-pill">Waiting room</span>
+            </div>
+            <h2 class="text-2xl font-bold text-white">Ready to play?</h2>
+            <p id="countdown" class="text-sm text-slate-400 mt-1">Loading session info…</p>
+          </div>
+          <div id="user-chip" class="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-sm text-slate-300">
+            <i class="fa-solid fa-user-doctor text-slate-500"></i>
+            <span id="user-label">Guest</span>
+          </div>
+        </div>
+
+        <div class="px-6 sm:px-8 py-6 sm:py-8">
+          <div id="guest-form" class="hidden mb-6">
+            <label for="guest-username" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Display name (guests)</label>
+            <input id="guest-username" maxlength="24" placeholder="e.g. Dr. Carter"
+              class="w-full max-w-md px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+          </div>
+
+          <button type="button" id="join-btn"
+            class="w-full sm:w-auto min-w-[220px] inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-base transition shadow-lg shadow-emerald-500/20 disabled:shadow-none">
+            <i class="fa-solid fa-play"></i>
+            <span id="join-btn-label">Enter live quiz</span>
+          </button>
+
+          <p class="mt-4 text-xs text-slate-500">
+            Opens <code class="text-emerald-400/90 bg-slate-800 px-1.5 py-0.5 rounded">/med-trivia-quiz</code> — finish anytime and re-enter for another practice run.
+          </p>
+        </div>
       </div>
-      <div class="actions-row">
-        <button class="btn btn-primary" id="join-btn">Join Live Session</button>
-      </div>
-      <p style="margin-top:14px;font-size:13px;color:var(--text-muted)">After joining you’ll continue at <strong>/med-trivia-quiz</strong>.</p>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-bottom" style="justify-content:center; padding-top:22px; border-top:1px solid var(--border);">
-        <span>© 2026 MediHelp</span>
-      </div>
-    </div>
+  <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+    <p>© 2026 MediHelp · <a href="/" class="hover:text-slate-300">Home</a></p>
   </footer>
 
   <script src="med-trivia-core.js"></script>

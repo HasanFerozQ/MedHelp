@@ -188,7 +188,7 @@ templates = [
     },
     # T14: Target Population for CGA
     {
-        "q": "A health system is developing a screening protocol to identify patients who would benefit most from a referral to a high-resource Comprehensive Geriatric Assessment (CGA) clinic. Which of the following patients represents the **most appropriate** target population for a CGA?",
+        "q": "A health system's clinical quality team is developing a screening protocol to identify patients who would benefit most from a referral to a high-resource Comprehensive Geriatric Assessment (CGA) clinic for a cohort of patients over age {age}. Which of the following patients represents the **most appropriate** target population for a CGA?",
         "options": [
             "A {age}-year-old {gender} with mild cognitive decline, progressive gait unsteadiness, recent emergency department visits for minor falls, and polypharmacy (taking {gds_score} medications)",
             "A {age}-year-old {gender} who is highly active, jogs 3 miles daily, manages all {possessive} own finances, and has well-controlled hypertension on one medication",
