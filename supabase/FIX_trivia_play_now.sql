@@ -1,6 +1,7 @@
+-- DEPRECATED — run ONCE: supabase/migrations/20260524_medtrivia_testing_mode_once.sql
+-- (No daily scripts. Seed once: seed_medtrivia_first_set.sql)
 -- =============================================================================
--- COPY THIS ENTIRE FILE into Supabase → SQL → Run
--- Fixes: draft → scheduled, today (ET), retakes, clears old sessions for retest
+-- Legacy quick fix below (same as migration tail). Prefer the migration file.
 -- =============================================================================
 
 -- 0) What exists right now?

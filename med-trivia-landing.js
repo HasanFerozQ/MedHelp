@@ -56,7 +56,7 @@
       setStatus("off", "Closed", "Today’s set has ended. Check back tomorrow.");
       joinBtnLabelEl.textContent = "Set closed";
     } else if (C.ctx.state === "live" && !hasSet) {
-      setStatus("off", "Setup mismatch", "Database state is live but no playable set was returned. Run 20260523_medtrivia_sync_playable_set.sql in Supabase.");
+      setStatus("off", "Setup mismatch", "Playable set missing in API. Run migration 20260524_medtrivia_testing_mode_once.sql once in Supabase.");
       joinBtnLabelEl.textContent = "Not available";
     } else if (!hasSet || C.ctx.state === "no_content") {
       setStatus("off", "Unavailable", "Today's quiz is not open yet. Please check back soon.");

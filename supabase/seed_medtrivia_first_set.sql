@@ -1,5 +1,6 @@
--- Run in Supabase SQL Editor (postgres). Inserts today's set (America/New_York) + 10 questions.
--- Safe to re-run: upsert replaces questions for that date unless set is already live.
+-- Run ONCE in Supabase SQL Editor (or use med-trivia-admin to upload).
+-- Uses scheduled_date as UNIQUE key: re-run for the SAME date only replaces that day's questions (no duplicate row).
+-- A NEW date creates a separate quiz in history. Prefer admin panel for new sets after the first seed.
 
 SELECT public.upsert_trivia_set_with_questions(
   (now() AT TIME ZONE 'America/New_York')::date,
