@@ -171,7 +171,17 @@
       return msg || 'Request failed';
     }
 
-    async function invokeAdmin(extra) {
+    let lastLoadError = '';
+
+    async function invokeAdminRpc(fn, args) {
+      const db = window.initDbClient();
+      if (!db) throw new Error('Database client not ready. Refresh the page.');
+      const { data, error } = await db.rpc(fn, args);
+      if (error) throw new Error(error.message || 'RPC failed');
+      return data;
+    }
+
+    async function invokeAdminEdge(extra) {
       const db = window.initDbClient();
       const { data, error } = await db.functions.invoke('trivia-admin-schedule', {
         body: adminInvokePayload(extra),
@@ -179,34 +189,31 @@
       return { data, error };
     }
 
-    async function loadHistory() {
+    async function adminListSets() {
+      try {
+        const data = await invokeAdminRpc('trivia_admin_list_sets', {
+          p_admin_secret: getSecret(),
+        });
+        if (data && typeof data === 'object') return { data, error: null };
+      } catch (rpcErr) {
+        const edge = await invokeAdminEdge({ action: 'list' });
+        if (!edge.error && edge.data) return edge;
+        return {
+          data: edge.data,
+          error: { message: rpcErr.message || formatInvokeError(edge.error, edge.data) },
+        };
+      }
+      return { data: null, error: { message: 'List failed' } };
+    }
+
+    function renderHistoryTable(sets) {
       const statusEl = document.getElementById('list-status');
       const body = document.getElementById('sets-body');
-      statusEl.textContent = 'Loading…';
-
-      const { data, error } = await invokeAdmin({ action: 'list' });
-
-      if (error) {
-        const msg = formatInvokeError(error, data);
-        statusEl.textContent = msg;
-        body.innerHTML = `<tr><td colspan="7" class="hint">${escapeHtml(msg)}</td></tr>`;
-        if (/unauthorized/i.test(msg)) showLoginError('Wrong admin secret.');
-        return false;
-      }
-      if (!data?.ok) {
-        const msg = data?.error || 'Unauthorized';
-        statusEl.textContent = msg;
-        body.innerHTML = '<tr><td colspan="7" class="hint">Could not load sets.</td></tr>';
-        if (/unauthorized/i.test(msg)) showLoginError('Wrong admin secret.');
-        return false;
-      }
-
-      const sets = data.sets || [];
       statusEl.textContent = `${sets.length} set(s) — newest created at top.`;
 
       if (!sets.length) {
         body.innerHTML = '<tr><td colspan="7" class="hint">No sets yet. Upload below or run seed once in SQL.</td></tr>';
-        return true;
+        return;
       }
 
       body.innerHTML = sets.map((row) => {
@@ -222,18 +229,63 @@
           <td class="mono">${row.set_id}</td>
         </tr>`;
       }).join('');
+    }
+
+    async function loadHistory() {
+      const statusEl = document.getElementById('list-status');
+      const body = document.getElementById('sets-body');
+      statusEl.textContent = 'Loading…';
+      lastLoadError = '';
+
+      const { data, error } = await adminListSets();
+
+      if (error) {
+        lastLoadError = formatInvokeError(error, data);
+        statusEl.textContent = lastLoadError;
+        body.innerHTML = `<tr><td colspan="7" class="hint">${escapeHtml(lastLoadError)}</td></tr>`;
+        return false;
+      }
+      if (!data?.ok) {
+        lastLoadError = data?.error || 'Could not load sets';
+        statusEl.textContent = lastLoadError;
+        body.innerHTML = '<tr><td colspan="7" class="hint">Could not load sets.</td></tr>';
+        return false;
+      }
+
+      renderHistoryTable(data.sets || []);
       return true;
     }
 
     async function unlockAdmin() {
       const secret = getSecret();
+      const btn = document.getElementById('unlock-btn');
       if (!secret) {
         showLoginError('Enter your Trivia Admin Secret.');
         return;
       }
       document.getElementById('login-error').classList.add('hidden');
-      const ok = await loadHistory();
-      if (ok) setUnlocked(true);
+      btn.disabled = true;
+      btn.textContent = 'Checking…';
+      try {
+        const ok = await loadHistory();
+        if (ok) {
+          setUnlocked(true);
+          return;
+        }
+        const msg = lastLoadError || 'Unlock failed';
+        if (/unauthorized/i.test(msg)) {
+          showLoginError('Wrong admin secret.');
+        } else if (/not configured/i.test(msg)) {
+          showLoginError(msg);
+        } else {
+          showLoginError(msg);
+        }
+      } catch (e) {
+        showLoginError(e.message || 'Unlock failed');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Unlock';
+      }
     }
 
     document.getElementById('unlock-btn').onclick = () => unlockAdmin().catch((e) => showLoginError(e.message));
@@ -260,16 +312,28 @@
       }
 
       result.textContent = 'Uploading…';
-      const { data, error } = await invokeAdmin({
-        action: 'upload',
-        scheduled_date: scheduledDate,
-        title,
-        publish,
-        questions,
-      });
-      if (error) {
-        result.textContent = formatInvokeError(error, data);
-        return;
+      let data;
+      try {
+        data = await invokeAdminRpc('trivia_admin_upsert_set', {
+          p_admin_secret: getSecret(),
+          p_scheduled_date: scheduledDate,
+          p_title: title,
+          p_questions: questions,
+          p_publish: publish,
+        });
+      } catch (rpcErr) {
+        const edge = await invokeAdminEdge({
+          action: 'upload',
+          scheduled_date: scheduledDate,
+          title,
+          publish,
+          questions,
+        });
+        if (edge.error) {
+          result.textContent = formatInvokeError(edge.error, edge.data) || rpcErr.message;
+          return;
+        }
+        data = edge.data;
       }
       if (!data?.ok) {
         result.textContent = data?.error || 'Upload failed';
