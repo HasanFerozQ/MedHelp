@@ -10,12 +10,17 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <script src="core.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
     .hidden { display: none !important; }
     #join-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .feedback-fab { width: 56px !important; height: 56px !important; max-width: 56px; max-height: 56px; }
+    .feedback-fab svg { width: 24px !important; height: 24px !important; }
+    .feedback-modal { display: none; }
+    .feedback-modal.active { display: flex !important; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased">
@@ -117,9 +122,7 @@
     </section>
   </main>
 
-  <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
-    <p>© 2026 MediHelp · <a href="/" class="hover:text-slate-300">Home</a></p>
-  </footer>
+  <footer class="site-footer"></footer>
 
   <script src="med-trivia-core.js"></script>
   <script src="med-trivia-landing.js"></script>

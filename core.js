@@ -391,6 +391,70 @@ const MediHelp = {
     };
   },
 
+  initSiteFooter: function() {
+    if (document.querySelector('.site-footer .footer-grid')) return;
+
+    const html = `
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Free tools and professional advocates helping patients fight medical billing errors and reduce hospital costs.</p>
+          <div style="margin-top:16px; display:flex; gap:12px; margin-bottom: 16px;">
+            <a href="https://www.linkedin.com/company/medihelplive/" target="_blank" rel="noopener" style="color:var(--text-muted); transition:0.3s;" title="Follow MediHelp on LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Free Tools</h4>
+          <ul>
+            <li><a href="/medical-bill-audit">Bill Audit Tool</a></li>
+            <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings Search</a></li>
+            <li><a href="/providers">Provider Search</a></li>
+            <li><a href="/medical-calculator">Medical Calculator</a></li>
+            <li><a href="/med-trivia">MedTrivia Daily</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/pricing" style="color:var(--expert-amber);">Human Bill Negotiation</a></li>
+            <li><a href="/medical-exam-preparation" style="color:var(--accent); font-weight:700;">Medical Exam Mastery</a></li>
+            <li><a href="/blog">Patient Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
+        <span>© 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms & Disclaimer</a></span>
+        <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
+      </div>
+    </div>
+  </footer>`;
+
+    const existing = document.querySelector('.site-footer');
+    if (existing) {
+      existing.outerHTML = html;
+    } else {
+      document.body.insertAdjacentHTML('beforeend', html);
+    }
+  },
+
   initGlobalNegotiationBanner: function() {
     const path = window.location.pathname || '';
     if (path.includes('/audit')) return; // audit page has dedicated CTA block
@@ -1239,6 +1303,7 @@ const MediHelp = {
 
 // 7. Auto-init on Load
 document.addEventListener('DOMContentLoaded', async () => {
+  MediHelp.initSiteFooter();
   MediHelp.initFeedbackWidget();
   MediHelp.initGlobalTriviaBanner();
   

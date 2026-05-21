@@ -1,0 +1,24 @@
+<USER_REQUEST>
+Create Topic Card "General Pathology" in Flash Card 2nd Year: https://www.medihelp.live/flash-cards
+do audit and enchancement of General Pathology Data I'm providing and upload these flash cards given below . Make Answers understandable by students and accurate .
+Make sure you properly show the Chemical Formulas, Mathematical Formulas and Symbols if any present in right format
+
+-----------------------------------------------
+
+Front: Definition of Hypertrophy?
+
+Back: Increase in the size of cells resulting in an increase in the size of the organ; no new cells.
+
+Front: Definition of Hyperplasia?
+
+Back: Increase in the number of cells in an organ or tissue in response to a stimulus.
+
+Front: What is Metaplasia?
+
+Back: A reversible change in which one adult cell type is replaced by another adult cell type (e.g., Barrett esophagus).
+
+Front: Hallmarks of irreversible cell injury?
+
+Back: Profound mitochondrial dysfunction and severe disturbances in membrane function (plasma and lysosomal).
+
+<truncated 29489 bytes>

@@ -817,6 +817,8 @@ for t_idx, t in enumerate(templates):
             "dbp_standing": dbp_standing,
             "male_op_cause": male_op_cause,
             "hip_fx_type": hip_fx["desc"],
+            "fall_drug": fall_drug_item["drug"],
+            "beers_drug": beers_drug_item["drug"],
         }
 
         # For templates that use both genders (falls, ortho, etc)
