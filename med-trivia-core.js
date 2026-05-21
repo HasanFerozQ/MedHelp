@@ -131,21 +131,39 @@
     sessionStorage.removeItem(ACTIVE_KEY);
   }
 
+  function normalizeTodaySetRow(data) {
+    const row = Array.isArray(data) ? data[0] : data;
+    if (!row) return null;
+    const setId = row.set_id || row.id;
+    if (!setId) return null;
+    return {
+      set_id: setId,
+      scheduled_date: row.scheduled_date,
+      status: row.status,
+      allow_retakes: row.allow_retakes !== false,
+      start_at: row.start_at,
+      end_at: row.end_at,
+    };
+  }
+
   async function loadState() {
     const client = db();
     if (!client) throw new Error("Supabase client unavailable");
     const nowIso = new Date().toISOString();
-    const [stateRes, setRes] = await Promise.all([
-      client.rpc("get_current_trivia_state", { now_tz: nowIso }),
-      client.rpc("get_today_set_for_play", {}),
-    ]);
-    if (stateRes.error) throw new Error(stateRes.error.message || "Failed to load trivia state");
+
+    const setRes = await client.rpc("get_today_set_for_play", {});
     if (setRes.error) throw new Error(setRes.error.message || "Failed to load today’s trivia set");
 
-    const rows = setRes.data;
-    const todayRow = Array.isArray(rows) ? rows[0] : rows;
-    ctx.state = typeof stateRes.data === "string" ? stateRes.data : "no_content";
-    ctx.todaySet = todayRow || null;
+    ctx.todaySet = normalizeTodaySetRow(setRes.data);
+
+    if (ctx.todaySet) {
+      ctx.state = ctx.todaySet.status === "closed" ? "post_game" : "live";
+    } else {
+      const stateRes = await client.rpc("get_current_trivia_state", { now_tz: nowIso });
+      if (stateRes.error) throw new Error(stateRes.error.message || "Failed to load trivia state");
+      ctx.state = typeof stateRes.data === "string" ? stateRes.data : "no_content";
+    }
+
     return { state: ctx.state, today_set: ctx.todaySet, now_iso: nowIso };
   }
 

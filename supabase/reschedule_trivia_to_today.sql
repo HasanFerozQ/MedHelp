@@ -1,5 +1,6 @@
 -- Activate today's MedTrivia set (US Eastern). Run in Supabase SQL Editor.
--- Fixes: draft sets (lobby only sees scheduled/live), date mismatch, missing published_at.
+-- Prefer supabase/FIX_trivia_play_now.sql (diagnostics + never skips draft fix).
+-- OLD versions that RETURN early when date=today left status as draft — do not use those.
 
 DO $$
 DECLARE
