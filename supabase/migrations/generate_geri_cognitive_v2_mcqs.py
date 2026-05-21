@@ -658,8 +658,7 @@ print(f"Total unique MCQs generated: {len(mcqs)}")
 parts = [mcqs[i:i+100] for i in range(0, len(mcqs), 100)]
 
 for part_num, part_mcqs in enumerate(parts, 1):
-    out_file = f"c:\\Users\\Hasan-PC\\Desktop\\MedHelp\\supabase\\migrations\\20260520_geri_cognitive_v2_mcqs_p{part_num}.sql"
-    
+    out_file = f"c:\\Users\\Hasan-PC\\Desktop\\MedHelp\\supabase\\migrations\\20260520_geri_cognitive_mcqs_p{part_num}.sql"
     with open(out_file, "w", encoding="utf-8") as f:
         f.write(f"-- US MD/MBBS (4th Year) clinical case blocks - Geriatrics: Cognitive disorders - Alzheimer's, vascular, Lewy body, frontotemporal dementia, MCI - Part {part_num} ({(part_num-1)*100+1}-{part_num*100})\n")
         f.write("BEGIN;\n\n")

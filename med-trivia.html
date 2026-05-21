@@ -14,24 +14,18 @@
     .trivia-shell { max-width: 920px; margin: 40px auto 90px; padding: 0 20px; }
     .trivia-hero { text-align: center; margin-bottom: 28px; }
     .trivia-hero h1 { margin: 0 0 8px; font-size: clamp(30px, 4.6vw, 50px); }
-    .trivia-hero p { margin: 0; color: var(--text-muted); }
-    .trivia-topbar { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; margin: 18px 0 24px; }
+    .trivia-hero p { margin: 0; color: var(--text-muted); max-width: 640px; margin-left: auto; margin-right: auto; }
+    .trivia-topbar { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin: 18px 0 24px; }
     .pill { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; font-weight: 700; }
     .trivia-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 22px; }
     .trivia-card h2 { margin-top: 0; }
     .actions-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
     .hidden { display: none !important; }
-    .option-list { display: grid; gap: 10px; margin-top: 18px; }
-    .option-btn { text-align: left; border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-h); border-radius: 12px; padding: 12px; cursor: pointer; font-weight: 600; }
-    .option-btn:hover { border-color: var(--accent); }
-    .option-btn.correct { border-color: #10b981; background: rgba(16,185,129,0.12); }
-    .option-btn.wrong { border-color: #ef4444; background: rgba(239,68,68,0.12); }
-    .rationale-box { margin-top: 14px; background: rgba(var(--accent-rgb),0.08); border: 1px solid rgba(var(--accent-rgb),0.26); border-radius: 12px; padding: 12px; color: var(--text); }
     .guest-form { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
     .guest-form input { flex: 1; min-width: 220px; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 10px; padding: 11px; }
-    .result-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.72); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-    .result-box { width: min(540px, 92vw); background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; text-align: center; }
-    .result-grid { white-space: pre-wrap; font-size: 20px; margin: 14px 0; }
+    .live-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
   </style>
 </head>
 <body>
@@ -54,16 +48,16 @@
   <main class="trivia-shell">
     <section class="trivia-hero">
       <h1>MedTrivia Daily Live</h1>
-      <p>Free daily challenge (10 questions, 60s each). When today’s set is published in the database, you can join and play right away.</p>
+      <p>Free daily challenge — 10 questions, 60 seconds each. Join the waiting room, then enter the live quiz when today’s set is published.</p>
     </section>
 
     <section class="trivia-topbar">
       <div class="pill" id="trivia-state">State: loading</div>
       <div class="pill" id="countdown">Loading...</div>
-      <button class="btn btn-ghost" id="mute-btn">Mute Sound</button>
     </section>
 
     <section class="trivia-card">
+      <div class="live-pill"><span class="live-dot"></span><span id="live-waiting-pill">…</span></div>
       <h2>Waiting Room</h2>
       <div id="waiting-count" style="color:var(--text-muted)">Waiting now: 0</div>
       <div id="guest-form" class="guest-form hidden">
@@ -72,28 +66,9 @@
       <div class="actions-row">
         <button class="btn btn-primary" id="join-btn">Join Live Session</button>
       </div>
-    </section>
-
-    <section id="question-card" class="trivia-card hidden" style="margin-top: 14px;">
-      <div id="question-progress" style="font-weight:800;color:var(--accent)">Question 1 / 10</div>
-      <h2 id="question-prompt">Loading question...</h2>
-      <div id="question-options" class="option-list"></div>
-      <div id="rationale-box" class="rationale-box hidden">
-        <strong>Rationale:</strong>
-        <div id="rationale-text"></div>
-      </div>
+      <p style="margin-top:14px;font-size:13px;color:var(--text-muted)">After joining you’ll continue at <strong>/med-trivia-quiz</strong>.</p>
     </section>
   </main>
-
-  <div id="result-modal" class="result-modal hidden">
-    <div class="result-box">
-      <h2>Session Complete</h2>
-      <p id="result-text"></p>
-      <div id="result-grid" class="result-grid"></div>
-      <p id="result-stats" style="color:var(--text-muted)"></p>
-      <button id="close-result" class="btn btn-primary">Close</button>
-    </div>
-  </div>
 
   <footer class="site-footer">
     <div class="container">
@@ -103,6 +78,7 @@
     </div>
   </footer>
 
-  <script src="med-trivia.js"></script>
+  <script src="med-trivia-core.js"></script>
+  <script src="med-trivia-landing.js"></script>
 </body>
 </html>
