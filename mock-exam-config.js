@@ -11,12 +11,14 @@ window.MockExamConfig = {
       step: 1,
       tab: 'step1',
       title: 'USMLE Step 1 Mock #1',
-      badge: 'STEP 1 · MOST POPULAR',
+      badge: 'STEP 1',
       questions: 280,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
-      freeDemo: true,
+      freeDemo: false,
+      premiumOnly: true,
       pool: 'step1-random',
+      focus: 'Balanced random mix across all Step 1 disciplines (UWorld / First Aid style full-length).',
       confirmMessage: 'Ready to start the 8-hour USMLE Step 1 exam? The clock runs in real time once you begin.',
     },
     'step1-mock2': {
@@ -24,13 +26,14 @@ window.MockExamConfig = {
       step: 1,
       tab: 'step1',
       title: 'USMLE Step 1 Mock #2',
-      badge: 'STEP 1 · NBME BLUEPRINT',
+      badge: 'STEP 1',
       questions: 280,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
       freeDemo: false,
       premiumOnly: true,
       pool: 'step1-stratified-mock2',
+      focus: 'NBME blueprint weighting — pathology-heavy with physiology, pharmacology, micro, and biochemistry.',
       confirmMessage: 'Ready to start USMLE Step 1 Mock #2? Blueprint-weighted questions load across 7 blocks.',
     },
     'step1-mock3': {
@@ -38,13 +41,14 @@ window.MockExamConfig = {
       step: 1,
       tab: 'step1',
       title: 'USMLE Step 1 Mock #3',
-      badge: 'STEP 1 · TEXTBOOK MASTERY',
+      badge: 'STEP 1',
       questions: 280,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
       freeDemo: false,
       premiumOnly: true,
       pool: 'step1-stratified-mock3',
+      focus: 'Classic textbooks — Gray\'s, Langman\'s, Moore, Harper\'s, Robbins, Ganong, Katzung, Goljan, Pathoma, and related sources.',
       confirmMessage: 'Ready to start USMLE Step 1 Mock #3? Questions are drawn from your core Step 1 textbook map.',
     },
     'step1-mock4': {
@@ -52,14 +56,30 @@ window.MockExamConfig = {
       step: 1,
       tab: 'step1',
       title: 'USMLE Step 1 Mock #4',
-      badge: 'STEP 1 · HIGH-YIELD PASS',
+      badge: 'STEP 1',
       questions: 280,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
       freeDemo: false,
       premiumOnly: true,
       pool: 'step1-stratified-mock4',
-      confirmMessage: 'Ready to start USMLE Step 1 Mock #4? This pass-focused exam emphasizes First Aid, Pathoma, UWorld-style, and Sketchy high-yield disciplines across 7 timed blocks.',
+      focus: 'High-yield pass prep — Pathoma, Goljan, Sketchy, First Aid, UWorld-style, Katzung, and BRS disciplines.',
+      confirmMessage: 'Ready to start USMLE Step 1 Mock #4? Pass-focused high-yield questions load across 7 timed blocks.',
+    },
+    'step1-mock5': {
+      id: 'step1-mock5',
+      step: 1,
+      tab: 'step1',
+      title: 'USMLE Step 1 Mock #5',
+      badge: 'STEP 1',
+      questions: 280,
+      totalHours: 8,
+      format: '7 Blocks / 60m ea.',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step1-stratified-mock5',
+      focus: 'Organ-system integration — cardio, pulmonary, renal, GI, endocrine, repro, neuro, MSK/skin (Guyton, Ganong, West, Lilly, Greenspan, Snell, Netter).',
+      confirmMessage: 'Ready to start USMLE Step 1 Mock #5? Integrated organ-system vignettes load across 7 blocks.',
     },
     'step2-mock1': {
       id: 'step2-mock1',
@@ -141,6 +161,62 @@ window.MockExamConfig = {
     { count: 22, label: 'Multisystem · derm · nutrition · aging · Amboss-style', slugs: ['dermatology', 'usmle-1-nutrition', 'usmle-1-aging'] },
   ],
 
+  /**
+   * Organ-system integrated emphasis — Mock #5 only (280).
+   * Guyton, Ganong, West, Lilly, Greenspan, Snell, Netter + cross-topic reinforcement.
+   */
+  step1Mock5Buckets: [
+    { count: 26, label: 'Cardiovascular · Lilly · Guyton', slugs: ['cardiovascular-physiology', 'hematology'] },
+    { count: 22, label: 'Respiratory · West', slugs: ['respiratory-physiology'] },
+    { count: 20, label: 'Renal · Guyton · BRS', slugs: ['renal-physiology'] },
+    { count: 18, label: 'Gastrointestinal', slugs: ['gastrointestinal-physiology'] },
+    { count: 18, label: 'Endocrine · Greenspan · BRS', slugs: ['endocrine-physiology'] },
+    { count: 16, label: 'Reproductive · Costanzo BRS', slugs: ['reproductive-physiology'] },
+    { count: 19, label: 'Neuro · Snell · HY Neuro · neuropath', slugs: ['neuropathology', 'neuropharmacology'] },
+    { count: 18, label: 'MSK · Netter · Gray\'s · dermatology', slugs: ['musculoskeletal', 'dermatology', 'usmle-1-anatomy'] },
+    { count: 18, label: 'Pathology · Robbins · Pathoma · Goljan', slugs: ['usmle-1-pathology', 'pathology'] },
+    { count: 17, label: 'Pharmacology · Katzung · Lippincott · Goodman', slugs: ['pharmacology-usmle-1'] },
+    { count: 14, label: 'Microbiology · Gladwin · Murray · Sketchy', slugs: ['usmle-1-microbiology'] },
+    { count: 14, label: 'Biochemistry · Harper · Lippincott', slugs: ['usmle-1-biochemistry', 'molecular-biology'] },
+    { count: 12, label: 'Embryology · Langman\'s · Developing Human', slugs: ['embryology'] },
+    { count: 10, label: 'Immunology · Abbas · Lippincott', slugs: ['immunology'] },
+    { count: 8, label: 'Genetics · Thompson · HY Genetics', slugs: ['usmle-1-genetics'] },
+    { count: 12, label: 'Behavioral · Ethics · Biostat · Kaplan · Jekel', slugs: ['behavioral-sciences-usmle-1', 'ethics-professionalism', 'usmle-1-biostatistics'] },
+    { count: 10, label: 'Nutrition · Aging · multisystem', slugs: ['usmle-1-nutrition', 'usmle-1-aging'] },
+    { count: 8, label: 'General physiology bridge', slugs: ['usmle-1-physiology'] },
+  ],
+
+  /** All Step 1 topic pools available in Supabase (used across mocks). */
+  step1TopicCatalog: [
+    { slug: 'usmle-1-pathology', name: 'General Pathology' },
+    { slug: 'pathology', name: 'Systemic Pathology' },
+    { slug: 'neuropathology', name: 'Neuropathology' },
+    { slug: 'hematology', name: 'Hematology / Oncology' },
+    { slug: 'cardiovascular-physiology', name: 'Cardiovascular Physiology' },
+    { slug: 'respiratory-physiology', name: 'Respiratory Physiology' },
+    { slug: 'renal-physiology', name: 'Renal / Urinary Physiology' },
+    { slug: 'gastrointestinal-physiology', name: 'Gastrointestinal Physiology' },
+    { slug: 'endocrine-physiology', name: 'Endocrine Physiology' },
+    { slug: 'reproductive-physiology', name: 'Reproductive Physiology' },
+    { slug: 'usmle-1-physiology', name: 'General Physiology' },
+    { slug: 'pharmacology-usmle-1', name: 'Pharmacology' },
+    { slug: 'neuropharmacology', name: 'Neuropharmacology' },
+    { slug: 'usmle-1-microbiology', name: 'Microbiology' },
+    { slug: 'usmle-1-biochemistry', name: 'Biochemistry' },
+    { slug: 'molecular-biology', name: 'Molecular Biology' },
+    { slug: 'usmle-1-anatomy', name: 'Gross Anatomy' },
+    { slug: 'embryology', name: 'Embryology' },
+    { slug: 'musculoskeletal', name: 'Musculoskeletal / Skin' },
+    { slug: 'behavioral-sciences-usmle-1', name: 'Behavioral Sciences' },
+    { slug: 'ethics-professionalism', name: 'Ethics & Professionalism' },
+    { slug: 'immunology', name: 'Immunology' },
+    { slug: 'usmle-1-genetics', name: 'Genetics' },
+    { slug: 'usmle-1-biostatistics', name: 'Biostatistics & Epidemiology' },
+    { slug: 'dermatology', name: 'Dermatology' },
+    { slug: 'usmle-1-nutrition', name: 'Nutrition' },
+    { slug: 'usmle-1-aging', name: 'Aging / Geriatrics Principles' },
+  ],
+
   /** Canonical Step 1 textbook & board-prep sources (exam engine metadata). */
   step1TextbookSources: [
     "Gray's Anatomy for Students (Drake, Vogl & Mitchell)",
@@ -198,12 +274,18 @@ window.MockExamConfig = {
   },
 
   getBucketsForExam(examId) {
-    const bucketsByExam = {
-      'step1-mock2': this.step1Mock2Buckets,
-      'step1-mock3': this.step1Mock3Buckets,
-      'step1-mock4': this.step1Mock4Buckets,
+    const pool = this.getExam(examId).pool;
+    const byPool = {
+      'step1-stratified-mock2': this.step1Mock2Buckets,
+      'step1-stratified-mock3': this.step1Mock3Buckets,
+      'step1-stratified-mock4': this.step1Mock4Buckets,
+      'step1-stratified-mock5': this.step1Mock5Buckets,
     };
-    return bucketsByExam[examId] || null;
+    return byPool[pool] || null;
+  },
+
+  getStep1Exams() {
+    return this.getExamsForTab('step1');
   },
 
   getStateKey(examId) {

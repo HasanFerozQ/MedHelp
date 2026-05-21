@@ -9,53 +9,156 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
-  <script src="mock-exam-config.js?v=20260521c"></script>
+  <script src="mock-exam-config.js?v=20260521d"></script>
   <script src="https://gumroad.com/js/gumroad.js"></script>
   <style>
     body { background: #0a0f18; }
+    body.sim-exam-active { padding-bottom: 92px; }
+    body.sim-exam-active .site-footer,
+    body.sim-exam-active #global-trivia-banner,
+    body.sim-exam-active #global-negotiation-banner { display: none !important; }
+
     .sim-header {
-      background: #111827;
-      border-bottom: 2px solid #374151;
-      padding: 12px 24px;
-      display: flex;
-      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.98) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+      padding: 14px 24px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
+      gap: 20px;
       position: sticky;
       top: 0;
       z-index: 1000;
+      backdrop-filter: blur(12px);
     }
-    .timer-pill {
-      background: #000;
-      border: 1px solid #4b5563;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-family: monospace;
-      font-size: 18px;
-      font-weight: 700;
-      color: #10b981;
-    }
-    .timer-pill.warning { color: var(--warning); border-color: var(--warning); }
-    .timer-pill.danger { color: #ef4444; border-color: #ef4444; }
-
-    .block-status {
+    .sim-header-left {
       display: flex;
-      gap: 12px;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+    .sim-header-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .sim-btn-ghost {
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(75, 85, 99, 0.6);
+      background: rgba(31, 41, 55, 0.6);
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .sim-btn-ghost:hover { color: #f3f4f6; border-color: #6b7280; background: rgba(55, 65, 81, 0.8); }
+    .sim-btn-quit:hover { border-color: rgba(239, 68, 68, 0.5); color: #fca5a5; }
+
+    .sim-block-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .sim-block-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #a855f7;
+    }
+    .sim-block-dots {
+      display: flex;
+      gap: 6px;
       align-items: center;
     }
     .block-dot {
-      width: 12px;
-      height: 12px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: #374151;
+      transition: all 0.2s ease;
     }
-    .block-dot.active { background: #a855f7; box-shadow: 0 0 10px #a855f7; }
+    .block-dot.active {
+      width: 22px;
+      border-radius: 100px;
+      background: linear-gradient(90deg, #a855f7, #7e22ce);
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.45);
+    }
     .block-dot.done { background: #10b981; }
+
+    .sim-header-center {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .sim-timer-card {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(75, 85, 99, 0.5);
+      border-radius: 14px;
+      padding: 10px 18px;
+      text-align: center;
+      min-width: 120px;
+    }
+    .sim-timer-card.global { border-color: rgba(96, 165, 250, 0.35); }
+    .sim-timer-card.block { border-color: rgba(16, 185, 129, 0.35); }
+    .sim-timer-card.warning { border-color: rgba(251, 191, 36, 0.5); }
+    .sim-timer-card.danger { border-color: rgba(239, 68, 68, 0.55); }
+    .sim-timer-label {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+    .sim-timer-value {
+      font-family: 'SF Mono', 'Consolas', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      color: #10b981;
+    }
+    .sim-timer-card.global .sim-timer-value { color: #60a5fa; }
+    .sim-timer-card.warning .sim-timer-value { color: #fbbf24; }
+    .sim-timer-card.danger .sim-timer-value { color: #f87171; }
+
+    .sim-header-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .sim-exam-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #6b7280;
+      text-align: right;
+      max-width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
     .sim-main {
       max-width: 1000px;
-      margin: 40px auto;
+      margin: 32px auto 24px;
       padding: 0 20px;
     }
+    .sim-skip-toast {
+      display: none;
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 12px;
+      color: #fca5a5;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .sim-skip-toast.visible { display: block; }
     
     .question-nav {
       display: grid;
@@ -116,12 +219,176 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: #111827;
-      border-top: 1px solid #374151;
-      padding: 16px 24px;
+      background: linear-gradient(0deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.92) 100%);
+      border-top: 1px solid rgba(168, 85, 247, 0.15);
+      padding: 14px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 16px;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+    }
+    .bottom-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .sim-btn-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid rgba(75, 85, 99, 0.6);
+      background: rgba(31, 41, 55, 0.8);
+      color: #d1d5db;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .sim-btn-mark:hover { border-color: #a855f7; color: #fff; }
+    .sim-btn-mark.marked { border-color: #fbbf24; color: #fbbf24; background: rgba(251, 191, 36, 0.08); }
+    .sim-btn-end-block {
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(126, 34, 206, 0.15) 100%);
+      color: #e9d5ff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .sim-btn-end-block:hover {
+      background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+      color: white;
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.35);
+    }
+    .bottom-bar-nav {
+      display: flex;
+      gap: 10px;
+    }
+    .sim-btn-nav {
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .sim-btn-prev {
+      background: rgba(55, 65, 81, 0.8);
+      color: #e5e7eb;
+      border: 1px solid #4b5563;
+    }
+    .sim-btn-next {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: #052e16;
+    }
+    .sim-btn-next:hover { filter: brightness(1.08); }
+
+    .sim-dialog-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 11000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(4, 8, 16, 0.88);
+      backdrop-filter: blur(12px);
+    }
+    .sim-dialog-overlay.visible { display: flex; }
+    .sim-dialog-card {
+      width: 100%;
+      max-width: 440px;
+      background: linear-gradient(160deg, #0f172a 0%, #111827 50%, #1e1b4b 100%);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 32px 64px rgba(0, 0, 0, 0.55), 0 0 48px rgba(168, 85, 247, 0.12);
+      animation: simDialogIn 0.22s ease;
+    }
+    @keyframes simDialogIn {
+      from { opacity: 0; transform: scale(0.96) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .sim-dialog-head {
+      padding: 28px 28px 16px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .sim-dialog-head h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.35;
+    }
+    .sim-dialog-head .sim-dialog-accent {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+      color: #a855f7;
+    }
+    .sim-dialog-head .sim-dialog-body {
+      margin: 12px 0 0;
+      font-size: 14px;
+      color: #9ca3af;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+    .sim-dialog-foot {
+      display: flex;
+      gap: 10px;
+      padding: 20px 24px 24px;
+    }
+    .sim-dialog-foot button {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .sim-dialog-cancel {
+      background: transparent;
+      color: #9ca3af;
+      border: 1px solid #4b5563 !important;
+    }
+    .sim-dialog-cancel:hover { color: #f3f4f6; border-color: #6b7280 !important; }
+    .sim-dialog-confirm {
+      background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+      color: white;
+    }
+    .sim-dialog-confirm:hover {
+      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.35);
+      transform: translateY(-1px);
+    }
+    .sim-dialog-confirm.danger {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    }
+    .sim-dialog-confirm.danger:hover {
+      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.35);
+    }
+
+    @media (max-width: 900px) {
+      .sim-header {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .sim-header-left, .sim-header-center, .sim-header-right {
+        justify-content: center;
+      }
+      .sim-header-actions { justify-content: center; }
+      .sim-exam-title { text-align: center; max-width: none; }
+      .bottom-bar { flex-wrap: wrap; justify-content: center; }
     }
 
     .report-view {
@@ -345,30 +612,35 @@
   <!-- SIMULATOR UI -->
   <div id="sim-ui">
     <header class="sim-header">
-      <div style="display: flex; gap: 12px; align-items: center;">
-        <button class="btn btn-danger" id="quit-exam-btn" onclick="quitAndSave()" style="background: #ef4444; font-size: 11px; padding: 8px 14px; height: auto;">Quit & Save</button>
-        <button class="btn btn-secondary" id="end-exam-btn" onclick="endExam()" style="background: #6b7280; color: white; font-size: 11px; padding: 8px 14px; height: auto;">End Exam</button>
-        <div class="block-status" id="block-dots">
-          <!-- 7 dots -->
+      <div class="sim-header-left">
+        <div class="sim-header-actions">
+          <button type="button" class="sim-btn-ghost sim-btn-quit" id="quit-exam-btn" onclick="quitAndSave()">Quit & Save</button>
+          <button type="button" class="sim-btn-ghost" id="end-exam-btn" onclick="endExam()">End Exam</button>
         </div>
-      </div>
-      
-      <div style="text-align: center;">
-        <div id="block-tracker-text" style="font-size: 10px; color: #a855f7; font-weight: 800; text-transform: uppercase; margin-bottom: 4px;">Block 1 of 7</div>
-        <div class="timer-pill" id="block-timer">60:00</div>
-        <div style="font-size: 9px; color: #9ca3af; margin-top: 4px; font-weight: 700;">TIME REMAINING</div>
+        <div class="sim-block-meta">
+          <div class="sim-block-label" id="block-tracker-text">Block 1 of 7</div>
+          <div class="sim-block-dots" id="block-dots"></div>
+        </div>
       </div>
 
-      <div style="display: flex; gap: 20px; align-items: center;">
-        <div style="text-align: right;">
-          <div style="font-size: 10px; color: #9ca3af; font-weight: 800; text-transform: uppercase;">Total Exam Clock</div>
-          <div class="timer-pill" id="global-timer" style="color: #60a5fa;">08:00:00</div>
+      <div class="sim-header-center">
+        <div class="sim-timer-card block" id="block-timer-card">
+          <div class="sim-timer-label">Block time</div>
+          <div class="sim-timer-value" id="block-timer">60:00</div>
         </div>
-        <button class="btn btn-danger" id="end-block-btn-top" onclick="submitBlock()" style="background: #dc2626; font-size: 11px; padding: 8px 14px; height: auto;">End Block</button>
+        <div class="sim-timer-card global" id="global-timer-card">
+          <div class="sim-timer-label">Total exam</div>
+          <div class="sim-timer-value" id="global-timer">08:00:00</div>
+        </div>
+      </div>
+
+      <div class="sim-header-right">
+        <div class="sim-exam-title" id="sim-exam-title">USMLE Step 1 Mock</div>
       </div>
     </header>
 
     <main class="sim-main">
+      <div class="sim-skip-toast" id="skip-toast" role="status">Unanswered question — please select an answer before ending this block.</div>
       <div class="question-nav" id="q-nav">
         <!-- 40 buttons -->
       </div>
@@ -383,20 +655,33 @@
     </main>
 
     <footer class="bottom-bar">
-      <div>
-        <button class="btn btn-ghost" id="mark-btn" onclick="toggleMark()" style="display: flex; align-items: center; gap: 8px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" id="mark-icon-svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 
+      <div class="bottom-bar-left">
+        <button type="button" class="sim-btn-mark" id="mark-btn" onclick="toggleMark()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" id="mark-icon-svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           Mark for Review
         </button>
+        <button type="button" class="sim-btn-end-block" id="end-block-btn" onclick="submitBlock()">End Block</button>
+        <button type="button" class="sim-btn-nav sim-btn-prev hidden" id="exit-review-btn" onclick="exitSimulator()">Exit Review</button>
       </div>
-      <div style="display: flex; gap: 12px;">
-        <button class="btn btn-secondary" onclick="prevQ()">Previous</button>
-        <button class="btn btn-primary" onclick="nextQ()" id="next-btn">Next Question</button>
-      </div>
-      <div>
-        <button class="btn btn-secondary hidden" id="exit-review-btn" onclick="exitSimulator()">Exit Review</button>
+      <div class="bottom-bar-nav" id="bottom-bar-nav">
+        <button type="button" class="sim-btn-nav sim-btn-prev" onclick="prevQ()">Previous</button>
+        <button type="button" class="sim-btn-nav sim-btn-next" onclick="nextQ()" id="next-btn">Next Question</button>
       </div>
     </footer>
+  </div>
+
+  <div id="sim-dialog-overlay" class="sim-dialog-overlay" role="dialog" aria-modal="true" aria-labelledby="sim-dialog-title" hidden>
+    <div class="sim-dialog-card">
+      <div class="sim-dialog-head">
+        <h3 id="sim-dialog-title">Confirm</h3>
+        <p class="sim-dialog-accent hidden" id="sim-dialog-accent"></p>
+        <p class="sim-dialog-body" id="sim-dialog-body"></p>
+      </div>
+      <div class="sim-dialog-foot">
+        <button type="button" class="sim-dialog-cancel" id="sim-dialog-cancel">Cancel</button>
+        <button type="button" class="sim-dialog-confirm" id="sim-dialog-confirm">OK</button>
+      </div>
+    </div>
   </div>
 
   <!-- BREAK VIEW -->
@@ -483,18 +768,77 @@
       }
     }
 
-    function quitAndSave() {
-      if (confirm("Are you sure you want to quit the exam? Your progress will be saved in this browser's cache, and you can resume later.")) {
-        saveState();
-        window.location.href = 'medical-exam-mock.html';
+    let simDialogOnConfirm = null;
+
+    function showSimDialog(opts) {
+      const overlay = document.getElementById('sim-dialog-overlay');
+      const titleEl = document.getElementById('sim-dialog-title');
+      const accentEl = document.getElementById('sim-dialog-accent');
+      const bodyEl = document.getElementById('sim-dialog-body');
+      const cancelBtn = document.getElementById('sim-dialog-cancel');
+      const confirmBtn = document.getElementById('sim-dialog-confirm');
+
+      titleEl.textContent = opts.title || 'Please confirm';
+      if (opts.accent) {
+        accentEl.textContent = opts.accent;
+        accentEl.classList.remove('hidden');
+      } else {
+        accentEl.classList.add('hidden');
       }
+      bodyEl.textContent = opts.body || '';
+      cancelBtn.textContent = opts.cancelText || 'Cancel';
+      confirmBtn.textContent = opts.confirmText || 'OK';
+      confirmBtn.classList.toggle('danger', opts.danger === true);
+
+      if (opts.alertOnly) {
+        cancelBtn.classList.add('hidden');
+        confirmBtn.style.flex = '1';
+      } else {
+        cancelBtn.classList.remove('hidden');
+        confirmBtn.style.flex = '';
+      }
+
+      simDialogOnConfirm = opts.onConfirm || null;
+      overlay.hidden = false;
+      overlay.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+      confirmBtn.focus();
+    }
+
+    function closeSimDialog() {
+      const overlay = document.getElementById('sim-dialog-overlay');
+      overlay.classList.remove('visible');
+      overlay.hidden = true;
+      document.body.style.overflow = '';
+      simDialogOnConfirm = null;
+    }
+
+    function quitAndSave() {
+      showSimDialog({
+        title: 'Quit and save progress?',
+        body: 'Your answers are saved in this browser. You can resume this mock exam later from the lobby.',
+        cancelText: 'Stay in Exam',
+        confirmText: 'Quit & Save',
+        onConfirm: () => {
+          saveState();
+          window.location.href = 'medical-exam-mock.html';
+        },
+      });
     }
 
     function endExam() {
-      if (confirm("Are you sure you want to end the exam now? All progress will be reset and you will return to the mock exam lobby.")) {
-        localStorage.removeItem(STATE_KEY);
-        window.location.href = 'medical-exam-mock.html';
-      }
+      showSimDialog({
+        title: 'End entire exam?',
+        accent: 'This cannot be undone.',
+        body: 'All progress for this attempt will be cleared and you will return to the mock exam lobby.',
+        cancelText: 'Continue Exam',
+        confirmText: 'End Exam',
+        danger: true,
+        onConfirm: () => {
+          localStorage.removeItem(STATE_KEY);
+          window.location.href = 'medical-exam-mock.html';
+        },
+      });
     }
 
     function shuffle(arr) {
@@ -569,8 +913,13 @@
 
     async function initSimulator() {
       if (EXAM.comingSoon) {
-        alert('This mock exam is coming soon.');
-        window.location.href = 'medical-exam-mock.html';
+        showSimDialog({
+          title: 'Coming soon',
+          body: 'This mock exam is not available yet. Please choose another exam from the lobby.',
+          confirmText: 'Back to Lobby',
+          alertOnly: true,
+          onConfirm: () => { window.location.href = 'medical-exam-mock.html'; },
+        });
         return;
       }
 
@@ -634,16 +983,17 @@
 
       // Block Timer (Only if not in break)
       if (!state.isBreak) {
-        const blockStart = state.blockStartTimes[state.currentBlock] || state.examStartedAt; 
+        const blockStart = state.blockStartTimes[state.currentBlock] || state.examStartedAt;
         const elapsedBlock = now - blockStart;
         const remainingBlock = Math.max(0, BLOCK_TIME - elapsedBlock);
-        
+
         const timerEl = document.getElementById('block-timer');
+        const timerCard = document.getElementById('block-timer-card');
         timerEl.textContent = formatTimeShort(remainingBlock);
-        
-        if (remainingBlock < 300000) timerEl.className = 'timer-pill danger';
-        else if (remainingBlock < 600000) timerEl.className = 'timer-pill warning';
-        else timerEl.className = 'timer-pill';
+
+        timerCard.classList.remove('warning', 'danger');
+        if (remainingBlock < 300000) timerCard.classList.add('danger');
+        else if (remainingBlock < 600000) timerCard.classList.add('warning');
 
         if (remainingBlock <= 0) submitBlock(true);
       }
@@ -666,30 +1016,40 @@
 
     // --- UI RENDER ---
     async function initUI() {
-      const allowFree = EXAM.freeDemo === true;
       const premium = await MediHelp.isPremium();
-      if (!allowFree && !premium) {
+      if (!premium) {
         document.getElementById('paywall-overlay').classList.remove('hidden');
         document.getElementById('sim-ui').classList.add('hidden');
         document.getElementById('paywall-overlay').querySelector('.paywall-p').textContent =
-          'This mock exam requires Medical Exam Mastery access. The first mock in each step is a free demo — or enter your Gumroad license below.';
+          'Full-length USMLE mock exams require Medical Exam Mastery access. Enter your Gumroad license below to start.';
         return;
       }
       document.getElementById('paywall-overlay').classList.add('hidden');
 
       if (!state.questions.length) return;
 
-      // Sync visibility
+      document.body.classList.add('sim-exam-active');
+      const titleEl = document.getElementById('sim-exam-title');
+      if (titleEl) titleEl.textContent = EXAM.title || 'USMLE Mock Exam';
+
+      const endBlockBtn = document.getElementById('end-block-btn');
+      const markBtn = document.getElementById('mark-btn');
+      const bottomNav = document.getElementById('bottom-bar-nav');
+      const skipToast = document.getElementById('skip-toast');
+
       if (state.isReview) {
-        // Handled by finishExam/enterReviewMode transition
-        // But for direct reload:
         document.getElementById('sim-ui').classList.remove('hidden');
         document.getElementById('break-ui').classList.add('hidden');
         document.getElementById('report-ui').classList.remove('visible');
-        document.getElementById('end-block-btn').classList.add('hidden');
+        endBlockBtn.classList.add('hidden');
+        markBtn.classList.add('hidden');
+        bottomNav.classList.add('hidden');
         document.getElementById('exit-review-btn').classList.remove('hidden');
-        document.getElementById('block-timer').textContent = "REVIEW";
-        document.getElementById('global-timer').textContent = "COMPLETE";
+        document.getElementById('quit-exam-btn').classList.add('hidden');
+        document.getElementById('end-exam-btn').classList.add('hidden');
+        document.getElementById('block-timer').textContent = 'REVIEW';
+        document.getElementById('global-timer').textContent = 'DONE';
+        if (skipToast) skipToast.classList.remove('visible');
       } else if (state.isBreak) {
         document.getElementById('sim-ui').classList.add('hidden');
         document.getElementById('break-ui').classList.remove('hidden');
@@ -698,6 +1058,12 @@
         document.getElementById('sim-ui').classList.remove('hidden');
         document.getElementById('break-ui').classList.add('hidden');
         document.getElementById('report-ui').classList.remove('visible');
+        endBlockBtn.classList.remove('hidden');
+        markBtn.classList.remove('hidden');
+        bottomNav.classList.remove('hidden');
+        document.getElementById('exit-review-btn').classList.add('hidden');
+        document.getElementById('quit-exam-btn').classList.remove('hidden');
+        document.getElementById('end-exam-btn').classList.remove('hidden');
       }
 
       const dots = document.getElementById('block-dots');
@@ -809,13 +1175,47 @@
        
        const markBtn = document.getElementById('mark-btn');
        const markSvg = document.getElementById('mark-icon-svg');
-       if (state.marked.has(globalIdx)) {
-         markBtn.style.color = 'var(--warning)';
-         markSvg.setAttribute('fill', 'currentColor');
-       } else {
-         markBtn.style.color = '';
-         markSvg.setAttribute('fill', 'none');
+       if (markBtn) {
+         if (state.marked.has(globalIdx)) {
+           markBtn.classList.add('marked');
+           markSvg.setAttribute('fill', 'currentColor');
+         } else {
+           markBtn.classList.remove('marked');
+           markSvg.setAttribute('fill', 'none');
+         }
        }
+    }
+
+    function getFirstSkippedQInBlock() {
+      const startIdx = state.currentBlock * Q_PER_BLOCK;
+      for (let i = 0; i < Q_PER_BLOCK; i++) {
+        if (state.answers[startIdx + i] === undefined) return i;
+      }
+      return -1;
+    }
+
+    function showSkipToast() {
+      const el = document.getElementById('skip-toast');
+      if (!el) return;
+      el.classList.add('visible');
+      clearTimeout(window._skipToastTimer);
+      window._skipToastTimer = setTimeout(() => el.classList.remove('visible'), 5000);
+    }
+
+    function submitBlockConfirmed(isAuto) {
+      closeSimDialog();
+      document.getElementById('skip-toast')?.classList.remove('visible');
+      state.isBreak = true;
+      state.currentBlock++;
+      state.currentQ = 0;
+
+      if (state.currentBlock >= TOTAL_BLOCKS) {
+        finishExam();
+      } else {
+        document.getElementById('sim-ui').classList.add('hidden');
+        document.getElementById('break-ui').classList.remove('hidden');
+        saveState();
+      }
     }
 
     function selectOption(idx) {
@@ -893,33 +1293,29 @@
     }
 
     function submitBlock(isAuto = false) {
-      if (!isAuto) {
-        // Enforce full completion
-        const startIdx = state.currentBlock * Q_PER_BLOCK;
-        let missing = 0;
-        for (let i = 0; i < Q_PER_BLOCK; i++) {
-          if (state.answers[startIdx + i] === undefined) missing++;
-        }
+      if (state.isReview) return;
 
-        if (missing > 0) {
-          alert(`CRITICAL: You have ${missing} unanswered questions in this block. You MUST attempt all questions before the simulator allows you to end the block.`);
+      if (!isAuto) {
+        const skippedQ = getFirstSkippedQInBlock();
+        if (skippedQ !== -1) {
+          state.currentQ = skippedQ;
+          saveState();
+          showSkipToast();
+          initUI();
           return;
         }
+        showSimDialog({
+          title: 'End this block?',
+          accent: 'You cannot return to these questions.',
+          body: 'Submitting will lock this block and start your break before the next block begins.',
+          cancelText: 'Continue Block',
+          confirmText: 'Submit Block',
+          onConfirm: () => submitBlockConfirmed(false),
+        });
+        return;
+      }
 
-        if (!confirm('Are you sure you want to end this block? You cannot return to these questions later.')) return;
-      }
-      
-      state.isBreak = true;
-      state.currentBlock++;
-      state.currentQ = 0;
-      
-      if (state.currentBlock >= TOTAL_BLOCKS) {
-        finishExam();
-      } else {
-        document.getElementById('sim-ui').classList.add('hidden');
-        document.getElementById('break-ui').classList.remove('hidden');
-        saveState();
-      }
+      submitBlockConfirmed(true);
     }
 
     function startNextBlock() {
@@ -956,15 +1352,12 @@
       document.getElementById('report-kicker').textContent =
         EXAM.step === 1 ? 'Step 1 Readiness Report' : 'Exam Performance Report';
       document.getElementById('report-title').textContent = EXAM.title;
-      let textbookNote = '';
-      if (EXAM_ID === 'step1-mock3') {
-        textbookNote = '<p style="font-size:12px;color:#6b7280;margin:0 0 16px;">Scored against textbook-weighted Step 1 pools (Gray\'s, Langman\'s, Moore, Harper\'s, Robbins, Ganong, Katzung, Goljan, Pathoma, First Aid &amp; related sources).</p>';
-      } else if (EXAM_ID === 'step1-mock4') {
-        textbookNote = '<p style="font-size:12px;color:#6b7280;margin:0 0 16px;">Pass-prep weighting: Pathoma, Goljan, First Aid, UWorld-style, Sketchy Micro/Pharm, Katzung, Robbins, Ganong/BRS Physiology, and high-yield organ systems.</p>';
-      }
+      const focusLine = EXAM.focus
+        ? `<p style="font-size:12px;color:#6b7280;margin:0 0 16px;">${EXAM.focus}</p>`
+        : '';
 
       document.getElementById('report-stats').innerHTML = `
-        ${textbookNote}
+        ${focusLine}
         <div class="report-prob-ring">
           <div>
             <div class="report-prob-value" style="-webkit-text-fill-color:${readiness.statusColor}; color:${readiness.statusColor};">${readiness.passMid}%</div>
@@ -1021,11 +1414,9 @@
       document.getElementById('block-timer').textContent = wrongOnly ? 'WRONG REVIEW' : 'REVIEW';
       document.getElementById('global-timer').textContent = 'COMPLETE';
 
-      document.getElementById('end-block-btn-top').classList.add('hidden');
       document.getElementById('end-exam-btn').classList.add('hidden');
       document.getElementById('quit-exam-btn').classList.add('hidden');
       document.getElementById('exit-review-btn').classList.remove('hidden');
-      document.getElementById('mark-btn').classList.add('hidden');
 
       initUI();
     }
@@ -1077,10 +1468,21 @@
       btn.textContent = 'Restoring...';
       try {
         await MediHelp.License.restore();
-        alert('Access Restored Successfully!');
-        location.reload();
+        showSimDialog({
+          title: 'Access restored',
+          accent: 'Welcome back!',
+          body: 'Your license was restored on this device. Reloading the simulator…',
+          confirmText: 'Continue',
+          alertOnly: true,
+          onConfirm: () => location.reload(),
+        });
       } catch (e) {
-        alert(e.message || 'No saved license found on this device.');
+        showSimDialog({
+          title: 'Could not restore',
+          body: e.message || 'No saved license found on this device.',
+          confirmText: 'OK',
+          alertOnly: true,
+        });
       } finally {
         btn.disabled = false;
         btn.textContent = 'Restore Purchase on this Device';
@@ -1102,6 +1504,21 @@
       if (g) g.textContent = label;
       if (gb) gb.textContent = label;
     })();
+
+    document.getElementById('sim-dialog-confirm')?.addEventListener('click', () => {
+      const fn = simDialogOnConfirm;
+      closeSimDialog();
+      if (fn) fn();
+    });
+    document.getElementById('sim-dialog-cancel')?.addEventListener('click', closeSimDialog);
+    document.getElementById('sim-dialog-overlay')?.addEventListener('click', (e) => {
+      if (e.target.id === 'sim-dialog-overlay') closeSimDialog();
+    });
+    document.addEventListener('keydown', (e) => {
+      const overlay = document.getElementById('sim-dialog-overlay');
+      if (!overlay?.classList.contains('visible')) return;
+      if (e.key === 'Escape') closeSimDialog();
+    });
 
     loadState();
     setInterval(updateTimers, 1000);

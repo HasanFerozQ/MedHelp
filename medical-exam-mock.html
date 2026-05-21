@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
-  <script src="mock-exam-config.js?v=20260521c"></script>
+  <script src="mock-exam-config.js?v=20260521d"></script>
   <style>
     .mock-lobby { padding: 40px 0 80px; }
     .mock-step-nav {
@@ -80,18 +80,6 @@
       color: #a855f7;
       margin-bottom: 8px;
     }
-    .mock-badge-free {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 100px;
-      font-size: 10px;
-      font-weight: 800;
-      background: var(--accent);
-      color: #000;
-      margin-left: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
     .mock-badge-premium {
       display: inline-block;
       padding: 4px 12px;
@@ -102,6 +90,14 @@
       color: #c084fc;
       margin-left: 8px;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .mock-card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
     }
     .mock-stat {
       display: flex;
@@ -135,9 +131,89 @@
       color: var(--text-muted);
       font-weight: 600;
     }
+    .mock-start-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(4, 8, 16, 0.82);
+      backdrop-filter: blur(10px);
+    }
+    .mock-start-overlay.visible {
+      display: flex;
+    }
+    .mock-start-modal {
+      width: 100%;
+      max-width: 440px;
+      background: linear-gradient(160deg, #111827 0%, #1e1b4b 100%);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      border-radius: 20px;
+      padding: 36px 32px 28px;
+      text-align: center;
+      box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5), 0 0 48px rgba(168, 85, 247, 0.12);
+      animation: mockModalIn 0.25s ease;
+    }
+    @keyframes mockModalIn {
+      from { opacity: 0; transform: scale(0.94) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .mock-start-modal h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text-h);
+      line-height: 1.35;
+    }
+    .mock-start-modal .mock-start-luck {
+      margin: 0 0 28px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #a855f7;
+    }
+    .mock-start-modal .mock-start-sub {
+      margin: 0 0 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .mock-start-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .mock-start-actions button {
+      flex: 1;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .mock-start-go {
+      background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+      color: white;
+    }
+    .mock-start-go:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.35);
+    }
+    .mock-start-cancel {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border) !important;
+    }
+    .mock-start-cancel:hover {
+      color: var(--text-h);
+      border-color: #6b7280 !important;
+    }
     @media (max-width: 768px) {
       .mock-step-nav { gap: 6px; }
       .mock-step-tab { padding: 10px 16px; font-size: 13px; flex: 1; text-align: center; }
+      .mock-start-actions { flex-direction: column-reverse; }
     }
   </style>
 </head>
@@ -197,6 +273,18 @@
     <div id="panel-step3" class="mock-panel" role="tabpanel"></div>
   </main>
 
+  <div id="mock-start-overlay" class="mock-start-overlay" role="dialog" aria-modal="true" aria-labelledby="mock-start-title" hidden>
+    <div class="mock-start-modal">
+      <h2 id="mock-start-title">Ready to start USMLE Step 1 Mock Exam?</h2>
+      <p class="mock-start-luck">Best of Luck!</p>
+      <p class="mock-start-sub" id="mock-start-sub">8 hours · 7 blocks · clock runs in real time</p>
+      <div class="mock-start-actions">
+        <button type="button" class="mock-start-cancel" id="mock-start-cancel">Not Yet</button>
+        <button type="button" class="mock-start-go" id="mock-start-go">Start Exam</button>
+      </div>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom" style="text-align: center;">
@@ -207,8 +295,13 @@
 
   <script>
     function renderExamCard(exam) {
-      const freeBadge = exam.freeDemo ? '<span class="mock-badge-free">Free Demo</span>' : '';
-      const premiumBadge = exam.premiumOnly ? '<span class="mock-badge-premium">Premium</span>' : '';
+      const isStep1 = exam.tab === 'step1';
+      const stepBadge = isStep1
+        ? '<span class="mock-badge">STEP 1</span>'
+        : `<span class="mock-badge">${exam.badge || ''}</span>`;
+      const premiumBadge = isStep1 || exam.premiumOnly
+        ? '<span class="mock-badge-premium">Premium</span>'
+        : '';
 
       const btnHtml = exam.comingSoon
         ? '<button class="btn-start-mock coming-soon" disabled>Coming Soon</button>'
@@ -228,7 +321,7 @@
         <div class="mock-card">
           <div class="mock-card-body">
             <div>
-              <span class="mock-badge">${exam.badge}</span>${freeBadge}${premiumBadge}
+              <div class="mock-card-badges">${stepBadge}${premiumBadge}</div>
               <h3>${exam.title}</h3>
             </div>
             <div class="mock-card-stats">
@@ -267,14 +360,74 @@
       });
     });
 
-    function startExam(id) {
+    let pendingExamId = null;
+
+    function getStartModalCopy(exam) {
+      if (exam.tab === 'step1') {
+        return {
+          title: 'Ready to start USMLE Step 1 Mock Exam?',
+          luck: 'Best of Luck!',
+        };
+      }
+      if (exam.tab === 'step2') {
+        return {
+          title: 'Ready to start USMLE Step 2 CK Mock Exam?',
+          luck: 'Best of Luck!',
+        };
+      }
+      return {
+        title: 'Ready to start USMLE Step 3 Mock Exam?',
+        luck: 'Best of Luck!',
+      };
+    }
+
+    function openStartModal(id) {
       const exam = MockExamConfig.getExam(id);
       if (exam.comingSoon) return;
-      const msg = exam.confirmMessage || 'Ready to start this mock exam? The clock runs in real time once you begin.';
-      if (confirm(msg)) {
-        window.location.href = `medical-exam-simulator.html?exam_id=${encodeURIComponent(id)}`;
-      }
+      pendingExamId = id;
+      const copy = getStartModalCopy(exam);
+      document.getElementById('mock-start-title').textContent = copy.title;
+      document.querySelector('.mock-start-luck').textContent = copy.luck;
+      const sub = exam.totalHours && exam.questions
+        ? `${exam.totalHours} hours · ${exam.questions} MCQs · 7 blocks · clock runs in real time`
+        : 'Clock runs in real time once you begin';
+      document.getElementById('mock-start-sub').textContent = sub;
+      const overlay = document.getElementById('mock-start-overlay');
+      overlay.hidden = false;
+      overlay.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('mock-start-go').focus();
     }
+
+    function closeStartModal() {
+      pendingExamId = null;
+      const overlay = document.getElementById('mock-start-overlay');
+      overlay.classList.remove('visible');
+      overlay.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    function confirmStartExam() {
+      if (!pendingExamId) return;
+      const id = pendingExamId;
+      closeStartModal();
+      window.location.href = `medical-exam-simulator.html?exam_id=${encodeURIComponent(id)}`;
+    }
+
+    function startExam(id) {
+      openStartModal(id);
+    }
+
+    document.getElementById('mock-start-go').addEventListener('click', confirmStartExam);
+    document.getElementById('mock-start-cancel').addEventListener('click', closeStartModal);
+    document.getElementById('mock-start-overlay').addEventListener('click', (e) => {
+      if (e.target.id === 'mock-start-overlay') closeStartModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      const overlay = document.getElementById('mock-start-overlay');
+      if (!overlay.classList.contains('visible')) return;
+      if (e.key === 'Escape') closeStartModal();
+    });
 
     renderPanels();
     if (window.MediHelp) MediHelp.initTheme();

@@ -14,7 +14,14 @@
   <script src="core.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-    body { font-family: 'Inter', sans-serif; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('/vision/Trivia_BG.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
     .hidden { display: none !important; }
     #join-btn:disabled { opacity: 0.45; cursor: not-allowed; }
     .feedback-fab { width: 56px !important; height: 56px !important; max-width: 56px; max-height: 56px; }
