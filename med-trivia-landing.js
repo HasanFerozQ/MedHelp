@@ -56,7 +56,7 @@
       setStatus("off", "Closed", "Today’s set has ended. Check back tomorrow.");
       joinBtnLabelEl.textContent = "Set closed";
     } else if (!hasSet || C.ctx.state === "no_content") {
-      setStatus("off", "Unavailable", "Publish a trivia set in Supabase (scheduled or live) to open the lobby.");
+      setStatus("off", "Unavailable", "Run seed_medtrivia_first_set.sql then reschedule_trivia_to_today.sql in Supabase.");
       joinBtnLabelEl.textContent = "Not available";
     } else {
       setStatus("live", "Live now", "Enter the quiz room — you can replay as many times as you need while testing.");
