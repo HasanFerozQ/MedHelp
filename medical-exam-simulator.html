@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
+  <script src="mock-exam-config.js"></script>
   <script src="https://gumroad.com/js/gumroad.js"></script>
   <style>
     body { background: #0a0f18; }
@@ -125,17 +126,130 @@
 
     .report-view {
       display: none;
-      text-align: center;
-      padding: 60px 20px;
+      position: fixed;
+      inset: 0;
+      z-index: 8000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(4, 8, 16, 0.88);
+      backdrop-filter: blur(16px);
     }
-    .report-view.visible { display: block !important; }
+    .report-view.visible {
+      display: flex !important;
+    }
     .report-card {
-      background: #111827;
+      background: linear-gradient(145deg, #0f172a 0%, #111827 45%, #1e1b4b 100%);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      padding: 0;
+      border-radius: 24px;
+      max-width: 560px;
+      width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55), 0 0 60px rgba(168, 85, 247, 0.15);
+      text-align: left;
+    }
+    .report-banner {
+      padding: 32px 36px 28px;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(16, 185, 129, 0.12) 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .report-banner h2 {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #a855f7;
+      margin: 0 0 8px;
+    }
+    .report-banner .report-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: white;
+      margin: 0 0 4px;
+    }
+    .report-body { padding: 28px 36px 36px; }
+    .report-prob-ring {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .report-prob-value {
+      font-size: 52px;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #10b981, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .report-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 800;
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      color: #fbbf24;
+      margin-bottom: 8px;
+    }
+    .report-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .report-stat-box {
+      background: rgba(31, 41, 55, 0.8);
+      padding: 16px;
+      border-radius: 12px;
       border: 1px solid #374151;
-      padding: 40px;
-      border-radius: 20px;
-      max-width: 600px;
-      margin: 20px auto;
+    }
+    .report-performance {
+      font-size: 14px;
+      color: #9ca3af;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      padding: 14px 16px;
+      background: rgba(31, 41, 55, 0.5);
+      border-radius: 10px;
+      border-left: 3px solid #a855f7;
+    }
+    .report-actions { display: flex; flex-direction: column; gap: 10px; }
+    .report-actions .btn-review-wrong {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      border: none;
+      color: white;
+      font-weight: 800;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .report-actions .btn-review-all {
+      background: #a855f7;
+      border: none;
+      color: white;
+      font-weight: 800;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .report-actions .btn-exit-dash {
+      background: transparent;
+      border: 1px solid #4b5563;
+      color: #9ca3af;
+      font-weight: 700;
+      padding: 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
     }
 
     /* ESSENTIAL UTILITY */
@@ -295,51 +409,65 @@
     </div>
   </div>
 
-  <!-- REPORT VIEW -->
-  <div id="report-ui" class="report-view">
-    <h1 style="font-size: 48px; color: #10b981;">Exam Complete</h1>
+  <!-- REPORT VIEW (Step 1 readiness banner) -->
+  <div id="report-ui" class="report-view" role="dialog" aria-labelledby="report-title">
     <div class="report-card">
-      <div id="report-stats">
-        <!-- Stats injected here -->
+      <div class="report-banner">
+        <h2 id="report-kicker">Step 1 Readiness Report</h2>
+        <p class="report-title" id="report-title">Exam Complete</p>
+        <p style="margin:0; font-size:14px; color:#9ca3af; font-weight:600;">Full-length mock performance summary</p>
       </div>
-      <button class="btn btn-primary" onclick="exitSimulator()" style="margin-top: 40px; width: 100%; height: auto; padding: 16px;">Return to Dashboard</button>
+      <div class="report-body">
+        <div id="report-stats"></div>
+        <div class="report-actions" id="report-actions"></div>
+      </div>
     </div>
   </div>
 
   <script>
-    // --- ENGINE STATE ---
-    const TOTAL_BLOCKS = 7;
-    const Q_PER_BLOCK = 40;
-    const TOTAL_TIME = 8 * 60 * 60 * 1000; // 8 hours in ms
-    const BLOCK_TIME = 60 * 60 * 1000; // 60 mins in ms
-    
+    const urlParams = new URLSearchParams(window.location.search);
+    const EXAM_ID = urlParams.get('exam_id') || 'step1-mock1';
+    const EXAM = MockExamConfig.getExam(EXAM_ID);
+    const TOTAL_BLOCKS = MockExamConfig.TOTAL_BLOCKS;
+    const Q_PER_BLOCK = MockExamConfig.Q_PER_BLOCK;
+    const TOTAL_QUESTIONS = TOTAL_BLOCKS * Q_PER_BLOCK;
+    const TOTAL_TIME = (EXAM.totalHours || 8) * 60 * 60 * 1000;
+    const BLOCK_TIME = 60 * 60 * 1000;
+    const STATE_KEY = MockExamConfig.getStateKey(EXAM_ID);
+
     let state = {
+      examId: EXAM_ID,
       examStartedAt: null,
       currentBlock: 0,
       currentQ: 0,
-      currentQuestion: 0,
-      questions: [], 
-      answers: {}, 
+      questions: [],
+      answers: {},
       marked: new Set(),
       blockStartTimes: {},
       isBreak: false,
       isReview: false,
+      reviewWrongOnly: false,
+      wrongIndices: [],
       isReportShow: false
     };
 
-    // --- STATE MANAGEMENT ---
     function saveState() {
       const toSave = { ...state, marked: Array.from(state.marked) };
-      localStorage.setItem('mh_sim_state', JSON.stringify(toSave));
+      localStorage.setItem(STATE_KEY, JSON.stringify(toSave));
     }
 
     function loadState() {
-      const saved = localStorage.getItem('mh_sim_state');
+      const saved = localStorage.getItem(STATE_KEY);
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
+          if (parsed.examId && parsed.examId !== EXAM_ID) {
+            initSimulator();
+            return;
+          }
           state = { ...parsed, marked: new Set(parsed.marked || []) };
-          
+          state.wrongIndices = parsed.wrongIndices || [];
+
           if (!state.questions || state.questions.length === 0) {
             console.warn("State exists but questions are empty. Re-fetching...");
             initSimulator();
@@ -358,59 +486,123 @@
     function quitAndSave() {
       if (confirm("Are you sure you want to quit the exam? Your progress will be saved in this browser's cache, and you can resume later.")) {
         saveState();
-        window.location.href = 'medical-exam-usmle.html';
+        window.location.href = 'medical-exam-mock.html';
       }
     }
 
     function endExam() {
-      if (confirm("Are you sure you want to end the exam now? All progress will be reset and you will return to the USMLE dashboard.")) {
-        localStorage.removeItem('mh_sim_state');
-        window.location.href = 'medical-exam-usmle.html';
+      if (confirm("Are you sure you want to end the exam now? All progress will be reset and you will return to the mock exam lobby.")) {
+        localStorage.removeItem(STATE_KEY);
+        window.location.href = 'medical-exam-mock.html';
       }
     }
 
-    // --- SIMULATOR ENGINE ---
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function buildBlocksFromPool(pool) {
+      const selected = shuffle(pool).slice(0, TOTAL_QUESTIONS);
+      const blocks = [];
+      for (let i = 0; i < TOTAL_BLOCKS; i++) {
+        blocks.push(selected.slice(i * Q_PER_BLOCK, (i + 1) * Q_PER_BLOCK));
+      }
+      return blocks;
+    }
+
+    async function fetchMcqsForStep(step) {
+      const { data, error } = await window.dbClient
+        .from('mcqs')
+        .select('*, topics!inner(*)')
+        .eq('topics.usmle_step', step)
+        .neq('topics.slug', 'usmle-1-mock-pool-hidden');
+      if (error || !data || data.length < TOTAL_QUESTIONS) {
+        throw new Error('Could not load enough questions for this exam.');
+      }
+      return data;
+    }
+
+    async function loadStratifiedStep1Pool() {
+      const pool = [];
+      const usedIds = new Set();
+
+      for (const bucket of MockExamConfig.step1Mock2Buckets) {
+        const { data: topics } = await window.dbClient
+          .from('topics')
+          .select('id')
+          .eq('usmle_step', 1)
+          .in('slug', bucket.slugs);
+        const topicIds = (topics || []).map((t) => t.id);
+        if (!topicIds.length) continue;
+
+        const { data: mcqs } = await window.dbClient
+          .from('mcqs')
+          .select('*')
+          .in('topic_id', topicIds);
+        const picked = shuffle(mcqs || [])
+          .filter((m) => !usedIds.has(m.id))
+          .slice(0, bucket.count);
+        picked.forEach((m) => usedIds.add(m.id));
+        pool.push(...picked);
+      }
+
+      if (pool.length < TOTAL_QUESTIONS) {
+        const all = await fetchMcqsForStep(1);
+        const filler = shuffle(all.filter((m) => !usedIds.has(m.id))).slice(0, TOTAL_QUESTIONS - pool.length);
+        pool.push(...filler);
+      }
+
+      return buildBlocksFromPool(pool);
+    }
+
     async function initSimulator() {
+      if (EXAM.comingSoon) {
+        alert('This mock exam is coming soon.');
+        window.location.href = 'medical-exam-mock.html';
+        return;
+      }
+
       const loader = document.getElementById('loading-msg');
       loader.innerHTML = `
         <div style="text-align: center; color: var(--accent);">
-          <div style="font-size: 24px; margin-bottom: 10px;">Initializing Board Simulation...</div>
-          <div style="font-size: 16px; opacity: 0.8;">Fetching 280 Randomized Questions from Supabase...</div>
+          <div style="font-size: 24px; margin-bottom: 10px;">Initializing ${EXAM.title}...</div>
+          <div style="font-size: 16px; opacity: 0.8;">Loading ${TOTAL_QUESTIONS} questions · ${TOTAL_BLOCKS} blocks · ${EXAM.totalHours || 8} hours</div>
         </div>
       `;
 
       try {
-        const { data, error } = await window.dbClient
-          .from('mcqs')
-          .select('*, topics!inner(*)')
-          .eq('topics.usmle_step', 1);
-
-        if (error || !data || data.length < 10) { 
-          throw new Error("Could not load question pool. Is the database populated?");
+        let blocks;
+        if (EXAM.pool === 'step1-stratified') {
+          blocks = await loadStratifiedStep1Pool();
+        } else {
+          const step = EXAM.step || 1;
+          const data = await fetchMcqsForStep(step);
+          blocks = buildBlocksFromPool(data);
         }
 
-        const shuffled = data.sort(() => Math.random() - 0.5);
-        
-        state.questions = [];
-        const qCount = Math.floor(shuffled.length / TOTAL_BLOCKS);
-        for (let i = 0; i < TOTAL_BLOCKS; i++) {
-          state.questions.push(shuffled.slice(i * qCount, (i + 1) * qCount));
-        }
-
+        state.questions = blocks;
+        state.examId = EXAM_ID;
         state.examStartedAt = Date.now();
         state.blockStartTimes[0] = Date.now();
-        
+        state.answers = {};
+        state.marked = new Set();
+        state.currentBlock = 0;
+        state.currentQ = 0;
+        state.isBreak = false;
+        state.isReview = false;
+
+        document.title = `${EXAM.title} | MediHelp`;
         saveState();
         initUI();
       } catch (err) {
         console.error(err);
-        initSimulator();
+        loader.innerHTML = `<p style="color:#ef4444; text-align:center;">${err.message || 'Failed to load exam.'} <a href="medical-exam-mock.html" style="color:#a855f7;">Return to lobby</a></p>`;
       }
-    }
-
-    function saveState() {
-      const toSave = { ...state, marked: Array.from(state.marked) };
-      localStorage.setItem('mh_sim_state', JSON.stringify(toSave));
     }
 
     // --- TIMERS ---
@@ -466,15 +658,16 @@
 
     // --- UI RENDER ---
     async function initUI() {
-      // PAYWALL CHECK
+      const allowFree = EXAM.freeDemo === true;
       const premium = await MediHelp.isPremium();
-      if (!premium) {
+      if (!allowFree && !premium) {
         document.getElementById('paywall-overlay').classList.remove('hidden');
         document.getElementById('sim-ui').classList.add('hidden');
+        document.getElementById('paywall-overlay').querySelector('.paywall-p').textContent =
+          'This mock exam requires Medical Exam Mastery access. The first mock in each step is a free demo — or enter your Gumroad license below.';
         return;
-      } else {
-        document.getElementById('paywall-overlay').classList.add('hidden');
       }
+      document.getElementById('paywall-overlay').classList.add('hidden');
 
       if (!state.questions.length) return;
 
@@ -509,11 +702,23 @@
 
       const qNav = document.getElementById('q-nav');
       qNav.innerHTML = '';
-      for (let i = 0; i < Q_PER_BLOCK; i++) {
+      const navIndices = getNavIndicesForBlock(state.currentBlock);
+      if (state.isReview && state.reviewWrongOnly && navIndices.length === 0) {
+        const nextBlock = findNextBlockWithWrong(state.currentBlock + 1);
+        if (nextBlock !== -1) {
+          state.currentBlock = nextBlock;
+          state.currentQ = getNavIndicesForBlock(nextBlock)[0] ?? 0;
+          saveState();
+          initUI();
+          return;
+        }
+      }
+
+      navIndices.forEach((qIdx, navPos) => {
         const btn = document.createElement('div');
-        const globalIdx = state.currentBlock * Q_PER_BLOCK + i;
-        btn.className = `q-btn ${i === state.currentQ ? 'current' : ''}`;
-        
+        const globalIdx = state.currentBlock * Q_PER_BLOCK + qIdx;
+        btn.className = `q-btn ${qIdx === state.currentQ ? 'current' : ''}`;
+
         if (state.answers[globalIdx] !== undefined) {
           btn.classList.add('answered');
         } else if (!state.isReview) {
@@ -521,11 +726,14 @@
         }
 
         if (state.marked.has(globalIdx)) btn.classList.add('marked');
-        btn.textContent = i + 1;
-        btn.onclick = () => jumpToQ(i);
+        if (state.isReview && state.wrongIndices.includes(globalIdx)) {
+          btn.style.outline = '2px solid #ef4444';
+        }
+        btn.textContent = navPos + 1;
+        btn.onclick = () => jumpToQ(qIdx);
         qNav.appendChild(btn);
-      }
-      
+      });
+
       const tracker = document.getElementById('block-tracker-text');
       if (tracker) tracker.textContent = state.isReview ? "EXAM REVIEW" : `BLOCK ${state.currentBlock + 1} OF ${TOTAL_BLOCKS}`;
       
@@ -534,7 +742,12 @@
 
     function renderQuestion() {
        const globalIdx = state.currentBlock * Q_PER_BLOCK + state.currentQ;
-       const q = state.questions[state.currentBlock][state.currentQ];
+       const blockQs = state.questions[state.currentBlock];
+       const q = blockQs && blockQs[state.currentQ];
+       if (!q) {
+         document.getElementById('loading-msg').textContent = 'Question not available.';
+         return;
+       }
        const qTextEl = document.getElementById('q-text');
        const optionsEl = document.getElementById('options-list');
        const mcqArea = document.getElementById('mcq-area');
@@ -613,6 +826,38 @@
       initUI();
     }
 
+    function getNavIndicesForBlock(blockNum) {
+      if (!state.isReview || !state.reviewWrongOnly) {
+        return Array.from({ length: Q_PER_BLOCK }, (_, i) => i);
+      }
+      return state.wrongIndices
+        .filter((g) => Math.floor(g / Q_PER_BLOCK) === blockNum)
+        .map((g) => g % Q_PER_BLOCK)
+        .sort((a, b) => a - b);
+    }
+
+    function findNextBlockWithWrong(fromBlock) {
+      for (let b = fromBlock; b < TOTAL_BLOCKS; b++) {
+        if (getNavIndicesForBlock(b).length > 0) return b;
+      }
+      return -1;
+    }
+
+    function getWrongGlobalIndices() {
+      const wrong = [];
+      let globalIdx = 0;
+      for (let b = 0; b < TOTAL_BLOCKS; b++) {
+        for (let q = 0; q < Q_PER_BLOCK; q++) {
+          const question = state.questions[b][q];
+          if (state.answers[globalIdx] !== question.correct_index) {
+            wrong.push(globalIdx);
+          }
+          globalIdx++;
+        }
+      }
+      return wrong;
+    }
+
     function jumpToQ(i) {
       state.currentQ = i;
       saveState();
@@ -620,16 +865,20 @@
     }
 
     function nextQ() {
-      if (state.currentQ < Q_PER_BLOCK - 1) {
-        state.currentQ++;
+      const nav = getNavIndicesForBlock(state.currentBlock);
+      const pos = nav.indexOf(state.currentQ);
+      if (pos >= 0 && pos < nav.length - 1) {
+        state.currentQ = nav[pos + 1];
         saveState();
         initUI();
       }
     }
 
     function prevQ() {
-      if (state.currentQ > 0) {
-        state.currentQ--;
+      const nav = getNavIndicesForBlock(state.currentBlock);
+      const pos = nav.indexOf(state.currentQ);
+      if (pos > 0) {
+        state.currentQ = nav[pos - 1];
         saveState();
         initUI();
       }
@@ -675,64 +924,94 @@
     }
 
     function finishExam() {
-      state.isReview = true; // Flag for later review
+      state.isReview = false;
+      state.wrongIndices = getWrongGlobalIndices();
       document.getElementById('sim-ui').classList.add('hidden');
       document.getElementById('break-ui').classList.add('hidden');
       document.getElementById('report-ui').classList.add('visible');
-      
-      // Calculate Score
+
       let correct = 0;
       let globalIdx = 0;
       for (let b = 0; b < TOTAL_BLOCKS; b++) {
         for (let q = 0; q < Q_PER_BLOCK; q++) {
           const question = state.questions[b][q];
-          if (state.answers[globalIdx] === question.correct_index) {
-            correct++;
-          }
+          if (state.answers[globalIdx] === question.correct_index) correct++;
           globalIdx++;
         }
       }
 
-      const totalAnswered = Object.keys(state.answers).length;
-      const totalQ = TOTAL_BLOCKS * Q_PER_BLOCK;
+      const totalQ = TOTAL_QUESTIONS;
       const scorePct = Math.round((correct / totalQ) * 100);
-      
+      const wrongCount = state.wrongIndices.length;
+      const readiness = MockExamConfig.getStep1Readiness(scorePct);
+
+      document.getElementById('report-kicker').textContent =
+        EXAM.step === 1 ? 'Step 1 Readiness Report' : 'Exam Performance Report';
+      document.getElementById('report-title').textContent = EXAM.title;
+
       document.getElementById('report-stats').innerHTML = `
-        <div style="font-size: 64px; font-weight: 900; color: #10b981; margin-bottom: 10px;">${scorePct}%</div>
-        <div style="color: var(--text-muted); margin-bottom: 40px; font-weight:700;">PROVISIONAL PERFORMANCE REPORT</div>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom:30px;">
-          <div style="background: #1f2937; padding: 20px; border-radius: 12px; border:1px solid #374151;">
-             <div style="font-size: 24px; font-weight: 900;">${correct} / ${totalQ}</div>
-             <div style="font-size: 11px; color: #9ca3af; text-transform: uppercase; font-weight:800;">Correct Answers</div>
+        <div class="report-prob-ring">
+          <div>
+            <div class="report-prob-value" style="-webkit-text-fill-color:${readiness.statusColor}; color:${readiness.statusColor};">${readiness.passMid}%</div>
+            <div style="font-size:12px; color:#6b7280; font-weight:700;">ESTIMATED PASS PROBABILITY</div>
+            <div style="font-size:11px; color:#9ca3af; margin-top:4px;">Range: ${readiness.passRange}</div>
           </div>
-          <div style="background: #1f2937; padding: 20px; border-radius: 12px; border:1px solid #374151;">
-             <div style="font-size: 24px; font-weight: 900;">${totalAnswered}</div>
-             <div style="font-size: 11px; color: #9ca3af; text-transform: uppercase; font-weight:800;">Questions Attempted</div>
+          <div>
+            <div class="report-status-pill" style="border-color:${readiness.statusColor}55; color:${readiness.statusColor};">
+              ${readiness.statusEmoji} ${readiness.status}
+            </div>
+            <div style="font-size:36px; font-weight:900; color:white;">${scorePct}%</div>
+            <div style="font-size:11px; color:#9ca3af; font-weight:800; text-transform:uppercase;">Raw Score</div>
           </div>
         </div>
-
-        <button class="btn btn-primary" onclick="enterReviewMode()" style="background:#a855f7; width:100%; margin-bottom:12px;">Review All Questions</button>
+        <div class="report-stat-grid">
+          <div class="report-stat-box">
+            <div style="font-size:22px; font-weight:900; color:white;">${correct} / ${totalQ}</div>
+            <div style="font-size:11px; color:#9ca3af; text-transform:uppercase; font-weight:800;">Correct</div>
+          </div>
+          <div class="report-stat-box">
+            <div style="font-size:22px; font-weight:900; color:#ef4444;">${wrongCount}</div>
+            <div style="font-size:11px; color:#9ca3af; text-transform:uppercase; font-weight:800;">Incorrect</div>
+          </div>
+        </div>
+        <p class="report-performance"><strong>Performance level:</strong> ${readiness.performanceLevel}</p>
       `;
-      
-      // We keep state for review, but will clear on final exit
+
+      const wrongBtn = wrongCount > 0
+        ? `<button type="button" class="btn-review-wrong" onclick="enterReviewMode(true)">Review ${wrongCount} Incorrect Questions</button>`
+        : '';
+      document.getElementById('report-actions').innerHTML = `
+        ${wrongBtn}
+        <button type="button" class="btn-review-all" onclick="enterReviewMode(false)">Review All Questions & Answers</button>
+        <button type="button" class="btn-exit-dash" onclick="exitSimulator()">Return to Mock Exams</button>
+      `;
+
+      saveState();
     }
 
-    function enterReviewMode() {
-      state.currentBlock = 0;
-      state.currentQ = 0;
+    function enterReviewMode(wrongOnly = false) {
+      state.reviewWrongOnly = wrongOnly;
+      if (wrongOnly && state.wrongIndices.length) {
+        const first = state.wrongIndices[0];
+        state.currentBlock = Math.floor(first / Q_PER_BLOCK);
+        state.currentQ = first % Q_PER_BLOCK;
+      } else {
+        state.currentBlock = 0;
+        state.currentQ = 0;
+      }
       state.isReview = true;
       state.isBreak = false;
       document.getElementById('report-ui').classList.remove('visible');
       document.getElementById('sim-ui').classList.remove('hidden');
-      document.getElementById('block-timer').textContent = "REVIEW";
-      document.getElementById('global-timer').textContent = "COMPLETE";
-      
-      // Toggle buttons for review
+      document.getElementById('block-timer').textContent = wrongOnly ? 'WRONG REVIEW' : 'REVIEW';
+      document.getElementById('global-timer').textContent = 'COMPLETE';
+
       document.getElementById('end-block-btn-top').classList.add('hidden');
+      document.getElementById('end-exam-btn').classList.add('hidden');
       document.getElementById('quit-exam-btn').classList.add('hidden');
       document.getElementById('exit-review-btn').classList.remove('hidden');
-      
+      document.getElementById('mark-btn').classList.add('hidden');
+
       initUI();
     }
 
@@ -794,16 +1073,24 @@
     }
 
     function exitSimulator() {
-      localStorage.removeItem('mh_sim_state');
-      window.location.href = 'medical-exam-usmle.html';
+      localStorage.removeItem(STATE_KEY);
+      window.location.href = 'medical-exam-mock.html';
     }
 
 
     // --- INITIALIZE ---
+    (function setExamClockLabel() {
+      const h = EXAM.totalHours || 8;
+      const label = `${String(h).padStart(2, '0')}:00:00`;
+      const g = document.getElementById('global-timer');
+      const gb = document.getElementById('global-timer-break');
+      if (g) g.textContent = label;
+      if (gb) gb.textContent = label;
+    })();
+
     loadState();
     setInterval(updateTimers, 1000);
 
-    // Theme toggle
     if (window.MediHelp) MediHelp.initTheme();
   </script>
 </body>

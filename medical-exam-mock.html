@@ -7,14 +7,43 @@
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
+  <script src="mock-exam-config.js"></script>
   <style>
-    .mock-lobby { padding: 40px 0; }
+    .mock-lobby { padding: 40px 0 80px; }
+    .mock-step-nav {
+      display: flex;
+      gap: 10px;
+      margin: 32px 0 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .mock-step-tab {
+      padding: 12px 28px;
+      color: var(--text-muted);
+      font-weight: 800;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+    }
+    .mock-step-tab:hover { color: var(--text-h); background: var(--bg-card); }
+    .mock-step-tab.active {
+      color: white;
+      background: #a855f7;
+      box-shadow: 0 4px 15px rgba(168,85,247,0.3);
+    }
+    .mock-panel { display: none; }
+    .mock-panel.active { display: block; }
     .mock-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 24px;
-      margin-top: 40px;
+      margin-top: 28px;
     }
     .mock-card {
       background: var(--bg-card);
@@ -24,11 +53,10 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
-    .mock-card:hover {
-      border-color: #a855f7;
-      transform: translateY(-4px);
-    }
+    .mock-card:hover { border-color: #a855f7; transform: translateY(-4px); }
     .mock-card h3 { font-size: 20px; font-weight: 900; margin-bottom: 12px; color: var(--text-h); }
     .mock-badge {
       display: inline-block;
@@ -38,7 +66,30 @@
       font-weight: 800;
       background: rgba(168,85,247,0.1);
       color: #a855f7;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
+    }
+    .mock-badge-free {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 800;
+      background: var(--accent);
+      color: #000;
+      margin-left: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .mock-badge-premium {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 800;
+      background: rgba(168,85,247,0.2);
+      color: #c084fc;
+      margin-left: 8px;
+      text-transform: uppercase;
     }
     .mock-stat {
       display: flex;
@@ -59,7 +110,23 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
-    .btn-start-mock:hover { background: #7e22ce; }
+    .btn-start-mock:hover:not(:disabled) { background: #7e22ce; }
+    .btn-start-mock:disabled,
+    .btn-start-mock.coming-soon {
+      background: var(--border);
+      cursor: not-allowed;
+      color: var(--text-muted);
+    }
+    .mock-tab-empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    @media (max-width: 768px) {
+      .mock-step-nav { gap: 6px; }
+      .mock-step-tab { padding: 10px 16px; font-size: 13px; flex: 1; text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -103,51 +170,19 @@
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 40px;">
       <a href="medical-exam-usmle.html" style="color: var(--text-muted); text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="transform: rotate(180deg);"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg> Back to Dash</a>
     </div>
-    
+
     <h1 class="hero-h1" style="text-align: left;">Full-Length <span style="color: #a855f7;">Mock Exams</span></h1>
     <p class="hero-sub" style="margin: 0; text-align: left;">Standardized simulations replicating the real board exam environment.</p>
 
-    <div class="mock-grid">
-      <!-- Mock Exam Card 1 -->
-      <div class="mock-card">
-        <div class="mock-badge">STEP 1 - MOST POPULAR</div>
-        <h3>USMLE Step 1 Mock #1</h3>
-        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Complete 280-question simulation across 7 core medical blocks.</p>
-        
-        <div class="mock-stat">
-          <span>Questions</span>
-          <span style="color: var(--text-h); font-weight: 700;">280 MCQs</span>
-        </div>
-        <div class="mock-stat">
-          <span>Total Time</span>
-          <span style="color: var(--text-h); font-weight: 700;">8 Hours</span>
-        </div>
-        <div class="mock-stat">
-          <span>Format</span>
-          <span style="color: var(--text-h); font-weight: 700;">7 Blocks / 60m ea.</span>
-        </div>
-
-        <button class="btn-start-mock" onclick="startExam('step1-mock1')">Start Simulation</button>
-      </div>
-
-       <!-- Mock Exam Card 2 -->
-       <div class="mock-card">
-        <div class="mock-badge">STEP 2 CK</div>
-        <h3>USMLE Step 2 Mock #1</h3>
-        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Clinical knowledge assessment focusing on diagnosis and management.</p>
-        
-        <div class="mock-stat">
-          <span>Questions</span>
-          <span style="color: var(--text-h); font-weight: 700;">318 MCQs</span>
-        </div>
-        <div class="mock-stat">
-          <span>Total Time</span>
-          <span style="color: var(--text-h); font-weight: 700;">9 Hours</span>
-        </div>
-
-        <button class="btn-start-mock" style="background: var(--border); cursor: not-allowed; color: var(--text-muted);">Coming Soon</button>
-      </div>
+    <div class="mock-step-nav" id="mock-step-nav" role="tablist">
+      <button type="button" class="mock-step-tab active" data-tab="step1" role="tab" aria-selected="true">USMLE Step 1</button>
+      <button type="button" class="mock-step-tab" data-tab="step2" role="tab" aria-selected="false">USMLE Step 2 CK</button>
+      <button type="button" class="mock-step-tab" data-tab="step3" role="tab" aria-selected="false">USMLE Step 3</button>
     </div>
+
+    <div id="panel-step1" class="mock-panel active" role="tabpanel"></div>
+    <div id="panel-step2" class="mock-panel" role="tabpanel"></div>
+    <div id="panel-step3" class="mock-panel" role="tabpanel"></div>
   </main>
 
   <footer class="site-footer">
@@ -159,10 +194,84 @@
   </footer>
 
   <script>
-    function startExam(id) {
-      if (confirm('Are you ready to start the 8-hour simulation? The clock will run in real-time once you begin.')) {
-        window.location.href = `medical-exam-simulator.html?exam_id=${id}`;
+    function renderExamCard(exam) {
+      const freeBadge = exam.freeDemo ? '<span class="mock-badge-free">Free Demo</span>' : '';
+      const premiumBadge = exam.premiumOnly ? '<span class="mock-badge-premium">Premium</span>' : '';
+
+      let btnHtml;
+      if (exam.comingSoon) {
+        btnHtml = '<button class="btn-start-mock coming-soon" disabled>Coming Soon</button>';
+      } else if (exam.id === 'step1-mock1') {
+        btnHtml = `<button class="btn-start-mock" onclick="startExam('${exam.id}')">Start Exam</button>`;
+      } else {
+        btnHtml = `<button class="btn-start-mock" onclick="startExam('${exam.id}')">Start Exam</button>`;
       }
+
+      const qLine = exam.questions
+        ? `<div class="mock-stat"><span>Questions</span><span style="color: var(--text-h); font-weight: 700;">${exam.questions} MCQs</span></div>`
+        : '';
+      const timeLine = exam.totalHours
+        ? `<div class="mock-stat"><span>Total Time</span><span style="color: var(--text-h); font-weight: 700;">${exam.totalHours} Hours</span></div>`
+        : '';
+      const formatLine = exam.format
+        ? `<div class="mock-stat"><span>Format</span><span style="color: var(--text-h); font-weight: 700;">${exam.format}</span></div>`
+        : '';
+
+      return `
+        <div class="mock-card">
+          <div>
+            <span class="mock-badge">${exam.badge}</span>${freeBadge}${premiumBadge}
+            <h3>${exam.title}</h3>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">${exam.description}</p>
+            ${qLine}
+            ${timeLine}
+            ${formatLine}
+          </div>
+          ${btnHtml}
+        </div>
+      `;
+    }
+
+    function renderPanels() {
+      ['step1', 'step2', 'step3'].forEach((tab) => {
+        const panel = document.getElementById(`panel-${tab}`);
+        const exams = MockExamConfig.getExamsForTab(tab);
+        if (!exams.length) {
+          panel.innerHTML = '<p class="mock-tab-empty">Full-length mocks for this step are coming soon.</p>';
+          return;
+        }
+        panel.innerHTML = `<div class="mock-grid">${exams.map((e) => renderExamCard(e)).join('')}</div>`;
+      });
+    }
+
+    document.querySelectorAll('.mock-step-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.mock-step-tab').forEach((t) => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.mock-panel').forEach((p) => p.classList.remove('active'));
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        document.getElementById(`panel-${tab.dataset.tab}`).classList.add('active');
+      });
+    });
+
+    function startExam(id) {
+      const exam = MockExamConfig.getExam(id);
+      if (exam.comingSoon) return;
+      const msg = exam.confirmMessage || 'Ready to start this mock exam? The clock runs in real time once you begin.';
+      if (confirm(msg)) {
+        window.location.href = `medical-exam-simulator.html?exam_id=${encodeURIComponent(id)}`;
+      }
+    }
+
+    renderPanels();
+    if (window.MediHelp) MediHelp.initTheme();
+
+    const hashTab = new URLSearchParams(window.location.search).get('tab');
+    if (hashTab && ['step1', 'step2', 'step3'].includes(hashTab)) {
+      document.querySelector(`.mock-step-tab[data-tab="${hashTab}"]`)?.click();
     }
   </script>
 </body>
