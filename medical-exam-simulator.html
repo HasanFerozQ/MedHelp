@@ -508,9 +508,16 @@
 
     function buildBlocksFromPool(pool) {
       const selected = shuffle(pool).slice(0, TOTAL_QUESTIONS);
+      if (selected.length < TOTAL_QUESTIONS) {
+        throw new Error(`Only ${selected.length} questions available; need ${TOTAL_QUESTIONS}.`);
+      }
       const blocks = [];
       for (let i = 0; i < TOTAL_BLOCKS; i++) {
-        blocks.push(selected.slice(i * Q_PER_BLOCK, (i + 1) * Q_PER_BLOCK));
+        const block = selected.slice(i * Q_PER_BLOCK, (i + 1) * Q_PER_BLOCK);
+        if (block.length !== Q_PER_BLOCK) {
+          throw new Error(`Block ${i + 1} has ${block.length} questions; expected ${Q_PER_BLOCK}.`);
+        }
+        blocks.push(block);
       }
       return blocks;
     }
@@ -527,11 +534,11 @@
       return data;
     }
 
-    async function loadStratifiedStep1Pool() {
+    async function loadStratifiedPool(buckets) {
       const pool = [];
       const usedIds = new Set();
 
-      for (const bucket of MockExamConfig.step1Mock2Buckets) {
+      for (const bucket of buckets) {
         const { data: topics } = await window.dbClient
           .from('topics')
           .select('id')
@@ -577,8 +584,9 @@
 
       try {
         let blocks;
-        if (EXAM.pool === 'step1-stratified') {
-          blocks = await loadStratifiedStep1Pool();
+        const buckets = MockExamConfig.getBucketsForExam(EXAM_ID);
+        if (buckets) {
+          blocks = await loadStratifiedPool(buckets);
         } else {
           const step = EXAM.step || 1;
           const data = await fetchMcqsForStep(step);
@@ -948,8 +956,12 @@
       document.getElementById('report-kicker').textContent =
         EXAM.step === 1 ? 'Step 1 Readiness Report' : 'Exam Performance Report';
       document.getElementById('report-title').textContent = EXAM.title;
+      const textbookNote = EXAM.showTextbooks
+        ? '<p style="font-size:12px;color:#6b7280;margin:0 0 16px;">Scored against textbook-weighted Step 1 pools (Gray\'s, Langman\'s, Moore, Harper\'s, Robbins, Ganong, Katzung, Goljan, Pathoma, First Aid &amp; related sources).</p>'
+        : '';
 
       document.getElementById('report-stats').innerHTML = `
+        ${textbookNote}
         <div class="report-prob-ring">
           <div>
             <div class="report-prob-value" style="-webkit-text-fill-color:${readiness.statusColor}; color:${readiness.statusColor};">${readiness.passMid}%</div>
