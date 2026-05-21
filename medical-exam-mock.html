@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
-  <script src="mock-exam-config.js"></script>
+  <script src="mock-exam-config.js?v=20260521c"></script>
   <style>
     .mock-lobby { padding: 40px 0 80px; }
     .mock-step-nav {
@@ -57,7 +57,7 @@
       display: flex;
       flex-direction: column;
       height: 100%;
-      min-height: 420px;
+      min-height: 300px;
     }
     .mock-card:hover { border-color: #a855f7; transform: translateY(-4px); }
     .mock-card-body {
@@ -66,41 +66,7 @@
       flex-direction: column;
       min-height: 0;
     }
-    .mock-card h3 { font-size: 20px; font-weight: 900; margin-bottom: 10px; color: var(--text-h); }
-    .mock-card-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.55;
-      margin: 0 0 16px;
-      min-height: 4.65em;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .mock-card-books {
-      flex: 1;
-      min-height: 5.5em;
-      max-height: 5.5em;
-      overflow-y: auto;
-      margin-bottom: 16px;
-      padding: 10px 12px;
-      background: rgba(168, 85, 247, 0.06);
-      border: 1px solid rgba(168, 85, 247, 0.15);
-      border-radius: 10px;
-      font-size: 11px;
-      line-height: 1.45;
-      color: var(--text-muted);
-    }
-    .mock-card-books strong {
-      display: block;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #a855f7;
-      margin-bottom: 6px;
-      font-weight: 800;
-    }
+    .mock-card h3 { font-size: 20px; font-weight: 900; margin: 0 0 20px; color: var(--text-h); }
     .mock-card-stats {
       margin-top: auto;
     }
@@ -240,26 +206,13 @@
   </footer>
 
   <script>
-    function escapeHtml(s) {
-      return String(s)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
     function renderExamCard(exam) {
       const freeBadge = exam.freeDemo ? '<span class="mock-badge-free">Free Demo</span>' : '';
       const premiumBadge = exam.premiumOnly ? '<span class="mock-badge-premium">Premium</span>' : '';
-      const summary = exam.summary || exam.description || '';
 
       const btnHtml = exam.comingSoon
         ? '<button class="btn-start-mock coming-soon" disabled>Coming Soon</button>'
         : `<button class="btn-start-mock" onclick="startExam('${exam.id}')">Start Exam</button>`;
-
-      const booksHtml = exam.showTextbooks && MockExamConfig.step1TextbookSources
-        ? `<div class="mock-card-books" title="Step 1 textbook sources"><strong>Sources</strong>${MockExamConfig.step1TextbookSources.map((b) => escapeHtml(b)).join(' · ')}</div>`
-        : '<div class="mock-card-books" style="visibility:hidden; border-color:transparent; background:transparent;" aria-hidden="true">&nbsp;</div>';
 
       const qLine = exam.questions
         ? `<div class="mock-stat"><span>Questions</span><span style="color: var(--text-h); font-weight: 700;">${exam.questions} MCQs</span></div>`
@@ -277,9 +230,7 @@
             <div>
               <span class="mock-badge">${exam.badge}</span>${freeBadge}${premiumBadge}
               <h3>${exam.title}</h3>
-              <p class="mock-card-desc">${escapeHtml(summary)}</p>
             </div>
-            ${booksHtml}
             <div class="mock-card-stats">
               ${qLine}
               ${timeLine}

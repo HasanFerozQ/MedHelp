@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
-  <script src="mock-exam-config.js"></script>
+  <script src="mock-exam-config.js?v=20260521c"></script>
   <script src="https://gumroad.com/js/gumroad.js"></script>
   <style>
     body { background: #0a0f18; }
@@ -956,9 +956,12 @@
       document.getElementById('report-kicker').textContent =
         EXAM.step === 1 ? 'Step 1 Readiness Report' : 'Exam Performance Report';
       document.getElementById('report-title').textContent = EXAM.title;
-      const textbookNote = EXAM.showTextbooks
-        ? '<p style="font-size:12px;color:#6b7280;margin:0 0 16px;">Scored against textbook-weighted Step 1 pools (Gray\'s, Langman\'s, Moore, Harper\'s, Robbins, Ganong, Katzung, Goljan, Pathoma, First Aid &amp; related sources).</p>'
-        : '';
+      let textbookNote = '';
+      if (EXAM_ID === 'step1-mock3') {
+        textbookNote = '<p style="font-size:12px;color:#6b7280;margin:0 0 16px;">Scored against textbook-weighted Step 1 pools (Gray\'s, Langman\'s, Moore, Harper\'s, Robbins, Ganong, Katzung, Goljan, Pathoma, First Aid &amp; related sources).</p>';
+      } else if (EXAM_ID === 'step1-mock4') {
+        textbookNote = '<p style="font-size:12px;color:#6b7280;margin:0 0 16px;">Pass-prep weighting: Pathoma, Goljan, First Aid, UWorld-style, Sketchy Micro/Pharm, Katzung, Robbins, Ganong/BRS Physiology, and high-yield organ systems.</p>';
+      }
 
       document.getElementById('report-stats').innerHTML = `
         ${textbookNote}

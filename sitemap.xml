@@ -203,6 +203,18 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://www.medihelp.live/blog-post?slug=trump-rfk-ai-healthcare-safeguards-2026</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.medihelp.live/blog-post?slug=measles-outbreak-2026-us-elimination-status</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 
   <!-- Legal & Static Pages -->
   <url>

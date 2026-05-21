@@ -12,7 +12,6 @@ window.MockExamConfig = {
       tab: 'step1',
       title: 'USMLE Step 1 Mock #1',
       badge: 'STEP 1 · MOST POPULAR',
-      summary: 'Full-length board simulation — timed 7 blocks, mixed high-yield Step 1 disciplines.',
       questions: 280,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
@@ -26,7 +25,6 @@ window.MockExamConfig = {
       tab: 'step1',
       title: 'USMLE Step 1 Mock #2',
       badge: 'STEP 1 · NBME BLUEPRINT',
-      summary: 'NBME-style weighting emphasizing pathology, physiology, pharmacology, microbiology & biochemistry.',
       questions: 280,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
@@ -41,7 +39,6 @@ window.MockExamConfig = {
       tab: 'step1',
       title: 'USMLE Step 1 Mock #3',
       badge: 'STEP 1 · TEXTBOOK MASTERY',
-      summary: 'Classic textbook–driven 280-question exam for Step 1 fundamentals and clinical vignettes.',
       questions: 280,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
@@ -49,7 +46,20 @@ window.MockExamConfig = {
       premiumOnly: true,
       pool: 'step1-stratified-mock3',
       confirmMessage: 'Ready to start USMLE Step 1 Mock #3? Questions are drawn from your core Step 1 textbook map.',
-      showTextbooks: true,
+    },
+    'step1-mock4': {
+      id: 'step1-mock4',
+      step: 1,
+      tab: 'step1',
+      title: 'USMLE Step 1 Mock #4',
+      badge: 'STEP 1 · HIGH-YIELD PASS',
+      questions: 280,
+      totalHours: 8,
+      format: '7 Blocks / 60m ea.',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step1-stratified-mock4',
+      confirmMessage: 'Ready to start USMLE Step 1 Mock #4? This pass-focused exam emphasizes First Aid, Pathoma, UWorld-style, and Sketchy high-yield disciplines across 7 timed blocks.',
     },
     'step2-mock1': {
       id: 'step2-mock1',
@@ -57,7 +67,6 @@ window.MockExamConfig = {
       tab: 'step2',
       title: 'USMLE Step 2 Mock #1',
       badge: 'STEP 2 CK',
-      summary: 'Clinical knowledge assessment — diagnosis and management (coming soon).',
       questions: 318,
       totalHours: 9,
       format: '8 Blocks / 60m ea.',
@@ -71,7 +80,6 @@ window.MockExamConfig = {
       tab: 'step3',
       title: 'USMLE Step 3 Mock #1',
       badge: 'STEP 3',
-      summary: 'Clinical case integration and CCS-style workflow (coming soon).',
       questions: null,
       totalHours: null,
       format: 'Coming soon',
@@ -114,7 +122,26 @@ window.MockExamConfig = {
     { count: 8, label: "Wheater's Histology · Dermatology · Aging", slugs: ['dermatology', 'usmle-1-aging'] },
   ],
 
-  /** Canonical Step 1 textbook list (Mock #3 card + exam metadata). */
+  /**
+   * Board-crush / pass-prep emphasis — Mock #4 only (280).
+   * Weights highest-yield Step 1 disciplines (Pathoma, Goljan, Sketchy, First Aid, UWorld, Katzung).
+   */
+  step1Mock4Buckets: [
+    { count: 58, label: 'Pathoma · Goljan · Robbins PBD · First Aid Path', slugs: ['usmle-1-pathology', 'pathology', 'neuropathology'] },
+    { count: 32, label: 'Sketchy Pharm · Katzung · Lippincott · BRS · Goodman', slugs: ['pharmacology-usmle-1', 'neuropharmacology'] },
+    { count: 24, label: 'Sketchy Micro · Gladwin · Murray', slugs: ['usmle-1-microbiology'] },
+    { count: 38, label: 'Ganong · Guyton · BRS Physiology · organ systems', slugs: ['cardiovascular-physiology', 'respiratory-physiology', 'renal-physiology', 'gastrointestinal-physiology', 'endocrine-physiology', 'reproductive-physiology', 'usmle-1-physiology'] },
+    { count: 22, label: "Harper's · Lippincott Biochem · First Aid Biochem", slugs: ['usmle-1-biochemistry', 'molecular-biology'] },
+    { count: 18, label: "Gray's · HY Gross · Langman's · Moore · Netter", slugs: ['usmle-1-anatomy', 'embryology', 'musculoskeletal'] },
+    { count: 14, label: 'Abbas Immunology · Lippincott Immunology', slugs: ['immunology'] },
+    { count: 10, label: 'Thompson Genetics · HY Genetics · First Aid', slugs: ['usmle-1-genetics'] },
+    { count: 14, label: 'Kaplan Behavioral · BRS Fadem · Ethics · HY Biostat · Jekel', slugs: ['behavioral-sciences-usmle-1', 'ethics-professionalism', 'usmle-1-biostatistics'] },
+    { count: 16, label: 'Snell Neuro · HY Neuroanatomy · Netter Neuro', slugs: ['neuropathology'] },
+    { count: 12, label: 'Deja Review Heme-Onc · hematology', slugs: ['hematology'] },
+    { count: 22, label: 'Multisystem · derm · nutrition · aging · Amboss-style', slugs: ['dermatology', 'usmle-1-nutrition', 'usmle-1-aging'] },
+  ],
+
+  /** Canonical Step 1 textbook & board-prep sources (exam engine metadata). */
   step1TextbookSources: [
     "Gray's Anatomy for Students (Drake, Vogl & Mitchell)",
     "Langman's Medical Embryology (Sadler)",
@@ -171,9 +198,12 @@ window.MockExamConfig = {
   },
 
   getBucketsForExam(examId) {
-    if (examId === 'step1-mock2') return this.step1Mock2Buckets;
-    if (examId === 'step1-mock3') return this.step1Mock3Buckets;
-    return null;
+    const bucketsByExam = {
+      'step1-mock2': this.step1Mock2Buckets,
+      'step1-mock3': this.step1Mock3Buckets,
+      'step1-mock4': this.step1Mock4Buckets,
+    };
+    return bucketsByExam[examId] || null;
   },
 
   getStateKey(examId) {
