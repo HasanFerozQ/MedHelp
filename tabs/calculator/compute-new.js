@@ -247,7 +247,7 @@
       gdm = abnormal >= 2;
       return {
         primary: gdm ? 'GDM Diagnosed' : (abnormal === 1 ? '1 abnormal value (repeat if clinical concern)' : 'Normal 3-hr OGTT'),
-        interpretation: (gdm ? '≥2 abnormal values → GDM confirmed. ' : '') + results.join(', ') || 'All values within normal limits.',
+        interpretation: (gdm ? '≥2 abnormal values → GDM confirmed. ' : '') + (results.length ? results.join(', ') : 'All values within normal limits.'),
         chip: gdm ? 'critical' : abnormal === 1 ? 'high' : 'normal',
         details: [{ label: 'Thresholds (Carpenter-Coustan)', value: 'Fasting 95 | 1-hr 180 | 2-hr 155 | 3-hr 140' }]
       };
@@ -259,7 +259,7 @@
       gdm = abnormal >= 1;
       return {
         primary: gdm ? 'GDM Diagnosed' : 'Normal 2-hr OGTT',
-        interpretation: (gdm ? '≥1 abnormal value (IADPSG) → GDM confirmed. ' : '') + results.join(', ') || 'All values within IADPSG limits.',
+        interpretation: (gdm ? '≥1 abnormal value (IADPSG) → GDM confirmed. ' : '') + (results.length ? results.join(', ') : 'All values within IADPSG limits.'),
         chip: gdm ? 'critical' : 'normal',
         details: [{ label: 'Thresholds (IADPSG)', value: 'Fasting 92 | 1-hr 180 | 2-hr 153' }]
       };

@@ -65,14 +65,27 @@ window.CalcUI = {
     this.render();
   },
 
+  _schemaFor(id) {
+    if (CalcSchemas[id]) return CalcSchemas[id];
+    const canon = CalcCompute._aliases?.[id];
+    if (canon && CalcSchemas[canon]) return CalcSchemas[canon];
+    return null;
+  },
+
   openCalc(id) {
     const calc = CalcRegistry.getById(id);
     if (!calc) return;
     const access = this.canAccess(calc);
     if (access === 'auth') { MediHelp.showAuthModal(); return; }
-    if (access === 'premium' && !calc.implemented) return;
+    if (access === 'premium' && !calc.implemented) {
+      alert(CalcI18n.t('comingSoon') + ' — ' + this._name(calc));
+      return;
+    }
     if (access === 'premium') { this._showPremium(); return; }
-    if (!calc.implemented) return;
+    if (!calc.implemented) {
+      alert(CalcI18n.t('comingSoon') + ' — ' + this._name(calc));
+      return;
+    }
     this._addRecent(id);
     this.state = { view: 'calc', role: calc.role, calcId: id, emergency: this.state.emergency || ['er', 'icu'].includes(calc.role) };
     history.pushState({}, '', '/medical-calculator?calc=' + id);
@@ -245,7 +258,7 @@ window.CalcUI = {
 
   _renderCalculator(id) {
     const calc = CalcRegistry.getById(id);
-    const schema = CalcSchemas[id] || CalcSchemas[CalcCompute._aliases[id]];
+    const schema = this._schemaFor(id);
     if (!calc || !schema) return '<p>Calculator not found</p>';
 
     const saved = JSON.parse(localStorage.getItem(this.STORAGE.values) || '{}')[id] || {};
@@ -323,7 +336,21 @@ window.CalcUI = {
       ? CalcUnits.canonicalToDisplay(siDefault, grp, fieldDisplaySys)
       : siDefault;
     const savedRaw = saved[inp.id];
-    const val = savedRaw !== undefined ? savedRaw : displayDefault;
+    let val = displayDefault;
+    if (savedRaw !== undefined && savedRaw !== '') {
+      if (grp) {
+        const storedSys = savedUnits[inp.id] || fieldDisplaySys;
+        const n = parseFloat(savedRaw);
+        if (!isNaN(n)) {
+          const canon = CalcUnits.displayToCanonical(n, grp, storedSys);
+          val = CalcUnits.canonicalToDisplay(canon, grp, fieldDisplaySys);
+        } else {
+          val = savedRaw;
+        }
+      } else {
+        val = savedRaw;
+      }
+    }
     const label = inp.label[CalcI18n.lang] || inp.label.en;
     const range = grp ? CalcUnits.getRange(grp, fieldDisplaySys) : (inp.min !== undefined ? inp.min + '–' + (inp.max || '') : '');
     const placeholder = range ? 'Norm: ' + range : '';
@@ -364,12 +391,11 @@ window.CalcUI = {
     const vals = {};
     new FormData(form).forEach((v, k) => {
       const el = form.elements[k];
-      vals[k] = el?.type === 'checkbox' ? el.checked : v;
+      if (el?.type === 'checkbox') return;
+      vals[k] = v;
     });
     form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-      if (cb.name && !cb.checked) {
-        vals[cb.name] = false;
-      }
+      if (cb.name) vals[cb.name] = cb.checked;
     });
     const displayUnits = {};
     form.querySelectorAll('[data-display-unit]').forEach(el => {
@@ -380,12 +406,17 @@ window.CalcUI = {
     all[id] = Object.assign({ _units: displayUnits }, vals);
     localStorage.setItem(this.STORAGE.values, JSON.stringify(all));
 
-    const schema = CalcSchemas[id] || CalcSchemas[CalcCompute._aliases[id]];
-    const siVals = schema ? CalcUnits.convertFormToSI(vals, schema, displayUnits) : vals;
-
-    const result = CalcCompute.compute(id, siVals);
+    const schema = this._schemaFor(id);
     const box = document.getElementById('calc-result');
     if (!box) return;
+    if (!schema) {
+      box.innerHTML = '<div class="result-error">Calculator schema missing — unit conversion unavailable. Check registry/schema keys.</div>';
+      box.classList.remove('empty');
+      return;
+    }
+    const siVals = CalcUnits.convertFormToSI(vals, schema, displayUnits);
+
+    const result = CalcCompute.compute(id, siVals);
 
     if (result.error) {
       box.innerHTML = `<div class="result-error">${result.error}</div>`;

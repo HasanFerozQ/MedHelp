@@ -9,7 +9,7 @@ window.CalcFormulas = {
     tidal_volume: { ml_per_kg_low: 6, ml_per_kg_high: 8 },
     parkland: { multiplier: 4 },
     maintenance_fluid: { first_10: 100, second_10: 50, remainder: 20 },
-    iron_deficit: { factor: 0.544, target_hb_default: 15 },
+    iron_deficit: { ganzoni_factor: 2.4, target_hb_default: 15, weight_child_threshold: 35, stores_per_kg_child: 15, stores_adult: 500 },
     sodium_correction: { factor_low: 1.6, factor_high: 2.4, glucose_threshold: 400 },
     calcium_correction: { albumin_normal: 4, factor: 0.8 },
     potassium_deficit: { factor: 0.4 },
@@ -21,8 +21,8 @@ window.CalcFormulas = {
       hydromorphone: 5,
       fentanyl_patch_mcg_hr: 2.4,
       codeine: 0.15,
-      tramadol: 0.2,
-      methadone: 4.7
+      tramadol: 0.2
+      /* methadone: tiered CDC factors — see opioid-conversion in compute.js */
     }
   },
 

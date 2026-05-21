@@ -321,10 +321,10 @@ window.CalcCompute = {
   'corrected-sodium'(v) {
     // Expected canonical glucose is mg/dL (convertFormToSI). If caller bypasses it and sends
     // mmol/L-like values, normalize defensively to keep the 400 mg/dL threshold valid.
+    const sc = CalcFormulas.DOSAGES.sodium_correction;
     const glucose = +v.glucose;
     const glucoseMgDl = glucose > 0 && glucose < 30 ? glucose * 18.016 : glucose;
-    // Threshold 400 mg/dL ≈ 22.2 mmol/L — comparison valid after conversion
-    const factor = glucoseMgDl >= 400 ? 2.4 : 1.6;
+    const factor = glucoseMgDl >= sc.glucose_threshold ? sc.factor_high : sc.factor_low;
     const corr = (+v.na) + factor * ((glucoseMgDl - 100) / 100);
     return {
       primary: corr.toFixed(1) + ' mEq/L',
@@ -456,11 +456,12 @@ window.CalcCompute = {
 
   'iron-deficit'(v) {
     const w = +v.weight;
+    const id = CalcFormulas.DOSAGES.iron_deficit;
     // Ganzoni formula assumes Hb in g/dL; if SI mode Hb may be g/L — divide by 10
-    const targetHb = +v.targetHb > 50 ? +v.targetHb / 10 : +v.targetHb;
+    const targetHb = +v.targetHb > 50 ? +v.targetHb / 10 : (+v.targetHb || id.target_hb_default);
     const currentHb = +v.currentHb > 50 ? +v.currentHb / 10 : +v.currentHb;
-    const stores = w < 35 ? (15 * w) : 500;
-    const deficit = w * (targetHb - currentHb) * 2.4 + stores;
+    const stores = w < id.weight_child_threshold ? (id.stores_per_kg_child * w) : id.stores_adult;
+    const deficit = w * (targetHb - currentHb) * id.ganzoni_factor + stores;
     return { primary: Math.max(0, deficit).toFixed(0) + ' mg', interpretation: 'Ganzoni iron deficit (simplified) — Hb input treated as g/dL', chip: 'normal' };
   },
 
