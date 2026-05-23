@@ -117,8 +117,14 @@
     }
 
     function setUnlocked(on) {
-      if (on) sessionStorage.setItem(UNLOCK_KEY, '1');
-      else sessionStorage.removeItem(UNLOCK_KEY);
+      if (on) {
+        sessionStorage.setItem(UNLOCK_KEY, '1');
+      } else {
+        sessionStorage.removeItem(UNLOCK_KEY);
+        localStorage.removeItem(SECRET_KEY);
+        const secretEl = document.getElementById('admin-secret');
+        if (secretEl) secretEl.value = '';
+      }
       document.getElementById('admin-panel').classList.toggle('hidden', !on);
       document.getElementById('lock-btn').classList.toggle('hidden', !on);
       document.getElementById('login-error').classList.add('hidden');

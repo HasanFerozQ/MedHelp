@@ -388,8 +388,9 @@
       const copy = getStartModalCopy(exam);
       document.getElementById('mock-start-title').textContent = copy.title;
       document.querySelector('.mock-start-luck').textContent = copy.luck;
+      const blocksCount = exam.totalBlocks || (exam.step === 2 ? 8 : 7);
       const sub = exam.totalHours && exam.questions
-        ? `${exam.totalHours} hours · ${exam.questions} MCQs · 7 blocks · clock runs in real time`
+        ? `${exam.totalHours} hours · ${exam.questions} MCQs · ${blocksCount} blocks · clock runs in real time`
         : 'Clock runs in real time once you begin';
       document.getElementById('mock-start-sub').textContent = sub;
       const overlay = document.getElementById('mock-start-overlay');

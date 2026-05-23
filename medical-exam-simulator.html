@@ -618,7 +618,7 @@
           <button type="button" class="sim-btn-ghost" id="end-exam-btn" onclick="endExam()">End Exam</button>
         </div>
         <div class="sim-block-meta">
-          <div class="sim-block-label" id="block-tracker-text">Block 1 of 7</div>
+          <div class="sim-block-label" id="block-tracker-text">Loading Block...</div>
           <div class="sim-block-dots" id="block-dots"></div>
         </div>
       </div>
@@ -626,11 +626,11 @@
       <div class="sim-header-center">
         <div class="sim-timer-card block" id="block-timer-card">
           <div class="sim-timer-label">Block time</div>
-          <div class="sim-timer-value" id="block-timer">60:00</div>
+          <div class="sim-timer-value" id="block-timer">--:--</div>
         </div>
         <div class="sim-timer-card global" id="global-timer-card">
           <div class="sim-timer-label">Total exam</div>
-          <div class="sim-timer-value" id="global-timer">08:00:00</div>
+          <div class="sim-timer-value" id="global-timer">--:--:--</div>
         </div>
       </div>
 
@@ -713,10 +713,10 @@
     const urlParams = new URLSearchParams(window.location.search);
     const EXAM_ID = urlParams.get('exam_id') || 'step1-mock1';
     const EXAM = MockExamConfig.getExam(EXAM_ID);
-    const TOTAL_BLOCKS = MockExamConfig.TOTAL_BLOCKS;
-    const Q_PER_BLOCK = MockExamConfig.Q_PER_BLOCK;
-    const TOTAL_QUESTIONS = TOTAL_BLOCKS * Q_PER_BLOCK;
-    const TOTAL_TIME = (EXAM.totalHours || 8) * 60 * 60 * 1000;
+    const TOTAL_BLOCKS = EXAM.totalBlocks || (EXAM.step === 2 ? 8 : (MockExamConfig.TOTAL_BLOCKS || 7));
+    const Q_PER_BLOCK = EXAM.questionsPerBlock || MockExamConfig.Q_PER_BLOCK || 40;
+    const TOTAL_QUESTIONS = EXAM.questions || (TOTAL_BLOCKS * Q_PER_BLOCK);
+    const TOTAL_TIME = (EXAM.totalHours || (EXAM.step === 2 ? 9 : 8)) * 60 * 60 * 1000;
     const BLOCK_TIME = 60 * 60 * 1000;
     const STATE_KEY = MockExamConfig.getStateKey(EXAM_ID);
 
@@ -867,11 +867,23 @@
     }
 
     async function fetchMcqsForStep(step) {
-      const { data, error } = await window.dbClient
+      let { data, error } = await window.dbClient
         .from('mcqs')
         .select('*, topics!inner(*)')
         .eq('topics.usmle_step', step)
         .neq('topics.slug', 'usmle-1-mock-pool-hidden');
+
+      if ((error || !data || data.length < TOTAL_QUESTIONS) && step === 2) {
+        console.warn("No Step 2 MCQs found in DB; falling back to Step 1 MCQs for testing/demo of Step 2 CK format.");
+        const fallbackRes = await window.dbClient
+          .from('mcqs')
+          .select('*, topics!inner(*)')
+          .eq('topics.usmle_step', 1)
+          .neq('topics.slug', 'usmle-1-mock-pool-hidden');
+        data = fallbackRes.data;
+        error = fallbackRes.error;
+      }
+
       if (error || !data || data.length < TOTAL_QUESTIONS) {
         throw new Error('Could not load enough questions for this exam.');
       }
@@ -1347,22 +1359,28 @@
       const totalQ = TOTAL_QUESTIONS;
       const scorePct = Math.round((correct / totalQ) * 100);
       const wrongCount = state.wrongIndices.length;
-      const readiness = MockExamConfig.getStep1Readiness(scorePct);
+      const readiness = EXAM.step === 2
+        ? MockExamConfig.getStep2Readiness(scorePct)
+        : MockExamConfig.getStep1Readiness(scorePct);
 
       document.getElementById('report-kicker').textContent =
-        EXAM.step === 1 ? 'Step 1 Readiness Report' : 'Exam Performance Report';
+        EXAM.step === 2 ? 'Step 2 CK Readiness Report' : (EXAM.step === 1 ? 'Step 1 Readiness Report' : 'Exam Performance Report');
       document.getElementById('report-title').textContent = EXAM.title;
       const focusLine = EXAM.focus
         ? `<p style="font-size:12px;color:#6b7280;margin:0 0 16px;">${EXAM.focus}</p>`
         : '';
 
+      const scoreLabel = EXAM.step === 2 ? 'ESTIMATED THREE-DIGIT SCORE' : 'ESTIMATED PASS PROBABILITY';
+      const rangeLabel = EXAM.step === 2 ? 'Projected Score' : 'Range';
+      const displayValue = EXAM.step === 2 ? `${readiness.passMid}` : `${readiness.passMid}%`;
+
       document.getElementById('report-stats').innerHTML = `
         ${focusLine}
         <div class="report-prob-ring">
           <div>
-            <div class="report-prob-value" style="-webkit-text-fill-color:${readiness.statusColor}; color:${readiness.statusColor};">${readiness.passMid}%</div>
-            <div style="font-size:12px; color:#6b7280; font-weight:700;">ESTIMATED PASS PROBABILITY</div>
-            <div style="font-size:11px; color:#9ca3af; margin-top:4px;">Range: ${readiness.passRange}</div>
+            <div class="report-prob-value" style="-webkit-text-fill-color:${readiness.statusColor}; color:${readiness.statusColor};">${displayValue}</div>
+            <div style="font-size:12px; color:#6b7280; font-weight:700;">${scoreLabel}</div>
+            <div style="font-size:11px; color:#9ca3af; margin-top:4px;">${rangeLabel}: ${readiness.passRange}</div>
           </div>
           <div>
             <div class="report-status-pill" style="border-color:${readiness.statusColor}55; color:${readiness.statusColor};">

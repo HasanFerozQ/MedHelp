@@ -13,6 +13,8 @@ window.MockExamConfig = {
       title: 'USMLE Step 1 Mock #1',
       badge: 'STEP 1',
       questions: 280,
+      totalBlocks: 7,
+      questionsPerBlock: 40,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
       freeDemo: false,
@@ -28,6 +30,8 @@ window.MockExamConfig = {
       title: 'USMLE Step 1 Mock #2',
       badge: 'STEP 1',
       questions: 280,
+      totalBlocks: 7,
+      questionsPerBlock: 40,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
       freeDemo: false,
@@ -43,6 +47,8 @@ window.MockExamConfig = {
       title: 'USMLE Step 1 Mock #3',
       badge: 'STEP 1',
       questions: 280,
+      totalBlocks: 7,
+      questionsPerBlock: 40,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
       freeDemo: false,
@@ -58,6 +64,8 @@ window.MockExamConfig = {
       title: 'USMLE Step 1 Mock #4',
       badge: 'STEP 1',
       questions: 280,
+      totalBlocks: 7,
+      questionsPerBlock: 40,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
       freeDemo: false,
@@ -73,6 +81,8 @@ window.MockExamConfig = {
       title: 'USMLE Step 1 Mock #5',
       badge: 'STEP 1',
       questions: 280,
+      totalBlocks: 7,
+      questionsPerBlock: 40,
       totalHours: 8,
       format: '7 Blocks / 60m ea.',
       freeDemo: false,
@@ -87,12 +97,15 @@ window.MockExamConfig = {
       tab: 'step2',
       title: 'USMLE Step 2 Mock #1',
       badge: 'STEP 2 CK',
-      questions: 318,
+      questions: 320,
+      totalBlocks: 8,
+      questionsPerBlock: 40,
       totalHours: 9,
       format: '8 Blocks / 60m ea.',
       freeDemo: true,
-      comingSoon: true,
       pool: 'step2-random',
+      focus: 'Balanced random mix across all Step 2 CK clinical disciplines (UWorld / First Aid style full-length).',
+      confirmMessage: 'Ready to start the 9-hour USMLE Step 2 CK exam? The clock runs in real time once you begin.',
     },
     'step3-mock1': {
       id: 'step3-mock1',
@@ -332,6 +345,53 @@ window.MockExamConfig = {
       passMax,
       passMid,
       passRange: `${passMin}–${passMax}%`,
+      status,
+      statusEmoji,
+      statusColor,
+      performanceLevel,
+    };
+  },
+
+  getStep2Readiness(scorePct) {
+    let projectedMin, projectedMax, status, statusColor, performanceLevel;
+    if (scorePct >= 85) {
+      projectedMin = 258; projectedMax = 272;
+      status = 'Excellent (Target 260+)';
+      statusColor = '#10b981';
+      performanceLevel = 'Outstanding score — competitive for highly selective specialties. Maintain pace.';
+    } else if (scorePct >= 75) {
+      projectedMin = 244; projectedMax = 257;
+      status = 'Very Good (Target 245-255)';
+      statusColor = '#34d399';
+      performanceLevel = 'Strong foundation — focus on clinical reasoning nuances and medical ethics/safety.';
+    } else if (scorePct >= 65) {
+      projectedMin = 228; projectedMax = 243;
+      status = 'Good (Target 230-240)';
+      statusColor = '#fbbf24';
+      performanceLevel = 'Solid performance — close gaps in preventive medicine and high-yield algorithms.';
+    } else if (scorePct >= 55) {
+      projectedMin = 214; projectedMax = 227;
+      status = 'Passing / Borderline';
+      statusColor = '#f59e0b';
+      performanceLevel = 'Passing but near threshold — target weak clerkships (OB/GYN, Pediatrics, Surgery).';
+    } else if (scorePct >= 45) {
+      projectedMin = 195; projectedMax = 213;
+      status = 'At Risk';
+      statusColor = '#f97316';
+      performanceLevel = 'Below passing score — build structured knowledge base and practice timing.';
+    } else {
+      projectedMin = 160; projectedMax = 194;
+      status = 'Not Ready';
+      statusColor = '#ef4444';
+      performanceLevel = 'Significant knowledge gaps — review core clerkship materials before next full-length.';
+    }
+    const projectedMid = Math.round((projectedMin + projectedMax) / 2);
+    const statusEmoji = scorePct >= 75 ? '🟢' : scorePct >= 65 ? '🟡' : scorePct >= 55 ? '🟠' : '🔴';
+    return {
+      passMin: projectedMin,
+      passMax: projectedMax,
+      passMid: projectedMid,
+      passRange: `${projectedMin}–${projectedMax}`,
       status,
       statusEmoji,
       statusColor,
