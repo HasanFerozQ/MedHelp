@@ -108,6 +108,7 @@
         session: ctx.session,
         questionOrder: ctx.questionOrder,
         liveScore: ctx.liveScore,
+        questionStartedAt: ctx.questionStartedAt,
       })
     );
   }
@@ -121,6 +122,7 @@
       ctx.session = data.session;
       ctx.questionOrder = data.questionOrder || 1;
       ctx.liveScore = data.liveScore || 0;
+      ctx.questionStartedAt = data.questionStartedAt || null;
       return true;
     } catch (_) {
       return false;
@@ -156,13 +158,9 @@
 
     ctx.todaySet = normalizeTodaySetRow(setRes.data);
 
-    if (ctx.todaySet) {
-      ctx.state = ctx.todaySet.status === "closed" ? "post_game" : "live";
-    } else {
-      const stateRes = await client.rpc("get_current_trivia_state", { now_tz: nowIso });
-      if (stateRes.error) throw new Error(stateRes.error.message || "Failed to load trivia state");
-      ctx.state = typeof stateRes.data === "string" ? stateRes.data : "no_content";
-    }
+    const stateRes = await client.rpc("get_current_trivia_state", { now_tz: nowIso });
+    if (stateRes.error) throw new Error(stateRes.error.message || "Failed to load trivia state");
+    ctx.state = typeof stateRes.data === "string" ? stateRes.data : "no_content";
 
     return { state: ctx.state, today_set: ctx.todaySet, now_iso: nowIso };
   }

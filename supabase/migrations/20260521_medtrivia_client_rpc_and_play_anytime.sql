@@ -1,6 +1,6 @@
--- MedTrivia: play anytime when today's set exists (test / staging friendly).
+-- MedTrivia: strict 8 PM ET schedule for today's set.
 -- Adds trivia_join_session() so the browser can join without edge functions (RLS blocks direct inserts).
--- Replaces get_current_trivia_state with non–8 PM gating (revert before strict production windows).
+-- Uses production-style gating for scheduled sets.
 
 BEGIN;
 
@@ -11,24 +11,29 @@ STABLE
 SET search_path = public
 AS $$
 DECLARE
-  v_local timestamp;
-  v_today date;
-  v_today_set uuid;
+  v_set_id uuid;
   v_set_status text;
+  v_start_at timestamptz;
+  v_end_at timestamptz;
 BEGIN
-  v_local := now_tz AT TIME ZONE 'America/New_York';
-  v_today := v_local::date;
-
-  SELECT id, status INTO v_today_set, v_set_status
-  FROM public.trivia_sets
-  WHERE scheduled_date = v_today
+  SELECT gs.set_id, gs.status, gs.start_at, gs.end_at
+  INTO v_set_id, v_set_status, v_start_at, v_end_at
+  FROM public.get_today_set_for_play() AS gs
   LIMIT 1;
 
-  IF v_today_set IS NULL THEN
+  IF v_set_id IS NULL THEN
     RETURN 'no_content';
   END IF;
 
   IF v_set_status = 'closed' THEN
+    RETURN 'post_game';
+  END IF;
+
+  IF now_tz < v_start_at THEN
+    RETURN 'scheduled';
+  END IF;
+
+  IF now_tz > v_end_at THEN
     RETURN 'post_game';
   END IF;
 
@@ -67,6 +72,12 @@ BEGIN
 
   IF v_set_id IS NULL THEN
     RAISE EXCEPTION 'No trivia set scheduled for today';
+  END IF;
+  IF now() < v_start_at THEN
+    RAISE EXCEPTION 'Trivia opens at 8:00 PM America/New_York.';
+  END IF;
+  IF now() > v_end_at OR v_set_status = 'closed' THEN
+    RAISE EXCEPTION 'Today''s trivia is closed.';
   END IF;
 
   v_set := jsonb_build_object(

@@ -60,6 +60,7 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      align-items: center;
       min-width: 0;
     }
     .sim-block-label {
@@ -91,8 +92,16 @@
 
     .sim-header-center {
       display: flex;
+      flex-direction: column;
+      align-items: center;
       gap: 12px;
+    }
+    .sim-timers-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
       justify-content: center;
+      width: 100%;
     }
     .sim-timer-card {
       background: rgba(15, 23, 42, 0.9);
@@ -129,6 +138,22 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
+    }
+    .sim-header-right-inner {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+    .sim-nav-auth-slot {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      min-width: 0;
     }
     .sim-exam-title {
       font-size: 12px;
@@ -617,25 +642,30 @@
           <button type="button" class="sim-btn-ghost sim-btn-quit" id="quit-exam-btn" onclick="quitAndSave()">Quit & Save</button>
           <button type="button" class="sim-btn-ghost" id="end-exam-btn" onclick="endExam()">End Exam</button>
         </div>
+      </div>
+
+      <div class="sim-header-center">
+        <div class="sim-timers-row">
+          <div class="sim-timer-card block" id="block-timer-card">
+            <div class="sim-timer-label">Block time</div>
+            <div class="sim-timer-value" id="block-timer">--:--</div>
+          </div>
+          <div class="sim-timer-card global" id="global-timer-card">
+            <div class="sim-timer-label">Total exam</div>
+            <div class="sim-timer-value" id="global-timer">--:--:--</div>
+          </div>
+        </div>
         <div class="sim-block-meta">
           <div class="sim-block-label" id="block-tracker-text">Loading Block...</div>
           <div class="sim-block-dots" id="block-dots"></div>
         </div>
       </div>
 
-      <div class="sim-header-center">
-        <div class="sim-timer-card block" id="block-timer-card">
-          <div class="sim-timer-label">Block time</div>
-          <div class="sim-timer-value" id="block-timer">--:--</div>
-        </div>
-        <div class="sim-timer-card global" id="global-timer-card">
-          <div class="sim-timer-label">Total exam</div>
-          <div class="sim-timer-value" id="global-timer">--:--:--</div>
-        </div>
-      </div>
-
       <div class="sim-header-right">
-        <div class="sim-exam-title" id="sim-exam-title">USMLE Step 1 Mock</div>
+        <div class="sim-header-right-inner">
+          <div class="sim-exam-title" id="sim-exam-title">USMLE Step 1 Mock</div>
+          <div class="nav-actions sim-nav-auth-slot"></div>
+        </div>
       </div>
     </header>
 

@@ -5,6 +5,7 @@
   const statusBadgeEl = document.getElementById("status-badge");
   const setBadgeEl = document.getElementById("set-badge");
   const countdownEl = document.getElementById("countdown");
+  const launchMessageEl = document.getElementById("launch-message");
   const waitingCountEl = document.getElementById("waiting-count");
   const joinBtnEl = document.getElementById("join-btn");
   const joinBtnLabelEl = document.getElementById("join-btn-label");
@@ -14,6 +15,7 @@
   const userLabelEl = document.getElementById("user-label");
   const userChipEl = document.getElementById("user-chip");
   const retakeHintEl = document.getElementById("retake-hint");
+  let launchTicker = null;
 
   function setStatus(kind, label, detail) {
     const colors = {
@@ -25,6 +27,41 @@
     statusBadgeEl.className = `text-sm font-semibold ${colors[kind] || colors.off}`;
     statusBadgeEl.textContent = label;
     if (detail) countdownEl.textContent = detail;
+  }
+
+  function formatCountdown(ms) {
+    const totalSeconds = Math.max(0, Math.ceil(ms / 1000));
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${String(seconds).padStart(2, "0")}`;
+  }
+
+  function updateLaunchCountdown(startAt, startLabel) {
+    if (!launchMessageEl || !countdownEl) return;
+    clearInterval(launchTicker);
+    const refresh = () => {
+      const remaining = startAt.getTime() - Date.now();
+      if (remaining <= 0) {
+        clearInterval(launchTicker);
+        countdownEl.textContent = "Starting now";
+        launchMessageEl.textContent = "Trivia is live! Refresh the page to join.";
+        launchMessageEl.classList.remove("hidden");
+        return;
+      }
+      if (remaining > 30 * 60_000) {
+        countdownEl.textContent = startLabel || "Opens at 8:00 PM ET";
+        launchMessageEl.textContent = "Trivia will start at 8 PM ET. Stay tuned.";
+        launchMessageEl.classList.remove("hidden");
+      } else {
+        countdownEl.textContent = `Starting in ${formatCountdown(remaining)}`;
+        launchMessageEl.textContent = "Live quiz opens soon — get ready!";
+        launchMessageEl.classList.remove("hidden");
+      }
+    };
+    refresh();
+    if (startAt.getTime() - Date.now() <= 30 * 60_000) {
+      launchTicker = setInterval(refresh, 1000);
+    }
   }
 
   async function paintInitialUi() {
@@ -52,19 +89,39 @@
       retakeHintEl.textContent = "Unlimited practice runs";
     }
 
+    const startAt = C.ctx.todaySet?.start_at ? new Date(C.ctx.todaySet.start_at) : null;
+    const startLabel = startAt
+      ? `${startAt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} ${startAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' })} ET`
+      : null;
+
     if (C.ctx.state === "post_game") {
       setStatus("off", "Closed", "Today’s set has ended. Check back tomorrow.");
       joinBtnLabelEl.textContent = "Set closed";
+    } else if (C.ctx.state === "scheduled") {
+      setStatus("wait", "Scheduled", startLabel || "Opens at 8:00 PM ET.");
+      joinBtnLabelEl.textContent = "Not available";
+      if (startAt) {
+        updateLaunchCountdown(startAt, startLabel);
+      } else if (launchMessageEl) {
+        launchMessageEl.textContent = "Trivia will start at 8 PM ET. Stay tuned.";
+        launchMessageEl.classList.remove("hidden");
+      }
     } else if (C.ctx.state === "live" && !hasSet) {
       setStatus("off", "Setup mismatch", "Playable set missing in API. Run migration 20260524_medtrivia_testing_mode_once.sql once in Supabase.");
       joinBtnLabelEl.textContent = "Not available";
+      if (launchMessageEl) launchMessageEl.classList.add("hidden");
     } else if (!hasSet || C.ctx.state === "no_content") {
       setStatus("off", "Unavailable", "Today's quiz is not open yet. Please check back soon.");
       joinBtnLabelEl.textContent = "Not available";
+      if (launchMessageEl) {
+        launchMessageEl.textContent = "Trivia will start at 8 PM ET. Stay tuned.";
+        launchMessageEl.classList.remove("hidden");
+      }
     } else {
       setStatus("live", "Live now", "Enter the quiz room — you can replay as many times as you need while testing.");
       joinBtnLabelEl.textContent = "Enter live quiz";
       if (liveCountEl) liveCountEl.textContent = "Open for players";
+      if (launchMessageEl) launchMessageEl.classList.add("hidden");
     }
 
     if (C.ctx.todaySet?.set_id) {

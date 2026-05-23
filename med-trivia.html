@@ -32,21 +32,43 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased">
 
-  <header class="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
-      <a href="/" class="flex items-center gap-2 no-underline shrink-0">
-        <img src="icons/logo.png?v=1.1" alt="" class="h-9 w-9 rounded-lg object-contain" onerror="this.style.display='none'">
-        <span class="text-lg font-bold text-white">MediHelp</span>
+  <!-- Use consistent site navbar for MedTrivia -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png?v=1.1" alt="MediHelp — Medical Bill Audit">
+        MediHelp
       </a>
-      <nav class="hidden md:flex items-center gap-6 text-sm text-slate-400">
-        <a href="/" class="hover:text-white transition">Home</a>
-        <a href="/medical-exam-preparation" class="hover:text-white transition">Medical Exams</a>
-        <a href="/med-trivia" class="text-emerald-400 font-semibold">MedTrivia</a>
-        <a href="/medical-bill-audit" class="hover:text-white transition">Bill Audit</a>
-      </nav>
-      <button id="theme-toggle" type="button" class="w-9 h-9 rounded-lg border border-slate-700 bg-slate-800 text-lg" title="Toggle theme">🌙</button>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/medical-exam-preparation">Medical Exams</a>
+        <a href="/medical-bill-audit">Medical Bill Audit</a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">Codes ▼</div>
+          <div class="nav-dropdown-menu">
+            <a href="/cpt-code-search">CPT Codes</a>
+            <a href="/claim-denial-codes">Denial Codes</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">More ▼</div>
+          <div class="nav-dropdown-menu">
+            <a href="/rx-savings">Rx Savings</a>
+            <a href="/providers">Provider Search</a>
+            <a href="/blog">Blog</a>
+            <a href="/medical-calculator" style="color: var(--expert-amber); font-weight: 800;">Medical Calculator</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="/pricing" class="btn btn-ghost" style="padding:8px 18px; font-size:14px; border-radius:10px;">Expert Help</a>
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
+        <div class="nav-toggle" onclick="MediHelp.toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
     </div>
-  </header>
+  </nav>
 
   <main class="flex-grow">
     <section class="relative overflow-hidden border-b border-slate-800/60">
@@ -105,6 +127,7 @@
             </div>
             <h2 class="text-2xl font-bold text-white">Ready to play?</h2>
             <p id="countdown" class="text-sm text-slate-400 mt-1">Loading session info…</p>
+            <p id="launch-message" class="text-sm text-slate-300 mt-2 hidden"></p>
           </div>
           <div id="user-chip" class="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-sm text-slate-300">
             <i class="fa-solid fa-user-doctor text-slate-500"></i>

@@ -1,10 +1,7 @@
 -- =============================================================================
 -- RUN ONCE in Supabase SQL (then seed once if empty). No daily scripts needed.
 --
--- Testing behavior (until you apply a production revert migration):
---   • Any day: latest 10-question set is playable (not tied to today's date)
---   • No 8 PM ET window — always "live" when a set exists
---   • Every Join starts a fresh quiz (unlimited retakes)
+-- Production-ready ET schedule: today's set is only playable during the 8:00 - 8:20 PM America/New_York window.
 -- =============================================================================
 
 BEGIN;
@@ -36,11 +33,11 @@ AS $$
     COALESCE(s.allow_retakes, true) AS allow_retakes
   FROM public.trivia_sets s
   CROSS JOIN et
-  WHERE s.status IN ('draft', 'scheduled', 'live')
+  WHERE s.scheduled_date = et.today
+    AND s.status IN ('scheduled', 'live', 'closed')
     AND (SELECT COUNT(*)::int FROM public.trivia_questions q WHERE q.set_id = s.id) = 10
   ORDER BY
-    CASE WHEN s.scheduled_date = et.today THEN 0 ELSE 1 END,
-    CASE s.status WHEN 'live' THEN 0 WHEN 'scheduled' THEN 1 ELSE 2 END,
+    CASE s.status WHEN 'live' THEN 0 WHEN 'scheduled' THEN 1 WHEN 'closed' THEN 2 ELSE 3 END,
     s.updated_at DESC
   LIMIT 1;
 $$;
@@ -52,16 +49,26 @@ STABLE
 SET search_path = public
 AS $$
 DECLARE
-  v_status text;
+  v_set_id uuid;
+  v_set_status text;
+  v_start_at timestamptz;
+  v_end_at timestamptz;
 BEGIN
-  SELECT gs.status INTO v_status
+  SELECT gs.set_id, gs.status, gs.start_at, gs.end_at
+  INTO v_set_id, v_set_status, v_start_at, v_end_at
   FROM public.get_today_set_for_play() AS gs
   LIMIT 1;
 
-  IF v_status IS NULL THEN
+  IF v_set_id IS NULL THEN
     RETURN 'no_content';
   END IF;
-  IF v_status = 'closed' THEN
+  IF v_set_status = 'closed' THEN
+    RETURN 'post_game';
+  END IF;
+  IF now_tz < v_start_at THEN
+    RETURN 'scheduled';
+  END IF;
+  IF now_tz > v_end_at THEN
     RETURN 'post_game';
   END IF;
   RETURN 'live';
@@ -100,6 +107,12 @@ BEGIN
 
   IF v_set_id IS NULL THEN
     RAISE EXCEPTION 'No playable trivia set. Run supabase/seed_medtrivia_first_set.sql once.';
+  END IF;
+  IF now() < v_start_at THEN
+    RAISE EXCEPTION 'Trivia opens at 8:00 PM America/New_York.';
+  END IF;
+  IF now() > v_end_at OR v_set_status = 'closed' THEN
+    RAISE EXCEPTION 'Today''s trivia is closed.';
   END IF;
 
   v_set := jsonb_build_object(

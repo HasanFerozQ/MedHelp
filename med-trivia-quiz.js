@@ -19,6 +19,7 @@
   const resultStatsEl = document.getElementById("result-stats");
 
   const LETTERS = ["A", "B", "C", "D"];
+  let currentQuestionRationale = "";
 
   function resetTimerBar() {
     timerBar.style.transition = "none";
@@ -37,7 +38,13 @@
     resetTimerBar();
 
     const started = new Date(C.ctx.questionStartedAt).getTime();
-    timerText.classList.remove("text-red-500", "animate-pulse");
+    if (Number.isNaN(started)) {
+      C.ctx.questionStartedAt = new Date().toISOString();
+      C.saveActiveSession();
+      return runQuestionTimer();
+    }
+
+    timerText.classList.remove("text-red-500", "animate-pulse", "text-slate-400");
     timerText.classList.add("text-rose-400");
 
     C.ctx.questionTicker = setInterval(() => {
@@ -52,9 +59,32 @@
         clearInterval(C.ctx.questionTicker);
         C.stopClock();
         timerText.textContent = "0s";
-        lockOptions();
+        timerText.classList.remove("text-rose-400", "animate-pulse");
+        timerText.classList.add("text-slate-400");
+        handleTimeout();
       }
     }, 250);
+  }
+
+  async function handleTimeout() {
+    lockOptions();
+    rationaleTextEl.textContent = "Time expired — moving to the next question.";
+    rationalePanel.classList.remove("hidden");
+    try {
+      await submitAnswer(null, currentQuestionRationale || "No rationale provided.");
+    } catch (error) {
+      console.warn("Timeout answer submit failed:", error);
+      setTimeout(async () => {
+        C.ctx.questionOrder += 1;
+        C.ctx.questionStartedAt = null;
+        C.saveActiveSession();
+        if (C.ctx.questionOrder > C.TOTAL_QUESTIONS) {
+          await finishTrivia();
+          return;
+        }
+        await renderQuestion(C.ctx.questionOrder);
+      }, C.RATIONALE_PAUSE_MS);
+    }
   }
 
   function lockOptions() {
@@ -79,9 +109,12 @@
     rationalePanel.classList.add("hidden");
     scoreLiveEl.textContent = String(C.ctx.liveScore);
 
-    C.ctx.questionStartedAt = new Date().toISOString();
+    if (!C.ctx.questionStartedAt || C.ctx.questionOrder !== order) {
+      C.ctx.questionStartedAt = new Date().toISOString();
+    }
     C.saveActiveSession();
 
+    currentQuestionRationale = q.rationale || "";
     const options = Array.isArray(q.options) ? q.options : JSON.parse(q.options || "[]");
     options.forEach((opt, i) => {
       const btn = document.createElement("button");
@@ -137,7 +170,7 @@
 
     questionOptionsEl.querySelectorAll("button").forEach((b, idx) => {
       if (idx === result.correct_index) b.classList.add("correct");
-      else if (idx === selectedIndex) b.classList.add("wrong");
+      else if (selectedIndex !== null && idx === selectedIndex) b.classList.add("wrong");
     });
 
     rationaleTextEl.textContent = rationale || "No rationale provided.";
@@ -145,6 +178,7 @@
 
     setTimeout(async () => {
       C.ctx.questionOrder += 1;
+      C.ctx.questionStartedAt = null;
       C.saveActiveSession();
       if (C.ctx.questionOrder > C.TOTAL_QUESTIONS) {
         await finishTrivia();
