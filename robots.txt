@@ -1,6 +1,6 @@
 User-agent: *
 Disallow: /admin/
 Disallow: /private/
-Disallow: /medical-calculator
+Allow: /medical-calculator
 
 Sitemap: https://www.medihelp.live/sitemap.xml
