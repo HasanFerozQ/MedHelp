@@ -1,0 +1,18 @@
+const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
+const CALC = __dirname;
+const code = (file) => fs.readFileSync(path.join(CALC, file), 'utf8');
+const ctx = { window: {}, console, Math, Date, JSON, parseInt, parseFloat, isNaN, isFinite, Array, Object, String, Number, Boolean, RegExp, Error };
+ctx.window = ctx;
+ctx.globalThis = ctx;
+vm.createContext(ctx);
+const order = ['formulas.js', 'clinical-data.js', 'i18n.js', 'registry.js', 'schemas.js', 'schemas-extra.js', 'schemas-remaining.js', 'schemas-new.js', 'schemas-new2.js', 'units.js', 'compute.js', 'compute-remaining.js', 'compute-new.js', 'compute-new2.js', 'clinical-grade.js'];
+order.forEach((f) => vm.runInContext(code(f), ctx, { filename: f }));
+const CalcRegistry = ctx.CalcRegistry;
+const cases = JSON.parse(fs.readFileSync(path.join(CALC, 'test-cases.json'), 'utf8')).cases;
+const allIds = CalcRegistry.calculators.filter((c) => c.implemented).map((c) => c.id).sort();
+const tested = new Set(cases.map((tc) => tc.id));
+const untested = allIds.filter((id) => !tested.has(id));
+console.log(untested.length);
+console.log(untested.join('\n'));

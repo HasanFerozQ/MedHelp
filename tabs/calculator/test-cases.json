@@ -1,125 +1,2221 @@
 {
   "description": "MediHelp calculator validation suite. Run: npm run test:calculators",
-  "tolerance": { "numeric": 0.15, "percent": 0.5 },
+  "tolerance": {
+    "numeric": 0.15,
+    "percent": 0.5
+  },
   "cases": [
-    { "id": "bmi", "inputs": { "weight": 70, "height": 170 }, "expectPrimaryContains": "24.2", "expectChip": "normal" },
-    { "id": "bmi", "inputs": { "weight": 100, "height": 170 }, "expectPrimaryContains": "34.6", "expectChip": "high" },
-    { "id": "bmi", "inputs": { "weight": 154.3, "height": 66.9 }, "displayUnits": { "weight": "US", "height": "US" }, "expectPrimaryContains": "24.2", "expectChip": "normal", "note": "US lbs + inches" },
-    { "id": "bmi", "inputs": { "weight": 340.2, "height": 169.9 }, "displayUnits": { "weight": "US", "height": "SI" }, "expectPrimaryContains": "53.5", "expectChip": "critical", "note": "340 lbs + 170 cm (not 8.3 underweight)" },
-    { "id": "bsa", "inputs": { "weight": 154.3, "height": 66.9 }, "displayUnits": { "weight": "US", "height": "US" }, "expectPrimaryContains": "1.82", "expectChip": "normal", "note": "BSA US units" },
-    { "id": "bsa", "inputs": { "weight": 70, "height": 170 }, "expectPrimaryContains": "1.82", "expectChip": "normal" },
-    { "id": "creatinine-clearance", "inputs": { "age": 65, "weight": 70, "scr": 1.2, "sex": "male" }, "expectPrimaryContains": "60.8", "expectChip": "low" },
-    { "id": "creatinine-clearance", "inputs": { "age": 65, "weight": 70, "scr": 1.2, "sex": "female" }, "expectPrimaryContains": "51.6", "expectChip": "high" },
-    { "id": "egfr", "inputs": { "age": 55, "scr": 1.0, "sex": "male" }, "expectPrimaryContains": "89", "expectChip": "low" },
-    { "id": "egfr", "inputs": { "age": 55, "scr": 88.4, "sex": "male" }, "displayUnits": { "scr": "SI" }, "expectPrimaryContains": "89", "expectChip": "low", "note": "SI µmol/L creatinine" },
-    { "id": "curb65", "inputs": { "confusion": true, "bun": true, "rr": false, "bp": false, "age65": false }, "expectPrimaryContains": "2 / 5", "expectChip": "high" },
-    { "id": "qsofa", "inputs": { "rr": 24, "sbp": 105, "gcs": 15 }, "expectPrimaryContains": "1 / 3", "expectChip": "normal" },
-    { "id": "corrected-sodium", "inputs": { "na": 130, "glucose": 400 }, "expectPrimaryContains": "137.2", "expectChip": "normal" },
-    { "id": "maintenance-fluid", "inputs": { "weight": 70 }, "expectPrimaryContains": "2500", "expectChip": "normal" },
-    { "id": "ibw", "inputs": { "height": 170, "sex": "male" }, "expectPrimaryContains": "65.9", "expectChip": "normal" },
-    { "id": "student-ecg", "inputs": { "rr": 20, "qt": 10, "paperSpeed": 25 }, "expectPrimaryContains": "HR 75", "expectChip": "normal" },
-    { "id": "bishop-score", "inputs": { "dilation": 2, "effacement": 2, "station": 1, "consistency": 1, "position": 1 }, "expectPrimaryContains": "7 / 13", "expectChip": "low" },
-    { "id": "opioid-conversion", "inputs": { "drug": "oxycodone", "dose": 40 }, "expectPrimaryContains": "60.0 MME", "expectChip": "high" },
-    { "id": "ascvd-risk", "inputs": { "age": 55, "sex": "male", "race": "white", "tc": 200, "hdl": 50, "sbp": 130, "treated": false, "smoker": false, "diabetic": false }, "expectPrimaryContains": "%", "expectChip": "normal" },
-    { "id": "burn-tbsa", "inputs": { "head": 0, "trunkFront": 18, "trunkBack": 0, "armL": 9, "armR": 0, "legL": 0, "legR": 0, "groin": 0 }, "expectPrimaryContains": "27% TBSA", "expectChip": "critical" },
-    { "id": "qtc", "inputs": { "qt": 400, "hr": 75 }, "expectPrimaryContains": "447", "expectChip": "normal" },
-    { "id": "sofa", "inputs": { "pao2": 90, "fio2": 21, "platelets": 150, "bilirubin": 1, "map": 85, "vasopressors": 0, "gcs": 15, "creatinine": 1 }, "expectPrimaryContains": "0 points", "expectChip": "normal" },
-    { "id": "disease-criteria", "inputs": { "disease": "dka" }, "expectPrimaryContains": "DKA", "expectInterpretationContains": "Glucose", "expectChip": "normal" },
-    { "id": "diagnostic-scores", "inputs": { "score": "CURB-65" }, "expectPrimaryContains": "CURB-65", "expectInterpretationContains": "outpatient", "expectChip": "normal" },
-    { "id": "lab-interpretation", "inputs": { "test": "potassium", "value": 3.2 }, "expectPrimaryContains": "3.2", "expectInterpretationContains": "Low", "expectChip": "low" },
-    { "id": "antibiotic-renal", "inputs": { "drug": "vancomycin", "age": 65, "weight": 70, "scr": 1.5, "sex": "male" }, "expectPrimaryContains": "15-20", "expectChip": "high" },
-    { "id": "diet-tpn", "inputs": { "weight": 70, "tdee": 2000, "proteinG": 80, "volume": 2000 }, "expectPrimaryContains": "83.3", "expectChip": "normal" },
-    { "id": "map", "inputs": { "sbp": 120, "dbp": 80 }, "expectPrimaryContains": "93", "expectChip": "normal" },
-    { "id": "map", "inputs": { "sbp": 90, "dbp": 60 }, "expectPrimaryContains": "70", "expectChip": "normal" },
-    { "id": "chads2-vasc", "inputs": { "chf": true, "htn": true, "age75": false, "age65": true, "dm": false, "stroke": false, "vascular": false, "sex": false }, "expectPrimaryContains": "3", "expectChip": "high" },
-    { "id": "wells-pe", "inputs": { "dvt": true, "peLikely": false, "hr": false, "immob": false, "prevPe": false, "hemoptysis": false, "malignancy": false }, "expectPrimaryContains": "3", "expectChip": "normal" },
-    { "id": "qsofa", "inputs": { "rr": 24, "sbp": 90, "gcs": 13 }, "expectPrimaryContains": "3", "expectChip": "critical" },
-    { "id": "gcs", "inputs": { "eye": 4, "verbal": 5, "motor": 6 }, "expectPrimaryContains": "15", "expectChip": "normal" },
-    { "id": "gcs", "inputs": { "eye": 2, "verbal": 2, "motor": 4 }, "expectPrimaryContains": "8", "expectChip": "critical" },
-    { "id": "gcs", "inputs": { "eye": "", "verbal": "", "motor": "" }, "expectErrorContains": "Select all three GCS components" },
-    { "id": "shock-index", "inputs": { "hr": 100, "sbp": 100 }, "expectPrimaryContains": "1.00", "expectChip": "critical" },
-    { "id": "parkland", "inputs": { "weight": 70, "tbsa": 20 }, "expectPrimaryContains": "5,600", "expectChip": "normal" },
-    { "id": "anion-gap", "inputs": { "na": 140, "cl": 105, "hco3": 24 }, "expectPrimaryContains": "11.0", "expectChip": "normal" },
-    { "id": "corrected-calcium", "inputs": { "ca": 8.0, "albumin": 2.0 }, "expectPrimaryContains": "9.60", "expectChip": "normal" },
-    { "id": "maintenance-fluid", "inputs": { "weight": 15 }, "expectPrimaryContains": "1250", "expectChip": "normal" },
-    { "id": "iv-flow-rate", "inputs": { "volume": 1000, "time": 8 }, "expectPrimaryContains": "125.0", "expectChip": "normal" },
-    { "id": "drops-per-minute", "inputs": { "volume": 500, "factor": 20, "time": 60 }, "expectPrimaryContains": "167", "expectChip": "normal" },
-    { "id": "weight-based-dose", "inputs": { "weight": 70, "dosePerKg": 15 }, "expectPrimaryContains": "1050", "expectChip": "normal" },
-    { "id": "concentration", "inputs": { "mass": 500, "volume": 10 }, "expectPrimaryContains": "50.00", "expectChip": "normal" },
-    { "id": "tidal-volume", "inputs": { "ibw": 70, "mlPerKg": 6 }, "expectPrimaryContains": "420", "expectChip": "normal" },
-    { "id": "apgar", "inputs": { "appearance": 2, "pulse": 2, "grimace": 2, "activity": 2, "respiration": 2 }, "expectPrimaryContains": "10", "expectChip": "normal" },
-    { "id": "defibrillation-energy", "inputs": { "weight": 70, "attempt": 1, "pediatric": false }, "expectPrimaryContains": "140", "expectChip": "normal" },
-    { "id": "pf-ratio", "inputs": { "pao2": 80, "fio2": 40 }, "expectPrimaryContains": "200", "expectChip": "high" },
-    { "id": "bicarbonate-deficit", "inputs": { "weight": 70, "hco3": 16 }, "expectPrimaryContains": "280", "expectChip": "normal" },
-    { "id": "potassium-correction", "inputs": { "weight": 70, "current": 3.0, "target": 4.0 }, "expectPrimaryContains": "28", "expectChip": "normal" },
-    { "id": "minute-ventilation", "inputs": { "rr": 12, "vt": 500 }, "expectPrimaryContains": "6.0", "expectChip": "normal" },
-    { "id": "unit-converter", "inputs": { "value": 70, "from": "kg", "to": "lb" }, "expectPrimaryContains": "154.3", "expectChip": "normal" },
-    { "id": "calorie-requirement", "inputs": { "weight": 70, "height": 170, "age": 35, "sex": "male", "activity": 1.375 }, "expectPrimaryContains": "kcal", "expectChip": "normal" },
-    { "id": "trauma-score", "inputs": { "gcs": 15, "sbp": 120, "rr": 20 }, "expectPrimaryContains": "12", "expectChip": "normal" },
-    { "id": "apache-ii", "inputs": { "temp": 37, "map": 85, "hr": 80, "rr": 16, "fio2": 21, "pao2": 90, "aao2": 200, "ph": 7.40, "sodium": 140, "potassium": 4, "creatinine": 1, "arf": false, "hct": 42, "wbc": 8, "gcs": 15, "agePoints": 0, "chronicPoints": 0 }, "expectPrimaryContains": "points", "expectChip": "normal" },
-    { "id": "dialysis-adequacy", "inputs": { "preBun": 60, "postBun": 20, "time": 4, "uf": 2, "weight": 70 }, "expectPrimaryContains": "Kt/V", "expectChip": "normal" },
-    { "id": "carboplatin-auc", "inputs": { "auc": 5, "gfr": 80 }, "expectPrimaryContains": "525", "expectChip": "normal" },
-    { "id": "anc", "inputs": { "wbc": 7, "neutPct": 60 }, "expectPrimaryContains": "4200", "expectChip": "normal" },
-    { "id": "anc", "inputs": { "wbc": 2, "neutPct": 40 }, "expectPrimaryContains": "800", "expectChip": "critical" },
-    { "id": "sirs-criteria", "inputs": { "temp": 38.5, "hr": 95, "rr": 22, "paco2": 40, "wbc": 12000, "bands": false }, "expectPrimaryContains": "3", "expectChip": "high" },
-    { "id": "fall-risk", "inputs": { "history": true, "secondary": false, "ambulatory": "none", "iv": true, "gait": "normal", "mental": false }, "expectPrimaryContains": "45", "expectChip": "critical" },
-    { "id": "contraction-timer", "inputs": { "duration": 60, "interval": 5 }, "expectPrimaryContains": "12.0", "expectChip": "high" },
-    { "id": "qc-stats", "inputs": { "v1": 100, "v2": 102, "v3": 98, "v4": 101, "v5": 99, "target": 100 }, "expectPrimaryContains": "CV", "expectChip": "normal" },
-    { "id": "medication-dilution", "inputs": { "c1": 100, "v1": 5, "c2": 10 }, "expectPrimaryContains": "50", "expectChip": "normal" },
-    { "id": "intake-output", "inputs": { "intake": 2500, "output": 2000 }, "expectPrimaryContains": "+500", "expectChip": "normal" },
-    { "id": "protein-requirement", "inputs": { "weight": 70, "gPerKg": 1.2 }, "expectPrimaryContains": "84", "expectChip": "normal" },
-    { "id": "dehydration", "inputs": { "weight": 20, "percent": 5 }, "expectPrimaryContains": "1000", "expectChip": "high" },
-    { "id": "aa-gradient", "inputs": { "fio2": 21, "paco2": 40, "pao2": 90 }, "expectPrimaryContains": "mmHg", "expectChip": "normal" },
-    { "id": "cardiac-output", "inputs": { "hr": 80, "sv": 70 }, "expectPrimaryContains": "5.60", "expectChip": "normal" },
-    { "id": "timi", "inputs": { "age65": true, "risk3": true, "st": false, "angina": false, "asa": false, "enzymes": true }, "expectPrimaryContains": "3", "expectChip": "high" },
-    { "id": "heart-score", "inputs": { "history": true, "ecg": false, "age": false, "risk": false, "troponin": false }, "expectPrimaryContains": "2", "expectChip": "normal" },
-    { "id": "pain-scale", "inputs": { "score": 8 }, "expectPrimaryContains": "8", "expectChip": "critical" },
-    { "id": "rass", "inputs": { "score": 0 }, "expectPrimaryContains": "0", "expectChip": "normal" },
-    { "id": "mallampati", "inputs": { "class": 3 }, "expectPrimaryContains": "Class 3", "expectChip": "high" },
-    { "id": "dvt-risk", "inputs": { "age41": false, "age60": true, "age75": false, "surgeryMajor": true, "cancer": false, "priorVTE": true, "immobile": false }, "expectPrimaryContains": "7", "expectChip": "critical" },
-    { "id": "renal-dose-adjust", "inputs": { "standardDose": 500, "crcl": 50, "normalCrcl": 100 }, "expectPrimaryContains": "250", "expectChip": "normal" },
-    { "id": "hepatic-dose", "inputs": { "standardDose": 100, "childPugh": "B" }, "expectPrimaryContains": "50", "expectChip": "high" },
-    { "id": "compounding", "inputs": { "desiredConc": 2, "stockHigh": 10, "stockLow": 0, "totalVol": 100 }, "expectPrimaryContains": "20", "expectChip": "normal" },
-    { "id": "syringe-prep", "inputs": { "dose": 5, "concentration": 10 }, "expectPrimaryContains": "0.50", "expectChip": "normal" },
-    { "id": "insulin-infusion", "inputs": { "weight": 70, "unitsPerKgHr": 0.1 }, "expectPrimaryContains": "7.00", "expectChip": "normal" },
-    { "id": "enteral-feeding", "inputs": { "dailyVol": 1200, "hours": 24 }, "expectPrimaryContains": "50.0", "expectChip": "normal" },
-    { "id": "surg-fluid", "inputs": { "weight": 70, "mlPerKg": 10 }, "expectPrimaryContains": "700", "expectChip": "normal" },
-    { "id": "lab-dilution", "inputs": { "c1": 100, "v1": 2, "c2": 10 }, "expectPrimaryContains": "20", "expectChip": "normal" },
-    { "id": "fio2-calculator", "inputs": { "device": "nc2" }, "expectPrimaryContains": "28", "expectChip": "normal" },
-    { "id": "peep-optimization", "inputs": { "fio2": 60 }, "expectPrimaryContains": "8", "expectChip": "normal" },
-    { "id": "transfusion", "inputs": { "weight": 70, "currentHb": 7, "targetHb": 10 }, "expectPrimaryContains": "units", "expectChip": "critical" },
-    { "id": "iron-deficit", "inputs": { "weight": 70, "currentHb": 8, "targetHb": 15 }, "expectPrimaryContains": "mg", "expectChip": "normal" },
-    { "id": "insulin-dose", "inputs": { "bg": 250, "target": 120, "isf": 50 }, "expectPrimaryContains": "2.6", "expectChip": "normal" },
-    { "id": "chemotherapy-dose", "inputs": { "weight": 70, "height": 170, "dosePerM2": 75 }, "expectPrimaryContains": "mg", "expectChip": "normal" },
-    { "id": "ped-bsa-dose", "inputs": { "weight": 20, "height": 110, "dosePerM2": 50 }, "expectPrimaryContains": "mg", "expectChip": "normal" },
-    { "id": "reconstitution", "inputs": { "mass": 500, "targetConc": 50 }, "expectPrimaryContains": "10.00", "expectChip": "normal" },
-    { "id": "aminoglycoside", "inputs": { "weight": 70, "drug": "gentamicin", "crcl": 80 }, "expectPrimaryContains": "mg", "expectChip": "normal" },
-    { "id": "postop-pain", "inputs": { "weight": 70, "drug": "morphine" }, "expectPrimaryContains": "7.0", "expectChip": "normal" },
-    { "id": "neonatal-dose", "inputs": { "weight": 3.5, "dosePerKg": 0.01 }, "expectPrimaryContains": "0.035", "expectChip": "normal" },
-    { "id": "mac", "inputs": { "agent": "sevoflurane", "ageGroup": "adult", "age": 40 }, "expectPrimaryContains": "MAC", "expectChip": "normal" },
-    { "id": "difficult-airway", "inputs": { "look": "normal", "evaluation": "normal", "mallampati": 2, "obstruction": false, "neck": "normal" }, "expectPrimaryContains": "0", "expectChip": "normal" },
-    { "id": "growth-percentile", "inputs": { "ageMonths": 12, "weight": 9.6, "sex": "male" }, "expectPrimaryContains": "percentile", "expectChip": "normal" },
-    { "id": "fetal-weight", "inputs": { "ac": 30, "bpd": 8.5 }, "expectPrimaryContains": "g", "expectChip": "normal" },
-    { "id": "has-bled", "inputs": { "htn": true, "renal": false, "liver": false, "stroke": false, "bleeding": false, "labileInr": false, "elderly": false, "drugs": true, "alcohol": true }, "expectPrimaryContains": "3", "expectChip": "critical" },
-    { "id": "meld-score", "inputs": { "bilirubin": 1, "inr": 1, "creatinine": 1, "sodium": 137 }, "expectPrimaryContains": "MELD 6", "expectChip": "normal" },
-    { "id": "free-water-deficit", "inputs": { "sex": "male", "age": 60, "weight": 70, "na": 138 }, "expectErrorContains": "hypernatremia" },
-    { "id": "aminoglycoside", "inputs": { "weight": 70, "drug": "gentamicin", "crcl": 35 }, "expectPrimaryContains": "368", "expectChip": "normal" },
-    { "id": "antibiotic-prophylaxis", "inputs": { "weight": 70, "procedure": "clean", "allergy": false }, "expectPrimaryContains": "2 g", "expectChip": "normal" },
-    { "id": "abg-analyzer", "inputs": { "ph": 7.25, "pco2": 50, "hco3": 22 }, "expectPrimaryContains": "acidosis", "expectChip": "high" },
-    { "id": "acid-base", "inputs": { "ph": 7.50, "pco2": 30, "hco3": 24, "na": 140, "cl": 105, "albumin": 4 }, "expectPrimaryContains": "alkalosis", "expectChip": "high" },
-    { "id": "broselow", "inputs": { "length": 100 }, "expectPrimaryContains": "Yellow", "expectChip": "normal" },
-    { "id": "acls-drugs", "inputs": { "drug": "epinephrine", "pediatric": false }, "expectPrimaryContains": "1 mg", "expectChip": "normal" },
-    { "id": "pediatric-resus", "inputs": { "weight": 15, "drug": "epinephrine" }, "expectPrimaryContains": "mg", "expectChip": "normal" },
-    { "id": "intubation-dose", "inputs": { "weight": 70, "drug": "etomidate", "pediatric": false }, "expectPrimaryContains": "21", "expectChip": "normal" },
-    { "id": "cpr-drug-dose", "inputs": { "weight": 20, "drug": "epinephrine", "pediatric": true }, "expectPrimaryContains": "0.20", "expectChip": "normal" },
-    { "id": "dopamine-infusion", "inputs": { "dose": 5, "weight": 70, "concentration": 1.6 }, "expectPrimaryContains": "mL/hr", "expectChip": "normal" },
-    { "id": "osmolality", "inputs": { "na": 140, "glucose": 100, "bun": 15 }, "expectPrimaryContains": "mOsm", "expectChip": "normal" },
-    { "id": "news2", "inputs": { "rr": 16, "spo2": 98, "sbp": 120, "hr": 80, "temp": 37, "oxygen": false, "consciousness": "alert" }, "expectPrimaryContains": "0", "expectChip": "normal" },
-    { "id": "drug-interaction", "inputs": { "drugA": "Warfarin", "drugB": "NSAIDs" }, "expectPrimaryContains": "Major", "expectChip": "high" },
-    { "id": "tdm", "inputs": { "drug": "lithium" }, "expectPrimaryContains": "mEq/L", "expectChip": "normal" },
-    { "id": "antidote", "inputs": { "poison": "opioid" }, "expectPrimaryContains": "Naloxone", "expectChip": "critical" },
-    { "id": "ventilator-settings", "inputs": { "ibw": 70, "rr": 16, "fio2": 40, "peep": 5 }, "expectPrimaryContains": "420", "expectChip": "normal" },
-    { "id": "electrolyte-deficit", "inputs": { "electrolyte": "k", "weight": 70, "current": 3.0, "target": 4.0 }, "expectPrimaryContains": "mEq", "expectChip": "normal" },
-    { "id": "tpn", "inputs": { "weight": 70, "caloriesPerKg": 25, "proteinPerKg": 1.5, "volume": 2000 }, "expectPrimaryContains": "kcal", "expectChip": "normal" }
+    {
+      "id": "bmi",
+      "inputs": {
+        "weight": 70,
+        "height": 170
+      },
+      "expectPrimaryContains": "24.2",
+      "expectChip": "normal"
+    },
+    {
+      "id": "bmi",
+      "inputs": {
+        "weight": 100,
+        "height": 170
+      },
+      "expectPrimaryContains": "34.6",
+      "expectChip": "high"
+    },
+    {
+      "id": "bmi",
+      "inputs": {
+        "weight": 154.3,
+        "height": 66.9
+      },
+      "displayUnits": {
+        "weight": "US",
+        "height": "US"
+      },
+      "expectPrimaryContains": "24.2",
+      "expectChip": "normal",
+      "note": "US lbs + inches"
+    },
+    {
+      "id": "bmi",
+      "inputs": {
+        "weight": 340.2,
+        "height": 169.9
+      },
+      "displayUnits": {
+        "weight": "US",
+        "height": "SI"
+      },
+      "expectPrimaryContains": "53.5",
+      "expectChip": "critical",
+      "note": "340 lbs + 170 cm (not 8.3 underweight)"
+    },
+    {
+      "id": "bsa",
+      "inputs": {
+        "weight": 154.3,
+        "height": 66.9
+      },
+      "displayUnits": {
+        "weight": "US",
+        "height": "US"
+      },
+      "expectPrimaryContains": "1.82",
+      "expectChip": "normal",
+      "note": "BSA US units"
+    },
+    {
+      "id": "bsa",
+      "inputs": {
+        "weight": 70,
+        "height": 170
+      },
+      "expectPrimaryContains": "1.82",
+      "expectChip": "normal"
+    },
+    {
+      "id": "creatinine-clearance",
+      "inputs": {
+        "age": 65,
+        "weight": 70,
+        "scr": 1.2,
+        "sex": "male"
+      },
+      "expectPrimaryContains": "60.8",
+      "expectChip": "low"
+    },
+    {
+      "id": "creatinine-clearance",
+      "inputs": {
+        "age": 65,
+        "weight": 70,
+        "scr": 1.2,
+        "sex": "female"
+      },
+      "expectPrimaryContains": "51.6",
+      "expectChip": "high"
+    },
+    {
+      "id": "egfr",
+      "inputs": {
+        "age": 55,
+        "scr": 1,
+        "sex": "male"
+      },
+      "expectPrimaryContains": "89",
+      "expectChip": "low"
+    },
+    {
+      "id": "egfr",
+      "inputs": {
+        "age": 55,
+        "scr": 88.4,
+        "sex": "male"
+      },
+      "displayUnits": {
+        "scr": "SI"
+      },
+      "expectPrimaryContains": "89",
+      "expectChip": "low",
+      "note": "SI µmol/L creatinine"
+    },
+    {
+      "id": "curb65",
+      "inputs": {
+        "confusion": true,
+        "bun": true,
+        "rr": false,
+        "bp": false,
+        "age65": false
+      },
+      "expectPrimaryContains": "2 / 5",
+      "expectChip": "high"
+    },
+    {
+      "id": "qsofa",
+      "inputs": {
+        "rr": 24,
+        "sbp": 105,
+        "gcs": 15
+      },
+      "expectPrimaryContains": "1 / 3",
+      "expectChip": "normal"
+    },
+    {
+      "id": "corrected-sodium",
+      "inputs": {
+        "na": 130,
+        "glucose": 400
+      },
+      "expectPrimaryContains": "137.2",
+      "expectChip": "normal"
+    },
+    {
+      "id": "maintenance-fluid",
+      "inputs": {
+        "weight": 70
+      },
+      "expectPrimaryContains": "2500",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ibw",
+      "inputs": {
+        "height": 170,
+        "sex": "male"
+      },
+      "expectPrimaryContains": "65.9",
+      "expectChip": "normal"
+    },
+    {
+      "id": "student-ecg",
+      "inputs": {
+        "rr": 20,
+        "qt": 10,
+        "paperSpeed": 25
+      },
+      "expectPrimaryContains": "HR 75",
+      "expectChip": "normal"
+    },
+    {
+      "id": "bishop-score",
+      "inputs": {
+        "dilation": 2,
+        "effacement": 2,
+        "station": 1,
+        "consistency": 1,
+        "position": 1
+      },
+      "expectPrimaryContains": "7 / 13",
+      "expectChip": "low"
+    },
+    {
+      "id": "opioid-conversion",
+      "inputs": {
+        "drug": "oxycodone",
+        "dose": 40
+      },
+      "expectPrimaryContains": "60.0 MME",
+      "expectChip": "high"
+    },
+    {
+      "id": "ascvd-risk",
+      "inputs": {
+        "age": 55,
+        "sex": "male",
+        "race": "white",
+        "tc": 200,
+        "hdl": 50,
+        "sbp": 130,
+        "treated": false,
+        "smoker": false,
+        "diabetic": false
+      },
+      "expectPrimaryContains": "%",
+      "expectChip": "normal"
+    },
+    {
+      "id": "burn-tbsa",
+      "inputs": {
+        "head": 0,
+        "trunkFront": 18,
+        "trunkBack": 0,
+        "armL": 9,
+        "armR": 0,
+        "legL": 0,
+        "legR": 0,
+        "groin": 0
+      },
+      "expectPrimaryContains": "27% TBSA",
+      "expectChip": "critical"
+    },
+    {
+      "id": "qtc",
+      "inputs": {
+        "qt": 400,
+        "hr": 75
+      },
+      "expectPrimaryContains": "447",
+      "expectChip": "normal"
+    },
+    {
+      "id": "sofa",
+      "inputs": {
+        "pao2": 90,
+        "fio2": 21,
+        "platelets": 150,
+        "bilirubin": 1,
+        "map": 85,
+        "vasopressors": 0,
+        "gcs": 15,
+        "creatinine": 1
+      },
+      "expectPrimaryContains": "0 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "disease-criteria",
+      "inputs": {
+        "disease": "dka"
+      },
+      "expectPrimaryContains": "DKA",
+      "expectInterpretationContains": "Glucose",
+      "expectChip": "normal"
+    },
+    {
+      "id": "diagnostic-scores",
+      "inputs": {
+        "score": "CURB-65"
+      },
+      "expectPrimaryContains": "CURB-65",
+      "expectInterpretationContains": "outpatient",
+      "expectChip": "normal"
+    },
+    {
+      "id": "lab-interpretation",
+      "inputs": {
+        "test": "potassium",
+        "value": 3.2
+      },
+      "expectPrimaryContains": "3.2",
+      "expectInterpretationContains": "Low",
+      "expectChip": "low"
+    },
+    {
+      "id": "antibiotic-renal",
+      "inputs": {
+        "drug": "vancomycin",
+        "age": 65,
+        "weight": 70,
+        "scr": 1.5,
+        "sex": "male"
+      },
+      "expectPrimaryContains": "15-20",
+      "expectChip": "high"
+    },
+    {
+      "id": "diet-tpn",
+      "inputs": {
+        "weight": 70,
+        "tdee": 2000,
+        "proteinG": 80,
+        "volume": 2000
+      },
+      "expectPrimaryContains": "83.3",
+      "expectChip": "normal"
+    },
+    {
+      "id": "map",
+      "inputs": {
+        "sbp": 120,
+        "dbp": 80
+      },
+      "expectPrimaryContains": "93",
+      "expectChip": "normal"
+    },
+    {
+      "id": "map",
+      "inputs": {
+        "sbp": 90,
+        "dbp": 60
+      },
+      "expectPrimaryContains": "70",
+      "expectChip": "normal"
+    },
+    {
+      "id": "chads2-vasc",
+      "inputs": {
+        "chf": true,
+        "htn": true,
+        "age75": false,
+        "age65": true,
+        "dm": false,
+        "stroke": false,
+        "vascular": false,
+        "sex": false
+      },
+      "expectPrimaryContains": "3",
+      "expectChip": "high"
+    },
+    {
+      "id": "wells-pe",
+      "inputs": {
+        "dvt": true,
+        "peLikely": false,
+        "hr": false,
+        "immob": false,
+        "prevPe": false,
+        "hemoptysis": false,
+        "malignancy": false
+      },
+      "expectPrimaryContains": "3",
+      "expectChip": "normal"
+    },
+    {
+      "id": "qsofa",
+      "inputs": {
+        "rr": 24,
+        "sbp": 90,
+        "gcs": 13
+      },
+      "expectPrimaryContains": "3",
+      "expectChip": "critical"
+    },
+    {
+      "id": "gcs",
+      "inputs": {
+        "eye": 4,
+        "verbal": 5,
+        "motor": 6
+      },
+      "expectPrimaryContains": "15",
+      "expectChip": "normal"
+    },
+    {
+      "id": "gcs",
+      "inputs": {
+        "eye": 2,
+        "verbal": 2,
+        "motor": 4
+      },
+      "expectPrimaryContains": "8",
+      "expectChip": "critical"
+    },
+    {
+      "id": "gcs",
+      "inputs": {
+        "eye": "",
+        "verbal": "",
+        "motor": ""
+      },
+      "expectErrorContains": "Select all three GCS components"
+    },
+    {
+      "id": "shock-index",
+      "inputs": {
+        "hr": 100,
+        "sbp": 100
+      },
+      "expectPrimaryContains": "1.00",
+      "expectChip": "critical"
+    },
+    {
+      "id": "parkland",
+      "inputs": {
+        "weight": 70,
+        "tbsa": 20
+      },
+      "expectPrimaryContains": "5,600",
+      "expectChip": "normal"
+    },
+    {
+      "id": "anion-gap",
+      "inputs": {
+        "na": 140,
+        "cl": 105,
+        "hco3": 24
+      },
+      "expectPrimaryContains": "11.0",
+      "expectChip": "normal"
+    },
+    {
+      "id": "corrected-calcium",
+      "inputs": {
+        "ca": 8,
+        "albumin": 2
+      },
+      "expectPrimaryContains": "9.60",
+      "expectChip": "normal"
+    },
+    {
+      "id": "maintenance-fluid",
+      "inputs": {
+        "weight": 15
+      },
+      "expectPrimaryContains": "1250",
+      "expectChip": "normal"
+    },
+    {
+      "id": "iv-flow-rate",
+      "inputs": {
+        "volume": 1000,
+        "time": 8
+      },
+      "expectPrimaryContains": "125.0",
+      "expectChip": "normal"
+    },
+    {
+      "id": "drops-per-minute",
+      "inputs": {
+        "volume": 500,
+        "factor": 20,
+        "time": 60
+      },
+      "expectPrimaryContains": "167",
+      "expectChip": "normal"
+    },
+    {
+      "id": "weight-based-dose",
+      "inputs": {
+        "weight": 70,
+        "dosePerKg": 15
+      },
+      "expectPrimaryContains": "1050",
+      "expectChip": "normal"
+    },
+    {
+      "id": "concentration",
+      "inputs": {
+        "mass": 500,
+        "volume": 10
+      },
+      "expectPrimaryContains": "50.00",
+      "expectChip": "normal"
+    },
+    {
+      "id": "tidal-volume",
+      "inputs": {
+        "ibw": 70,
+        "mlPerKg": 6
+      },
+      "expectPrimaryContains": "420",
+      "expectChip": "normal"
+    },
+    {
+      "id": "apgar",
+      "inputs": {
+        "appearance": 2,
+        "pulse": 2,
+        "grimace": 2,
+        "activity": 2,
+        "respiration": 2
+      },
+      "expectPrimaryContains": "10",
+      "expectChip": "normal"
+    },
+    {
+      "id": "defibrillation-energy",
+      "inputs": {
+        "weight": 70,
+        "attempt": 1,
+        "pediatric": false
+      },
+      "expectPrimaryContains": "140",
+      "expectChip": "normal"
+    },
+    {
+      "id": "pf-ratio",
+      "inputs": {
+        "pao2": 80,
+        "fio2": 40
+      },
+      "expectPrimaryContains": "200",
+      "expectChip": "high"
+    },
+    {
+      "id": "bicarbonate-deficit",
+      "inputs": {
+        "weight": 70,
+        "hco3": 16
+      },
+      "expectPrimaryContains": "280",
+      "expectChip": "normal"
+    },
+    {
+      "id": "potassium-correction",
+      "inputs": {
+        "weight": 70,
+        "current": 3,
+        "target": 4
+      },
+      "expectPrimaryContains": "28",
+      "expectChip": "normal"
+    },
+    {
+      "id": "minute-ventilation",
+      "inputs": {
+        "rr": 12,
+        "vt": 500
+      },
+      "expectPrimaryContains": "6.0",
+      "expectChip": "normal"
+    },
+    {
+      "id": "unit-converter",
+      "inputs": {
+        "value": 70,
+        "from": "kg",
+        "to": "lb"
+      },
+      "expectPrimaryContains": "154.3",
+      "expectChip": "normal"
+    },
+    {
+      "id": "calorie-requirement",
+      "inputs": {
+        "weight": 70,
+        "height": 170,
+        "age": 35,
+        "sex": "male",
+        "activity": 1.375
+      },
+      "expectPrimaryContains": "kcal",
+      "expectChip": "normal"
+    },
+    {
+      "id": "trauma-score",
+      "inputs": {
+        "gcs": 15,
+        "sbp": 120,
+        "rr": 20
+      },
+      "expectPrimaryContains": "12",
+      "expectChip": "normal"
+    },
+    {
+      "id": "apache-ii",
+      "inputs": {
+        "temp": 37,
+        "map": 85,
+        "hr": 80,
+        "rr": 16,
+        "fio2": 21,
+        "pao2": 90,
+        "aao2": 200,
+        "ph": 7.4,
+        "sodium": 140,
+        "potassium": 4,
+        "creatinine": 1,
+        "arf": false,
+        "hct": 42,
+        "wbc": 8,
+        "gcs": 15,
+        "agePoints": 0,
+        "chronicPoints": 0
+      },
+      "expectPrimaryContains": "points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "dialysis-adequacy",
+      "inputs": {
+        "preBun": 60,
+        "postBun": 20,
+        "time": 4,
+        "uf": 2,
+        "weight": 70
+      },
+      "expectPrimaryContains": "Kt/V",
+      "expectChip": "normal"
+    },
+    {
+      "id": "carboplatin-auc",
+      "inputs": {
+        "auc": 5,
+        "gfr": 80
+      },
+      "expectPrimaryContains": "525",
+      "expectChip": "normal"
+    },
+    {
+      "id": "anc",
+      "inputs": {
+        "wbc": 7,
+        "neutPct": 60
+      },
+      "expectPrimaryContains": "4200",
+      "expectChip": "normal"
+    },
+    {
+      "id": "anc",
+      "inputs": {
+        "wbc": 2,
+        "neutPct": 40
+      },
+      "expectPrimaryContains": "800",
+      "expectChip": "critical"
+    },
+    {
+      "id": "sirs-criteria",
+      "inputs": {
+        "temp": 38.5,
+        "hr": 95,
+        "rr": 22,
+        "paco2": 40,
+        "wbc": 12000,
+        "bands": false
+      },
+      "expectPrimaryContains": "3",
+      "expectChip": "high"
+    },
+    {
+      "id": "fall-risk",
+      "inputs": {
+        "history": true,
+        "secondary": false,
+        "ambulatory": "none",
+        "iv": true,
+        "gait": "normal",
+        "mental": false
+      },
+      "expectPrimaryContains": "45",
+      "expectChip": "critical"
+    },
+    {
+      "id": "contraction-timer",
+      "inputs": {
+        "duration": 60,
+        "interval": 5
+      },
+      "expectPrimaryContains": "12.0",
+      "expectChip": "high"
+    },
+    {
+      "id": "qc-stats",
+      "inputs": {
+        "v1": 100,
+        "v2": 102,
+        "v3": 98,
+        "v4": 101,
+        "v5": 99,
+        "target": 100
+      },
+      "expectPrimaryContains": "CV",
+      "expectChip": "normal"
+    },
+    {
+      "id": "medication-dilution",
+      "inputs": {
+        "c1": 100,
+        "v1": 5,
+        "c2": 10
+      },
+      "expectPrimaryContains": "50",
+      "expectChip": "normal"
+    },
+    {
+      "id": "intake-output",
+      "inputs": {
+        "intake": 2500,
+        "output": 2000
+      },
+      "expectPrimaryContains": "+500",
+      "expectChip": "normal"
+    },
+    {
+      "id": "protein-requirement",
+      "inputs": {
+        "weight": 70,
+        "gPerKg": 1.2
+      },
+      "expectPrimaryContains": "84",
+      "expectChip": "normal"
+    },
+    {
+      "id": "dehydration",
+      "inputs": {
+        "weight": 20,
+        "percent": 5
+      },
+      "expectPrimaryContains": "1000",
+      "expectChip": "high"
+    },
+    {
+      "id": "aa-gradient",
+      "inputs": {
+        "fio2": 21,
+        "paco2": 40,
+        "pao2": 90
+      },
+      "expectPrimaryContains": "mmHg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "cardiac-output",
+      "inputs": {
+        "hr": 80,
+        "sv": 70
+      },
+      "expectPrimaryContains": "5.60",
+      "expectChip": "normal"
+    },
+    {
+      "id": "timi",
+      "inputs": {
+        "age65": true,
+        "risk3": true,
+        "st": false,
+        "angina": false,
+        "asa": false,
+        "enzymes": true
+      },
+      "expectPrimaryContains": "3",
+      "expectChip": "high"
+    },
+    {
+      "id": "heart-score",
+      "inputs": {
+        "history": true,
+        "ecg": false,
+        "age": false,
+        "risk": false,
+        "troponin": false
+      },
+      "expectPrimaryContains": "2",
+      "expectChip": "normal"
+    },
+    {
+      "id": "pain-scale",
+      "inputs": {
+        "score": 8
+      },
+      "expectPrimaryContains": "8",
+      "expectChip": "critical"
+    },
+    {
+      "id": "rass",
+      "inputs": {
+        "score": 0
+      },
+      "expectPrimaryContains": "0",
+      "expectChip": "normal"
+    },
+    {
+      "id": "mallampati",
+      "inputs": {
+        "class": 3
+      },
+      "expectPrimaryContains": "Class 3",
+      "expectChip": "high"
+    },
+    {
+      "id": "dvt-risk",
+      "inputs": {
+        "age41": false,
+        "age60": true,
+        "age75": false,
+        "surgeryMajor": true,
+        "cancer": false,
+        "priorVTE": true,
+        "immobile": false
+      },
+      "expectPrimaryContains": "7",
+      "expectChip": "critical"
+    },
+    {
+      "id": "renal-dose-adjust",
+      "inputs": {
+        "standardDose": 500,
+        "crcl": 50,
+        "normalCrcl": 100
+      },
+      "expectPrimaryContains": "250",
+      "expectChip": "normal"
+    },
+    {
+      "id": "hepatic-dose",
+      "inputs": {
+        "standardDose": 100,
+        "childPugh": "B"
+      },
+      "expectPrimaryContains": "50",
+      "expectChip": "high"
+    },
+    {
+      "id": "compounding",
+      "inputs": {
+        "desiredConc": 2,
+        "stockHigh": 10,
+        "stockLow": 0,
+        "totalVol": 100
+      },
+      "expectPrimaryContains": "20",
+      "expectChip": "normal"
+    },
+    {
+      "id": "syringe-prep",
+      "inputs": {
+        "dose": 5,
+        "concentration": 10
+      },
+      "expectPrimaryContains": "0.50",
+      "expectChip": "normal"
+    },
+    {
+      "id": "insulin-infusion",
+      "inputs": {
+        "weight": 70,
+        "unitsPerKgHr": 0.1
+      },
+      "expectPrimaryContains": "7.00",
+      "expectChip": "normal"
+    },
+    {
+      "id": "enteral-feeding",
+      "inputs": {
+        "dailyVol": 1200,
+        "hours": 24
+      },
+      "expectPrimaryContains": "50.0",
+      "expectChip": "normal"
+    },
+    {
+      "id": "surg-fluid",
+      "inputs": {
+        "weight": 70,
+        "mlPerKg": 10
+      },
+      "expectPrimaryContains": "700",
+      "expectChip": "normal"
+    },
+    {
+      "id": "lab-dilution",
+      "inputs": {
+        "c1": 100,
+        "v1": 2,
+        "c2": 10
+      },
+      "expectPrimaryContains": "20",
+      "expectChip": "normal"
+    },
+    {
+      "id": "fio2-calculator",
+      "inputs": {
+        "device": "nc2"
+      },
+      "expectPrimaryContains": "28",
+      "expectChip": "normal"
+    },
+    {
+      "id": "peep-optimization",
+      "inputs": {
+        "fio2": 60
+      },
+      "expectPrimaryContains": "8",
+      "expectChip": "normal"
+    },
+    {
+      "id": "transfusion",
+      "inputs": {
+        "weight": 70,
+        "currentHb": 7,
+        "targetHb": 10
+      },
+      "expectPrimaryContains": "units",
+      "expectChip": "critical"
+    },
+    {
+      "id": "iron-deficit",
+      "inputs": {
+        "weight": 70,
+        "currentHb": 8,
+        "targetHb": 15
+      },
+      "expectPrimaryContains": "mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "insulin-dose",
+      "inputs": {
+        "bg": 250,
+        "target": 120,
+        "isf": 50
+      },
+      "expectPrimaryContains": "2.6",
+      "expectChip": "normal"
+    },
+    {
+      "id": "chemotherapy-dose",
+      "inputs": {
+        "weight": 70,
+        "height": 170,
+        "dosePerM2": 75
+      },
+      "expectPrimaryContains": "mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ped-bsa-dose",
+      "inputs": {
+        "weight": 20,
+        "height": 110,
+        "dosePerM2": 50
+      },
+      "expectPrimaryContains": "mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "reconstitution",
+      "inputs": {
+        "mass": 500,
+        "targetConc": 50
+      },
+      "expectPrimaryContains": "10.00",
+      "expectChip": "normal"
+    },
+    {
+      "id": "aminoglycoside",
+      "inputs": {
+        "weight": 70,
+        "drug": "gentamicin",
+        "crcl": 80
+      },
+      "expectPrimaryContains": "mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "postop-pain",
+      "inputs": {
+        "weight": 70,
+        "drug": "morphine"
+      },
+      "expectPrimaryContains": "7.0",
+      "expectChip": "normal"
+    },
+    {
+      "id": "neonatal-dose",
+      "inputs": {
+        "weight": 3.5,
+        "dosePerKg": 0.01
+      },
+      "expectPrimaryContains": "0.035",
+      "expectChip": "normal"
+    },
+    {
+      "id": "mac",
+      "inputs": {
+        "agent": "sevoflurane",
+        "ageGroup": "adult",
+        "age": 40
+      },
+      "expectPrimaryContains": "MAC",
+      "expectChip": "normal"
+    },
+    {
+      "id": "difficult-airway",
+      "inputs": {
+        "look": "normal",
+        "evaluation": "normal",
+        "mallampati": 2,
+        "obstruction": false,
+        "neck": "normal"
+      },
+      "expectPrimaryContains": "0",
+      "expectChip": "normal"
+    },
+    {
+      "id": "growth-percentile",
+      "inputs": {
+        "ageMonths": 12,
+        "weight": 9.6,
+        "sex": "male"
+      },
+      "expectPrimaryContains": "percentile",
+      "expectChip": "normal"
+    },
+    {
+      "id": "fetal-weight",
+      "inputs": {
+        "ac": 30,
+        "bpd": 8.5
+      },
+      "expectPrimaryContains": "g",
+      "expectChip": "normal"
+    },
+    {
+      "id": "has-bled",
+      "inputs": {
+        "htn": true,
+        "renal": false,
+        "liver": false,
+        "stroke": false,
+        "bleeding": false,
+        "labileInr": false,
+        "elderly": false,
+        "drugs": true,
+        "alcohol": true
+      },
+      "expectPrimaryContains": "3",
+      "expectChip": "critical"
+    },
+    {
+      "id": "meld-score",
+      "inputs": {
+        "bilirubin": 1,
+        "inr": 1,
+        "creatinine": 1,
+        "sodium": 137
+      },
+      "expectPrimaryContains": "MELD 6",
+      "expectChip": "normal"
+    },
+    {
+      "id": "free-water-deficit",
+      "inputs": {
+        "sex": "male",
+        "age": 60,
+        "weight": 70,
+        "na": 138
+      },
+      "expectErrorContains": "hypernatremia"
+    },
+    {
+      "id": "aminoglycoside",
+      "inputs": {
+        "weight": 70,
+        "drug": "gentamicin",
+        "crcl": 35
+      },
+      "expectPrimaryContains": "368",
+      "expectChip": "normal"
+    },
+    {
+      "id": "antibiotic-prophylaxis",
+      "inputs": {
+        "weight": 70,
+        "procedure": "clean",
+        "allergy": false
+      },
+      "expectPrimaryContains": "2 g",
+      "expectChip": "normal"
+    },
+    {
+      "id": "abg-analyzer",
+      "inputs": {
+        "ph": 7.25,
+        "pco2": 50,
+        "hco3": 22
+      },
+      "expectPrimaryContains": "acidosis",
+      "expectChip": "high"
+    },
+    {
+      "id": "acid-base",
+      "inputs": {
+        "ph": 7.5,
+        "pco2": 30,
+        "hco3": 24,
+        "na": 140,
+        "cl": 105,
+        "albumin": 4
+      },
+      "expectPrimaryContains": "alkalosis",
+      "expectChip": "high"
+    },
+    {
+      "id": "broselow",
+      "inputs": {
+        "length": 100
+      },
+      "expectPrimaryContains": "Yellow",
+      "expectChip": "normal"
+    },
+    {
+      "id": "acls-drugs",
+      "inputs": {
+        "drug": "epinephrine",
+        "pediatric": false
+      },
+      "expectPrimaryContains": "1 mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "pediatric-resus",
+      "inputs": {
+        "weight": 15,
+        "drug": "epinephrine"
+      },
+      "expectPrimaryContains": "mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "intubation-dose",
+      "inputs": {
+        "weight": 70,
+        "drug": "etomidate",
+        "pediatric": false
+      },
+      "expectPrimaryContains": "21",
+      "expectChip": "normal"
+    },
+    {
+      "id": "cpr-drug-dose",
+      "inputs": {
+        "weight": 20,
+        "drug": "epinephrine",
+        "pediatric": true
+      },
+      "expectPrimaryContains": "0.20",
+      "expectChip": "normal"
+    },
+    {
+      "id": "dopamine-infusion",
+      "inputs": {
+        "dose": 5,
+        "weight": 70,
+        "concentration": 1.6
+      },
+      "expectPrimaryContains": "mL/hr",
+      "expectChip": "normal"
+    },
+    {
+      "id": "osmolality",
+      "inputs": {
+        "na": 140,
+        "glucose": 100,
+        "bun": 15
+      },
+      "expectPrimaryContains": "mOsm",
+      "expectChip": "normal"
+    },
+    {
+      "id": "news2",
+      "inputs": {
+        "rr": 16,
+        "spo2": 98,
+        "sbp": 120,
+        "hr": 80,
+        "temp": 37,
+        "oxygen": false,
+        "consciousness": "alert"
+      },
+      "expectPrimaryContains": "0",
+      "expectChip": "normal"
+    },
+    {
+      "id": "drug-interaction",
+      "inputs": {
+        "drugA": "Warfarin",
+        "drugB": "NSAIDs"
+      },
+      "expectPrimaryContains": "Major",
+      "expectChip": "high"
+    },
+    {
+      "id": "tdm",
+      "inputs": {
+        "drug": "lithium"
+      },
+      "expectPrimaryContains": "mEq/L",
+      "expectChip": "normal"
+    },
+    {
+      "id": "antidote",
+      "inputs": {
+        "poison": "opioid"
+      },
+      "expectPrimaryContains": "Naloxone",
+      "expectChip": "critical"
+    },
+    {
+      "id": "ventilator-settings",
+      "inputs": {
+        "ibw": 70,
+        "rr": 16,
+        "fio2": 40,
+        "peep": 5
+      },
+      "expectPrimaryContains": "420",
+      "expectChip": "normal"
+    },
+    {
+      "id": "electrolyte-deficit",
+      "inputs": {
+        "electrolyte": "k",
+        "weight": 70,
+        "current": 3,
+        "target": 4
+      },
+      "expectPrimaryContains": "mEq",
+      "expectChip": "normal"
+    },
+    {
+      "id": "tpn",
+      "inputs": {
+        "weight": 70,
+        "caloriesPerKg": 25,
+        "proteinPerKg": 1.5,
+        "volume": 2000
+      },
+      "expectPrimaryContains": "kcal",
+      "expectChip": "normal"
+    },
+    {
+      "id": "abcd2-score",
+      "inputs": {
+        "age": false,
+        "bp": false,
+        "clinical": "0",
+        "duration": "0",
+        "dm": false
+      },
+      "expectPrimaryContains": "0 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "alvarado-score",
+      "inputs": {
+        "migratory": false,
+        "anorexia": false,
+        "nausea": false,
+        "tenderness": false,
+        "rebound": false,
+        "temp": false,
+        "leukocytosis": false,
+        "shift": false
+      },
+      "expectPrimaryContains": "0 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "blood-loss",
+      "inputs": {
+        "weight": "",
+        "preHb": 14,
+        "postHb": 10,
+        "bloodVol": ""
+      },
+      "expectPrimaryContains": "1667 mL",
+      "expectChip": "critical"
+    },
+    {
+      "id": "canadian-ct-head",
+      "inputs": {
+        "gcs": false,
+        "fracture": false,
+        "basilar": false,
+        "vomiting": false,
+        "age": false,
+        "amnesia": false,
+        "mechanism": false
+      },
+      "expectPrimaryContains": "CT Head Not Indicated",
+      "expectChip": "normal"
+    },
+    {
+      "id": "centor-score",
+      "inputs": {
+        "fever": false,
+        "exudate": false,
+        "nodes": false,
+        "cough": false,
+        "age": "0"
+      },
+      "expectPrimaryContains": "0 points",
+      "expectChip": "low"
+    },
+    {
+      "id": "child-pugh",
+      "inputs": {
+        "bilirubin": 1,
+        "albumin": 1,
+        "pt": 1,
+        "ascites": 1,
+        "encephalopathy": 1
+      },
+      "expectPrimaryContains": "Class A (5 points)",
+      "expectChip": "normal"
+    },
+    {
+      "id": "crcl-obese",
+      "inputs": {
+        "age": 55,
+        "tbw": 120,
+        "height": 170,
+        "scr": 1.2,
+        "sex": "male"
+      },
+      "expectPrimaryContains": "86.1 mL/min",
+      "expectChip": "normal"
+    },
+    {
+      "id": "crcl-obese-adjbw",
+      "inputs": {
+        "age": 55,
+        "tbw": 120,
+        "height": 170,
+        "scr": 1.2,
+        "sex": "male"
+      },
+      "expectPrimaryContains": "86.1 mL/min",
+      "expectChip": "normal"
+    },
+    {
+      "id": "delta-gap",
+      "inputs": {
+        "na": 140,
+        "cl": 104,
+        "hco3": 24
+      },
+      "expectPrimaryContains": "AG: 12.0 mEq/L",
+      "expectChip": "normal"
+    },
+    {
+      "id": "diet-bmi",
+      "inputs": {
+        "weight": 70,
+        "height": 170
+      },
+      "expectPrimaryContains": "24.2 kg/m²",
+      "expectChip": "normal"
+    },
+    {
+      "id": "diet-ibw",
+      "inputs": {
+        "height": 170,
+        "sex": "male"
+      },
+      "expectPrimaryContains": "65.9 kg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "edd",
+      "inputs": {
+        "lmp": ""
+      },
+      "expectErrorContains": "Enter LMP"
+    },
+    {
+      "id": "emergency-drug-dose",
+      "inputs": {
+        "weight": 70,
+        "drug": "epinephrine"
+      },
+      "expectPrimaryContains": "0.70 mg IV/IO",
+      "expectChip": "normal"
+    },
+    {
+      "id": "fena-calculator",
+      "inputs": {
+        "una": 20,
+        "sna": 140,
+        "ucr": 100,
+        "scr": 1
+      },
+      "expectPrimaryContains": "0.1 %",
+      "expectChip": "normal"
+    },
+    {
+      "id": "fib4",
+      "inputs": {
+        "age": 55,
+        "ast": 45,
+        "alt": 35,
+        "platelets": 150
+      },
+      "expectPrimaryContains": "2.79",
+      "expectChip": "critical"
+    },
+    {
+      "id": "fib4-index",
+      "inputs": {
+        "age": 55,
+        "ast": 45,
+        "alt": 35,
+        "platelets": 150
+      },
+      "expectPrimaryContains": "2.79",
+      "expectChip": "critical"
+    },
+    {
+      "id": "fluid-replacement",
+      "inputs": {
+        "weight": 70,
+        "mlPerKg": 10
+      },
+      "expectPrimaryContains": "700 mL",
+      "expectChip": "normal"
+    },
+    {
+      "id": "formula-library",
+      "inputs": {
+        "formula": 0
+      },
+      "expectPrimaryContains": "weight(kg) / height(m)²",
+      "expectChip": "normal"
+    },
+    {
+      "id": "four-score",
+      "inputs": {
+        "eye": "4",
+        "motor": "4",
+        "brainstem": "4",
+        "respiration": "4"
+      },
+      "expectPrimaryContains": "16 / 16 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "gcs-pediatric",
+      "inputs": {
+        "eye": 4,
+        "verbal": 5,
+        "motor": 6
+      },
+      "expectPrimaryContains": "15 / 15",
+      "expectChip": "normal"
+    },
+    {
+      "id": "gdm-screening",
+      "inputs": {
+        "approach": "twostep",
+        "fasting": 90,
+        "hr1": 145,
+        "hr2": 130,
+        "hr3": 120
+      },
+      "expectPrimaryContains": "Normal 3-hr OGTT",
+      "expectChip": "normal"
+    },
+    {
+      "id": "gdm-thresholds",
+      "inputs": {
+        "approach": "twostep",
+        "fasting": 90,
+        "hr1": 145,
+        "hr2": 130,
+        "hr3": 120
+      },
+      "expectPrimaryContains": "Normal 3-hr OGTT",
+      "expectChip": "normal"
+    },
+    {
+      "id": "geneva-revised",
+      "inputs": {
+        "age65": false,
+        "prevDvtPe": false,
+        "surgFx1m": false,
+        "malignancy": false,
+        "unilateralPain": false,
+        "hemoptysis": false,
+        "hr": 0,
+        "limbEdema": false
+      },
+      "expectPrimaryContains": "0 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "gestational-age",
+      "inputs": {
+        "lmp": "",
+        "usWeeks": "",
+        "usDays": 0,
+        "usDate": ""
+      },
+      "expectErrorContains": "Enter LMP or ultrasound GA"
+    },
+    {
+      "id": "glasgow-blatchford",
+      "inputs": {
+        "bun": 18,
+        "hb": 14,
+        "sex": "male",
+        "sbp": 120,
+        "hr": false,
+        "melena": false,
+        "syncope": false,
+        "hepatic": false,
+        "hf": false
+      },
+      "expectPrimaryContains": "2 points",
+      "expectChip": "critical"
+    },
+    {
+      "id": "grace-acs",
+      "inputs": {
+        "agePts": 55,
+        "hrPts": 0,
+        "sbpPts": 37,
+        "crPts": 8,
+        "killipPts": 0,
+        "cardiacArrest": false,
+        "stDeviation": false,
+        "elevatedEnzymes": false
+      },
+      "expectPrimaryContains": "100 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "grace-score",
+      "inputs": {
+        "agePts": 55,
+        "hrPts": 0,
+        "sbpPts": 37,
+        "crPts": 8,
+        "killipPts": 0,
+        "cardiacArrest": false,
+        "stDeviation": false,
+        "elevatedEnzymes": false
+      },
+      "expectPrimaryContains": "100 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "head-circumference",
+      "inputs": {
+        "ageMonths": 6,
+        "hc": 43
+      },
+      "expectPrimaryContains": ">95th percentile (est.)",
+      "expectChip": "high"
+    },
+    {
+      "id": "heparin-dosing",
+      "inputs": {
+        "weight": 70,
+        "indication": "vte"
+      },
+      "expectPrimaryContains": "Bolus: 5600 units",
+      "expectChip": "normal"
+    },
+    {
+      "id": "induction-dose",
+      "inputs": {
+        "weight": 70,
+        "drug": "propofol",
+        "pediatric": false
+      },
+      "expectPrimaryContains": "105.00 mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "infusion-rate",
+      "inputs": {
+        "volume": 1000,
+        "time": 8
+      },
+      "expectPrimaryContains": "125.0 mL/hr",
+      "expectChip": "normal"
+    },
+    {
+      "id": "iv-compatibility",
+      "inputs": {
+        "drug1": "vancomycin",
+        "drug2": "ns"
+      },
+      "expectPrimaryContains": "Verify Y-site compatibility",
+      "expectChip": "low"
+    },
+    {
+      "id": "iv-infusion",
+      "inputs": {
+        "volume": 1000,
+        "time": 8
+      },
+      "expectPrimaryContains": "125.0 mL/hr",
+      "expectChip": "normal"
+    },
+    {
+      "id": "lab-anion-gap",
+      "inputs": {
+        "na": 140,
+        "cl": 105,
+        "hco3": 24
+      },
+      "expectPrimaryContains": "11.0 mEq/L",
+      "expectChip": "normal"
+    },
+    {
+      "id": "lab-corrected-calcium",
+      "inputs": {
+        "ca": 8.5,
+        "albumin": 4
+      },
+      "expectPrimaryContains": "8.50 mg/dL",
+      "expectChip": "normal"
+    },
+    {
+      "id": "lab-osmolality",
+      "inputs": {
+        "na": 140,
+        "glucose": 100,
+        "bun": 15
+      },
+      "expectPrimaryContains": "290.9 mOsm/kg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "lrinec-score",
+      "inputs": {
+        "crp": 10,
+        "wbc": 8000,
+        "hb": 14,
+        "na": 140,
+        "cr": 1,
+        "glucose": 100
+      },
+      "expectPrimaryContains": "0 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "medication-dose",
+      "inputs": {
+        "weight": 70,
+        "dosePerKg": 15
+      },
+      "expectPrimaryContains": "1050.0 mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "meld-meldna",
+      "inputs": {
+        "bilirubin": 1,
+        "inr": 1.2,
+        "creatinine": 1,
+        "sodium": 138
+      },
+      "expectPrimaryContains": "MELD 8 | MELD-Na 10",
+      "expectChip": "normal"
+    },
+    {
+      "id": "neonatal-bilirubin",
+      "inputs": {
+        "ageHours": 24,
+        "bilirubin": 8,
+        "risk": false
+      },
+      "expectPrimaryContains": "8 mg/dL at 24 hr",
+      "expectChip": "normal"
+    },
+    {
+      "id": "nihss",
+      "inputs": {
+        "loc": "0",
+        "loc_q": "0",
+        "loc_cmd": "0",
+        "gaze": "0",
+        "visual": "0",
+        "facial": "0",
+        "arm_l": "0",
+        "arm_r": "0",
+        "leg_l": "0",
+        "leg_r": "0",
+        "ataxia": "0",
+        "sensory": "0",
+        "language": "0",
+        "dysarthria": "0",
+        "extinction": "0"
+      },
+      "expectPrimaryContains": "0 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "norepi-infusion",
+      "inputs": {
+        "dose": 5,
+        "weight": 70,
+        "concentration": 1.6
+      },
+      "expectPrimaryContains": "13.13 mL/hr",
+      "expectChip": "normal"
+    },
+    {
+      "id": "nutrition-req",
+      "inputs": {
+        "weight": 70,
+        "height": 170,
+        "age": 35,
+        "sex": "male",
+        "activity": 1.375
+      },
+      "expectPrimaryContains": "2190 kcal/day",
+      "expectChip": "normal"
+    },
+    {
+      "id": "osmolarity",
+      "inputs": {
+        "na": 140,
+        "glucose": 100,
+        "bun": 15
+      },
+      "expectPrimaryContains": "291 mOsm/L",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ottawa-ankle",
+      "inputs": {
+        "area": "ankle",
+        "noWB": false,
+        "lateralMalleolus": false,
+        "medialMalleolus": false,
+        "base5th": false,
+        "navicular": false,
+        "age55": false,
+        "patellar": false,
+        "fibular": false,
+        "cantFlex90": false
+      },
+      "expectPrimaryContains": "X-ray NOT indicated",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ottawa-foot",
+      "inputs": {
+        "area": "ankle",
+        "noWB": false,
+        "lateralMalleolus": false,
+        "medialMalleolus": false,
+        "base5th": false,
+        "navicular": false,
+        "age55": false,
+        "patellar": false,
+        "fibular": false,
+        "cantFlex90": false
+      },
+      "expectPrimaryContains": "X-ray NOT indicated",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ottawa-knee",
+      "inputs": {
+        "area": "ankle",
+        "noWB": false,
+        "lateralMalleolus": false,
+        "medialMalleolus": false,
+        "base5th": false,
+        "navicular": false,
+        "age55": false,
+        "patellar": false,
+        "fibular": false,
+        "cantFlex90": false
+      },
+      "expectPrimaryContains": "X-ray NOT indicated",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ottawa-rules",
+      "inputs": {
+        "area": "ankle",
+        "noWB": false,
+        "lateralMalleolus": false,
+        "medialMalleolus": false,
+        "base5th": false,
+        "navicular": false,
+        "age55": false,
+        "patellar": false,
+        "fibular": false,
+        "cantFlex90": false
+      },
+      "expectPrimaryContains": "X-ray NOT indicated",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ovulation-calculator",
+      "inputs": {
+        "lmp": "2026-05-25",
+        "cycle": 28
+      },
+      "expectPrimaryContains": "Mon, 8 Jun 2026",
+      "expectChip": "normal"
+    },
+    {
+      "id": "oxygen-delivery",
+      "inputs": {
+        "device": "nc2"
+      },
+      "expectPrimaryContains": "28%",
+      "expectChip": "normal"
+    },
+    {
+      "id": "oxygen-requirement",
+      "inputs": {
+        "targetSpo2": 94
+      },
+      "expectPrimaryContains": "36%",
+      "expectChip": "normal"
+    },
+    {
+      "id": "oxytocin-infusion",
+      "inputs": {
+        "mlHr": 3,
+        "unitsPerL": 30
+      },
+      "expectPrimaryContains": "1.5 mU/min",
+      "expectChip": "normal"
+    },
+    {
+      "id": "paralytic-dose",
+      "inputs": {
+        "weight": 70,
+        "drug": "rocuronium"
+      },
+      "expectPrimaryContains": "70.0 mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "pecarn-head-ct",
+      "inputs": {
+        "ageGroup": "gte2",
+        "gcsLt15": false,
+        "palpableSkullFx": false,
+        "occipitalHematoma": false,
+        "locGt5s": false,
+        "actingAbnormal": false,
+        "anyLoc": false,
+        "vomiting": false,
+        "severeHeadache": false,
+        "basilarSkull": false,
+        "mechanism": "nonsevere"
+      },
+      "expectPrimaryContains": "CT Not Indicated",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ped-bp-percentile",
+      "inputs": {
+        "ageYears": 10,
+        "height": 50,
+        "sbp": 110,
+        "dbp": 70,
+        "sex": "male"
+      },
+      "expectPrimaryContains": "Elevated BP for age",
+      "expectChip": "high"
+    },
+    {
+      "id": "ped-emergency-drugs",
+      "inputs": {
+        "weight": 15,
+        "drug": "epinephrine"
+      },
+      "expectPrimaryContains": "0.15 mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ped-gcs",
+      "inputs": {
+        "eye": 4,
+        "verbal": 5,
+        "motor": 6
+      },
+      "expectPrimaryContains": "15 / 15",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ped-maintenance-fluid",
+      "inputs": {
+        "weight": 70
+      },
+      "expectPrimaryContains": "2500 mL/24h",
+      "expectChip": "normal"
+    },
+    {
+      "id": "ped-weight-dose",
+      "inputs": {
+        "weight": 70,
+        "dosePerKg": 15
+      },
+      "expectPrimaryContains": "1050.0 mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "pediatric-emergency-dose",
+      "inputs": {
+        "weight": 20,
+        "drug": "epinephrine"
+      },
+      "expectPrimaryContains": "0.20 mg IM",
+      "expectChip": "normal"
+    },
+    {
+      "id": "perc-rule",
+      "inputs": {
+        "age": false,
+        "hr": false,
+        "spo2": false,
+        "dvt_hx": false,
+        "trauma": false,
+        "hemoptysis": false,
+        "hormone": false,
+        "leg": false
+      },
+      "expectPrimaryContains": "PERC Negative",
+      "expectChip": "normal"
+    },
+    {
+      "id": "pews",
+      "inputs": {
+        "behavior": 0,
+        "cardiovascular": 0,
+        "respiratory": 0
+      },
+      "expectPrimaryContains": "0 / 9 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "pews-monaghan",
+      "inputs": {
+        "behavior": 0,
+        "cardiovascular": 0,
+        "respiratory": 0
+      },
+      "expectPrimaryContains": "0 / 9 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "phenytoin-corrected",
+      "inputs": {
+        "measured": 8,
+        "albumin": 2.5,
+        "renalImpair": "none"
+      },
+      "expectPrimaryContains": "13.3 mg/L (corrected)",
+      "expectChip": "normal"
+    },
+    {
+      "id": "phenytoin-correction",
+      "inputs": {
+        "measured": 8,
+        "albumin": 2.5,
+        "renalImpair": "none"
+      },
+      "expectPrimaryContains": "13.3 mg/L (corrected)",
+      "expectChip": "normal"
+    },
+    {
+      "id": "preeclampsia-aspirin",
+      "inputs": {
+        "priorPE": false,
+        "multifetal": false,
+        "chronicHTN": false,
+        "t1t2dm": false,
+        "renalDz": false,
+        "autoimm": false,
+        "firstPreg": false,
+        "obese": false,
+        "famHx": false,
+        "age35": false,
+        "priorAdverse": false
+      },
+      "expectPrimaryContains": "Aspirin NOT indicated",
+      "expectChip": "normal"
+    },
+    {
+      "id": "preeclampsia-risk",
+      "inputs": {
+        "priorPE": false,
+        "multifetal": false,
+        "chronicHTN": false,
+        "t1t2dm": false,
+        "renalDz": false,
+        "autoimm": false,
+        "firstPreg": false,
+        "obese": false,
+        "famHx": false,
+        "age35": false,
+        "priorAdverse": false
+      },
+      "expectPrimaryContains": "Aspirin NOT indicated",
+      "expectChip": "normal"
+    },
+    {
+      "id": "pregnancy-weight",
+      "inputs": {
+        "preBmi": 24,
+        "weeks": 20
+      },
+      "expectPrimaryContains": "25-35 lb total gain (IOM)",
+      "expectChip": "normal"
+    },
+    {
+      "id": "rcri",
+      "inputs": {
+        "surgery": false,
+        "ischemic": false,
+        "chf": false,
+        "cerebrovascular": false,
+        "dm": false,
+        "cr": false
+      },
+      "expectPrimaryContains": "0 predictors",
+      "expectChip": "normal"
+    },
+    {
+      "id": "revised-geneva",
+      "inputs": {
+        "age65": false,
+        "prevDvtPe": false,
+        "surgFx1m": false,
+        "malignancy": false,
+        "unilateralPain": false,
+        "hemoptysis": false,
+        "hr": 0,
+        "limbEdema": false
+      },
+      "expectPrimaryContains": "0 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "rox-index",
+      "inputs": {
+        "spo2": 95,
+        "fio2": 50,
+        "rr": 20
+      },
+      "expectPrimaryContains": "9.50",
+      "expectChip": "normal"
+    },
+    {
+      "id": "rsbi",
+      "inputs": {
+        "rr": 20,
+        "vt": 500
+      },
+      "expectPrimaryContains": "40 breaths/min/L",
+      "expectChip": "normal"
+    },
+    {
+      "id": "sedation-dose",
+      "inputs": {
+        "weight": 70,
+        "drug": "midazolam"
+      },
+      "expectPrimaryContains": "3.50 mg",
+      "expectChip": "normal"
+    },
+    {
+      "id": "sedation-drip",
+      "inputs": {
+        "weight": 70,
+        "drug": "propofol",
+        "dose": 30
+      },
+      "expectPrimaryContains": "12.6 mL/hr",
+      "expectChip": "normal"
+    },
+    {
+      "id": "sepsis-timer",
+      "inputs": {
+        "recognition": "",
+        "now": ""
+      },
+      "expectErrorContains": "Enter recognition time"
+    },
+    {
+      "id": "student-abg",
+      "inputs": {
+        "ph": 7.4,
+        "pco2": 40,
+        "hco3": 24
+      },
+      "expectPrimaryContains": "Normal acid-base status",
+      "expectChip": "normal"
+    },
+    {
+      "id": "student-bmi",
+      "inputs": {
+        "weight": 70,
+        "height": 170
+      },
+      "expectPrimaryContains": "24.2 kg/m²",
+      "expectChip": "normal"
+    },
+    {
+      "id": "student-bsa",
+      "inputs": {
+        "weight": 70,
+        "height": 170
+      },
+      "expectPrimaryContains": "1.82 m²",
+      "expectChip": "normal"
+    },
+    {
+      "id": "student-maintenance",
+      "inputs": {
+        "weight": 70
+      },
+      "expectPrimaryContains": "2500 mL/24h",
+      "expectChip": "normal"
+    },
+    {
+      "id": "surg-blood-loss",
+      "inputs": {
+        "weight": "",
+        "preHb": 14,
+        "postHb": 10,
+        "bloodVol": ""
+      },
+      "expectPrimaryContains": "1667 mL",
+      "expectChip": "critical"
+    },
+    {
+      "id": "surg-burn",
+      "inputs": {
+        "weight": 70,
+        "tbsa": 20
+      },
+      "expectPrimaryContains": "5,600 mL / 24h",
+      "expectChip": "normal"
+    },
+    {
+      "id": "toxicology-dose",
+      "inputs": {
+        "toxin": "acetaminophen",
+        "weight": 70
+      },
+      "expectPrimaryContains": "NAC 150 mg/kg IV load",
+      "expectChip": "critical"
+    },
+    {
+      "id": "vancomycin-auc",
+      "inputs": {
+        "trough": 15,
+        "dose": 2000,
+        "weight": 70,
+        "peak": ""
+      },
+      "expectPrimaryContains": "450 mg·h/L",
+      "expectChip": "normal"
+    },
+    {
+      "id": "vasopressor-titration",
+      "inputs": {
+        "weight": 70,
+        "agent": "norepi",
+        "dose": 0.1,
+        "concentration": 4
+      },
+      "expectPrimaryContains": "0.10 mL/hr",
+      "expectChip": "normal"
+    },
+    {
+      "id": "vbac",
+      "inputs": {
+        "age": 32,
+        "priorVaginal": false,
+        "reasonPrior": "other",
+        "bmi": 28,
+        "laborInduced": false
+      },
+      "expectPrimaryContains": "63% VBAC success",
+      "expectChip": "normal"
+    },
+    {
+      "id": "wells-dvt",
+      "inputs": {
+        "cancer": false,
+        "paralysis": false,
+        "bedridden": false,
+        "tenderness": false,
+        "swelling": false,
+        "calf": false,
+        "edema": false,
+        "collateral": false,
+        "hx": false,
+        "alternative": false
+      },
+      "expectPrimaryContains": "0 points",
+      "expectChip": "normal"
+    },
+    {
+      "id": "winters-formula",
+      "inputs": {
+        "hco3": 15,
+        "pco2": 30
+      },
+      "expectPrimaryContains": "28.5 - 32.5 mmHg",
+      "expectChip": "normal"
+    }
   ]
 }

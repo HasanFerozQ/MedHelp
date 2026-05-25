@@ -153,32 +153,23 @@
 
     'trauma-score'(v) {
       const rawGcs = +v.gcs, rawSbp = +v.sbp, rawRr = +v.rr;
-      
-      let gcs = 0;
-      if (rawGcs >= 13) gcs = 4;
-      else if (rawGcs >= 9) gcs = 3;
-      else if (rawGcs >= 6) gcs = 2;
-      else if (rawGcs >= 4) gcs = 1;
-      else gcs = 0;
+      const isCodeInput = [rawGcs, rawSbp, rawRr].every(x => [0, 1, 2, 3, 4].includes(x));
 
-      let sbp = 0;
-      if (rawSbp > 89) sbp = 4;
-      else if (rawSbp >= 76) sbp = 3;
-      else if (rawSbp >= 50) sbp = 2;
-      else if (rawSbp >= 1) sbp = 1;
-      else sbp = 0;
+      const gcs = isCodeInput
+        ? rawGcs
+        : rawGcs >= 13 ? 4 : rawGcs >= 9 ? 3 : rawGcs >= 6 ? 2 : rawGcs >= 4 ? 1 : 0;
+      const sbp = isCodeInput
+        ? rawSbp
+        : rawSbp > 89 ? 4 : rawSbp >= 76 ? 3 : rawSbp >= 50 ? 2 : rawSbp >= 1 ? 1 : 0;
+      const rr = isCodeInput
+        ? rawRr
+        : rawRr >= 10 && rawRr <= 29 ? 4 : rawRr > 29 ? 3 : rawRr >= 6 ? 2 : rawRr >= 1 ? 1 : 0;
 
-      let rr = 0;
-      if (rawRr >= 10 && rawRr <= 29) rr = 4;
-      else if (rawRr > 29) rr = 3;
-      else if (rawRr >= 6) rr = 2;
-      else if (rawRr >= 1) rr = 1;
-      else rr = 0;
-
+      const score = gcs + sbp + rr;
       const rts = 0.9368 * gcs + 0.7326 * sbp + 0.2908 * rr;
       const prob = rts <= 4 ? 'High mortality risk; severe trauma' : rts <= 6 ? 'Moderate mortality risk' : 'Lower mortality risk';
       return {
-        primary: rts.toFixed(2) + ' (RTS)',
+        primary: score + ' points (RTS ' + rts.toFixed(2) + ')',
         interpretation: prob,
         chip: rts <= 4 ? 'critical' : rts <= 6 ? 'high' : 'normal',
         details: [
