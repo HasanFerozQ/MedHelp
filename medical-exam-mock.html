@@ -405,6 +405,23 @@
         ? '<span class="mock-badge-completed">Completed</span>'
         : '';
 
+      // Check Day 1 / Day 2 status for Step 3
+      let step3StatusBadge = '';
+      if (exam.step3Exam) {
+        const isFullCompleted = MockExamConfig.isMockCompleted(exam.id);
+        const day1ResultKey = window.MockExamStep3Config ? window.MockExamStep3Config.getDay1ResultKey(exam.id) : `mh_sim3_day1_result_${exam.id}`;
+        const hasDay1Result = !!localStorage.getItem(day1ResultKey);
+        
+        if (hasDay1Result && !isFullCompleted) {
+          step3StatusBadge = `
+            <span class="mock-badge-day-status" style="background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); font-size: 10px; font-weight: 800; padding: 4px 12px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 8px; display: inline-flex; align-items: center; gap: 6px;">
+              <span style="display:inline-block; width:6px; height:6px; background:#fbbf24; border-radius:50%; box-shadow: 0 0 6px #fbbf24; animation: pulse 2s infinite;"></span>
+              Day 1 Done · Day 2 Left
+            </span>
+          `;
+        }
+      }
+
       const btnLabel = exam.step3Exam ? 'Open 2-Day Mock' : 'Start Exam';
       const btnHtml = exam.comingSoon
         ? '<button class="btn-start-mock coming-soon" disabled>Coming Soon</button>'
@@ -414,17 +431,28 @@
         ? `<div class="mock-stat"><span>Questions</span><span style="color: var(--text-h); font-weight: 700;">${exam.questions} items</span></div>`
         : '';
       const timeLine = exam.totalHours
-        ? `<div class="mock-stat"><span>Total Time</span><span style="color: var(--text-h); font-weight: 700;">${exam.totalHours} Hours (2 days)</span></div>`
+        ? `<div class="mock-stat"><span>Total Time</span><span style="color: var(--text-h); font-weight: 700;">${exam.totalHours} Hours${exam.step3Exam ? ' (2 Days)' : ''}</span></div>`
         : '';
-      const formatLine = exam.format
-        ? `<div class="mock-stat"><span>Format</span><span style="color: var(--text-h); font-weight: 700;">${exam.format}</span></div>`
-        : '';
+      
+      let formatLine = '';
+      if (exam.format) {
+        if (exam.step3Exam) {
+          formatLine = `
+            <div class="mock-stat" style="flex-direction: column; align-items: flex-start; gap: 6px; margin-top: 12px; border-top: 1px dashed var(--border); padding-top: 12px;">
+              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Schedule & Structure</span>
+              <span style="color: var(--text-h); font-weight: 700; text-align: left; line-height: 1.4; font-size: 13px;">${exam.format}</span>
+            </div>
+          `;
+        } else {
+          formatLine = `<div class="mock-stat"><span>Format</span><span style="color: var(--text-h); font-weight: 700;">${exam.format}</span></div>`;
+        }
+      }
 
       return `
         <div class="mock-card">
           <div class="mock-card-body">
             <div>
-              <div class="mock-card-badges">${stepBadge}${premiumBadge}${completedBadge}</div>
+              <div class="mock-card-badges">${stepBadge}${premiumBadge}${completedBadge}${step3StatusBadge}</div>
               <h3>${exam.title}</h3>
             </div>
             <div class="mock-card-stats">
