@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nursing Calculators — Bedside Dosing & Flow Rates | MediHelp</title>
+  <meta name="description" content="Free clinical calculators for nurses. Calculate IV flow rates, drops per minute (gtt/min), pediatric dosing, and Morse fall risks.">
+  <link rel="canonical" href="https://www.medihelp.live/calculators/nurses">
+  <link rel="icon" href="/icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/tabs/calculator/calculator.css?v=1.2">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/core.js"></script>
+  <style>
+    .clinical-content {
+      max-width: 900px;
+      margin: 48px auto;
+      padding: 0 24px 64px;
+      color: var(--text-body);
+      font-family: var(--font-body);
+      line-height: 1.8;
+    }
+    .clinical-content h2 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-h);
+      margin-top: 40px;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--accent);
+      padding-left: 16px;
+    }
+    .clinical-content p {
+      margin-bottom: 20px;
+    }
+    .faq-block {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .faq-question {
+      font-weight: 700;
+      color: var(--text-h);
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .faq-answer {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+      z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.visible { display: flex; }
+    .modal-content {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px;
+      max-width: 500px; width: 100%; padding: 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .close-modal { background: none; border: none; font-size: 28px; color: var(--text-muted); cursor: pointer; }
+    .pricing-box { background: rgba(var(--accent-rgb),0.05); border: 1px solid rgba(var(--accent-rgb),0.2); border-radius: 16px; padding: 24px; margin: 24px 0; text-align: center; }
+    .price-value { font-size: 32px; font-weight: 900; color: var(--accent); }
+    .license-entry p { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="/icons/logo.png?v=1.1" alt="MediHelp">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/medical-exam-preparation">Medical Exams</a>
+        <a href="/medical-bill-audit">Medical Bill Audit</a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">Codes ▼</div>
+          <div class="nav-dropdown-menu">
+            <a href="/cpt-code-search">CPT Codes</a>
+            <a href="/claim-denial-codes">Denial Codes</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">More ▼</div>
+          <div class="nav-dropdown-menu">
+            <a href="/rx-savings">Rx Savings</a>
+            <a href="/providers">Provider Search</a>
+            <a href="/blog">Blog</a>
+            <div style="border-top: 1px solid var(--border); margin: 8px 0;"></div>
+            <div style="padding: 4px 16px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.1em;">Calculators</div>
+            <a href="/calculators/bmi-calculator" style="font-size: 14px;">BMI Calculator</a>
+            <a href="/calculators/creatinine-clearance-calculator" style="font-size: 14px;">CrCl Calculator</a>
+            <a href="/calculators/bsa-calculator" style="font-size: 14px;">BSA Calculator</a>
+            <a href="/calculators/bicarbonate-deficit-calculator" style="font-size: 14px;">HCO3 Deficit</a>
+            <a href="/calculators/doctors" style="font-size: 14px; color: var(--expert-amber);">For Doctors</a>
+            <a href="/calculators/nurses" style="font-size: 14px; color: var(--expert-amber);">For Nurses</a>
+            <a href="/calculators/pharmacists" style="font-size: 14px; color: var(--expert-amber);">For Pharmacists</a>
+            <a href="/calculators/students" style="font-size: 14px; color: var(--expert-amber);">For Students</a>
+            <a href="/calculators/er" style="font-size: 14px; color: var(--expert-amber);">ER / Emergency</a>
+            <a href="/calculators/icu" style="font-size: 14px; color: var(--expert-amber);">ICU / Critical Care</a>
+            <a href="/calculators/pediatrics" style="font-size: 14px; color: var(--expert-amber);">Pediatrics</a>
+            <a href="/calculators/obgyn" style="font-size: 14px; color: var(--expert-amber);">OB/GYN</a>
+            <a href="/calculators/surgeons" style="font-size: 14px; color: var(--expert-amber);">Surgeons</a>
+            <a href="/calculators/anesthesia" style="font-size: 14px; color: var(--expert-amber);">Anesthesia</a>
+            <a href="/calculators/lab" style="font-size: 14px; color: var(--expert-amber);">Lab / Pathology</a>
+            <a href="/calculators/dietitians" style="font-size: 14px; color: var(--expert-amber);">Dietitians</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="/pricing" class="btn btn-ghost" style="padding:8px 18px; font-size:14px; border-radius:10px;">Expert Help</a>
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
+        <div class="nav-toggle" onclick="MediHelp.toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dynamic Mount for Nurses' Calculators -->
+  <main id="calc-app" class="calc-app container" data-role-id="nurses" style="max-width:900px; margin:28px auto; padding:0 20px;"></main>
+
+  <!-- Rich Clinical Copy for SEO -->
+  <article class="clinical-content">
+    <h2>Essential Clinical Calculators for Nurses</h2>
+    <p>Nurses stand at the forefront of patient care, managing critical bedside assessments, verifying pharmacological doses, and monitoring infusion rates. Bedside calculators help nursing professionals avoid medication calculation errors, verify IV pump settings, audit intake/output metrics, and standardize fall risk protocols to optimize patient safety outcomes.</p>
+
+    <h2>Primary Bedside Nursing Tools</h2>
+    <p>Our nursing portal contains calculators specifically tailored for floor and ICU environments:</p>
+    <ul>
+      <li><strong>IV Infusion Calibrations</strong>: Calculates flow rate ($mL/hr$) based on total volume and run-time, alongside Drops per Minute ($gtt/min$) based on drop factor constants.</li>
+      <li><strong>Medication Prep & Dilutions</strong>: Features mass-by-volume dosage equations, syringe volume preparation calculations, and reconstitution formulas.</li>
+      <li><strong>Patient Safety Assessments</strong>: Integrates the Morse Fall Risk scale to guide proactive clinical injury prevention interventions.</li>
+      <li><strong>Clinical Fluid Audits</strong>: Features Intake/Output balance sheets to audit 24-hour baseline fluid shifts.</li>
+      <li><strong>Unit Conversions</strong>: Provides quick transformations between micrograms ($mcg$), milligrams ($mg$), kilograms ($kg$), pounds ($lbs$), inches, and centimeters.</li>
+    </ul>
+
+    <h2>BEDSIDE FAQs</h2>
+    <div class="faq-block">
+      <div class="faq-question">What is the standard formula for calculating IV drops per minute (gtt/min)?</div>
+      <p class="faq-answer">The standard formula is:
+        <div style="font-family:var(--font-mono); font-size:14px; margin: 8px 0; color:var(--accent-light);">gtt/min = [ Total Volume (mL) × Drop Factor (gtt/mL) ] / Time (minutes)</div>
+        The drop factor is dictated by the administration tubing package, typically set at 10, 15, or 20 gtt/mL for macrodrip sets, or 60 gtt/mL for microdrip sets.
+      </p>
+    </div>
+    <div class="faq-block">
+      <div class="faq-question">How does the Morse Fall Scale guide clinical interventions?</div>
+      <p class="faq-answer">The Morse Fall Scale scores six risk categories (history of falling, secondary diagnosis, ambulatory aid, IV access, gait, mental status). A score ≥ 45 indicates a high fall risk, requiring standard high-risk precautions (e.g., bed alarms, low-height beds, non-slip socks, and assisted transfers).</p>
+    </div>
+  </article>
+
+  <!-- PREMIUM MODAL OVERLAY -->
+  <div id="calc-premium-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="grad-text">Unlock Calculator Access</h2>
+        <button class="close-modal" onclick="closeCalcPremium()">×</button>
+      </div>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">Use your Medical Exam Mastery license to unlock all clinical calculators.</p>
+      <div class="pricing-box">
+        <div class="price-value">$24.99<small>/year</small></div>
+        <p>Same license unlocks Medical Exams + Calculators</p>
+        <a href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank" class="btn btn-primary" style="width:100%; margin-top:15px;">Get Instant Access</a>
+      </div>
+      <div class="license-entry">
+        <p>Already have a license?</p>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+          <input type="text" id="calc-license-key" placeholder="Gumroad License Key" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--bg-elevated); color:var(--text-h);">
+          <input type="email" id="calc-license-email" placeholder="Email Address" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--bg-elevated); color:var(--text-h);">
+          <button class="btn btn-secondary" onclick="verifyCalcLicense()" style="width:100%; padding:12px; border-radius:12px; font-weight:700;">Activate Access</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Free tools and professional advocates helping patients fight medical billing errors and reduce hospital costs.</p>
+          <div style="margin-top:16px; display:flex; gap:12px; margin-bottom: 16px;">
+            <a href="https://www.linkedin.com/company/medihelplive/" target="_blank" rel="noopener" style="color:var(--text-muted); transition:0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'" title="Follow MediHelp on LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+          </div>
+          <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; background:rgba(var(--accent-rgb),0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--accent-rgb),0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
+            <span style="font-size:11px; background:rgba(var(--amber-rgb),0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--amber-rgb),0.2);">No Signup</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Free Tools</h4>
+          <ul>
+            <li><a href="/medical-bill-audit">Bill Audit Tool</a></li>
+            <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings Search</a></li>
+            <li><a href="/providers">Provider Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Calculators</h4>
+          <ul>
+            <li><a href="/calculators/bmi-calculator">BMI</a></li>
+            <li><a href="/calculators/creatinine-clearance-calculator">Creatinine Clearance</a></li>
+            <li><a href="/calculators/bsa-calculator">BSA</a></li>
+            <li><a href="/calculators/bicarbonate-deficit-calculator">Bicarbonate Deficit</a></li>
+            <li><a href="/calculators/doctors">For Doctors</a></li>
+            <li><a href="/calculators/nurses">For Nurses</a></li>
+            <li><a href="/calculators/pharmacists">For Pharmacists</a></li>
+            <li><a href="/calculators/students">For Students</a></li>
+            <li><a href="/calculators/er">ER / Emergency</a></li>
+            <li><a href="/calculators/icu">ICU / Critical</a></li>
+            <li><a href="/calculators/pediatrics">Pediatrics</a></li>
+            <li><a href="/calculators/obgyn">OB/GYN</a></li>
+            <li><a href="/calculators/surgeons">Surgeons</a></li>
+            <li><a href="/calculators/anesthesia">Anesthesia</a></li>
+            <li><a href="/calculators/lab">Lab / Pathology</a></li>
+            <li><a href="/calculators/dietitians">Dietitians</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/pricing" style="color:var(--expert-amber); display: inline-flex; align-items: center; gap: 6px;">Human Bill Negotiation <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m12 3 1.91 5.82L21 12l-7.09 3.18L12 21l-1.91-5.82L3 12l7.09-3.18L12 3z"/></svg></a></li>
+            <li><a href="/medical-exam-preparation" style="color:var(--accent); font-weight:700;">Medical Exam Mastery</a></li>
+            <li><a href="/blog">Patient Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
+        <span>© 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms & Disclaimer</a></span>
+        <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core Scripts for Computation -->
+  <script src="/tabs/calculator/formulas.js"></script>
+  <script src="/tabs/calculator/clinical-data.js"></script>
+  <script src="/tabs/calculator/i18n.js"></script>
+  <script src="/tabs/calculator/registry.js"></script>
+  <script src="/tabs/calculator/schemas.js"></script>
+  <script src="/tabs/calculator/schemas-extra.js"></script>
+  <script src="/tabs/calculator/schemas-remaining.js"></script>
+  <script src="/tabs/calculator/units.js?v=1.3"></script>
+  <script src="/tabs/calculator/compute.js"></script>
+  <script src="/tabs/calculator/compute-remaining.js"></script>
+  <script src="/tabs/calculator/clinical-grade.js"></script>
+  <script src="/tabs/calculator/schemas-new.js"></script>
+  <script src="/tabs/calculator/compute-new.js"></script>
+  <script src="/tabs/calculator/schemas-new2.js"></script>
+  <script src="/tabs/calculator/compute-new2.js"></script>
+  <script src="/tabs/calculator/ui.js?v=1.3"></script>
+
+  <!-- Rich Clinical Schema Markups -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MedicalWebPage",
+        "@id": "https://www.medihelp.live/calculators/nurses#webpage",
+        "url": "https://www.medihelp.live/calculators/nurses",
+        "name": "Nursing Calculators — Bedside Dosing & Flow Rates",
+        "description": "Bedside clinical calculators for nurses. Compute IV flow rates, drops per minute (gtt/min), medication dilutions, pain scales, and Morse fall risks.",
+        "inLanguage": "en-US",
+        "reviewedBy": {
+          "@type": "Physician",
+          "name": "Dr. Sarah Mitchell, MD",
+          "specialty": "Internal Medicine"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://www.medihelp.live/calculators/nurses#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.medihelp.live/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Medical Calculators",
+            "item": "https://www.medihelp.live/medical-calculator"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Nursing Calculators",
+            "item": "https://www.medihelp.live/calculators/nurses"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</body>
+</html>

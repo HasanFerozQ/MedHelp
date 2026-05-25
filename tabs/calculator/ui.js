@@ -30,12 +30,21 @@ window.CalcUI = {
   },
 
   _parseRoute() {
+    const root = document.getElementById('calc-app');
+    const defaultCalc = root ? root.dataset.calcId : null;
+    const defaultRole = root ? root.dataset.roleId : null;
+
     const p = new URLSearchParams(location.search);
-    const calc = p.get('calc');
-    const role = p.get('role');
+    const calc = p.get('calc') || defaultCalc;
+    const role = p.get('role') || defaultRole;
+
     if (calc && CalcRegistry.getById(calc)) {
       this.state.view = 'calc';
       this.state.calcId = calc;
+      const calcObj = CalcRegistry.getById(calc);
+      if (calcObj) {
+        this.state.role = calcObj.role;
+      }
     } else if (role) {
       this.state.view = 'role';
       this.state.role = role;
@@ -61,7 +70,8 @@ window.CalcUI = {
 
   goRole(roleId) {
     this.state = { view: 'role', role: roleId, calcId: null, emergency: ['er', 'icu'].includes(roleId) };
-    history.pushState({}, '', '/medical-calculator?role=' + roleId);
+    const path = location.pathname.startsWith('/calculators/') ? location.pathname : '/medical-calculator';
+    history.pushState({}, '', path + '?role=' + roleId);
     this.render();
   },
 
@@ -87,8 +97,16 @@ window.CalcUI = {
       return;
     }
     this._addRecent(id);
+
+    // Dynamic SEO landing page redirections for top-4 calculators
+    if (id === 'bmi') { window.location.href = '/calculators/bmi-calculator'; return; }
+    if (id === 'creatinine-clearance') { window.location.href = '/calculators/creatinine-clearance-calculator'; return; }
+    if (id === 'bsa') { window.location.href = '/calculators/bsa-calculator'; return; }
+    if (id === 'bicarbonate-deficit') { window.location.href = '/calculators/bicarbonate-deficit-calculator'; return; }
+
     this.state = { view: 'calc', role: calc.role, calcId: id, emergency: this.state.emergency || ['er', 'icu'].includes(calc.role) };
-    history.pushState({}, '', '/medical-calculator?calc=' + id);
+    const path = location.pathname.startsWith('/calculators/') ? location.pathname : '/medical-calculator';
+    history.pushState({}, '', path + '?calc=' + id);
     this.render();
   },
 

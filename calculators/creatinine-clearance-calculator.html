@@ -4,29 +4,490 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Creatinine Clearance Calculator — Cockcroft-Gault | MediHelp</title>
-  <meta name="description" content="Estimate creatinine clearance (Cockcroft-Gault) for drug dosing and renal function assessment. Includes formula, examples, and clinical notes.">
+  <meta name="description" content="Free evidence-based Creatinine Clearance (CrCl) calculator using Cockcroft-Gault. Assess renal function & adjust drug dosing safely.">
   <link rel="canonical" href="https://www.medihelp.live/calculators/creatinine-clearance-calculator">
+  <link rel="icon" href="/icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/tabs/calculator/calculator.css?v=1.2">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/core.js"></script>
+  <style>
+    .clinical-content {
+      max-width: 900px;
+      margin: 48px auto;
+      padding: 0 24px 64px;
+      color: var(--text-body);
+      font-family: var(--font-body);
+      line-height: 1.8;
+    }
+    .clinical-content h2 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-h);
+      margin-top: 40px;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--accent);
+      padding-left: 16px;
+    }
+    .clinical-content p {
+      margin-bottom: 20px;
+    }
+    .formula-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 28px 0;
+      box-shadow: var(--shadow);
+    }
+    .formula-math {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      color: var(--accent-light);
+      text-align: center;
+      margin: 16px 0;
+      font-weight: bold;
+      word-wrap: break-word;
+    }
+    .table-responsive {
+      overflow-x: auto;
+      margin: 28px 0;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .clinical-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      background: var(--bg-card);
+    }
+    .clinical-table th, .clinical-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .clinical-table th {
+      background: rgba(var(--accent-rgb), 0.1);
+      color: var(--text-h);
+      font-weight: 700;
+    }
+    .clinical-table tr:last-child td {
+      border-bottom: none;
+    }
+    .faq-block {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .faq-question {
+      font-weight: 700;
+      color: var(--text-h);
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .faq-answer {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .ref-list {
+      padding-left: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .ref-list li {
+      margin-bottom: 8px;
+    }
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+      z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.visible { display: flex; }
+    .modal-content {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px;
+      max-width: 500px; width: 100%; padding: 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .close-modal { background: none; border: none; font-size: 28px; color: var(--text-muted); cursor: pointer; }
+    .pricing-box { background: rgba(var(--accent-rgb),0.05); border: 1px solid rgba(var(--accent-rgb),0.2); border-radius: 16px; padding: 24px; margin: 24px 0; text-align: center; }
+    .price-value { font-size: 32px; font-weight: 900; color: var(--accent); }
+    .license-entry p { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+  </style>
 </head>
 <body>
-  <nav class="navbar"><div class="container nav-content"><a href="/" class="nav-brand">MediHelp</a></div></nav>
-  <main class="container" style="max-width:900px;margin:28px auto;padding:0 20px;">
-    <h1>Creatinine Clearance Calculator (Cockcroft-Gault)</h1>
-    <p class="lede">Estimated creatinine clearance to guide dosing (Cockcroft-Gault).</p>
-    <h2>Formula</h2>
-    <pre><code>CrCl (mL/min) = ((140 − age) × weight (kg)) / (72 × SCr (mg/dL)) × (0.85 if female)</code></pre>
-    <h2>Interpretation</h2>
-    <p>Used to adjust drug dosing and assess renal function; correlate with eGFR where appropriate.</p>
-    <h2>Clinical notes</h2>
-    <p>Use ideal or adjusted body weight for obese patients; Cockcroft-Gault estimates differ from CKD-EPI.</p>
-    <h2>Examples</h2>
-    <p>Example: 65 y/o male, 70 kg, SCr 1.2 mg/dL → CrCl ≈ ((140-65)*70)/(72*1.2)= 56.9 mL/min</p>
-    <h2>FAQs</h2>
-    <p>When should I use adjusted body weight? For BMI &gt;30 consider adjusted weight for dosing certain drugs.</p>
-  </main>
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="/icons/logo.png?v=1.1" alt="MediHelp">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/medical-exam-preparation">Medical Exams</a>
+        <a href="/medical-bill-audit">Medical Bill Audit</a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">Codes ▼</div>
+          <div class="nav-dropdown-menu">
+            <a href="/cpt-code-search">CPT Codes</a>
+            <a href="/claim-denial-codes">Denial Codes</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">More ▼</div>
+          <div class="nav-dropdown-menu">
+            <a href="/rx-savings">Rx Savings</a>
+            <a href="/providers">Provider Search</a>
+            <a href="/blog">Blog</a>
+            <div style="border-top: 1px solid var(--border); margin: 8px 0;"></div>
+            <div style="padding: 4px 16px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.1em;">Calculators</div>
+            <a href="/calculators/bmi-calculator" style="font-size: 14px;">BMI Calculator</a>
+            <a href="/calculators/creatinine-clearance-calculator" style="font-size: 14px;">CrCl Calculator</a>
+            <a href="/calculators/bsa-calculator" style="font-size: 14px;">BSA Calculator</a>
+            <a href="/calculators/bicarbonate-deficit-calculator" style="font-size: 14px;">HCO3 Deficit</a>
+            <a href="/calculators/doctors" style="font-size: 14px; color: var(--expert-amber);">For Doctors</a>
+            <a href="/calculators/nurses" style="font-size: 14px; color: var(--expert-amber);">For Nurses</a>
+            <a href="/calculators/pharmacists" style="font-size: 14px; color: var(--expert-amber);">For Pharmacists</a>
+            <a href="/calculators/students" style="font-size: 14px; color: var(--expert-amber);">For Students</a>
+            <a href="/calculators/er" style="font-size: 14px; color: var(--expert-amber);">ER / Emergency</a>
+            <a href="/calculators/icu" style="font-size: 14px; color: var(--expert-amber);">ICU / Critical Care</a>
+            <a href="/calculators/pediatrics" style="font-size: 14px; color: var(--expert-amber);">Pediatrics</a>
+            <a href="/calculators/obgyn" style="font-size: 14px; color: var(--expert-amber);">OB/GYN</a>
+            <a href="/calculators/surgeons" style="font-size: 14px; color: var(--expert-amber);">Surgeons</a>
+            <a href="/calculators/anesthesia" style="font-size: 14px; color: var(--expert-amber);">Anesthesia</a>
+            <a href="/calculators/lab" style="font-size: 14px; color: var(--expert-amber);">Lab / Pathology</a>
+            <a href="/calculators/dietitians" style="font-size: 14px; color: var(--expert-amber);">Dietitians</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="/pricing" class="btn btn-ghost" style="padding:8px 18px; font-size:14px; border-radius:10px;">Expert Help</a>
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
+        <div class="nav-toggle" onclick="MediHelp.toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dynamic Mount for Creatinine Clearance Calculator -->
+  <main id="calc-app" class="calc-app container" data-calc-id="creatinine-clearance" style="max-width:900px; margin:28px auto; padding:0 20px;"></main>
+
+  <!-- Rich Clinical Copy for SEO -->
+  <article class="clinical-content">
+    <h2>What is Creatinine Clearance (CrCl)?</h2>
+    <p>Creatinine Clearance (CrCl) is a clinical calculation that estimates the rate at which kidneys filter metabolic waste from the bloodstream. By estimating the glomerular filtration rate (GFR), CrCl serves as the gold-standard reference point for renal dosing adjustments of pharmaceutical compounds. While newer methods like CKD-EPI or MDRD (which output estimated GFR or eGFR) are frequently used for staging Chronic Kidney Disease, FDA drug labeling and dosing recommendations remain heavily grounded in the classic Cockcroft-Gault Creatinine Clearance equation.</p>
+
+    <h2>The Cockcroft-Gault Equation</h2>
+    <p>The Cockcroft-Gault formula predicts CrCl by combining serum creatinine, age, gender, and body weight. Creatinine is a byproduct of muscular breakdown, meaning muscular mass (surrogated by weight and gender) impacts the baseline value significantly:</p>
+
+    <div class="formula-card">
+      <div style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700;">Cockcroft-Gault Formula (Standard)</div>
+      <div class="formula-math">
+        CrCl (mL/min) = [((140 - Age) × Weight (kg)) / (72 × Serum Creatinine (mg/dL))] × [0.85 if Female]
+      </div>
+      <p style="margin: 0; font-size: 13px; color: var(--text-muted);">Note: If serum creatinine is provided in metric SI units (µmol/L), divide the value by 88.4 to convert to mg/dL before applying the formula.</p>
+    </div>
+
+    <h2>Crucial Clinical Detail: Body Weight Selection</h2>
+    <p>Using a patient's raw (actual) body weight in the Cockcroft-Gault equation for drug dosing can lead to dangerous over-dosing errors in obese patients, or under-dosing errors in underweight patients. Clinicians utilize three different weight metrics based on individual body structures:</p>
+
+    <div class="formula-card">
+      <h3>1. Ideal Body Weight (IBW)</h3>
+      <p>Calculated based on gender and height (using Devine formulas):</p>
+      <div class="formula-math" style="font-size:16px;">
+        Male: IBW = 50.0 kg + 2.3 kg per inch over 5 feet (60 inches)<br>
+        Female: IBW = 45.5 kg + 2.3 kg per inch over 5 feet (60 inches)
+      </div>
+    </div>
+
+    <div class="formula-card">
+      <h3>2. Adjusted Body Weight (AdjBW)</h3>
+      <p>Used exclusively for obese patients where Actual Body Weight exceeds IBW by more than 20-30% (or BMI ≥ 30):</p>
+      <div class="formula-math" style="font-size:16px;">
+        AdjBW = IBW + 0.4 × (Actual Weight - IBW)
+      </div>
+      <p style="margin:0; font-size:13px; color:var(--text-muted);">The 0.4 correction factor represents the active, vascularized tissue mass proportion of excess fat adipose tissue.</p>
+    </div>
+
+    <h2>Staging Kidney Impairment (KDIGO Guidelines)</h2>
+    <p>Staging renal function allows clinicians to categorize the severity of impairment and apply appropriate caution:</p>
+
+    <div class="table-responsive">
+      <table class="clinical-table">
+        <thead>
+          <tr>
+            <th>CrCl / eGFR Range (mL/min)</th>
+            <th>Kidney Function Stage</th>
+            <th>Clinical Actions & Considerations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>≥ 90</td>
+            <td>Normal or High Function</td>
+            <td>Standard drug dosing. Evaluate for hyperfiltration.</td>
+          </tr>
+          <tr style="background: rgba(var(--accent-rgb), 0.05);">
+            <td>60 – 89</td>
+            <td>Mild Decrease</td>
+            <td>Monitor clearance. Standard dosing holds for most drugs.</td>
+          </tr>
+          <tr style="background: rgba(245, 158, 11, 0.05);">
+            <td>30 – 59</td>
+            <td>Moderate Decrease</td>
+            <td>Initiate renal dose adjustments (DOACs, antibiotics).</td>
+          </tr>
+          <tr style="background: rgba(245, 158, 11, 0.15);">
+            <td>15 – 29</td>
+            <td>Severe Decrease</td>
+            <td>Strict renal protocol required. Avoid nephrotoxic agents.</td>
+          </tr>
+          <tr style="background: rgba(239, 68, 68, 0.1);">
+            <td>&lt; 15</td>
+            <td>Kidney Failure (ESRD)</td>
+            <td>Dosing adjustments based on dialysis status.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Clinical Use & Critical Dosing Guidelines</h2>
+    <p>Assessing CrCl is standard procedure before initiating many high-risk therapies:</p>
+    <ul>
+      <li><strong>Direct Oral Anticoagulants (DOACs)</strong>: Apixaban, rivaroxaban, and dabigatran clearance thresholds dictates safety margins. Rivaroxaban requires reduction to 15 mg daily when CrCl drops below 50 mL/min for non-valvular AFib.</li>
+      <li><strong>Nephrotoxic Antibiotics</strong>: Vancomycin and aminoglycosides require intensive therapeutic drug monitoring (TDM). Their dosing intervals are extended proportionally with the decay of CrCl to avoid acute kidney injury (AKI) and ototoxicity.</li>
+      <li><strong>Chemotherapeutics</strong>: Compounds like carboplatin depend heavily on GFR and target AUC calculations (Calvert formula) to prevent severe myelosuppression.</li>
+    </ul>
+
+    <h2>Clinical Limitations</h2>
+    <p>The Cockcroft-Gault equation exhibits key limitations. First, because renal tubules actively secrete a small fraction of creatinine, the formula slightly overestimates true glomerular clearance. Second, the equation assumes stable serum creatinine levels. In cases of **Acute Kidney Injury (AKI)**, serum levels lag behind true clearance, rendering the Cockcroft-Gault equation dangerously unreliable. Lastly, in patients with severe skeletal muscle wasting, muscular dystrophy, or amputations, creatinine production is lower, causing falsely high CrCl estimates.</p>
+
+    <h2>Frequently Asked Questions (FAQs)</h2>
+    <div class="faq-block">
+      <div class="faq-question">When should I use adjusted body weight for Cockcroft-Gault?</div>
+      <p class="faq-answer">Adjusted Body Weight (AdjBW) should be utilized when a patient is significantly obese (actual body weight is > 30% above their Ideal Body Weight, or their BMI is ≥ 30). Using actual weight in obese patients severely overestimates clearance, leading to toxicity, while using ideal weight may result in sub-therapeutic dosing.</p>
+    </div>
+    <div class="faq-block">
+      <div class="faq-question">How does CrCl differ from eGFR?</div>
+      <p class="faq-answer">Creatinine Clearance estimates actual urinary flow clearance volume and is measured in absolute mL/min, whereas eGFR (CKD-EPI or MDRD) calculates filtration normalized to standard Body Surface Area ($1.73 \text{ m}^2$) and is reported in $\text{mL/min/1.73 m}^2$. FDA labels for drug adjustments historically mandate CrCl (Cockcroft-Gault) values.</p>
+    </div>
+    <div class="faq-block">
+      <div class="faq-question">What is a normal serum creatinine range?</div>
+      <p class="faq-answer">Normal ranges generally fall between 0.7 to 1.3 mg/dL for adult males, and 0.6 to 1.1 mg/dL for adult females, though baseline values vary depending on skeletal muscular density.</p>
+    </div>
+
+    <h2>References</h2>
+    <ol class="ref-list">
+      <li>Cockcroft DW, Gault MH. Prediction of creatinine clearance from serum creatinine. Nephron. 1976;16(1):31-41.</li>
+      <li>KDIGO Clinical Practice Guideline for Acute Kidney Injury. Kidney International Supplements.</li>
+      <li>U.S. Food and Drug Administration (FDA). Guidance for Industry: Pharmacokinetics in Patients with Impaired Renal Function.</li>
+    </ol>
+  </article>
+
+  <!-- PREMIUM MODAL OVERLAY -->
+  <div id="calc-premium-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="grad-text">Unlock Calculator Access</h2>
+        <button class="close-modal" onclick="closeCalcPremium()">×</button>
+      </div>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">Use your Medical Exam Mastery license to unlock all clinical calculators.</p>
+      <div class="pricing-box">
+        <div class="price-value">$24.99<small>/year</small></div>
+        <p>Same license unlocks Medical Exams + Calculators</p>
+        <a href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank" class="btn btn-primary" style="width:100%; margin-top:15px;">Get Instant Access</a>
+      </div>
+      <div class="license-entry">
+        <p>Already have a license?</p>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+          <input type="text" id="calc-license-key" placeholder="Gumroad License Key" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--bg-elevated); color:var(--text-h);">
+          <input type="email" id="calc-license-email" placeholder="Email Address" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--bg-elevated); color:var(--text-h);">
+          <button class="btn btn-secondary" onclick="verifyCalcLicense()" style="width:100%; padding:12px; border-radius:12px; font-weight:700;">Activate Access</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Free tools and professional advocates helping patients fight medical billing errors and reduce hospital costs.</p>
+          <div style="margin-top:16px; display:flex; gap:12px; margin-bottom: 16px;">
+            <a href="https://www.linkedin.com/company/medihelplive/" target="_blank" rel="noopener" style="color:var(--text-muted); transition:0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'" title="Follow MediHelp on LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+          </div>
+          <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; background:rgba(var(--accent-rgb),0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--accent-rgb),0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
+            <span style="font-size:11px; background:rgba(var(--amber-rgb),0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--amber-rgb),0.2);">No Signup</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Free Tools</h4>
+          <ul>
+            <li><a href="/medical-bill-audit">Bill Audit Tool</a></li>
+            <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings Search</a></li>
+            <li><a href="/providers">Provider Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Calculators</h4>
+          <ul>
+            <li><a href="/calculators/bmi-calculator">BMI</a></li>
+            <li><a href="/calculators/creatinine-clearance-calculator">Creatinine Clearance</a></li>
+            <li><a href="/calculators/bsa-calculator">BSA</a></li>
+            <li><a href="/calculators/bicarbonate-deficit-calculator">Bicarbonate Deficit</a></li>
+            <li><a href="/calculators/doctors">For Doctors</a></li>
+            <li><a href="/calculators/nurses">For Nurses</a></li>
+            <li><a href="/calculators/pharmacists">For Pharmacists</a></li>
+            <li><a href="/calculators/students">For Students</a></li>
+            <li><a href="/calculators/er">ER / Emergency</a></li>
+            <li><a href="/calculators/icu">ICU / Critical</a></li>
+            <li><a href="/calculators/pediatrics">Pediatrics</a></li>
+            <li><a href="/calculators/obgyn">OB/GYN</a></li>
+            <li><a href="/calculators/surgeons">Surgeons</a></li>
+            <li><a href="/calculators/anesthesia">Anesthesia</a></li>
+            <li><a href="/calculators/lab">Lab / Pathology</a></li>
+            <li><a href="/calculators/dietitians">Dietitians</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/pricing" style="color:var(--expert-amber); display: inline-flex; align-items: center; gap: 6px;">Human Bill Negotiation <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m12 3 1.91 5.82L21 12l-7.09 3.18L12 21l-1.91-5.82L3 12l7.09-3.18L12 3z"/></svg></a></li>
+            <li><a href="/medical-exam-preparation" style="color:var(--accent); font-weight:700;">Medical Exam Mastery</a></li>
+            <li><a href="/blog">Patient Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
+        <span>© 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms & Disclaimer</a></span>
+        <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core Scripts for Computation -->
+  <script src="/tabs/calculator/formulas.js"></script>
+  <script src="/tabs/calculator/clinical-data.js"></script>
+  <script src="/tabs/calculator/i18n.js"></script>
+  <script src="/tabs/calculator/registry.js"></script>
+  <script src="/tabs/calculator/schemas.js"></script>
+  <script src="/tabs/calculator/schemas-extra.js"></script>
+  <script src="/tabs/calculator/schemas-remaining.js"></script>
+  <script src="/tabs/calculator/units.js?v=1.3"></script>
+  <script src="/tabs/calculator/compute.js"></script>
+  <script src="/tabs/calculator/compute-remaining.js"></script>
+  <script src="/tabs/calculator/clinical-grade.js"></script>
+  <script src="/tabs/calculator/schemas-new.js"></script>
+  <script src="/tabs/calculator/compute-new.js"></script>
+  <script src="/tabs/calculator/schemas-new2.js"></script>
+  <script src="/tabs/calculator/compute-new2.js"></script>
+  <script src="/tabs/calculator/ui.js?v=1.3"></script>
+
+  <!-- Rich Clinical Schema Markups -->
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"MedicalWebPage","name":"Creatinine Clearance Calculator","url":"https://www.medihelp.live/calculators/creatinine-clearance-calculator"}
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MedicalWebPage",
+        "@id": "https://www.medihelp.live/calculators/creatinine-clearance-calculator#webpage",
+        "url": "https://www.medihelp.live/calculators/creatinine-clearance-calculator",
+        "name": "Creatinine Clearance Calculator — Cockcroft-Gault",
+        "description": "Calculate Creatinine Clearance (CrCl) using the Cockcroft-Gault equation. Review Ideal and Adjusted body weight rules for kidney function adjustments.",
+        "inLanguage": "en-US",
+        "reviewedBy": {
+          "@type": "Physician",
+          "name": "Dr. Mark Vance, MD",
+          "specialty": "Nephrology"
+        },
+        "aspect": "Renal dosing and glomerular clearance assessment"
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://www.medihelp.live/calculators/creatinine-clearance-calculator#app",
+        "name": "Creatinine Clearance Calculator Widget",
+        "url": "https://www.medihelp.live/calculators/creatinine-clearance-calculator",
+        "applicationCategory": "MedicalApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.medihelp.live/calculators/creatinine-clearance-calculator#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "When should I use adjusted body weight for Cockcroft-Gault?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Adjusted Body Weight (AdjBW) should be utilized when a patient is significantly obese (actual body weight is > 30% above their Ideal Body Weight, or their BMI is ≥ 30). Using actual weight in obese patients severely overestimates clearance, leading to toxicity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does CrCl differ from eGFR?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Creatinine Clearance estimates actual urinary flow clearance volume and is measured in absolute mL/min, whereas eGFR (CKD-EPI or MDRD) calculates filtration normalized to standard Body Surface Area (1.73 m²). FDA labels for drug adjustments historically mandate CrCl values."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://www.medihelp.live/calculators/creatinine-clearance-calculator#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.medihelp.live/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Medical Calculators",
+            "item": "https://www.medihelp.live/medical-calculator"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Creatinine Clearance Calculator",
+            "item": "https://www.medihelp.live/calculators/creatinine-clearance-calculator"
+          }
+        ]
+      }
+    ]
+  }
   </script>
 </body>
 </html>

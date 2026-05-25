@@ -173,7 +173,24 @@
             <a href="/rx-savings">Rx Savings</a>
             <a href="/providers">Provider Search</a>
             <a href="/blog">Blog</a>
-            <a href="/medical-calculator" style="color: var(--expert-amber); font-weight: 800;">Medical Calculator</a>
+            <div style="border-top: 1px solid var(--border); margin: 8px 0;"></div>
+            <div style="padding: 4px 16px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.1em;">Calculators</div>
+            <a href="/calculators/bmi-calculator" style="font-size: 14px;">BMI Calculator</a>
+            <a href="/calculators/creatinine-clearance-calculator" style="font-size: 14px;">CrCl Calculator</a>
+            <a href="/calculators/bsa-calculator" style="font-size: 14px;">BSA Calculator</a>
+            <a href="/calculators/bicarbonate-deficit-calculator" style="font-size: 14px;">HCO3 Deficit</a>
+            <a href="/calculators/doctors" style="font-size: 14px; color: var(--expert-amber);">For Doctors</a>
+            <a href="/calculators/nurses" style="font-size: 14px; color: var(--expert-amber);">For Nurses</a>
+            <a href="/calculators/pharmacists" style="font-size: 14px; color: var(--expert-amber);">For Pharmacists</a>
+            <a href="/calculators/students" style="font-size: 14px; color: var(--expert-amber);">For Students</a>
+            <a href="/calculators/er" style="font-size: 14px; color: var(--expert-amber);">ER / Emergency</a>
+            <a href="/calculators/icu" style="font-size: 14px; color: var(--expert-amber);">ICU / Critical Care</a>
+            <a href="/calculators/pediatrics" style="font-size: 14px; color: var(--expert-amber);">Pediatrics</a>
+            <a href="/calculators/obgyn" style="font-size: 14px; color: var(--expert-amber);">OB/GYN</a>
+            <a href="/calculators/surgeons" style="font-size: 14px; color: var(--expert-amber);">Surgeons</a>
+            <a href="/calculators/anesthesia" style="font-size: 14px; color: var(--expert-amber);">Anesthesia</a>
+            <a href="/calculators/lab" style="font-size: 14px; color: var(--expert-amber);">Lab / Pathology</a>
+            <a href="/calculators/dietitians" style="font-size: 14px; color: var(--expert-amber);">Dietitians</a>
           </div>
         </div>
       </div>
@@ -396,7 +413,27 @@
             <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
             <li><a href="/rx-savings">Rx Savings Search</a></li>
             <li><a href="/providers">Provider Search</a></li>
-              <li><a href="/medical-calculator">Medical Calculator</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Calculators</h4>
+          <ul>
+            <li><a href="/calculators/bmi-calculator">BMI</a></li>
+            <li><a href="/calculators/creatinine-clearance-calculator">Creatinine Clearance</a></li>
+            <li><a href="/calculators/bsa-calculator">BSA</a></li>
+            <li><a href="/calculators/bicarbonate-deficit-calculator">Bicarbonate Deficit</a></li>
+            <li><a href="/calculators/doctors">For Doctors</a></li>
+            <li><a href="/calculators/nurses">For Nurses</a></li>
+            <li><a href="/calculators/pharmacists">For Pharmacists</a></li>
+            <li><a href="/calculators/students">For Students</a></li>
+            <li><a href="/calculators/er">ER / Emergency</a></li>
+            <li><a href="/calculators/icu">ICU / Critical</a></li>
+            <li><a href="/calculators/pediatrics">Pediatrics</a></li>
+            <li><a href="/calculators/obgyn">OB/GYN</a></li>
+            <li><a href="/calculators/surgeons">Surgeons</a></li>
+            <li><a href="/calculators/anesthesia">Anesthesia</a></li>
+            <li><a href="/calculators/lab">Lab / Pathology</a></li>
+            <li><a href="/calculators/dietitians">Dietitians</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -404,7 +441,7 @@
           <ul>
             <li><a href="/pricing" style="color:var(--expert-amber); display: inline-flex; align-items: center; gap: 6px;">Human Bill Negotiation <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m12 3 1.91 5.82L21 12l-7.09 3.18L12 21l-1.91-5.82L3 12l7.09-3.18L12 3z"/></svg></a></li>
             <li><a href="/medical-exam-preparation" style="color:var(--accent); font-weight:700;">Medical Exam Mastery</a></li>
-              <li><a href="/blog">Patient Blog</a></li>
+            <li><a href="/blog">Patient Blog</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -413,8 +450,9 @@
             <li><a href="/privacy">Privacy Policy</a></li>
             <li><a href="/terms">Terms of Service</a></li>
             <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
             <li><a href="/contact">Contact Us</a></li>
-            <li><a href="sitemap.xml">Sitemap</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
           </ul>
         </div>
       </div>
@@ -20803,29 +20841,10 @@
         }],
       'year3': [
         {
-          topic: 'Internal Medicine',
-          icon: 'stethoscope',
-          cards: [
-            { q: "First-line treatment for Hypertension?", a: "<b>ACE inhibitors, ARBs, Thiazides, or CCBs.</b>" },
-            { q: "Classic triad of Meningitis?", a: "Fever, Nuchal rigidity, Altered mental status." },
-            { q: "Most common cause of Community-Acquired Pneumonia?", a: "<i>Streptococcus pneumoniae</i>." }
-          ]
-        },
-        {
-          topic: 'General Surgery',
-          icon: 'scissors',
-          cards: [
-            { q: "What is McBurney's Point?", a: "1/3 the distance from ASIS to Umbilicus; point of maximal tenderness in <b>Appendicitis</b>." },
-            { q: "Signs of Cholecystitis?", a: "<b>Murphy's Sign</b> (arrest of inspiration on RUQ palpation)." }
-          ]
-        },
-        {
-          topic: 'Pediatrics',
-          icon: 'baby',
-          cards: [
-            { q: "Most common cause of Croup?", a: "<b>Parainfluenza virus</b>." },
-            { q: "Characteristic finding in Pyloric Stenosis?", a: "<b>Olive-shaped mass</b> in the epigastrium; projectile vomiting." }
-          ]
+          section: 'Internal Medicine',
+          topic: 'Cardiology — ACS, heart failure, arrhythmias, valvular disease',
+          icon: 'heart',
+          cards: []
         }
       ],
       'year4': [
@@ -20928,22 +20947,39 @@
           emptyState.classList.add('hidden');
           topicGrid.classList.remove('hidden');
           
-          topics.forEach((t, idx) => {
-            if (!t) return;
-            const isFreeDemo = (idx === 0);
-            const card = document.createElement('div');
-            card.className = 'topic-card-item';
-            card.innerHTML = `
-              ${isFreeDemo ? '<div style="position:absolute; top:12px; right:12px; background:var(--accent); color:white; font-size:10px; font-weight:800; padding:3px 10px; border-radius:6px; text-transform:uppercase; letter-spacing:1px; z-index:1; box-shadow:0 4px 12px rgba(var(--accent-rgb),0.3);">Free Demo</div>' : ''}
-              <div class="topic-card-icon">
-                <i data-lucide="${t.icon || 'book'}"></i>
-              </div>
-              <div class="topic-card-title">${t.topic || 'Untitled Topic'}</div>
-              <div class="topic-card-count">${(t.cards || []).length} Cards</div>
-            `;
-            card.onclick = () => startStudyMode(idx, isFreeDemo);
-            topicGrid.appendChild(card);
+          const sectionsMap = {};
+          topics.forEach(t => {
+            const s = t.section || 'General';
+            if (!sectionsMap[s]) sectionsMap[s] = [];
+            sectionsMap[s].push(t);
           });
+
+          for (const [sectionName, secTopics] of Object.entries(sectionsMap)) {
+            if (sectionName !== 'General' || Object.keys(sectionsMap).length > 1) {
+              const header = document.createElement('div');
+              header.className = 'section-header';
+              header.style.gridColumn = '1 / -1';
+              header.textContent = sectionName;
+              topicGrid.appendChild(header);
+            }
+            
+            secTopics.forEach((t) => {
+              const idx = topics.indexOf(t);
+              const isFreeDemo = (idx === 0);
+              const card = document.createElement('div');
+              card.className = 'topic-card-item';
+              card.innerHTML = `
+                ${isFreeDemo ? '<div style="position:absolute; top:12px; right:12px; background:var(--accent); color:white; font-size:10px; font-weight:800; padding:3px 10px; border-radius:6px; text-transform:uppercase; letter-spacing:1px; z-index:1; box-shadow:0 4px 12px rgba(var(--accent-rgb),0.3);">Free Demo</div>' : ''}
+                <div class="topic-card-icon">
+                  <i data-lucide="${t.icon || 'book'}"></i>
+                </div>
+                <div class="topic-card-title">${t.topic || 'Untitled Topic'}</div>
+                <div class="topic-card-count">${(t.cards || []).length} Cards</div>
+              `;
+              card.onclick = () => startStudyMode(idx, isFreeDemo);
+              topicGrid.appendChild(card);
+            });
+          }
           
           // Initialize Lucide icons with error catching
           if (window.lucide) {
