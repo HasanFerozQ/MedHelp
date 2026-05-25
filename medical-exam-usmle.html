@@ -362,14 +362,16 @@
       loader.classList.remove('hidden');
 
       async function backgroundRefreshUsmle(sId, key) {
-        const { data } = await window.dbClient.from('topics').select('*, mcqs(id), case_studies(id, case_questions(id))').eq('usmle_step', sId).neq('slug', 'usmle-1-mock-pool-hidden').order('order');
+        let topicQuery = window.dbClient.from('topics').select('*, mcqs(id), case_studies(id, case_questions(id))').eq('usmle_step', sId).neq('slug', 'usmle-1-mock-pool-hidden');
+        if (sId === 2) topicQuery = topicQuery.not('slug', 'like', 'usmle-2-mock-pool-%');
+        const { data } = await topicQuery.order('order');
         if (data) {
           localStorage.setItem(key, JSON.stringify({ topics: data, timestamp: Date.now() }));
           renderUsmleTopics(data);
         }
       }
 
-      const { data, error } = await window.dbClient
+      let topicFetch = window.dbClient
         .from('topics')
         .select(`
           *, 
@@ -380,7 +382,9 @@
           )
         `)
         .eq('usmle_step', stepId)
-        .neq('slug', 'usmle-1-mock-pool-hidden')
+        .neq('slug', 'usmle-1-mock-pool-hidden');
+      if (stepId === 2) topicFetch = topicFetch.not('slug', 'like', 'usmle-2-mock-pool-%');
+      const { data, error } = await topicFetch
         .order('order', { ascending: true })
         .order('created_at', { ascending: true });
 

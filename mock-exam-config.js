@@ -95,7 +95,7 @@ window.MockExamConfig = {
       id: 'step2-mock1',
       step: 2,
       tab: 'step2',
-      title: 'USMLE Step 2 Mock #1',
+      title: 'USMLE Step 2 CK Mock #1',
       badge: 'STEP 2 CK',
       questions: 320,
       totalBlocks: 8,
@@ -103,9 +103,77 @@ window.MockExamConfig = {
       totalHours: 9,
       format: '8 Blocks / 60m ea.',
       freeDemo: true,
-      pool: 'step2-random',
-      focus: 'Balanced random mix across all Step 2 CK clinical disciplines (UWorld / First Aid style full-length).',
-      confirmMessage: 'Ready to start the 9-hour USMLE Step 2 CK exam? The clock runs in real time once you begin.',
+      pool: 'step2-dedicated-mock1',
+      focus: 'Balanced NBME-style clinical vignettes — internal medicine, surgery, pediatrics, OB/GYN, psychiatry (UWorld / First Aid / Step-Up).',
+      confirmMessage: 'Ready to start the 9-hour USMLE Step 2 CK Mock #1? The clock runs in real time once you begin.',
+    },
+    'step2-mock2': {
+      id: 'step2-mock2',
+      step: 2,
+      tab: 'step2',
+      title: 'USMLE Step 2 CK Mock #2',
+      badge: 'STEP 2 CK',
+      questions: 320,
+      totalBlocks: 8,
+      questionsPerBlock: 40,
+      totalHours: 9,
+      format: '8 Blocks / 60m ea.',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step2-dedicated-mock2',
+      focus: 'Internal medicine emphasis — Harrison, CMDT, Washington Manual, Kumar & Clark, organ-system subspecialty texts.',
+      confirmMessage: 'Ready to start USMLE Step 2 CK Mock #2? Internal medicine–weighted vignettes load across 8 timed blocks.',
+    },
+    'step2-mock3': {
+      id: 'step2-mock3',
+      step: 2,
+      tab: 'step2',
+      title: 'USMLE Step 2 CK Mock #3',
+      badge: 'STEP 2 CK',
+      questions: 320,
+      totalBlocks: 8,
+      questionsPerBlock: 40,
+      totalHours: 9,
+      format: '8 Blocks / 60m ea.',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step2-dedicated-mock3',
+      focus: 'Surgery & acute care — Schwartz, Bailey & Love, ATLS, Tintinalli, Rosen, Surgical Recall, trauma and perioperative management.',
+      confirmMessage: 'Ready to start USMLE Step 2 CK Mock #3? Surgery and emergency medicine vignettes load across 8 blocks.',
+    },
+    'step2-mock4': {
+      id: 'step2-mock4',
+      step: 2,
+      tab: 'step2',
+      title: 'USMLE Step 2 CK Mock #4',
+      badge: 'STEP 2 CK',
+      questions: 320,
+      totalBlocks: 8,
+      questionsPerBlock: 40,
+      totalHours: 9,
+      format: '8 Blocks / 60m ea.',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step2-dedicated-mock4',
+      focus: 'Pediatrics & OB/GYN — Nelson, Williams Obstetrics/Gynecology, Beckmann, PALS/ALSO, high-yield women's and children's health.',
+      confirmMessage: 'Ready to start USMLE Step 2 CK Mock #4? Pediatrics and OB/GYN vignettes load across 8 timed blocks.',
+    },
+    'step2-mock5': {
+      id: 'step2-mock5',
+      step: 2,
+      tab: 'step2',
+      title: 'USMLE Step 2 CK Mock #5',
+      badge: 'STEP 2 CK',
+      questions: 320,
+      totalBlocks: 8,
+      questionsPerBlock: 40,
+      totalHours: 9,
+      format: '8 Blocks / 60m ea.',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step2-dedicated-mock5',
+      focus: 'Psychiatry, ethics, geriatrics, derm, ophtho, ENT — Kaplan & Sadock, Beauchamp & Childress, multispecialty integration.',
+      confirmMessage: 'Ready to start USMLE Step 2 CK Mock #5? Multispecialty and behavioral health vignettes load across 8 blocks.',
     },
     'step3-mock1': {
       id: 'step3-mock1',
@@ -286,6 +354,20 @@ window.MockExamConfig = {
       .sort((a, b) => a.title.localeCompare(b.title, undefined, { numeric: true }));
   },
 
+  /** Dedicated Supabase topic slugs (hidden from USMLE topic browser). */
+  step2DedicatedPoolSlugs: {
+    'step2-dedicated-mock1': 'usmle-2-mock-pool-mock1',
+    'step2-dedicated-mock2': 'usmle-2-mock-pool-mock2',
+    'step2-dedicated-mock3': 'usmle-2-mock-pool-mock3',
+    'step2-dedicated-mock4': 'usmle-2-mock-pool-mock4',
+    'step2-dedicated-mock5': 'usmle-2-mock-pool-mock5',
+  },
+
+  getDedicatedPoolSlug(examId) {
+    const pool = this.getExam(examId).pool;
+    return this.step2DedicatedPoolSlugs[pool] || null;
+  },
+
   getBucketsForExam(examId) {
     const pool = this.getExam(examId).pool;
     const byPool = {
@@ -296,6 +378,34 @@ window.MockExamConfig = {
     };
     return byPool[pool] || null;
   },
+
+  /** Canonical Step 2 CK textbook & board-prep sources (exam metadata). */
+  step2TextbookSources: [
+    'UWorld Step 2 CK Qbank',
+    'AMBOSS Step 2 CK Qbank',
+    'Master the Boards USMLE Step 2 CK (Conrad Fischer)',
+    'Step-Up to Medicine (Steven Agabegi)',
+    'First Aid for the USMLE Step 2 CK (Tao Le & Vikas Bhushan)',
+    'OnlineMedEd (video + notes)',
+    "Harrison's Principles of Internal Medicine",
+    'Washington Manual of Medical Therapeutics',
+    'Current Medical Diagnosis & Treatment (CMDT)',
+    'Clinical Medicine (Kumar & Clark)',
+    "Braunwald's Heart Disease",
+    "Murray & Nadel's Respiratory Medicine",
+    "Sleisenger and Fordtran's GI and Liver Disease",
+    "Brenner & Rector's The Kidney",
+    "Williams Textbook of Endocrinology",
+    "Mandell, Douglas, and Bennett's Infectious Diseases",
+    "Schwartz's Principles of Surgery",
+    "Tintinalli's Emergency Medicine",
+    "Williams Obstetrics / Williams Gynecology",
+    'Nelson Textbook of Pediatrics',
+    "Kaplan & Sadock's Synopsis of Psychiatry",
+    "Bates' Guide to Physical Examination",
+    'Case Files Series (Toy et al.)',
+    'Symptom to Diagnosis (Stern et al.)',
+  ],
 
   getStep1Exams() {
     return this.getExamsForTab('step1');
@@ -352,6 +462,24 @@ window.MockExamConfig = {
     };
   },
 
+  getStep2Percentile(threeDigitScore) {
+    if (threeDigitScore >= 270) return 99;
+    if (threeDigitScore >= 265) return 97;
+    if (threeDigitScore >= 260) return 93;
+    if (threeDigitScore >= 255) return 88;
+    if (threeDigitScore >= 250) return 80;
+    if (threeDigitScore >= 245) return 72;
+    if (threeDigitScore >= 240) return 62;
+    if (threeDigitScore >= 235) return 52;
+    if (threeDigitScore >= 230) return 42;
+    if (threeDigitScore >= 225) return 32;
+    if (threeDigitScore >= 220) return 24;
+    if (threeDigitScore >= 214) return 15;
+    if (threeDigitScore >= 205) return 8;
+    if (threeDigitScore >= 195) return 4;
+    return 1;
+  },
+
   getStep2Readiness(scorePct) {
     let projectedMin, projectedMax, status, statusColor, performanceLevel;
     if (scorePct >= 85) {
@@ -386,12 +514,14 @@ window.MockExamConfig = {
       performanceLevel = 'Significant knowledge gaps — review core clerkship materials before next full-length.';
     }
     const projectedMid = Math.round((projectedMin + projectedMax) / 2);
+    const percentile = this.getStep2Percentile(projectedMid);
     const statusEmoji = scorePct >= 75 ? '🟢' : scorePct >= 65 ? '🟡' : scorePct >= 55 ? '🟠' : '🔴';
     return {
       passMin: projectedMin,
       passMax: projectedMax,
       passMid: projectedMid,
       passRange: `${projectedMin}–${projectedMax}`,
+      percentile,
       status,
       statusEmoji,
       statusColor,

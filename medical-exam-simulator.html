@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
-  <script src="mock-exam-config.js?v=20260521d"></script>
+  <script src="mock-exam-config.js?v=20260523a"></script>
   <script src="https://gumroad.com/js/gumroad.js"></script>
   <style>
     body { background: #0a0f18; }
@@ -896,12 +896,20 @@
       return blocks;
     }
 
+    const MOCK_POOL_SLUG_EXCLUDE = ['usmle-1-mock-pool-hidden'];
+
     async function fetchMcqsForStep(step) {
-      let { data, error } = await window.dbClient
+      let query = window.dbClient
         .from('mcqs')
         .select('*, topics!inner(*)')
-        .eq('topics.usmle_step', step)
-        .neq('topics.slug', 'usmle-1-mock-pool-hidden');
+        .eq('topics.usmle_step', step);
+      MOCK_POOL_SLUG_EXCLUDE.forEach((slug) => {
+        query = query.neq('topics.slug', slug);
+      });
+      if (step === 2) {
+        query = query.not('topics.slug', 'like', 'usmle-2-mock-pool-%');
+      }
+      let { data, error } = await query;
 
       if ((error || !data || data.length < TOTAL_QUESTIONS) && step === 2) {
         console.warn("No Step 2 MCQs found in DB; falling back to Step 1 MCQs for testing/demo of Step 2 CK format.");
@@ -953,6 +961,26 @@
       return buildBlocksFromPool(pool);
     }
 
+    async function loadDedicatedMockPool(topicSlug) {
+      const { data: topic, error: topicErr } = await window.dbClient
+        .from('topics')
+        .select('id')
+        .eq('slug', topicSlug)
+        .maybeSingle();
+      if (topicErr || !topic) {
+        throw new Error(`Mock question pool "${topicSlug}" is not available. Apply Step 2 CK mock migrations.`);
+      }
+      const { data: mcqs, error } = await window.dbClient
+        .from('mcqs')
+        .select('*')
+        .eq('topic_id', topic.id);
+      if (error || !mcqs || mcqs.length < TOTAL_QUESTIONS) {
+        const n = mcqs ? mcqs.length : 0;
+        throw new Error(`Only ${n} questions in ${topicSlug}; need ${TOTAL_QUESTIONS}.`);
+      }
+      return buildBlocksFromPool(mcqs);
+    }
+
     async function initSimulator() {
       if (EXAM.comingSoon) {
         showSimDialog({
@@ -975,8 +1003,11 @@
 
       try {
         let blocks;
+        const dedicatedSlug = MockExamConfig.getDedicatedPoolSlug(EXAM_ID);
         const buckets = MockExamConfig.getBucketsForExam(EXAM_ID);
-        if (buckets) {
+        if (dedicatedSlug) {
+          blocks = await loadDedicatedMockPool(dedicatedSlug);
+        } else if (buckets) {
           blocks = await loadStratifiedPool(buckets);
         } else {
           const step = EXAM.step || 1;
@@ -1403,6 +1434,9 @@
       const scoreLabel = EXAM.step === 2 ? 'ESTIMATED THREE-DIGIT SCORE' : 'ESTIMATED PASS PROBABILITY';
       const rangeLabel = EXAM.step === 2 ? 'Projected Score' : 'Range';
       const displayValue = EXAM.step === 2 ? `${readiness.passMid}` : `${readiness.passMid}%`;
+      const percentileLine = EXAM.step === 2 && readiness.percentile != null
+        ? `<div style="font-size:13px; color:#9ca3af; margin-top:6px; font-weight:700;">Estimated Percentile: <span style="color:#e9d5ff;">${readiness.percentile}th</span> · Passing ~214 · Competitive avg ~245–250</div>`
+        : '';
 
       document.getElementById('report-stats').innerHTML = `
         ${focusLine}
@@ -1411,6 +1445,7 @@
             <div class="report-prob-value" style="-webkit-text-fill-color:${readiness.statusColor}; color:${readiness.statusColor};">${displayValue}</div>
             <div style="font-size:12px; color:#6b7280; font-weight:700;">${scoreLabel}</div>
             <div style="font-size:11px; color:#9ca3af; margin-top:4px;">${rangeLabel}: ${readiness.passRange}</div>
+            ${percentileLine}
           </div>
           <div>
             <div class="report-status-pill" style="border-color:${readiness.statusColor}55; color:${readiness.statusColor};">
