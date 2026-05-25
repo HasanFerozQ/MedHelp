@@ -15,14 +15,9 @@ window.MockExamStep3Config = {
     blocks: 6,
     questionsPerBlock: 33,
     totalQuestions: 198,
+    totalHours: 6,
     blockMinutes: 60,
   },
-  DAY2_CCS: {
-    label: 'Day 2 — Computer-Based Case Simulations',
-    caseCount: 13,
-    defaultMinutes: 15,
-  },
-  DAY2_TOTAL_HOURS: 9,
 
   poolSlugs(mockNum, day) {
     const n = mockNum;
@@ -156,7 +151,7 @@ window.MockExamStep3Config = {
     {
       title: 'Toxic Ingestion — Acetaminophen',
       vignette: 'A 22-year-old took 30g acetaminophen 6 hours ago, nausea, AST pending, NAC not yet given.',
-      essential: ['acetaminophen_level', 'nac_protocol', 'bmp_lfts', 'toxicology_consult'],
+        essential: ['acetaminophen_level', 'nac_protocol', 'lfts', 'toxicology_consult'],
       harmful: ['charcoal_only_late', 'discharge_home'],
       exp: 'Significant APAP overdose needs level, N-acetylcysteine per nomogram, monitoring.',
     },
@@ -295,57 +290,29 @@ window.MockExamStep3Config = {
     aggressive_chemo_start: 'Start new chemotherapy today',
   },
 
-  getCcsCasesForMock(mockNum) {
-    const lib = this.ccsCaseLibrary;
-    const start = ((mockNum - 1) * 3) % lib.length;
-    const cases = [];
-    for (let i = 0; i < this.DAY2_CCS.caseCount; i++) {
-      const src = lib[(start + i) % lib.length];
-      cases.push({
-        ...src,
-        id: `mock${mockNum}-ccs-${i + 1}`,
-        timeMinutes: this.DAY2_CCS.defaultMinutes,
-      });
-    }
-    return cases;
-  },
-
-  scoreCcsCase(caseDef, selectedIds) {
-    const set = new Set(selectedIds);
-    let score = 0;
-    let max = caseDef.essential.length;
-    caseDef.essential.forEach((id) => {
-      if (set.has(id)) score += 1;
-    });
-    caseDef.harmful.forEach((id) => {
-      if (set.has(id)) score -= 1;
-    });
-    const pct = Math.max(0, Math.round((score / max) * 100));
-    return { score, max, pct };
-  },
-
+  /** CCS not offered — requires official Primum-style encounter software we do not provide. */
   getStep3Readiness(combinedPct) {
     let projectedMin, projectedMax, status, statusColor, performanceLevel;
     if (combinedPct >= 80) {
       projectedMin = 228; projectedMax = 245;
       status = 'Excellent';
       statusColor = '#10b981';
-      performanceLevel = 'Strong Step 3 performance — refine CCS timing and preventive medicine.';
+      performanceLevel = 'Strong Step 3 performance — refine Day 2 management and preventive medicine.';
     } else if (combinedPct >= 70) {
       projectedMin = 215; projectedMax = 227;
       status = 'Above Average';
       statusColor = '#34d399';
-      performanceLevel = 'Solid — focus CCS essential orders and biostatistics/ethics.';
+      performanceLevel = 'Solid — focus biostatistics, ethics, and multispecialty management.';
     } else if (combinedPct >= 60) {
       projectedMin = 205; projectedMax = 214;
       status = 'Passing Range';
       statusColor = '#fbbf24';
-      performanceLevel = 'Near passing (~198) — increase UWorld Step 3 and CCS practice.';
+      performanceLevel = 'Near passing (~198) — increase UWorld Step 3 and timed Day 2 blocks.';
     } else if (combinedPct >= 50) {
       projectedMin = 198; projectedMax = 204;
       status = 'Borderline';
       statusColor = '#f59e0b';
-      performanceLevel = 'Borderline pass — prioritize Day 2 management and CCS cases.';
+      performanceLevel = 'Borderline pass — prioritize Day 2 ACP management vignettes.';
     } else {
       projectedMin = 175; projectedMax = 197;
       status = 'Below Passing';

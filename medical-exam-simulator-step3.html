@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USMLE Step 3 Simulator | MediHelp</title>
+  <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+  <script src="mock-exam-step3-config.js?v=20260524a"></script>
+  <script src="mock-exam-config.js?v=20260524a"></script>
+  <script src="https://gumroad.com/js/gumroad.js"></script>
+  <style>
+    body { background: #0a0f18; }
+    .hidden { display: none !important; }
+    .hub-wrap { max-width: 720px; margin: 48px auto; padding: 0 20px; }
+    .hub-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; }
+    .hub-card h1 { margin: 0 0 12px; font-size: 26px; }
+    .day-card { border: 1px solid #374151; border-radius: 14px; padding: 20px; margin-top: 16px; }
+    .btn-start-day { width: 100%; margin-top: 12px; padding: 14px; border-radius: 12px; border: none; background: #a855f7; color: white; font-weight: 800; cursor: pointer; }
+    .btn-start-day:disabled { opacity: 0.45; cursor: not-allowed; }
+    .completed-pill { display: inline-block; padding: 4px 12px; border-radius: 100px; background: rgba(16,185,129,0.15); color: #10b981; font-size: 11px; font-weight: 800; margin-left: 8px; }
+    .sim-header { background: #111827; border-bottom: 1px solid #374151; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .sim-main { max-width: 1000px; margin: 24px auto; padding: 0 20px 100px; }
+    .question-nav { display: grid; grid-template-columns: repeat(11, 1fr); gap: 6px; margin-bottom: 20px; }
+    .q-btn { width: 32px; height: 32px; border: 1px solid #374151; background: #1f2937; color: #9ca3af; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 4px; }
+    .q-btn.current { border-color: #a855f7; color: white; }
+    .q-btn.answered { background: #10b981; color: #0a0f18; }
+    .q-btn.unanswered { background: #dc2626; color: white; }
+    .mcq-area { background: #111827; border: 1px solid #374151; border-radius: 12px; padding: 32px; min-height: 320px; }
+    .option-row { display: flex; gap: 12px; padding: 14px; background: #1f2937; border: 1px solid #374151; border-radius: 8px; margin-bottom: 10px; cursor: pointer; }
+    .option-row.selected { border-color: #a855f7; background: rgba(168,85,247,0.1); }
+    .opt-letter { font-weight: 900; color: #a855f7; }
+    .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #111827; border-top: 1px solid #374151; padding: 12px 24px; display: flex; justify-content: space-between; z-index: 100; }
+    .sim-btn-nav { padding: 10px 18px; border-radius: 10px; border: 1px solid #4b5563; background: #1f2937; color: #e5e7eb; font-weight: 700; cursor: pointer; }
+    .block-dot { width: 8px; height: 8px; border-radius: 50%; background: #374151; display: inline-block; margin: 0 3px; }
+    .block-dot.active { background: #a855f7; width: 18px; border-radius: 8px; }
+    .block-dot.done { background: #10b981; }
+    .ccs-order-item { display: block; padding: 10px; margin: 6px 0; background: #1f2937; border-radius: 8px; cursor: pointer; font-size: 14px; }
+    .ccs-wrap { max-width: 900px; margin: 24px auto; padding: 0 20px 80px; }
+    .report-view { position: fixed; inset: 0; background: rgba(10,15,24,0.95); display: flex; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+    .report-view:not(.hidden) { display: flex; }
+    .report-card { background: #111827; border: 1px solid #374151; border-radius: 20px; max-width: 560px; width: 100%; padding: 32px; }
+    .report-stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .report-stat-box { background: #1f2937; padding: 12px; border-radius: 8px; text-align: center; font-size: 13px; color: #9ca3af; }
+    #paywall-overlay { position: fixed; inset: 0; background: rgba(10,15,24,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+    #paywall-overlay.hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div id="paywall-overlay" class="hidden">
+    <div style="background:#111827;border:1px solid #374151;padding:40px;border-radius:20px;max-width:480px;text-align:center;">
+      <h2 style="color:white;margin:0 0 12px">Premium Required</h2>
+      <p style="color:#9ca3af">Step 3 mocks require Medical Exam Mastery.</p>
+      <a href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank" class="btn btn-primary" style="margin-top:20px;display:inline-block">Get Access</a>
+    </div>
+  </div>
+
+  <div id="hub-ui" class="hub-wrap">
+    <div class="hub-card">
+      <h1 id="hub-title">USMLE Step 3 Mock</h1>
+      <span id="hub-completed-tag" class="completed-pill hidden">Completed</span>
+      <p id="hub-focus" style="color:var(--text-muted);line-height:1.6;margin:12px 0 0"></p>
+      <p style="font-size:13px;color:#9ca3af;margin-top:8px">This mock spans <strong>2 days</strong> (MCQ only). Complete Day 1 before unlocking Day 2. CCS cases are not included — they require official encounter simulation software.</p>
+      <div class="day-card">
+        <strong>Day 1 — Foundations of Independent Practice (FIP)</strong>
+        <p id="day1-status" style="margin:8px 0 0;font-size:14px;color:var(--text-muted)"></p>
+        <button type="button" class="btn-start-day" id="btn-start-day1">Start Day 1</button>
+      </div>
+      <div class="day-card">
+        <strong>Day 2 — Advanced Clinical Medicine (ACP)</strong>
+        <p id="day2-status" style="margin:8px 0 0;font-size:14px;color:var(--text-muted)"></p>
+        <button type="button" class="btn-start-day" id="btn-start-day2" disabled>Start Day 2 (198 MCQs)</button>
+      </div>
+      <div id="hub-day-actions" style="margin-top:16px"></div>
+      <button type="button" class="btn-start-day" style="background:transparent;border:1px solid #4b5563;color:#9ca3af;margin-top:12px" onclick="window._s3Exit()">Back to Mock Lobby</button>
+    </div>
+  </div>
+
+  <div id="loading-ui" class="hidden hub-wrap"><p id="loading-msg" style="text-align:center;color:#a855f7">Loading questions…</p></div>
+
+  <div id="sim-ui" class="hidden">
+    <header class="sim-header">
+      <button type="button" class="sim-btn-nav" onclick="window._s3Hub()">← Hub</button>
+      <div style="text-align:center">
+        <div style="font-size:11px;color:#6b7280;font-weight:800" id="block-tracker-text">BLOCK</div>
+        <div id="block-dots"></div>
+        <div style="margin-top:8px;font-family:monospace"><span id="block-timer">60:00</span> · <span id="global-timer">07:00:00</span></div>
+      </div>
+      <div id="sim-exam-title" style="font-size:12px;color:#9ca3af;max-width:200px;text-align:right">Step 3</div>
+    </header>
+    <main class="sim-main">
+      <div class="question-nav" id="q-nav"></div>
+      <div class="mcq-area">
+        <div id="q-text"></div>
+        <div id="options-list" style="margin-top:20px"></div>
+      </div>
+    </main>
+    <footer class="bottom-bar">
+      <button type="button" class="sim-btn-nav" onclick="window._s3Prev()">Previous</button>
+      <button type="button" class="sim-btn-nav" onclick="window._s3Next()">Next</button>
+      <button type="button" class="sim-btn-nav" style="border-color:#a855f7;color:#e9d5ff" onclick="window._s3SubmitBlock()">End Block</button>
+    </footer>
+  </div>
+
+  <div id="break-ui" class="hidden" style="text-align:center;padding:80px 20px">
+    <h2 style="color:#a855f7">Block break</h2>
+    <p style="color:#9ca3af">Total exam clock still running.</p>
+    <p id="global-timer-break" style="font-size:36px;font-family:monospace;margin:24px 0">--:--:--</p>
+    <button class="btn-start-day" onclick="window._s3Resume()">Resume next block</button>
+  </div>
+
+  <div id="report-ui" class="report-view hidden">
+    <div class="report-card">
+      <h2 style="margin:0 0 8px;color:#a855f7;font-size:14px">Step 3 Readiness Report</h2>
+      <p id="report-title" style="margin:0 0 20px;font-size:22px;font-weight:900;color:white">Exam Complete</p>
+      <div id="report-stats"></div>
+      <button type="button" class="btn-start-day" style="margin-top:24px" onclick="window._s3Exit()">Return to Mock Lobby</button>
+    </div>
+  </div>
+
+  <script src="medical-exam-simulator-step3.js?v=20260524a"></script>
+  <script>
+    document.getElementById('btn-start-day1').onclick = () => window._s3StartDay1();
+    document.getElementById('btn-start-day2').onclick = () => window._s3StartDay2();
+  </script>
+</body>
+</html>

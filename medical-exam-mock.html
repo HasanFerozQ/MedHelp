@@ -9,7 +9,8 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
-  <script src="mock-exam-config.js?v=20260523a"></script>
+  <script src="mock-exam-step3-config.js?v=20260524a"></script>
+  <script src="mock-exam-config.js?v=20260524a"></script>
   <style>
     .mock-lobby { padding: 40px 0 80px; }
     .mock-step-nav {
@@ -79,6 +80,18 @@
       background: rgba(168,85,247,0.1);
       color: #a855f7;
       margin-bottom: 8px;
+    }
+    .mock-badge-completed {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 800;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      margin-left: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .mock-badge-premium {
       display: inline-block;
@@ -388,16 +401,20 @@
       const premiumBadge = isStep1 || exam.premiumOnly
         ? '<span class="mock-badge-premium">Premium</span>'
         : '';
+      const completedBadge = MockExamConfig.isMockCompleted(exam.id)
+        ? '<span class="mock-badge-completed">Completed</span>'
+        : '';
 
+      const btnLabel = exam.step3Exam ? 'Open 2-Day Mock' : 'Start Exam';
       const btnHtml = exam.comingSoon
         ? '<button class="btn-start-mock coming-soon" disabled>Coming Soon</button>'
-        : `<button class="btn-start-mock" onclick="startExam('${exam.id}')">Start Exam</button>`;
+        : `<button class="btn-start-mock" onclick="startExam('${exam.id}')">${btnLabel}</button>`;
 
       const qLine = exam.questions
-        ? `<div class="mock-stat"><span>Questions</span><span style="color: var(--text-h); font-weight: 700;">${exam.questions} MCQs</span></div>`
+        ? `<div class="mock-stat"><span>Questions</span><span style="color: var(--text-h); font-weight: 700;">${exam.questions} items</span></div>`
         : '';
       const timeLine = exam.totalHours
-        ? `<div class="mock-stat"><span>Total Time</span><span style="color: var(--text-h); font-weight: 700;">${exam.totalHours} Hours</span></div>`
+        ? `<div class="mock-stat"><span>Total Time</span><span style="color: var(--text-h); font-weight: 700;">${exam.totalHours} Hours (2 days)</span></div>`
         : '';
       const formatLine = exam.format
         ? `<div class="mock-stat"><span>Format</span><span style="color: var(--text-h); font-weight: 700;">${exam.format}</span></div>`
@@ -407,7 +424,7 @@
         <div class="mock-card">
           <div class="mock-card-body">
             <div>
-              <div class="mock-card-badges">${stepBadge}${premiumBadge}</div>
+              <div class="mock-card-badges">${stepBadge}${premiumBadge}${completedBadge}</div>
               <h3>${exam.title}</h3>
             </div>
             <div class="mock-card-stats">
@@ -461,6 +478,12 @@
           luck: 'Best of Luck!',
         };
       }
+      if (exam.tab === 'step3') {
+        return {
+          title: `Ready to start ${exam.title}?`,
+          luck: 'Best of Luck!',
+        };
+      }
       return {
         title: 'Ready to start USMLE Step 3 Mock Exam?',
         luck: 'Best of Luck!',
@@ -474,10 +497,13 @@
       const copy = getStartModalCopy(exam);
       document.getElementById('mock-start-title').textContent = copy.title;
       document.querySelector('.mock-start-luck').textContent = copy.luck;
-      const blocksCount = exam.totalBlocks || (exam.step === 2 ? 8 : 7);
-      const sub = exam.totalHours && exam.questions
-        ? `${exam.totalHours} hours · ${exam.questions} MCQs · ${blocksCount} blocks · clock runs in real time`
-        : 'Clock runs in real time once you begin';
+      let sub = 'Clock runs in real time once you begin';
+      if (exam.step3Exam && exam.twoDayExam) {
+        sub = 'Day 1: 7h (240 MCQ) · Day 2: 6h (198 MCQ) · complete Day 1 to unlock Day 2 · CCS not included';
+      } else if (exam.totalHours && exam.questions) {
+        const blocksCount = exam.totalBlocks || (exam.step === 2 ? 8 : 7);
+        sub = `${exam.totalHours} hours · ${exam.questions} MCQs · ${blocksCount} blocks · clock runs in real time`;
+      }
       document.getElementById('mock-start-sub').textContent = sub;
       const overlay = document.getElementById('mock-start-overlay');
       overlay.hidden = false;
@@ -498,7 +524,8 @@
       if (!pendingExamId) return;
       const id = pendingExamId;
       closeStartModal();
-      window.location.href = `medical-exam-simulator.html?exam_id=${encodeURIComponent(id)}`;
+      const path = MockExamConfig.getSimulatorPath(id);
+      window.location.href = `${path}?exam_id=${encodeURIComponent(id)}`;
     }
 
     function startExam(id) {

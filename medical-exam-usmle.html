@@ -364,6 +364,7 @@
       async function backgroundRefreshUsmle(sId, key) {
         let topicQuery = window.dbClient.from('topics').select('*, mcqs(id), case_studies(id, case_questions(id))').eq('usmle_step', sId).neq('slug', 'usmle-1-mock-pool-hidden');
         if (sId === 2) topicQuery = topicQuery.not('slug', 'like', 'usmle-2-mock-pool-%');
+        if (sId === 3) topicQuery = topicQuery.not('slug', 'like', 'usmle-3-mock-pool-%');
         const { data } = await topicQuery.order('order');
         if (data) {
           localStorage.setItem(key, JSON.stringify({ topics: data, timestamp: Date.now() }));
@@ -384,6 +385,7 @@
         .eq('usmle_step', stepId)
         .neq('slug', 'usmle-1-mock-pool-hidden');
       if (stepId === 2) topicFetch = topicFetch.not('slug', 'like', 'usmle-2-mock-pool-%');
+      if (stepId === 3) topicFetch = topicFetch.not('slug', 'like', 'usmle-3-mock-pool-%');
       const { data, error } = await topicFetch
         .order('order', { ascending: true })
         .order('created_at', { ascending: true });

@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
-  <script src="mock-exam-config.js?v=20260523a"></script>
+  <script src="mock-exam-config.js?v=20260524a"></script>
   <script src="https://gumroad.com/js/gumroad.js"></script>
   <style>
     body { background: #0a0f18; }
@@ -743,6 +743,9 @@
     const urlParams = new URLSearchParams(window.location.search);
     const EXAM_ID = urlParams.get('exam_id') || 'step1-mock1';
     const EXAM = MockExamConfig.getExam(EXAM_ID);
+    if (EXAM.step3Exam) {
+      window.location.replace(`medical-exam-simulator-step3.html?exam_id=${encodeURIComponent(EXAM_ID)}`);
+    }
     const TOTAL_BLOCKS = EXAM.totalBlocks || (EXAM.step === 2 ? 8 : (MockExamConfig.TOTAL_BLOCKS || 7));
     const Q_PER_BLOCK = EXAM.questionsPerBlock || MockExamConfig.Q_PER_BLOCK || 40;
     const TOTAL_QUESTIONS = EXAM.questions || (TOTAL_BLOCKS * Q_PER_BLOCK);
@@ -1477,6 +1480,13 @@
         <button type="button" class="btn-exit-dash" onclick="exitSimulator()">Return to Mock Exams</button>
       `;
 
+      MockExamConfig.markMockCompleted(EXAM_ID, {
+        scorePct,
+        step: EXAM.step,
+        correct,
+        total: totalQ,
+        projected: readiness.passMid,
+      });
       saveState();
     }
 

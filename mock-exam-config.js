@@ -181,12 +181,83 @@ window.MockExamConfig = {
       tab: 'step3',
       title: 'USMLE Step 3 Mock #1',
       badge: 'STEP 3',
-      questions: null,
-      totalHours: null,
-      format: 'Coming soon',
+      step3Exam: true,
+      twoDayExam: true,
+      questions: 438,
+      totalHours: 13,
+      format: '2 Days · D1: 240 MCQ · D2: 198 MCQ',
       freeDemo: true,
-      comingSoon: true,
-      pool: 'step3-random',
+      pool: 'step3-dedicated-mock1',
+      focus: 'Balanced FIP + ACP MCQs — First Aid Step 3, Master the Boards, UWorld-style vignettes (CCS not included).',
+      confirmMessage: 'Start Step 3 Mock #1? Day 1 (FIP) is ~7 hours; Day 2 (198 MCQ only) unlocks after Day 1 is complete.',
+    },
+    'step3-mock2': {
+      id: 'step3-mock2',
+      step: 3,
+      tab: 'step3',
+      title: 'USMLE Step 3 Mock #2',
+      badge: 'STEP 3',
+      step3Exam: true,
+      twoDayExam: true,
+      questions: 438,
+      totalHours: 13,
+      format: '2 Days · D1: 240 MCQ · D2: 198 MCQ',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step3-dedicated-mock2',
+      focus: 'OB/GYN, neonatology, pediatrics — Williams, Nelson, NRP, PALS, Case Files.',
+      confirmMessage: 'Ready for Step 3 Mock #2? Complete Day 1 before starting Day 2.',
+    },
+    'step3-mock3': {
+      id: 'step3-mock3',
+      step: 3,
+      tab: 'step3',
+      title: 'USMLE Step 3 Mock #3',
+      badge: 'STEP 3',
+      step3Exam: true,
+      twoDayExam: true,
+      questions: 438,
+      totalHours: 13,
+      format: '2 Days · D1: 240 MCQ · D2: 198 MCQ',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step3-dedicated-mock3',
+      focus: 'Emergency medicine & surgery — Tintinalli, Rosen, ATLS, ACLS, Schwartz, trauma algorithms.',
+      confirmMessage: 'Ready for Step 3 Mock #3? Emergency and surgical management emphasis.',
+    },
+    'step3-mock4': {
+      id: 'step3-mock4',
+      step: 3,
+      tab: 'step3',
+      title: 'USMLE Step 3 Mock #4',
+      badge: 'STEP 3',
+      step3Exam: true,
+      twoDayExam: true,
+      questions: 438,
+      totalHours: 13,
+      format: '2 Days · D1: 240 MCQ · D2: 198 MCQ',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step3-dedicated-mock4',
+      focus: 'MSK, ophtho, ENT, dermatology — Campbell, Kanski, Cummings, Fitzpatrick, subspecialty pearls.',
+      confirmMessage: 'Ready for Step 3 Mock #4? Subspecialty-heavy Day 2 MCQ.',
+    },
+    'step3-mock5': {
+      id: 'step3-mock5',
+      step: 3,
+      tab: 'step3',
+      title: 'USMLE Step 3 Mock #5',
+      badge: 'STEP 3',
+      step3Exam: true,
+      twoDayExam: true,
+      questions: 438,
+      totalHours: 13,
+      format: '2 Days · D1: 240 MCQ · D2: 198 MCQ',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step3-dedicated-mock5',
+      focus: 'Ethics, health systems, geriatrics, palliative care — Beauchamp, Jonsen, Hazzard, AGS Beers, biostatistics.',
+      confirmMessage: 'Ready for Step 3 Mock #5? Ethics, prevention, and geriatrics integration.',
     },
   },
 
@@ -412,7 +483,45 @@ window.MockExamConfig = {
   },
 
   getStateKey(examId) {
+    const exam = this.getExam(examId);
+    if (exam.step3Exam) {
+      return window.MockExamStep3Config
+        ? window.MockExamStep3Config.getStateKey(examId)
+        : `mh_sim3_state_${examId}`;
+    }
     return `mh_sim_state_${examId}`;
+  },
+
+  getCompletionKey(examId) {
+    return `mh_mock_completed_${examId}`;
+  },
+
+  isMockCompleted(examId) {
+    try {
+      const raw = localStorage.getItem(this.getCompletionKey(examId));
+      if (!raw) return false;
+      const data = JSON.parse(raw);
+      return data && data.completed === true;
+    } catch {
+      return false;
+    }
+  },
+
+  markMockCompleted(examId, summary) {
+    localStorage.setItem(
+      this.getCompletionKey(examId),
+      JSON.stringify({
+        completed: true,
+        completedAt: Date.now(),
+        ...summary,
+      })
+    );
+  },
+
+  getSimulatorPath(examId) {
+    const exam = this.getExam(examId);
+    if (exam.step3Exam) return 'medical-exam-simulator-step3.html';
+    return 'medical-exam-simulator.html';
   },
 
   getStep1Readiness(scorePct) {

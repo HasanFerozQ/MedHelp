@@ -20373,7 +20373,7 @@
                             }
                   ]
         }],
-      'year3': [
+            'year3': [
         {
           section: 'Internal Medicine',
           topic: "Cardiology — ACS, heart failure, arrhythmias, valvular disease",
@@ -20512,7 +20512,14 @@
             { q: "EKG finding of a \"Brugada Pattern\"?", a: "Pseudo-RBBB and persistent ST elevation in leads V1–V2." },
             { q: "Management of a patient with WPW and Atrial Fibrillation?", a: "Procainamide or Cardioversion (Avoid AV nodal blockers)." },
             { q: "Major side effect of Amiodarone?", a: "Pulmonary fibrosis, thyroid dysfunction (hypo/hyper), and hepatotoxicity." },
-            { q: "Goal BP for most patients according to ACC/AHA guidelines?", a: "Less than 130/80 mmHg." },
+            { q: "Goal BP for most patients according to ACC/AHA guidelines?", a: "Less than 130/80 mmHg." }
+          ]
+        },
+        {
+          section: 'Internal Medicine',
+          topic: "ACS — Advanced Pearls & Subtypes",
+          icon: 'heart',
+          cards: [
             { q: "Most sensitive EKG finding for Posterior Wall MI?", a: "ST-segment depression in leads V1–V3 with prominent R waves." },
             { q: "What is the \"de Winter\" T-wave pattern?", a: "Upsloping ST-depression with tall, symmetric T-waves in precordial leads; indicates proximal LAD occlusion." },
             { q: "Clinical utility of the HEART score?", a: "Risk stratifies patients with undifferentiated chest pain in the ED to identify those safe for discharge." },
@@ -20730,7 +20737,7 @@
             { q: "Most common congenital heart defect found in adults?", a: "Bicuspid Aortic Valve." },
             { q: "Physical exam finding for a small Ventricular Septal Defect (VSD)?", a: "Loud, harsh holosystolic murmur at the left lower sternal border; often palpated as a thrill." },
             { q: "Murmur of a Patent Ductus Arteriosus (PDA)?", a: "Continuous \"machine-like\" murmur heard best at the left infraclavicular area." },
-            { q: "Management of a large PDA in an adult?", a: "Percutaneous or surgical closure to prevent pulmonary hypertension and endocarditis." },
+            { q: "Management of a large PDA in an adult?", a: "Permanent or surgical closure to prevent pulmonary hypertension and endocarditis." },
             { q: "Definition of Eisenmenger Syndrome?", a: "Reversal of a left-to-right shunt to right-to-left due to severe, irreversible pulmonary hypertension." },
             { q: "Clinical signs of Eisenmenger Syndrome?", a: "Cyanosis, clubbing, and polycythemia." },
             { q: "Why is the murmur of VSD or PDA \"missing\" in Eisenmenger Syndrome?", a: "The pressures in the systemic and pulmonary circulations have equalized, eliminating the pressure gradient." }
@@ -20755,7 +20762,7 @@
           cards: [
             { q: "Most common cardiac complication during pregnancy in women with Mitral Stenosis?", a: "Acute pulmonary edema or Atrial Fibrillation due to increased plasma volume." },
             { q: "Definition of Peripartum Cardiomyopathy?", a: "Dilated cardiomyopathy/HF occurring in the last month of pregnancy or within 5 months postpartum." },
-            { q: "Management of Peripartum Cardiomyopathy with LVEF <25%?", a: "Anticoagulation (high risk of thrombus) and standard HF therapy (avoiding ACEi/ARBs if still pregnant)." },
+            { q: "Management of Peripartum Cardiomyopathy with LVEF <25%?", a: "Anti-coagulation (high risk of thrombus) and standard HF therapy (avoiding ACEi/ARBs if still pregnant)." },
             { q: "Preferred anticoagulation for a pregnant patient with a mechanical heart valve?", a: "Low Molecular Weight Heparin (LMWH) in the first trimester; Warfarin may be used in the 2nd/3rd trimester." },
             { q: "First-line antihypertensive for a pregnant patient?", a: "Labetalol, Nifedipine, or Methyldopa." }
           ]
