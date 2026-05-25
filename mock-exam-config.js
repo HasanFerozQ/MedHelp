@@ -155,7 +155,7 @@ window.MockExamConfig = {
       freeDemo: false,
       premiumOnly: true,
       pool: 'step2-dedicated-mock4',
-      focus: 'Pediatrics & OB/GYN — Nelson, Williams Obstetrics/Gynecology, Beckmann, PALS/ALSO, high-yield women's and children's health.',
+      focus: "Pediatrics & OB/GYN — Nelson, Williams Obstetrics/Gynecology, Beckmann, PALS/ALSO, high-yield women's and children's health.",
       confirmMessage: 'Ready to start USMLE Step 2 CK Mock #4? Pediatrics and OB/GYN vignettes load across 8 timed blocks.',
     },
     'step2-mock5': {
@@ -188,8 +188,8 @@ window.MockExamConfig = {
       format: '2 Days · D1: 240 MCQ · D2: 198 MCQ',
       freeDemo: true,
       pool: 'step3-dedicated-mock1',
-      focus: 'Balanced FIP + ACP MCQs — First Aid Step 3, Master the Boards, UWorld-style vignettes (CCS not included).',
-      confirmMessage: 'Start Step 3 Mock #1? Day 1 (FIP) is ~7 hours; Day 2 (198 MCQ only) unlocks after Day 1 is complete.',
+      focus: 'Authentic NBME split: Day 1 FIP (diagnosis, workup, mechanism, biostat/ethics) · Day 2 ACP (management, screening, prognosis) — separate banks.',
+      confirmMessage: 'Start Step 3 Mock #1? Day 1 FIP (~7h, 240 MCQ) tests diagnosis & workup; Day 2 ACP (~6h, 198 MCQ) unlocks after Day 1.',
     },
     'step3-mock2': {
       id: 'step3-mock2',
@@ -205,8 +205,8 @@ window.MockExamConfig = {
       freeDemo: false,
       premiumOnly: true,
       pool: 'step3-dedicated-mock2',
-      focus: 'OB/GYN, neonatology, pediatrics — Williams, Nelson, NRP, PALS, Case Files.',
-      confirmMessage: 'Ready for Step 3 Mock #2? Complete Day 1 before starting Day 2.',
+      focus: 'Day 1 FIP: diagnosis & initial studies (OB/peds heavy) · Day 2 ACP: longitudinal management — Williams, Nelson, Case Files.',
+      confirmMessage: 'Ready for Step 3 Mock #2? Day 1 FIP first; Day 2 ACP management unlocks after Day 1.',
     },
     'step3-mock3': {
       id: 'step3-mock3',
@@ -222,8 +222,8 @@ window.MockExamConfig = {
       freeDemo: false,
       premiumOnly: true,
       pool: 'step3-dedicated-mock3',
-      focus: 'Emergency medicine & surgery — Tintinalli, Rosen, ATLS, ACLS, Schwartz, trauma algorithms.',
-      confirmMessage: 'Ready for Step 3 Mock #3? Emergency and surgical management emphasis.',
+      focus: 'Day 1 FIP: acute presentation diagnosis · Day 2 ACP: EM/surgery algorithms — Tintinalli, Rosen, ATLS, Schwartz.',
+      confirmMessage: 'Ready for Step 3 Mock #3? FIP diagnosis day first; ACP management day second.',
     },
     'step3-mock4': {
       id: 'step3-mock4',
@@ -239,8 +239,8 @@ window.MockExamConfig = {
       freeDemo: false,
       premiumOnly: true,
       pool: 'step3-dedicated-mock4',
-      focus: 'MSK, ophtho, ENT, dermatology — Campbell, Kanski, Cummings, Fitzpatrick, subspecialty pearls.',
-      confirmMessage: 'Ready for Step 3 Mock #4? Subspecialty-heavy Day 2 MCQ.',
+      focus: 'Day 1 FIP: subspecialty diagnosis (MSK, ophtho, ENT, derm) · Day 2 ACP: treatment & follow-up — Campbell, Kanski, Fitzpatrick.',
+      confirmMessage: 'Ready for Step 3 Mock #4? Subspecialty FIP then ACP management.',
     },
     'step3-mock5': {
       id: 'step3-mock5',
@@ -256,8 +256,8 @@ window.MockExamConfig = {
       freeDemo: false,
       premiumOnly: true,
       pool: 'step3-dedicated-mock5',
-      focus: 'Ethics, health systems, geriatrics, palliative care — Beauchamp, Jonsen, Hazzard, AGS Beers, biostatistics.',
-      confirmMessage: 'Ready for Step 3 Mock #5? Ethics, prevention, and geriatrics integration.',
+      focus: 'Day 1 FIP: ethics, biostat, geriatric diagnosis · Day 2 ACP: prevention, systems, palliative care — Beauchamp, Hazzard, AGS Beers.',
+      confirmMessage: 'Ready for Step 3 Mock #5? Ethics/biostat FIP; prevention & systems ACP.',
     },
   },
 

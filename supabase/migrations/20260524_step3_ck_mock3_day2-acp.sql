@@ -1,4 +1,4 @@
--- Step 3 Mock #3 day2-acp — 198 MCQs
+-- Step 3 Mock #3 day2-acp — 198 authentic MCQs
 BEGIN;
 DO $$
 DECLARE v_topic_id UUID;
@@ -8,2916 +8,2381 @@ BEGIN
   END IF;
   DELETE FROM mcqs WHERE topic_id = v_topic_id;
   INSERT INTO mcqs (topic_id, question, options, correct_index, explanation) VALUES
-    (v_topic_id, 'A 63-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+    (v_topic_id, 'A 58-year-old male has Opioid overdose and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Discharge if FAST negative", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Delay fracture management 72 hours", "Oral antibiotics only"]'::jsonb, 2, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 69-year-old male has LLQ pain, fever, and constipation. CT shows colonic diverticula with pericolic fat stranding.
+What is the most appropriate next step in management?', '["Observation only", "Naloxone and airway support", "Alternative unrelated therapy", "Delay treatment 1 week", "Discharge without therapy"]'::jsonb, 1, 'Standard management for Opioid overdose: Naloxone and airway support.'),
+    (v_topic_id, 'A 83-year-old female has Acute gout and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Temp 38.5°C | HR 96 bpm | BP 130/84 mmHg.
-Abdomen: LLQ tenderness, guarding localized to LLQ, no diffuse peritonitis.
+Vitals improving.
 
 Laboratory Results:
 
-WBC: 14,100/mm³
-CT: Sigmoid diverticulitis without abscess or free air
+Relevant diagnostics completed.
 
 
-What is the most appropriate initial management for uncomplicated diverticulitis?', '["Oral antibiotics (e.g., amoxicillin-clavulanate or metronidazole + fluoroquinolone where appropriate), bowel rest, and outpatient follow-up if stable", "No antibiotics ever for diverticulitis", "IV thrombolysis", "Immediate elective colectomy during this admission for all cases", "Appendectomy"]'::jsonb, 0, 'Uncomplicated diverticulitis in stable outpatients is managed with antibiotics (select cases may be managed without per recent guidelines but exam-style answer remains antibiotics + supportive care), dietary modification, and follow-up. Routine immediate surgery is not indicated. Thrombolysis and appendectomy are irrelevant.'),
-    (v_topic_id, 'A 45-year-old female with prior appendectomy presents with crampy abdominal pain, bilious vomiting, and no flatus for 36 hours.
+What is the most appropriate next step in management?', '["Delay treatment 1 week", "Discharge without therapy", "NSAID, colchicine, or steroid depending comorbidities", "Observation only", "Alternative unrelated therapy"]'::jsonb, 2, 'Standard management for Acute gout: NSAID, colchicine, or steroid depending comorbidities.'),
+    (v_topic_id, 'A 69-year-old male is seen for Tumor lysis syndrome.
 
 Physical Examination:
 
-Vitals: HR 102 bpm | BP 118/74 mmHg | RR 18/min.
-Abdomen: Distended, high-pitched bowel sounds, mild diffuse tenderness, no rebound.
-Surgical scars: Midline laparotomy scar well healed.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Abdominal X-ray: Dilated small-bowel loops with air-fluid levels, paucity of colonic gas
-Lactate: 1.4 mmol/L
+Relevant diagnostics reviewed.
 
 
-What is the most likely cause of this small-bowel obstruction?', '["Acute appendicitis", "Postoperative adhesions", "Primary biliary cholangitis", "Incarcerated inguinal hernia", "Colonic malignancy as primary cause of SBO"]'::jsonb, 1, 'Prior abdominal surgery with SBO radiographic pattern strongly suggests adhesive disease — the most common SBO cause in adults. Incarcerated hernia is second common but no groin findings described. Primary colonic cancer rarely causes isolated SBO without colonic dilation pattern.'),
-    (v_topic_id, 'A 41-year-old male has polyuria, polydipsia, glucose 340, anion gap normal, osmolality high.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Placebo only", "Rasburicase hydration allopurinol", "No intervention", "Contradicted therapy"]'::jsonb, 2, 'Guideline-consistent care: Rasburicase hydration allopurinol.'),
+    (v_topic_id, 'A 32-year-old male has Acute angle closure glaucoma and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 100 | BP 100/60.
-Mental status: Alert.
+Vitals improving.
 
 Laboratory Results:
 
-Glucose: 340
-pH: 7.38
-Serum osmolality: 340 mOsm/kg
-Ketones: Negative
+Relevant diagnostics completed.
 
 
-Diagnosis?', '["Hypoglycemia", "DKA", "Hyperosmolar hyperglycemic state", "Lactic acidosis primary", "Normal variant"]'::jsonb, 2, 'Marked hyperglycemia without significant ketosis/acidosis = HHS, common type 2 diabetes.'),
-    (v_topic_id, 'A 26-year-old male presents with sudden tearing chest pain radiating to the back. History includes poorly controlled hypertension.
+What is the most appropriate next step in management?', '["Alternative unrelated therapy", "Observation only", "Discharge without therapy", "Delay treatment 1 week", "Timolol, pilocarpine, IV acetazolamide, emergent laser"]'::jsonb, 4, 'Standard management for Acute angle closure glaucoma: Timolol, pilocarpine, IV acetazolamide, emergent laser.'),
+    (v_topic_id, 'A 75-year-old male is a Average-risk 50-year-old presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: HR 112 bpm | BP 188/102 mmHg right arm, 156/88 mmHg left arm.
-Cardiac: Diastolic decrescendo murmur at right sternal border.
-Neuro: Alert but anxious.
+No acute complaints.
 
 Laboratory Results:
 
-Chest X-ray: Widened mediastinum
-CT angiogram chest: Intimal flap in ascending aorta with involvement of aortic root
+Prior records reviewed.
 
 
-What is the most appropriate immediate medical therapy while arranging definitive care?', '["Immediate thrombolysis", "Aggressive IV fluid bolus", "Oral clopidogrel and aspirin only", "IV esmolol (or labetalol) to target HR <60 and SBP 100\u2013120, then vasodilator if needed", "Sublingual nitroglycerin as monotherapy"]'::jsonb, 3, 'Acute aortic dissection requires heart rate and blood pressure control with IV beta-blockade first to reduce shear stress; vasodilators only after beta-blockade. Nitrates alone can cause reflex tachycardia. Thrombolysis is contraindicated. Antiplatelets do not treat dissection. Fluids may worsen dissection.'),
-    (v_topic_id, 'A 64-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which preventive measure is most appropriate?', '["Antibiotics prophylaxis", "No screening ever", "PET scan annually", "Colorectal cancer screening per USPSTF", "Screening only if symptomatic for all diseases"]'::jsonb, 3, 'Evidence-based screening: Colorectal cancer screening per USPSTF.'),
+    (v_topic_id, 'A 81-year-old female is seen for SAH vasospasm.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Immediate MRI spine before any fluids", "Oral antibiotics only", "Discharge if FAST negative", "Delay fracture management 72 hours"]'::jsonb, 0, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 40-year-old male presents with severe epigastric pain radiating to the back, vomiting, and history of heavy alcohol use.
+What is the most appropriate next step in management?', '["Neurologic decline days 4-14", "No intervention", "Delayed care 6 months", "Contradicted therapy", "Placebo only"]'::jsonb, 0, 'Guideline-consistent care: Neurologic decline days 4-14.'),
+    (v_topic_id, 'A 79-year-old female is seen for Breakthrough pain cancer.
 
 Physical Examination:
 
-Vitals: Temp 38.2°C | HR 118 bpm | BP 100/64 mmHg | RR 24/min.
-Abdomen: Epigastric tenderness without rebound; bowel sounds hypoactive.
-Skin: No jaundice.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Lipase: 1,840 U/L (4× ULN)
-AST/ALT: Mildly elevated
-Triglycerides: 180 mg/dL
-Abdominal ultrasound: No gallstones
+Relevant diagnostics reviewed.
 
 
-What is the most likely etiology in this patient?', '["Alcohol-induced acute pancreatitis", "Acute cholecystitis from cholelithiasis", "Acute hepatitis A", "Mesenteric ischemia", "Peptic ulcer perforation"]'::jsonb, 0, 'Elevated lipase with epigastric pain and alcohol history supports alcoholic pancreatitis; ultrasound without gallstones makes gallstone etiology less likely. Cholecystitis needs RUQ findings. Mesenteric ischemia has different pain pattern. Perforation has peritoneal signs. Hepatitis does not explain lipase this high as primary diagnosis.'),
-    (v_topic_id, 'A 37-year-old male has burn to arm — white waxy center, no sensation in center, blisters at periphery.
+What is the most appropriate next step in management?', '["No intervention", "Placebo only", "Delayed care 6 months", "Short-acting opioid with bowel regimen", "Contradicted therapy"]'::jsonb, 3, 'Guideline-consistent care: Short-acting opioid with bowel regimen.'),
+    (v_topic_id, 'A 71-year-old female has anaphylaxis with urticaria and wheeze after peanut ingestion.
 
 Physical Examination:
 
-Vitals: Stable.
-Skin: Full-thickness area 3%, partial 5%.
+BP 86/54 | HR 128 | SpO2 91%.
 
 Laboratory Results:
 
-No labs urgent
+No labs needed emergently.
 
 
-Burn depth classification of white anesthetic center?', '["Superficial only", "All burns are partial thickness", "Chemical burn only", "Full-thickness (third-degree)", "First-degree sunburn pattern"]'::jsonb, 3, 'White insensate area indicates full-thickness burn often needing grafting.'),
-    (v_topic_id, 'A 34-year-old female has acute monoarticular knee pain, erythema, fever after seafood feast.
+What is the most appropriate immediate treatment?', '["IV diphenhydramine alone", "Intramuscular epinephrine", "Observation without meds", "Albuterol nebulizer only", "Oral prednisone only"]'::jsonb, 1, 'Anaphylaxis first-line is IM epinephrine; adjuncts do not replace it.'),
+    (v_topic_id, 'A 45-year-old male is seen for STI partner treatment.
 
 Physical Examination:
 
-Vitals: Temp 38.6°C.
-Knee: Warm, swollen, extremely tender.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Synovial fluid: WBC 80,000, negatively birefringent needle crystals
+Relevant diagnostics reviewed.
 
 
-Diagnosis?', '["Septic arthritis only without crystals", "Gout", "OA flare", "Pseudogout (CPPD)", "Rheumatoid arthritis initial presentation"]'::jsonb, 1, 'Negatively birefringent needles = urate gout. CPPD is positively birefringent rhomboids. Septic arthritis must be considered but crystals support gout; gram stain/culture still important.'),
-    (v_topic_id, 'A 57-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["No intervention", "Expedited partner therapy where legal", "Placebo only", "Contradicted therapy", "Delayed care 6 months"]'::jsonb, 1, 'Guideline-consistent care: Expedited partner therapy where legal.'),
+    (v_topic_id, 'A 36-year-old female has Thyroid storm and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Oral antibiotics only", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids"]'::jsonb, 1, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 43-year-old male was in a high-speed MVC. BP drops to 80/50 after 2 L crystalloid. FAST exam is positive in splenorenal pouch.
+What is the most appropriate next step in management?', '["Propranolol, PTU/methimazole, iodine after antithyroid drug", "Observation only", "Alternative unrelated therapy", "Discharge without therapy", "Delay treatment 1 week"]'::jsonb, 0, 'Standard management for Thyroid storm: Propranolol, PTU/methimazole, iodine after antithyroid drug.'),
+    (v_topic_id, 'A 67-year-old female is a Abdominal aortic aneurysm presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: HR 132 bpm | BP 80/50 mmHg | RR 30/min.
-Abdomen: Distended, diffuse tenderness.
-Extremities: Cool, delayed cap refill.
+No acute complaints.
 
 Laboratory Results:
 
-Hemoglobin: 6.8 g/dL (down from 11 g/dL on arrival)
-Lactate: 5.1 mmol/L
-Type and screen: O-negative blood available
+Prior records reviewed.
 
 
-What is the most appropriate next step?', '["Oral fluids and observation", "Diagnostic peritoneal lavage only without resuscitation", "Discharge after normal FAST", "CT abdomen with contrast before any transfusion in unstable patient", "Activate massive transfusion protocol and emergent operative intervention for hemorrhagic shock"]'::jsonb, 4, 'Unstable trauma with positive FAST and falling hemoglobin indicates intra-abdominal hemorrhage requiring blood products and emergent surgery (damage control). CT delays life-saving intervention in unstable patients. Observation is inappropriate.'),
-    (v_topic_id, 'A 36-year-old female developed sudden pleuritic chest pain and dyspnea 10 days after total knee replacement.
+Which preventive measure is most appropriate?', '["No screening ever", "Antibiotics prophylaxis", "One-time ultrasound men 65\u201375 ever smoked", "PET scan annually", "Screening only if symptomatic for all diseases"]'::jsonb, 2, 'Evidence-based screening: One-time ultrasound men 65–75 ever smoked.'),
+    (v_topic_id, 'A 32-year-old female is seen for Lung cancer screening.
 
 Physical Examination:
 
-Vitals: Temp 37.8°C | HR 118 bpm | RR 26/min | BP 128/82 mmHg | SpO2 89% on room air.
-Lungs: Clear.
-Extremities: Left calf tender and swollen; right leg post-surgical dressing intact.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-ECG: S1Q3T3 pattern
-D-dimer: Elevated
-CT Pulmonary Angiography: Bilateral segmental filling defects
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate initial treatment?', '["Anticoagulation with heparin/LMWH bridged to oral anticoagulant", "Observation with repeat imaging in 1 week", "Thrombolysis for all stable patients", "Aspirin monotherapy", "IV antibiotics for pneumonia"]'::jsonb, 0, 'Confirmed PE after recent orthopedic surgery warrants anticoagulation unless contraindicated. Aspirin is insufficient. Thrombolysis is reserved for massive PE with instability. Antibiotics treat infection, not PE. Observation delays necessary treatment.'),
-    (v_topic_id, 'A 62-year-old male Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Placebo only", "Delayed care 6 months", "Contradicted therapy", "No intervention", "Annual LDCT if criteria"]'::jsonb, 4, 'Guideline-consistent care: Annual LDCT if criteria.'),
+    (v_topic_id, 'A 62-year-old female returns for follow-up of Hypertension stage 2.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Stable exam.
 
 Laboratory Results:
 
-Type and screen available
+Labs reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Futility \u2014 do not operate", "Emergency exception / implied consent for life-threatening emergency", "Beneficence requires waiting for family indefinitely", "Autonomy of physician to choose any procedure", "Justice requires randomization"]'::jsonb, 1, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 45-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate long-term management?', '["No treatment indicated", "Start thiazide/CCB/ACEi per JNC guidelines", "Antibiotics chronically", "Discontinue all prior meds abruptly", "High-dose steroids indefinitely without indication"]'::jsonb, 1, 'Guideline-based chronic care for Hypertension stage 2.'),
+    (v_topic_id, 'A 64-year-old male returns for follow-up of COPD GOLD B.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Stable exam.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Labs reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Delay fracture management 72 hours", "Oral antibiotics only", "Discharge if FAST negative", "Immediate MRI spine before any fluids"]'::jsonb, 0, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 48-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate long-term management?', '["Antibiotics chronically", "LAMA or LABA; pulmonary rehab", "No treatment indicated", "Discontinue all prior meds abruptly", "High-dose steroids indefinitely without indication"]'::jsonb, 1, 'Guideline-based chronic care for COPD GOLD B.'),
+    (v_topic_id, 'A 43-year-old female has anaphylaxis with urticaria and wheeze after peanut ingestion.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+BP 86/54 | HR 128 | SpO2 91%.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+No labs needed emergently.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Delay fracture management 72 hours", "Discharge if FAST negative", "Oral antibiotics only", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 38-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate immediate treatment?', '["Oral prednisone only", "IV diphenhydramine alone", "Albuterol nebulizer only", "Observation without meds", "Intramuscular epinephrine"]'::jsonb, 4, 'Anaphylaxis first-line is IM epinephrine; adjuncts do not replace it.'),
+    (v_topic_id, 'A 33-year-old female returns for follow-up of IBD maintenance.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Stable exam.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Labs reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Discharge if FAST negative", "Delay fracture management 72 hours", "Oral antibiotics only", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 55-year-old male has RUQ pain after motor vehicle collision with hypotension.
+What is the most appropriate long-term management?', '["No treatment indicated", "Discontinue all prior meds abruptly", "Antibiotics chronically", "High-dose steroids indefinitely without indication", "Immunomodulator or biologic per severity"]'::jsonb, 4, 'Guideline-based chronic care for IBD maintenance.'),
+    (v_topic_id, 'A 83-year-old male is seen for Acute mania.
 
 Physical Examination:
 
-Vitals: HR 128 | BP 86/52.
-Abdomen: RUQ tenderness, rebound.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Fluid in Morrison pouch
-Hgb drop 3 points
+Relevant diagnostics reviewed.
 
 
-Most likely injured organ and management?', '["Liver laceration with hemorrhagic shock \u2014 operative or IR embolization", "GERD", "UTI", "Acute appendicitis only", "Splenic sequestration benign"]'::jsonb, 0, 'Trauma hypotension with positive FAST suggests intra-abdominal hemorrhage often liver/spleen — needs intervention.'),
-    (v_topic_id, 'A 74-year-old female has RUQ pain after motor vehicle collision with hypotension.
+What is the most appropriate next step in management?', '["Antipsychotic mood stabilizer", "No intervention", "Placebo only", "Contradicted therapy", "Delayed care 6 months"]'::jsonb, 0, 'Guideline-consistent care: Antipsychotic mood stabilizer.'),
+    (v_topic_id, 'A 49-year-old female is seen for IBD remission.
 
 Physical Examination:
 
-Vitals: HR 128 | BP 86/52.
-Abdomen: RUQ tenderness, rebound.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Fluid in Morrison pouch
-Hgb drop 3 points
+Relevant diagnostics reviewed.
 
 
-Most likely injured organ and management?', '["UTI", "GERD", "Splenic sequestration benign", "Acute appendicitis only", "Liver laceration with hemorrhagic shock \u2014 operative or IR embolization"]'::jsonb, 4, 'Trauma hypotension with positive FAST suggests intra-abdominal hemorrhage often liver/spleen — needs intervention.'),
-    (v_topic_id, 'A 37-year-old male is a 2-year-old with barking cough and stridor only with crying (mild croup).
+What is the most appropriate next step in management?', '["No intervention", "Continue biologic therapy", "Placebo only", "Delayed care 6 months", "Contradicted therapy"]'::jsonb, 1, 'Guideline-consistent care: Continue biologic therapy.'),
+    (v_topic_id, 'A 35-year-old female is a Osteoporosis postmenopausal presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: Temp 37.8°C | SpO2 99%.
-Lungs: Stridor intermittent.
+No acute complaints.
 
 Laboratory Results:
 
-CXR: Normal
+Prior records reviewed.
 
 
-Treatment?', '["Racemic epinephrine required for all", "Chest tube", "Intubation", "Antibiotics mandatory", "Single dose dexamethasone and supportive care"]'::jsonb, 4, 'Mild croup is managed with dexamethasone; epinephrine for moderate-severe.'),
-    (v_topic_id, 'A 45-year-old male has groin bulge increasing with cough, reducible, no overlying skin changes.
+Which preventive measure is most appropriate?', '["PET scan annually", "Screening only if symptomatic for all diseases", "Antibiotics prophylaxis", "DEXA screening per age/risk", "No screening ever"]'::jsonb, 3, 'Evidence-based screening: DEXA screening per age/risk.'),
+    (v_topic_id, 'A 83-year-old male is seen for Bell palsy.
 
 Physical Examination:
 
-Vitals: Normal.
-Groin: Reducible mass above inguinal ligament.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-No acute labs abnormal
+Relevant diagnostics reviewed.
 
 
-Management?', '["Emergent OR for all groin masses", "Elective surgical repair when symptomatic", "No repair ever", "Chemotherapy", "Antibiotics only"]'::jsonb, 1, 'Symptomatic reducible inguinal hernia — elective repair. Emergent if incarcerated/strangulated.'),
-    (v_topic_id, 'A 35-year-old male infant 4 months with paroxysmal cough, whoop, post-tussive vomiting.
+What is the most appropriate next step in management?', '["Prednisone within 72 hours", "No intervention", "Delayed care 6 months", "Contradicted therapy", "Placebo only"]'::jsonb, 0, 'Guideline-consistent care: Prednisone within 72 hours.'),
+    (v_topic_id, 'A 50-year-old female returns for follow-up of Type 2 diabetes A1c 9.2% on metformin.
 
 Physical Examination:
 
-Vitals: Temp 37.2°C.
-Lungs: Clear between paroxysms.
+Stable exam.
 
 Laboratory Results:
 
-WBC: 28,000 with lymphocytosis
-PCR: Bordetella pertussis positive
+Labs reviewed.
 
 
-Management includes:', '["Macrolide (azithromycin), supportive care, contact prophylaxis", "No antibiotics needed", "Ribavirin", "Immediate surgery", "Steroids only"]'::jsonb, 0, 'Pertussis treated with macrolide and isolation/prophylaxis of contacts.'),
-    (v_topic_id, 'A 56-year-old female has LLQ pain, fever, and constipation. CT shows colonic diverticula with pericolic fat stranding.
+What is the most appropriate long-term management?', '["Antibiotics chronically", "High-dose steroids indefinitely without indication", "Add GLP-1 RA or SGLT2i with ASCVD benefit if indicated", "Discontinue all prior meds abruptly", "No treatment indicated"]'::jsonb, 2, 'Guideline-based chronic care for Type 2 diabetes A1c 9.2% on metformin.'),
+    (v_topic_id, 'A 66-year-old male returns for follow-up of Atrial fibrillation CHA2DS2-VASc 3.
 
 Physical Examination:
 
-Vitals: Temp 38.5°C | HR 96 bpm | BP 130/84 mmHg.
-Abdomen: LLQ tenderness, guarding localized to LLQ, no diffuse peritonitis.
+Stable exam.
 
 Laboratory Results:
 
-WBC: 14,100/mm³
-CT: Sigmoid diverticulitis without abscess or free air
+Labs reviewed.
 
 
-What is the most appropriate initial management for uncomplicated diverticulitis?', '["IV thrombolysis", "Immediate elective colectomy during this admission for all cases", "Appendectomy", "No antibiotics ever for diverticulitis", "Oral antibiotics (e.g., amoxicillin-clavulanate or metronidazole + fluoroquinolone where appropriate), bowel rest, and outpatient follow-up if stable"]'::jsonb, 4, 'Uncomplicated diverticulitis in stable outpatients is managed with antibiotics (select cases may be managed without per recent guidelines but exam-style answer remains antibiotics + supportive care), dietary modification, and follow-up. Routine immediate surgery is not indicated. Thrombolysis and appendectomy are irrelevant.'),
-    (v_topic_id, 'A 30-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate long-term management?', '["Discontinue all prior meds abruptly", "High-dose steroids indefinitely without indication", "Antibiotics chronically", "Anticoagulation unless contraindicated", "No treatment indicated"]'::jsonb, 3, 'Guideline-based chronic care for Atrial fibrillation CHA2DS2-VASc 3.'),
+    (v_topic_id, 'A 42-year-old male has Subarachnoid hemorrhage.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Currently hospitalized.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Clinical course discussed with team.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Oral antibiotics only", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 80-year-old female has fatigue, cold intolerance, weight gain, bradycardia.
+Which statement regarding prognosis/complications is most accurate?', '["No complications ever occur", "Vasospasm days 3\u201314; neurologic monitoring", "Disease is always benign", "Immediate cure expected", "No follow-up needed"]'::jsonb, 1, 'Vasospasm days 3–14; neurologic monitoring'),
+    (v_topic_id, 'A 50-year-old female is seen for CKD G3a albuminuria.
 
 Physical Examination:
 
-Vitals: HR 54 | Temp 36.2°C.
-Skin: Dry, coarse hair.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-TSH: 28 mIU/L (high)
-Free T4: Low
+Relevant diagnostics reviewed.
 
 
-Treatment?', '["Radioactive iodine", "Propranolol only without levothyroxine", "Levothyroxine replacement", "Methimazole", "Observation only"]'::jsonb, 2, 'Primary hypothyroidism: high TSH, low T4 — treat with levothyroxine. Methimazole and RAI are for hyperthyroidism.'),
-    (v_topic_id, 'A 78-year-old male child 5 years with petechiae, bruising after viral illness, otherwise well.
+What is the most appropriate next step in management?', '["ACEi max tolerated dose", "No intervention", "Contradicted therapy", "Placebo only", "Delayed care 6 months"]'::jsonb, 0, 'Guideline-consistent care: ACEi max tolerated dose.'),
+    (v_topic_id, 'A 36-year-old male is seen for Hearing loss screening elderly.
 
 Physical Examination:
 
-Vitals: Normal.
-Skin: Petechiae legs, no hepatosplenomegaly.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Platelets: 12,000/mm³
-Rest of counts normal
+Relevant diagnostics reviewed.
 
 
-Most likely diagnosis?', '["ITP", "DIC", "TTP", "Leukemia", "Aplastic anemia all cell lines low"]'::jsonb, 0, 'Isolated thrombocytopenia post-viral in child with normal Hgb/WBC = ITP. Leukemia has other cytopenias/blasts.'),
-    (v_topic_id, 'A 48-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Audiology referral", "No intervention", "Placebo only", "Delayed care 6 months", "Contradicted therapy"]'::jsonb, 0, 'Guideline-consistent care: Audiology referral.'),
+    (v_topic_id, 'A 72-year-old male has Heart failure reduced EF.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Currently hospitalized.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Clinical course discussed with team.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Delay fracture management 72 hours", "Discharge if FAST negative", "Oral antibiotics only"]'::jsonb, 1, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 36-year-old female has LLQ pain, fever, and constipation. CT shows colonic diverticula with pericolic fat stranding.
+Which statement regarding prognosis/complications is most accurate?', '["Disease is always benign", "No complications ever occur", "Immediate cure expected", "No follow-up needed", "5-year mortality remains significant; implantable defibrillator if criteria met"]'::jsonb, 4, '5-year mortality remains significant; implantable defibrillator if criteria met'),
+    (v_topic_id, 'A 36-year-old male is seen for Breast cancer chemo.
 
 Physical Examination:
 
-Vitals: Temp 38.5°C | HR 96 bpm | BP 130/84 mmHg.
-Abdomen: LLQ tenderness, guarding localized to LLQ, no diffuse peritonitis.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-WBC: 14,100/mm³
-CT: Sigmoid diverticulitis without abscess or free air
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate initial management for uncomplicated diverticulitis?', '["IV thrombolysis", "Oral antibiotics (e.g., amoxicillin-clavulanate or metronidazole + fluoroquinolone where appropriate), bowel rest, and outpatient follow-up if stable", "Immediate elective colectomy during this admission for all cases", "No antibiotics ever for diverticulitis", "Appendectomy"]'::jsonb, 1, 'Uncomplicated diverticulitis in stable outpatients is managed with antibiotics (select cases may be managed without per recent guidelines but exam-style answer remains antibiotics + supportive care), dietary modification, and follow-up. Routine immediate surgery is not indicated. Thrombolysis and appendectomy are irrelevant.'),
-    (v_topic_id, 'A 57-year-old female has RUQ pain, fever, and nausea after a fatty meal. Murphys sign is positive.
+What is the most appropriate next step in management?', '["No intervention", "Neutropenia infection risk", "Delayed care 6 months", "Placebo only", "Contradicted therapy"]'::jsonb, 1, 'Guideline-consistent care: Neutropenia infection risk.'),
+    (v_topic_id, 'A 53-year-old male is seen for Elder neglect.
 
 Physical Examination:
 
-Vitals: Temp 38.8°C | HR 104 bpm | BP 128/82 mmHg.
-Abdomen: RUQ tenderness with inspiratory arrest on palpation.
-Sclera: Anicteric.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-WBC: 13,400/mm³
-RUQ ultrasound: Gallstones, gallbladder wall thickening, pericholecystic fluid
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate management?', '["Observation without antibiotics", "ERCP as first step for all RUQ pain", "IV fluids, antibiotics, analgesia, and cholecystectomy (typically during same admission when uncomplicated)", "Oral antibiotics only and elective cholecystectomy in 6 months only if recurrent", "Immediate splenectomy"]'::jsonb, 2, 'Acute cholecystitis is managed with supportive care, antibiotics, and cholecystectomy (early laparoscopic cholecystectomy is standard for uncomplicated cases). Delaying antibiotics is unsafe. ERCP is for choledocholithiasis/cholangitis, not uncomplicated cholecystitis alone.'),
-    (v_topic_id, 'A 78-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Placebo only", "APS referral safety plan", "Contradicted therapy", "No intervention"]'::jsonb, 2, 'Guideline-consistent care: APS referral safety plan.'),
+    (v_topic_id, 'A 62-year-old female returns for follow-up of Atrial fibrillation CHA2DS2-VASc 3.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Stable exam.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Labs reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Immediate MRI spine before any fluids", "Oral antibiotics only", "Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 23-year-old female reports episodic pounding headaches, palpitations, and sweating. During an episode in clinic, BP is 224/118 mmHg.
+What is the most appropriate long-term management?', '["High-dose steroids indefinitely without indication", "Discontinue all prior meds abruptly", "Antibiotics chronically", "No treatment indicated", "Anticoagulation unless contraindicated"]'::jsonb, 4, 'Guideline-based chronic care for Atrial fibrillation CHA2DS2-VASc 3.'),
+    (v_topic_id, 'A 40-year-old male is seen for Osteoporosis screening female.
 
 Physical Examination:
 
-Vitals between episodes: BP 142/86 mmHg, HR 82 bpm.
-General: Anxious during episode, otherwise well.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-24-hour urine metanephrines: Markedly elevated
-Abdominal CT: 4 cm right adrenal mass
+Relevant diagnostics reviewed.
 
 
-What is essential preoperative management before adrenalectomy?', '["Beta-blocker monotherapy first", "Calcium channel blocker only", "High-dose loop diuretics alone", "Alpha-blockade first (e.g., phenoxybenzamine), then beta-blocker if needed after alpha blockade", "Immediate surgery without medical preparation"]'::jsonb, 3, 'Pheochromocytoma requires alpha-blockade before beta-blockade to prevent unopposed alpha-mediated vasoconstriction and hypertensive crisis. Beta-blockade first is dangerous. Surgery without preparation is life-threatening.'),
-    (v_topic_id, 'A 28-year-old male with type 1 diabetes presents with polyuria, polydipsia, vomiting, and Kussmaul respirations.
+What is the most appropriate next step in management?', '["DEXA age 65 or earlier risk", "No intervention", "Placebo only", "Delayed care 6 months", "Contradicted therapy"]'::jsonb, 0, 'Guideline-consistent care: DEXA age 65 or earlier risk.'),
+    (v_topic_id, 'A 41-year-old female is a 25-year-old sexually active female presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: Temp 37.0°C | HR 118 bpm | RR 28/min (deep) | BP 96/60 mmHg.
-General: Lethargic but arousable.
-Abdomen: Mild diffuse tenderness.
+No acute complaints.
 
 Laboratory Results:
 
-Glucose: 486 mg/dL
-pH: 7.12 | HCO3: 8 mEq/L
-Anion gap: 28
-Serum ketones: Positive
-Potassium: 5.4 mEq/L (on presentation)
+Prior records reviewed.
 
 
-What is the most appropriate initial management?', '["Potassium supplementation before any fluids", "Oral antidiabetic agents and discharge", "IV 0.9% saline resuscitation, insulin infusion after potassium check, and potassium replacement when K+ <5.2", "Immediate sodium bicarbonate for all patients", "Subcutaneous insulin only and oral fluids"]'::jsonb, 2, 'DKA requires volume resuscitation with normal saline, insulin after confirming potassium (add K+ to fluids when K+ falls below ~5.2 because insulin drives K+ intracellularly), and monitoring. Bicarbonate is reserved for severe acidemia (pH <6.9). SC insulin alone is inadequate for DKA. Giving K+ before fluids/insulin assessment can be dangerous if hyperkalemic initially.'),
-    (v_topic_id, 'A 75-year-old male has acute severe headache, papilledema, BMI 35, on tetracycline for acne.
+Which preventive measure is most appropriate?', '["Screening only if symptomatic for all diseases", "Antibiotics prophylaxis", "PET scan annually", "Chlamydia/gonorrhea screening", "No screening ever"]'::jsonb, 3, 'Evidence-based screening: Chlamydia/gonorrhea screening.'),
+    (v_topic_id, 'A 44-year-old female is seen for Diabetic foot infection.
 
 Physical Examination:
 
-Vitals: BP 138/88.
-Neuro: Papilledema, CN VI palsy.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-LP opening pressure: 34 cm H2O, normal cells
-MRI: Empty sella, no mass
+Relevant diagnostics reviewed.
 
 
-Treatment?', '["No treatment", "Antibiotics for meningitis", "Acetazolamide, weight loss, stop offending agents, monitor vision", "Immediate craniotomy", "High-dose opioids only"]'::jsonb, 2, 'Idiopathic intracranial hypertension: elevated opening pressure without mass — acetazolamide, weight loss, stop tetracycline.'),
-    (v_topic_id, 'A 48-year-old male Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Risk osteomyelitis amputation", "Placebo only", "Delayed care 6 months", "No intervention"]'::jsonb, 1, 'Guideline-consistent care: Risk osteomyelitis amputation.'),
+    (v_topic_id, 'A 33-year-old male is seen for Hyperlipidemia ASCVD.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Emergency exception / implied consent for life-threatening emergency", "Autonomy of physician to choose any procedure", "Beneficence requires waiting for family indefinitely", "Justice requires randomization", "Futility \u2014 do not operate"]'::jsonb, 0, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 41-year-old male primigravida at 40 weeks, contractions q3min, cervix 8 cm dilated.
+What is the most appropriate next step in management?', '["High-intensity statin", "No intervention", "Placebo only", "Contradicted therapy", "Delayed care 6 months"]'::jsonb, 0, 'Guideline-consistent care: High-intensity statin.'),
+    (v_topic_id, 'A 59-year-old female returns for follow-up of Prior TIA noncardioembolic.
 
 Physical Examination:
 
-Vitals: Normal fetal heart tracing category I.
-Cervix: 8/100/-1.
+Stable exam.
 
 Laboratory Results:
 
-FHR: 140 reactive
+Labs reviewed.
 
 
-Management?', '["Immediate cesarean for all primigravidas", "Magnesium for seizure prophylaxis", "Forceps before complete dilation", "Discharge home", "Continue active labor management per stage"]'::jsonb, 4, 'Active labor with reassuring FHR — expectant management/augment as indicated.'),
-    (v_topic_id, 'A 83-year-old male has breast lump 2 cm, mobile, age 45, family history mother breast CA age 48.
+What is the most appropriate long-term management?', '["Antiplatelet therapy and risk factor control", "Antibiotics chronically", "High-dose steroids indefinitely without indication", "Discontinue all prior meds abruptly", "No treatment indicated"]'::jsonb, 0, 'Guideline-based chronic care for Prior TIA noncardioembolic.'),
+    (v_topic_id, 'A 26-year-old female is seen for CHF readmission reduction.
 
 Physical Examination:
 
-Vitals: Normal.
-Breast: 2 cm firm mobile upper outer quadrant mass, no skin changes.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Mammogram: BI-RADS 4
-Core biopsy: Invasive ductal carcinoma ER+
+Relevant diagnostics reviewed.
 
 
-Next step in care?', '["Antibiotics for mastitis", "Emergency appendectomy", "Ignore BI-RADS 4", "Topical estrogen cream only", "Staging workup and multidisciplinary oncologic/surgical planning"]'::jsonb, 4, 'BI-RADS 4 with invasive cancer needs staging and treatment planning.'),
-    (v_topic_id, 'A 31-year-old male Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["No intervention", "Teach diuretic titration early follow-up", "Placebo only", "Delayed care 6 months", "Contradicted therapy"]'::jsonb, 1, 'Guideline-consistent care: Teach diuretic titration early follow-up.'),
+    (v_topic_id, 'A 30-year-old male is a Depression primary care presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+No acute complaints.
 
 Laboratory Results:
 
-Type and screen available
+Prior records reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Autonomy of physician to choose any procedure", "Beneficence requires waiting for family indefinitely", "Emergency exception / implied consent for life-threatening emergency", "Justice requires randomization", "Futility \u2014 do not operate"]'::jsonb, 2, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 27-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which preventive measure is most appropriate?', '["No screening ever", "Screening only if symptomatic for all diseases", "PET scan annually", "PHQ-2/9 screening", "Antibiotics prophylaxis"]'::jsonb, 3, 'Evidence-based screening: PHQ-2/9 screening.'),
+    (v_topic_id, 'A 64-year-old male has Postpartum hemorrhage and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Oral antibiotics only", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Delay fracture management 72 hours", "Discharge if FAST negative", "Immediate MRI spine before any fluids"]'::jsonb, 1, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 64-year-old male Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Uterotonics, massage, transfusion as needed", "Alternative unrelated therapy", "Observation only", "Delay treatment 1 week", "Discharge without therapy"]'::jsonb, 0, 'Standard management for Postpartum hemorrhage: Uterotonics, massage, transfusion as needed.'),
+    (v_topic_id, 'A 49-year-old male is seen for Latent TB treatment.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Justice requires randomization", "Beneficence requires waiting for family indefinitely", "Futility \u2014 do not operate", "Emergency exception / implied consent for life-threatening emergency", "Autonomy of physician to choose any procedure"]'::jsonb, 3, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 80-year-old male with CKD stage 4 has fatigue and Hgb 8.2 g/dL.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "No intervention", "Isoniazid or rifampin course", "Placebo only", "Contradicted therapy"]'::jsonb, 2, 'Guideline-consistent care: Isoniazid or rifampin course.'),
+    (v_topic_id, 'A 32-year-old male has Malignant hyperthermia and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: BP 148/88.
-No active bleeding.
+Vitals improving.
 
 Laboratory Results:
 
-Ferritin: 120 ng/mL
-TSAT: 22%
-Creatinine: 3.8 mg/dL
+Relevant diagnostics completed.
 
 
-Most appropriate anemia management in CKD?', '["Oral iron only always sufficient", "Immediate transfuse to Hgb 15", "Vitamin B12 alone without checking iron", "IV iron if iron deficient and ESAs per nephrology guidelines with target Hgb goals", "Phlebotomy"]'::jsonb, 3, 'CKD anemia often needs iron repletion and ESA per guidelines; transfusion targets symptom-driven not normalize to 15. B12 if deficient. Phlebotomy worsens anemia.'),
-    (v_topic_id, 'A 62-year-old female has ankle injury cannot bear weight after inversion injury.
+What is the most appropriate next step in management?', '["Observation only", "Alternative unrelated therapy", "Dantrolene and stop triggering agents", "Delay treatment 1 week", "Discharge without therapy"]'::jsonb, 2, 'Standard management for Malignant hyperthermia: Dantrolene and stop triggering agents.'),
+    (v_topic_id, 'A 79-year-old male has Anaphylaxis refractory and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Normal.
-Ankle: Tenderness at posterior lateral malleolus.
+Vitals improving.
 
 Laboratory Results:
 
-X-ray Ottawa rules positive — fracture at lateral malleolus
+Relevant diagnostics completed.
 
 
-Management?', '["Knee arthroscopy", "Splint/cast and orthopedic follow-up; not weight-bearing until cleared", "Anticoagulation only", "Immediate amputation", "No imaging needed"]'::jsonb, 1, 'Ankle fracture by Ottawa criteria needs immobilization and orthopedic care.'),
-    (v_topic_id, 'A 69-year-old female has ankle injury cannot bear weight after inversion injury.
+What is the most appropriate next step in management?', '["Alternative unrelated therapy", "Discharge without therapy", "Delay treatment 1 week", "Observation only", "Repeat epinephrine, fluids, ICU monitoring"]'::jsonb, 4, 'Standard management for Anaphylaxis refractory: Repeat epinephrine, fluids, ICU monitoring.'),
+    (v_topic_id, 'A 69-year-old female is seen for Cervical cancer screening.
 
 Physical Examination:
 
-Vitals: Normal.
-Ankle: Tenderness at posterior lateral malleolus.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-X-ray Ottawa rules positive — fracture at lateral malleolus
+Relevant diagnostics reviewed.
 
 
-Management?', '["Splint/cast and orthopedic follow-up; not weight-bearing until cleared", "No imaging needed", "Anticoagulation only", "Knee arthroscopy", "Immediate amputation"]'::jsonb, 0, 'Ankle fracture by Ottawa criteria needs immobilization and orthopedic care.'),
-    (v_topic_id, 'A 42-year-old male has palpitations, weight loss, heat intolerance, lid lag.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Pap/HPV per guidelines", "Placebo only", "Delayed care 6 months", "No intervention"]'::jsonb, 1, 'Guideline-consistent care: Pap/HPV per guidelines.'),
+    (v_topic_id, 'A 58-year-old female is seen for Increased ICP.
 
 Physical Examination:
 
-Vitals: HR 118 | BP 148/78.
-Thyroid: Diffusely enlarged, bruit.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-TSH: <0.01
-Free T4/T3: Elevated
-TSI: Positive
+Relevant diagnostics reviewed.
 
 
-Most likely diagnosis?', '["Hashimoto thyroiditis", "Pituitary TSHoma only without hyperthyroid labs", "Graves disease", "Sick euthyroid", "Subclinical hypothyroidism"]'::jsonb, 2, 'Diffuse goiter, hyperthyroid labs, positive TSI = Graves. Hashimoto causes hypothyroidism.'),
-    (v_topic_id, 'A 30-year-old male is an 8-month-old with 3 days high fever; fever resolved today and now a diffuse rash appeared.
+What is the most appropriate next step in management?', '["No intervention", "Head elevation mannitol hyperventilation", "Contradicted therapy", "Delayed care 6 months", "Placebo only"]'::jsonb, 1, 'Guideline-consistent care: Head elevation mannitol hyperventilation.'),
+    (v_topic_id, 'A 67-year-old female has septic shock from pneumonia; MAP 58 on norepinephrine.
 
 Physical Examination:
 
-Vitals: Temp 37.0°C (afebrile today) | HR 110 bpm | Appears well.
-Skin: Maculopapular rash on trunk and neck as fever cleared.
-HEENT: Mildly injected pharynx, no exudates.
+Lactate 4.2.
 
 Laboratory Results:
 
-CBC: WBC normal
-Rapid strep: Negative
+Blood cultures drawn.
 
 
-What is the most likely diagnosis?', '["Meningococcemia", "Roseola infantum (exanthem subitum due to HHV-6)", "Scarlet fever", "Kawasaki disease", "Measles with ongoing high fever"]'::jsonb, 1, 'Classic roseola: high fever several days then defervescence with maculopapular rash in well-appearing infant. Measles has cough/coryza/conjunctivitis and fever with rash. Kawasaki needs prolonged fever plus criteria. Scarlet fever has sandpaper rash with pharyngitis. Meningococcemia is toxic, not well-appearing post-fever rash.'),
-    (v_topic_id, 'A 31-year-old male has ankle injury cannot bear weight after inversion injury.
+What is the most appropriate antibiotic strategy?', '["Broad-spectrum IV antibiotics within 1 hour", "Oral amoxicillin only", "Fluoroquinolone monotherapy for all ICU patients always", "Await culture 48 hours before antibiotics", "Topical antibiotics"]'::jsonb, 0, 'Septic shock requires urgent IV broad-spectrum antibiotics after cultures.'),
+    (v_topic_id, 'A 40-year-old female is seen for Hypothyroidism.
 
 Physical Examination:
 
-Vitals: Normal.
-Ankle: Tenderness at posterior lateral malleolus.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-X-ray Ottawa rules positive — fracture at lateral malleolus
+Relevant diagnostics reviewed.
 
 
-Management?', '["No imaging needed", "Knee arthroscopy", "Splint/cast and orthopedic follow-up; not weight-bearing until cleared", "Anticoagulation only", "Immediate amputation"]'::jsonb, 2, 'Ankle fracture by Ottawa criteria needs immobilization and orthopedic care.'),
-    (v_topic_id, 'A 36-year-old female has hematemesis, melena, hypotension after NSAID use.
+What is the most appropriate next step in management?', '["No intervention", "Placebo only", "Levothyroxine titrate TSH", "Delayed care 6 months", "Contradicted therapy"]'::jsonb, 2, 'Guideline-consistent care: Levothyroxine titrate TSH.'),
+    (v_topic_id, 'A 43-year-old female is seen for Prior authorization appeal.
 
 Physical Examination:
 
-Vitals: HR 124 | BP 88/50.
-Abdomen: Mild epigastric tenderness.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Hgb: 7.1 g/dL
-BUN/Cr ratio elevated
+Relevant diagnostics reviewed.
 
 
-After resuscitation, best diagnostic step?', '["Colonoscopy first", "Abdominal MRI as first test", "Observe without endoscopy", "Barium swallow", "Upper endoscopy (EGD)"]'::jsonb, 4, 'Upper GI bleed after resuscitation needs EGD for diagnosis/therapy. Colonoscopy evaluates lower GI bleed.'),
-    (v_topic_id, 'A 81-year-old male has sudden unilateral pelvic pain at 6 weeks gestation, dizziness.
+What is the most appropriate next step in management?', '["Placebo only", "No intervention", "Contradicted therapy", "Delayed care 6 months", "Peer-to-peer when denied"]'::jsonb, 4, 'Guideline-consistent care: Peer-to-peer when denied.'),
+    (v_topic_id, 'A 58-year-old female has Acute spinal cord compression and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 120 | BP 90/60.
-Abdomen: RLQ tenderness.
+Vitals improving.
 
 Laboratory Results:
 
-hCG: 3,200
-TVUS: No IUP, adnexal mass with free fluid
+Relevant diagnostics completed.
 
 
-Most likely diagnosis?', '["Threatened abortion with IUP", "Ovarian torsion only without pregnancy", "PID only", "Ectopic pregnancy", "Normal pregnancy"]'::jsonb, 3, 'Positive hCG without IUP and adnexal mass with free fluid in unstable patient = ectopic until proven otherwise.'),
-    (v_topic_id, 'A 69-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Observation only", "Discharge without therapy", "Delay treatment 1 week", "Dexamethasone and emergent radiation/surgery", "Alternative unrelated therapy"]'::jsonb, 3, 'Standard management for Acute spinal cord compression: Dexamethasone and emergent radiation/surgery.'),
+    (v_topic_id, 'A 70-year-old male returns for follow-up of Cirrhosis ascites.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Stable exam.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Labs reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Discharge if FAST negative", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Delay fracture management 72 hours", "Oral antibiotics only"]'::jsonb, 2, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 42-year-old female on heparin for DVT develops calf pain on day 6; platelet count fell from 210,000 to 78,000/mm³.
+What is the most appropriate long-term management?', '["Antibiotics chronically", "Discontinue all prior meds abruptly", "No treatment indicated", "Sodium restriction and diuretics; paracentesis PRN", "High-dose steroids indefinitely without indication"]'::jsonb, 3, 'Guideline-based chronic care for Cirrhosis ascites.'),
+    (v_topic_id, 'A 74-year-old female is seen for Acute optic neuritis MS.
 
 Physical Examination:
 
-Vitals: Temp 37.6°C | HR 104 bpm | BP 130/84 mmHg.
-Extremities: Left calf swollen and tender.
-Skin: No petechiae.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Platelets: 78,000/mm³
-Lower extremity ultrasound: New deep vein thrombosis
-4T score: High probability for HIT
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate next step?', '["Observation only", "Stop all heparin products and start a non-heparin anticoagulant (e.g., argatroban)", "Continue heparin and transfuse platelets", "Switch to subcutaneous enoxaparin", "Start warfarin immediately"]'::jsonb, 1, 'Suspected HIT with thrombosis requires stopping heparin (including LMWH) and alternative anticoagulation (direct thrombin inhibitor or fondaparinux). Continuing heparin or LMWH is harmful. Warfarin alone early can cause skin necrosis; warfarin is added later when platelets recover.'),
-    (v_topic_id, 'A 78-year-old female has rash on trunk, fever, and recent amoxicillin for strep throat.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Placebo only", "IV methylprednisolone", "Delayed care 6 months", "No intervention"]'::jsonb, 2, 'Guideline-consistent care: IV methylprednisolone.'),
+    (v_topic_id, 'A 41-year-old female returns for follow-up of Schizophrenia.
 
 Physical Examination:
 
-Vitals: Temp 38.4°C.
-Skin: Morbilliform rash, no mucosal involvement.
+Stable exam.
 
 Laboratory Results:
 
-No labs critical
+Labs reviewed.
 
 
-Most likely diagnosis?', '["Toxic epidermal necrolysis", "Lupus only", "Meningococcemia", "Drug reaction (amoxicillin rash)", "Stevens-Johnson syndrome"]'::jsonb, 3, 'Morbilliform rash after antibiotic without mucosal involvement = simple drug eruption. SJS/TEN have mucosal involvement and skin detachment.'),
-    (v_topic_id, 'A 64-year-old male infant 4 months with paroxysmal cough, whoop, post-tussive vomiting.
+What is the most appropriate long-term management?', '["Antibiotics chronically", "High-dose steroids indefinitely without indication", "Discontinue all prior meds abruptly", "Antipsychotic with metabolic monitoring", "No treatment indicated"]'::jsonb, 3, 'Guideline-based chronic care for Schizophrenia.'),
+    (v_topic_id, 'A 28-year-old male has septic shock from pneumonia; MAP 58 on norepinephrine.
 
 Physical Examination:
 
-Vitals: Temp 37.2°C.
-Lungs: Clear between paroxysms.
+Lactate 4.2.
 
 Laboratory Results:
 
-WBC: 28,000 with lymphocytosis
-PCR: Bordetella pertussis positive
+Blood cultures drawn.
 
 
-Management includes:', '["Steroids only", "Immediate surgery", "No antibiotics needed", "Ribavirin", "Macrolide (azithromycin), supportive care, contact prophylaxis"]'::jsonb, 4, 'Pertussis treated with macrolide and isolation/prophylaxis of contacts.'),
-    (v_topic_id, 'A 66-year-old female infant 4 months with paroxysmal cough, whoop, post-tussive vomiting.
+What is the most appropriate antibiotic strategy?', '["Oral amoxicillin only", "Await culture 48 hours before antibiotics", "Topical antibiotics", "Broad-spectrum IV antibiotics within 1 hour", "Fluoroquinolone monotherapy for all ICU patients always"]'::jsonb, 3, 'Septic shock requires urgent IV broad-spectrum antibiotics after cultures.'),
+    (v_topic_id, 'A 29-year-old male has AMI complications.
 
 Physical Examination:
 
-Vitals: Temp 37.2°C.
-Lungs: Clear between paroxysms.
+Currently hospitalized.
 
 Laboratory Results:
 
-WBC: 28,000 with lymphocytosis
-PCR: Bordetella pertussis positive
+Clinical course discussed with team.
 
 
-Management includes:', '["No antibiotics needed", "Immediate surgery", "Ribavirin", "Macrolide (azithromycin), supportive care, contact prophylaxis", "Steroids only"]'::jsonb, 3, 'Pertussis treated with macrolide and isolation/prophylaxis of contacts.'),
-    (v_topic_id, 'A 51-year-old male presents at 10 weeks gestation with heavy vaginal bleeding and passage of tissue. Cervical os is open.
+Which statement regarding prognosis/complications is most accurate?', '["Watch for VSD, papillary muscle rupture, arrhythmia", "No follow-up needed", "Disease is always benign", "Immediate cure expected", "No complications ever occur"]'::jsonb, 0, 'Watch for VSD, papillary muscle rupture, arrhythmia'),
+    (v_topic_id, 'A 41-year-old male has Cirrhosis Child-Pugh C.
 
 Physical Examination:
 
-Vitals: HR 108 bpm | BP 102/68 mmHg.
-Abdomen: Mild suprapubic cramping.
-Speculum: Open cervical os with tissue at os.
+Currently hospitalized.
 
 Laboratory Results:
 
-hCG: 2,400 mIU/mL (lower than expected for dates)
-Ultrasound: No intrauterine gestational sac; incomplete products in canal
+Clinical course discussed with team.
 
 
-What is the most likely diagnosis?', '["Threatened abortion with closed cervix", "Normal intrauterine pregnancy", "Incomplete abortion", "Ectopic pregnancy", "Molar pregnancy only"]'::jsonb, 2, 'Open cervix with passage of tissue and incomplete products on ultrasound defines incomplete abortion. Ectopic would not show intrauterine products at os typically. Threatened abortion has closed cervix. Normal pregnancy has viable IUP findings.'),
-    (v_topic_id, 'A 36-year-old male has chest pain worse lying flat, relieved leaning forward, recent viral URI.
+Which statement regarding prognosis/complications is most accurate?', '["Disease is always benign", "High short-term mortality; transplant evaluation", "No follow-up needed", "No complications ever occur", "Immediate cure expected"]'::jsonb, 1, 'High short-term mortality; transplant evaluation'),
+    (v_topic_id, 'A 22-year-old female is seen for Postpartum hemorrhage.
 
 Physical Examination:
 
-Vitals: Temp 37.9°C.
-Cardiac: Friction rub.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-ECG: Diffuse ST elevation with PR depression
-Troponin: Mildly elevated
+Relevant diagnostics reviewed.
 
 
-Diagnosis?', '["Acute pericarditis", "GERD only", "Costochondritis only", "Pulmonary embolism only", "STEMI"]'::jsonb, 0, 'Positional pain, friction rub, diffuse ST elevation with PR depression = pericarditis. STEMI is regional vascular distribution.'),
-    (v_topic_id, 'A 44-year-old female is a 6-week-old infant brought for poor feeding, lethargy, and vomiting.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Placebo only", "Contradicted therapy", "No intervention", "Uterotonics balloon tamponade"]'::jsonb, 4, 'Guideline-consistent care: Uterotonics balloon tamponade.'),
+    (v_topic_id, 'A 80-year-old male is seen for Hep B vaccination risk.
 
 Physical Examination:
 
-Vitals: Temp 35.8°C (hypothermic) | HR 170 bpm | RR 12/min (episodes of apnea) | BP 62/40 mmHg.
-General: Lethargic, mottled.
-Genitourinary: Ambiguous in exam; neonatal screen pending review.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Glucose: 32 mg/dL
-Na: 128 | K: 7.8 mEq/L (critical)
-Cortisol: Low
-17-hydroxyprogesterone: Markedly elevated (on prior newborn screen)
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate immediate treatment?', '["IV normal saline bolus, IV hydrocortisone, and correct hypoglycemia \u2014 treat congenital adrenal hyperplasia crisis", "Kayexalate only without steroids", "Immediate thyroidectomy", "Oral rehydration and discharge", "Observation until outpatient endocrinology visit"]'::jsonb, 0, 'Neonatal adrenal crisis (CAH) presents with shock, hyponatremia, hyperkalemia, hypoglycemia — requires IV fluids, stress-dose steroids, glucose correction, and electrolyte management. Outpatient management is unsafe. Kayexalate is adjunctive; steroids are critical.'),
-    (v_topic_id, 'A 37-year-old male with prior appendectomy presents with crampy abdominal pain, bilious vomiting, and no flatus for 36 hours.
+What is the most appropriate next step in management?', '["Placebo only", "Contradicted therapy", "Delayed care 6 months", "No intervention", "HBV vaccine series"]'::jsonb, 4, 'Guideline-consistent care: HBV vaccine series.'),
+    (v_topic_id, 'A 68-year-old female is seen for Advance directives.
 
 Physical Examination:
 
-Vitals: HR 102 bpm | BP 118/74 mmHg | RR 18/min.
-Abdomen: Distended, high-pitched bowel sounds, mild diffuse tenderness, no rebound.
-Surgical scars: Midline laparotomy scar well healed.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Abdominal X-ray: Dilated small-bowel loops with air-fluid levels, paucity of colonic gas
-Lactate: 1.4 mmol/L
+Relevant diagnostics reviewed.
 
 
-What is the most likely cause of this small-bowel obstruction?', '["Colonic malignancy as primary cause of SBO", "Postoperative adhesions", "Primary biliary cholangitis", "Incarcerated inguinal hernia", "Acute appendicitis"]'::jsonb, 1, 'Prior abdominal surgery with SBO radiographic pattern strongly suggests adhesive disease — the most common SBO cause in adults. Incarcerated hernia is second common but no groin findings described. Primary colonic cancer rarely causes isolated SBO without colonic dilation pattern.'),
-    (v_topic_id, 'A 29-year-old female has RUQ pain after motor vehicle collision with hypotension.
+What is the most appropriate next step in management?', '["No intervention", "Delayed care 6 months", "Document goals before incapacity", "Contradicted therapy", "Placebo only"]'::jsonb, 2, 'Guideline-consistent care: Document goals before incapacity.'),
+    (v_topic_id, 'A 38-year-old female is a Type 2 diabetes presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: HR 128 | BP 86/52.
-Abdomen: RUQ tenderness, rebound.
+No acute complaints.
 
 Laboratory Results:
 
-FAST: Fluid in Morrison pouch
-Hgb drop 3 points
+Prior records reviewed.
 
 
-Most likely injured organ and management?', '["Liver laceration with hemorrhagic shock \u2014 operative or IR embolization", "Acute appendicitis only", "UTI", "GERD", "Splenic sequestration benign"]'::jsonb, 0, 'Trauma hypotension with positive FAST suggests intra-abdominal hemorrhage often liver/spleen — needs intervention.'),
-    (v_topic_id, 'A 48-year-old male with a history of IV drug use presents with 3 weeks of fever, fatigue, and dyspnea.
+Which preventive measure is most appropriate?', '["Screening only if symptomatic for all diseases", "Antibiotics prophylaxis", "PET scan annually", "No screening ever", "Annual dilated eye exam and urine albumin"]'::jsonb, 4, 'Evidence-based screening: Annual dilated eye exam and urine albumin.'),
+    (v_topic_id, 'A 39-year-old female is seen for Tobacco cessation.
 
 Physical Examination:
 
-Vitals: Temp 38.4°C | HR 108 bpm | RR 20/min | BP 118/74 mmHg.
-Cardiac: Holosystolic murmur at the left lower sternal border increasing with inspiration.
-Skin: Non-tender hemorrhagic macules on palms (Janeway lesions) and tender nodules on finger pads (Osler nodes).
-Eyes: Roth spots on fundoscopy.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Blood cultures: Pending (3 sets drawn)
-WBC: 14,200/mm³
-ESR: 88 mm/hr
-Transthoracic echo: 1.2 cm vegetation on tricuspid valve
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate next diagnostic/management step?', '["Rheumatoid factor and ANA panel only", "Oral amoxicillin and outpatient follow-up", "Immediate valve replacement without antibiotics", "Obtain multiple blood cultures and start empiric IV antibiotics after cultures; schedule echocardiography if not done", "Bone marrow biopsy"]'::jsonb, 3, 'Suspected infective endocarditis (fever, IVDU, tricuspid murmur, peripheral stigmata) requires multiple blood cultures before antibiotics when feasible, echocardiography, and empiric IV antibiotics tailored to likely organisms (often staph in IVDU). Outpatient oral therapy is unsafe. Surgery is not first-line without stabilized infection. Autoimmune panels do not replace cultures and echo.'),
-    (v_topic_id, 'A 46-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["No intervention", "Delayed care 6 months", "Placebo only", "Contradicted therapy", "Varenicline plus counseling"]'::jsonb, 4, 'Guideline-consistent care: Varenicline plus counseling.'),
+    (v_topic_id, 'A 32-year-old male is seen for Atrial fibrillation new anticoagulation.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Autonomy of physician to choose any procedure", "Futility \u2014 do not operate", "Emergency exception / implied consent for life-threatening emergency", "Justice requires randomization", "Beneficence requires waiting for family indefinitely"]'::jsonb, 2, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 68-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Placebo only", "Start DOAC unless contraindicated", "No intervention", "Delayed care 6 months", "Contradicted therapy"]'::jsonb, 1, 'Guideline-consistent care: Start DOAC unless contraindicated.'),
+    (v_topic_id, 'A 42-year-old female returns for follow-up of Hypertension stage 2.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Stable exam.
 
 Laboratory Results:
 
-Type and screen available
+Labs reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Emergency exception / implied consent for life-threatening emergency", "Justice requires randomization", "Futility \u2014 do not operate", "Autonomy of physician to choose any procedure", "Beneficence requires waiting for family indefinitely"]'::jsonb, 0, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 36-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate long-term management?', '["High-dose steroids indefinitely without indication", "No treatment indicated", "Start thiazide/CCB/ACEi per JNC guidelines", "Antibiotics chronically", "Discontinue all prior meds abruptly"]'::jsonb, 2, 'Guideline-based chronic care for Hypertension stage 2.'),
+    (v_topic_id, 'A 30-year-old male returns for follow-up of CKD stage 3 with albuminuria.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Stable exam.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Labs reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Oral antibiotics only", "Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 22-year-old female was in a high-speed MVC. BP drops to 80/50 after 2 L crystalloid. FAST exam is positive in splenorenal pouch.
+What is the most appropriate long-term management?', '["Antibiotics chronically", "No treatment indicated", "ACEi/ARB for proteinuria reduction", "High-dose steroids indefinitely without indication", "Discontinue all prior meds abruptly"]'::jsonb, 2, 'Guideline-based chronic care for CKD stage 3 with albuminuria.'),
+    (v_topic_id, 'A 69-year-old male has Opioid overdose and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 132 bpm | BP 80/50 mmHg | RR 30/min.
-Abdomen: Distended, diffuse tenderness.
-Extremities: Cool, delayed cap refill.
+Vitals improving.
 
 Laboratory Results:
 
-Hemoglobin: 6.8 g/dL (down from 11 g/dL on arrival)
-Lactate: 5.1 mmol/L
-Type and screen: O-negative blood available
+Relevant diagnostics completed.
 
 
-What is the most appropriate next step?', '["CT abdomen with contrast before any transfusion in unstable patient", "Oral fluids and observation", "Activate massive transfusion protocol and emergent operative intervention for hemorrhagic shock", "Diagnostic peritoneal lavage only without resuscitation", "Discharge after normal FAST"]'::jsonb, 2, 'Unstable trauma with positive FAST and falling hemoglobin indicates intra-abdominal hemorrhage requiring blood products and emergent surgery (damage control). CT delays life-saving intervention in unstable patients. Observation is inappropriate.'),
-    (v_topic_id, 'A 37-year-old male developed sudden pleuritic chest pain and dyspnea 10 days after total knee replacement.
+What is the most appropriate next step in management?', '["Delay treatment 1 week", "Discharge without therapy", "Alternative unrelated therapy", "Observation only", "Naloxone and airway support"]'::jsonb, 4, 'Standard management for Opioid overdose: Naloxone and airway support.'),
+    (v_topic_id, 'A 44-year-old male has Prostate cancer low risk.
 
 Physical Examination:
 
-Vitals: Temp 37.8°C | HR 118 bpm | RR 26/min | BP 128/82 mmHg | SpO2 89% on room air.
-Lungs: Clear.
-Extremities: Left calf tender and swollen; right leg post-surgical dressing intact.
+Currently hospitalized.
 
 Laboratory Results:
 
-ECG: S1Q3T3 pattern
-D-dimer: Elevated
-CT Pulmonary Angiography: Bilateral segmental filling defects
+Clinical course discussed with team.
 
 
-What is the most appropriate initial treatment?', '["IV antibiotics for pneumonia", "Anticoagulation with heparin/LMWH bridged to oral anticoagulant", "Thrombolysis for all stable patients", "Aspirin monotherapy", "Observation with repeat imaging in 1 week"]'::jsonb, 1, 'Confirmed PE after recent orthopedic surgery warrants anticoagulation unless contraindicated. Aspirin is insufficient. Thrombolysis is reserved for massive PE with instability. Antibiotics treat infection, not PE. Observation delays necessary treatment.'),
-    (v_topic_id, 'A 53-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which statement regarding prognosis/complications is most accurate?', '["No follow-up needed", "Immediate cure expected", "Disease is always benign", "Active surveillance may be appropriate", "No complications ever occur"]'::jsonb, 3, 'Active surveillance may be appropriate'),
+    (v_topic_id, 'A 27-year-old male is seen for PrEP HIV risk.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Discharge if FAST negative", "Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Oral antibiotics only"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 34-year-old male has RUQ pain after motor vehicle collision with hypotension.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Tenofovir emtricitabine monitoring", "Placebo only", "Contradicted therapy", "No intervention"]'::jsonb, 1, 'Guideline-consistent care: Tenofovir emtricitabine monitoring.'),
+    (v_topic_id, 'A 31-year-old male is seen for Telehealth follow-up CHF.
 
 Physical Examination:
 
-Vitals: HR 128 | BP 86/52.
-Abdomen: RUQ tenderness, rebound.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Fluid in Morrison pouch
-Hgb drop 3 points
+Relevant diagnostics reviewed.
 
 
-Most likely injured organ and management?', '["GERD", "Liver laceration with hemorrhagic shock \u2014 operative or IR embolization", "Acute appendicitis only", "UTI", "Splenic sequestration benign"]'::jsonb, 1, 'Trauma hypotension with positive FAST suggests intra-abdominal hemorrhage often liver/spleen — needs intervention.'),
-    (v_topic_id, 'A 78-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["No intervention", "Daily weight remote monitoring", "Placebo only", "Delayed care 6 months", "Contradicted therapy"]'::jsonb, 1, 'Guideline-consistent care: Daily weight remote monitoring.'),
+    (v_topic_id, 'A 30-year-old male is seen for Prostate cancer surveillance.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Justice requires randomization", "Autonomy of physician to choose any procedure", "Futility \u2014 do not operate", "Beneficence requires waiting for family indefinitely", "Emergency exception / implied consent for life-threatening emergency"]'::jsonb, 4, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 82-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Active surveillance low grade", "Placebo only", "Contradicted therapy", "Delayed care 6 months", "No intervention"]'::jsonb, 0, 'Guideline-consistent care: Active surveillance low grade.'),
+    (v_topic_id, 'A 83-year-old female has STEMI post-PCI and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Oral antibiotics only", "Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Immediate MRI spine before any fluids"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 63-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Delay treatment 1 week", "Dual antiplatelet therapy for 12 months unless bleeding risk", "Observation only", "Alternative unrelated therapy", "Discharge without therapy"]'::jsonb, 1, 'Standard management for STEMI post-PCI: Dual antiplatelet therapy for 12 months unless bleeding risk.'),
+    (v_topic_id, 'A 42-year-old male is seen for Hypercalcemia malignancy.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Oral antibiotics only", "Discharge if FAST negative", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 46-year-old female presents at 10 weeks gestation with heavy vaginal bleeding and passage of tissue. Cervical os is open.
+What is the most appropriate next step in management?', '["Contradicted therapy", "IV fluids bisphosphonate", "Placebo only", "No intervention", "Delayed care 6 months"]'::jsonb, 1, 'Guideline-consistent care: IV fluids bisphosphonate.'),
+    (v_topic_id, 'A 46-year-old female returns for follow-up of Rheumatoid arthritis.
 
 Physical Examination:
 
-Vitals: HR 108 bpm | BP 102/68 mmHg.
-Abdomen: Mild suprapubic cramping.
-Speculum: Open cervical os with tissue at os.
+Stable exam.
 
 Laboratory Results:
 
-hCG: 2,400 mIU/mL (lower than expected for dates)
-Ultrasound: No intrauterine gestational sac; incomplete products in canal
+Labs reviewed.
 
 
-What is the most likely diagnosis?', '["Incomplete abortion", "Threatened abortion with closed cervix", "Ectopic pregnancy", "Normal intrauterine pregnancy", "Molar pregnancy only"]'::jsonb, 0, 'Open cervix with passage of tissue and incomplete products on ultrasound defines incomplete abortion. Ectopic would not show intrauterine products at os typically. Threatened abortion has closed cervix. Normal pregnancy has viable IUP findings.'),
-    (v_topic_id, 'A 64-year-old male has resistant hypertension, muscle cramps, and weakness.
+What is the most appropriate long-term management?', '["Discontinue all prior meds abruptly", "Methotrexate first-line DMARD", "No treatment indicated", "Antibiotics chronically", "High-dose steroids indefinitely without indication"]'::jsonb, 1, 'Guideline-based chronic care for Rheumatoid arthritis.'),
+    (v_topic_id, 'A 40-year-old male is seen for Macular degeneration AREDS.
 
 Physical Examination:
 
-Vitals: BP 168/98 mmHg on three occasions.
-Musculoskeletal: Proximal muscle weakness.
-Abdomen: No bruits.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Na: 146 mEq/L | K: 2.9 mEq/L
-HCO3: 32 mEq/L (metabolic alkalosis)
-Aldosterone/renin ratio: 38 (elevated)
+Relevant diagnostics reviewed.
 
 
-What is the most likely diagnosis?', '["Primary hyperaldosteronism", "Hypothyroidism", "Essential hypertension only", "Renal cell carcinoma", "Pheochromocytoma"]'::jsonb, 0, 'Hypertension + hypokalemia + metabolic alkalosis + elevated ARR suggests primary hyperaldosteronism. Pheochromocytoma causes episodic HTN and catecholamine excess, not hypokalemic alkalosis. Essential HTN does not explain hypokalemia. Hypothyroidism does not fit. RCC is unrelated.'),
-    (v_topic_id, 'A 33-year-old female has LLQ pain, fever, and constipation. CT shows colonic diverticula with pericolic fat stranding.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Placebo only", "Antioxidant vitamins", "No intervention", "Contradicted therapy"]'::jsonb, 2, 'Guideline-consistent care: Antioxidant vitamins.'),
+    (v_topic_id, 'A 50-year-old female has Digoxin toxicity arrhythmia and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Temp 38.5°C | HR 96 bpm | BP 130/84 mmHg.
-Abdomen: LLQ tenderness, guarding localized to LLQ, no diffuse peritonitis.
+Vitals improving.
 
 Laboratory Results:
 
-WBC: 14,100/mm³
-CT: Sigmoid diverticulitis without abscess or free air
+Relevant diagnostics completed.
 
 
-What is the most appropriate initial management for uncomplicated diverticulitis?', '["Immediate elective colectomy during this admission for all cases", "IV thrombolysis", "No antibiotics ever for diverticulitis", "Oral antibiotics (e.g., amoxicillin-clavulanate or metronidazole + fluoroquinolone where appropriate), bowel rest, and outpatient follow-up if stable", "Appendectomy"]'::jsonb, 3, 'Uncomplicated diverticulitis in stable outpatients is managed with antibiotics (select cases may be managed without per recent guidelines but exam-style answer remains antibiotics + supportive care), dietary modification, and follow-up. Routine immediate surgery is not indicated. Thrombolysis and appendectomy are irrelevant.'),
-    (v_topic_id, 'A 60-year-old male was in a high-speed MVC. BP drops to 80/50 after 2 L crystalloid. FAST exam is positive in splenorenal pouch.
+What is the most appropriate next step in management?', '["Delay treatment 1 week", "Digoxin Fab fragments", "Observation only", "Alternative unrelated therapy", "Discharge without therapy"]'::jsonb, 1, 'Standard management for Digoxin toxicity arrhythmia: Digoxin Fab fragments.'),
+    (v_topic_id, 'A 75-year-old female has Acute angle closure glaucoma and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 132 bpm | BP 80/50 mmHg | RR 30/min.
-Abdomen: Distended, diffuse tenderness.
-Extremities: Cool, delayed cap refill.
+Vitals improving.
 
 Laboratory Results:
 
-Hemoglobin: 6.8 g/dL (down from 11 g/dL on arrival)
-Lactate: 5.1 mmol/L
-Type and screen: O-negative blood available
+Relevant diagnostics completed.
 
 
-What is the most appropriate next step?', '["Discharge after normal FAST", "Activate massive transfusion protocol and emergent operative intervention for hemorrhagic shock", "CT abdomen with contrast before any transfusion in unstable patient", "Diagnostic peritoneal lavage only without resuscitation", "Oral fluids and observation"]'::jsonb, 1, 'Unstable trauma with positive FAST and falling hemoglobin indicates intra-abdominal hemorrhage requiring blood products and emergent surgery (damage control). CT delays life-saving intervention in unstable patients. Observation is inappropriate.'),
-    (v_topic_id, 'A 62-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Discharge without therapy", "Timolol, pilocarpine, IV acetazolamide, emergent laser", "Alternative unrelated therapy", "Observation only", "Delay treatment 1 week"]'::jsonb, 1, 'Standard management for Acute angle closure glaucoma: Timolol, pilocarpine, IV acetazolamide, emergent laser.'),
+    (v_topic_id, 'A 82-year-old female has Acute stroke tPA candidate and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Oral antibiotics only", "Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Immediate MRI spine before any fluids"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 25-year-old male Term newborn fails to cry at delivery, floppy, cyanotic; bag-mask ventilation started.
+What is the most appropriate next step in management?', '["Delay treatment 1 week", "Discharge without therapy", "IV alteplase within 4.5 h if no contraindications", "Observation only", "Alternative unrelated therapy"]'::jsonb, 2, 'Standard management for Acute stroke tPA candidate: IV alteplase within 4.5 h if no contraindications.'),
+    (v_topic_id, 'A 79-year-old female is seen for AMI VSD complication.
 
 Physical Examination:
 
-Vitals after 30 sec PPV: HR 80, poor respiratory effort.
-Cord gases pending.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-APGAR at 1 min: 3
-APGAR at 5 min: pending
+Relevant diagnostics reviewed.
 
 
-Per NRP, what is the next step if HR remains 80 after effective ventilation?', '["Stop all resuscitation efforts", "Begin chest compressions coordinated with ventilation", "Epinephrine as first step before compressions", "Discharge to nursery", "Immediate intubation without ventilation trial"]'::jsonb, 1, 'NRP: if HR <100 after 30 sec effective PPV, start chest compressions; epinephrine if HR remains <60 after compressions.'),
-    (v_topic_id, 'A 69-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["No intervention", "Delayed care 6 months", "New holosystolic murmur shock", "Contradicted therapy", "Placebo only"]'::jsonb, 2, 'Guideline-consistent care: New holosystolic murmur shock.'),
+    (v_topic_id, 'A 44-year-old male has Multiple myeloma.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Currently hospitalized.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Clinical course discussed with team.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Oral antibiotics only", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 47-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which statement regarding prognosis/complications is most accurate?', '["No follow-up needed", "Immediate cure expected", "No complications ever occur", "Hypercalcemia, renal injury, infection risk", "Disease is always benign"]'::jsonb, 3, 'Hypercalcemia, renal injury, infection risk'),
+    (v_topic_id, 'A 47-year-old male returns for follow-up of Bipolar disorder maintenance.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Stable exam.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Labs reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Oral antibiotics only", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative", "Immediate MRI spine before any fluids"]'::jsonb, 2, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 55-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate long-term management?', '["Antibiotics chronically", "High-dose steroids indefinitely without indication", "Discontinue all prior meds abruptly", "No treatment indicated", "Lithium or valproate mood stabilizer"]'::jsonb, 4, 'Guideline-based chronic care for Bipolar disorder maintenance.'),
+    (v_topic_id, 'A 67-year-old male is a 65-year-old never screened presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+No acute complaints.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Prior records reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Oral antibiotics only", "Immediate MRI spine before any fluids", "Discharge if FAST negative", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Delay fracture management 72 hours"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 34-year-old female has painless jaundice, 5-kg weight loss, and pruritus for 1 month.
+Which preventive measure is most appropriate?', '["Screening only if symptomatic for all diseases", "One-time AAA ultrasound if ever smoked", "No screening ever", "PET scan annually", "Antibiotics prophylaxis"]'::jsonb, 1, 'Evidence-based screening: One-time AAA ultrasound if ever smoked.'),
+    (v_topic_id, 'A 37-year-old female is seen for Hep B vaccination risk.
 
 Physical Examination:
 
-Vitals: Temp 37.1°C | BP 132/80 mmHg.
-Abdomen: Non-tender, palpable non-tender gallbladder (Courvoisier sign).
-Sclera: Icteric.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Total bilirubin: 12.4 mg/dL (direct predominant)
-ALP: 620 U/L | ALT: 98 U/L
-CT abdomen: Mass at head of pancreas compressing distal bile duct
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate next step in management?', '["ERCP or surgical biliary decompression evaluation and staging for pancreatic malignancy", "Empiric ceftriaxone for ascending cholangitis without imaging", "Immediate appendectomy", "Oral ursodiol only and discharge", "Observation for spontaneous resolution"]'::jsonb, 0, 'Painless obstructive jaundice with pancreatic head mass suggests pancreatic cancer causing biliary obstruction; biliary decompression and oncology/surgical staging follow. Empiric antibiotics without obstruction workup miss malignancy. Ursodiol does not relieve malignant obstruction.'),
-    (v_topic_id, 'A 31-year-old female has LLQ pain, fever, and constipation. CT shows colonic diverticula with pericolic fat stranding.
+What is the most appropriate next step in management?', '["Placebo only", "No intervention", "Delayed care 6 months", "HBV vaccine series", "Contradicted therapy"]'::jsonb, 3, 'Guideline-consistent care: HBV vaccine series.'),
+    (v_topic_id, 'A 84-year-old male returns for follow-up of Osteoporosis T-score -2.8.
 
 Physical Examination:
 
-Vitals: Temp 38.5°C | HR 96 bpm | BP 130/84 mmHg.
-Abdomen: LLQ tenderness, guarding localized to LLQ, no diffuse peritonitis.
+Stable exam.
 
 Laboratory Results:
 
-WBC: 14,100/mm³
-CT: Sigmoid diverticulitis without abscess or free air
+Labs reviewed.
 
 
-What is the most appropriate initial management for uncomplicated diverticulitis?', '["IV thrombolysis", "Immediate elective colectomy during this admission for all cases", "Appendectomy", "Oral antibiotics (e.g., amoxicillin-clavulanate or metronidazole + fluoroquinolone where appropriate), bowel rest, and outpatient follow-up if stable", "No antibiotics ever for diverticulitis"]'::jsonb, 3, 'Uncomplicated diverticulitis in stable outpatients is managed with antibiotics (select cases may be managed without per recent guidelines but exam-style answer remains antibiotics + supportive care), dietary modification, and follow-up. Routine immediate surgery is not indicated. Thrombolysis and appendectomy are irrelevant.'),
-    (v_topic_id, 'A 26-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate long-term management?', '["No treatment indicated", "Antibiotics chronically", "High-dose steroids indefinitely without indication", "Discontinue all prior meds abruptly", "Bisphosphonate or alternative per guidelines"]'::jsonb, 4, 'Guideline-based chronic care for Osteoporosis T-score -2.8.'),
+    (v_topic_id, 'A 26-year-old male is seen for SLE lupus nephritis.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative", "Oral antibiotics only"]'::jsonb, 2, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 49-year-old male has burn to arm — white waxy center, no sensation in center, blisters at periphery.
+What is the most appropriate next step in management?', '["Progressive renal failure risk", "Delayed care 6 months", "Placebo only", "Contradicted therapy", "No intervention"]'::jsonb, 0, 'Guideline-consistent care: Progressive renal failure risk.'),
+    (v_topic_id, 'A 67-year-old female is seen for Schizophrenia adherence.
 
 Physical Examination:
 
-Vitals: Stable.
-Skin: Full-thickness area 3%, partial 5%.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-No labs urgent
+Relevant diagnostics reviewed.
 
 
-Burn depth classification of white anesthetic center?', '["Superficial only", "All burns are partial thickness", "Chemical burn only", "First-degree sunburn pattern", "Full-thickness (third-degree)"]'::jsonb, 4, 'White insensate area indicates full-thickness burn often needing grafting.'),
-    (v_topic_id, 'A 53-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Contradicted therapy", "Placebo only", "No intervention", "Long-acting injectable antipsychotic"]'::jsonb, 4, 'Guideline-consistent care: Long-acting injectable antipsychotic.'),
+    (v_topic_id, 'A 40-year-old female is seen for PCOS infertility desire.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Oral antibiotics only", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Discharge if FAST negative"]'::jsonb, 0, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 34-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["No intervention", "Delayed care 6 months", "Contradicted therapy", "Weight loss clomiphene", "Placebo only"]'::jsonb, 3, 'Guideline-consistent care: Weight loss clomiphene.'),
+    (v_topic_id, 'A 41-year-old male is seen for Influenza prevention.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative", "Oral antibiotics only", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids"]'::jsonb, 0, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 73-year-old female has sudden unilateral pelvic pain at 6 weeks gestation, dizziness.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Delayed care 6 months", "Annual influenza vaccine", "No intervention", "Placebo only"]'::jsonb, 2, 'Guideline-consistent care: Annual influenza vaccine.'),
+    (v_topic_id, 'A 44-year-old female is seen for Crohn fistula risk.
 
 Physical Examination:
 
-Vitals: HR 120 | BP 90/60.
-Abdomen: RLQ tenderness.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-hCG: 3,200
-TVUS: No IUP, adnexal mass with free fluid
+Relevant diagnostics reviewed.
 
 
-Most likely diagnosis?', '["Ectopic pregnancy", "PID only", "Ovarian torsion only without pregnancy", "Normal pregnancy", "Threatened abortion with IUP"]'::jsonb, 0, 'Positive hCG without IUP and adnexal mass with free fluid in unstable patient = ectopic until proven otherwise.'),
-    (v_topic_id, 'A 57-year-old female Term newborn fails to cry at delivery, floppy, cyanotic; bag-mask ventilation started.
+What is the most appropriate next step in management?', '["Placebo only", "Delayed care 6 months", "Monitor abscess fistula formation", "Contradicted therapy", "No intervention"]'::jsonb, 2, 'Guideline-consistent care: Monitor abscess fistula formation.'),
+    (v_topic_id, 'A 44-year-old male is seen for Hep C cured.
 
 Physical Examination:
 
-Vitals after 30 sec PPV: HR 80, poor respiratory effort.
-Cord gases pending.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-APGAR at 1 min: 3
-APGAR at 5 min: pending
+Relevant diagnostics reviewed.
 
 
-Per NRP, what is the next step if HR remains 80 after effective ventilation?', '["Discharge to nursery", "Epinephrine as first step before compressions", "Stop all resuscitation efforts", "Immediate intubation without ventilation trial", "Begin chest compressions coordinated with ventilation"]'::jsonb, 4, 'NRP: if HR <100 after 30 sec effective PPV, start chest compressions; epinephrine if HR remains <60 after compressions.'),
-    (v_topic_id, 'A 50-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Sustained virologic response surveillance", "No intervention", "Contradicted therapy", "Delayed care 6 months", "Placebo only"]'::jsonb, 0, 'Guideline-consistent care: Sustained virologic response surveillance.'),
+    (v_topic_id, 'A 79-year-old female has Hyperkalemia ECG changes and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Oral antibiotics only", "Discharge if FAST negative", "Immediate MRI spine before any fluids", "Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 34-year-old female child 5 years with petechiae, bruising after viral illness, otherwise well.
+What is the most appropriate next step in management?', '["Observation only", "Alternative unrelated therapy", "Delay treatment 1 week", "Discharge without therapy", "Calcium gluconate, insulin/dextrose, albuterol"]'::jsonb, 4, 'Standard management for Hyperkalemia ECG changes: Calcium gluconate, insulin/dextrose, albuterol.'),
+    (v_topic_id, 'A 61-year-old female is seen for STI partner treatment.
 
 Physical Examination:
 
-Vitals: Normal.
-Skin: Petechiae legs, no hepatosplenomegaly.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Platelets: 12,000/mm³
-Rest of counts normal
+Relevant diagnostics reviewed.
 
 
-Most likely diagnosis?', '["Leukemia", "TTP", "DIC", "Aplastic anemia all cell lines low", "ITP"]'::jsonb, 4, 'Isolated thrombocytopenia post-viral in child with normal Hgb/WBC = ITP. Leukemia has other cytopenias/blasts.'),
-    (v_topic_id, 'A 34-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Placebo only", "No intervention", "Expedited partner therapy where legal", "Contradicted therapy", "Delayed care 6 months"]'::jsonb, 2, 'Guideline-consistent care: Expedited partner therapy where legal.'),
+    (v_topic_id, 'A 62-year-old male is seen for SLE lupus nephritis.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative", "Delay fracture management 72 hours", "Oral antibiotics only", "Immediate MRI spine before any fluids"]'::jsonb, 0, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 53-year-old male with COPD presents with increased dyspnea, purulent sputum, and fever for 3 days.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "No intervention", "Progressive renal failure risk", "Placebo only", "Contradicted therapy"]'::jsonb, 2, 'Guideline-consistent care: Progressive renal failure risk.'),
+    (v_topic_id, 'A 53-year-old female has SLE nephritis.
 
 Physical Examination:
 
-Vitals: Temp 38.7°C | HR 110 bpm | RR 28/min | BP 118/76 mmHg | SpO2 86% on room air.
-Lungs: Diffuse wheezes, decreased breath sounds at bases.
-Mental status: Alert.
+Currently hospitalized.
 
 Laboratory Results:
 
-ABG on room air: pH 7.32, PaCO2 58 mmHg, PaO2 52 mmHg
-WBC: 15,800/mm³
-Chest X-ray: Hyperinflation, no infiltrate
+Clinical course discussed with team.
 
 
-What is the most appropriate initial management?', '["Sedation with benzodiazepines for anxiety", "High-flow oxygen to maintain SpO2 >98% regardless of CO2", "Supplemental oxygen (target SpO2 88\u201392%), bronchodilators, systemic corticosteroids, and antibiotics", "Antibiotics only without bronchodilators", "Immediate intubation for all COPD exacerbations"]'::jsonb, 2, 'Acute COPD exacerbation with hypoxemia/hypercapnia needs controlled oxygen (avoid suppressing hypoxic drive excessively), bronchodilators, steroids, and antibiotics when purulent sputum/fever suggest bacterial trigger. High-flow O2 can worsen hypercapnia. Routine sedation is risky. Intubation is for respiratory failure not all exacerbations.'),
-    (v_topic_id, 'A 60-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which statement regarding prognosis/complications is most accurate?', '["No follow-up needed", "Disease is always benign", "No complications ever occur", "Immediate cure expected", "Progressive renal failure without treatment"]'::jsonb, 4, 'Progressive renal failure without treatment'),
+    (v_topic_id, 'A 47-year-old male is a 45-year-old smoker 30 pack-years presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+No acute complaints.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Prior records reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Oral antibiotics only", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Discharge if FAST negative"]'::jsonb, 0, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 36-year-old male presents with severe epigastric pain radiating to the back, vomiting, and history of heavy alcohol use.
+Which preventive measure is most appropriate?', '["Screening only if symptomatic for all diseases", "PET scan annually", "Antibiotics prophylaxis", "No screening ever", "Annual low-dose CT lung cancer screening"]'::jsonb, 4, 'Evidence-based screening: Annual low-dose CT lung cancer screening.'),
+    (v_topic_id, 'A 38-year-old male scenario: Quality improvement fall protocol.
 
 Physical Examination:
 
-Vitals: Temp 38.2°C | HR 118 bpm | BP 100/64 mmHg | RR 24/min.
-Abdomen: Epigastric tenderness without rebound; bowel sounds hypoactive.
-Skin: No jaundice.
+N/A
 
 Laboratory Results:
 
-Lipase: 1,840 U/L (4× ULN)
-AST/ALT: Mildly elevated
-Triglycerides: 180 mg/dL
-Abdominal ultrasound: No gallstones
+N/A
 
 
-What is the most likely etiology in this patient?', '["Alcohol-induced acute pancreatitis", "Mesenteric ischemia", "Acute cholecystitis from cholelithiasis", "Peptic ulcer perforation", "Acute hepatitis A"]'::jsonb, 0, 'Elevated lipase with epigastric pain and alcohol history supports alcoholic pancreatitis; ultrasound without gallstones makes gallstone etiology less likely. Cholecystitis needs RUQ findings. Mesenteric ischemia has different pain pattern. Perforation has peritoneal signs. Hepatitis does not explain lipase this high as primary diagnosis.'),
-    (v_topic_id, 'A 47-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate systems-based action?', '["No documentation", "Ignore discharge planning", "Medication review and home safety evaluation", "Avoid care coordination", "Skip follow-up"]'::jsonb, 2, 'Medication review and home safety evaluation'),
+    (v_topic_id, 'A 56-year-old male has Cirrhosis Child-Pugh C.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Currently hospitalized.
 
 Laboratory Results:
 
-Type and screen available
+Clinical course discussed with team.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Futility \u2014 do not operate", "Justice requires randomization", "Beneficence requires waiting for family indefinitely", "Emergency exception / implied consent for life-threatening emergency", "Autonomy of physician to choose any procedure"]'::jsonb, 3, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 81-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which statement regarding prognosis/complications is most accurate?', '["No complications ever occur", "Disease is always benign", "No follow-up needed", "High short-term mortality; transplant evaluation", "Immediate cure expected"]'::jsonb, 3, 'High short-term mortality; transplant evaluation'),
+    (v_topic_id, 'A 75-year-old male has Acute gout and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Oral antibiotics only"]'::jsonb, 0, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 67-year-old female has RUQ pain after motor vehicle collision with hypotension.
+What is the most appropriate next step in management?', '["NSAID, colchicine, or steroid depending comorbidities", "Observation only", "Alternative unrelated therapy", "Discharge without therapy", "Delay treatment 1 week"]'::jsonb, 0, 'Standard management for Acute gout: NSAID, colchicine, or steroid depending comorbidities.'),
+    (v_topic_id, 'A 39-year-old male has Acute pancreatitis severe.
 
 Physical Examination:
 
-Vitals: HR 128 | BP 86/52.
-Abdomen: RUQ tenderness, rebound.
+Currently hospitalized.
 
 Laboratory Results:
 
-FAST: Fluid in Morrison pouch
-Hgb drop 3 points
+Clinical course discussed with team.
 
 
-Most likely injured organ and management?', '["Liver laceration with hemorrhagic shock \u2014 operative or IR embolization", "UTI", "Acute appendicitis only", "Splenic sequestration benign", "GERD"]'::jsonb, 0, 'Trauma hypotension with positive FAST suggests intra-abdominal hemorrhage often liver/spleen — needs intervention.'),
-    (v_topic_id, 'A 53-year-old female teen presents with sore throat, fever, tonsillar exudates, tender anterior cervical nodes.
+Which statement regarding prognosis/complications is most accurate?', '["No follow-up needed", "Disease is always benign", "Risk of necrosis, infection, organ failure", "No complications ever occur", "Immediate cure expected"]'::jsonb, 2, 'Risk of necrosis, infection, organ failure'),
+    (v_topic_id, 'A 77-year-old female is seen for Pressure ulcer stage 3.
 
 Physical Examination:
 
-Vitals: Temp 38.9°C.
-HEENT: Exudative tonsillitis, no cough.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Rapid strep: Positive
+Relevant diagnostics reviewed.
 
 
-Treatment?', '["Prednisone only", "Azithromycin first-line always", "Acyclovir", "No antibiotics for positive rapid strep", "Penicillin or amoxicillin"]'::jsonb, 4, 'Strep pharyngitis confirmed needs penicillin/amoxicillin (or cephalosporin if allergy).'),
-    (v_topic_id, 'A 24-year-old male Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Placebo only", "Contradicted therapy", "No intervention", "Offloading wound care nutrition"]'::jsonb, 4, 'Guideline-consistent care: Offloading wound care nutrition.'),
+    (v_topic_id, 'A 57-year-old female is seen for Spinal cord compression.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Autonomy of physician to choose any procedure", "Justice requires randomization", "Beneficence requires waiting for family indefinitely", "Futility \u2014 do not operate", "Emergency exception / implied consent for life-threatening emergency"]'::jsonb, 4, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 63-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Placebo only", "Contradicted therapy", "Dexamethasone emergent radiation", "Delayed care 6 months", "No intervention"]'::jsonb, 2, 'Guideline-consistent care: Dexamethasone emergent radiation.'),
+    (v_topic_id, 'A 30-year-old male is a Abdominal aortic aneurysm presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+No acute complaints.
 
 Laboratory Results:
 
-Type and screen available
+Prior records reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Beneficence requires waiting for family indefinitely", "Autonomy of physician to choose any procedure", "Justice requires randomization", "Emergency exception / implied consent for life-threatening emergency", "Futility \u2014 do not operate"]'::jsonb, 3, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 66-year-old female was in a high-speed MVC. BP drops to 80/50 after 2 L crystalloid. FAST exam is positive in splenorenal pouch.
+Which preventive measure is most appropriate?', '["PET scan annually", "One-time ultrasound men 65\u201375 ever smoked", "Screening only if symptomatic for all diseases", "No screening ever", "Antibiotics prophylaxis"]'::jsonb, 1, 'Evidence-based screening: One-time ultrasound men 65–75 ever smoked.'),
+    (v_topic_id, 'A 36-year-old male returns for follow-up of HFpEF.
 
 Physical Examination:
 
-Vitals: HR 132 bpm | BP 80/50 mmHg | RR 30/min.
-Abdomen: Distended, diffuse tenderness.
-Extremities: Cool, delayed cap refill.
+Stable exam.
 
 Laboratory Results:
 
-Hemoglobin: 6.8 g/dL (down from 11 g/dL on arrival)
-Lactate: 5.1 mmol/L
-Type and screen: O-negative blood available
+Labs reviewed.
 
 
-What is the most appropriate next step?', '["CT abdomen with contrast before any transfusion in unstable patient", "Activate massive transfusion protocol and emergent operative intervention for hemorrhagic shock", "Oral fluids and observation", "Diagnostic peritoneal lavage only without resuscitation", "Discharge after normal FAST"]'::jsonb, 1, 'Unstable trauma with positive FAST and falling hemoglobin indicates intra-abdominal hemorrhage requiring blood products and emergent surgery (damage control). CT delays life-saving intervention in unstable patients. Observation is inappropriate.'),
-    (v_topic_id, 'A 55-year-old male is admitted for worsening shortness of breath, orthopnea, and 6-kg weight gain over 2 weeks. History includes ischemic cardiomyopathy.
+What is the most appropriate long-term management?', '["High-dose steroids indefinitely without indication", "No treatment indicated", "Discontinue all prior meds abruptly", "Diuretics for congestion; treat comorbid HTN/diabetes", "Antibiotics chronically"]'::jsonb, 3, 'Guideline-based chronic care for HFpEF.'),
+    (v_topic_id, 'A 45-year-old male is seen for STEMI post stent.
 
 Physical Examination:
 
-Vitals: Temp 98.1°F | HR 96 bpm | RR 24/min | BP 102/68 mmHg.
-Neck: JVD to the angle of the jaw.
-Cardiac: Displaced PMI, S3 gallop, holosystolic murmur at the apex radiating to the axilla.
-Lungs: Bibasilar crackles to mid-lung fields.
-Extremities: 2+ pitting edema to the knees bilaterally.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-BNP: 1,420 pg/mL
-Echocardiogram: LVEF 25%, moderate mitral regurgitation, dilated LV
-Creatinine: 1.3 mg/dL
+Relevant diagnostics reviewed.
 
 
-Which medication class has been shown to reduce mortality in this patient''s condition?', '["Calcium channel blockers (amlodipine)", "Loop diuretics alone", "Short-acting nitrates as monotherapy", "Digoxin as first-line mortality therapy", "Beta-blockers (e.g., carvedilol)"]'::jsonb, 4, 'HFrEF mortality benefit is proven for beta-blockers, ACEi/ARB/ARNI, MRAs, and SGLT2 inhibitors. Loop diuretics relieve congestion but do not reduce mortality. Nitrates and CCBs are not mortality drugs in HFrEF. Digoxin may reduce hospitalizations but is not first-line mortality therapy.'),
-    (v_topic_id, 'A 31-year-old male Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["No intervention", "Contradicted therapy", "Delayed care 6 months", "Placebo only", "DAPT statin beta-blocker ACEi"]'::jsonb, 4, 'Guideline-consistent care: DAPT statin beta-blocker ACEi.'),
+    (v_topic_id, 'A 45-year-old male is seen for Heart failure admission.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Beneficence requires waiting for family indefinitely", "Futility \u2014 do not operate", "Autonomy of physician to choose any procedure", "Emergency exception / implied consent for life-threatening emergency", "Justice requires randomization"]'::jsonb, 3, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 42-year-old female has chronic hepatitis C genotype 1a, treatment-naive, no cirrhosis on FibroScan.
+What is the most appropriate next step in management?', '["No intervention", "Diuretic GDMT optimization", "Placebo only", "Contradicted therapy", "Delayed care 6 months"]'::jsonb, 1, 'Guideline-consistent care: Diuretic GDMT optimization.'),
+    (v_topic_id, 'A 81-year-old male has Tension pneumothorax and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Normal.
-Abdomen: No ascites.
-No stigmata of chronic liver disease.
+Vitals improving.
 
 Laboratory Results:
 
-HCV RNA: 2,400,000 IU/mL
-ALT: 68 U/L
+Relevant diagnostics completed.
 
 
-Most appropriate modern treatment approach?', '["Observation without treatment ever", "Liver transplant evaluation first-line", "Interferon-ribavirin only", "Direct-acting antiviral regimen for 8\u201312 weeks", "Cholestyramine"]'::jsonb, 3, 'Current HCV standard is pangenotypic DAA regimens with high cure rates. Interferon-based therapy is obsolete first-line. Transplant is for decompensated cirrhosis/HCC.'),
-    (v_topic_id, 'A 71-year-old female child 5 years with petechiae, bruising after viral illness, otherwise well.
+What is the most appropriate next step in management?', '["Delay treatment 1 week", "Alternative unrelated therapy", "Needle decompression then chest tube", "Observation only", "Discharge without therapy"]'::jsonb, 2, 'Standard management for Tension pneumothorax: Needle decompression then chest tube.'),
+    (v_topic_id, 'A 84-year-old male is seen for NAFLD lifestyle.
 
 Physical Examination:
 
-Vitals: Normal.
-Skin: Petechiae legs, no hepatosplenomegaly.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Platelets: 12,000/mm³
-Rest of counts normal
+Relevant diagnostics reviewed.
 
 
-Most likely diagnosis?', '["TTP", "ITP", "DIC", "Leukemia", "Aplastic anemia all cell lines low"]'::jsonb, 1, 'Isolated thrombocytopenia post-viral in child with normal Hgb/WBC = ITP. Leukemia has other cytopenias/blasts.'),
-    (v_topic_id, 'A 57-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Weight loss 7-10% target", "No intervention", "Delayed care 6 months", "Placebo only"]'::jsonb, 1, 'Guideline-consistent care: Weight loss 7-10% target.'),
+    (v_topic_id, 'A 35-year-old female is seen for Iron deficiency post-menopause.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Oral antibiotics only", "Discharge if FAST negative", "Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 69-year-old female has coffee-ground emesis, cirrhosis history, spider angiomata.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Delayed care 6 months", "Colonoscopy if no obvious source", "No intervention", "Placebo only"]'::jsonb, 2, 'Guideline-consistent care: Colonoscopy if no obvious source.'),
+    (v_topic_id, 'A 70-year-old female is seen for Crohn fistula risk.
 
 Physical Examination:
 
-Vitals: HR 118 | BP 92/58.
-Abdomen: Ascites, splenomegaly.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Hgb: 6.8
-INR: 2.1
-BUN elevated
+Relevant diagnostics reviewed.
 
 
-After ABCs, key medication to reduce bleeding?', '["High-dose beta-blocker acute bolus only without endoscopy plan", "Discharge without endoscopy", "Warfarin loading", "Oral NSAIDs", "IV octreotide (or terlipressin where available) and antibiotics for SBP prophylaxis per protocol"]'::jsonb, 4, 'Variceal bleed in cirrhosis: octreotide/vasoactive drugs, antibiotics, urgent EGD banding — not NSAIDs/warfarin.'),
-    (v_topic_id, 'A 80-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Monitor abscess fistula formation", "No intervention", "Placebo only", "Delayed care 6 months"]'::jsonb, 1, 'Guideline-consistent care: Monitor abscess fistula formation.'),
+    (v_topic_id, 'A 44-year-old female returns for follow-up of Osteoporosis T-score -2.8.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Stable exam.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Labs reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Oral antibiotics only", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids"]'::jsonb, 2, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 54-year-old female has RUQ pain, fever, and nausea after a fatty meal. Murphys sign is positive.
+What is the most appropriate long-term management?', '["High-dose steroids indefinitely without indication", "Antibiotics chronically", "No treatment indicated", "Bisphosphonate or alternative per guidelines", "Discontinue all prior meds abruptly"]'::jsonb, 3, 'Guideline-based chronic care for Osteoporosis T-score -2.8.'),
+    (v_topic_id, 'A 82-year-old male has Acute liver failure acetaminophen and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Temp 38.8°C | HR 104 bpm | BP 128/82 mmHg.
-Abdomen: RUQ tenderness with inspiratory arrest on palpation.
-Sclera: Anicteric.
+Vitals improving.
 
 Laboratory Results:
 
-WBC: 13,400/mm³
-RUQ ultrasound: Gallstones, gallbladder wall thickening, pericholecystic fluid
+Relevant diagnostics completed.
 
 
-What is the most appropriate management?', '["Immediate splenectomy", "ERCP as first step for all RUQ pain", "Observation without antibiotics", "Oral antibiotics only and elective cholecystectomy in 6 months only if recurrent", "IV fluids, antibiotics, analgesia, and cholecystectomy (typically during same admission when uncomplicated)"]'::jsonb, 4, 'Acute cholecystitis is managed with supportive care, antibiotics, and cholecystectomy (early laparoscopic cholecystectomy is standard for uncomplicated cases). Delaying antibiotics is unsafe. ERCP is for choledocholithiasis/cholangitis, not uncomplicated cholecystitis alone.'),
-    (v_topic_id, 'A 80-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Observation only", "Discharge without therapy", "Alternative unrelated therapy", "N-acetylcysteine", "Delay treatment 1 week"]'::jsonb, 3, 'Standard management for Acute liver failure acetaminophen: N-acetylcysteine.'),
+    (v_topic_id, 'A 27-year-old male returns for follow-up of HIV stable.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Stable exam.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Labs reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Delay fracture management 72 hours", "Discharge if FAST negative", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Oral antibiotics only"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 40-year-old male has burn to arm — white waxy center, no sensation in center, blisters at periphery.
+What is the most appropriate long-term management?', '["No treatment indicated", "Antibiotics chronically", "Discontinue all prior meds abruptly", "ART adherence counseling; continue regimen", "High-dose steroids indefinitely without indication"]'::jsonb, 3, 'Guideline-based chronic care for HIV stable.'),
+    (v_topic_id, 'A 72-year-old female is seen for Diabetic foot infection.
 
 Physical Examination:
 
-Vitals: Stable.
-Skin: Full-thickness area 3%, partial 5%.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-No labs urgent
+Relevant diagnostics reviewed.
 
 
-Burn depth classification of white anesthetic center?', '["Superficial only", "All burns are partial thickness", "First-degree sunburn pattern", "Chemical burn only", "Full-thickness (third-degree)"]'::jsonb, 4, 'White insensate area indicates full-thickness burn often needing grafting.'),
-    (v_topic_id, 'A 27-year-old female with type 1 diabetes presents with polyuria, polydipsia, vomiting, and Kussmaul respirations.
+What is the most appropriate next step in management?', '["Risk osteomyelitis amputation", "No intervention", "Contradicted therapy", "Delayed care 6 months", "Placebo only"]'::jsonb, 0, 'Guideline-consistent care: Risk osteomyelitis amputation.'),
+    (v_topic_id, 'A 46-year-old female is a Hep C baby boomer presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: Temp 37.0°C | HR 118 bpm | RR 28/min (deep) | BP 96/60 mmHg.
-General: Lethargic but arousable.
-Abdomen: Mild diffuse tenderness.
+No acute complaints.
 
 Laboratory Results:
 
-Glucose: 486 mg/dL
-pH: 7.12 | HCO3: 8 mEq/L
-Anion gap: 28
-Serum ketones: Positive
-Potassium: 5.4 mEq/L (on presentation)
+Prior records reviewed.
 
 
-What is the most appropriate initial management?', '["Immediate sodium bicarbonate for all patients", "Potassium supplementation before any fluids", "IV 0.9% saline resuscitation, insulin infusion after potassium check, and potassium replacement when K+ <5.2", "Subcutaneous insulin only and oral fluids", "Oral antidiabetic agents and discharge"]'::jsonb, 2, 'DKA requires volume resuscitation with normal saline, insulin after confirming potassium (add K+ to fluids when K+ falls below ~5.2 because insulin drives K+ intracellularly), and monitoring. Bicarbonate is reserved for severe acidemia (pH <6.9). SC insulin alone is inadequate for DKA. Giving K+ before fluids/insulin assessment can be dangerous if hyperkalemic initially.'),
-    (v_topic_id, 'A 32-year-old female has acute severe headache, papilledema, BMI 35, on tetracycline for acne.
+Which preventive measure is most appropriate?', '["Antibiotics prophylaxis", "No screening ever", "Screening only if symptomatic for all diseases", "PET scan annually", "HCV antibody screening once"]'::jsonb, 4, 'Evidence-based screening: HCV antibody screening once.'),
+    (v_topic_id, 'A 27-year-old male has Testicular torsion and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: BP 138/88.
-Neuro: Papilledema, CN VI palsy.
+Vitals improving.
 
 Laboratory Results:
 
-LP opening pressure: 34 cm H2O, normal cells
-MRI: Empty sella, no mass
+Relevant diagnostics completed.
 
 
-Treatment?', '["High-dose opioids only", "Acetazolamide, weight loss, stop offending agents, monitor vision", "Immediate craniotomy", "No treatment", "Antibiotics for meningitis"]'::jsonb, 1, 'Idiopathic intracranial hypertension: elevated opening pressure without mass — acetazolamide, weight loss, stop tetracycline.'),
-    (v_topic_id, 'A 42-year-old female has resistant hypertension, muscle cramps, and weakness.
+What is the most appropriate next step in management?', '["Alternative unrelated therapy", "Delay treatment 1 week", "Emergent urologic exploration", "Discharge without therapy", "Observation only"]'::jsonb, 2, 'Standard management for Testicular torsion: Emergent urologic exploration.'),
+    (v_topic_id, 'A 24-year-old female has STEMI post-PCI and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: BP 168/98 mmHg on three occasions.
-Musculoskeletal: Proximal muscle weakness.
-Abdomen: No bruits.
+Vitals improving.
 
 Laboratory Results:
 
-Na: 146 mEq/L | K: 2.9 mEq/L
-HCO3: 32 mEq/L (metabolic alkalosis)
-Aldosterone/renin ratio: 38 (elevated)
+Relevant diagnostics completed.
 
 
-What is the most likely diagnosis?', '["Hypothyroidism", "Pheochromocytoma", "Primary hyperaldosteronism", "Renal cell carcinoma", "Essential hypertension only"]'::jsonb, 2, 'Hypertension + hypokalemia + metabolic alkalosis + elevated ARR suggests primary hyperaldosteronism. Pheochromocytoma causes episodic HTN and catecholamine excess, not hypokalemic alkalosis. Essential HTN does not explain hypokalemia. Hypothyroidism does not fit. RCC is unrelated.'),
-    (v_topic_id, 'A 79-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Observation only", "Dual antiplatelet therapy for 12 months unless bleeding risk", "Discharge without therapy", "Delay treatment 1 week", "Alternative unrelated therapy"]'::jsonb, 1, 'Standard management for STEMI post-PCI: Dual antiplatelet therapy for 12 months unless bleeding risk.'),
+    (v_topic_id, 'A 58-year-old male has Acute liver failure acetaminophen and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Vitals improving.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics completed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Beneficence requires waiting for family indefinitely", "Futility \u2014 do not operate", "Autonomy of physician to choose any procedure", "Emergency exception / implied consent for life-threatening emergency", "Justice requires randomization"]'::jsonb, 3, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 64-year-old female has burn to arm — white waxy center, no sensation in center, blisters at periphery.
+What is the most appropriate next step in management?', '["Observation only", "N-acetylcysteine", "Delay treatment 1 week", "Alternative unrelated therapy", "Discharge without therapy"]'::jsonb, 1, 'Standard management for Acute liver failure acetaminophen: N-acetylcysteine.'),
+    (v_topic_id, 'A 76-year-old female is seen for Celiac strict gluten-free.
 
 Physical Examination:
 
-Vitals: Stable.
-Skin: Full-thickness area 3%, partial 5%.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-No labs urgent
+Relevant diagnostics reviewed.
 
 
-Burn depth classification of white anesthetic center?', '["Superficial only", "Chemical burn only", "Full-thickness (third-degree)", "All burns are partial thickness", "First-degree sunburn pattern"]'::jsonb, 2, 'White insensate area indicates full-thickness burn often needing grafting.'),
-    (v_topic_id, 'A 28-year-old female has breast lump 2 cm, mobile, age 45, family history mother breast CA age 48.
+What is the most appropriate next step in management?', '["Placebo only", "Delayed care 6 months", "No intervention", "Dietitian referral", "Contradicted therapy"]'::jsonb, 3, 'Guideline-consistent care: Dietitian referral.'),
+    (v_topic_id, 'A 39-year-old female is seen for AMI VSD complication.
 
 Physical Examination:
 
-Vitals: Normal.
-Breast: 2 cm firm mobile upper outer quadrant mass, no skin changes.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Mammogram: BI-RADS 4
-Core biopsy: Invasive ductal carcinoma ER+
+Relevant diagnostics reviewed.
 
 
-Next step in care?', '["Ignore BI-RADS 4", "Antibiotics for mastitis", "Staging workup and multidisciplinary oncologic/surgical planning", "Emergency appendectomy", "Topical estrogen cream only"]'::jsonb, 2, 'BI-RADS 4 with invasive cancer needs staging and treatment planning.'),
-    (v_topic_id, 'A 37-year-old female presents with severe epigastric pain radiating to the back, vomiting, and history of heavy alcohol use.
+What is the most appropriate next step in management?', '["No intervention", "New holosystolic murmur shock", "Delayed care 6 months", "Contradicted therapy", "Placebo only"]'::jsonb, 1, 'Guideline-consistent care: New holosystolic murmur shock.'),
+    (v_topic_id, 'A 46-year-old female is seen for Cervical cancer screening.
 
 Physical Examination:
 
-Vitals: Temp 38.2°C | HR 118 bpm | BP 100/64 mmHg | RR 24/min.
-Abdomen: Epigastric tenderness without rebound; bowel sounds hypoactive.
-Skin: No jaundice.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Lipase: 1,840 U/L (4× ULN)
-AST/ALT: Mildly elevated
-Triglycerides: 180 mg/dL
-Abdominal ultrasound: No gallstones
+Relevant diagnostics reviewed.
 
 
-What is the most likely etiology in this patient?', '["Mesenteric ischemia", "Acute cholecystitis from cholelithiasis", "Acute hepatitis A", "Alcohol-induced acute pancreatitis", "Peptic ulcer perforation"]'::jsonb, 3, 'Elevated lipase with epigastric pain and alcohol history supports alcoholic pancreatitis; ultrasound without gallstones makes gallstone etiology less likely. Cholecystitis needs RUQ findings. Mesenteric ischemia has different pain pattern. Perforation has peritoneal signs. Hepatitis does not explain lipase this high as primary diagnosis.'),
-    (v_topic_id, 'A 29-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["No intervention", "Delayed care 6 months", "Pap/HPV per guidelines", "Placebo only", "Contradicted therapy"]'::jsonb, 2, 'Guideline-consistent care: Pap/HPV per guidelines.'),
+    (v_topic_id, 'A 81-year-old female is seen for Prostate cancer surveillance.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Discharge if FAST negative", "Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Oral antibiotics only"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 22-year-old female has breast lump 2 cm, mobile, age 45, family history mother breast CA age 48.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Active surveillance low grade", "Placebo only", "Contradicted therapy", "No intervention"]'::jsonb, 1, 'Guideline-consistent care: Active surveillance low grade.'),
+    (v_topic_id, 'A 49-year-old female is seen for Statin primary prevention.
 
 Physical Examination:
 
-Vitals: Normal.
-Breast: 2 cm firm mobile upper outer quadrant mass, no skin changes.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Mammogram: BI-RADS 4
-Core biopsy: Invasive ductal carcinoma ER+
+Relevant diagnostics reviewed.
 
 
-Next step in care?', '["Topical estrogen cream only", "Emergency appendectomy", "Antibiotics for mastitis", "Ignore BI-RADS 4", "Staging workup and multidisciplinary oncologic/surgical planning"]'::jsonb, 4, 'BI-RADS 4 with invasive cancer needs staging and treatment planning.'),
-    (v_topic_id, 'A 80-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Contradicted therapy", "ASCVD risk calculator", "Placebo only", "Delayed care 6 months", "No intervention"]'::jsonb, 1, 'Guideline-consistent care: ASCVD risk calculator.'),
+    (v_topic_id, 'A 24-year-old male is seen for Child abuse reporting.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Oral antibiotics only"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 44-year-old male is a 3-year-old with barking cough, stridor at rest, and low-grade fever.
+What is the most appropriate next step in management?', '["Mandatory report when suspected", "Contradicted therapy", "Delayed care 6 months", "Placebo only", "No intervention"]'::jsonb, 0, 'Guideline-consistent care: Mandatory report when suspected.'),
+    (v_topic_id, 'A 59-year-old male has Acute pancreatitis severe.
 
 Physical Examination:
 
-Vitals: Temp 38.3°C | HR 130 bpm | RR 32/min | SpO2 93% on room air.
-HEENT: Inspiratory stridor, no drooling.
-Lungs: Mild intercostal retractions.
+Currently hospitalized.
 
 Laboratory Results:
 
-Neck X-ray: Steeple sign (subglottic narrowing)
-WBC: 11,200/mm³
+Clinical course discussed with team.
 
 
-What is the most appropriate initial treatment for moderate croup?', '["Nebulized racemic epinephrine and dexamethasone", "Chest CT with contrast", "Incision and drainage of neck", "Antibiotics (amoxicillin) as first-line", "Immediate intubation for all stridor"]'::jsonb, 0, 'Moderate croup is treated with dexamethasone and nebulized epinephrine if significant stridor/distress. Not all stridor needs intubation. Antibiotics do not treat viral croup. CT and I&D are not indicated.'),
-    (v_topic_id, 'A 26-year-old male postpartum day 2 has fever, uterine tenderness, foul lochia.
+Which statement regarding prognosis/complications is most accurate?', '["Disease is always benign", "Immediate cure expected", "No complications ever occur", "No follow-up needed", "Risk of necrosis, infection, organ failure"]'::jsonb, 4, 'Risk of necrosis, infection, organ failure'),
+    (v_topic_id, 'A 42-year-old female has Hyperkalemia ECG changes and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Temp 39.0°C | HR 110.
-Uterus: Tender, subinvoluted.
+Vitals improving.
 
 Laboratory Results:
 
-WBC: 17,000
+Relevant diagnostics completed.
 
 
-Diagnosis and treatment?', '["Mastitis", "Appendicitis only", "Postpartum endometritis \u2014 broad-spectrum IV antibiotics (e.g., clindamycin + gentamicin)", "Normal lochia \u2014 no treatment", "UTI only without uterine exam"]'::jsonb, 2, 'Fever + uterine tenderness + foul lochia = endometritis needing IV broad-spectrum antibiotics.'),
-    (v_topic_id, 'A 34-year-old female has breast lump 2 cm, mobile, age 45, family history mother breast CA age 48.
+What is the most appropriate next step in management?', '["Delay treatment 1 week", "Alternative unrelated therapy", "Observation only", "Calcium gluconate, insulin/dextrose, albuterol", "Discharge without therapy"]'::jsonb, 3, 'Standard management for Hyperkalemia ECG changes: Calcium gluconate, insulin/dextrose, albuterol.'),
+    (v_topic_id, 'A 44-year-old male is seen for Febrile neutropenia.
 
 Physical Examination:
 
-Vitals: Normal.
-Breast: 2 cm firm mobile upper outer quadrant mass, no skin changes.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Mammogram: BI-RADS 4
-Core biopsy: Invasive ductal carcinoma ER+
+Relevant diagnostics reviewed.
 
 
-Next step in care?', '["Emergency appendectomy", "Topical estrogen cream only", "Antibiotics for mastitis", "Staging workup and multidisciplinary oncologic/surgical planning", "Ignore BI-RADS 4"]'::jsonb, 3, 'BI-RADS 4 with invasive cancer needs staging and treatment planning.'),
-    (v_topic_id, 'A 59-year-old female has groin bulge increasing with cough, reducible, no overlying skin changes.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Empiric antipseudomonal beta-lactam", "Contradicted therapy", "Placebo only", "No intervention"]'::jsonb, 1, 'Guideline-consistent care: Empiric antipseudomonal beta-lactam.'),
+    (v_topic_id, 'A 82-year-old female has DKA with pH 7.05 and K+ 5.8 mEq/L on presentation.
 
 Physical Examination:
 
-Vitals: Normal.
-Groin: Reducible mass above inguinal ligament.
+Dry mucous membranes.
 
 Laboratory Results:
 
-No acute labs abnormal
+Glucose 520 mg/dL.
 
 
-Management?', '["No repair ever", "Antibiotics only", "Emergent OR for all groin masses", "Elective surgical repair when symptomatic", "Chemotherapy"]'::jsonb, 3, 'Symptomatic reducible inguinal hernia — elective repair. Emergent if incarcerated/strangulated.'),
-    (v_topic_id, 'A 51-year-old female presents with sudden tearing chest pain radiating to the back. History includes poorly controlled hypertension.
+What is the most appropriate initial management?', '["Potassium supplementation before any insulin regardless of level", "Oral hypoglycemic agent", "Insulin bolus only without fluids", "IV fluids and insulin after confirming potassium adequacy", "Bicarbonate for all DKA"]'::jsonb, 3, 'DKA: fluids first; insulin when K+ safe (>3.3); hold insulin if K+ <3.3 until repleted.'),
+    (v_topic_id, 'A 44-year-old female scenario: Workers compensation back pain.
 
 Physical Examination:
 
-Vitals: HR 112 bpm | BP 188/102 mmHg right arm, 156/88 mmHg left arm.
-Cardiac: Diastolic decrescendo murmur at right sternal border.
-Neuro: Alert but anxious.
+N/A
 
 Laboratory Results:
 
-Chest X-ray: Widened mediastinum
-CT angiogram chest: Intimal flap in ascending aorta with involvement of aortic root
+N/A
 
 
-What is the most appropriate immediate medical therapy while arranging definitive care?', '["Oral clopidogrel and aspirin only", "Immediate thrombolysis", "IV esmolol (or labetalol) to target HR <60 and SBP 100\u2013120, then vasodilator if needed", "Sublingual nitroglycerin as monotherapy", "Aggressive IV fluid bolus"]'::jsonb, 2, 'Acute aortic dissection requires heart rate and blood pressure control with IV beta-blockade first to reduce shear stress; vasodilators only after beta-blockade. Nitrates alone can cause reflex tachycardia. Thrombolysis is contraindicated. Antiplatelets do not treat dissection. Fluids may worsen dissection.'),
-    (v_topic_id, 'A 25-year-old male with prior appendectomy presents with crampy abdominal pain, bilious vomiting, and no flatus for 36 hours.
+What is the most appropriate systems-based action?', '["Skip follow-up", "No documentation", "Ignore discharge planning", "Functional restoration; avoid prolonged opioids", "Avoid care coordination"]'::jsonb, 3, 'Functional restoration; avoid prolonged opioids'),
+    (v_topic_id, 'A 36-year-old female is seen for Diabetic retinopathy.
 
 Physical Examination:
 
-Vitals: HR 102 bpm | BP 118/74 mmHg | RR 18/min.
-Abdomen: Distended, high-pitched bowel sounds, mild diffuse tenderness, no rebound.
-Surgical scars: Midline laparotomy scar well healed.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Abdominal X-ray: Dilated small-bowel loops with air-fluid levels, paucity of colonic gas
-Lactate: 1.4 mmol/L
+Relevant diagnostics reviewed.
 
 
-What is the most likely cause of this small-bowel obstruction?', '["Postoperative adhesions", "Acute appendicitis", "Incarcerated inguinal hernia", "Primary biliary cholangitis", "Colonic malignancy as primary cause of SBO"]'::jsonb, 0, 'Prior abdominal surgery with SBO radiographic pattern strongly suggests adhesive disease — the most common SBO cause in adults. Incarcerated hernia is second common but no groin findings described. Primary colonic cancer rarely causes isolated SBO without colonic dilation pattern.'),
-    (v_topic_id, 'A 37-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Placebo only", "Tight glucose laser anti-VEGF", "Delayed care 6 months", "No intervention", "Contradicted therapy"]'::jsonb, 1, 'Guideline-consistent care: Tight glucose laser anti-VEGF.'),
+    (v_topic_id, 'A 42-year-old male is seen for Delirium hospital.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Oral antibiotics only", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative", "Immediate MRI spine before any fluids", "Delay fracture management 72 hours"]'::jsonb, 1, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 29-year-old female has RUQ pain, fever, and nausea after a fatty meal. Murphys sign is positive.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Delayed care 6 months", "No intervention", "Treat cause minimize sedatives", "Placebo only"]'::jsonb, 3, 'Guideline-consistent care: Treat cause minimize sedatives.'),
+    (v_topic_id, 'A 84-year-old female is seen for Pressure ulcer stage 3.
 
 Physical Examination:
 
-Vitals: Temp 38.8°C | HR 104 bpm | BP 128/82 mmHg.
-Abdomen: RUQ tenderness with inspiratory arrest on palpation.
-Sclera: Anicteric.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-WBC: 13,400/mm³
-RUQ ultrasound: Gallstones, gallbladder wall thickening, pericholecystic fluid
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate management?', '["ERCP as first step for all RUQ pain", "IV fluids, antibiotics, analgesia, and cholecystectomy (typically during same admission when uncomplicated)", "Oral antibiotics only and elective cholecystectomy in 6 months only if recurrent", "Immediate splenectomy", "Observation without antibiotics"]'::jsonb, 1, 'Acute cholecystitis is managed with supportive care, antibiotics, and cholecystectomy (early laparoscopic cholecystectomy is standard for uncomplicated cases). Delaying antibiotics is unsafe. ERCP is for choledocholithiasis/cholangitis, not uncomplicated cholecystitis alone.'),
-    (v_topic_id, 'A 55-year-old female presents with acute focal right arm weakness and aphasia starting 90 minutes ago.
+What is the most appropriate next step in management?', '["Placebo only", "Delayed care 6 months", "Offloading wound care nutrition", "Contradicted therapy", "No intervention"]'::jsonb, 2, 'Guideline-consistent care: Offloading wound care nutrition.'),
+    (v_topic_id, 'A 80-year-old female is seen for RA methotrexate.
 
 Physical Examination:
 
-Vitals: BP 188/104 | HR 88 | AFib on exam.
-Neuro: Left gaze preference, right hemiparesis, expressive aphasia.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-CT head: No hemorrhage
-CT angiography: Left MCA occlusion
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate next step if within thrombolysis/ thrombectomy window?', '["Observation only", "Immediate anticoagulation with warfarin", "Lumbar puncture first", "High-dose steroids", "IV alteplase evaluation and/or mechanical thrombectomy per protocol"]'::jsonb, 4, 'Acute ischemic stroke within window requires reperfusion assessment (tPA and/or thrombectomy) after excluding hemorrhage. Immediate warfarin is not acute therapy. Observation misses reperfusion opportunity.'),
-    (v_topic_id, 'A 34-year-old male Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Contradicted therapy", "No intervention", "Folic acid monitoring LFTs", "Placebo only"]'::jsonb, 3, 'Guideline-consistent care: Folic acid monitoring LFTs.'),
+    (v_topic_id, 'A 44-year-old female is seen for Alcohol withdrawal CIWA.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Beneficence requires waiting for family indefinitely", "Autonomy of physician to choose any procedure", "Justice requires randomization", "Emergency exception / implied consent for life-threatening emergency", "Futility \u2014 do not operate"]'::jsonb, 3, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 57-year-old female has RUQ pain, fever, and nausea after a fatty meal. Murphys sign is positive.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Delayed care 6 months", "No intervention", "Symptom-triggered benzodiazepines", "Placebo only"]'::jsonb, 3, 'Guideline-consistent care: Symptom-triggered benzodiazepines.'),
+    (v_topic_id, 'A 59-year-old male has DKA with pH 7.05 and K+ 5.8 mEq/L on presentation.
 
 Physical Examination:
 
-Vitals: Temp 38.8°C | HR 104 bpm | BP 128/82 mmHg.
-Abdomen: RUQ tenderness with inspiratory arrest on palpation.
-Sclera: Anicteric.
+Dry mucous membranes.
 
 Laboratory Results:
 
-WBC: 13,400/mm³
-RUQ ultrasound: Gallstones, gallbladder wall thickening, pericholecystic fluid
+Glucose 520 mg/dL.
 
 
-What is the most appropriate management?', '["Oral antibiotics only and elective cholecystectomy in 6 months only if recurrent", "Immediate splenectomy", "Observation without antibiotics", "ERCP as first step for all RUQ pain", "IV fluids, antibiotics, analgesia, and cholecystectomy (typically during same admission when uncomplicated)"]'::jsonb, 4, 'Acute cholecystitis is managed with supportive care, antibiotics, and cholecystectomy (early laparoscopic cholecystectomy is standard for uncomplicated cases). Delaying antibiotics is unsafe. ERCP is for choledocholithiasis/cholangitis, not uncomplicated cholecystitis alone.'),
-    (v_topic_id, 'A 62-year-old female has rash on trunk, fever, and recent amoxicillin for strep throat.
+What is the most appropriate initial management?', '["Potassium supplementation before any insulin regardless of level", "IV fluids and insulin after confirming potassium adequacy", "Oral hypoglycemic agent", "Bicarbonate for all DKA", "Insulin bolus only without fluids"]'::jsonb, 1, 'DKA: fluids first; insulin when K+ safe (>3.3); hold insulin if K+ <3.3 until repleted.'),
+    (v_topic_id, 'A 48-year-old male was diagnosed with STEMI 45 minutes ago; cath lab activated.
 
 Physical Examination:
 
-Vitals: Temp 38.4°C.
-Skin: Morbilliform rash, no mucosal involvement.
+Chest pain resolving after nitroglycerin.
 
 Laboratory Results:
 
-No labs critical
+ECG: Residual ST elevation inferior leads.
 
 
-Most likely diagnosis?', '["Toxic epidermal necrolysis", "Meningococcemia", "Drug reaction (amoxicillin rash)", "Stevens-Johnson syndrome", "Lupus only"]'::jsonb, 2, 'Morbilliform rash after antibiotic without mucosal involvement = simple drug eruption. SJS/TEN have mucosal involvement and skin detachment.'),
-    (v_topic_id, 'A 24-year-old male G2P1 at 38 weeks has painful vaginal bleeding, firm tender uterus, and fetal bradycardia 90 bpm.
+In addition to aspirin, which medication should be given now before PCI?', '["Routine thrombolysis if PCI available", "Warfarin loading", "Discharge on heparin only", "P2Y12 inhibitor loading dose", "Oral beta-blocker mandatory before cath"]'::jsonb, 3, 'DAPT with P2Y12 load (ticagrelor/prasugrel/clopidogrel per protocol) is standard with PCI.'),
+    (v_topic_id, 'A 66-year-old female has NSTEMI high-risk and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 118 | BP 90/58 | RR 22.
-Uterus: Firm, tender, high tone.
-FHR: 90 bpm with late decelerations.
+Vitals improving.
 
 Laboratory Results:
 
-Ultrasound: Retroplacental hematoma
-Hemoglobin: 9.8 g/dL
-Fibrinogen: Low
+Relevant diagnostics completed.
 
 
-What is the most appropriate immediate management?', '["Emergent cesarean delivery and maternal resuscitation", "Observation with outpatient follow-up", "Expectant management at home", "Magnesium sulfate only", "Vaginal delivery despite non-reassuring FHR without preparation"]'::jsonb, 0, 'Placental abruption with maternal instability and non-reassuring fetal status requires emergent delivery (usually cesarean) and resuscitation.'),
-    (v_topic_id, 'A 78-year-old female with prior appendectomy presents with crampy abdominal pain, bilious vomiting, and no flatus for 36 hours.
+What is the most appropriate next step in management?', '["Discharge without therapy", "Early invasive strategy within 24\u201348 h", "Alternative unrelated therapy", "Delay treatment 1 week", "Observation only"]'::jsonb, 1, 'Standard management for NSTEMI high-risk: Early invasive strategy within 24–48 h.'),
+    (v_topic_id, 'A 76-year-old female scenario: Medicare patient discharge.
 
 Physical Examination:
 
-Vitals: HR 102 bpm | BP 118/74 mmHg | RR 18/min.
-Abdomen: Distended, high-pitched bowel sounds, mild diffuse tenderness, no rebound.
-Surgical scars: Midline laparotomy scar well healed.
+N/A
 
 Laboratory Results:
 
-Abdominal X-ray: Dilated small-bowel loops with air-fluid levels, paucity of colonic gas
-Lactate: 1.4 mmol/L
+N/A
 
 
-What is the most likely cause of this small-bowel obstruction?', '["Colonic malignancy as primary cause of SBO", "Postoperative adhesions", "Incarcerated inguinal hernia", "Primary biliary cholangitis", "Acute appendicitis"]'::jsonb, 1, 'Prior abdominal surgery with SBO radiographic pattern strongly suggests adhesive disease — the most common SBO cause in adults. Incarcerated hernia is second common but no groin findings described. Primary colonic cancer rarely causes isolated SBO without colonic dilation pattern.'),
-    (v_topic_id, 'A 35-year-old male has groin bulge increasing with cough, reducible, no overlying skin changes.
+What is the most appropriate systems-based action?', '["Avoid care coordination", "Skip follow-up", "Ignore discharge planning", "Ensure understanding of meds and follow-up within 30 days", "No documentation"]'::jsonb, 3, 'Ensure understanding of meds and follow-up within 30 days'),
+    (v_topic_id, 'A 38-year-old female is seen for Colorectal screening average risk.
 
 Physical Examination:
 
-Vitals: Normal.
-Groin: Reducible mass above inguinal ligament.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-No acute labs abnormal
+Relevant diagnostics reviewed.
 
 
-Management?', '["No repair ever", "Chemotherapy", "Antibiotics only", "Elective surgical repair when symptomatic", "Emergent OR for all groin masses"]'::jsonb, 3, 'Symptomatic reducible inguinal hernia — elective repair. Emergent if incarcerated/strangulated.'),
-    (v_topic_id, 'A 34-year-old male was in a high-speed MVC. BP drops to 80/50 after 2 L crystalloid. FAST exam is positive in splenorenal pouch.
+What is the most appropriate next step in management?', '["Placebo only", "No intervention", "Delayed care 6 months", "Contradicted therapy", "Colonoscopy or FIT per guidelines"]'::jsonb, 4, 'Guideline-consistent care: Colonoscopy or FIT per guidelines.'),
+    (v_topic_id, 'A 40-year-old male is seen for OUD buprenorphine.
 
 Physical Examination:
 
-Vitals: HR 132 bpm | BP 80/50 mmHg | RR 30/min.
-Abdomen: Distended, diffuse tenderness.
-Extremities: Cool, delayed cap refill.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Hemoglobin: 6.8 g/dL (down from 11 g/dL on arrival)
-Lactate: 5.1 mmol/L
-Type and screen: O-negative blood available
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate next step?', '["Activate massive transfusion protocol and emergent operative intervention for hemorrhagic shock", "Discharge after normal FAST", "Oral fluids and observation", "Diagnostic peritoneal lavage only without resuscitation", "CT abdomen with contrast before any transfusion in unstable patient"]'::jsonb, 0, 'Unstable trauma with positive FAST and falling hemoglobin indicates intra-abdominal hemorrhage requiring blood products and emergent surgery (damage control). CT delays life-saving intervention in unstable patients. Observation is inappropriate.'),
-    (v_topic_id, 'A 82-year-old female has rash in sun-exposed areas, oral ulcers, joint pain, positive ANA.
+What is the most appropriate next step in management?', '["No intervention", "Contradicted therapy", "Delayed care 6 months", "Induction when mild withdrawal", "Placebo only"]'::jsonb, 3, 'Guideline-consistent care: Induction when mild withdrawal.'),
+    (v_topic_id, 'A 45-year-old female is seen for Polypharmacy elderly.
 
 Physical Examination:
 
-Vitals: Normal.
-Skin: Malar rash sparing nasolabial folds.
-Oral: Palatal ulcers.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-ANA positive
-Anti-dsDNA elevated
-Low C3/C4
+Relevant diagnostics reviewed.
 
 
-Diagnosis?', '["Gout", "Dermatomyositis only", "Scabies", "Systemic lupus erythematosus", "Contact dermatitis only"]'::jsonb, 3, 'Malar rash, oral ulcers, serositis/arthralgia, ANA and anti-dsDNA, low complement = SLE.'),
-    (v_topic_id, 'A 66-year-old female has ankle injury cannot bear weight after inversion injury.
+What is the most appropriate next step in management?', '["Placebo only", "Delayed care 6 months", "Deprescribing Beers criteria", "No intervention", "Contradicted therapy"]'::jsonb, 2, 'Guideline-consistent care: Deprescribing Beers criteria.'),
+    (v_topic_id, 'A 25-year-old female is a 25-year-old sexually active female presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: Normal.
-Ankle: Tenderness at posterior lateral malleolus.
+No acute complaints.
 
 Laboratory Results:
 
-X-ray Ottawa rules positive — fracture at lateral malleolus
+Prior records reviewed.
 
 
-Management?', '["Knee arthroscopy", "Anticoagulation only", "Splint/cast and orthopedic follow-up; not weight-bearing until cleared", "Immediate amputation", "No imaging needed"]'::jsonb, 2, 'Ankle fracture by Ottawa criteria needs immobilization and orthopedic care.'),
-    (v_topic_id, 'A 30-year-old female with atrial fibrillation (not anticoagulated) has sudden severe abdominal pain out of proportion to exam.
+Which preventive measure is most appropriate?', '["PET scan annually", "Antibiotics prophylaxis", "No screening ever", "Screening only if symptomatic for all diseases", "Chlamydia/gonorrhea screening"]'::jsonb, 4, 'Evidence-based screening: Chlamydia/gonorrhea screening.'),
+    (v_topic_id, 'A 76-year-old female is seen for Workers comp rehab.
 
 Physical Examination:
 
-Vitals: Temp 37.2°C | HR 130 bpm (irregular) | BP 94/58 mmHg | RR 22/min.
-Abdomen: Soft, mild diffuse tenderness, no peritoneal signs, hypoactive bowel sounds.
-Cardiac: Irregularly irregular rhythm.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-WBC: 18,000/mm³
-Lactate: 6.2 mmol/L (elevated)
-ABG: pH 7.28, HCO3 14 mEq/L
-CT angiography abdomen: SMA occlusion with bowel wall thickening
+Relevant diagnostics reviewed.
 
 
-What is the most likely diagnosis and urgent management priority?', '["Acute mesenteric ischemia \u2014 emergent vascular evaluation and possible revascularization", "Irritable bowel syndrome \u2014 antispasmodics", "Peptic ulcer disease \u2014 PPI and outpatient follow-up", "Constipation \u2014 enema and discharge", "Acute diverticulitis \u2014 oral metronidazole"]'::jsonb, 0, 'Pain out of proportion, AFib embolic risk, metabolic acidosis, and SMA occlusion indicate acute mesenteric ischemia — a surgical/vascular emergency. Diverticulitis and PUD do not match vascular occlusion. IBS and constipation are not acute ischemic presentations.'),
-    (v_topic_id, 'A 70-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "No intervention", "Placebo only", "Contradicted therapy", "Graded return to work plan"]'::jsonb, 4, 'Guideline-consistent care: Graded return to work plan.'),
+    (v_topic_id, 'A 59-year-old male is seen for Breast cancer chemo.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Autonomy of physician to choose any procedure", "Beneficence requires waiting for family indefinitely", "Futility \u2014 do not operate", "Emergency exception / implied consent for life-threatening emergency", "Justice requires randomization"]'::jsonb, 3, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 59-year-old female is an 8-month-old with 3 days high fever; fever resolved today and now a diffuse rash appeared.
+What is the most appropriate next step in management?', '["Placebo only", "Contradicted therapy", "Neutropenia infection risk", "No intervention", "Delayed care 6 months"]'::jsonb, 2, 'Guideline-consistent care: Neutropenia infection risk.'),
+    (v_topic_id, 'A 28-year-old female has Bacterial meningitis and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Temp 37.0°C (afebrile today) | HR 110 bpm | Appears well.
-Skin: Maculopapular rash on trunk and neck as fever cleared.
-HEENT: Mildly injected pharynx, no exudates.
+Vitals improving.
 
 Laboratory Results:
 
-CBC: WBC normal
-Rapid strep: Negative
+Relevant diagnostics completed.
 
 
-What is the most likely diagnosis?', '["Roseola infantum (exanthem subitum due to HHV-6)", "Scarlet fever", "Meningococcemia", "Kawasaki disease", "Measles with ongoing high fever"]'::jsonb, 0, 'Classic roseola: high fever several days then defervescence with maculopapular rash in well-appearing infant. Measles has cough/coryza/conjunctivitis and fever with rash. Kawasaki needs prolonged fever plus criteria. Scarlet fever has sandpaper rash with pharyngitis. Meningococcemia is toxic, not well-appearing post-fever rash.'),
-    (v_topic_id, 'A 67-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Observation only", "Empiric ceftriaxone + vancomycin \u00b1 ampicillin by age", "Delay treatment 1 week", "Alternative unrelated therapy", "Discharge without therapy"]'::jsonb, 1, 'Standard management for Bacterial meningitis: Empiric ceftriaxone + vancomycin ± ampicillin by age.'),
+    (v_topic_id, 'A 75-year-old male is seen for Hypertension uncontrolled.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Beneficence requires waiting for family indefinitely", "Autonomy of physician to choose any procedure", "Emergency exception / implied consent for life-threatening emergency", "Justice requires randomization", "Futility \u2014 do not operate"]'::jsonb, 2, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 31-year-old female with COPD presents with increased dyspnea, purulent sputum, and fever for 3 days.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Delayed care 6 months", "Add second agent thiazide or CCB", "No intervention", "Placebo only"]'::jsonb, 2, 'Guideline-consistent care: Add second agent thiazide or CCB.'),
+    (v_topic_id, 'A 23-year-old male is seen for HIV viral load detectable.
 
 Physical Examination:
 
-Vitals: Temp 38.7°C | HR 110 bpm | RR 28/min | BP 118/76 mmHg | SpO2 86% on room air.
-Lungs: Diffuse wheezes, decreased breath sounds at bases.
-Mental status: Alert.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-ABG on room air: pH 7.32, PaCO2 58 mmHg, PaO2 52 mmHg
-WBC: 15,800/mm³
-Chest X-ray: Hyperinflation, no infiltrate
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate initial management?', '["Antibiotics only without bronchodilators", "Supplemental oxygen (target SpO2 88\u201392%), bronchodilators, systemic corticosteroids, and antibiotics", "High-flow oxygen to maintain SpO2 >98% regardless of CO2", "Immediate intubation for all COPD exacerbations", "Sedation with benzodiazepines for anxiety"]'::jsonb, 1, 'Acute COPD exacerbation with hypoxemia/hypercapnia needs controlled oxygen (avoid suppressing hypoxic drive excessively), bronchodilators, steroids, and antibiotics when purulent sputum/fever suggest bacterial trigger. High-flow O2 can worsen hypercapnia. Routine sedation is risky. Intubation is for respiratory failure not all exacerbations.'),
-    (v_topic_id, 'A 66-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["No intervention", "Contradicted therapy", "Resistance testing adjust ART", "Placebo only", "Delayed care 6 months"]'::jsonb, 2, 'Guideline-consistent care: Resistance testing adjust ART.'),
+    (v_topic_id, 'A 43-year-old female is seen for Tdap pregnancy.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Oral antibiotics only", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 64-year-old female on heparin for DVT develops calf pain on day 6; platelet count fell from 210,000 to 78,000/mm³.
+What is the most appropriate next step in management?', '["Tdap each pregnancy", "Delayed care 6 months", "Contradicted therapy", "No intervention", "Placebo only"]'::jsonb, 0, 'Guideline-consistent care: Tdap each pregnancy.'),
+    (v_topic_id, 'A 58-year-old male has Subarachnoid hemorrhage.
 
 Physical Examination:
 
-Vitals: Temp 37.6°C | HR 104 bpm | BP 130/84 mmHg.
-Extremities: Left calf swollen and tender.
-Skin: No petechiae.
+Currently hospitalized.
 
 Laboratory Results:
 
-Platelets: 78,000/mm³
-Lower extremity ultrasound: New deep vein thrombosis
-4T score: High probability for HIT
+Clinical course discussed with team.
 
 
-What is the most appropriate next step?', '["Continue heparin and transfuse platelets", "Stop all heparin products and start a non-heparin anticoagulant (e.g., argatroban)", "Observation only", "Switch to subcutaneous enoxaparin", "Start warfarin immediately"]'::jsonb, 1, 'Suspected HIT with thrombosis requires stopping heparin (including LMWH) and alternative anticoagulation (direct thrombin inhibitor or fondaparinux). Continuing heparin or LMWH is harmful. Warfarin alone early can cause skin necrosis; warfarin is added later when platelets recover.'),
-    (v_topic_id, 'A 79-year-old female has polyuria, polydipsia, glucose 340, anion gap normal, osmolality high.
+Which statement regarding prognosis/complications is most accurate?', '["Immediate cure expected", "Vasospasm days 3\u201314; neurologic monitoring", "No follow-up needed", "No complications ever occur", "Disease is always benign"]'::jsonb, 1, 'Vasospasm days 3–14; neurologic monitoring'),
+    (v_topic_id, 'A 23-year-old female has AMI complications.
 
 Physical Examination:
 
-Vitals: HR 100 | BP 100/60.
-Mental status: Alert.
+Currently hospitalized.
 
 Laboratory Results:
 
-Glucose: 340
-pH: 7.38
-Serum osmolality: 340 mOsm/kg
-Ketones: Negative
+Clinical course discussed with team.
 
 
-Diagnosis?', '["Hyperosmolar hyperglycemic state", "Normal variant", "Hypoglycemia", "DKA", "Lactic acidosis primary"]'::jsonb, 0, 'Marked hyperglycemia without significant ketosis/acidosis = HHS, common type 2 diabetes.'),
-    (v_topic_id, 'A 72-year-old male has rash in sun-exposed areas, oral ulcers, joint pain, positive ANA.
+Which statement regarding prognosis/complications is most accurate?', '["Immediate cure expected", "No complications ever occur", "Disease is always benign", "No follow-up needed", "Watch for VSD, papillary muscle rupture, arrhythmia"]'::jsonb, 4, 'Watch for VSD, papillary muscle rupture, arrhythmia'),
+    (v_topic_id, 'A 44-year-old female has Stage IV lung cancer.
 
 Physical Examination:
 
-Vitals: Normal.
-Skin: Malar rash sparing nasolabial folds.
-Oral: Palatal ulcers.
+Currently hospitalized.
 
 Laboratory Results:
 
-ANA positive
-Anti-dsDNA elevated
-Low C3/C4
+Clinical course discussed with team.
 
 
-Diagnosis?', '["Contact dermatitis only", "Gout", "Scabies", "Systemic lupus erythematosus", "Dermatomyositis only"]'::jsonb, 3, 'Malar rash, oral ulcers, serositis/arthralgia, ANA and anti-dsDNA, low complement = SLE.'),
-    (v_topic_id, 'A 25-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which statement regarding prognosis/complications is most accurate?', '["Palliative focus; prognosis discussion", "No complications ever occur", "Immediate cure expected", "No follow-up needed", "Disease is always benign"]'::jsonb, 0, 'Palliative focus; prognosis discussion'),
+    (v_topic_id, 'A 83-year-old male has Diabetic foot ulcer.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Currently hospitalized.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Clinical course discussed with team.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Oral antibiotics only", "Discharge if FAST negative"]'::jsonb, 2, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 40-year-old male with SLE on hydroxychloroquine has fever, pleuritic chest pain, and leg swelling unilateral.
+Which statement regarding prognosis/complications is most accurate?', '["Immediate cure expected", "Disease is always benign", "No follow-up needed", "Risk progression to osteomyelitis/amputation", "No complications ever occur"]'::jsonb, 3, 'Risk progression to osteomyelitis/amputation'),
+    (v_topic_id, 'A 45-year-old male returns for follow-up of Chronic pain fibromyalgia.
 
 Physical Examination:
 
-Vitals: HR 110 | SpO2 92%.
-Lungs: Clear.
-Leg: Left calf swollen.
+Stable exam.
 
 Laboratory Results:
 
-D-dimer elevated
-CTPA: Segmental PE
-Anti-cardiolipin IgG positive
+Labs reviewed.
 
 
-Management should include:', '["Platelet transfusion", "Anticoagulation and evaluate for antiphospholipid syndrome", "Stop all anticoagulation", "No workup for thrombophilia", "Only hydroxychloroquine increase"]'::jsonb, 1, 'PE in setting of APS requires anticoagulation often long-term and APS evaluation. Stopping anticoagulation is harmful.'),
-    (v_topic_id, 'A 48-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate long-term management?', '["Discontinue all prior meds abruptly", "No treatment indicated", "High-dose steroids indefinitely without indication", "Exercise, CBT, SNRI/gabapentinoid", "Antibiotics chronically"]'::jsonb, 3, 'Guideline-based chronic care for Chronic pain fibromyalgia.'),
+    (v_topic_id, 'A 45-year-old female has Tension pneumothorax and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Immediate MRI spine before any fluids", "Discharge if FAST negative", "Oral antibiotics only"]'::jsonb, 1, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 83-year-old female with prior appendectomy presents with crampy abdominal pain, bilious vomiting, and no flatus for 36 hours.
+What is the most appropriate next step in management?', '["Delay treatment 1 week", "Alternative unrelated therapy", "Needle decompression then chest tube", "Discharge without therapy", "Observation only"]'::jsonb, 2, 'Standard management for Tension pneumothorax: Needle decompression then chest tube.'),
+    (v_topic_id, 'A 76-year-old male has status asthmaticus not responding to three albuterol nebulizers.
 
 Physical Examination:
 
-Vitals: HR 102 bpm | BP 118/74 mmHg | RR 18/min.
-Abdomen: Distended, high-pitched bowel sounds, mild diffuse tenderness, no rebound.
-Surgical scars: Midline laparotomy scar well healed.
+Silent chest on auscultation.
 
 Laboratory Results:
 
-Abdominal X-ray: Dilated small-bowel loops with air-fluid levels, paucity of colonic gas
-Lactate: 1.4 mmol/L
+ABG: pH 7.32, PaCO2 48.
 
 
-What is the most likely cause of this small-bowel obstruction?', '["Postoperative adhesions", "Primary biliary cholangitis", "Colonic malignancy as primary cause of SBO", "Acute appendicitis", "Incarcerated inguinal hernia"]'::jsonb, 0, 'Prior abdominal surgery with SBO radiographic pattern strongly suggests adhesive disease — the most common SBO cause in adults. Incarcerated hernia is second common but no groin findings described. Primary colonic cancer rarely causes isolated SBO without colonic dilation pattern.'),
-    (v_topic_id, 'A 50-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step?', '["Discharge with inhaler", "Oral antihistamine only", "Chest CT", "Immediate intubation without trial of medical therapy", "IV magnesium sulfate and systemic corticosteroids"]'::jsonb, 4, 'Severe asthma requires systemic steroids and magnesium; prepare for escalation.'),
+    (v_topic_id, 'A 44-year-old male is seen for Falls prevention.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Beneficence requires waiting for family indefinitely", "Justice requires randomization", "Futility \u2014 do not operate", "Emergency exception / implied consent for life-threatening emergency", "Autonomy of physician to choose any procedure"]'::jsonb, 3, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 83-year-old female teen presents with sore throat, fever, tonsillar exudates, tender anterior cervical nodes.
+What is the most appropriate next step in management?', '["Placebo only", "No intervention", "Delayed care 6 months", "Vitamin D exercise PT", "Contradicted therapy"]'::jsonb, 3, 'Guideline-consistent care: Vitamin D exercise PT.'),
+    (v_topic_id, 'A 38-year-old female is seen for Breast cancer screening.
 
 Physical Examination:
 
-Vitals: Temp 38.9°C.
-HEENT: Exudative tonsillitis, no cough.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Rapid strep: Positive
+Relevant diagnostics reviewed.
 
 
-Treatment?', '["Acyclovir", "No antibiotics for positive rapid strep", "Prednisone only", "Penicillin or amoxicillin", "Azithromycin first-line always"]'::jsonb, 3, 'Strep pharyngitis confirmed needs penicillin/amoxicillin (or cephalosporin if allergy).'),
-    (v_topic_id, 'A 23-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Placebo only", "No intervention", "Mammography per age risk", "Delayed care 6 months", "Contradicted therapy"]'::jsonb, 2, 'Guideline-consistent care: Mammography per age risk.'),
+    (v_topic_id, 'A 46-year-old female is seen for Preeclampsia severe.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Oral antibiotics only", "Immediate MRI spine before any fluids", "Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 69-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Placebo only", "No intervention", "Contradicted therapy", "Magnesium sulfate delivery planning", "Delayed care 6 months"]'::jsonb, 3, 'Guideline-consistent care: Magnesium sulfate delivery planning.'),
+    (v_topic_id, 'A 64-year-old female has Multiple myeloma.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Currently hospitalized.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Clinical course discussed with team.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative", "Oral antibiotics only", "Immediate MRI spine before any fluids"]'::jsonb, 1, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 42-year-old female at 28 weeks has a 1-hour glucose challenge test of 162 mg/dL (failed 50 g screen).
+Which statement regarding prognosis/complications is most accurate?', '["Hypercalcemia, renal injury, infection risk", "Disease is always benign", "No complications ever occur", "Immediate cure expected", "No follow-up needed"]'::jsonb, 0, 'Hypercalcemia, renal injury, infection risk'),
+    (v_topic_id, 'A 64-year-old female is a Type 2 diabetes presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: Normal.
-Fundal height: Appropriate for dates.
-Fetal heart tones: 150 bpm, reactive.
+No acute complaints.
 
 Laboratory Results:
 
-50 g GCT: 162 mg/dL (threshold typically 130–140)
-Prior 3-hour OGTT: Not yet performed
+Prior records reviewed.
 
 
-What is the most appropriate next step?', '["Schedule delivery at 28 weeks", "Reassure \u2014 no further testing needed", "Perform diagnostic 3-hour 100 g oral glucose tolerance test (or 2-hour 75 g test per protocol)", "Start insulin immediately without further testing", "Start metformin and skip diagnostic testing"]'::jsonb, 2, 'Abnormal screening GCT requires definitive diagnostic OGTT before labeling gestational diabetes. Insulin/metformin follow diagnosis. Early delivery at 28 weeks is inappropriate.'),
-    (v_topic_id, 'A 80-year-old female at 28 weeks has a 1-hour glucose challenge test of 162 mg/dL (failed 50 g screen).
+Which preventive measure is most appropriate?', '["Antibiotics prophylaxis", "Screening only if symptomatic for all diseases", "Annual dilated eye exam and urine albumin", "PET scan annually", "No screening ever"]'::jsonb, 2, 'Evidence-based screening: Annual dilated eye exam and urine albumin.'),
+    (v_topic_id, 'A 62-year-old female has Thyroid storm and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Normal.
-Fundal height: Appropriate for dates.
-Fetal heart tones: 150 bpm, reactive.
+Vitals improving.
 
 Laboratory Results:
 
-50 g GCT: 162 mg/dL (threshold typically 130–140)
-Prior 3-hour OGTT: Not yet performed
+Relevant diagnostics completed.
 
 
-What is the most appropriate next step?', '["Schedule delivery at 28 weeks", "Reassure \u2014 no further testing needed", "Perform diagnostic 3-hour 100 g oral glucose tolerance test (or 2-hour 75 g test per protocol)", "Start metformin and skip diagnostic testing", "Start insulin immediately without further testing"]'::jsonb, 2, 'Abnormal screening GCT requires definitive diagnostic OGTT before labeling gestational diabetes. Insulin/metformin follow diagnosis. Early delivery at 28 weeks is inappropriate.'),
-    (v_topic_id, 'A 40-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Delay treatment 1 week", "Propranolol, PTU/methimazole, iodine after antithyroid drug", "Alternative unrelated therapy", "Discharge without therapy", "Observation only"]'::jsonb, 1, 'Standard management for Thyroid storm: Propranolol, PTU/methimazole, iodine after antithyroid drug.'),
+    (v_topic_id, 'A 34-year-old female has status asthmaticus not responding to three albuterol nebulizers.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Silent chest on auscultation.
 
 Laboratory Results:
 
-Type and screen available
+ABG: pH 7.32, PaCO2 48.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Autonomy of physician to choose any procedure", "Futility \u2014 do not operate", "Beneficence requires waiting for family indefinitely", "Justice requires randomization", "Emergency exception / implied consent for life-threatening emergency"]'::jsonb, 4, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 63-year-old male reports episodic pounding headaches, palpitations, and sweating. During an episode in clinic, BP is 224/118 mmHg.
+What is the most appropriate next step?', '["Chest CT", "Immediate intubation without trial of medical therapy", "Discharge with inhaler", "IV magnesium sulfate and systemic corticosteroids", "Oral antihistamine only"]'::jsonb, 3, 'Severe asthma requires systemic steroids and magnesium; prepare for escalation.'),
+    (v_topic_id, 'A 76-year-old male is seen for Pneumococcal vaccines.
 
 Physical Examination:
 
-Vitals between episodes: BP 142/86 mmHg, HR 82 bpm.
-General: Anxious during episode, otherwise well.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-24-hour urine metanephrines: Markedly elevated
-Abdominal CT: 4 cm right adrenal mass
+Relevant diagnostics reviewed.
 
 
-What is essential preoperative management before adrenalectomy?', '["Alpha-blockade first (e.g., phenoxybenzamine), then beta-blocker if needed after alpha blockade", "Calcium channel blocker only", "Beta-blocker monotherapy first", "Immediate surgery without medical preparation", "High-dose loop diuretics alone"]'::jsonb, 0, 'Pheochromocytoma requires alpha-blockade before beta-blockade to prevent unopposed alpha-mediated vasoconstriction and hypertensive crisis. Beta-blockade first is dangerous. Surgery without preparation is life-threatening.'),
-    (v_topic_id, 'A 66-year-old female is brought to the Emergency Department by her wife due to confusion and acting strange for the past 24 hours. she has a history of Type 2 Diabetes, Hypertension, and Stage 3 Chronic Kidney Disease. she was recently treated with trimethoprim-sulfamethoxazole for a urinary tract infection.
+What is the most appropriate next step in management?', '["PCV/PPSV per age immunocompromised", "Delayed care 6 months", "Placebo only", "Contradicted therapy", "No intervention"]'::jsonb, 0, 'Guideline-consistent care: PCV/PPSV per age immunocompromised.'),
+    (v_topic_id, 'A 72-year-old female is seen for Vitamin D deficiency.
 
 Physical Examination:
 
-Vitals: Temp 100.2°F | HR 104 bpm | RR 18/min | BP 108/62 mmHg.
-Mental Status: Disoriented to time and place; follows simple commands but is slow to respond.
-Physical: Mucous membranes are dry. Skin turgor is poor. No focal neurological deficits. Cardiac exam shows a soft systolic murmur. Lungs are clear to auscultation.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Serum Sodium: 158 mEq/L (135–145)
-Serum Potassium: 4.1 mEq/L (3.5–5.0)
-Serum Glucose: 142 mg/dL (70–100)
-BUN / Creatinine: 52 mg/dL / 2.1 mg/dL (baseline Cr 1.4)
-Urine Osmolality: 550 mOsm/kg
+Relevant diagnostics reviewed.
 
 
-Which of the following is the most appropriate next step in the management of this patient''s hypernatremia?', '["Administration of IV 0.9% (normal) saline", "Administration of IV 0.45% (half-normal) saline", "Administration of IV 3% (hypertonic) saline", "Desmopressin (dDAVP) administration", "Rapid correction with 5% Dextrose in water (D5W)"]'::jsonb, 1, 'This is hypernatremia with hypovolemia (dry mucosa, poor turgor, elevated BUN/Cr, high urine osmolality) likely from decreased free water intake plus possible osmotic diuresis after UTI treatment. Correct with hypotonic fluids (0.45% saline or D5W) and correct sodium slowly (≤10–12 mEq/L per 24 h) to avoid osmotic demyelination. Isotonic saline treats hypovolemia but does not correct hypertonicity as effectively; hypertonic saline worsens hypernatremia; rapid D5W risks overcorrection; dDAVP is for central diabetes insipidus, not this presentation.'),
-    (v_topic_id, 'A 81-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "No intervention", "Placebo only", "Contradicted therapy", "Supplementation recheck level"]'::jsonb, 4, 'Guideline-consistent care: Supplementation recheck level.'),
+    (v_topic_id, 'A 38-year-old male is a 65-year-old never screened presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+No acute complaints.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Prior records reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Oral antibiotics only", "Delay fracture management 72 hours", "Discharge if FAST negative"]'::jsonb, 1, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 47-year-old male presents with severe epigastric pain radiating to the back, vomiting, and history of heavy alcohol use.
+Which preventive measure is most appropriate?', '["Antibiotics prophylaxis", "No screening ever", "Screening only if symptomatic for all diseases", "PET scan annually", "One-time AAA ultrasound if ever smoked"]'::jsonb, 4, 'Evidence-based screening: One-time AAA ultrasound if ever smoked.'),
+    (v_topic_id, 'A 42-year-old female is seen for COPD exacerbation.
 
 Physical Examination:
 
-Vitals: Temp 38.2°C | HR 118 bpm | BP 100/64 mmHg | RR 24/min.
-Abdomen: Epigastric tenderness without rebound; bowel sounds hypoactive.
-Skin: No jaundice.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Lipase: 1,840 U/L (4× ULN)
-AST/ALT: Mildly elevated
-Triglycerides: 180 mg/dL
-Abdominal ultrasound: No gallstones
+Relevant diagnostics reviewed.
 
 
-What is the most likely etiology in this patient?', '["Acute cholecystitis from cholelithiasis", "Peptic ulcer perforation", "Alcohol-induced acute pancreatitis", "Acute hepatitis A", "Mesenteric ischemia"]'::jsonb, 2, 'Elevated lipase with epigastric pain and alcohol history supports alcoholic pancreatitis; ultrasound without gallstones makes gallstone etiology less likely. Cholecystitis needs RUQ findings. Mesenteric ischemia has different pain pattern. Perforation has peritoneal signs. Hepatitis does not explain lipase this high as primary diagnosis.'),
-    (v_topic_id, 'A 42-year-old male at 32 weeks gestation has severe headache, visual scotomata, and BP 172/108 mmHg on repeat measurements.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Placebo only", "Delayed care 6 months", "Bronchodilator systemic steroid", "No intervention"]'::jsonb, 3, 'Guideline-consistent care: Bronchodilator systemic steroid.'),
+    (v_topic_id, 'A 62-year-old female returns for follow-up of HFrEF EF 30%.
 
 Physical Examination:
 
-Vitals: HR 92 bpm | RR 18/min.
-Neuro: Hyperreflexia, no seizure activity currently.
-Reflexes: 3+ patellar reflexes.
+Stable exam.
 
 Laboratory Results:
 
-Urinalysis: 3+ protein
-Platelets: 98,000/mm³
-AST/ALT: Elevated
-Creatinine: 1.4 mg/dL
+Labs reviewed.
 
 
-What is the most appropriate immediate intervention to prevent eclampsia?', '["Immediate magnesium-free vaginal delivery without BP control", "Oral phenytoin monotherapy", "Observation only", "IV magnesium sulfate loading and maintenance", "Nitroprusside as first-line seizure prophylaxis"]'::jsonb, 3, 'Preeclampsia with severe features requires magnesium for eclampsia prophylaxis plus BP control and delivery planning. Phenytoin is not standard. Delivery is indicated but magnesium is immediate seizure prevention. Nitroprusside is not seizure prophylaxis.'),
-    (v_topic_id, 'A 30-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate long-term management?', '["No treatment indicated", "ACE inhibitor/ARB + beta-blocker + MRA + SGLT2 inhibitor", "Discontinue all prior meds abruptly", "Antibiotics chronically", "High-dose steroids indefinitely without indication"]'::jsonb, 1, 'Guideline-based chronic care for HFrEF EF 30%.'),
+    (v_topic_id, 'A 67-year-old female is seen for Lung cancer screening.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Oral antibiotics only", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 61-year-old male with HIV (CD4 120, not on ART) has 2 weeks of progressive headache, fever, and confusion.
+What is the most appropriate next step in management?', '["Annual LDCT if criteria", "Placebo only", "Delayed care 6 months", "No intervention", "Contradicted therapy"]'::jsonb, 0, 'Guideline-consistent care: Annual LDCT if criteria.'),
+    (v_topic_id, 'A 62-year-old female returns for follow-up of Prior TIA noncardioembolic.
 
 Physical Examination:
 
-Vitals: Temp 38.9°C | HR 102 bpm | BP 124/78 mmHg.
-Neuro: Lethargic, neck stiffness, no focal motor deficits.
-Lungs: Clear.
+Stable exam.
 
 Laboratory Results:
 
-LP: Opening pressure 32 cm H2O, lymphocytic pleocytosis, low glucose, elevated protein
-India ink: Positive
-Cryptococcal antigen (serum): Positive
+Labs reviewed.
 
 
-What is the most appropriate initial therapy?', '["Fluconazole monotherapy for induction", "Oral metronidazole", "Acyclovir IV", "High-dose steroids without antifungals", "Amphotericin B plus flucytosine, with careful ICP management"]'::jsonb, 4, 'Cryptococcal meningitis in advanced HIV requires induction with amphotericin-based regimen plus flucytosine; fluconazole monotherapy is inadequate for induction. Acyclovir treats HSV. Steroids alone are harmful. Metronidazole treats anaerobic infections, not cryptococcus.'),
-    (v_topic_id, 'A 45-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate long-term management?', '["Antiplatelet therapy and risk factor control", "High-dose steroids indefinitely without indication", "No treatment indicated", "Discontinue all prior meds abruptly", "Antibiotics chronically"]'::jsonb, 0, 'Guideline-based chronic care for Prior TIA noncardioembolic.'),
+    (v_topic_id, 'A 45-year-old male is seen for Asthma moderate.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Oral antibiotics only"]'::jsonb, 1, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 48-year-old female is a 2-year-old with barking cough and stridor only with crying (mild croup).
+What is the most appropriate next step in management?', '["ICS LABA action plan", "Placebo only", "No intervention", "Contradicted therapy", "Delayed care 6 months"]'::jsonb, 0, 'Guideline-consistent care: ICS LABA action plan.'),
+    (v_topic_id, 'A 29-year-old male is seen for ADHD school impairment.
 
 Physical Examination:
 
-Vitals: Temp 37.8°C | SpO2 99%.
-Lungs: Stridor intermittent.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-CXR: Normal
+Relevant diagnostics reviewed.
 
 
-Treatment?', '["Antibiotics mandatory", "Single dose dexamethasone and supportive care", "Chest tube", "Racemic epinephrine required for all", "Intubation"]'::jsonb, 1, 'Mild croup is managed with dexamethasone; epinephrine for moderate-severe.'),
-    (v_topic_id, 'A 38-year-old female has acute unilateral facial weakness including forehead, ear pain, no limb weakness.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Placebo only", "Stimulant with cardiovascular screening", "No intervention", "Delayed care 6 months"]'::jsonb, 2, 'Guideline-consistent care: Stimulant with cardiovascular screening.'),
+    (v_topic_id, 'A 28-year-old male has Prostate cancer low risk.
 
 Physical Examination:
 
-Vitals: Normal.
-Neuro: Cannot close right eye or raise eyebrow; hyperacusis.
+Currently hospitalized.
 
 Laboratory Results:
 
-No stroke on MRI brain
+Clinical course discussed with team.
 
 
-Diagnosis and treatment?', '["No treatment ever", "Stroke", "Myasthenia gravis", "Brain tumor first-line", "Bell palsy \u2014 prednisone within 72 hours \u00b1 antiviral per protocol"]'::jsonb, 4, 'Forehead-sparing vs involvement: full face including forehead = peripheral Bell palsy; early steroids improve outcomes.'),
-    (v_topic_id, 'A 48-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which statement regarding prognosis/complications is most accurate?', '["No follow-up needed", "Disease is always benign", "Active surveillance may be appropriate", "No complications ever occur", "Immediate cure expected"]'::jsonb, 2, 'Active surveillance may be appropriate'),
+    (v_topic_id, 'A 46-year-old female is seen for Diabetes A1c 8.5 on metformin.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Immediate MRI spine before any fluids", "Oral antibiotics only", "Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 79-year-old female is a 3-year-old with barking cough, stridor at rest, and low-grade fever.
+What is the most appropriate next step in management?', '["Placebo only", "Add GLP-1 or SGLT2i", "Delayed care 6 months", "No intervention", "Contradicted therapy"]'::jsonb, 1, 'Guideline-consistent care: Add GLP-1 or SGLT2i.'),
+    (v_topic_id, 'A 26-year-old female is seen for SAH vasospasm.
 
 Physical Examination:
 
-Vitals: Temp 38.3°C | HR 130 bpm | RR 32/min | SpO2 93% on room air.
-HEENT: Inspiratory stridor, no drooling.
-Lungs: Mild intercostal retractions.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Neck X-ray: Steeple sign (subglottic narrowing)
-WBC: 11,200/mm³
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate initial treatment for moderate croup?', '["Nebulized racemic epinephrine and dexamethasone", "Incision and drainage of neck", "Immediate intubation for all stridor", "Chest CT with contrast", "Antibiotics (amoxicillin) as first-line"]'::jsonb, 0, 'Moderate croup is treated with dexamethasone and nebulized epinephrine if significant stridor/distress. Not all stridor needs intubation. Antibiotics do not treat viral croup. CT and I&D are not indicated.'),
-    (v_topic_id, 'A 55-year-old male has RUQ pain, fever, and nausea after a fatty meal. Murphys sign is positive.
+What is the most appropriate next step in management?', '["No intervention", "Delayed care 6 months", "Neurologic decline days 4-14", "Contradicted therapy", "Placebo only"]'::jsonb, 2, 'Guideline-consistent care: Neurologic decline days 4-14.'),
+    (v_topic_id, 'A 49-year-old male has SLE nephritis.
 
 Physical Examination:
 
-Vitals: Temp 38.8°C | HR 104 bpm | BP 128/82 mmHg.
-Abdomen: RUQ tenderness with inspiratory arrest on palpation.
-Sclera: Anicteric.
+Currently hospitalized.
 
 Laboratory Results:
 
-WBC: 13,400/mm³
-RUQ ultrasound: Gallstones, gallbladder wall thickening, pericholecystic fluid
+Clinical course discussed with team.
 
 
-What is the most appropriate management?', '["Oral antibiotics only and elective cholecystectomy in 6 months only if recurrent", "Observation without antibiotics", "IV fluids, antibiotics, analgesia, and cholecystectomy (typically during same admission when uncomplicated)", "ERCP as first step for all RUQ pain", "Immediate splenectomy"]'::jsonb, 2, 'Acute cholecystitis is managed with supportive care, antibiotics, and cholecystectomy (early laparoscopic cholecystectomy is standard for uncomplicated cases). Delaying antibiotics is unsafe. ERCP is for choledocholithiasis/cholangitis, not uncomplicated cholecystitis alone.'),
-    (v_topic_id, 'A 22-year-old male has breast lump 2 cm, mobile, age 45, family history mother breast CA age 48.
+Which statement regarding prognosis/complications is most accurate?', '["No follow-up needed", "Disease is always benign", "Immediate cure expected", "Progressive renal failure without treatment", "No complications ever occur"]'::jsonb, 3, 'Progressive renal failure without treatment'),
+    (v_topic_id, 'A 24-year-old female is seen for Cirrhosis HCC surveillance.
 
 Physical Examination:
 
-Vitals: Normal.
-Breast: 2 cm firm mobile upper outer quadrant mass, no skin changes.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Mammogram: BI-RADS 4
-Core biopsy: Invasive ductal carcinoma ER+
+Relevant diagnostics reviewed.
 
 
-Next step in care?', '["Antibiotics for mastitis", "Emergency appendectomy", "Ignore BI-RADS 4", "Staging workup and multidisciplinary oncologic/surgical planning", "Topical estrogen cream only"]'::jsonb, 3, 'BI-RADS 4 with invasive cancer needs staging and treatment planning.'),
-    (v_topic_id, 'A 54-year-old male is a 6-week-old infant brought for poor feeding, lethargy, and vomiting.
+What is the most appropriate next step in management?', '["Ultrasound q6 months", "Contradicted therapy", "Delayed care 6 months", "No intervention", "Placebo only"]'::jsonb, 0, 'Guideline-consistent care: Ultrasound q6 months.'),
+    (v_topic_id, 'A 56-year-old male is seen for PrEP HIV risk.
 
 Physical Examination:
 
-Vitals: Temp 35.8°C (hypothermic) | HR 170 bpm | RR 12/min (episodes of apnea) | BP 62/40 mmHg.
-General: Lethargic, mottled.
-Genitourinary: Ambiguous in exam; neonatal screen pending review.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Glucose: 32 mg/dL
-Na: 128 | K: 7.8 mEq/L (critical)
-Cortisol: Low
-17-hydroxyprogesterone: Markedly elevated (on prior newborn screen)
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate immediate treatment?', '["IV normal saline bolus, IV hydrocortisone, and correct hypoglycemia \u2014 treat congenital adrenal hyperplasia crisis", "Oral rehydration and discharge", "Observation until outpatient endocrinology visit", "Immediate thyroidectomy", "Kayexalate only without steroids"]'::jsonb, 0, 'Neonatal adrenal crisis (CAH) presents with shock, hyponatremia, hyperkalemia, hypoglycemia — requires IV fluids, stress-dose steroids, glucose correction, and electrolyte management. Outpatient management is unsafe. Kayexalate is adjunctive; steroids are critical.'),
-    (v_topic_id, 'A 51-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Placebo only", "No intervention", "Tenofovir emtricitabine monitoring", "Contradicted therapy", "Delayed care 6 months"]'::jsonb, 2, 'Guideline-consistent care: Tenofovir emtricitabine monitoring.'),
+    (v_topic_id, 'A 34-year-old male returns for follow-up of Rheumatoid arthritis.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Stable exam.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Labs reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Oral antibiotics only", "Immediate MRI spine before any fluids", "Discharge if FAST negative", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 32-year-old male Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate long-term management?', '["Discontinue all prior meds abruptly", "Methotrexate first-line DMARD", "No treatment indicated", "Antibiotics chronically", "High-dose steroids indefinitely without indication"]'::jsonb, 1, 'Guideline-based chronic care for Rheumatoid arthritis.'),
+    (v_topic_id, 'A 38-year-old male is a HIV risk presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+No acute complaints.
 
 Laboratory Results:
 
-Type and screen available
+Prior records reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Beneficence requires waiting for family indefinitely", "Autonomy of physician to choose any procedure", "Emergency exception / implied consent for life-threatening emergency", "Justice requires randomization", "Futility \u2014 do not operate"]'::jsonb, 2, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 34-year-old male has groin bulge increasing with cough, reducible, no overlying skin changes.
+Which preventive measure is most appropriate?', '["PET scan annually", "HIV screening at least once", "Antibiotics prophylaxis", "Screening only if symptomatic for all diseases", "No screening ever"]'::jsonb, 1, 'Evidence-based screening: HIV screening at least once.'),
+    (v_topic_id, 'A 49-year-old female has Stage IV lung cancer.
 
 Physical Examination:
 
-Vitals: Normal.
-Groin: Reducible mass above inguinal ligament.
+Currently hospitalized.
 
 Laboratory Results:
 
-No acute labs abnormal
+Clinical course discussed with team.
 
 
-Management?', '["Elective surgical repair when symptomatic", "Chemotherapy", "No repair ever", "Antibiotics only", "Emergent OR for all groin masses"]'::jsonb, 0, 'Symptomatic reducible inguinal hernia — elective repair. Emergent if incarcerated/strangulated.'),
-    (v_topic_id, 'A 43-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which statement regarding prognosis/complications is most accurate?', '["Palliative focus; prognosis discussion", "No complications ever occur", "No follow-up needed", "Disease is always benign", "Immediate cure expected"]'::jsonb, 0, 'Palliative focus; prognosis discussion'),
+    (v_topic_id, 'A 55-year-old female returns for follow-up of Asthma persistent.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Stable exam.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Labs reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Oral antibiotics only", "Discharge if FAST negative", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Delay fracture management 72 hours", "Immediate MRI spine before any fluids"]'::jsonb, 2, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 53-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate long-term management?', '["ICS with as-needed SABA; step up if uncontrolled", "Antibiotics chronically", "Discontinue all prior meds abruptly", "No treatment indicated", "High-dose steroids indefinitely without indication"]'::jsonb, 0, 'Guideline-based chronic care for Asthma persistent.'),
+    (v_topic_id, 'A 63-year-old male has Anaphylaxis refractory and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Discharge if FAST negative", "Oral antibiotics only", "Immediate MRI spine before any fluids", "Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 57-year-old male has burn to arm — white waxy center, no sensation in center, blisters at periphery.
+What is the most appropriate next step in management?', '["Delay treatment 1 week", "Alternative unrelated therapy", "Discharge without therapy", "Observation only", "Repeat epinephrine, fluids, ICU monitoring"]'::jsonb, 4, 'Standard management for Anaphylaxis refractory: Repeat epinephrine, fluids, ICU monitoring.'),
+    (v_topic_id, 'A 84-year-old male is seen for Neonatal jaundice phototherapy.
 
 Physical Examination:
 
-Vitals: Stable.
-Skin: Full-thickness area 3%, partial 5%.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-No labs urgent
+Relevant diagnostics reviewed.
 
 
-Burn depth classification of white anesthetic center?', '["All burns are partial thickness", "Full-thickness (third-degree)", "Chemical burn only", "First-degree sunburn pattern", "Superficial only"]'::jsonb, 1, 'White insensate area indicates full-thickness burn often needing grafting.'),
-    (v_topic_id, 'A 23-year-old male has ankle injury cannot bear weight after inversion injury.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Bilirubin threshold by age", "No intervention", "Contradicted therapy", "Placebo only"]'::jsonb, 1, 'Guideline-consistent care: Bilirubin threshold by age.'),
+    (v_topic_id, 'A 76-year-old male returns for follow-up of Type 2 diabetes A1c 9.2% on metformin.
 
 Physical Examination:
 
-Vitals: Normal.
-Ankle: Tenderness at posterior lateral malleolus.
+Stable exam.
 
 Laboratory Results:
 
-X-ray Ottawa rules positive — fracture at lateral malleolus
+Labs reviewed.
 
 
-Management?', '["Knee arthroscopy", "No imaging needed", "Immediate amputation", "Splint/cast and orthopedic follow-up; not weight-bearing until cleared", "Anticoagulation only"]'::jsonb, 3, 'Ankle fracture by Ottawa criteria needs immobilization and orthopedic care.'),
-    (v_topic_id, 'A 39-year-old male has fever, productive cough, and pleuritic chest pain for 4 days.
+What is the most appropriate long-term management?', '["Add GLP-1 RA or SGLT2i with ASCVD benefit if indicated", "Antibiotics chronically", "Discontinue all prior meds abruptly", "High-dose steroids indefinitely without indication", "No treatment indicated"]'::jsonb, 0, 'Guideline-based chronic care for Type 2 diabetes A1c 9.2% on metformin.'),
+    (v_topic_id, 'A 70-year-old female is seen for AAA screening smoker.
 
 Physical Examination:
 
-Vitals: Temp 39.1°C | HR 104 | RR 22 | SpO2 91% RA.
-Lungs: Dullness and bronchial breath sounds at right base.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-CXR: Right lower lobe consolidation
-WBC: 16,200
+Relevant diagnostics reviewed.
 
 
-Best initial outpatient therapy for community-acquired pneumonia without comorbidities?', '["Metronidazole only", "Fluconazole", "Amoxicillin or doxycycline per guidelines", "Ribavirin", "Vancomycin monotherapy"]'::jsonb, 2, 'Healthy outpatient CAP is treated with amoxicillin, doxycycline, or macrolide depending on local resistance. Vancomycin is for MRSA risk inpatients. Antifungals/antivirals are not first-line.'),
-    (v_topic_id, 'A 55-year-old female is admitted for worsening shortness of breath, orthopnea, and 6-kg weight gain over 2 weeks. History includes ischemic cardiomyopathy.
+What is the most appropriate next step in management?', '["One-time ultrasound", "No intervention", "Placebo only", "Delayed care 6 months", "Contradicted therapy"]'::jsonb, 0, 'Guideline-consistent care: One-time ultrasound.'),
+    (v_topic_id, 'A 74-year-old male is seen for Status epilepticus.
 
 Physical Examination:
 
-Vitals: Temp 98.1°F | HR 96 bpm | RR 24/min | BP 102/68 mmHg.
-Neck: JVD to the angle of the jaw.
-Cardiac: Displaced PMI, S3 gallop, holosystolic murmur at the apex radiating to the axilla.
-Lungs: Bibasilar crackles to mid-lung fields.
-Extremities: 2+ pitting edema to the knees bilaterally.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-BNP: 1,420 pg/mL
-Echocardiogram: LVEF 25%, moderate mitral regurgitation, dilated LV
-Creatinine: 1.3 mg/dL
+Relevant diagnostics reviewed.
 
 
-Which medication class has been shown to reduce mortality in this patient''s condition?', '["Short-acting nitrates as monotherapy", "Loop diuretics alone", "Beta-blockers (e.g., carvedilol)", "Digoxin as first-line mortality therapy", "Calcium channel blockers (amlodipine)"]'::jsonb, 2, 'HFrEF mortality benefit is proven for beta-blockers, ACEi/ARB/ARNI, MRAs, and SGLT2 inhibitors. Loop diuretics relieve congestion but do not reduce mortality. Nitrates and CCBs are not mortality drugs in HFrEF. Digoxin may reduce hospitalizations but is not first-line mortality therapy.'),
-    (v_topic_id, 'A 28-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["No intervention", "Delayed care 6 months", "Contradicted therapy", "Benzodiazepine then levetiracetam", "Placebo only"]'::jsonb, 3, 'Guideline-consistent care: Benzodiazepine then levetiracetam.'),
+    (v_topic_id, 'A 49-year-old male has Heart failure reduced EF.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Currently hospitalized.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Clinical course discussed with team.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Immediate MRI spine before any fluids", "Delay fracture management 72 hours", "Discharge if FAST negative", "Oral antibiotics only", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation"]'::jsonb, 4, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 45-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which statement regarding prognosis/complications is most accurate?', '["Immediate cure expected", "No complications ever occur", "No follow-up needed", "5-year mortality remains significant; implantable defibrillator if criteria met", "Disease is always benign"]'::jsonb, 3, '5-year mortality remains significant; implantable defibrillator if criteria met'),
+    (v_topic_id, 'A 82-year-old male is seen for Latent TB treatment.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Oral antibiotics only", "Discharge if FAST negative"]'::jsonb, 2, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 70-year-old female has groin bulge increasing with cough, reducible, no overlying skin changes.
+What is the most appropriate next step in management?', '["No intervention", "Delayed care 6 months", "Placebo only", "Isoniazid or rifampin course", "Contradicted therapy"]'::jsonb, 3, 'Guideline-consistent care: Isoniazid or rifampin course.'),
+    (v_topic_id, 'A 28-year-old female is seen for Restless legs iron.
 
 Physical Examination:
 
-Vitals: Normal.
-Groin: Reducible mass above inguinal ligament.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-No acute labs abnormal
+Relevant diagnostics reviewed.
 
 
-Management?', '["Elective surgical repair when symptomatic", "Antibiotics only", "No repair ever", "Chemotherapy", "Emergent OR for all groin masses"]'::jsonb, 0, 'Symptomatic reducible inguinal hernia — elective repair. Emergent if incarcerated/strangulated.'),
-    (v_topic_id, 'A 30-year-old male presents to the emergency department with crushing substernal chest pain radiating to the left arm and jaw for 45 minutes, with diaphoresis and nausea.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Contradicted therapy", "Check ferritin replete if low", "Placebo only", "No intervention"]'::jsonb, 2, 'Guideline-consistent care: Check ferritin replete if low.'),
+    (v_topic_id, 'A 84-year-old male is seen for Eating disorder outpatient.
 
 Physical Examination:
 
-Vitals: Temp 98.4°F | HR 92 bpm | RR 22/min | BP 148/92 mmHg | SpO2 94% on room air.
-Cardiac: Diaphoretic, no murmurs. Lungs with bibasilar crackles.
-Extremities: No edema.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-ECG: ST-segment elevation in leads II, III, and aVF.
-Troponin I: 3.8 ng/mL (elevated)
-Chest X-ray: Mild pulmonary vascular congestion
+Relevant diagnostics reviewed.
 
 
-Which of the following is the most appropriate immediate management?', '["High-dose IV beta-blocker before reperfusion", "Oral aspirin and discharge with outpatient stress test", "Intravenous heparin alone without reperfusion strategy", "Urgent CT pulmonary angiography", "Emergent coronary angiography with primary PCI"]'::jsonb, 4, 'Inferior STEMI requires immediate reperfusion; primary PCI is preferred when available within guideline time windows. Aspirin is adjunctive but insufficient alone. Anticoagulation without reperfusion is inadequate. CTPA is for PE suspicion. IV beta-blockers are relatively contraindicated in acute inferior MI with possible RV involvement until stabilized.'),
-    (v_topic_id, 'A 55-year-old female is brought to the Emergency Department by her wife due to confusion and acting strange for the past 24 hours. she has a history of Type 2 Diabetes, Hypertension, and Stage 3 Chronic Kidney Disease. she was recently treated with trimethoprim-sulfamethoxazole for a urinary tract infection.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Placebo only", "No intervention", "Medical stabilization nutrition therapy", "Delayed care 6 months"]'::jsonb, 3, 'Guideline-consistent care: Medical stabilization nutrition therapy.'),
+    (v_topic_id, 'A 39-year-old male is seen for Iron deficiency post-menopause.
 
 Physical Examination:
 
-Vitals: Temp 100.2°F | HR 104 bpm | RR 18/min | BP 108/62 mmHg.
-Mental Status: Disoriented to time and place; follows simple commands but is slow to respond.
-Physical: Mucous membranes are dry. Skin turgor is poor. No focal neurological deficits. Cardiac exam shows a soft systolic murmur. Lungs are clear to auscultation.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Serum Sodium: 158 mEq/L (135–145)
-Serum Potassium: 4.1 mEq/L (3.5–5.0)
-Serum Glucose: 142 mg/dL (70–100)
-BUN / Creatinine: 52 mg/dL / 2.1 mg/dL (baseline Cr 1.4)
-Urine Osmolality: 550 mOsm/kg
+Relevant diagnostics reviewed.
 
 
-Which of the following is the most appropriate next step in the management of this patient''s hypernatremia?', '["Rapid correction with 5% Dextrose in water (D5W)", "Administration of IV 0.45% (half-normal) saline", "Administration of IV 0.9% (normal) saline", "Desmopressin (dDAVP) administration", "Administration of IV 3% (hypertonic) saline"]'::jsonb, 1, 'This is hypernatremia with hypovolemia (dry mucosa, poor turgor, elevated BUN/Cr, high urine osmolality) likely from decreased free water intake plus possible osmotic diuresis after UTI treatment. Correct with hypotonic fluids (0.45% saline or D5W) and correct sodium slowly (≤10–12 mEq/L per 24 h) to avoid osmotic demyelination. Isotonic saline treats hypovolemia but does not correct hypertonicity as effectively; hypertonic saline worsens hypernatremia; rapid D5W risks overcorrection; dDAVP is for central diabetes insipidus, not this presentation.'),
-    (v_topic_id, 'A 53-year-old male has chest pain worse lying flat, relieved leaning forward, recent viral URI.
+What is the most appropriate next step in management?', '["No intervention", "Colonoscopy if no obvious source", "Delayed care 6 months", "Contradicted therapy", "Placebo only"]'::jsonb, 1, 'Guideline-consistent care: Colonoscopy if no obvious source.'),
+    (v_topic_id, 'A 31-year-old female is seen for Gout prophylaxis start ULT.
 
 Physical Examination:
 
-Vitals: Temp 37.9°C.
-Cardiac: Friction rub.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-ECG: Diffuse ST elevation with PR depression
-Troponin: Mildly elevated
+Relevant diagnostics reviewed.
 
 
-Diagnosis?', '["Costochondritis only", "GERD only", "Pulmonary embolism only", "Acute pericarditis", "STEMI"]'::jsonb, 3, 'Positional pain, friction rub, diffuse ST elevation with PR depression = pericarditis. STEMI is regional vascular distribution.'),
-    (v_topic_id, 'A 25-year-old male Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+What is the most appropriate next step in management?', '["Colchicine when initiating allopurinol", "No intervention", "Placebo only", "Delayed care 6 months", "Contradicted therapy"]'::jsonb, 0, 'Guideline-consistent care: Colchicine when initiating allopurinol.'),
+    (v_topic_id, 'A 84-year-old male is seen for Gestational diabetes.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics reviewed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Futility \u2014 do not operate", "Beneficence requires waiting for family indefinitely", "Justice requires randomization", "Autonomy of physician to choose any procedure", "Emergency exception / implied consent for life-threatening emergency"]'::jsonb, 4, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 25-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Contradicted therapy", "No intervention", "Nutrition therapy insulin if needed", "Placebo only", "Delayed care 6 months"]'::jsonb, 2, 'Guideline-consistent care: Nutrition therapy insulin if needed.'),
+    (v_topic_id, 'A 45-year-old female is seen for Migraine prophylaxis.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics reviewed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Immediate MRI spine before any fluids", "Discharge if FAST negative", "Delay fracture management 72 hours", "Oral antibiotics only"]'::jsonb, 0, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 33-year-old male with a history of IV drug use presents with 3 weeks of fever, fatigue, and dyspnea.
+What is the most appropriate next step in management?', '["Topiramate or CGRP inhibitor", "No intervention", "Delayed care 6 months", "Contradicted therapy", "Placebo only"]'::jsonb, 0, 'Guideline-consistent care: Topiramate or CGRP inhibitor.'),
+    (v_topic_id, 'A 58-year-old female is seen for Cirrhosis HCC surveillance.
 
 Physical Examination:
 
-Vitals: Temp 38.4°C | HR 108 bpm | RR 20/min | BP 118/74 mmHg.
-Cardiac: Holosystolic murmur at the left lower sternal border increasing with inspiration.
-Skin: Non-tender hemorrhagic macules on palms (Janeway lesions) and tender nodules on finger pads (Osler nodes).
-Eyes: Roth spots on fundoscopy.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Blood cultures: Pending (3 sets drawn)
-WBC: 14,200/mm³
-ESR: 88 mm/hr
-Transthoracic echo: 1.2 cm vegetation on tricuspid valve
+Relevant diagnostics reviewed.
 
 
-What is the most appropriate next diagnostic/management step?', '["Immediate valve replacement without antibiotics", "Rheumatoid factor and ANA panel only", "Oral amoxicillin and outpatient follow-up", "Obtain multiple blood cultures and start empiric IV antibiotics after cultures; schedule echocardiography if not done", "Bone marrow biopsy"]'::jsonb, 3, 'Suspected infective endocarditis (fever, IVDU, tricuspid murmur, peripheral stigmata) requires multiple blood cultures before antibiotics when feasible, echocardiography, and empiric IV antibiotics tailored to likely organisms (often staph in IVDU). Outpatient oral therapy is unsafe. Surgery is not first-line without stabilized infection. Autoimmune panels do not replace cultures and echo.'),
-    (v_topic_id, 'A 52-year-old female has acute unilateral facial weakness including forehead, ear pain, no limb weakness.
+What is the most appropriate next step in management?', '["Contradicted therapy", "Delayed care 6 months", "Ultrasound q6 months", "Placebo only", "No intervention"]'::jsonb, 2, 'Guideline-consistent care: Ultrasound q6 months.'),
+    (v_topic_id, 'A 46-year-old female has Postpartum hemorrhage and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Normal.
-Neuro: Cannot close right eye or raise eyebrow; hyperacusis.
+Vitals improving.
 
 Laboratory Results:
 
-No stroke on MRI brain
+Relevant diagnostics completed.
 
 
-Diagnosis and treatment?', '["Stroke", "Brain tumor first-line", "Myasthenia gravis", "No treatment ever", "Bell palsy \u2014 prednisone within 72 hours \u00b1 antiviral per protocol"]'::jsonb, 4, 'Forehead-sparing vs involvement: full face including forehead = peripheral Bell palsy; early steroids improve outcomes.'),
-    (v_topic_id, 'A 69-year-old male presents with severe epigastric pain radiating to the back, vomiting, and history of heavy alcohol use.
+What is the most appropriate next step in management?', '["Observation only", "Uterotonics, massage, transfusion as needed", "Discharge without therapy", "Alternative unrelated therapy", "Delay treatment 1 week"]'::jsonb, 1, 'Standard management for Postpartum hemorrhage: Uterotonics, massage, transfusion as needed.'),
+    (v_topic_id, 'A 37-year-old female is seen for GERD maintenance.
 
 Physical Examination:
 
-Vitals: Temp 38.2°C | HR 118 bpm | BP 100/64 mmHg | RR 24/min.
-Abdomen: Epigastric tenderness without rebound; bowel sounds hypoactive.
-Skin: No jaundice.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Lipase: 1,840 U/L (4× ULN)
-AST/ALT: Mildly elevated
-Triglycerides: 180 mg/dL
-Abdominal ultrasound: No gallstones
+Relevant diagnostics reviewed.
 
 
-What is the most likely etiology in this patient?', '["Alcohol-induced acute pancreatitis", "Acute hepatitis A", "Peptic ulcer perforation", "Acute cholecystitis from cholelithiasis", "Mesenteric ischemia"]'::jsonb, 0, 'Elevated lipase with epigastric pain and alcohol history supports alcoholic pancreatitis; ultrasound without gallstones makes gallstone etiology less likely. Cholecystitis needs RUQ findings. Mesenteric ischemia has different pain pattern. Perforation has peritoneal signs. Hepatitis does not explain lipase this high as primary diagnosis.'),
-    (v_topic_id, 'A 60-year-old female has coffee-ground emesis, cirrhosis history, spider angiomata.
+What is the most appropriate next step in management?', '["Lowest effective PPI dose", "Contradicted therapy", "Delayed care 6 months", "Placebo only", "No intervention"]'::jsonb, 0, 'Guideline-consistent care: Lowest effective PPI dose.'),
+    (v_topic_id, 'A 25-year-old male is seen for PTSD first line.
 
 Physical Examination:
 
-Vitals: HR 118 | BP 92/58.
-Abdomen: Ascites, splenomegaly.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-Hgb: 6.8
-INR: 2.1
-BUN elevated
+Relevant diagnostics reviewed.
 
 
-After ABCs, key medication to reduce bleeding?', '["Discharge without endoscopy", "IV octreotide (or terlipressin where available) and antibiotics for SBP prophylaxis per protocol", "High-dose beta-blocker acute bolus only without endoscopy plan", "Oral NSAIDs", "Warfarin loading"]'::jsonb, 1, 'Variceal bleed in cirrhosis: octreotide/vasoactive drugs, antibiotics, urgent EGD banding — not NSAIDs/warfarin.'),
-    (v_topic_id, 'A 72-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Placebo only", "No intervention", "Contradicted therapy", "Delayed care 6 months", "Trauma-focused CBT or EMDR"]'::jsonb, 4, 'Guideline-consistent care: Trauma-focused CBT or EMDR.'),
+    (v_topic_id, 'A 28-year-old male has Diabetic foot ulcer.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Currently hospitalized.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Clinical course discussed with team.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Oral antibiotics only", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Immediate MRI spine before any fluids", "Delay fracture management 72 hours", "Discharge if FAST negative"]'::jsonb, 1, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 71-year-old male MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+Which statement regarding prognosis/complications is most accurate?', '["Disease is always benign", "Immediate cure expected", "Risk progression to osteomyelitis/amputation", "No follow-up needed", "No complications ever occur"]'::jsonb, 2, 'Risk progression to osteomyelitis/amputation'),
+    (v_topic_id, 'A 35-year-old female has Acute spinal cord compression and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Oral antibiotics only", "Discharge if FAST negative", "Immediate MRI spine before any fluids", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Delay fracture management 72 hours"]'::jsonb, 3, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 66-year-old female with HIV (CD4 120, not on ART) has 2 weeks of progressive headache, fever, and confusion.
+What is the most appropriate next step in management?', '["Alternative unrelated therapy", "Dexamethasone and emergent radiation/surgery", "Discharge without therapy", "Observation only", "Delay treatment 1 week"]'::jsonb, 1, 'Standard management for Acute spinal cord compression: Dexamethasone and emergent radiation/surgery.'),
+    (v_topic_id, 'A 62-year-old male is a Hep C baby boomer presenting for preventive visit.
 
 Physical Examination:
 
-Vitals: Temp 38.9°C | HR 102 bpm | BP 124/78 mmHg.
-Neuro: Lethargic, neck stiffness, no focal motor deficits.
-Lungs: Clear.
+No acute complaints.
 
 Laboratory Results:
 
-LP: Opening pressure 32 cm H2O, lymphocytic pleocytosis, low glucose, elevated protein
-India ink: Positive
-Cryptococcal antigen (serum): Positive
+Prior records reviewed.
 
 
-What is the most appropriate initial therapy?', '["High-dose steroids without antifungals", "Oral metronidazole", "Amphotericin B plus flucytosine, with careful ICP management", "Fluconazole monotherapy for induction", "Acyclovir IV"]'::jsonb, 2, 'Cryptococcal meningitis in advanced HIV requires induction with amphotericin-based regimen plus flucytosine; fluconazole monotherapy is inadequate for induction. Acyclovir treats HSV. Steroids alone are harmful. Metronidazole treats anaerobic infections, not cryptococcus.'),
-    (v_topic_id, 'A 79-year-old female Unconscious trauma patient needs emergent surgery; no family reachable; no advance directive on chart.
+Which preventive measure is most appropriate?', '["Antibiotics prophylaxis", "No screening ever", "Screening only if symptomatic for all diseases", "HCV antibody screening once", "PET scan annually"]'::jsonb, 3, 'Evidence-based screening: HCV antibody screening once.'),
+    (v_topic_id, 'A 63-year-old male has Malignant hyperthermia and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Unstable.
-Mental status: Unresponsive.
+Vitals improving.
 
 Laboratory Results:
 
-Type and screen available
+Relevant diagnostics completed.
 
 
-What ethical principle allows proceeding with lifesaving surgery?', '["Autonomy of physician to choose any procedure", "Futility \u2014 do not operate", "Beneficence requires waiting for family indefinitely", "Emergency exception / implied consent for life-threatening emergency", "Justice requires randomization"]'::jsonb, 3, 'Life-threatening emergency with inability to consent: treat under emergency/implied consent doctrine while attempting to reach surrogate.'),
-    (v_topic_id, 'A 26-year-old female MVC unrestrained driver, GCS 13, open femur fracture, BP 88/50 after 1 L saline.
+What is the most appropriate next step in management?', '["Alternative unrelated therapy", "Delay treatment 1 week", "Discharge without therapy", "Dantrolene and stop triggering agents", "Observation only"]'::jsonb, 3, 'Standard management for Malignant hyperthermia: Dantrolene and stop triggering agents.'),
+    (v_topic_id, 'A 42-year-old female has Digoxin toxicity arrhythmia and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: HR 128 | RR 24 | SpO2 92%.
-Extremity: Open femur fracture with bleeding.
-Abdomen: Soft.
+Vitals improving.
 
 Laboratory Results:
 
-FAST: Negative
-Hemoglobin: 8.2 g/dL
+Relevant diagnostics completed.
 
 
-What is the priority per ATLS after airway/breathing assessment?', '["Delay fracture management 72 hours", "Control hemorrhage, IV resuscitation, type and cross, ortho/trauma evaluation", "Discharge if FAST negative", "Immediate MRI spine before any fluids", "Oral antibiotics only"]'::jsonb, 1, 'ATLS: circulation — stop bleeding, resuscitate, transfuse as needed, stabilize fractures.'),
-    (v_topic_id, 'A 69-year-old female presents to the emergency department with crushing substernal chest pain radiating to the left arm and jaw for 45 minutes, with diaphoresis and nausea.
+What is the most appropriate next step in management?', '["Discharge without therapy", "Digoxin Fab fragments", "Observation only", "Alternative unrelated therapy", "Delay treatment 1 week"]'::jsonb, 1, 'Standard management for Digoxin toxicity arrhythmia: Digoxin Fab fragments.'),
+    (v_topic_id, 'A 63-year-old male is seen for Cluster headache acute.
 
 Physical Examination:
 
-Vitals: Temp 98.4°F | HR 92 bpm | RR 22/min | BP 148/92 mmHg | SpO2 94% on room air.
-Cardiac: Diaphoretic, no murmurs. Lungs with bibasilar crackles.
-Extremities: No edema.
+Appropriate exam for setting.
 
 Laboratory Results:
 
-ECG: ST-segment elevation in leads II, III, and aVF.
-Troponin I: 3.8 ng/mL (elevated)
-Chest X-ray: Mild pulmonary vascular congestion
+Relevant diagnostics reviewed.
 
 
-Which of the following is the most appropriate immediate management?', '["Oral aspirin and discharge with outpatient stress test", "Emergent coronary angiography with primary PCI", "High-dose IV beta-blocker before reperfusion", "Urgent CT pulmonary angiography", "Intravenous heparin alone without reperfusion strategy"]'::jsonb, 1, 'Inferior STEMI requires immediate reperfusion; primary PCI is preferred when available within guideline time windows. Aspirin is adjunctive but insufficient alone. Anticoagulation without reperfusion is inadequate. CTPA is for PE suspicion. IV beta-blockers are relatively contraindicated in acute inferior MI with possible RV involvement until stabilized.'),
-    (v_topic_id, 'A 26-year-old male with atrial fibrillation (not anticoagulated) has sudden severe abdominal pain out of proportion to exam.
+What is the most appropriate next step in management?', '["Delayed care 6 months", "Contradicted therapy", "No intervention", "High-flow oxygen sumatriptan", "Placebo only"]'::jsonb, 3, 'Guideline-consistent care: High-flow oxygen sumatriptan.'),
+    (v_topic_id, 'A 50-year-old male has Ectopic pregnancy unstable and is hemodynamically stable after initial resuscitation.
 
 Physical Examination:
 
-Vitals: Temp 37.2°C | HR 130 bpm (irregular) | BP 94/58 mmHg | RR 22/min.
-Abdomen: Soft, mild diffuse tenderness, no peritoneal signs, hypoactive bowel sounds.
-Cardiac: Irregularly irregular rhythm.
+Vitals improving.
 
 Laboratory Results:
 
-WBC: 18,000/mm³
-Lactate: 6.2 mmol/L (elevated)
-ABG: pH 7.28, HCO3 14 mEq/L
-CT angiography abdomen: SMA occlusion with bowel wall thickening
+Relevant diagnostics completed.
 
 
-What is the most likely diagnosis and urgent management priority?', '["Acute diverticulitis \u2014 oral metronidazole", "Irritable bowel syndrome \u2014 antispasmodics", "Constipation \u2014 enema and discharge", "Peptic ulcer disease \u2014 PPI and outpatient follow-up", "Acute mesenteric ischemia \u2014 emergent vascular evaluation and possible revascularization"]'::jsonb, 4, 'Pain out of proportion, AFib embolic risk, metabolic acidosis, and SMA occlusion indicate acute mesenteric ischemia — a surgical/vascular emergency. Diverticulitis and PUD do not match vascular occlusion. IBS and constipation are not acute ischemic presentations.');
+What is the most appropriate next step in management?', '["Emergent surgical management", "Discharge without therapy", "Alternative unrelated therapy", "Delay treatment 1 week", "Observation only"]'::jsonb, 0, 'Standard management for Ectopic pregnancy unstable: Emergent surgical management.');
 END $$;
 COMMIT;

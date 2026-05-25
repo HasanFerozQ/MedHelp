@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
-  <script src="mock-exam-step3-config.js?v=20260524a"></script>
+  <script src="mock-exam-step3-config.js?v=20260524b"></script>
   <script src="mock-exam-config.js?v=20260524a"></script>
   <style>
     .mock-lobby { padding: 40px 0 80px; }
@@ -499,7 +499,7 @@
       document.querySelector('.mock-start-luck').textContent = copy.luck;
       let sub = 'Clock runs in real time once you begin';
       if (exam.step3Exam && exam.twoDayExam) {
-        sub = 'Day 1: 7h (240 MCQ) · Day 2: 6h (198 MCQ) · complete Day 1 to unlock Day 2 · CCS not included';
+        sub = 'Day 1 FIP: 7h (diagnosis & workup) · Day 2 ACP: 6h (management & prevention) · unlock Day 2 after Day 1';
       } else if (exam.totalHours && exam.questions) {
         const blocksCount = exam.totalBlocks || (exam.step === 2 ? 8 : 7);
         sub = `${exam.totalHours} hours · ${exam.questions} MCQs · ${blocksCount} blocks · clock runs in real time`;

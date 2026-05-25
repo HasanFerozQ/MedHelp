@@ -1,31 +1,36 @@
 #!/usr/bin/env python3
-"""Generate USMLE Step 3 mock SQL: 5 mocks × (Day1 240 + Day2 198 MCQs)."""
+"""
+Generate USMLE Step 3 mock SQL with authentic split:
+  Day 1 FIP — diagnosis, initial workup, mechanism, biostat/ethics
+  Day 2 ACP — management, chronic care, screening, prognosis (separate bank)
+"""
 import json
 import random
-import re
+from collections import defaultdict
 from pathlib import Path
 
-from step2_ck_mock_clinical_bank import GENDERS
-from step3_ck_mock_clinical_bank import CLINICAL_CASES
+from build_step3_authentic_banks import build_all
+from step3_authentic_common import make_mcq
 
 ROOT = Path(__file__).resolve().parent
 MIGRATIONS = ROOT / "supabase" / "migrations"
-AGES = list(range(22, 84))
 
-DAY1_BUCKETS = {
-    1: {"internal_medicine": 120, "obgyn": 24, "pediatrics": 36, "emergency": 24, "surgery": 24, "ethics": 12},
-    2: {"internal_medicine": 96, "obgyn": 48, "pediatrics": 48, "emergency": 12, "surgery": 12, "ethics": 24},
-    3: {"internal_medicine": 84, "obgyn": 12, "pediatrics": 24, "emergency": 48, "surgery": 48, "ethics": 24},
-    4: {"internal_medicine": 72, "obgyn": 12, "pediatrics": 12, "emergency": 12, "surgery": 12, "ortho": 48, "ophtho": 24, "ent": 24, "dermatology": 24},
-    5: {"internal_medicine": 60, "obgyn": 12, "pediatrics": 12, "emergency": 12, "surgery": 12, "ethics": 48, "geriatrics": 48, "preventive": 48},
+# NBME-style FIP day distribution (240 total)
+FIP_QUOTAS = {
+    "diagnosis": 96,
+    "diagnostic_study": 60,
+    "pathophys_mechanism": 36,
+    "biostat": 24,
+    "ethics_communication": 24,
 }
 
-DAY2_BUCKETS = {
-    1: {"internal_medicine": 80, "obgyn": 20, "pediatrics": 20, "emergency": 30, "surgery": 28, "ethics": 20},
-    2: {"internal_medicine": 60, "obgyn": 40, "pediatrics": 40, "emergency": 18, "surgery": 20, "ethics": 20},
-    3: {"internal_medicine": 50, "obgyn": 10, "pediatrics": 18, "emergency": 50, "surgery": 50, "ethics": 20},
-    4: {"internal_medicine": 40, "obgyn": 10, "pediatrics": 10, "emergency": 10, "surgery": 10, "ortho": 40, "ophtho": 30, "ent": 28, "dermatology": 20},
-    5: {"internal_medicine": 40, "obgyn": 10, "pediatrics": 10, "emergency": 10, "surgery": 10, "ethics": 40, "geriatrics": 40, "preventive": 38},
+# NBME-style ACP day distribution (198 total)
+ACP_QUOTAS = {
+    "acute_management": 60,
+    "chronic_management": 50,
+    "screening_prevention": 40,
+    "prognosis_complications": 38,
+    "systems_medicolegal": 10,
 }
 
 
@@ -33,64 +38,58 @@ def sql_escape(s: str) -> str:
     return s.replace("'", "''")
 
 
-def build_stem(case, age, gender_word, poss, cap):
-    intro = case["intro"]
-    if "{poss}" in intro or "{cap}" in intro:
-        intro = intro.format(poss=poss, cap=cap)
-    opening = f"A {age}-year-old {gender_word} {intro}".strip()
-    opening = re.sub(r"\s+", " ", opening)
-    return (
-        f"{opening}\n\nPhysical Examination:\n\n{case['pe']}\n\n"
-        f"Laboratory Results:\n\n{case['labs']}\n\n\n{case['question']}"
-    )
+def expand_pool(cases: list[dict], min_size: int) -> list[dict]:
+    """Clone cases with variant ids so each mock can draw unique templates."""
+    if len(cases) >= min_size:
+        return list(cases)
+    expanded = []
+    v = 0
+    while len(expanded) < min_size:
+        for c in cases:
+            nc = dict(c)
+            nc["id"] = f"{c['id']}-x{v // max(len(cases), 1)}"
+            expanded.append(nc)
+            if len(expanded) >= min_size:
+                break
+        v += 1
+    return expanded
 
 
-def make_mcq(case, seed):
-    rng = random.Random(seed)
-    age = rng.choice(AGES)
-    gender_word, poss, cap, _ = rng.choice(GENDERS)
-    stem = build_stem(case, age, gender_word, poss, cap)
-    opts = list(case["options"])
-    correct = opts[case["answer"]]
-    rng.shuffle(opts)
-    return {
-        "question": stem,
-        "options": opts,
-        "correct_index": opts.index(correct),
-        "explanation": case["exp"],
-    }
+def pick_by_quotas(pool: list[dict], quotas: dict[str, int], mock_num: int, salt: int) -> list[dict]:
+    rng = random.Random(20260530 + mock_num * 10007 + salt)
+    by_cat: dict[str, list[dict]] = defaultdict(list)
+    for c in pool:
+        by_cat[c["category"]].append(c)
+
+    selected: list[dict] = []
+    for cat, need in quotas.items():
+        cases = by_cat.get(cat, [])
+        if not cases:
+            raise SystemExit(f"No cases for category {cat}")
+        cases = list(cases)
+        rng.shuffle(cases)
+        start = ((mock_num - 1) * need) % len(cases)
+        ordered = cases[start:] + cases[:start]
+        for i in range(need):
+            selected.append(ordered[i % len(ordered)])
+
+    rng.shuffle(selected)
+    return selected
 
 
-def by_subject():
-    out = {}
-    for c in CLINICAL_CASES:
-        subj = c["subject"]
-        if subj in ("ortho", "ophtho", "ent") and subj not in out:
-            out[subj] = []
-        if subj == "neonatal":
-            out.setdefault("pediatrics", []).append(c)
-        out.setdefault(subj, []).append(c)
+def build_mcqs(cases: list[dict], mock_num: int, salt: int) -> list[dict]:
+    seed = 20260524 + mock_num * 5000 + salt
+    out = []
+    for i, case in enumerate(cases):
+        mcq = make_mcq(case, seed + i)
+        out.append(mcq)
     return out
-
-
-def pick_mcqs(buckets, mock_num, offset=0):
-    pool = by_subject()
-    mcqs = []
-    seed = 20260524 + mock_num * 1000 + offset
-    for subject, count in buckets.items():
-        cases = pool.get(subject) or pool.get("internal_medicine", [])
-        for i in range(count):
-            case = cases[(i + mock_num * 11 + offset) % len(cases)]
-            mcqs.append(make_mcq(case, seed))
-            seed += 1
-    random.Random(mock_num + offset).shuffle(mcqs)
-    return mcqs
 
 
 def write_topics():
     path = MIGRATIONS / "20260524_step3_ck_mock_topics.sql"
     lines = [
-        "-- USMLE Step 3 hidden mock pools (Day 1 FIP + Day 2 ACP per mock)",
+        "-- USMLE Step 3 hidden mock pools (authentic FIP Day 1 + ACP Day 2)",
         "BEGIN;",
         "DO $$",
         "DECLARE v_max INT;",
@@ -124,7 +123,7 @@ def write_sql(mock_num, day_suffix, mcqs, total_expected):
         e = sql_escape(m["explanation"])
         vals.append(f"    (v_topic_id, '{q}', '{o}'::jsonb, {m['correct_index']}, '{e}')")
     body = (
-        f"-- Step 3 Mock #{mock_num} {day_suffix} — {len(mcqs)} MCQs\nBEGIN;\nDO $$\n"
+        f"-- Step 3 Mock #{mock_num} {day_suffix} — {len(mcqs)} authentic MCQs\nBEGIN;\nDO $$\n"
         f"DECLARE v_topic_id UUID;\nBEGIN\n"
         f"  SELECT id INTO v_topic_id FROM topics WHERE slug = '{slug}' LIMIT 1;\n"
         f"  IF v_topic_id IS NULL THEN RAISE EXCEPTION 'Topic {slug} missing';\n"
@@ -138,13 +137,21 @@ def write_sql(mock_num, day_suffix, mcqs, total_expected):
 
 
 def main():
+    fip_pool, acp_pool = build_all()
+    print(f"Bank: {len(fip_pool)} FIP, {len(acp_pool)} ACP templates")
+
+    fip_pool = expand_pool(fip_pool, 260)
+    acp_pool = expand_pool(acp_pool, 210)
+
     write_topics()
     for n in range(1, 6):
-        d1 = pick_mcqs(DAY1_BUCKETS[n], n, 0)[:240]
-        d2 = pick_mcqs(DAY2_BUCKETS[n], n, 500)[:198]
+        fip_cases = pick_by_quotas(fip_pool, FIP_QUOTAS, n, 0)
+        acp_cases = pick_by_quotas(acp_pool, ACP_QUOTAS, n, 900)
+        d1 = build_mcqs(fip_cases, n, 0)
+        d2 = build_mcqs(acp_cases, n, 900)
         write_sql(n, "day1-fip", d1, 240)
         write_sql(n, "day2-acp", d2, 198)
-    print("Done.")
+    print("Done — Step 3 authentic FIP/ACP mocks generated.")
 
 
 if __name__ == "__main__":

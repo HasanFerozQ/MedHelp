@@ -1,4 +1,4 @@
--- USMLE Step 3 hidden mock pools (Day 1 FIP + Day 2 ACP per mock)
+-- USMLE Step 3 hidden mock pools (authentic FIP Day 1 + ACP Day 2)
 BEGIN;
 DO $$
 DECLARE v_max INT;

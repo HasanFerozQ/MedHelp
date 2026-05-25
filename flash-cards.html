@@ -101,6 +101,35 @@
       color: var(--text-muted);
     }
     
+    .topic-grid .section-header {
+      grid-column: 1 / -1;
+      margin: 48px 0 16px;
+      padding: 12px 0;
+      color: var(--text-h);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
+    }
+    .topic-grid .section-header::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 24px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-glow));
+      border-radius: 4px;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .topic-grid .section-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+    
     /* ── MOBILE RESPONSIVENESS ── */
     @media (max-width: 768px) {
       .flash-container { padding: 0 14px; }
