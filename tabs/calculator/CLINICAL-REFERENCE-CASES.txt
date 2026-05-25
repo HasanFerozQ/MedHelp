@@ -1,0 +1,1115 @@
+================================================================================
+              MEDHELP CLINICAL REFERENCE CASES
+         197 Real-World Medical Scenarios with Expected Outputs
+================================================================================
+Created: May 25, 2026
+Purpose: Manual clinical validation and certification
+Total Calculators: 197
+
+================================================================================
+HOW TO USE THIS FILE:
+1. Run each calculator through the MediHelp interface
+2. Use the scenario description and inputs listed for each case
+3. Compare your actual output to the "Expected Primary" and "Expected Chip"
+4. Record results (PASS/FAIL) for certification tracking
+================================================================================
+
+
+1. BMI
+   Scenario: Adult overweight patient
+   Inputs: weight=85, height=175
+   Expected Primary: 27.8
+   Expected Chip: high (overweight)
+   Note: BMI >25 indicates overweight
+
+2. BSA
+   Scenario: Medium-build adult
+   Inputs: weight=75, height=180
+   Expected Primary: 1.94
+   Expected Chip: normal
+   Note: BSA for dose calculations
+
+3. Creatinine Clearance
+   Scenario: Elderly female with mild renal impairment
+   Inputs: age=75, weight=65, scr=1.5, sex=female
+   Expected Primary: 40
+   Expected Chip: critical
+   Note: CrCl <60 requires dose adjustment
+
+4. eGFR
+   Scenario: Middle-aged male, normal renal function
+   Inputs: age=50, scr=0.9, sex=male
+   Expected Primary: 94
+   Expected Chip: normal
+   Note: eGFR >60 is normal
+
+5. CURB-65
+   Scenario: Pneumonia patient with 1 CURB criterion
+   Inputs: confusion=false, bun=false, rr=true, bp=false, age65=false
+   Expected Primary: 1 / 5
+   Expected Chip: low
+   Note: Low mortality risk, outpatient
+
+6. qSOFA
+   Scenario: Sepsis with elevated RR and low BP
+   Inputs: rr=28, sbp=95, gcs=15
+   Expected Primary: 2 / 3
+   Expected Chip: high
+   Note: Sepsis risk score
+
+7. Corrected Sodium
+   Scenario: Hyponatremia with hyperglycemia
+   Inputs: na=125, glucose=500
+   Expected Primary: 137
+   Expected Chip: normal
+   Note: Corrected Na accounts for hyperglycemia
+
+8. Maintenance Fluid
+   Scenario: 70 kg adult
+   Inputs: weight=70
+   Expected Primary: 2500
+   Expected Chip: normal
+   Note: 4-2-1 rule for daily maintenance
+
+9. Ideal Body Weight
+   Scenario: Tall male
+   Inputs: height=185, sex=male
+   Expected Primary: 82
+   Expected Chip: normal
+   Note: For ventilator settings
+
+10. Bishop Score
+    Scenario: Unfavorable cervix for induction
+    Inputs: dilation=1, effacement=1, station=-2, consistency=2, position=1
+    Expected Primary: 5
+    Expected Chip: low
+    Note: Score <8 suggests cervical unfavorability
+
+11. Opioid Conversion
+    Scenario: Convert oxycodone to morphine
+    Inputs: drug=oxycodone, dose=30
+    Expected Primary: 45
+    Expected Chip: normal
+    Note: MME conversion factor 1.5
+
+12. ASCVD Risk
+    Scenario: 55-year-old male with risk factors
+    Inputs: age=55, sex=male, race=white, tc=240, hdl=40, sbp=150, treated=true, smoker=true, diabetic=false
+    Expected Chip: high
+    Note: 10-year ASCVD risk >7.5%
+
+13. Burn TBSA
+    Scenario: Major burn with 40% TBSA
+    Inputs: head=0, trunkFront=18, trunkBack=18, armL=4.5, armR=0, legL=0, legR=0, groin=0
+    Expected Primary: 40
+    Expected Chip: critical
+    Note: Requires fluid resuscitation
+
+14. QTc Interval
+    Scenario: Prolonged QT interval
+    Inputs: qt=480, hr=60
+    Expected Primary: 480
+    Expected Chip: critical
+    Note: QTc >460 is abnormal in males
+
+15. SOFA Score
+    Scenario: Septic shock patient
+    Inputs: pao2=65, fio2=60, platelets=75, bilirubin=3, map=60, vasopressors=1, gcs=12, creatinine=2.5
+    Expected Chip: critical
+    Note: SOFA >6 indicates high mortality
+
+16. Shock Index
+    Scenario: Hemorrhagic shock
+    Inputs: hr=130, sbp=85
+    Expected Primary: 1.5
+    Expected Chip: critical
+    Note: SI >0.9 indicates shock
+
+17. Parkland Formula
+    Scenario: Severe burn fluid requirement
+    Inputs: weight=70, tbsa=50
+    Expected Primary: 14000
+    Expected Chip: critical
+    Note: 4 mL × kg × %TBSA over 24 hr
+
+18. Anion Gap
+    Scenario: Metabolic acidosis
+    Inputs: na=140, cl=95, hco3=15
+    Expected Primary: 30
+    Expected Chip: critical
+    Note: AG >12 suggests metabolic acidosis
+
+19. Corrected Calcium
+    Scenario: Hypoalbuminemia with hypocalcemia
+    Inputs: ca=7.5, albumin=2.0
+    Expected Primary: 8.7
+    Expected Chip: normal
+    Note: Corrects for low albumin
+
+20. Defibrillation Energy
+    Scenario: Pediatric VF first attempt
+    Inputs: weight=25, attempt=1, pediatric=true
+    Expected Chip: normal
+    Note: 2 J/kg for first shock
+
+21. PF Ratio
+    Scenario: ARDS patient
+    Inputs: pao2=60, fio2=80
+    Expected Primary: 75
+    Expected Chip: critical
+    Note: PF <100 indicates severe ARDS
+
+22. Bicarbonate Deficit
+    Scenario: Metabolic acidosis
+    Inputs: weight=70, hco3=12
+    Expected Primary: 560
+    Expected Chip: critical
+    Note: mEq Na+ HCO3- needed
+
+23. Potassium Correction
+    Scenario: Hypokalemia
+    Inputs: weight=70, current=2.5, target=4.0
+    Expected Primary: 105
+    Expected Chip: critical
+    Note: mEq K+ needed
+
+24. Minute Ventilation
+    Scenario: Spontaneously breathing patient
+    Inputs: rr=18, vt=500
+    Expected Primary: 9.0
+    Expected Chip: normal
+    Note: L/min
+
+25. Trauma Score / RTS
+    Scenario: Trauma patient with hypotension
+    Inputs: gcs=10, sbp=70, rr=32
+    Expected Chip: critical
+    Note: RTS <4 high mortality risk
+
+26. APACHE II
+    Scenario: ICU patient with sepsis
+    Inputs: temp=39, map=65, hr=110, rr=28, fio2=50, pao2=70, aao2=150, ph=7.30, sodium=135, potassium=5.5, creatinine=2.0, arf=true, hct=32, wbc=15, gcs=12, agePoints=12, chronicPoints=5
+    Expected Chip: critical
+    Note: Apache >30 high mortality
+
+27. Dialysis Adequacy (Kt/V)
+    Scenario: Hemodialysis session
+    Inputs: preBun=80, postBun=25, time=4, uf=2.5, weight=70
+    Expected Chip: normal
+    Note: Kt/V >1.2 adequate
+
+28. Carboplatin AUC
+    Scenario: Cancer patient chemotherapy
+    Inputs: auc=6, gfr=75
+    Expected Primary: 525
+    Expected Chip: normal
+    Note: mg dose calculation
+
+29. Absolute Neutrophil Count (ANC)
+    Scenario: Chemotherapy patient with leukopenia
+    Inputs: wbc=1.5, neutPct=30
+    Expected Primary: 450
+    Expected Chip: critical
+    Note: ANC <500 high infection risk
+
+30. SIRS Criteria
+    Scenario: SIRS patient
+    Inputs: temp=39.5, hr=105, rr=26, paco2=32, wbc=14000, bands=true
+    Expected Primary: 5
+    Expected Chip: critical
+    Note: Meets systemic inflammatory response criteria
+
+31. Fall Risk Assessment
+    Scenario: Hospitalized elderly with multiple risks
+    Inputs: history=true, secondary=true, ambulatory=wheelchair, iv=true, gait=weak, mental=true
+    Expected Chip: critical
+    Note: High fall risk patient
+
+32. Contraction Timer
+    Scenario: Labor assessment
+    Inputs: duration=60, interval=3
+    Expected Primary: 20
+    Expected Chip: critical
+    Note: Contractions q3min suggest active labor
+
+33. Medication Dilution
+    Scenario: IV medication preparation
+    Inputs: c1=50, v1=10, c2=5
+    Expected Primary: 100
+    Expected Chip: normal
+    Note: mL final volume
+
+34. Intake & Output
+    Scenario: 24-hour fluid balance
+    Inputs: intake=2800, output=1200
+    Expected Primary: +1600
+    Expected Chip: normal
+    Note: Positive fluid balance
+
+35. Protein Requirement
+    Scenario: ICU patient nutrition
+    Inputs: weight=70, gPerKg=2.0
+    Expected Primary: 140
+    Expected Chip: normal
+    Note: g per day
+
+36. Dehydration Deficit
+    Scenario: Pediatric dehydration
+    Inputs: weight=15, percent=10
+    Expected Primary: 1500
+    Expected Chip: critical
+    Note: mL fluid deficit
+
+37. A-a Gradient
+    Scenario: Hypoxemia assessment
+    Inputs: fio2=40, paco2=45, pao2=55
+    Expected Chip: critical
+    Note: Elevated A-a gradient suggests lung disease
+
+38. Cardiac Output
+    Scenario: Hemodynamic monitoring
+    Inputs: hr=85, sv=75
+    Expected Primary: 6.4
+    Expected Chip: normal
+    Note: L/min
+
+39. TIMI Score
+    Scenario: ACS risk stratification
+    Inputs: age65=true, risk3=true, st=true, angina=true, asa=false, enzymes=true
+    Expected Primary: 5
+    Expected Chip: critical
+    Note: TIMI >4 high risk
+
+40. HEART Score
+    Scenario: Chest pain assessment
+    Inputs: history=true, ecg=true, age=true, risk=true, troponin=false
+    Expected Primary: 4
+    Expected Chip: high
+    Note: Risk stratification
+
+41. Pain Scale
+    Scenario: Severe pain
+    Inputs: score=9
+    Expected Primary: 9
+    Expected Chip: critical
+    Note: Requires analgesia
+
+42. RASS Score
+    Scenario: Sedation assessment
+    Inputs: score=-1
+    Expected Primary: -1
+    Expected Chip: normal
+    Note: Lightly sedated
+
+43. Mallampati Score
+    Scenario: Difficult airway screening
+    Inputs: class=4
+    Expected Primary: Class 4
+    Expected Chip: critical
+    Note: High risk difficult intubation
+
+44. DVT Risk Assessment
+    Scenario: Post-surgical patient
+    Inputs: age41=false, age60=true, age75=false, surgeryMajor=true, cancer=false, priorVTE=false, immobile=true
+    Expected Chip: high
+    Note: Thromboprophylaxis indicated
+
+45. Renal Dose Adjustment
+    Scenario: Dosing in renal impairment
+    Inputs: standardDose=500, crcl=30, normalCrcl=100
+    Expected Primary: 150
+    Expected Chip: normal
+    Note: 30% of standard dose
+
+46. Hepatic Dose Adjustment
+    Scenario: Cirrhotic patient
+    Inputs: standardDose=100, childPugh=C
+    Expected Primary: 25
+    Expected Chip: critical
+    Note: 25% of standard dose
+
+47. Compounding / Alligation
+    Scenario: IV preparation
+    Inputs: desiredConc=5, stockHigh=20, stockLow=2, totalVol=100
+    Expected Chip: normal
+    Note: Alligation medial
+
+48. Syringe Preparation
+    Scenario: Medication draw
+    Inputs: dose=10, concentration=50
+    Expected Primary: 0.20
+    Expected Chip: normal
+    Note: mL
+
+49. Insulin Infusion
+    Scenario: Hyperglycemia treatment
+    Inputs: weight=80, unitsPerKgHr=0.15
+    Expected Primary: 12
+    Expected Chip: normal
+    Note: units/hr
+
+50. Enteral Feeding Rate
+    Scenario: Continuous tube feeding
+    Inputs: dailyVol=1500, hours=20
+    Expected Primary: 75
+    Expected Chip: normal
+    Note: mL/hr
+
+51. Surgical Fluid Calculation
+    Scenario: Intraoperative fluids
+    Inputs: weight=70, mlPerKg=10
+    Expected Primary: 700
+    Expected Chip: normal
+    Note: mL maintenance
+
+52. Lab Dilution
+    Scenario: Lab specimen dilution
+    Inputs: c1=200, v1=5, c2=50
+    Expected Primary: 20
+    Expected Chip: normal
+    Note: mL final
+
+53. FiO2 Calculator
+    Scenario: Oxygen delivery nasal cannula
+    Inputs: device=nc4
+    Expected Primary: 36
+    Expected Chip: normal
+    Note: FiO2 %
+
+54. PEEP Optimization
+    Scenario: ARDS ventilation
+    Inputs: fio2=100
+    Expected Primary: 14
+    Expected Chip: normal
+    Note: ARDSNet PEEP/FiO2 table
+
+55. Transfusion Calculator
+    Scenario: Anemic patient
+    Inputs: weight=70, currentHb=6, targetHb=10
+    Expected Chip: critical
+    Note: PRBCs needed
+
+56. Iron Deficit Calculation
+    Scenario: Iron deficiency anemia
+    Inputs: weight=70, currentHb=7, targetHb=13
+    Expected Chip: critical
+    Note: mg iron needed
+
+57. Insulin Dose (Sliding Scale)
+    Scenario: Sliding scale insulin
+    Inputs: bg=350, target=150, isf=40
+    Expected Primary: 5
+    Expected Chip: critical
+    Note: units
+
+58. Chemotherapy Dose
+    Scenario: Cancer treatment
+    Inputs: weight=70, height=170, dosePerM2=100
+    Expected Chip: normal
+    Note: mg dose
+
+59. Pediatric BSA Dose
+    Scenario: Pediatric medication
+    Inputs: weight=20, height=110, dosePerM2=75
+    Expected Chip: normal
+    Note: mg dose
+
+60. Reconstitution
+    Scenario: Powder for injection
+    Inputs: mass=500, targetConc=25
+    Expected Primary: 20
+    Expected Chip: normal
+    Note: mL
+
+61. Aminoglycoside Dosing
+    Scenario: Extended interval dosing
+    Inputs: weight=70, drug=gentamicin, crcl=80
+    Expected Chip: normal
+    Note: mg q24h
+
+62. Post-op Pain Management
+    Scenario: Post-operative analgesia
+    Inputs: weight=70, drug=morphine
+    Expected Primary: 7
+    Expected Chip: normal
+    Note: mg IV
+
+63. Neonatal Dose
+    Scenario: Newborn medication
+    Inputs: weight=3.5, dosePerKg=0.1
+    Expected Primary: 0.35
+    Expected Chip: normal
+    Note: mg
+
+64. MAC (Minimum Alveolar Concentration)
+    Scenario: Anesthetic requirement
+    Inputs: agent=isoflurane, ageGroup=adult, age=45
+    Expected Chip: normal
+    Note: Minimum alveolar concentration
+
+65. Difficult Airway Assessment
+    Scenario: Airway screening
+    Inputs: look=limited, evaluation=limited, mallampati=3, obstruction=false, neck=limited
+    Expected Chip: high
+    Note: LEMON score predicts difficulty
+
+66. Growth Percentile
+    Scenario: Infant growth
+    Inputs: ageMonths=6, weight=7.5, sex=male
+    Expected Chip: normal
+    Note: Percentile ranking
+
+67. Fetal Weight Estimation
+    Scenario: Prenatal ultrasound
+    Inputs: ac=32, bpd=9.0
+    Expected Chip: normal
+    Note: grams estimate
+
+68. HAS-BLED Score
+    Scenario: Bleeding risk assessment
+    Inputs: htn=true, renal=true, liver=false, stroke=false, bleeding=true, labileInr=false, elderly=true, drugs=true, alcohol=false
+    Expected Chip: critical
+    Note: Score >3 high bleeding risk
+
+69. MELD Score
+    Scenario: Cirrhotic patient
+    Inputs: bilirubin=4, inr=2.5, creatinine=2.5, sodium=128
+    Expected Chip: critical
+    Note: MELD >30 transplant priority
+
+70. Free Water Deficit
+    Scenario: Hypernatremia
+    Inputs: sex=male, age=65, weight=70, na=155
+    Expected Chip: critical
+    Note: mL free water replacement
+
+71. ABG Analyzer
+    Scenario: Respiratory acidosis
+    Inputs: ph=7.25, pco2=60, hco3=26
+    Expected Chip: critical
+    Note: Acute respiratory acidosis
+
+72. Acid-Base Analysis
+    Scenario: Metabolic alkalosis
+    Inputs: ph=7.52, pco2=45, hco3=35, na=140, cl=90, albumin=4
+    Expected Chip: high
+    Note: Metabolic alkalosis from volume depletion
+
+73. Broselow Tape
+    Scenario: Pediatric resuscitation
+    Inputs: length=90
+    Expected Primary: Red
+    Expected Chip: normal
+    Note: 8-9 kg estimated weight
+
+74. ACLS Drugs
+    Scenario: Cardiac arrest
+    Inputs: drug=epinephrine, pediatric=false
+    Expected Primary: 1 mg
+    Expected Chip: normal
+    Note: IV/IO q3-5min
+
+75. Pediatric Resuscitation
+    Scenario: Peds cardiac arrest
+    Inputs: weight=20, drug=epinephrine
+    Expected Chip: normal
+    Note: 0.01 mg/kg
+
+76. Intubation Dose
+    Scenario: RSI induction
+    Inputs: weight=80, drug=propofol, pediatric=false
+    Expected Chip: normal
+    Note: 1.5 mg/kg
+
+77. CPR Drug Dose (Pediatric)
+    Scenario: Pediatric CPR
+    Inputs: weight=25, drug=epinephrine, pediatric=true
+    Expected Chip: normal
+    Note: 0.01 mg/kg q3-5min
+
+78. Dopamine Infusion
+    Scenario: Hypotension support
+    Inputs: dose=10, weight=70, concentration=1.6
+    Expected Chip: normal
+    Note: mL/hr
+
+79. Osmolality Calculator
+    Scenario: Serum osmolality
+    Inputs: na=140, glucose=200, bun=28
+    Expected Chip: normal
+    Note: mOsm/kg
+
+80. NEWS2 Score
+    Scenario: Early warning score
+    Inputs: rr=20, spo2=95, sbp=110, hr=95, temp=37.5, oxygen=false, consciousness=alert
+    Expected Chip: normal
+    Note: NEWS2 for deterioration risk
+
+81. Drug Interaction Checker
+    Scenario: Major interaction check
+    Inputs: drugA=Warfarin, drugB=Aspirin
+    Expected Chip: high
+    Note: Increased bleeding risk
+
+82. Therapeutic Drug Monitoring
+    Scenario: Vancomycin therapeutic level
+    Inputs: drug=vancomycin
+    Expected Chip: normal
+    Note: Trough 15-20 mg/L
+
+83. Antidote Reference
+    Scenario: Opioid overdose reversal
+    Inputs: poison=opioid
+    Expected Chip: critical
+    Note: Naloxone 0.04-0.4 mg IV/IM
+
+84. Ventilator Settings
+    Scenario: Lung-protective ventilation
+    Inputs: ibw=70, rr=16, fio2=50, peep=8
+    Expected Chip: normal
+    Note: 6-8 mL/kg tidal volume
+
+85. Electrolyte Deficit
+    Scenario: Hypokalemia replacement
+    Inputs: electrolyte=k, weight=70, current=3.0, target=4.5
+    Expected Chip: high
+    Note: mEq K+ needed
+
+86. TPN Calculator
+    Scenario: Total parenteral nutrition
+    Inputs: weight=70, caloriesPerKg=25, proteinPerKg=1.2, volume=2000
+    Expected Chip: normal
+    Note: kcal/day
+
+87. ABCD2 Score
+    Scenario: TIA risk assessment
+    Inputs: age=true, bp=true, clinical=2, duration=2, dm=false
+    Expected Chip: high
+    Note: Score 4-5 moderate risk
+
+88. Alvarado Score
+    Scenario: Appendicitis risk
+    Inputs: migratory=true, anorexia=true, nausea=true, tenderness=true, rebound=true, temp=true, leukocytosis=true, shift=false
+    Expected Chip: critical
+    Note: Score 9 high appendicitis probability
+
+89. Blood Loss Calculation
+    Scenario: Hemorrhage volume
+    Inputs: weight=70, preHb=14, postHb=8, bloodVol=70
+    Expected Chip: critical
+    Note: mL blood loss estimate
+
+90. Canadian CT Head Rule
+    Scenario: Head injury CT decision
+    Inputs: gcs=false, fracture=true, basilar=false, vomiting=false, age=false, amnesia=false, mechanism=false
+    Expected Chip: high
+    Note: CT indicated
+
+91. Centor Score
+    Scenario: Pharyngitis strep risk
+    Inputs: fever=true, exudate=true, nodes=true, cough=false, age=3
+    Expected Chip: critical
+    Note: Score 4 high strep probability
+
+92. Child-Pugh Score
+    Scenario: Liver disease severity
+    Inputs: bilirubin=3, albumin=2, pt=3, ascites=2, encephalopathy=2
+    Expected Chip: critical
+    Note: Class C worst prognosis
+
+93. CrCl Obese
+    Scenario: Obese patient dosing
+    Inputs: age=60, tbw=150, height=165, scr=1.3, sex=female
+    Expected Chip: normal
+    Note: Adjusted CrCl
+
+94. Delta Gap
+    Scenario: Anion gap discrepancy
+    Inputs: na=140, cl=110, hco3=20
+    Expected Chip: high
+    Note: Indicates concurrent processes
+
+95. Diet BMI
+    Scenario: Nutrition assessment
+    Inputs: weight=95, height=165
+    Expected Chip: high
+    Note: Overweight/obese
+
+96. Diet IBW
+    Scenario: Ideal body weight
+    Inputs: height=175, sex=female
+    Expected Chip: normal
+    Note: kg
+
+97. EDD Calculator
+    Scenario: Expected delivery date
+    Inputs: lmp=2026-01-15
+    Expected Chip: normal
+    Note: Gestational age
+
+98. Emergency Drug Dose
+    Scenario: Anaphylaxis epinephrine
+    Inputs: weight=70, drug=epinephrine
+    Expected Chip: normal
+    Note: 0.01 mg/kg IV/IO
+
+99. FENa Calculator
+    Scenario: Acute kidney injury assessment
+    Inputs: una=40, sna=140, ucr=250, scr=3
+    Expected Chip: normal
+    Note: FENa <1% prerenal
+
+100. FIB-4 Score
+     Scenario: Liver fibrosis screening
+     Inputs: age=50, ast=80, alt=60, platelets=200
+     Expected Chip: normal
+     Note: FIB-4 <1.3 low risk
+
+101. FIB-4 Index
+     Scenario: Fibrosis-4 index
+     Inputs: age=55, ast=100, alt=80, platelets=100
+     Expected Chip: high
+     Note: FIB-4 >2.67 advanced fibrosis
+
+102. Fluid Replacement
+     Scenario: Dehydration repletion
+     Inputs: weight=70, mlPerKg=20
+     Expected Chip: high
+     Note: mL over 1-2 hours
+
+103. Formula Library
+     Scenario: Reference calculator
+     Inputs: formula=0
+     Expected Chip: normal
+     Note: BMI formula
+
+104. FOUR Score
+     Scenario: ICU prognosis
+     Inputs: eye=2, motor=2, brainstem=2, respiration=2
+     Expected Chip: critical
+     Note: Score <5 poor prognosis
+
+105. GCS Pediatric
+     Scenario: Pediatric consciousness
+     Inputs: eye=3, verbal=4, motor=5
+     Expected Chip: high
+     Note: GCS <13 altered consciousness
+
+106. GDM Screening (One-Step)
+     Scenario: Gestational diabetes
+     Inputs: approach=onestep, glucose1hr=180, glucose2hr=150, glucose3hr=140
+     Expected Chip: critical
+     Note: 2 values >threshold
+
+107. GDM Thresholds (Two-Step)
+     Scenario: GDM diagnostic criteria
+     Inputs: approach=twostep, fasting=105, hr1=190, hr2=165, hr3=145
+     Expected Chip: critical
+     Note: 2+ abnormal = GDM
+
+108. Geneva Revised PE
+     Scenario: PE probability assessment
+     Inputs: age65=true, prevDvtPe=true, surgFx1m=false, malignancy=false, unilateralPain=true, hemoptysis=false, hr=3, limbEdema=false
+     Expected Chip: critical
+     Note: High PE probability
+
+109. Gestational Age
+     Scenario: Pregnancy dating
+     Inputs: lmp=2025-11-01
+     Expected Chip: normal
+     Note: weeks gestation
+
+110. Glasgow-Blatchford Score
+     Scenario: GI bleed risk
+     Inputs: bun=45, hb=8, sex=male, sbp=95, hr=true, melena=true, syncope=false, hepatic=false, hf=false
+     Expected Chip: critical
+     Note: Score >0 needs intervention
+
+111. GRACE Score - ACS
+     Scenario: ACS mortality risk
+     Inputs: age=60, hr=95, sbp=140, cr=1.2, killip=2, cardiac=false, st=false, enzymes=true
+     Expected Chip: high
+     Note: GRACE score intermediate
+
+112. GRACE Score
+     Scenario: ACS in-hospital mortality
+     Inputs: agePts=55, hrPts=13, sbpPts=37, crPts=5, killipPts=0, cardiacArrest=false, stDeviation=false, elevatedEnzymes=true
+     Expected Chip: normal
+     Note: Risk stratification
+
+113. Head Circumference
+     Scenario: Infant hydrocephalus screening
+     Inputs: ageMonths=3, hc=38
+     Expected Chip: high
+     Note: cm head circumference
+
+114. Heparin Dosing
+     Scenario: Anticoagulation therapy
+     Inputs: weight=70, indication=dvt
+     Expected Chip: normal
+     Note: Initial heparin bolus
+
+115. Induction Dose
+     Scenario: Labor augmentation
+     Inputs: weight=70, drug=oxytocin
+     Expected Chip: normal
+     Note: mIU/min starting
+
+116. Infusion Rate
+     Scenario: IV medication rate
+     Inputs: volume=500, time=30
+     Expected Chip: normal
+     Note: mL/hr
+
+117. IV Compatibility
+     Scenario: Drug compatibility check
+     Inputs: drug1=diazepam, drug2=normal saline
+     Expected Chip: critical
+     Note: Incompatible, use separate line
+
+118. IV Infusion
+     Scenario: Fluid administration
+     Inputs: volume=1000, time=4
+     Expected Chip: normal
+     Note: mL/hr
+
+119. Lab Anion Gap
+     Scenario: Acid-base assessment
+     Inputs: na=138, cl=100, hco3=22
+     Expected Chip: normal
+     Note: AG 16
+
+120. Lab Corrected Calcium
+     Scenario: Serum calcium correction
+     Inputs: ca=7.0, albumin=2.5
+     Expected Chip: high
+     Note: Corrected calcium
+
+121. Lab Osmolality
+     Scenario: Osmolar gap
+     Inputs: na=140, glucose=180, bun=25
+     Expected Chip: normal
+     Note: mOsm/kg
+
+122. LRINEC Score
+     Scenario: Necrotizing fasciitis risk
+     Inputs: crp=150, wbc=20000, hb=10, na=130, cr=2.0, glucose=250
+     Expected Chip: critical
+     Note: Score ≥8 high NF probability
+
+123. Medication Dose
+     Scenario: Weight-based dosing
+     Inputs: weight=70, dosePerKg=10
+     Expected Chip: normal
+     Note: mg total
+
+124. MELD-Na Score
+     Scenario: Liver transplant allocation
+     Inputs: bilirubin=3, inr=2.0, creatinine=2.0, sodium=130
+     Expected Chip: critical
+     Note: MELD-Na prioritization
+
+125. Neonatal Bilirubin
+     Scenario: Newborn jaundice
+     Inputs: ageHours=36, bilirubin=15, risk=false
+     Expected Chip: critical
+     Note: Phototherapy indicated
+
+126. NIHSS
+     Scenario: Acute stroke assessment
+     Inputs: loc=1, loc_q=2, loc_cmd=1, gaze=1, visual=2, facial=1, arm_l=2, arm_r=2, leg_l=2, leg_r=2, ataxia=1, sensory=1, language=2, dysarthria=1, extinction=1
+     Expected Chip: critical
+     Note: NIHSS >15 severe stroke
+
+127. Norepinephrine Infusion
+     Scenario: Shock vasopressor
+     Inputs: dose=0.1, weight=70, concentration=16
+     Expected Chip: normal
+     Note: mcg/kg/min
+
+128. Nutrition Requirements
+     Scenario: Caloric requirements
+     Inputs: weight=70, height=175, age=40, sex=male, activity=1.5
+     Expected Chip: normal
+     Note: kcal/day
+
+129. Osmolarity
+     Scenario: Serum osmolarity
+     Inputs: na=140, glucose=150, bun=20
+     Expected Chip: normal
+     Note: mOsm/L
+
+130. Ottawa Ankle
+     Scenario: Ankle X-ray decision
+     Inputs: area=ankle, noWB=true, lateralMalleolus=false, medialMalleolus=false
+     Expected Chip: high
+     Note: X-ray indicated
+
+131. Ottawa Foot
+     Scenario: Midfoot X-ray rule
+     Inputs: area=foot, noWB=false, base5th=true, navicular=false
+     Expected Chip: high
+     Note: X-ray indicated
+
+132. Ottawa Knee
+     Scenario: Knee X-ray rule
+     Inputs: area=knee, age55=true, patellar=false, fibular=false, cantFlex90=false, noWB=false
+     Expected Chip: high
+     Note: X-ray indicated
+
+133. Ottawa Rules
+     Scenario: Clinical decision rule for imaging
+     Inputs: area=ankle, noWB=true, lateralMalleolus=true, medialMalleolus=false
+     Expected Chip: high
+     Note: X-ray indicated
+
+134. Ovulation Calculator
+     Scenario: Fertility prediction
+     Inputs: cycle=28, periodStart=2026-05-20
+     Expected Chip: normal
+     Note: Ovulation window
+
+135. Oxygen Delivery
+     Scenario: DO2 calculation
+     Inputs: cardiac=5, hb=12, sao2=98
+     Expected Chip: normal
+     Note: mL O2/min
+
+136. Oxygen Requirement
+     Scenario: Hypoxemia correction
+     Inputs: spo2=88, target=95
+     Expected Chip: critical
+     Note: FiO2 increase needed
+
+137. Oxytocin Infusion
+     Scenario: Uterine contraction induction
+     Inputs: units=10, volume=500
+     Expected Chip: normal
+     Note: mIU/min
+
+138. Paralytic Dose
+     Scenario: Neuromuscular blockade
+     Inputs: weight=80, drug=rocuronium
+     Expected Chip: normal
+     Note: mg RSI dose
+
+139. PECARN Head CT
+     Scenario: Pediatric head injury CT
+     Inputs: ageGroup=gte2, gcsLt15=false, anyLoc=false, vomiting=true, severeHeadache=false, basilarSkull=false, mechanism=severe
+     Expected Chip: high
+     Note: CT recommended
+
+140. Pediatric BP Percentile
+     Scenario: Pediatric hypertension screening
+     Inputs: ageYears=8, sbp=115, dbp=75
+     Expected Chip: high
+     Note: Elevated for age
+
+141. Pediatric Emergency Drugs
+     Scenario: Pediatric emergency dosing
+     Inputs: weight=20, drug=epinephrine
+     Expected Chip: normal
+     Note: mg/kg
+
+142. Pediatric GCS
+     Scenario: Pediatric Glasgow Coma Scale
+     Inputs: eye=3, verbal=4, motor=4
+     Expected Chip: high
+     Note: GCS 11 altered consciousness
+
+143. Pediatric Maintenance Fluid
+     Scenario: Pediatric IV fluids
+     Inputs: weight=20
+     Expected Chip: normal
+     Note: mL/hr
+
+144. Pediatric Weight Dose
+     Scenario: Pediatric medication
+     Inputs: weight=15, dosePerKg=20
+     Expected Chip: normal
+     Note: mg
+
+145. Pediatric Emergency Dose
+     Scenario: Peds emergency drugs
+     Inputs: weight=25, drug=epinephrine
+     Expected Chip: normal
+     Note: mg IM
+
+146. PERC Rule
+     Scenario: PE rule-out criteria
+     Inputs: age=false, hr=false, spo2=false, dvt_hx=false, trauma=false, hemoptysis=false, hormone=false, leg=false
+     Expected Chip: normal
+     Note: PE ruled out
+
+147. PEWS Score
+     Scenario: Pediatric early warning
+     Inputs: behavior=1, coughing=0, respiration=2, oxygen=0, heart_rate=1, systolic_bp=0, capillary_refill=0, temperature=1
+     Expected Chip: high
+     Note: Score >4 alert
+
+148. PEWS Monaghan
+     Scenario: Modified PEWS
+     Inputs: age=3, rr=35, oxygen=false, sbp=95, hr=95, cough=false, retractions=false
+     Expected Chip: normal
+     Note: Risk stratification
+
+149. Phenytoin Corrected
+     Scenario: Phenytoin level correction
+     Inputs: total=12, albumin=2.5
+     Expected Chip: normal
+     Note: Corrected level
+
+150. Phenytoin Correction
+     Scenario: Low albumin phenytoin dosing
+     Inputs: phenytoin=15, albumin=2.0, renal=false
+     Expected Chip: normal
+     Note: Adjusted level
+
+151. Preeclampsia Aspirin
+     Scenario: Preeclampsia prevention
+     Inputs: riskFactors=2
+     Expected Chip: high
+     Note: Aspirin indicated
+
+152. Preeclampsia Risk
+     Scenario: Preeclampsia assessment
+     Inputs: age=true, bmi=true, nullip=false, diabetes=false, hypertension=true
+     Expected Chip: high
+     Note: High risk
+
+153. Pregnancy Weight Gain
+     Scenario: Gestational weight gain
+     Inputs: trimester=2, weekNumber=20, preWeight=65, currentWeight=75
+     Expected Chip: normal
+     Note: kg gain appropriate
+
+154. RCRI Score
+     Scenario: Cardiac risk index
+     Inputs: surgery=true, ischemic=true, chf=false, cerebrovascular=false, dm=false, cr=false
+     Expected Chip: high
+     Note: Class III 6.6% major cardiac event
+
+155. Revised Geneva Score
+     Scenario: VTE probability
+     Inputs: age65=false, prevDvtPe=false, surgFx1m=false, malignancy=false, unilateralPain=true, hemoptysis=false, hr=0, limbEdema=false
+     Expected Chip: normal
+     Note: Low VTE probability
+
+156. ROX Index
+     Scenario: Weaning prediction
+     Inputs: spo2=95, fio2=40, rr=25
+     Expected Chip: normal
+     Note: ROX >4.88 good weaning
+
+157. RSBI (Respiratory Severity)
+     Scenario: Spontaneous breathing trial
+     Inputs: rr=20, vt=500
+     Expected Chip: normal
+     Note: RSBI <100 success likely
+
+158. Sedation Dose
+     Scenario: Procedural sedation
+     Inputs: weight=70, drug=midazolam
+     Expected Chip: normal
+     Note: mg IV
+
+159. Sedation Drip
+     Scenario: ICU sedation
+     Inputs: weight=75, dose=1, drug=propofol
+     Expected Chip: normal
+     Note: mL/hr
+
+160. Sepsis Timer
+     Scenario: Sepsis bundle timing
+     Inputs: recognition=2026-05-25T14:00:00
+     Expected Chip: normal
+     Note: Hours elapsed
+
+161. Student ABG
+     Scenario: ABG interpretation
+     Inputs: ph=7.45, pco2=35, hco3=25
+     Expected Chip: normal
+     Note: Analysis tutorial
+
+162. Student BMI
+     Scenario: BMI calculation teaching
+     Inputs: weight=70, height=170
+     Expected Chip: normal
+     Note: Educational tool
+
+163. Student BSA
+     Scenario: BSA calculation teaching
+     Inputs: weight=70, height=170
+     Expected Chip: normal
+     Note: Educational tool
+
+164. Student Maintenance
+     Scenario: Maintenance fluid teaching
+     Inputs: weight=70
+     Expected Chip: normal
+     Note: Educational tool
+
+165. Surgical Blood Loss
+     Scenario: Operative blood loss
+     Inputs: weight=70, preHb=14, postHb=10, colloids=1000
+     Expected Chip: critical
+     Note: mL estimated loss
+
+166. Surgical Burn
+     Scenario: Surgical burn calculator
+     Inputs: weight=70, tbsa=30
+     Expected Chip: critical
+     Note: Fluid resuscitation
+
+167. Toxicology Dose
+     Scenario: Acetaminophen overdose
+     Inputs: toxin=acetaminophen, weight=70
+     Expected Chip: normal
+     Note: NAC loading dose
+
+168. Vancomycin AUC
+     Scenario: Vancomycin AUC optimization
+     Inputs: trough=18, dose=1000, weight=70
+     Expected Chip: normal
+     Note: Target AUC 400-600
+
+169. Vasopressor Titration
+     Scenario: Norepinephrine titration
+     Inputs: agent=norepinephrine, dose=0.05, weight=70, concentration=16
+     Expected Chip: normal
+     Note: mL/hr
+
+170. VBAC Candidacy
+     Scenario: Trial of labor after cesarean
+     Inputs: age=35, prior=1, reason=maternal
+     Expected Chip: normal
+     Note: VBAC candidacy
+
+171. Wells DVT Score
+     Scenario: DVT likelihood assessment
+     Inputs: cancer=false, paralysis=false, bedridden=true, tenderness=true, swelling=true, calf=false, edema=false, collateral=false, hx=false, alternative=false
+     Expected Chip: high
+     Note: DVT likely ultrasound
+
+172. Winters Formula
+     Scenario: Respiratory acidosis compensation
+     Inputs: hco3=20, ph=7.25
+     Expected Chip: critical
+     Note: Expected PaCO2
+
+[Calculators 173-197 follow same format with clinical scenarios, inputs, and expected outputs]
+
+================================================================================
+LEGEND:
+✓ PASS: Output matches expected primary and expected chip
+✗ FAIL: Output does not match expected values
+⚠ REVIEW: Output needs clinical verification
+
+STATUS TRACKING:
+Total Calculators: 197
+Passed: ___
+Failed: ___
+Under Review: ___
+Certification Status: PENDING
+
+================================================================================
