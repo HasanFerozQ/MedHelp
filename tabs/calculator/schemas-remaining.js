@@ -68,10 +68,10 @@
     ]},
     'emergency-drug-dose': { formula: 'Emergency medication dosing', inputs: [
       num('weight', 'Weight', 'Peso', 'kg', 70),
-      { id: 'drug', label: L('Drug', 'Fármaco'), type: 'select', options: sel([['epinephrine', 'Epinephrine 0.01 mg/kg'], ['diphenhydramine', 'Diphenhydramine 1 mg/kg'], ['dexamethasone', 'Dexamethasone 0.6 mg/kg'], ['lorazepam', 'Lorazepam 0.1 mg/kg']]), default: 'epinephrine' }
+      { id: 'drug', label: L('Drug', 'Fármaco'), type: 'select', options: sel([['epinephrine', 'Epinephrine 0.01 mg/kg'], ['diphenhydramine', 'Diphenhydramine 1 mg/kg'], ['dexamethasone', 'Dexamethasone 0.6 mg/kg (max 10 mg)'], ['lorazepam', 'Lorazepam 0.1 mg/kg (max 4 mg)']]), default: 'epinephrine' }
     ]},
     broselow: { formula: 'Length-based Broselow zone', inputs: [
-      num('length', 'Body length', 'Longitud', 'cm', 100, { min: 46, max: 180 })
+      num('length', 'Body length', 'Longitud', 'cm', 100, { min: 46, max: 146 })
     ]},
     'trauma-score': { formula: 'Revised Trauma Score (RTS)', inputs: [
       { id: 'gcs', label: L('GCS code', 'Código GCS'), type: 'select', options: sel([[4, '13-15 (4)'], [3, '9-12 (3)'], [2, '6-8 (2)'], [1, '4-5 (1)'], [0, '3 (0)']]), default: 4 },

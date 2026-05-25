@@ -3,12 +3,14 @@
  */
 window.CalcUI = {
   state: { view: 'home', role: null, calcId: null, emergency: false },
-  STORAGE: { favs: 'mh_calc_favs', recents: 'mh_calc_recents', searches: 'mh_calc_searches', values: 'mh_calc_last_vals' },
+  _erPatient: null,
+  STORAGE: { favs: 'mh_calc_favs', recents: 'mh_calc_recents', searches: 'mh_calc_searches', values: 'mh_calc_last_vals', erPatient: 'mh_calc_er_patient' },
 
   init() {
     CalcI18n.init();
     this._bindEvents();
     this._registerSW();
+    this._erPatient = this._erPatientFromStorage();
     this._checkAccess().then(() => {
       this._parseRoute();
       this.render();
@@ -250,11 +252,18 @@ window.CalcUI = {
     let html = `<div class="calc-role-header ${role?.emergency ? 'emergency' : ''}">
       <button id="calc-back" class="btn btn-ghost">← ${CalcI18n.t('back')}</button>
       <h1>${role?.icon || ''} ${CalcI18n.t('roles.' + roleId)}</h1>
-      ${role?.emergency ? `<div class="emergency-presets">
-        <span>${CalcI18n.t('presets')}:</span>
-        <button class="preset-btn" data-preset="adult">Adult</button>
-        <button class="preset-btn" data-preset="ped">Pediatric</button>
-        <button class="preset-btn" data-preset="70">70 kg</button>
+      ${role?.emergency ? `<div class="er-patient-panel">
+        <div class="panel-row">
+          <label>Age<input type="number" id="er-age" min="0" max="120" step="1"></label>
+          <label>Sex
+            <select id="er-sex">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </label>
+          <label>Weight<input type="text" id="er-weight" placeholder="kg / lbs"></label>
+        </div>
+        <div class="panel-note">Values are shared across all ER calculators for fast bedside input.</div>
       </div>` : ''}
     </div>`;
 
@@ -267,9 +276,7 @@ window.CalcUI = {
     setTimeout(() => {
       document.getElementById('calc-back')?.addEventListener('click', () => this.goHome());
       this._bindCalcCards();
-      document.querySelectorAll('.preset-btn').forEach(btn => {
-        btn.onclick = () => this._applyPreset(btn.dataset.preset);
-      });
+      if (role?.emergency) this._bindErPanel();
     }, 0);
     return html;
   },
@@ -318,6 +325,10 @@ window.CalcUI = {
         e.preventDefault();
         this._runCalc(id);
       });
+      if (calc.role === 'er') {
+        this._pushErPatientToForms();
+        this._showErBanner();
+      }
       document.querySelectorAll('.stepper').forEach(s => {
         s.querySelector('.step-minus')?.addEventListener('click', () => this._step(s, -1));
         s.querySelector('.step-plus')?.addEventListener('click', () => this._step(s, 1));
@@ -471,6 +482,111 @@ window.CalcUI = {
       const displayVal = grp ? CalcUnits.canonicalToDisplay(v, grp, displaySys) : v;
       el.value = displayVal;
     });
+  },
+
+  _erPatientFromStorage() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(this.STORAGE.erPatient) || '{}');
+      const weightText = raw.weightText || '';
+      return {
+        age: raw.age || '',
+        sex: raw.sex || '',
+        weightText,
+        weightKg: this._parseErWeight(weightText)
+      };
+    } catch (e) {
+      return null;
+    }
+  },
+
+  _parseErWeight(weight) {
+    if (weight === undefined || weight === null) return null;
+    const value = String(weight).trim().toLowerCase().replace(/,/g, '');
+    if (!value) return null;
+    const lbMatch = value.match(/^([\d.]+)\s*(lb|lbs)$/);
+    const kgMatch = value.match(/^([\d.]+)\s*(kg)?$/);
+    if (lbMatch) return parseFloat(lbMatch[1]) * 0.45359237;
+    if (kgMatch) return parseFloat(kgMatch[1]);
+    const parsed = parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  },
+
+  _bindErPanel() {
+    const ageEl = document.getElementById('er-age');
+    const sexEl = document.getElementById('er-sex');
+    const weightEl = document.getElementById('er-weight');
+    if (!ageEl || !sexEl || !weightEl) return;
+
+    ageEl.value = this._erPatient?.age || '';
+    sexEl.value = this._erPatient?.sex || 'male';
+    weightEl.value = this._erPatient?.weightText || '';
+
+    const save = () => {
+      this._erPatient = {
+        age: ageEl.value || '',
+        sex: sexEl.value || 'male',
+        weightText: weightEl.value || '',
+        weightKg: this._parseErWeight(weightEl.value || '')
+      };
+      localStorage.setItem(this.STORAGE.erPatient, JSON.stringify({
+        age: this._erPatient.age,
+        sex: this._erPatient.sex,
+        weightText: this._erPatient.weightText
+      }));
+      this._pushErPatientToForms();
+      this._showErBanner();
+    };
+
+    ageEl.addEventListener('input', save);
+    sexEl.addEventListener('change', save);
+    weightEl.addEventListener('input', save);
+  },
+
+  _pushErPatientToForms() {
+    if (!this._erPatient) return;
+    const entries = [
+      ['age', this._erPatient.age],
+      ['sex', this._erPatient.sex],
+      ['weight', this._erPatient.weightKg != null ? this._erPatient.weightKg : this._erPatient.weightText]
+    ];
+    entries.forEach(([field, value]) => {
+      if (value === undefined || value === null || value === '') return;
+      const elements = Array.from(document.querySelectorAll(`[name="${field}"]`));
+      elements.forEach(el => {
+        if (el.type === 'radio') {
+          el.checked = el.value === String(value);
+          return;
+        }
+        if (field === 'weight' && el.dataset.unitGroup === 'weight') {
+          const displaySys = el.dataset.displayUnit || CalcUnits.system;
+          if (this._erPatient.weightKg != null) {
+            el.value = CalcUnits.canonicalToDisplay(this._erPatient.weightKg, 'weight', displaySys);
+          } else {
+            el.value = this._erPatient.weightText;
+          }
+          return;
+        }
+        el.value = String(value);
+      });
+    });
+  },
+
+  _showErBanner() {
+    const existing = document.getElementById('er-patient-banner');
+    if (!this._erPatient || (!this._erPatient.age && !this._erPatient.sex && !this._erPatient.weightText)) {
+      existing?.remove();
+      return;
+    }
+    const summary = [];
+    if (this._erPatient.age) summary.push(`Age ${this._erPatient.age}`);
+    if (this._erPatient.sex) summary.push(this._erPatient.sex.charAt(0).toUpperCase() + this._erPatient.sex.slice(1));
+    if (this._erPatient.weightText) summary.push(`Weight ${this._erPatient.weightText}`);
+    const bannerHtml = `<div id="er-patient-banner" class="er-banner"><strong>ER patient:</strong> ${summary.join(' · ')}. Saved across ER calculators.</div>`;
+    if (existing) {
+      existing.innerHTML = bannerHtml;
+    } else {
+      document.querySelector('.calc-layout')?.insertAdjacentHTML('afterbegin', bannerHtml);
+    }
   },
 
   _updateOfflineBadge() {

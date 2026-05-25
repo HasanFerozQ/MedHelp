@@ -107,6 +107,12 @@
       let dose;
       if (v.drug === 'adenosine') {
         dose = Math.min(p.dose1 * w, p.max1) + ' mg then ' + Math.min(p.dose2 * w, p.max2) + ' mg';
+      } else if (v.drug === 'epinephrine') {
+        const mg = Math.min(p.dose * w, 1);
+        dose = mg.toFixed(2) + ' mg';
+      } else if (v.drug === 'amiodarone') {
+        const mg = Math.min(p.dose * w, 300);
+        dose = mg.toFixed(0) + ' mg';
       } else if (v.drug === 'atropine') {
         const mg = Math.max(p.min, Math.min(p.max, p.dose * w));
         dose = mg.toFixed(2) + ' mg';
@@ -119,19 +125,30 @@
     'emergency-drug-dose'(v) {
       const w = +v.weight;
       const doses = {
-        // Applied Math.min() cap so the displayed number never exceeds the stated maximum
-        epinephrine: (0.01 * w).toFixed(2) + ' mg IM (0.01 mg/kg)',
-        diphenhydramine: Math.min(50, 1 * w).toFixed(0) + ' mg (1 mg/kg, max 50 mg)',
-        dexamethasone: Math.min(16, 0.6 * w).toFixed(1) + ' mg (0.6 mg/kg, max 16 mg)',
-        lorazepam: (0.1 * w).toFixed(1) + ' mg (0.1 mg/kg)'
+        epinephrine: Math.min(0.01 * w, 1).toFixed(2) + ' mg IV/IO',
+        diphenhydramine: Math.min(50, 1 * w).toFixed(0) + ' mg IV/IM',
+        dexamethasone: Math.min(10, 0.6 * w).toFixed(1) + ' mg IV/IM',
+        lorazepam: Math.min(4, 0.1 * w).toFixed(1) + ' mg IV/IM'
       };
-      return { primary: doses[v.drug] || 'See reference', interpretation: 'Emergency dosing', chip: 'normal' };
+      const interpretations = {
+        epinephrine: '0.01 mg/kg IV/IO (max 1 mg) for cardiac arrest or anaphylaxis',
+        diphenhydramine: '1 mg/kg IV/IM (max 50 mg) for allergic emergency',
+        dexamethasone: '0.6 mg/kg IV/IM (max 10 mg)',
+        lorazepam: '0.1 mg/kg IV/IM (max 4 mg) for seizures/agitation'
+      };
+      return { primary: doses[v.drug] || 'See reference', interpretation: interpretations[v.drug] || 'Emergency dosing', chip: 'normal' };
     },
 
     broselow(v) {
       const len = +v.length;
-      const zone = D().broselow.find(z => len >= z.lengthMin && len < z.lengthMax) || D().broselow[D().broselow.length - 1];
-      return { primary: zone.zone + ' zone', interpretation: 'Estimated weight ' + zone.weight + ' for ' + len + ' cm', chip: 'normal' };
+      const zone = D().broselow.find(z => len >= z.lengthMin && len < z.lengthMax) || (len < D().broselow[0].lengthMin ? D().broselow[0] : D().broselow[D().broselow.length - 1]);
+      const warning = len > 146 ? 'Length exceeds Broselow tape limit (146 cm); use 30+ kg estimate and adult dosing guidance.' : 'Estimated weight ' + zone.weight + ' for ' + len + ' cm';
+      return {
+        primary: zone.zone + ' zone',
+        interpretation: warning,
+        chip: len > 146 ? 'high' : 'normal',
+        details: [{ label: 'Length', value: len + ' cm' }]
+      };
     },
 
     'trauma-score'(v) {
@@ -158,20 +175,53 @@
       else if (rawRr >= 1) rr = 1;
       else rr = 0;
 
-      const sum = gcs + sbp + rr;
       const rts = 0.9368 * gcs + 0.7326 * sbp + 0.2908 * rr;
-      const prob = sum > 10 ? 'Low mortality' : sum > 6 ? 'Moderate mortality risk' : 'High mortality risk';
+      const prob = rts <= 4 ? 'High mortality risk; severe trauma' : rts <= 6 ? 'Moderate mortality risk' : 'Lower mortality risk';
       return {
-        primary: sum + ' / 12 (Weighted: ' + rts.toFixed(4) + ')',
+        primary: rts.toFixed(2) + ' (RTS)',
         interpretation: prob,
-        chip: sum <= 6 ? 'critical' : sum <= 10 ? 'high' : 'normal'
+        chip: rts <= 4 ? 'critical' : rts <= 6 ? 'high' : 'normal',
+        details: [
+          { label: 'GCS code', value: gcs },
+          { label: 'SBP code', value: sbp },
+          { label: 'RR code', value: rr }
+        ]
       };
     },
 
     'toxicology-dose'(v) {
       const w = +v.weight;
       if (v.toxin === 'acetaminophen') {
-        return { primary: (150 * w).toFixed(0) + ' mg NAC load', interpretation: 'NAC 150 mg/kg IV over 1 hr', chip: 'normal' };
+        return {
+          primary: 'NAC 150 mg/kg IV load',
+          interpretation: 'Then 50 mg/kg over 4 hr, then 100 mg/kg over 16 hr; standard IV 3-bag protocol.',
+          chip: 'critical',
+          details: [
+            { label: 'Total regimen', value: '150 + 50 + 100 mg/kg over 21 hr' },
+            { label: 'Weight used', value: w + ' kg' }
+          ]
+        };
+      }
+      if (v.toxin === 'opioid') {
+        return {
+          primary: 'Naloxone 0.04-0.4 mg IV/IM/IN q2-3 min PRN',
+          interpretation: 'Titrate to respiratory response; repeat as needed for opioid overdose.',
+          chip: 'critical'
+        };
+      }
+      if (v.toxin === 'benzodiazepine') {
+        return {
+          primary: 'Flumazenil 0.2 mg IV over 30 sec (max 1 mg)',
+          interpretation: 'Use only for severe benzo overdose without chronic use, seizures, or TCA co-ingestion.',
+          chip: 'high'
+        };
+      }
+      if (v.toxin === 'tricyclic') {
+        return {
+          primary: 'Sodium bicarbonate 1-2 mEq/kg IV',
+          interpretation: 'Indicated for QRS >100 ms, hypotension, or dysrhythmia in TCA overdose.',
+          chip: 'critical'
+        };
       }
       const ant = D().antidotes[v.toxin];
       return { primary: ant?.dose || 'Consult poison control', interpretation: ant?.antidote || v.toxin, chip: 'critical' };
@@ -263,10 +313,10 @@
     'cpr-drug-dose'(v) {
       const w = +v.weight;
       if (v.drug === 'epinephrine') {
-        const d = v.pediatric ? (0.01 * w).toFixed(2) + ' mg (0.01 mg/kg)' : '1 mg';
+        const d = v.pediatric ? Math.min(0.01 * w, 1).toFixed(2) + ' mg (0.01 mg/kg, max 1 mg)' : '1 mg';
         return { primary: d, interpretation: 'Epinephrine CPR dose q3-5min', chip: 'normal' };
       }
-      const amio = v.pediatric ? (5 * w).toFixed(0) + ' mg (5 mg/kg)' : '300 mg bolus';
+      const amio = v.pediatric ? Math.min(5 * w, 300).toFixed(0) + ' mg (5 mg/kg, max 300 mg)' : '300 mg bolus';
       return { primary: amio, interpretation: 'Amiodarone CPR dose', chip: 'normal' };
     },
 

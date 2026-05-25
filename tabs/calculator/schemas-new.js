@@ -45,7 +45,7 @@
       tog('basilarSkull', '[≥2 yr] Signs of basilar skull fracture', '[≥2 años] Signos fractura base de cráneo'),
       sel('mechanism', 'Injury mechanism', 'Mecanismo', [
         { v: 'nonsevere', l: { en: 'Non-severe', es: 'No severo' } },
-        { v: 'severe', l: { en: 'Severe (MVC, fall >3 ft, struck by high-impact object)', es: 'Severo (MVC, caída >90 cm, impacto alta energía)' } }
+        { v: 'severe', l: { en: 'Severe (MVC, fall >3 ft/5 stairs, struck by high-impact object)', es: 'Severo (MVC, caída >90 cm o 5 escalones, impacto alta energía)' } }
       ], 'nonsevere')
     ]
   };

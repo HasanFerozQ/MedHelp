@@ -37,25 +37,31 @@
   // ── PECARN Head CT ──
   CalcCompute['pecarn-head-ct'] = function(v) {
     const lt2 = v.ageGroup === 'lt2';
+    const severeMechanismLabel = lt2 ? 'MVC, fall >3 ft, or high-impact object' : 'MVC, fall >5 stairs, or high-impact object';
+    const mechanismSevere = v.mechanism === 'severe';
+
     let highRisk = false, intRisk = false, label = '', interp = '';
 
     if (lt2) {
       highRisk = v.gcsLt15 || v.palpableSkullFx || v.actingAbnormal;
-      intRisk = !highRisk && (v.occipitalHematoma || v.locGt5s || v.mechanism === 'severe');
+      intRisk = !highRisk && (v.occipitalHematoma || v.locGt5s || mechanismSevere);
     } else {
-      highRisk = v.gcsLt15 || v.basilarSkull;
-      intRisk = !highRisk && (v.anyLoc || v.vomiting || v.severeHeadache || v.mechanism === 'severe');
+      highRisk = v.gcsLt15 || v.basilarSkull || v.ageGroup === 'gte2' && v.basilarSkull;
+      intRisk = !highRisk && (v.anyLoc || v.vomiting || v.severeHeadache || mechanismSevere);
     }
 
-    if (highRisk) { label = 'CT Recommended'; interp = 'High-risk features — CT head recommended.'; }
-    else if (intRisk) { label = 'CT vs Observation'; interp = 'Intermediate risk — CT or observation based on clinical judgement.'; }
-    else { label = 'CT Not Indicated'; interp = 'Low risk — CT not indicated. Risk of clinically important TBI <0.02%.'; }
+    if (highRisk) { label = 'CT Recommended'; interp = 'High-risk PECARN features — CT head recommended.'; }
+    else if (intRisk) { label = 'CT vs Observation'; interp = 'Intermediate risk — CT or observation based on clinical judgment.'; }
+    else { label = 'CT Not Indicated'; interp = 'Low risk — CT not indicated. Risk of clinically important TBI is very low.'; }
 
     return {
       primary: label,
       interpretation: interp,
       chip: highRisk ? 'critical' : intRisk ? 'high' : 'normal',
-      details: [{ label: 'Age group', value: lt2 ? '<2 years' : '2–18 years' }]
+      details: [
+        { label: 'Age group', value: lt2 ? '<2 years' : '2–18 years' },
+        { label: 'Severe mechanism', value: mechanismSevere ? severeMechanismLabel : 'Non-severe' }
+      ]
     };
   };
 

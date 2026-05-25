@@ -86,13 +86,20 @@
     const highRisk = v.gcs || v.fracture || v.basilar || v.vomiting || ageOver65;
     const medRisk = v.amnesia || v.mechanism;
     const ct = highRisk || medRisk;
+    const interp = ct
+      ? highRisk
+        ? 'High risk — CT head indicated per Canadian CT Head Rule.'
+        : 'Medium risk — CT head indicated per Canadian CT Head Rule.'
+      : 'Not indicated. No Canadian CT Head Rule criteria met.';
 
-    let interp = highRisk ? 'High Risk for neurological intervention — CT Head indicated.' : medRisk ? 'Medium Risk for brain injury — CT Head indicated.' : 'Not indicated. Does not meet criteria for CT Head.';
     return {
       primary: ct ? 'CT Head Indicated' : 'CT Head Not Indicated',
       interpretation: interp,
       chip: highRisk ? 'critical' : medRisk ? 'high' : 'normal',
-      details: [{ label: 'Exclusions', value: 'Age <16, bleeding disorder, focal neuro deficit, seizure.' }]
+      details: [
+        { label: 'Rule eligibility', value: 'Minor head injury with GCS 13-15 at 2 hr' },
+        { label: 'Exclusions', value: 'Age <16, bleeding disorder, focal deficit, seizure' }
+      ]
     };
   };
 

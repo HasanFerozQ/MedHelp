@@ -47,8 +47,8 @@ window.CalcClinicalData = {
     { zone: 'Yellow', lengthMin: 99, lengthMax: 112, weight: '12-14 kg' },
     { zone: 'White', lengthMin: 112, lengthMax: 125, weight: '15-18 kg' },
     { zone: 'Blue', lengthMin: 125, lengthMax: 137, weight: '19-23 kg' },
-    { zone: 'Orange', lengthMin: 137, lengthMax: 150, weight: '24-29 kg' },
-    { zone: 'Green', lengthMin: 150, lengthMax: 200, weight: '30+ kg' }
+    { zone: 'Orange', lengthMin: 137, lengthMax: 146, weight: '24-29 kg' },
+    { zone: 'Green', lengthMin: 146, lengthMax: Infinity, weight: '30+ kg' }
   ],
 
   antibioticRenal: {
