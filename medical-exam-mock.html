@@ -248,30 +248,13 @@
             <a href="/claim-denial-codes">Denial Codes</a>
           </div>
         </div>
+        <a href="/calculators/doctors">Medical Calculator</a>
         <div class="nav-dropdown">
           <div class="nav-dropdown-btn">More ▼</div>
           <div class="nav-dropdown-menu">
             <a href="/rx-savings">Rx Savings</a>
             <a href="/providers">Provider Search</a>
             <a href="/blog">Blog</a>
-            <div style="border-top: 1px solid var(--border); margin: 8px 0;"></div>
-            <div style="padding: 4px 16px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.1em;">Calculators</div>
-            <a href="/calculators/bmi-calculator" style="font-size: 14px;">BMI Calculator</a>
-            <a href="/calculators/creatinine-clearance-calculator" style="font-size: 14px;">CrCl Calculator</a>
-            <a href="/calculators/bsa-calculator" style="font-size: 14px;">BSA Calculator</a>
-            <a href="/calculators/bicarbonate-deficit-calculator" style="font-size: 14px;">HCO3 Deficit</a>
-            <a href="/calculators/doctors" style="font-size: 14px; color: var(--expert-amber);">For Doctors</a>
-            <a href="/calculators/nurses" style="font-size: 14px; color: var(--expert-amber);">For Nurses</a>
-            <a href="/calculators/pharmacists" style="font-size: 14px; color: var(--expert-amber);">For Pharmacists</a>
-            <a href="/calculators/students" style="font-size: 14px; color: var(--expert-amber);">For Students</a>
-            <a href="/calculators/er" style="font-size: 14px; color: var(--expert-amber);">ER / Emergency</a>
-            <a href="/calculators/icu" style="font-size: 14px; color: var(--expert-amber);">ICU / Critical Care</a>
-            <a href="/calculators/pediatrics" style="font-size: 14px; color: var(--expert-amber);">Pediatrics</a>
-            <a href="/calculators/obgyn" style="font-size: 14px; color: var(--expert-amber);">OB/GYN</a>
-            <a href="/calculators/surgeons" style="font-size: 14px; color: var(--expert-amber);">Surgeons</a>
-            <a href="/calculators/anesthesia" style="font-size: 14px; color: var(--expert-amber);">Anesthesia</a>
-            <a href="/calculators/lab" style="font-size: 14px; color: var(--expert-amber);">Lab / Pathology</a>
-            <a href="/calculators/dietitians" style="font-size: 14px; color: var(--expert-amber);">Dietitians</a>
           </div>
         </div>
       </div>
@@ -438,9 +421,18 @@
       if (exam.format) {
         if (exam.step3Exam) {
           formatLine = `
-            <div class="mock-stat" style="flex-direction: column; align-items: flex-start; gap: 6px; margin-top: 12px; border-top: 1px dashed var(--border); padding-top: 12px;">
-              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Schedule & Structure</span>
-              <span style="color: var(--text-h); font-weight: 700; text-align: left; line-height: 1.4; font-size: 13px;">${exam.format}</span>
+            <div class="mock-stat" style="flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 14px; border-top: 1px dashed var(--border); padding-top: 14px; width: 100%;">
+              <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 2px;">Exam Structure (2-Day Split)</span>
+              <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; width: 100%;">
+                  <span style="font-weight: 700; color: var(--text-h);">Day 1 (FIP)</span>
+                  <span style="color: var(--accent); font-weight: 700;">232 MCQ <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">(6 blocks)</span></span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 13px; width: 100%;">
+                  <span style="font-weight: 700; color: var(--text-h);">Day 2 (ACP)</span>
+                  <span style="color: var(--accent); font-weight: 700;">180 MCQ <span style="color: var(--text-muted); font-weight: 500; font-size: 11px;">(6 blocks)</span></span>
+                </div>
+              </div>
             </div>
           `;
         } else {

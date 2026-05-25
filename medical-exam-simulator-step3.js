@@ -81,8 +81,16 @@
     }
     const selected = shuffle(mcqs).slice(0, TOTAL_QUESTIONS);
     const blocks = [];
+    let start = 0;
     for (let i = 0; i < TOTAL_BLOCKS; i++) {
-      blocks.push(selected.slice(i * Q_PER_BLOCK, (i + 1) * Q_PER_BLOCK));
+      let size = Q_PER_BLOCK;
+      if (day === 1) {
+        size = i < 4 ? 39 : 38;
+      } else {
+        size = 30;
+      }
+      blocks.push(selected.slice(start, start + size));
+      start += size;
     }
     return blocks;
   }
@@ -123,12 +131,12 @@
     document.getElementById('hub-completed-tag').classList.toggle('hidden', !completed);
     document.getElementById('day1-status').textContent = d1Done
       ? `Completed — ${day1Result.scorePct}% (${day1Result.correct}/${day1Result.total})`
-      : 'Not started · ~7 hours · 6 blocks × 40 questions';
+      : 'Not started · ~7 hours · 6 blocks (38-39 questions per block, 232 MCQs total)';
     const day2Btn = document.getElementById('btn-start-day2');
     day2Btn.disabled = !d1Done;
     day2Btn.title = d1Done ? '' : 'Complete Day 1 first';
     document.getElementById('day2-status').textContent = d1Done
-      ? 'Day 2 ACP: 6 blocks × 33 MCQs (~6 hours) — CCS not included'
+      ? 'Day 2 ACP: 6 blocks × 30 MCQs (~6 hours, 180 MCQs total) — CCS not included'
       : 'Locked until Day 1 is complete';
     showView('hub-ui');
   }
@@ -194,8 +202,9 @@
     let g = 0;
     const wrong = [];
     for (let b = 0; b < TOTAL_BLOCKS; b++) {
-      for (let q = 0; q < Q_PER_BLOCK; q++) {
-        const question = state.questions[b][q];
+      const blockQs = state.questions[b] || [];
+      for (let q = 0; q < blockQs.length; q++) {
+        const question = blockQs[q];
         if (state.answers[g] === question.correct_index) correct++;
         else wrong.push(g);
         g++;
@@ -318,8 +327,14 @@
     }
     const qNav = document.getElementById('q-nav');
     qNav.innerHTML = '';
-    for (let i = 0; i < Q_PER_BLOCK; i++) {
-      const g = state.currentBlock * Q_PER_BLOCK + i;
+    const currentBlockQs = state.questions[state.currentBlock] || [];
+    for (let i = 0; i < currentBlockQs.length; i++) {
+      let g = 0;
+      for (let prev = 0; prev < state.currentBlock; prev++) {
+        g += state.questions[prev].length;
+      }
+      g += i;
+      
       const btn = document.createElement('div');
       btn.className = `q-btn ${i === state.currentQ ? 'current' : ''} ${state.answers[g] !== undefined ? 'answered' : 'unanswered'}`;
       btn.textContent = i + 1;
@@ -336,9 +351,14 @@
   }
 
   function renderQuestion() {
-    const g = state.currentBlock * Q_PER_BLOCK + state.currentQ;
+    let g = 0;
+    for (let prev = 0; prev < state.currentBlock; prev++) {
+      g += state.questions[prev].length;
+    }
+    g += state.currentQ;
     const q = state.questions[state.currentBlock][state.currentQ];
-    document.getElementById('q-text').innerHTML = `<div style="font-size:11px;color:#9ca3af;margin-bottom:8px;font-weight:800">Q ${state.currentQ + 1} / ${Q_PER_BLOCK}</div><div style="line-height:1.6;font-size:18px">${formatMcqHtml(q.question)}</div>`;
+    const currentBlockQs = state.questions[state.currentBlock] || [];
+    document.getElementById('q-text').innerHTML = `<div style="font-size:11px;color:#9ca3af;margin-bottom:8px;font-weight:800">Q ${state.currentQ + 1} / ${currentBlockQs.length}</div><div style="line-height:1.6;font-size:18px">${formatMcqHtml(q.question)}</div>`;
     const opts = Array.isArray(q.options) ? q.options : JSON.parse(q.options);
     document.getElementById('options-list').innerHTML = opts
       .map(
@@ -349,7 +369,11 @@
   }
 
   window._s3Select = function (idx) {
-    const g = state.currentBlock * Q_PER_BLOCK + state.currentQ;
+    let g = 0;
+    for (let prev = 0; prev < state.currentBlock; prev++) {
+      g += state.questions[prev].length;
+    }
+    g += state.currentQ;
     state.answers[g] = idx;
     saveState();
     renderQuestion();
@@ -357,7 +381,8 @@
   };
 
   window._s3Next = function () {
-    if (state.currentQ < Q_PER_BLOCK - 1) {
+    const currentBlockQs = state.questions[state.currentBlock] || [];
+    if (state.currentQ < currentBlockQs.length - 1) {
       state.currentQ++;
       saveState();
       renderQuestion();
