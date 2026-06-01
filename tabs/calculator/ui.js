@@ -143,6 +143,287 @@ window.CalcUI = {
   _name(c) { return c.name[CalcI18n.lang] || c.name.en; },
   _desc(c) { return c.desc[CalcI18n.lang] || c.desc.en; },
 
+  getClinicalInfo(id, calc, schema) {
+    const name = this._name(calc);
+    const formulaStr = schema.formula || 'Custom Algorithmic Calculation';
+
+    // Tailored database of calculators
+    const DB = {
+      'gcs': {
+        why: 'The Glasgow Coma Scale (GCS) is used to objectively describe the level of consciousness in a patient following acute brain injury. It helps identify severity of impairment, guides triage decisions (e.g., airway protection), and tracks neurological trends.',
+        formula: 'GCS = Eye (1-4) + Verbal (1-5) + Motor (1-6)',
+        formulaExplanation: 'The sum score ranges from 3 (deep coma or brain death) to 15 (fully awake and oriented). Individual sub-scores should always be reported (e.g., E3V4M6 = GCS 13) to track specific deficits.',
+        steps: [
+          'Assess Eye Opening: Observe if the patient opens eyes spontaneously, to voice, to painful stimulation, or not at all.',
+          'Assess Verbal Response: Ask the patient simple orientation questions (name, location, month) to determine if they are oriented, confused, using inappropriate words, making incomprehensible sounds, or completely silent.',
+          'Assess Motor Response: Ask the patient to obey commands. If unable, apply localized stimulus to test for purposeful localization, withdrawal, decorticate/flexion posturing, decerebrate/extension posturing, or no movement.',
+          'Add the three values together to calculate the final GCS score.'
+        ],
+        clinicalTips: 'A GCS score of 8 or less is the classic clinical threshold indicating the need for endotracheal intubation to protect the airway ("GCS less than 8, intubate").'
+      },
+      'egfr': {
+        why: 'Estimated Glomerular Filtration Rate (eGFR) is the gold standard metric used to screen for, stage, and monitor Chronic Kidney Disease (CKD). It estimates the volume of blood filtered by the kidneys per minute, normalized to a standard body surface area.',
+        formula: 'CKD-EPI 2021 Equation (Serum Creatinine)',
+        formulaExplanation: 'The updated 2021 CKD-EPI equation calculates eGFR by scaling serum creatinine, age, and sex, notably omitting the race coefficient used in older MDRD or 2009 CKD-EPI formulas to enhance objectivity.',
+        steps: [
+          'Measure the patient\'s Serum Creatinine levels (mg/dL or µmol/L).',
+          'Record the patient\'s age and biological sex.',
+          'Apply the mathematical equation which utilizes specific constants based on sex and creatinine level thresholds to determine estimated clearance in mL/min/1.73m².'
+        ],
+        clinicalTips: 'An eGFR persistently below 60 mL/min/1.73m² for 3 months or longer satisfies the diagnostic criteria for Chronic Kidney Disease.'
+      },
+      'chads2-vasc': {
+        why: 'The CHA₂DS₂-VASc score is a clinically validated tool used to estimate stroke risk in patients with non-valvular Atrial Fibrillation (AFib). It helps clinicians determine whether oral anticoagulation (like DOACs or Warfarin) is indicated.',
+        formula: 'Sum of risk points (0 to 9)',
+        formulaExplanation: 'Points are allocated as: Congestive Heart Failure (+1), Hypertension (+1), Age ≥75 (+2), Diabetes (+1), Stroke/TIA history (+2), Vascular disease (+1), Age 65-74 (+1), and Female sex (+1).',
+        steps: [
+          'Review the patient\'s medical history for congestive heart failure, hypertension, diabetes, previous stroke/TIA, and vascular disease.',
+          'Identify the patient\'s age and gender.',
+          'Assign 1 or 2 points for each positive risk factor and sum them up to calculate the score.'
+        ],
+        clinicalTips: 'Anticoagulation is strongly recommended for a score ≥ 2 in males or ≥ 3 in females. Consider anticoagulation for a score of 1 in males.'
+      },
+      'wells-pe': {
+        why: 'The Wells Criteria for Pulmonary Embolism (PE) is a clinical decision rule used to estimate the pre-test probability of a PE, helping to guide diagnostic workups (e.g., D-dimer vs. CT Angiogram).',
+        formula: 'Wells Score Sum (0 to 12.5)',
+        formulaExplanation: 'Assigns points based on clinical features: DVT signs (+3), PE most likely (+3), Heart rate >100 (+1.5), Immobilization/surgery (+1.5), Previous PE/DVT (+1.5), Hemoptysis (+1), and Malignancy (+1).',
+        steps: [
+          'Evaluate the patient for active swelling and pain suggestive of a Deep Vein Thrombosis.',
+          'Evaluate if an alternative diagnosis is less likely than a pulmonary embolism.',
+          'Check vital signs for tachycardia, and review history for recent immobilization/surgery, hemoptysis, active cancer, or previous thrombosis.',
+          'Sum the active points to determine low, moderate, or high risk stratification.'
+        ],
+        clinicalTips: 'In patients with a Wells Score ≤ 4 ("PE unlikely"), a highly sensitive D-dimer test can safely rule out PE without the need for radiation exposure from a CT scan.'
+      },
+      'curb65': {
+        why: 'The CURB-65 score is a severity predictor for patients diagnosed with Community-Acquired Pneumonia (CAP). It helps clinicians decide whether the patient can be safely treated as an outpatient, requires admission to the ward, or requires intensive care.',
+        formula: 'CURB-65 Score (0 to 5)',
+        formulaExplanation: 'One point is given for each of: Confusion, BUN >19 mg/dL, Respiratory rate ≥30/min, Systolic BP <90 or Diastolic ≤60, and Age ≥65 years.',
+        steps: [
+          'Assess the patient\'s orientation for acute confusion.',
+          'Obtain blood chemistry to check Urea or Blood Urea Nitrogen (BUN) levels.',
+          'Count the respiratory rate and record the blood pressure.',
+          'Sum the points: 0-1 points indicate outpatient management, 2 points warrant hospital admission, and ≥3 points indicate severe pneumonia requiring intensive care consideration.'
+        ],
+        clinicalTips: 'Always pair the CURB-65 score with clinical judgment; comorbidities, social support, and oxygen saturation are critical secondary indicators.'
+      },
+      'qsofa': {
+        why: 'The Quick SOFA (qSOFA) score is a rapid screening tool used at the bedside outside the intensive care unit to identify patients with suspected infection who are at high risk of poor outcomes or clinical deterioration.',
+        formula: 'qSOFA Score (0 to 3)',
+        formulaExplanation: 'One point is awarded for each of: Respiratory rate ≥22 breaths/min, Altered mental status (GCS <15), and Systolic blood pressure ≤100 mmHg.',
+        steps: [
+          'Measure the patient\'s respiratory rate (breaths per minute).',
+          'Evaluate the patient\'s consciousness (presence of new confusion or lethargy).',
+          'Measure the systolic blood pressure.',
+          'Count the active criteria: a score of ≥2 suggests high risk of sepsis and clinical deterioration, indicating a need for urgent investigation.'
+        ],
+        clinicalTips: 'qSOFA does not define sepsis, but is an excellent screening trigger for aggressive fluid resuscitation, blood culture collection, and broad-spectrum antibiotics.'
+      },
+      'sofa': {
+        why: 'The Sequential Organ Failure Assessment (SOFA) score is a diagnostic staging tool used in critical care units to quantify and track the severity of organ dysfunction across six physiological systems, correlating strongly with intensive care mortality risk.',
+        formula: 'SOFA Score Sum (0 to 24)',
+        formulaExplanation: 'Grades dysfunction from 0 (normal) to 4 (severe failure) across 6 organ systems: Respiration (PaO₂/FiO₂), Coagulation (Platelets), Liver (Bilirubin), Cardiovascular (MAP/Vasopressors), CNS (GCS), and Renal (Creatinine/Urine output).',
+        steps: [
+          'Obtain arterial blood gas results for PaO₂ and determine current FiO₂.',
+          'Obtain laboratory values for platelets, bilirubin, and creatinine.',
+          'Evaluate blood pressure, vasopressor infusion rates, and GCS.',
+          'Monitor hourly urine output.',
+          'Grade each organ system from 0 to 4 based on clinical thresholds and sum the scores.'
+        ],
+        clinicalTips: 'An increase in the SOFA score of 2 points or more in a patient with suspected infection satisfies the formal Sepsis-3 definition of Sepsis.'
+      },
+      'map': {
+        why: 'Mean Arterial Pressure (MAP) represents the average perfusion pressure flowing through the systemic vasculature during a single cardiac cycle. It is a critical vital sign for ensuring adequate organ perfusion.',
+        formula: 'MAP = (Systolic BP + 2 × Diastolic BP) / 3',
+        formulaExplanation: 'Diastole accounts for two-thirds of the cardiac cycle duration at normal heart rates, which is why diastolic pressure is weighted twice as heavily as systolic pressure.',
+        steps: [
+          'Obtain the patient\'s blood pressure reading.',
+          'Multiply the Diastolic Blood Pressure by 2.',
+          'Add the Systolic Blood Pressure to that result.',
+          'Divide the final sum by 3 to calculate the MAP in mmHg.'
+        ],
+        clinicalTips: 'A MAP of at least 65 mmHg is widely regarded as the absolute minimum threshold required to maintain perfusion to vital organs (brain, kidneys, heart) in shock states.'
+      },
+      'shock-index': {
+        why: 'The Shock Index is a simple, highly sensitive bedside screening tool used to detect early, occult, or compensated hypovolemic and hemorrhagic shock before standard hypotension manifests.',
+        formula: 'Shock Index = Heart Rate / Systolic BP',
+        formulaExplanation: 'Normally, systolic blood pressure is higher than heart rate, yielding a ratio of 0.5 to 0.7. An elevated ratio indicates occult systemic hypovolemia.',
+        steps: [
+          'Count the patient\'s heart rate (beats per minute).',
+          'Measure the patient\'s systolic blood pressure (mmHg).',
+          'Divide the heart rate by the systolic blood pressure to obtain the index.'
+        ],
+        clinicalTips: 'A Shock Index greater than 0.9 strongly suggests significant occult intravascular volume depletion, warning of impending cardiovascular collapse.'
+      },
+      'parkland': {
+        why: 'The Parkland Formula is a validated guide used to calculate the volume of intravenous crystalloid fluids required to resuscitate a patient experiencing major, severe burns over the first 24 hours from the time of injury.',
+        formula: 'Resuscitation Volume = 4 mL × Body Weight (kg) × %TBSA Burned',
+        formulaExplanation: 'Calculates the volume of Lactated Ringer\'s solution needed. Total Body Surface Area (%TBSA) is estimated using the Rule of Nines for partial- and full-thickness burns.',
+        steps: [
+          'Determine the patient\'s body weight in kilograms.',
+          'Estimate the percentage of total body surface area affected by partial- or full-thickness burns.',
+          'Multiply: 4 × Weight × TBSA to find the total 24-hour volume in mL.',
+          'Administer 50% of the calculated volume over the first 8 hours (starting from the *time of burn*), and the remaining 50% over the next 16 hours.'
+        ],
+        clinicalTips: 'Always titrate actual fluid delivery based on urine output (target 0.5 to 1.0 mL/kg/h in adults) rather than strictly adhering to the calculated value.'
+      },
+      'abg-analyzer': {
+        why: 'Arterial Blood Gas (ABG) interpretation is vital in critical care to assess oxygenation, ventilation efficiency, and systemic acid-base balances, guiding ventilator adjustments and metabolic therapies.',
+        formula: 'Henderson-Hasselbalch Equilibrium Integration',
+        formulaExplanation: 'Evaluates arterial pH, partial pressure of carbon dioxide (PaCO₂) and bicarbonate (HCO₃⁻) to identify primary respiratory or metabolic acid-base disorders and compensation trends.',
+        steps: [
+          'Obtain arterial blood gas values for pH, PaCO₂, and HCO₃⁻.',
+          'Evaluate pH: <7.35 indicates acidemia; >7.45 indicates alkalemia.',
+          'Check PaCO₂ and HCO₃⁻ to determine if the primary disorder is respiratory (matching PaCO₂) or metabolic (matching HCO₃⁻).',
+          'Assess for compensation: check if the non-primary variable has shifted in the direction that opposes the pH change.'
+        ],
+        clinicalTips: 'Always cross-reference the clinical context—history of chronic lung disease, severe vomiting, or diarrhea helps validate complex mixed disorders.'
+      },
+      'anion-gap': {
+        why: 'The Serum Anion Gap calculates the concentration of unmeasured anions in the blood, helping clinicians differentiate the etiologies of metabolic acidosis.',
+        formula: 'Anion Gap = Sodium − (Chloride + Bicarbonate)',
+        formulaExplanation: 'Represents the difference between measured cations (sodium) and measured anions (chloride and bicarbonate). A normal gap is typically 8 to 12 mEq/L.',
+        steps: [
+          'Obtain the patient\'s basic metabolic panel (BMP) lab values.',
+          'Add the Chloride and Bicarbonate levels together.',
+          'Subtract that sum from the Sodium level to find the gap.'
+        ],
+        clinicalTips: 'An elevated anion gap (>12 mEq/L) indicates the presence of unmeasured organic acids, classically remembered by the mnemonic MUDPILES (Methanol, Uremia, DKA, Propylene glycol, INH/Iron, Lactic acidosis, Ethylene glycol, Salicylates).'
+      },
+      'corrected-calcium': {
+        why: 'Corrected Calcium is calculated because approximately 40-50% of serum calcium is bound to albumin. Hypoalbuminemia falsely lowers measured total calcium levels despite ionized (physiologically active) calcium remaining normal.',
+        formula: 'Corrected Ca (mg/dL) = Measured Ca + 0.8 × (4.0 − Serum Albumin)',
+        formulaExplanation: 'For every 1 g/dL drop in serum albumin below the standard normal of 4.0 g/dL, total serum calcium drops by approximately 0.8 mg/dL.',
+        steps: [
+          'Obtain measured serum total calcium and serum albumin levels from blood tests.',
+          'Subtract the albumin level from 4.0.',
+          'Multiply that difference by 0.8.',
+          'Add that result to the measured calcium level to find the corrected total calcium.'
+        ],
+        clinicalTips: 'Always calculate corrected calcium before diagnosing clinical hypocalcemia in malnourished, cirrhotic, or hospitalized patients with low albumin.'
+      },
+      'corrected-sodium': {
+        why: 'Sodium Correction is necessary because hyperglycemia acts as an osmotic agent, drawing intracellular water into the vascular space and diluting measured serum sodium concentrations (pseudohyponatremia).',
+        formula: 'Corrected Na = Measured Na + 1.6 × [ (Glucose − 100) / 100 ]',
+        formulaExplanation: 'For every 100 mg/dL increase in serum glucose above 100 mg/dL, the measured sodium concentration is diluted by approximately 1.6 mEq/L (or 2.4 mEq/L if glucose exceeds 400 mg/dL).',
+        steps: [
+          'Obtain serum sodium and glucose levels from a basic metabolic panel.',
+          'Subtract 100 from the glucose level.',
+          'Divide that value by 100.',
+          'Multiply by 1.6 (or 2.4 for extreme hyperglycemia) and add the result to the measured sodium.'
+        ],
+        clinicalTips: 'Failing to correct sodium in patients with DKA or severe hyperglycemia can lead to inappropriate saline resuscitation planning, risking cerebral edema.'
+      },
+      'qtc': {
+        why: 'The Corrected QT (QTc) interval standardizes the QT measurement against heart rate variations. A prolonged QTc is a critical biomarker for high risk of severe ventricular arrhythmias, particularly Torsades de Pointes.',
+        formula: 'QTc (Bazett) = QT / √ (RR interval in seconds)',
+        formulaExplanation: 'The standard Bazett formula divides the measured QT interval by the square root of the RR interval (which is calculated as 60 divided by the Heart Rate).',
+        steps: [
+          'Measure the QT interval on an ECG (onset of Q wave to end of T wave).',
+          'Record the heart rate in beats per minute.',
+          'Apply the Bazett formula to calculate the rate-normalized interval in milliseconds.'
+        ],
+        clinicalTips: 'A QTc interval greater than 500 milliseconds is a critical warning threshold associated with a high risk of drug-induced arrhythmias.'
+      },
+      'maintenance-fluid': {
+        why: 'Maintenance Fluid calculation plans the hourly fluid volume required to replace physiological water and electrolyte losses in a patient unable to tolerate oral intake, preventing dehydration without causing volume overload.',
+        formula: 'Holliday-Segar (4-2-1 Rule)',
+        formulaExplanation: 'Allocates hourly rates: 4 mL/kg/h for the first 10 kg of body weight, + 2 mL/kg/h for the next 10 kg, and + 1 mL/kg/h for every kilogram above 20 kg.',
+        steps: [
+          'Identify the patient\'s body weight in kilograms.',
+          'Apply the 4-2-1 rule: for a 70 kg adult, calculate: (10 × 4) + (10 × 2) + (50 × 1) = 40 + 20 + 50 = 110 mL/h.',
+          'Select an appropriate maintenance crystalloid solution (e.g., D5 ½NS + 20 mEq KCl).'
+        ],
+        clinicalTips: 'The Holliday-Segar method represents a physiological baseline; always adjust rates based on clinical signs of volume status, heart failure, or renal impairment.'
+      },
+      'tidal-volume': {
+        why: 'Tidal Volume planning dictates the volume of air delivered during a mechanical ventilator breath. Standardizing volume against Ideal Body Weight prevents high pressure (barotrauma) and stretch (volutrauma) in the lungs.',
+        formula: 'Target Vt = 6 to 8 mL / kg of Ideal Body Weight (IBW)',
+        formulaExplanation: 'Calculates protective lung volumes. Crucially, the calculation must utilize Ideal Body Weight (which scales with biological lung size) rather than actual weight.',
+        steps: [
+          'Compute the patient\'s Ideal Body Weight based on height and biological sex.',
+          'Select the desired protective clinical target (typically 6 mL/kg for ARDS, or up to 8 mL/kg for normal lungs).',
+          'Multiply the target mL/kg by the Ideal Body Weight to determine the ventilator setting.'
+        ],
+        clinicalTips: 'Using a patient\'s actual weight to program tidal volumes in obese patients is a major clinical error that can lead to severe ventilator-induced lung injury.'
+      },
+      'apgar': {
+        why: 'The APGAR score is a rapid, standardized method used to assess a newborn infant\'s physical condition immediately after birth at 1 and 5 minutes, guiding emergency resuscitation decisions.',
+        formula: 'APGAR = Appearance + Pulse + Grimace + Activity + Respiration',
+        formulaExplanation: 'Grades five physiological metrics from 0 (poor) to 2 (normal), yielding a sum score from 0 to 10.',
+        steps: [
+          'Assess skin color (Appearance) for cyanosis or pinkness.',
+          'Measure the pulse rate.',
+          'Observe reflex response to mild stimulation (Grimace).',
+          'Evaluate muscle tone and active movement (Activity).',
+          'Observe respiratory effort and crying quality.',
+          'Sum the scored parameters to find the total APGAR score.'
+        ],
+        clinicalTips: 'An APGAR score of 7 to 10 is considered normal. A score of 3 or less indicates critical distress, requiring immediate cardiopulmonary resuscitation.'
+      },
+      'edd': {
+        why: 'The Estimated Date of Delivery (EDD) calculator predicts the due date of a pregnancy, which is vital for timing clinical prenatal screenings, tracking fetal growth milestones, and planning deliveries.',
+        formula: 'Naegele\'s Rule: EDD = LMP + 7 Days − 3 Months + 1 Year',
+        formulaExplanation: 'Naegele\'s rule projects delivery assuming a standard 280-day gestational duration from the first day of the Last Menstrual Period (LMP).',
+        steps: [
+          'Identify the first day of the patient\'s Last Menstrual Period.',
+          'Add 7 days to that date.',
+          'Subtract 3 calendar months.',
+          'Add 1 calendar year to calculate the final estimated date.'
+        ],
+        clinicalTips: 'Always correlate LMP-derived due dates with a first-trimester ultrasound measurement, which is the gold standard for clinical pregnancy dating.'
+      },
+      'gestational-age': {
+        why: 'Gestational Age calculations track the progress of a pregnancy in weeks and days, which is the primary metric governing all clinical decisions, testing schedules, and medication safety profiles.',
+        formula: 'Weeks and Days since the first day of the LMP',
+        formulaExplanation: 'Measures time elapsed from the first day of the Last Menstrual Period to the current date, standardly reported as a dual number (e.g., 28 weeks and 3 days).',
+        steps: [
+          'Identify the first day of the Last Menstrual Period.',
+          'Count the exact number of days that have elapsed from that date to the current bedside evaluation date.',
+          'Divide the total number of days by 7 to determine the weeks and remaining days.'
+        ],
+        clinicalTips: 'In cases of IVF pregnancies, gestational age is determined using the exact date of embryo transfer rather than LMP.'
+      },
+      'vbac': {
+        why: 'The Vaginal Birth After Cesarean (VBAC) calculator estimates the probability of a successful vaginal delivery in a patient who has previously undergone a cesarean section, assisting in patient counseling and delivery planning.',
+        formula: 'Guideline-Based Success Probability Model',
+        formulaExplanation: 'Uses clinical variables including age, BMI, prior vaginal deliveries, and the specific indication for the prior cesarean section to compute a predicted success rate.',
+        steps: [
+          'Record the patient\'s age and pre-pregnancy body mass index.',
+          'Identify if the patient has ever had a successful vaginal delivery (before or after the cesarean).',
+          'Review the indication for the prior cesarean section (e.g., arrested labor/dystocia).',
+          'Calculate the success percentage using the weighted risk models.'
+        ],
+        clinicalTips: 'A predicted success probability of 70% or greater is widely considered favorable for offering a Trial of Labor After Cesarean (TOLAC) in a setting with immediate surgical support.'
+      }
+    };
+
+    if (DB[id]) {
+      return {
+        title: name,
+        why: DB[id].why,
+        formula: DB[id].formula,
+        formulaExplanation: DB[id].formulaExplanation,
+        steps: DB[id].steps,
+        clinicalTips: DB[id].clinicalTips
+      };
+    }
+
+    const inputNames = schema.inputs.map(i => i.label.en).join(', ');
+    return {
+      title: name,
+      why: `The ${name} is an evidence-based clinical calculator designed to support clinical decision-making. It standardizes evaluations, reduces calculation errors, and provides quick bedside assistance.`,
+      formula: formulaStr,
+      formulaExplanation: `This calculator processes the inputs: ${inputNames} according to standard clinical algorithms and medical guidelines.`,
+      steps: [
+        `Identify and gather the required clinical parameters: ${inputNames}.`,
+        `Input the measured patient values into the designated calculator fields.`,
+        `Click "Calculate" to execute the standard physiological formula and view the clinical interpretation.`
+      ],
+      clinicalTips: 'Always pair calculated results with a comprehensive clinical evaluation. Clinical calculators support, but do not replace, individual bedside judgment.'
+    };
+  },
+
   toggleFav(id) {
     let f = JSON.parse(localStorage.getItem(this.STORAGE.favs) || '[]');
     f = f.includes(id) ? f.filter(x => x !== id) : [...f, id];
@@ -314,6 +595,37 @@ window.CalcUI = {
         <div class="result-placeholder">${CalcI18n.t('result')}</div>
       </div>
     </div>`;
+
+    // Fetch and append the rich clinical information block directly under the calculator
+    const info = this.getClinicalInfo(id, calc, schema);
+    html += `
+    <article class="clinical-content" style="max-width: 900px; margin: 48px auto 0; border-top: 1px solid var(--border); padding-top: 32px;">
+      <h2 style="font-family: var(--font-display); font-size: 26px; font-weight: 800; color: var(--text-h); margin-top: 20px; margin-bottom: 16px; border-left: 4px solid var(--accent); padding-left: 16px;">
+        ${info.title} Reference Guide
+      </h2>
+      
+      <h3 style="font-size: 18px; font-weight: 700; color: var(--text-h); margin-top: 24px; margin-bottom: 10px;">Why we use this calculator and what for?</h3>
+      <p style="margin-bottom: 20px; line-height: 1.8; color: var(--text-body);">${info.why}</p>
+      
+      <h3 style="font-size: 18px; font-weight: 700; color: var(--text-h); margin-top: 24px; margin-bottom: 10px;">What Formula is used?</h3>
+      <div class="formula-card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin: 16px 0; box-shadow: var(--shadow);">
+        <div class="formula-math" style="font-family: var(--font-mono); font-size: 18px; color: var(--accent-light); text-align: center; margin: 12px 0; font-weight: bold; word-wrap: break-word;">
+          ${(info.formula || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+        </div>
+        <p style="margin: 0; font-size: 14px; color: var(--text-muted); line-height: 1.6;">${info.formulaExplanation}</p>
+      </div>
+      
+      <h3 style="font-size: 18px; font-weight: 700; color: var(--text-h); margin-top: 24px; margin-bottom: 10px;">How to calculate?</h3>
+      <ol style="margin-bottom: 24px; padding-left: 20px; line-height: 1.8; color: var(--text-body);">
+        ${info.steps.map(s => `<li style="margin-bottom: 8px;">${s}</li>`).join('')}
+      </ol>
+      
+      ${info.clinicalTips ? `
+      <div style="background: rgba(var(--accent-rgb), 0.04); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 12px; padding: 20px; margin-bottom: 28px; margin-top: 24px;">
+        <strong style="color: var(--accent); display: block; margin-bottom: 8px; font-size: 15px;">💡 Bedside Clinical Tips & Warnings</strong>
+        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--text-body);">${info.clinicalTips}</p>
+      </div>` : ''}
+    </article>`;
 
     setTimeout(() => {
       document.getElementById('calc-back')?.addEventListener('click', () => this.goRole(calc.role));
