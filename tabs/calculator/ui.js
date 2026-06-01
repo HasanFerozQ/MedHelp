@@ -542,7 +542,15 @@ window.CalcUI = {
               <option value="female">Female</option>
             </select>
           </label>
-          <label>Weight (lbs or kg)<input type="text" id="er-weight" placeholder="e.g. 150 lbs or 70 kg"></label>
+          <label style="display:flex; flex-direction:column;">Weight
+            <div style="display:flex; align-items:center;">
+              <input type="number" id="er-weight" placeholder="150" step="any" style="flex:1; border-top-right-radius:0; border-bottom-right-radius:0;">
+              <select id="er-weight-unit" style="border-left:none; border-top-left-radius:0; border-bottom-left-radius:0; padding-left:4px; padding-right:8px; width:auto; background:var(--bg-input);">
+                <option value="lbs">lbs</option>
+                <option value="kg">kg</option>
+              </select>
+            </div>
+          </label>
         </div>
         <div class="panel-note">Values are shared across all ER calculators for fast bedside input.</div>
       </div>` : ''}
@@ -806,8 +814,10 @@ window.CalcUI = {
       return {
         age: raw.age || '',
         sex: raw.sex || '',
+        weightVal: raw.weightVal || '',
+        weightUnit: raw.weightUnit || 'lbs',
         weightText,
-        weightKg: this._parseErWeight(weightText)
+        weightKg: raw.weightKg || this._parseErWeight(weightText)
       };
     } catch (e) {
       return null;
@@ -818,10 +828,6 @@ window.CalcUI = {
     if (weight === undefined || weight === null) return null;
     const value = String(weight).trim().toLowerCase().replace(/,/g, '');
     if (!value) return null;
-    const lbMatch = value.match(/^([\d.]+)\s*(lb|lbs)$/);
-    const kgMatch = value.match(/^([\d.]+)\s*(kg)?$/);
-    if (lbMatch) return parseFloat(lbMatch[1]) * 0.45359237;
-    if (kgMatch) return parseFloat(kgMatch[1]);
     const parsed = parseFloat(value);
     return Number.isFinite(parsed) ? parsed : null;
   },
@@ -830,23 +836,39 @@ window.CalcUI = {
     const ageEl = document.getElementById('er-age');
     const sexEl = document.getElementById('er-sex');
     const weightEl = document.getElementById('er-weight');
+    const weightUnitEl = document.getElementById('er-weight-unit');
     if (!ageEl || !sexEl || !weightEl) return;
 
     ageEl.value = this._erPatient?.age || '';
     sexEl.value = this._erPatient?.sex || 'male';
-    weightEl.value = this._erPatient?.weightText || '';
+    weightEl.value = this._erPatient?.weightVal || '';
+    
+    if (weightUnitEl) {
+      weightUnitEl.value = this._erPatient?.weightUnit || (CalcUnits.system === 'US' ? 'lbs' : 'kg');
+    }
 
     const save = () => {
+      let weightKg = null;
+      let wVal = parseFloat(weightEl.value);
+      let wUnit = weightUnitEl ? weightUnitEl.value : 'kg';
+      if (!isNaN(wVal)) {
+        weightKg = wUnit === 'lbs' ? wVal * 0.45359237 : wVal;
+      }
       this._erPatient = {
         age: ageEl.value || '',
         sex: sexEl.value || 'male',
-        weightText: weightEl.value || '',
-        weightKg: this._parseErWeight(weightEl.value || '')
+        weightVal: weightEl.value || '',
+        weightUnit: wUnit,
+        weightText: weightEl.value ? (weightEl.value + ' ' + wUnit) : '',
+        weightKg: weightKg
       };
       localStorage.setItem(this.STORAGE.erPatient, JSON.stringify({
         age: this._erPatient.age,
         sex: this._erPatient.sex,
-        weightText: this._erPatient.weightText
+        weightVal: this._erPatient.weightVal,
+        weightUnit: this._erPatient.weightUnit,
+        weightText: this._erPatient.weightText,
+        weightKg: this._erPatient.weightKg
       }));
       this._pushErPatientToForms();
       this._showErBanner();
@@ -855,6 +877,7 @@ window.CalcUI = {
     ageEl.addEventListener('input', save);
     sexEl.addEventListener('change', save);
     weightEl.addEventListener('input', save);
+    if (weightUnitEl) weightUnitEl.addEventListener('change', save);
   },
 
   _pushErPatientToForms() {
