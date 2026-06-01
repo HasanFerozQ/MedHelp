@@ -25,8 +25,8 @@ window.CalcUI = {
   },
 
   canAccess(calc) {
+    if (calc?.freeDemo) return 'ok';
     if (!this._user) return 'auth';
-    if (calc.freeDemo) return 'ok';
     if (this._premium) return 'ok';
     return 'premium';
   },
@@ -535,14 +535,14 @@ window.CalcUI = {
       <h1>${role?.icon || ''} ${CalcI18n.t('roles.' + roleId)}</h1>
       ${role?.emergency ? `<div class="er-patient-panel">
         <div class="panel-row">
-          <label>Age<input type="number" id="er-age" min="0" max="120" step="1"></label>
+          <label>Age (years)<input type="number" id="er-age" min="0" max="120" step="1" placeholder="e.g. 35"></label>
           <label>Sex
             <select id="er-sex">
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
           </label>
-          <label>Weight<input type="text" id="er-weight" placeholder="kg / lbs"></label>
+          <label>Weight (lbs or kg)<input type="text" id="er-weight" placeholder="e.g. 150 lbs or 70 kg"></label>
         </div>
         <div class="panel-note">Values are shared across all ER calculators for fast bedside input.</div>
       </div>` : ''}
@@ -692,7 +692,10 @@ window.CalcUI = {
         val = savedRaw;
       }
     }
-    const label = inp.label[CalcI18n.lang] || inp.label.en;
+    let label = inp.label[CalcI18n.lang] || inp.label.en;
+    if (displayUnit) {
+      label += ` (${displayUnit})`;
+    }
     const range = grp ? CalcUnits.getRange(grp, fieldDisplaySys) : (inp.min !== undefined ? inp.min + '–' + (inp.max || '') : '');
     const placeholder = range ? 'Norm: ' + range : '';
 

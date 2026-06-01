@@ -2426,14 +2426,34 @@ a:hover {
   .nav-toggle.active span:nth-child(2) { opacity: 0; transform: translateX(10px); }
   .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); width: 24px; }
 
-  /* Dropdown in mobile */
+  /* Dropdown in mobile - fully expanded and flat */
+  .nav-dropdown {
+    width: 100%;
+  }
+  .nav-dropdown-btn {
+    pointer-events: none; /* Disable interactions since it's just a section header now */
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent) !important;
+    background: transparent !important;
+    padding: 8px 0 !important;
+    margin-top: 10px;
+  }
   .nav-dropdown-menu {
     position: static;
     background: transparent;
     border: none;
     padding: 0 0 0 15px;
     box-shadow: none;
-    display: none; /* Keep hidden unless clicked or just show all */
+    display: block !important; /* Fully expanded, no dropdowns! */
+  }
+  .nav-dropdown-menu a {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    padding: 10px 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
   }
 }
 

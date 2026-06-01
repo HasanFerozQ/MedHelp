@@ -253,3 +253,57 @@ input[type="number"] {
   appearance: textfield;
 }
 
+/* ER Shared Patient Panel Style */
+.er-patient-panel {
+  background: rgba(var(--accent-rgb), 0.05);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.er-patient-panel .panel-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+@media (max-width: 600px) {
+  .er-patient-panel .panel-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+.er-patient-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.er-patient-panel input,
+.er-patient-panel select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  color: var(--text-h);
+  font-size: 15px;
+  min-height: 44px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.er-patient-panel input:focus,
+.er-patient-panel select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+  outline: none;
+}
+.er-patient-panel .panel-note {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+

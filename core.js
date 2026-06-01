@@ -278,6 +278,15 @@ const MediHelp = {
     });
   },
 
+  initMobileNav: function() {
+    const dropdownBtns = document.querySelectorAll('.nav-dropdown-btn');
+    dropdownBtns.forEach(btn => {
+      if (window.innerWidth <= 900) {
+        btn.textContent = btn.textContent.replace(' ▼', '').replace('▼', '');
+      }
+    });
+  },
+
   initFeedbackWidget: function() {
     // 1. Create Floating Button
     const fab = document.createElement('button');
@@ -1306,6 +1315,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   MediHelp.initSiteFooter();
   MediHelp.initFeedbackWidget();
   MediHelp.initGlobalTriviaBanner();
+  MediHelp.initMobileNav();
   
   if (MediHelp.isAuthPage()) {
     MediHelp.initAuthModal();
