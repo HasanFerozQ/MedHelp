@@ -14,12 +14,11 @@
   const muteBtnEl = document.getElementById("mute-btn");
   const resultModalEl = document.getElementById("result-modal");
   const resultScoreBigEl = document.getElementById("result-score-big");
-  const resultTaglineEl = document.getElementById("result-tagline");
   const resultGridEl = document.getElementById("result-grid");
-  const resultStatsEl = document.getElementById("result-stats");
 
   const LETTERS = ["A", "B", "C", "D"];
   let currentQuestionRationale = "";
+  let finalDbScore = 0; // FIX: track authoritative DB score from finalize_trivia_session
 
   function resetTimerBar() {
     timerBar.style.transition = "none";
@@ -188,11 +187,101 @@
     }, C.RATIONALE_PAUSE_MS);
   }
 
-  function scoreTagline(score, total) {
-    if (score === total) return "Perfect score — outstanding.";
-    if (score >= 7) return "Strong round — keep it up.";
-    if (score >= 4) return "Solid effort — review rationales and try again tomorrow.";
-    return "Tough set today — rationales are your best teacher.";
+  async function renderResultBreakdown(sessionId) {
+    const breakdownEl = document.getElementById("result-breakdown");
+    if (!breakdownEl) return;
+    breakdownEl.innerHTML = '<p class="text-slate-400 text-sm text-center py-4">Loading review...</p>';
+
+    try {
+      const { data, error } = await C.db().rpc("get_trivia_session_results", {
+        p_session_id: sessionId
+      });
+      if (error) throw error;
+      
+      const results = data || [];
+      if (!results.length) {
+        breakdownEl.innerHTML = '<p class="text-slate-400 text-sm text-center py-4">No answers found.</p>';
+        return;
+      }
+
+      breakdownEl.innerHTML = results.map(q => {
+        const isRight = q.is_correct;
+        const statusColor = isRight ? "text-emerald-400" : "text-rose-400";
+        const statusIcon = isRight ? "fa-circle-check" : "fa-circle-xmark";
+        const statusBg = isRight ? "bg-emerald-400/10 border-emerald-500/20" : "bg-rose-400/10 border-rose-500/20";
+        
+        let optionsHtml = '';
+        const opts = Array.isArray(q.options) ? q.options : JSON.parse(q.options || "[]");
+        opts.forEach((opt, idx) => {
+          const isUserPick = idx === q.user_selected_index;
+          const isCorrectAns = idx === q.correct_index;
+          
+          let optClass = "border-slate-700 bg-slate-800 text-slate-300";
+          let iconHtml = '<i class="fa-regular fa-circle text-slate-600 text-[10px] shrink-0"></i>';
+          
+          if (isCorrectAns) {
+            optClass = "border-emerald-500 bg-emerald-500/10 text-emerald-100";
+            iconHtml = '<i class="fa-solid fa-check text-emerald-500 text-xs shrink-0"></i>';
+          } else if (isUserPick && !isCorrectAns) {
+            optClass = "border-rose-500 bg-rose-500/10 text-rose-100";
+            iconHtml = '<i class="fa-solid fa-xmark text-rose-500 text-xs shrink-0"></i>';
+          }
+
+          optionsHtml += `
+            <div class="p-2.5 sm:p-3 rounded-lg border ${optClass} flex items-center justify-between transition-colors">
+              <div class="flex items-center space-x-2.5 sm:space-x-3 pr-2 min-w-0">
+                <span class="w-6 h-6 shrink-0 rounded text-[10px] font-bold flex items-center justify-center ${isCorrectAns ? 'bg-emerald-500 text-slate-900' : isUserPick ? 'bg-rose-500 text-white' : 'bg-slate-700 text-slate-300'}">${LETTERS[idx]}</span>
+                <span class="text-[11px] sm:text-xs font-medium leading-tight">${escapeHtml(opt)}</span>
+              </div>
+              ${iconHtml}
+            </div>
+          `;
+        });
+
+        return `
+          <div class="p-3 sm:p-5 rounded-xl border ${statusBg}">
+            <div class="flex items-start justify-between mb-3">
+              <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest ${statusColor}">
+                <i class="fa-solid ${statusIcon} mr-1"></i> Q${q.question_order}
+              </span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed mb-4 whitespace-pre-wrap">${escapeHtml(q.prompt)}</p>
+            <div class="flex flex-col space-y-2 mb-4">
+              ${optionsHtml}
+            </div>
+            <div class="bg-slate-950/50 rounded-lg p-3 sm:p-4 border border-slate-800/50">
+              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5"><i class="fa-solid fa-lightbulb text-amber-400/80 mr-1"></i> Rationale</p>
+              <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">${escapeHtml(q.rationale)}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } catch (e) {
+      console.warn("Could not load rationales:", e);
+      breakdownEl.innerHTML = '<p class="text-rose-400 text-sm text-center py-4">Error loading review. Please try again later.</p>';
+    }
+  }
+
+  async function showResultModal(score, total, grid, setId, sessionId) {
+    finalDbScore = score; // Ensure share button has the authoritative score
+    resultScoreBigEl.innerHTML = `${score}<span class="text-2xl text-slate-500 font-semibold">/${total}</span>`;
+    resultGridEl.innerHTML = C.renderScoreGridHtml(grid);
+
+    let stats = null;
+    if (setId) {
+      const { data: statRow } = await C.db()
+        .from("trivia_daily_stats")
+        .select("participants, perfect_10")
+        .eq("set_id", setId)
+        .maybeSingle();
+      stats = statRow;
+    }
+    
+    document.getElementById("global-participants").textContent = stats ? String(stats.participants || 0) : "0";
+    document.getElementById("global-perfect").textContent = stats ? String(stats.perfect_10 || 0) : "0";
+
+    await renderResultBreakdown(sessionId);
+    resultModalEl.classList.remove("hidden");
   }
 
   async function finishTrivia() {
@@ -206,29 +295,14 @@
     const row = finRows?.[0];
     if (!row) throw new Error("Finish response missing");
 
-    const score = row.score;
-    const total = row.total_questions || C.TOTAL_QUESTIONS;
-    const grid = row.share_grid || "";
-
-    resultScoreBigEl.innerHTML = `${score}<span class="text-2xl text-slate-500 font-semibold">/${total}</span>`;
-    resultTaglineEl.textContent = scoreTagline(score, total);
-    resultGridEl.innerHTML = C.renderScoreGridHtml(grid);
-
-    let stats = null;
-    if (C.ctx.session?.set_id) {
-      const { data: statRow } = await C.db()
-        .from("trivia_daily_stats")
-        .select("participants, completers, perfect_10, avg_score")
-        .eq("set_id", C.ctx.session.set_id)
-        .maybeSingle();
-      stats = statRow;
-    }
-    resultStatsEl.textContent = stats
-      ? `${stats.participants} played today · avg ${stats.avg_score} · ${stats.perfect_10} perfect tens`
-      : "";
-
     C.clearActiveSession();
-    resultModalEl.classList.remove("hidden");
+    await showResultModal(
+      row.score, 
+      row.total_questions || C.TOTAL_QUESTIONS, 
+      row.share_grid || "", 
+      row.set_id, 
+      row.id
+    );
   }
 
   async function boot() {
@@ -240,8 +314,16 @@
       return;
     }
     if (C.ctx.session?.status === "finished") {
+      const row = C.ctx.session;
       C.clearActiveSession();
-      window.location.replace("/med-trivia");
+      // If they somehow land here with a finished session locally, load their results.
+      await showResultModal(
+        row.score || 0,
+        C.TOTAL_QUESTIONS,
+        row.share_grid || "",
+        row.set_id,
+        row.id
+      );
       return;
     }
 
@@ -253,8 +335,9 @@
     });
 
     document.getElementById("share-result").addEventListener("click", async () => {
-      const score = C.ctx.liveScore;
-      const text = `MedTrivia ${new Date().toLocaleDateString()}: ${score}/${C.TOTAL_QUESTIONS} on MediHelp`;
+      // FIX: use finalDbScore (from DB) not liveScore (client counter that can drift)
+      const score = finalDbScore || C.ctx.liveScore;
+      const text = `MedTrivia ${new Date().toLocaleDateString()}: ${score}/${C.TOTAL_QUESTIONS} — MediHelp Med Trivia`;
       try {
         await navigator.clipboard.writeText(text);
         alert("Score copied to clipboard.");

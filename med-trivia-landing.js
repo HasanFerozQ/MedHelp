@@ -16,6 +16,7 @@
   const userChipEl = document.getElementById("user-chip");
   const retakeHintEl = document.getElementById("retake-hint");
   let launchTicker = null;
+  let statePollTicker = null;
 
   function setStatus(kind, label, detail) {
     const colors = {
@@ -36,21 +37,28 @@
     return `${minutes}:${String(seconds).padStart(2, "0")}`;
   }
 
+  // FIX: always tick every second; auto-re-poll when countdown hits 0
   function updateLaunchCountdown(startAt, startLabel) {
     if (!launchMessageEl || !countdownEl) return;
     clearInterval(launchTicker);
+
     const refresh = () => {
       const remaining = startAt.getTime() - Date.now();
+
       if (remaining <= 0) {
+        // Quiz should now be live — stop the clock and re-poll state
         clearInterval(launchTicker);
-        countdownEl.textContent = "Starting now";
-        launchMessageEl.textContent = "Trivia is live! Refresh the page to join.";
+        countdownEl.textContent = "Checking status…";
+        launchMessageEl.textContent = "Trivia is starting — refreshing…";
         launchMessageEl.classList.remove("hidden");
+        setTimeout(() => paintInitialUi().catch(() => {}), 2000);
         return;
       }
+
       if (remaining > 30 * 60_000) {
+        // FIX: use dynamic startLabel instead of hardcoded "8:00 PM ET"
         countdownEl.textContent = startLabel || "Opens at 8:00 PM ET";
-        launchMessageEl.textContent = "Trivia will start at 8 PM ET. Stay tuned.";
+        launchMessageEl.textContent = `Quiz opens ${startLabel || "at 8 PM ET"}. Stay tuned!`;
         launchMessageEl.classList.remove("hidden");
       } else {
         countdownEl.textContent = `Starting in ${formatCountdown(remaining)}`;
@@ -58,13 +66,16 @@
         launchMessageEl.classList.remove("hidden");
       }
     };
+
     refresh();
-    if (startAt.getTime() - Date.now() <= 30 * 60_000) {
-      launchTicker = setInterval(refresh, 1000);
-    }
+    // FIX: always tick — was previously skipped when > 30 min, so the clock froze
+    launchTicker = setInterval(refresh, 1000);
   }
 
   async function paintInitialUi() {
+    // Clear any previous state poll
+    clearInterval(statePollTicker);
+
     const identity = await C.ensureGuestIdentity();
     const name = C.displayName(identity);
     if (userLabelEl) userLabelEl.textContent = name;
@@ -76,7 +87,7 @@
 
     await C.loadState();
     const hasSet = !!C.ctx.todaySet?.set_id;
-    const isPlayable = hasSet && C.ctx.state !== "no_content" && C.ctx.state !== "post_game";
+    const isPlayable = hasSet && C.ctx.state !== "no_content" && C.ctx.state !== "post_game" && C.ctx.state !== "scheduled";
     joinBtnEl.disabled = !isPlayable;
 
     const setDate = C.ctx.todaySet?.scheduled_date;
@@ -85,40 +96,94 @@
       : "—";
     setBadgeEl.textContent = hasSet ? `Set · ${title}` : "No set";
 
-    if (C.ctx.todaySet?.allow_retakes !== false) {
-      retakeHintEl.textContent = "Unlimited practice runs";
+    if (C.ctx.todaySet?.allow_retakes === false || !C.ctx.todaySet?.allow_retakes) {
+      if (retakeHintEl) {
+        retakeHintEl.textContent = "One attempt only";
+        retakeHintEl.classList.add("text-rose-400");
+        retakeHintEl.classList.remove("text-sky-400");
+        retakeHintEl.parentElement.querySelector("i")?.classList.replace("text-sky-400", "text-rose-400");
+      }
+    } else {
+      if (retakeHintEl) retakeHintEl.textContent = "Unlimited practice runs";
     }
 
     const startAt = C.ctx.todaySet?.start_at ? new Date(C.ctx.todaySet.start_at) : null;
+    const endAt = C.ctx.todaySet?.end_at ? new Date(C.ctx.todaySet.end_at) : null;
     const startLabel = startAt
-      ? `${startAt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} ${startAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' })} ET`
+      ? `${startAt.toLocaleDateString(undefined, { month: "short", day: "numeric" })} ${startAt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/New_York" })} ET`
       : null;
 
     if (C.ctx.state === "post_game") {
-      setStatus("off", "Closed", "Today’s set has ended. Check back tomorrow.");
-      joinBtnLabelEl.textContent = "Set closed";
+      clearInterval(launchTicker);
+      
+      let hasFinishedSession = false;
+      if (C.ctx.todaySet?.set_id) {
+        const { data: sessionRow } = await C.db()
+          .from("trivia_sessions")
+          .select("id, status, score, share_grid")
+          .eq("set_id", C.ctx.todaySet.set_id)
+          .eq(identity.isAuth ? "user_id" : "guest_token", identity.isAuth ? identity.user.id : (identity.guest?.token || ''))
+          .maybeSingle();
+        if (sessionRow && sessionRow.status === "finished") {
+          hasFinishedSession = true;
+          window.__triviaFinishedSession = { ...sessionRow, set_id: C.ctx.todaySet.set_id };
+        }
+      }
+
+      if (hasFinishedSession) {
+        setStatus("off", "Closed", "Today's set has ended.");
+        joinBtnLabelEl.textContent = "View Your Result";
+        joinBtnEl.disabled = false;
+      } else {
+        setStatus("off", "Closed", "Today's set has ended. Check back tomorrow at 8 PM ET.");
+        joinBtnLabelEl.textContent = "Set closed";
+        joinBtnEl.disabled = true;
+      }
+
     } else if (C.ctx.state === "scheduled") {
       setStatus("wait", "Scheduled", startLabel || "Opens at 8:00 PM ET.");
-      joinBtnLabelEl.textContent = "Not available";
+      joinBtnLabelEl.textContent = "Not open yet";
       if (startAt) {
         updateLaunchCountdown(startAt, startLabel);
       } else if (launchMessageEl) {
         launchMessageEl.textContent = "Trivia will start at 8 PM ET. Stay tuned.";
         launchMessageEl.classList.remove("hidden");
       }
+      // FIX: poll state every 60 seconds while waiting so the button auto-enables when live
+      statePollTicker = setInterval(() => paintInitialUi().catch(() => {}), 60_000);
+
     } else if (C.ctx.state === "live" && !hasSet) {
-      setStatus("off", "Setup mismatch", "Playable set missing in API. Run migration 20260524_medtrivia_testing_mode_once.sql once in Supabase.");
-      joinBtnLabelEl.textContent = "Not available";
-      if (launchMessageEl) launchMessageEl.classList.add("hidden");
-    } else if (!hasSet || C.ctx.state === "no_content") {
-      setStatus("off", "Unavailable", "Today's quiz is not open yet. Please check back soon.");
-      joinBtnLabelEl.textContent = "Not available";
+      // FIX: was showing confusing migration error. Now show a friendly message.
+      setStatus("wait", "Starting soon", "Loading today's set — please wait a moment.");
+      joinBtnLabelEl.textContent = "Loading…";
       if (launchMessageEl) {
-        launchMessageEl.textContent = "Trivia will start at 8 PM ET. Stay tuned.";
+        launchMessageEl.textContent = "Fetching today's quiz set…";
         launchMessageEl.classList.remove("hidden");
       }
+      // Retry in 5 seconds
+      setTimeout(() => paintInitialUi().catch(() => {}), 5000);
+
+    } else if (!hasSet || C.ctx.state === "no_content") {
+      clearInterval(launchTicker);
+      setStatus("off", "Unavailable", startLabel ? `Opens ${startLabel}.` : "Today's quiz is not open yet. Check back at 8 PM ET.");
+      joinBtnLabelEl.textContent = "Not available";
+      if (launchMessageEl) {
+        launchMessageEl.textContent = startLabel
+          ? `Today's quiz opens at ${startLabel}. Stay tuned!`
+          : "Trivia opens daily at 8 PM ET (1 AM Pakistan). Stay tuned.";
+        launchMessageEl.classList.remove("hidden");
+      }
+      // If a set is scheduled for the future, start the countdown
+      if (startAt && startAt.getTime() > Date.now()) {
+        updateLaunchCountdown(startAt, startLabel);
+      }
+
     } else {
-      setStatus("live", "Live now", "Enter the quiz room — you can replay as many times as you need while testing.");
+      // State is live and set exists — open for play
+      clearInterval(launchTicker);
+      setStatus("live", "Live now", endAt
+        ? `Open until ${endAt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/New_York" })} ET`
+        : "Enter the quiz room now!");
       joinBtnLabelEl.textContent = "Enter live quiz";
       if (liveCountEl) liveCountEl.textContent = "Open for players";
       if (launchMessageEl) launchMessageEl.classList.add("hidden");
@@ -144,6 +209,15 @@
 
   joinBtnEl.addEventListener("click", async () => {
     joinBtnEl.disabled = true;
+    
+    if (C.ctx.state === "post_game" && window.__triviaFinishedSession) {
+      joinBtnLabelEl.textContent = "Loading Results…";
+      C.ctx.session = window.__triviaFinishedSession;
+      C.saveActiveSession();
+      window.location.href = "/med-trivia-quiz";
+      return;
+    }
+
     joinBtnLabelEl.textContent = "Starting…";
     try {
       C.clearActiveSession();

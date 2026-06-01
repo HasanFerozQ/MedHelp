@@ -74,6 +74,7 @@
                 <th>Quiz date</th>
                 <th>Title</th>
                 <th>Questions</th>
+                <th>Participants</th>
                 <th>Status</th>
                 <th>Created</th>
                 <th>Published</th>
@@ -81,7 +82,7 @@
               </tr>
             </thead>
             <tbody id="sets-body">
-              <tr><td colspan="7" class="hint">—</td></tr>
+              <tr><td colspan="8" class="hint">—</td></tr>
             </tbody>
           </table>
         </div>
@@ -218,17 +219,21 @@
       statusEl.textContent = `${sets.length} set(s) — newest created at top.`;
 
       if (!sets.length) {
-        body.innerHTML = '<tr><td colspan="7" class="hint">No sets yet. Upload below or run seed once in SQL.</td></tr>';
+        body.innerHTML = '<tr><td colspan="8" class="hint">No sets yet. Upload below or run seed once in SQL.</td></tr>';
         return;
       }
 
       body.innerHTML = sets.map((row) => {
         const qOk = row.question_count === 10;
         const qLabel = qOk ? '10' : `<strong style="color:#f87171">${row.question_count}</strong>`;
+        const joined = row.participants ?? '—';
+        const finished = row.completers ?? '—';
+        const pLabel = `<span style="font-weight:600;">${joined}</span> <span style="color:var(--text-muted); font-size:11px;">joined</span> · <span style="font-weight:600;">${finished}</span> <span style="color:var(--text-muted); font-size:11px;">finished</span>`;
         return `<tr>
           <td>${fmtQuizDate(row.scheduled_date)}</td>
           <td>${escapeHtml(row.title || 'MedTrivia Daily')}</td>
           <td>${qLabel}</td>
+          <td>${pLabel}</td>
           <td>${statusBadge(row.status)}</td>
           <td>${fmtDate(row.created_at)}</td>
           <td>${fmtDate(row.published_at)}</td>
@@ -248,13 +253,13 @@
       if (error) {
         lastLoadError = formatInvokeError(error, data);
         statusEl.textContent = lastLoadError;
-        body.innerHTML = `<tr><td colspan="7" class="hint">${escapeHtml(lastLoadError)}</td></tr>`;
+        body.innerHTML = `<tr><td colspan="8" class="hint">${escapeHtml(lastLoadError)}</td></tr>`;
         return false;
       }
       if (!data?.ok) {
         lastLoadError = data?.error || 'Could not load sets';
         statusEl.textContent = lastLoadError;
-        body.innerHTML = '<tr><td colspan="7" class="hint">Could not load sets.</td></tr>';
+        body.innerHTML = '<tr><td colspan="8" class="hint">Could not load sets.</td></tr>';
         return false;
       }
 
@@ -298,7 +303,7 @@
     document.getElementById('refresh-list').onclick = () => loadHistory().catch((e) => alert(e.message));
     document.getElementById('lock-btn').onclick = () => {
       setUnlocked(false);
-      document.getElementById('sets-body').innerHTML = '<tr><td colspan="7" class="hint">Locked.</td></tr>';
+      document.getElementById('sets-body').innerHTML = '<tr><td colspan="8" class="hint">Locked.</td></tr>';
     };
 
     document.getElementById('submit').onclick = async () => {

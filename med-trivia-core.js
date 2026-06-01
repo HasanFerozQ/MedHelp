@@ -51,8 +51,13 @@
   }
 
   async function ensureGuestIdentity() {
-    const { data } = await db().auth.getUser();
-    if (data?.user) return { isAuth: true, user: data.user };
+    const client = db();
+    if (client) {
+      try {
+        const { data } = await client.auth.getUser();
+        if (data?.user) return { isAuth: true, user: data.user };
+      } catch (_) { /* auth check failed — fall through to guest */ }
+    }
     const existing = getGuest();
     if (existing?.token && existing?.username) return { isAuth: false, guest: existing };
     return { isAuth: false, guest: null };
