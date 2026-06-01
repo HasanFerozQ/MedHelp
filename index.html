@@ -193,13 +193,69 @@
       }
     }
     @media (max-width: 600px) {
+      /* ── Banner card ── */
       #exam-mastery-cta {
-        padding: 32px 18px !important;
+        padding: 28px 16px !important;
+        border-radius: 18px !important;
       }
+
+      /* ── "BEST VALUE" ribbon — shrink & reposition so it doesn't eat content space ── */
+      #exam-mastery-cta > div:first-child {
+        top: 16px !important;
+        right: -44px !important;
+        padding: 4px 48px !important;
+        font-size: 9px !important;
+      }
+
+      /* ── "UPDATED" pill badge — allow wrapping, prevent clipping ── */
+      #exam-mastery-cta .premium-banner-grid > div:first-child > div:first-child {
+        max-width: calc(100% - 60px) !important;   /* keep away from ribbon corner */
+        font-size: 11px !important;
+        padding: 5px 12px !important;
+        flex-wrap: wrap !important;
+        line-height: 1.4 !important;
+      }
+
+      /* ── Heading ── */
+      #exam-mastery-cta .premium-banner-grid h2 {
+        font-size: 26px !important;
+        letter-spacing: -0.5px !important;
+      }
+
+      /* ── Description paragraph ── */
+      #exam-mastery-cta .premium-banner-grid p {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+      }
+
+      /* ── Feature checkmarks — left-align, stack vertically ── */
       #exam-mastery-cta .premium-banner-grid > div:first-child > div:last-child {
         flex-direction: column !important;
         align-items: flex-start !important;
-        gap: 12px !important;
+        gap: 10px !important;
+        margin: 0 auto !important;
+        width: fit-content !important;
+      }
+
+      /* ── Pricing card — fluid width, reduce padding ── */
+      #exam-mastery-cta .premium-banner-grid > div:last-child {
+        min-width: unset !important;
+        width: 100% !important;
+        padding: 24px 20px !important;
+        box-sizing: border-box !important;
+      }
+
+      /* ── Price number — scale down ── */
+      #exam-mastery-cta .premium-banner-grid > div:last-child > div:first-child > div:last-child {
+        font-size: 40px !important;
+      }
+
+      /* ── Section header above the card ── */
+      #exam-mastery-section .section-header {
+        margin-bottom: 36px !important;
+      }
+      #exam-mastery-section .section-header p {
+        font-size: 14px !important;
       }
     }
   </style>
