@@ -29,6 +29,20 @@
     .login-row { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: end; max-width: 520px; }
     .err { color: #f87171; font-size: 13px; margin-top: 8px; }
     .hidden { display: none !important; }
+    /* Action buttons in history table */
+    .act-btn { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 600; border: 1px solid var(--border); background: transparent; color: var(--text-h); cursor: pointer; transition: all .15s ease; white-space: nowrap; }
+    .act-btn:hover { background: rgba(var(--accent-rgb), 0.12); border-color: var(--accent); }
+    .act-btn.danger { color: #f87171; }
+    .act-btn.danger:hover { background: rgba(239, 68, 68, 0.12); border-color: #f87171; }
+    .act-group { display: flex; gap: 6px; }
+    /* Modal overlay */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(4px); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; max-width: 420px; width: 92%; box-shadow: 0 16px 48px rgba(0,0,0,.4); transform: translateY(12px); transition: transform .2s ease; }
+    .modal-overlay.open .modal-box { transform: translateY(0); }
+    .modal-box h3 { margin: 0 0 12px; font-size: 17px; }
+    .modal-box p { margin: 0 0 16px; font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
     @media (max-width: 720px) {
       .history-table { display: block; overflow-x: auto; }
       .login-row { grid-template-columns: 1fr; }
@@ -79,10 +93,11 @@
                 <th>Created</th>
                 <th>Published</th>
                 <th>Set ID</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody id="sets-body">
-              <tr><td colspan="8" class="hint">—</td></tr>
+              <tr><td colspan="9" class="hint">—</td></tr>
             </tbody>
           </table>
         </div>
@@ -102,6 +117,37 @@
         <label style="display:flex;align-items:center;gap:8px;"><input id="publish" type="checkbox" checked style="width:auto;"> Publish immediately (status → scheduled)</label>
         <button id="submit" class="btn btn-primary">Upload set</button>
         <pre id="result" class="hint" style="margin:0; white-space:pre-wrap;"></pre>
+      </div>
+    </div>
+
+    <!-- Change-Date Modal -->
+    <div id="modal-change-date" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-change-date')">
+      <div class="modal-box">
+        <h3>📅 Change Quiz Date</h3>
+        <p id="cd-info"></p>
+        <label class="admin-grid" style="margin:0;">
+          <span class="hint">New scheduled date</span>
+          <input id="cd-new-date" type="date">
+        </label>
+        <p id="cd-error" class="err hidden"></p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closeModal('modal-change-date')">Cancel</button>
+          <button id="cd-confirm" class="btn btn-primary">Change Date</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="modal-delete" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-delete')">
+      <div class="modal-box">
+        <h3>🗑️ Delete Quiz</h3>
+        <p id="del-info"></p>
+        <p style="color:#f87171; font-size:13px; font-weight:600; margin:0 0 8px;">This will permanently delete the quiz, all questions, sessions, and responses. This cannot be undone.</p>
+        <p id="del-error" class="err hidden"></p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closeModal('modal-delete')">Cancel</button>
+          <button id="del-confirm" class="btn btn-primary" style="background:#ef4444; border-color:#ef4444;">Delete Forever</button>
+        </div>
       </div>
     </div>
   </main>
@@ -213,13 +259,112 @@
       return { data: null, error: { message: 'List failed' } };
     }
 
+    /* ── Modal helpers ──────────────────────────────────── */
+    function openModal(id) { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+      // Clear errors
+      const errEls = document.getElementById(id).querySelectorAll('.err');
+      errEls.forEach(e => { e.textContent = ''; e.classList.add('hidden'); });
+    }
+
+    /* ── Change Date ───────────────────────────────────── */
+    let changeDateSetId = null;
+    let changeDateOldDate = null;
+
+    function openChangeDateModal(setId, currentDate, title) {
+      changeDateSetId = setId;
+      changeDateOldDate = currentDate;
+      document.getElementById('cd-info').innerHTML =
+        `Change the date for <strong>${escapeHtml(title)}</strong><br>` +
+        `Current date: <strong>${fmtQuizDate(currentDate)}</strong>`;
+      document.getElementById('cd-new-date').value = currentDate;
+      document.getElementById('cd-error').classList.add('hidden');
+      document.getElementById('cd-confirm').disabled = false;
+      document.getElementById('cd-confirm').textContent = 'Change Date';
+      openModal('modal-change-date');
+    }
+
+    document.getElementById('cd-confirm').onclick = async () => {
+      const newDate = document.getElementById('cd-new-date').value;
+      const errEl = document.getElementById('cd-error');
+      const btn = document.getElementById('cd-confirm');
+      if (!newDate) { errEl.textContent = 'Select a date'; errEl.classList.remove('hidden'); return; }
+      if (newDate === changeDateOldDate) { errEl.textContent = 'Pick a different date'; errEl.classList.remove('hidden'); return; }
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+      errEl.classList.add('hidden');
+      try {
+        const data = await invokeAdminRpc('trivia_admin_change_date', {
+          p_admin_secret: getSecret(),
+          p_set_id: changeDateSetId,
+          p_new_date: newDate,
+        });
+        if (!data?.ok) {
+          errEl.textContent = data?.error || 'Failed to change date';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        closeModal('modal-change-date');
+        await loadHistory();
+      } catch (e) {
+        errEl.textContent = e.message || 'Request failed';
+        errEl.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Change Date';
+      }
+    };
+
+    /* ── Delete Set ────────────────────────────────────── */
+    let deleteSetId = null;
+
+    function openDeleteModal(setId, currentDate, title) {
+      deleteSetId = setId;
+      document.getElementById('del-info').innerHTML =
+        `You are about to delete <strong>${escapeHtml(title)}</strong>` +
+        ` (${fmtQuizDate(currentDate)}).`;
+      document.getElementById('del-error').classList.add('hidden');
+      document.getElementById('del-confirm').disabled = false;
+      document.getElementById('del-confirm').textContent = 'Delete Forever';
+      openModal('modal-delete');
+    }
+
+    document.getElementById('del-confirm').onclick = async () => {
+      const errEl = document.getElementById('del-error');
+      const btn = document.getElementById('del-confirm');
+      btn.disabled = true;
+      btn.textContent = 'Deleting…';
+      errEl.classList.add('hidden');
+      try {
+        const data = await invokeAdminRpc('trivia_admin_delete_set', {
+          p_admin_secret: getSecret(),
+          p_set_id: deleteSetId,
+        });
+        if (!data?.ok) {
+          errEl.textContent = data?.error || 'Failed to delete set';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        closeModal('modal-delete');
+        await loadHistory();
+      } catch (e) {
+        errEl.textContent = e.message || 'Request failed';
+        errEl.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Delete Forever';
+      }
+    };
+
+    /* ── Render history table ──────────────────────────── */
     function renderHistoryTable(sets) {
       const statusEl = document.getElementById('list-status');
       const body = document.getElementById('sets-body');
       statusEl.textContent = `${sets.length} set(s) — newest created at top.`;
 
       if (!sets.length) {
-        body.innerHTML = '<tr><td colspan="8" class="hint">No sets yet. Upload below or run seed once in SQL.</td></tr>';
+        body.innerHTML = '<tr><td colspan="9" class="hint">No sets yet. Upload below or run seed once in SQL.</td></tr>';
         return;
       }
 
@@ -229,15 +374,26 @@
         const joined = row.participants ?? '—';
         const finished = row.completers ?? '—';
         const pLabel = `<span style="font-weight:600;">${joined}</span> <span style="color:var(--text-muted); font-size:11px;">joined</span> · <span style="font-weight:600;">${finished}</span> <span style="color:var(--text-muted); font-size:11px;">finished</span>`;
+        const safeTitle = escapeHtml(row.title || 'MedTrivia Daily');
+        const safeDate = escapeHtml(row.scheduled_date || '');
+        const safeId = escapeHtml(row.set_id || '');
         return `<tr>
           <td>${fmtQuizDate(row.scheduled_date)}</td>
-          <td>${escapeHtml(row.title || 'MedTrivia Daily')}</td>
+          <td>${safeTitle}</td>
           <td>${qLabel}</td>
           <td>${pLabel}</td>
           <td>${statusBadge(row.status)}</td>
           <td>${fmtDate(row.created_at)}</td>
           <td>${fmtDate(row.published_at)}</td>
           <td class="mono">${row.set_id}</td>
+          <td>
+            <div class="act-group">
+              <button class="act-btn" onclick="openChangeDateModal('${safeId}','${safeDate}','${safeTitle.replace(/'/g, "\\'")}')"
+                title="Change scheduled date">📅 Date</button>
+              <button class="act-btn danger" onclick="openDeleteModal('${safeId}','${safeDate}','${safeTitle.replace(/'/g, "\\'")}')"
+                title="Delete this quiz permanently">🗑️ Delete</button>
+            </div>
+          </td>
         </tr>`;
       }).join('');
     }
@@ -253,13 +409,13 @@
       if (error) {
         lastLoadError = formatInvokeError(error, data);
         statusEl.textContent = lastLoadError;
-        body.innerHTML = `<tr><td colspan="8" class="hint">${escapeHtml(lastLoadError)}</td></tr>`;
+        body.innerHTML = `<tr><td colspan="9" class="hint">${escapeHtml(lastLoadError)}</td></tr>`;
         return false;
       }
       if (!data?.ok) {
         lastLoadError = data?.error || 'Could not load sets';
         statusEl.textContent = lastLoadError;
-        body.innerHTML = '<tr><td colspan="8" class="hint">Could not load sets.</td></tr>';
+        body.innerHTML = '<tr><td colspan="9" class="hint">Could not load sets.</td></tr>';
         return false;
       }
 
@@ -303,7 +459,7 @@
     document.getElementById('refresh-list').onclick = () => loadHistory().catch((e) => alert(e.message));
     document.getElementById('lock-btn').onclick = () => {
       setUnlocked(false);
-      document.getElementById('sets-body').innerHTML = '<tr><td colspan="8" class="hint">Locked.</td></tr>';
+      document.getElementById('sets-body').innerHTML = '<tr><td colspan="9" class="hint">Locked.</td></tr>';
     };
 
     document.getElementById('submit').onclick = async () => {
