@@ -78,7 +78,7 @@ BEGIN
     RAISE EXCEPTION 'No playable trivia set for today. Upload a set via the admin panel.';
   END IF;
   IF now() < v_start_at THEN
-    RAISE EXCEPTION 'Trivia opens at 8:00 PM America/New_York (5:00 AM Pakistan).';
+    RAISE EXCEPTION 'Trivia opens at 8:00 PM Eastern Time.';
   END IF;
   IF now() > v_end_at OR v_set_status = 'closed' THEN
     RAISE EXCEPTION 'Today''s trivia has closed. Come back tomorrow at 8 PM ET!';

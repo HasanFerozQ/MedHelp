@@ -86,15 +86,19 @@
     }
 
     await C.loadState();
+    const etToday = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });
+    const isTodaySet = C.ctx.todaySet?.scheduled_date === etToday;
     const hasSet = !!C.ctx.todaySet?.set_id;
-    const isPlayable = hasSet && C.ctx.state !== "no_content" && C.ctx.state !== "post_game" && C.ctx.state !== "scheduled";
+    const isPlayable = isTodaySet && hasSet && C.ctx.state === "live";
     joinBtnEl.disabled = !isPlayable;
 
     const setDate = C.ctx.todaySet?.scheduled_date;
     const title = setDate
       ? new Date(setDate + "T12:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })
       : "—";
-    setBadgeEl.textContent = hasSet ? `Set · ${title}` : "No set";
+    setBadgeEl.textContent = hasSet
+      ? (isTodaySet ? `Set · ${title}` : `Next · ${title}`)
+      : "No set";
 
     if (C.ctx.todaySet?.allow_retakes === false || !C.ctx.todaySet?.allow_retakes) {
       if (retakeHintEl) {
@@ -165,12 +169,12 @@
 
     } else if (!hasSet || C.ctx.state === "no_content") {
       clearInterval(launchTicker);
-      setStatus("off", "Unavailable", startLabel ? `Opens ${startLabel}.` : "Today's quiz is not open yet. Check back at 8 PM ET.");
+      setStatus("off", "Unavailable", startLabel ? `Opens ${startLabel}.` : "No quiz scheduled yet. Check back at 8 PM ET.");
       joinBtnLabelEl.textContent = "Not available";
       if (launchMessageEl) {
         launchMessageEl.textContent = startLabel
           ? `Today's quiz opens at ${startLabel}. Stay tuned!`
-          : "Trivia opens daily at 8 PM ET (1 AM Pakistan). Stay tuned.";
+          : "Trivia opens daily at 8 PM Eastern Time. Stay tuned.";
         launchMessageEl.classList.remove("hidden");
       }
       // If a set is scheduled for the future, start the countdown

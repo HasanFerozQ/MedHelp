@@ -158,10 +158,14 @@
     if (!client) throw new Error("Supabase client unavailable");
     const nowIso = new Date().toISOString();
 
-    const setRes = await client.rpc("get_today_set_for_play", {});
-    if (setRes.error) throw new Error(setRes.error.message || "Failed to load today’s trivia set");
-
-    ctx.todaySet = normalizeTodaySetRow(setRes.data);
+    const setRes = await client.rpc("get_trivia_set_for_lobby", {});
+    if (setRes.error) {
+      const fallback = await client.rpc("get_today_set_for_play", {});
+      if (fallback.error) throw new Error(fallback.error.message || "Failed to load today’s trivia set");
+      ctx.todaySet = normalizeTodaySetRow(fallback.data);
+    } else {
+      ctx.todaySet = normalizeTodaySetRow(setRes.data);
+    }
 
     const stateRes = await client.rpc("get_current_trivia_state", { now_tz: nowIso });
     if (stateRes.error) throw new Error(stateRes.error.message || "Failed to load trivia state");
