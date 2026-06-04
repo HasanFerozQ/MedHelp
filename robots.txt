@@ -1,6 +1,39 @@
+# MediHelp — robots.txt
+# https://www.medihelp.live/robots.txt
+
 User-agent: *
+Allow: /
+
+# Block admin, debug, and non-public paths
 Disallow: /admin/
 Disallow: /private/
-Allow: /medical-calculator
+Disallow: /med-trivia-admin
+Disallow: /debug
+Disallow: /api/
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /.vscode/
+Disallow: /.cursor/
+Disallow: /node_modules/
+Disallow: /scratch/
+Disallow: /scripts/
+Disallow: /supabase/
+Disallow: /popup/
+Disallow: /vision/
+Disallow: /__pycache__/
+Disallow: /docs/
+Disallow: /*.sql$
+Disallow: /*.py$
+Disallow: /*.md$
+Disallow: /*.json$
+Disallow: /tmp_script.js
+Disallow: /sw-calculator.js
+Disallow: /background.js
 
+# Allow specific JSON/manifest files crawlers may need
+Allow: /manifest.json
+Allow: /calculator.webmanifest
+Allow: /blog/manifest.json
+
+# Sitemaps
 Sitemap: https://www.medihelp.live/sitemap.xml
