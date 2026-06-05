@@ -3628,9 +3628,10 @@ html, body {
 .flash-card-scene {
   width: 100%;
   max-width: 650px;
-  height: 480px;
+  height: 380px;
   perspective: 1500px;
   margin: 40px auto;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .flash-card {
@@ -3713,14 +3714,14 @@ html, body {
 }
 
 .flash-card-text.size-xs {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.45;
 }
 .flash-card-text.size-xs table {
   margin-top: 12px;
 }
 .flash-card-text.size-sm {
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.5;
 }
 .flash-card-text.size-md {
@@ -3728,7 +3729,7 @@ html, body {
   line-height: 1.5;
 }
 .flash-card-text.size-lg {
-  font-size: clamp(21px, 2.5vw, 24px);
+  font-size: clamp(20px, 2.5vw, 24px);
   line-height: 1.5;
 }
 
@@ -3856,8 +3857,7 @@ html, body {
 }
 
 @media (max-width: 600px) {
-  .flash-card-scene { height: 400px; }
-  .flash-card-text { font-size: 18px; }
+  .flash-card-text { font-size: 16px; }
 }
 
 /* ============================================================

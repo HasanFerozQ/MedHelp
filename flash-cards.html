@@ -37651,15 +37651,35 @@
       const len = cleanText.length;
       const hasTable = text.includes('<table') || text.includes('</table>');
       
-      if (hasTable || len > 280) {
+      if (hasTable) {
         element.classList.add('size-xs');
-      } else if (len > 150) {
+      } else if (len > 400) {
         element.classList.add('size-sm');
-      } else if (len > 70) {
+      } else if (len > 180) {
         element.classList.add('size-md');
       } else {
         element.classList.add('size-lg');
       }
+    }
+
+    function adjustCardHeight() {
+      const scene = document.querySelector('.flash-card-scene');
+      if (!scene) return;
+      
+      const frontText = document.getElementById('front-text');
+      const backText = document.getElementById('back-text');
+      if (!frontText || !backText) return;
+      
+      // Vertical padding (32px top + 24px bottom) + label/margin (38px) + safety breathing room (16px) = 110px
+      const verticalPadding = 110; 
+      
+      const frontHeight = frontText.scrollHeight + verticalPadding;
+      const backHeight = backText.scrollHeight + verticalPadding;
+      
+      const minHeight = window.innerWidth <= 600 ? 300 : 360;
+      const maxHeight = Math.max(frontHeight, backHeight, minHeight);
+      
+      scene.style.height = `${maxHeight}px`;
     }
 
     function updateCard() {
@@ -37692,9 +37712,14 @@
           if (typeof MathJax.typesetClear === 'function') {
             MathJax.typesetClear([frontText, backText]);
           }
-          MathJax.typesetPromise([frontText, backText]).catch((err) => {
+          MathJax.typesetPromise([frontText, backText]).then(() => {
+            adjustCardHeight();
+          }).catch((err) => {
             console.error("MathJax typesetting error:", err);
+            adjustCardHeight();
           });
+        } else {
+          adjustCardHeight();
         }
       }, 50);
     }"en" data-theme="dark">
