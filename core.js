@@ -319,8 +319,16 @@ const MediHelp = {
             </select>
           </div>
           <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="fb-name" placeholder="John Doe">
+          </div>
+          <div class="form-group">
             <label>Your Email</label>
             <input type="email" id="fb-email" placeholder="email@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone (Optional)</label>
+            <input type="tel" id="fb-phone" placeholder="e.g. +1 (555) 000-0000">
           </div>
           <div class="form-group">
             <label>Message</label>
@@ -341,7 +349,7 @@ const MediHelp = {
       const to = payload.support_email || 'supportdesk@medihelp.live';
       const subject = encodeURIComponent(`[MediHelp Feedback] ${payload.type || 'General'}`);
       const body = encodeURIComponent(
-        `Type: ${payload.type || 'General'}\nEmail: ${payload.email || ''}\n\n${payload.message || ''}`
+        `Type: ${payload.type || 'General'}\nName: ${payload.name || ''}\nEmail: ${payload.email || ''}\nPhone: ${payload.phone || ''}\n\n${payload.message || ''}`
       );
       window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
     }
@@ -352,7 +360,9 @@ const MediHelp = {
       e.preventDefault();
       const submitBtn = form.querySelector('.btn-submit');
       const type = document.getElementById('fb-type').value;
+      const name = document.getElementById('fb-name').value;
       const email = document.getElementById('fb-email').value;
+      const phone = document.getElementById('fb-phone').value;
       const msg = document.getElementById('fb-message').value;
 
       submitBtn.disabled = true;
@@ -365,7 +375,9 @@ const MediHelp = {
           body: JSON.stringify({
             source: 'feedback-widget',
             type,
+            name,
             email,
+            phone,
             message: msg,
             page_url: window.location.href
           })
@@ -379,7 +391,7 @@ const MediHelp = {
               '\n\nOpen your email app to send this message to support instead?'
             );
             if (useMailto) {
-              openFeedbackMailto({ type, email, message: msg, support_email: data.support_email });
+              openFeedbackMailto({ type, name, email, phone, message: msg, support_email: data.support_email });
               modal.classList.remove('active');
               form.reset();
               return;

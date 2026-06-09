@@ -97,12 +97,19 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Message</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody id="feedback-body">
-              <tr><td colspan="7" class="hint">Unlock to load feedback.</td></tr>
+              <tr><td colspan="8" class="hint">Unlock to load feedback.</td></tr>
             </tbody>
           </table>
+        </div>
+        <!-- Feedback Pagination Controls -->
+        <div id="feedback-pagination" class="toolbar hidden" style="margin-top: 12px; justify-content: flex-end; gap: 10px;">
+          <button type="button" id="prev-feedback-page" class="btn btn-ghost" style="padding: 6px 12px; font-size: 12px; border-radius: 8px;">← Previous</button>
+          <span id="feedback-page-info" class="hint" style="margin: 0 4px; line-height: 2;">Page 1 of 1</span>
+          <button type="button" id="next-feedback-page" class="btn btn-ghost" style="padding: 6px 12px; font-size: 12px; border-radius: 8px;">Next →</button>
         </div>
       </div>
 
@@ -179,6 +186,20 @@
         <div class="modal-actions">
           <button class="btn btn-ghost" onclick="closeModal('modal-delete')">Cancel</button>
           <button id="del-confirm" class="btn btn-primary" style="background:#ef4444; border-color:#ef4444;">Delete Forever</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Feedback Confirmation Modal -->
+    <div id="modal-delete-feedback" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-delete-feedback')">
+      <div class="modal-box">
+        <h3>🗑️ Delete Feedback</h3>
+        <p id="del-feedback-info"></p>
+        <p style="color:#f87171; font-size:13px; font-weight:600; margin:0 0 8px;">This will permanently delete this feedback submission. This cannot be undone.</p>
+        <p id="del-feedback-error" class="err hidden"></p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closeModal('modal-delete-feedback')">Cancel</button>
+          <button id="del-feedback-confirm" class="btn btn-primary" style="background:#ef4444; border-color:#ef4444;">Delete Forever</button>
         </div>
       </div>
     </div>
@@ -450,30 +471,57 @@
       }).join('');
     }
 
-    function renderFeedbackTable(rows) {
+    let allFeedback = [];
+    let feedbackCurrentPage = 1;
+    const feedbackPageSize = 10;
+
+    function renderFeedbackTable() {
       const statusEl = document.getElementById('feedback-status');
       const body = document.getElementById('feedback-body');
-      if (!rows.length) {
+      const paginationEl = document.getElementById('feedback-pagination');
+      
+      if (!allFeedback.length) {
         statusEl.textContent = 'No feedback yet.';
-        body.innerHTML = '<tr><td colspan="7" class="hint">No messages yet.</td></tr>';
+        body.innerHTML = '<tr><td colspan="8" class="hint">No messages yet.</td></tr>';
+        paginationEl.classList.add('hidden');
         return;
       }
-      statusEl.textContent = `${rows.length} message(s) — newest first.`;
-      body.innerHTML = rows.map((row) => {
+
+      const totalPages = Math.ceil(allFeedback.length / feedbackPageSize);
+      if (feedbackCurrentPage < 1) feedbackCurrentPage = 1;
+      if (feedbackCurrentPage > totalPages) feedbackCurrentPage = totalPages;
+
+      const start = (feedbackCurrentPage - 1) * feedbackPageSize;
+      const end = start + feedbackPageSize;
+      const pageItems = allFeedback.slice(start, end);
+
+      statusEl.textContent = `${allFeedback.length} message(s) — showing ${start + 1} to ${Math.min(end, allFeedback.length)} (newest first).`;
+      
+      body.innerHTML = pageItems.map((row) => {
         const mail = row.email
           ? `<a href="mailto:${escapeHtml(row.email)}" style="color:var(--accent);">${escapeHtml(row.email)}</a>`
           : '—';
         const msg = escapeHtml(row.message || '').replace(/\n/g, '<br>');
+        const safeName = escapeHtml(row.name || '—');
         return `<tr>
           <td>${fmtDate(row.created_at)}</td>
           <td>${escapeHtml(row.source || '—')}</td>
           <td>${escapeHtml(row.type || '—')}</td>
-          <td>${escapeHtml(row.name || '—')}</td>
+          <td>${safeName}</td>
           <td>${mail}</td>
           <td>${escapeHtml(row.phone || '—')}</td>
           <td style="max-width:320px; white-space:normal;">${msg}</td>
+          <td>
+            <button class="act-btn danger" onclick="openDeleteFeedbackModal(${row.id}, '${safeName.replace(/'/g, "\\'")}')" title="Delete this feedback permanently">🗑️ Delete</button>
+          </td>
         </tr>`;
       }).join('');
+
+      // Update pagination controls
+      document.getElementById('feedback-page-info').textContent = `Page ${feedbackCurrentPage} of ${totalPages}`;
+      document.getElementById('prev-feedback-page').disabled = feedbackCurrentPage === 1;
+      document.getElementById('next-feedback-page').disabled = feedbackCurrentPage === totalPages;
+      paginationEl.classList.remove('hidden');
     }
 
     async function loadFeedback() {
@@ -483,22 +531,73 @@
       try {
         const data = await invokeAdminRpc('trivia_admin_list_feedback', {
           p_admin_secret: getSecret(),
-          p_limit: 100,
+          p_limit: 1000,
         });
         if (!data?.ok) {
           const err = data?.error || 'Could not load feedback';
           statusEl.textContent = err;
-          body.innerHTML = `<tr><td colspan="7" class="hint">${escapeHtml(err)}</td></tr>`;
+          body.innerHTML = `<tr><td colspan="8" class="hint">${escapeHtml(err)}</td></tr>`;
+          document.getElementById('feedback-pagination').classList.add('hidden');
           return false;
         }
-        renderFeedbackTable(data.feedback || []);
+        allFeedback = data.feedback || [];
+        feedbackCurrentPage = 1;
+        renderFeedbackTable();
         return true;
       } catch (e) {
         statusEl.textContent = e.message || 'Feedback load failed';
-        body.innerHTML = `<tr><td colspan="7" class="hint">${escapeHtml(e.message || 'Feedback load failed')}</td></tr>`;
+        body.innerHTML = `<tr><td colspan="8" class="hint">${escapeHtml(e.message || 'Feedback load failed')}</td></tr>`;
+        document.getElementById('feedback-pagination').classList.add('hidden');
         return false;
       }
     }
+
+    /* ── Delete Feedback ────────────────────────────────── */
+    let deleteFeedbackId = null;
+
+    function openDeleteFeedbackModal(id, name) {
+      deleteFeedbackId = id;
+      document.getElementById('del-feedback-info').innerHTML =
+        `You are about to delete feedback from <strong>${escapeHtml(name)}</strong>.`;
+      document.getElementById('del-feedback-error').classList.add('hidden');
+      document.getElementById('del-feedback-confirm').disabled = false;
+      document.getElementById('del-feedback-confirm').textContent = 'Delete Forever';
+      openModal('modal-delete-feedback');
+    }
+
+    document.getElementById('del-feedback-confirm').onclick = async () => {
+      const errEl = document.getElementById('del-feedback-error');
+      const btn = document.getElementById('del-feedback-confirm');
+      btn.disabled = true;
+      btn.textContent = 'Deleting…';
+      errEl.classList.add('hidden');
+      try {
+        const data = await invokeAdminRpc('trivia_admin_delete_feedback', {
+          p_admin_secret: getSecret(),
+          p_id: deleteFeedbackId,
+        });
+        if (!data?.ok) {
+          errEl.textContent = data?.error || 'Failed to delete feedback';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        closeModal('modal-delete-feedback');
+        // Remove locally from allFeedback and re-render
+        allFeedback = allFeedback.filter(item => item.id !== deleteFeedbackId);
+        // If current page is now empty and not the first page, go back one page
+        const maxPage = Math.ceil(allFeedback.length / feedbackPageSize) || 1;
+        if (feedbackCurrentPage > maxPage) {
+          feedbackCurrentPage = maxPage;
+        }
+        renderFeedbackTable();
+      } catch (e) {
+        errEl.textContent = e.message || 'Request failed';
+        errEl.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Delete Forever';
+      }
+    };
 
     async function loadHistory() {
       const statusEl = document.getElementById('list-status');
@@ -563,8 +662,23 @@
     document.getElementById('lock-btn').onclick = () => {
       setUnlocked(false);
       document.getElementById('sets-body').innerHTML = '<tr><td colspan="9" class="hint">Locked.</td></tr>';
-      document.getElementById('feedback-body').innerHTML = '<tr><td colspan="7" class="hint">Locked.</td></tr>';
+      document.getElementById('feedback-body').innerHTML = '<tr><td colspan="8" class="hint">Locked.</td></tr>';
       document.getElementById('feedback-status').textContent = 'Locked.';
+      document.getElementById('feedback-pagination').classList.add('hidden');
+    };
+
+    document.getElementById('prev-feedback-page').onclick = () => {
+      if (feedbackCurrentPage > 1) {
+        feedbackCurrentPage--;
+        renderFeedbackTable();
+      }
+    };
+    document.getElementById('next-feedback-page').onclick = () => {
+      const totalPages = Math.ceil(allFeedback.length / feedbackPageSize);
+      if (feedbackCurrentPage < totalPages) {
+        feedbackCurrentPage++;
+        renderFeedbackTable();
+      }
     };
 
     document.getElementById('submit').onclick = async () => {

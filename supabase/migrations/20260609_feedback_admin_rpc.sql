@@ -32,7 +32,7 @@ GRANT USAGE, SELECT ON SEQUENCE public.feedback_submissions_id_seq TO anon, auth
 
 CREATE OR REPLACE FUNCTION public.trivia_admin_list_feedback(
   p_admin_secret text,
-  p_limit int DEFAULT 100
+  p_limit int DEFAULT 1000
 )
 RETURNS jsonb
 LANGUAGE plpgsql
@@ -54,7 +54,7 @@ BEGIN
     RETURN jsonb_build_object('ok', false, 'error', 'Unauthorized');
   END IF;
 
-  v_limit := LEAST(GREATEST(COALESCE(p_limit, 100), 1), 200);
+  v_limit := LEAST(GREATEST(COALESCE(p_limit, 1000), 1), 5000);
 
   RETURN jsonb_build_object(
     'ok', true,
@@ -85,6 +85,39 @@ END;
 $$;
 
 GRANT EXECUTE ON FUNCTION public.trivia_admin_list_feedback(text, int)
+  TO anon, authenticated, service_role;
+
+-- Delete feedback RPC
+CREATE OR REPLACE FUNCTION public.trivia_admin_delete_feedback(
+  p_admin_secret text,
+  p_id bigint
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  v_stored text;
+BEGIN
+  SELECT admin_secret INTO v_stored FROM public.trivia_admin_config WHERE id = 1;
+  IF v_stored IS NULL OR length(v_stored) = 0 THEN
+    RETURN jsonb_build_object(
+      'ok', false,
+      'error', 'Admin secret not configured.'
+    );
+  END IF;
+  IF NOT public.trivia_admin_check_secret(p_admin_secret) THEN
+    RETURN jsonb_build_object('ok', false, 'error', 'Unauthorized');
+  END IF;
+
+  DELETE FROM public.feedback_submissions WHERE id = p_id;
+
+  RETURN jsonb_build_object('ok', true);
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.trivia_admin_delete_feedback(text, bigint)
   TO anon, authenticated, service_role;
 
 COMMIT;
