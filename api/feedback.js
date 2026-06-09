@@ -1,4 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
+const { createSmtpTransport, smtpConfig, friendlySmtpError } = require('./_lib/smtp');
 
 function required(value) {
   return value !== undefined && value !== null && String(value).trim() !== '';
@@ -19,6 +20,42 @@ function getSupabaseAdmin() {
     '';
   if (!url || !key) return null;
   return createClient(url, key);
+}
+
+async function saveFeedbackRow(supabase, payload) {
+  const { error } = await supabase.from('feedback_submissions').insert(payload);
+  return error;
+}
+
+async function sendFeedbackEmail({ source, type, name, email, phone, message, pageUrl }) {
+  const transporter = createSmtpTransport('FEEDBACK');
+  const { from, to } = smtpConfig('FEEDBACK');
+  const label = source === 'contact-form' ? 'Contact Form' : 'Site Feedback';
+  const subject = `[MediHelp ${label}] ${type} — ${name}`;
+
+  const text = [
+    `New ${label.toLowerCase()} submission`,
+    '',
+    `Type: ${type}`,
+    `Name: ${name}`,
+    `Email: ${email || '—'}`,
+    `Phone: ${phone || '—'}`,
+    `Page: ${pageUrl || '—'}`,
+    '',
+    '— Message —',
+    message,
+    '',
+    '—',
+    'Reply directly to this email to reach the visitor (Reply-To is set to their address).',
+  ].join('\n');
+
+  await transporter.sendMail({
+    from,
+    to,
+    replyTo: email || undefined,
+    subject,
+    text,
+  });
 }
 
 module.exports = async (req, res) => {
@@ -57,17 +94,7 @@ module.exports = async (req, res) => {
       return res.status(400).json({ ok: false, error: 'Phone is required for contact form submissions.' });
     }
 
-    const supabase = getSupabaseAdmin();
-    if (!supabase) {
-      return res.status(500).json({
-        ok: false,
-        error: 'Feedback storage is not configured. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Vercel.',
-        fallback_mailto: true,
-        support_email: 'supportdesk@medihelp.live',
-      });
-    }
-
-    const { error } = await supabase.from('feedback_submissions').insert({
+    const row = {
       source,
       type,
       name: name || null,
@@ -75,18 +102,40 @@ module.exports = async (req, res) => {
       phone: phone || null,
       message,
       page_url: pageUrl || null,
-    });
+    };
 
-    if (error) {
-      return res.status(500).json({
-        ok: false,
-        error: error.message || 'Could not save feedback.',
-        fallback_mailto: true,
-        support_email: 'supportdesk@medihelp.live',
-      });
+    const supabase = getSupabaseAdmin();
+    let dbError = null;
+    if (supabase) {
+      dbError = await saveFeedbackRow(supabase, row);
+    } else {
+      dbError = new Error('Supabase not configured');
     }
 
-    return res.status(200).json({ ok: true });
+    let emailError = null;
+    try {
+      await sendFeedbackEmail({ source, type, name, email, phone, message, pageUrl });
+    } catch (err) {
+      emailError = friendlySmtpError(err);
+    }
+
+    if (!dbError && !emailError) {
+      return res.status(200).json({ ok: true, delivered: 'database_and_email' });
+    }
+    if (!dbError) {
+      return res.status(200).json({ ok: true, delivered: 'database', email_warning: emailError });
+    }
+    if (!emailError) {
+      return res.status(200).json({ ok: true, delivered: 'email', db_warning: dbError.message });
+    }
+
+    return res.status(500).json({
+      ok: false,
+      error: dbError.message || 'Could not save feedback.',
+      email_error: emailError,
+      fallback_mailto: true,
+      support_email: 'supportdesk@medihelp.live',
+    });
   } catch (err) {
     return res.status(500).json({
       ok: false,

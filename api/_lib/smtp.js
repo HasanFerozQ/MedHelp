@@ -1,6 +1,16 @@
 const nodemailer = require('nodemailer');
 
 function smtpConfig(prefix = 'NEGOTIATION') {
+  if (prefix === 'FEEDBACK') {
+    const user = process.env.FEEDBACK_SMTP_USER;
+    const host = process.env.FEEDBACK_SMTP_HOST || 'smtp.gmail.com';
+    const port = Number(process.env.FEEDBACK_SMTP_PORT || 587);
+    const pass = process.env.FEEDBACK_SMTP_PASS;
+    const to = process.env.FEEDBACK_TO_EMAIL || user;
+    const from = process.env.FEEDBACK_FROM_EMAIL || (user ? `MediHelp Contact <${user}>` : user);
+    return { host, port, user, pass, from, to };
+  }
+
   const host = process.env[`${prefix}_SMTP_HOST`] || process.env.NEGOTIATION_SMTP_HOST || 'smtp.improvmx.com';
   const port = Number(process.env[`${prefix}_SMTP_PORT`] || process.env.NEGOTIATION_SMTP_PORT || 587);
   const user = process.env[`${prefix}_SMTP_USER`] || process.env.NEGOTIATION_SMTP_USER;
@@ -23,7 +33,10 @@ function friendlySmtpError(err) {
 function createSmtpTransport(prefix = 'NEGOTIATION') {
   const { host, port, user, pass } = smtpConfig(prefix);
   if (!user || !pass) {
-    throw new Error('SMTP credentials are missing. Set NEGOTIATION_SMTP_USER and NEGOTIATION_SMTP_PASS.');
+    const hint = prefix === 'FEEDBACK'
+      ? 'Set FEEDBACK_SMTP_USER and FEEDBACK_SMTP_PASS (Gmail app password).'
+      : 'Set NEGOTIATION_SMTP_USER and NEGOTIATION_SMTP_PASS.';
+    throw new Error(`SMTP credentials are missing. ${hint}`);
   }
   return nodemailer.createTransport({
     host,

@@ -69,7 +69,7 @@
         <label class="admin-grid" style="max-width:520px;">
           <span class="hint">Trivia Admin Secret</span>
           <div class="login-row">
-            <input id="admin-secret" type="password" placeholder="Same value as TRIVIA_ADMIN_SECRET in Supabase" autocomplete="current-password">
+            <input id="admin-secret" type="password" placeholder="Enter admin secret" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
             <button type="button" id="unlock-btn" class="btn btn-primary">Unlock</button>
             <button type="button" id="lock-btn" class="btn btn-ghost hidden">Lock</button>
           </div>
@@ -79,6 +79,33 @@
     </div>
 
     <div id="admin-panel" class="hidden">
+      <div class="admin-card">
+        <div class="toolbar">
+          <h2 style="margin:0;">Contact &amp; feedback inbox</h2>
+          <button type="button" id="refresh-feedback" class="btn btn-ghost">Refresh</button>
+        </div>
+        <p class="hint" style="margin:0 0 12px;">Messages from <strong>/contact</strong> and the site feedback widget. Newest first.</p>
+        <p id="feedback-status" class="hint">—</p>
+        <div style="overflow-x:auto;">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>When</th>
+                <th>Source</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody id="feedback-body">
+              <tr><td colspan="7" class="hint">Unlock to load feedback.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="admin-card">
         <div class="toolbar">
           <h2 style="margin:0;">Quiz history</h2>
@@ -158,25 +185,24 @@
   </main>
 
   <script>
-    const SECRET_KEY = 'mh_trivia_admin_secret';
-    const UNLOCK_KEY = 'mh_trivia_admin_unlocked';
+    // Secret is kept in memory only for this page load — never stored in localStorage/sessionStorage.
+    let adminSecretMemory = '';
 
     function getSecret() {
       const el = document.getElementById('admin-secret');
-      const v = (el?.value || '').trim();
-      if (v) localStorage.setItem(SECRET_KEY, v);
-      return v || localStorage.getItem(SECRET_KEY) || '';
+      const typed = (el?.value || '').trim();
+      if (typed) adminSecretMemory = typed;
+      return adminSecretMemory;
+    }
+
+    function clearSecret() {
+      adminSecretMemory = '';
+      const secretEl = document.getElementById('admin-secret');
+      if (secretEl) secretEl.value = '';
     }
 
     function setUnlocked(on) {
-      if (on) {
-        sessionStorage.setItem(UNLOCK_KEY, '1');
-      } else {
-        sessionStorage.removeItem(UNLOCK_KEY);
-        localStorage.removeItem(SECRET_KEY);
-        const secretEl = document.getElementById('admin-secret');
-        if (secretEl) secretEl.value = '';
-      }
+      if (!on) clearSecret();
       document.getElementById('admin-panel').classList.toggle('hidden', !on);
       document.getElementById('lock-btn').classList.toggle('hidden', !on);
       document.getElementById('login-error').classList.add('hidden');
@@ -424,6 +450,56 @@
       }).join('');
     }
 
+    function renderFeedbackTable(rows) {
+      const statusEl = document.getElementById('feedback-status');
+      const body = document.getElementById('feedback-body');
+      if (!rows.length) {
+        statusEl.textContent = 'No feedback yet.';
+        body.innerHTML = '<tr><td colspan="7" class="hint">No messages yet.</td></tr>';
+        return;
+      }
+      statusEl.textContent = `${rows.length} message(s) — newest first.`;
+      body.innerHTML = rows.map((row) => {
+        const mail = row.email
+          ? `<a href="mailto:${escapeHtml(row.email)}" style="color:var(--accent);">${escapeHtml(row.email)}</a>`
+          : '—';
+        const msg = escapeHtml(row.message || '').replace(/\n/g, '<br>');
+        return `<tr>
+          <td>${fmtDate(row.created_at)}</td>
+          <td>${escapeHtml(row.source || '—')}</td>
+          <td>${escapeHtml(row.type || '—')}</td>
+          <td>${escapeHtml(row.name || '—')}</td>
+          <td>${mail}</td>
+          <td>${escapeHtml(row.phone || '—')}</td>
+          <td style="max-width:320px; white-space:normal;">${msg}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    async function loadFeedback() {
+      const statusEl = document.getElementById('feedback-status');
+      const body = document.getElementById('feedback-body');
+      statusEl.textContent = 'Loading feedback…';
+      try {
+        const data = await invokeAdminRpc('trivia_admin_list_feedback', {
+          p_admin_secret: getSecret(),
+          p_limit: 100,
+        });
+        if (!data?.ok) {
+          const err = data?.error || 'Could not load feedback';
+          statusEl.textContent = err;
+          body.innerHTML = `<tr><td colspan="7" class="hint">${escapeHtml(err)}</td></tr>`;
+          return false;
+        }
+        renderFeedbackTable(data.feedback || []);
+        return true;
+      } catch (e) {
+        statusEl.textContent = e.message || 'Feedback load failed';
+        body.innerHTML = `<tr><td colspan="7" class="hint">${escapeHtml(e.message || 'Feedback load failed')}</td></tr>`;
+        return false;
+      }
+    }
+
     async function loadHistory() {
       const statusEl = document.getElementById('list-status');
       const body = document.getElementById('sets-body');
@@ -460,8 +536,8 @@
       btn.disabled = true;
       btn.textContent = 'Checking…';
       try {
-        const ok = await loadHistory();
-        if (ok) {
+        const [historyOk, feedbackOk] = await Promise.all([loadHistory(), loadFeedback()]);
+        if (historyOk || feedbackOk) {
           setUnlocked(true);
           return;
         }
@@ -483,9 +559,12 @@
 
     document.getElementById('unlock-btn').onclick = () => unlockAdmin().catch((e) => showLoginError(e.message));
     document.getElementById('refresh-list').onclick = () => loadHistory().catch((e) => alert(e.message));
+    document.getElementById('refresh-feedback').onclick = () => loadFeedback().catch((e) => alert(e.message));
     document.getElementById('lock-btn').onclick = () => {
       setUnlocked(false);
       document.getElementById('sets-body').innerHTML = '<tr><td colspan="9" class="hint">Locked.</td></tr>';
+      document.getElementById('feedback-body').innerHTML = '<tr><td colspan="7" class="hint">Locked.</td></tr>';
+      document.getElementById('feedback-status').textContent = 'Locked.';
     };
 
     document.getElementById('submit').onclick = async () => {
@@ -537,18 +616,17 @@
     };
 
     (function init() {
-      const saved = localStorage.getItem(SECRET_KEY);
-      if (saved) document.getElementById('admin-secret').value = saved;
+      // Clear any legacy stored secrets from older admin builds.
+      try {
+        localStorage.removeItem('mh_trivia_admin_secret');
+        sessionStorage.removeItem('mh_trivia_admin_unlocked');
+      } catch (_) {}
 
       const et = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
       const y = et.getFullYear();
       const m = String(et.getMonth() + 1).padStart(2, '0');
       const d = String(et.getDate()).padStart(2, '0');
       document.getElementById('scheduled-date').value = `${y}-${m}-${d}`;
-
-      if (sessionStorage.getItem(UNLOCK_KEY) === '1' && saved) {
-        unlockAdmin().catch(() => setUnlocked(false));
-      }
     })();
   </script>
 </body>

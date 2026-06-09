@@ -1,77 +1,122 @@
-# Guide: Setting up supportdesk@medihelp.live in Gmail
+# Email setup: supportdesk@medihelp.live → medihelp28592@gmail.com
 
-This guide explains how to receive and send emails as `supportdesk@medihelp.live` using a standard, personal Gmail account (without paying for Google Workspace).
-
----
-
-## Part 1: Receiving Emails (Redirection)
-
-To get emails sent to `supportdesk@medihelp.live` delivered to your Gmail inbox, you need an **Email Forwarding Service**.
-
-### Option A: Use your Domain Registrar (Free)
-Most registrars (like Namecheap, Google Domains, or GoDaddy) offer free email forwarding.
-1.  Go to your Domain Management dashboard.
-2.  Find **Email Forwarding**.
-3.  Add an alias: `supportdesk` → `yourname@gmail.com`.
-
-### Option B: Use ImprovMX (Free & Fast)
-If your registrar doesn't support forwarding, use [ImprovMX](https://improvmx.com/).
-1.  Enter your domain `medihelp.live` and your Gmail address.
-2.  It will provide you with **MX Records**.
-3.  Go to your DNS settings (wherever your domain is hosted) and replace existing MX records with the ones from ImprovMX.
+Use **only Gmail** for your inbox. Use **ImprovMX (free)** for forwarding `supportdesk@medihelp.live` — you already have ImprovMX MX records in Namecheap DNS.
 
 ---
 
-## Part 2: Sending Emails (The Screenshot Setup)
+## Part A — Receive mail at supportdesk@medihelp.live in Gmail (free)
 
-Once forwarding is working, follow these steps to reply *from* `supportdesk@medihelp.live` inside Gmail.
+### Step 1: ImprovMX account
 
-### 1. Generate an App Password
-Gmail requires an **App Password** to use its SMTP server as an alias.
-1.  Go to your [Google Account Security settings](https://myaccount.google.com/security).
-2.  Ensure **2-Step Verification** is ON.
-3.  Search for **App passwords** (usually at the bottom of the 2FA section).
-4.  Create a new one (Name it "MediHelp Alias").
-5.  **Copy the 16-character code.**
+1. Go to [https://improvmx.com](https://improvmx.com) and sign up (free).
+2. Add domain: **medihelp.live**
+3. ImprovMX will show DNS records. Your Namecheap DNS already has:
+   - MX `@` → `mx1.improvmx.com` (priority 10)
+   - MX `@` → `mx2.improvmx.com` (priority 20)
+   - TXT `@` → `v=spf1 include:_spf.improvmx.com ~all`
+4. In ImprovMX dashboard, click **Verify** / wait until domain shows as active.
 
-### 2. Configure Gmail "Send Mail As"
-In your Gmail settings, enter these exact details:
+### Step 2: Forward supportdesk → Gmail
 
-*   **SMTP Server**: `smtp.gmail.com`
-*   **Port**: `587`
-*   **Username**: `your_personal_gmail@gmail.com` (Your full Gmail address)
-*   **Password**: `xxxx xxxx xxxx xxxx` (The 16-character App Password you just generated)
-*   **Secured connection using TLS**: Checked (Recommended)
+1. In ImprovMX → **Aliases**
+2. Add alias:
+   - **Alias:** `supportdesk`
+   - **Forward to:** `medihelp28592@gmail.com`
+3. Save.
 
-Click **Add Account**. Gmail will send a verification code to `supportdesk@medihelp.live`. Since you set up forwarding in Part 1, you will receive this code in your Gmail inbox. Paste it to finish!
+### Step 3: Test inbound mail
 
-## Part 3: Namecheap Specific Configuration (The Fix)
+1. From another email account, send to **supportdesk@medihelp.live**
+2. Check **medihelp28592@gmail.com** (and Spam) within a few minutes.
 
-Since you are using Namecheap, follow these steps to resolve the "remote server misconfigured" error:
-
-### 1. Enable Email Forwarding in Namecheap
-1.  In Namecheap, go to **Domain List** > **medihelp.live** > **Manage**.
-2.  Scroll down to the **Redirect Email** section (on the "Domain" tab, not Advanced DNS).
-3.  Click **Add Forwarder**.
-4.  Alias: `supportdesk` | Forward to: `medihelp28592@gmail.com`.
-5.  **Important**: Save the changes.
-
-### 2. Add DNS Records for Email
-Go back to the **Advanced DNS** tab and ensure these records exist:
-
-| Type | Host | Value |
-| :--- | :--- | :--- |
-| **MX Record** | `@` | `mx1.privateemail.com` (if using Namecheap hosting) |
-| **MX Record** | `@` | `mx2.privateemail.com` |
-| **TXT Record** | `@` | `v=spf1 include:spf.efwd.registrar-servers.com ~all` |
-
-> [!NOTE]
-> If you are using Namecheap's **Free Email Forwarding**, the MX records are usually set automatically. If they are missing, select "Namecheap Free Redirect" from the **Mail Settings** dropdown on the Advanced DNS page.
+> Do **not** use Namecheap “Redirect Email” and ImprovMX at the same time. Your DNS uses ImprovMX MX records — configure forwarding only in ImprovMX.
 
 ---
 
-## Troubleshooting Tips
+## Part B — Reply as supportdesk@medihelp.live from Gmail (free)
 
-**Bounce Error (550)**: If you get a "Remote server misconfigured" error, it means the MX records are pointing to a server that doesn't have a forwarding rule for `supportdesk`. Double-check the **Redirect Email** tab.
-**Propagation**: DNS changes for email can take **1-2 hours** to fully propagate across the internet.
+### Step 1: Gmail App Password
 
+1. Open [Google Account → Security](https://myaccount.google.com/security)
+2. Turn on **2-Step Verification**
+3. Search **App passwords** → Create → name it `MediHelp`
+4. Copy the **16-character** password (no spaces when pasting into forms)
+
+### Step 2: Gmail “Send mail as”
+
+1. Gmail → **Settings** (gear) → **See all settings** → **Accounts and Import**
+2. **Send mail as** → **Add another email address**
+3. Name: `MediHelp Support`
+4. Email: **supportdesk@medihelp.live**
+5. Uncheck “Treat as alias” if you want replies to always show the support address
+6. SMTP:
+   - Server: `smtp.gmail.com`
+   - Port: `587`
+   - Username: **medihelp28592@gmail.com**
+   - Password: **App password** from Step 1
+   - TLS: Yes
+7. Gmail sends a verification code to **supportdesk@medihelp.live**
+8. Because of Part A forwarding, the code arrives in **medihelp28592@gmail.com** — paste it in Gmail
+
+### Step 3: Test reply
+
+1. Open a message that was sent to supportdesk@medihelp.live
+2. Reply — choose **From: supportdesk@medihelp.live**
+
+---
+
+## Part C — Contact form → medihelp28592@gmail.com (website)
+
+The contact form POSTs to `/api/feedback`. When configured, it:
+
+1. Saves to Supabase `feedback_submissions`
+2. Sends you an email via **Gmail SMTP**
+
+### Vercel environment variables
+
+Project → **Settings** → **Environment Variables** → add:
+
+| Variable | Value |
+|----------|--------|
+| `FEEDBACK_SMTP_HOST` | `smtp.gmail.com` |
+| `FEEDBACK_SMTP_PORT` | `587` |
+| `FEEDBACK_SMTP_USER` | `medihelp28592@gmail.com` |
+| `FEEDBACK_SMTP_PASS` | your 16-char Gmail app password |
+| `FEEDBACK_TO_EMAIL` | `medihelp28592@gmail.com` |
+
+Also ensure (for database backup):
+
+| Variable | Value |
+|----------|--------|
+| `SUPABASE_URL` | your Supabase project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | service role key from Supabase |
+
+**Redeploy** the site after saving variables.
+
+### Supabase: create feedback table
+
+In Supabase → **SQL Editor**, run the file:
+
+`supabase/migrations/20260609_feedback_admin_rpc.sql`
+
+This creates `feedback_submissions` and the admin RPC to read messages in `/med-trivia-admin`.
+
+---
+
+## Part D — Read feedback in admin panel
+
+1. Open [https://www.medihelp.live/med-trivia-admin](https://www.medihelp.live/med-trivia-admin)
+2. Enter your **Trivia Admin Secret** (not saved — re-enter each visit)
+3. Section **Contact & feedback inbox** lists all submissions
+
+---
+
+## Troubleshooting
+
+| Problem | Fix |
+|---------|-----|
+| Contact form: table not found | Run `20260609_feedback_admin_rpc.sql` in Supabase SQL Editor |
+| Contact form: no email | Add `FEEDBACK_SMTP_*` in Vercel and redeploy |
+| supportdesk@ not arriving | Check ImprovMX alias + domain verified; wait up to 1 hour for DNS |
+| Gmail “Send as” fails | Use App Password, not normal Gmail password |
+| 550 bounce on supportdesk@ | MX must point to ImprovMX, not privateemail.com |
