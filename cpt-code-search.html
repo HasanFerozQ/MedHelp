@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Search CPT codes online for free and verify medical billing charges instantly using MediHelp’s CPT code lookup tool. Detect upcoding and billing errors.">
-  <title>Free CPT Code Lookup Tool | Search Medical Billing Codes</title>
+  <meta name="description" content="Search 74,000+ CPT codes, ICD-10 diagnosis codes, and HCPCS billing codes free. Verify medical billing, find procedure descriptions, and catch billing errors instantly.">
+  <title>Free CPT Code Lookup Tool — Search CPT, ICD-10 &amp; HCPCS Codes Instantly</title>
   <link rel="canonical" href="https://www.medihelp.live/cpt-code-search">
   <meta name="robots" content="index, follow">
   
@@ -32,17 +32,38 @@
     "@type": "FAQPage",
     "mainEntity": [{
       "@type": "Question",
-      "name": "What is the most commonly used CPT code?",
+      "name": "What is a CPT code?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "CPT codes 99213 and 99214 for office visits are among the most commonly used codes. These represent evaluation and management services for patients with varying levels of medical complexity."
+        "text": "A CPT (Current Procedural Terminology) code is a 5-digit number used by healthcare providers to describe medical procedures and services for billing and insurance reimbursement. Each code represents a specific service, such as an office visit, lab test, or surgical procedure."
       }
     }, {
       "@type": "Question",
-      "name": "How do I find a CPT code?",
+      "name": "What is the difference between CPT and ICD-10 codes?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "To find a CPT code, use the MediHelp search tool to enter the procedure name or code, select your region, and review the billing details to verify accuracy."
+        "text": "CPT codes describe what procedure or service was performed (e.g., a blood test or surgery), while ICD-10 codes describe the patient's diagnosis or medical condition (e.g., diabetes or chest pain). Both are required on most insurance claims — CPT for the service, ICD-10 for the reason."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Can I search HCPCS codes here?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. This tool searches HCPCS Level II codes alongside CPT and ICD-10 codes. HCPCS Level II covers durable medical equipment (DME), ambulance services, prosthetics, and drug billing codes used in Medicare and Medicaid claims."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Is this CPT lookup tool free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. MediHelp's CPT, ICD-10, and HCPCS code lookup tool is completely free with no signup required. Search all 74,000+ codes instantly to verify your medical bill or understand procedure charges."
+      }
+    }, {
+      "@type": "Question",
+      "name": "How do I find a procedure code for my medical bill?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Find procedure codes on your itemized hospital bill or superbill, then enter the code or procedure name in the search bar above. Select your region, review the code description, and compare it against what you actually received to spot billing errors."
       }
     }]
   }
@@ -143,8 +164,9 @@
 
         <div class="search-wrapper">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="code-search-input" class="tool-input" placeholder="e.g. 99214 or 'Chest Pain'...">
+          <input type="text" id="code-search-input" class="tool-input" placeholder="Search CPT, ICD-10 or HCPCS code or description...">
         </div>
+        <p style="color: var(--text-muted); max-width: 700px; margin: 16px auto 0; font-size: 15px; text-align: center; line-height: 1.6;">Search 74,000+ codes across CPT (Current Procedural Terminology), ICD-10-CM/PCS diagnosis codes, and HCPCS Level II supply codes.</p>
 
         <div id="search-results-list" class="results-area" style="min-height: 200px; margin-top: 40px;">
           <p class="status-msg">Start typing to search 74,000+ medical codes.</p>
@@ -254,6 +276,43 @@
     </div>
   </section>
 
+  <!-- ── INTERNAL LINKING (reciprocal to /providers & /claim-denial-codes) ── -->
+  <section class="container" style="padding: 40px 20px; max-width: 1000px;">
+    <h3 style="margin-bottom: 24px; text-align: center;">More Free Medical Billing Tools</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+      <a href="/providers" style="display: block; padding: 28px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); text-decoration: none; transition: 0.3s;">
+        <h4 style="color: var(--accent); margin-bottom: 10px;">Free Provider Search</h4>
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">Search healthcare providers by NPI number or name. Verify your doctor's credentials, specialty, and practice address — free, no signup required.</p>
+      </a>
+      <a href="/claim-denial-codes" style="display: block; padding: 28px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); text-decoration: none; transition: 0.3s;">
+        <h4 style="color: var(--warning); margin-bottom: 10px;">Free Claim Denial Code Lookup</h4>
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">Decode insurance rejection codes (CARC &amp; RARC) instantly. Understand why your claim was denied and what steps to take next — completely free.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── SEO INTENT SECTIONS ── -->
+  <section class="container" style="padding: 40px 20px; max-width: 1000px; text-align: left;">
+    <h2 style="margin-bottom: 16px;">What Codes Can I Search?</h2>
+    <p style="color: var(--text-muted); line-height: 1.6;">
+      This tool searches across three medical code systems: CPT codes (procedure billing), ICD-10-CM/PCS codes (diagnosis and inpatient procedure codes), and HCPCS Level II codes (supplies, equipment, drugs). All in one search bar.
+    </p>
+  </section>
+
+  <section class="container" style="padding: 40px 20px; max-width: 1000px; text-align: left; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); margin-bottom: 40px;">
+    <h2 style="margin-bottom: 16px;">ICD-10 Code Lookup</h2>
+    <p style="color: var(--text-muted); line-height: 1.6;">
+      Search any ICD-10 diagnosis code or condition name. Supports ICD-10-CM (US clinical modification) and ICD-10-WHO (international).
+    </p>
+  </section>
+
+  <section class="container" style="padding: 40px 20px; max-width: 1000px; text-align: left; margin-bottom: 60px;">
+    <h2 style="margin-bottom: 16px;">HCPCS Code Lookup</h2>
+    <p style="color: var(--text-muted); line-height: 1.6;">
+      Look up HCPCS Level II codes for durable medical equipment (DME), ambulance services, and drug billing.
+    </p>
+  </section>
+
   <!-- ── FINAL CTA ── -->
   <section class="container" style="padding: 80px 0; text-align: center;">
     <h2 style="margin-bottom: 12px;">Check CPT Codes Now and Verify Your Medical Bill</h2>
@@ -343,12 +402,13 @@
   <script src="tabs/codesearch/codesearch.js"></script>
   <script>
     const cptFaqs = [
-      { q: 'What does a CPT code mean?', a: 'A CPT code is a 5-digit number that tells an insurance company what procedure or service you received. It ensures that the provider is paid for the work performed.' },
-      { q: 'How do I find a CPT code?', a: 'You can find CPT codes on your itemized hospital bill or superbill. Use the MediHelp search tool above to look up descriptions by name or code.' },
+      { q: 'What is a CPT code?', a: 'A CPT (Current Procedural Terminology) code is a 5-digit number used by healthcare providers to describe medical procedures and services for billing and insurance reimbursement. Each code represents a specific service, such as an office visit, lab test, or surgical procedure.' },
+      { q: 'What is the difference between CPT and ICD-10 codes?', a: 'CPT codes describe what procedure or service was performed (e.g., a blood test or surgery), while ICD-10 codes describe the patient\'s diagnosis or medical condition (e.g., diabetes or chest pain). Both are required on most insurance claims — CPT for the service, ICD-10 for the reason.' },
+      { q: 'Can I search HCPCS codes here?', a: 'Yes. This tool searches HCPCS Level II codes alongside CPT and ICD-10 codes. HCPCS Level II covers durable medical equipment (DME), ambulance services, prosthetics, and drug billing codes used in Medicare and Medicaid claims.' },
+      { q: 'Is this CPT lookup tool free?', a: 'Yes. MediHelp\'s CPT, ICD-10, and HCPCS code lookup tool is completely free with no signup required. Search all 74,000+ codes instantly to verify your medical bill or understand procedure charges.' },
+      { q: 'How do I find a procedure code for my medical bill?', a: 'Find procedure codes on your itemized hospital bill or superbill, then enter the code or procedure name in the search bar above. Select your region, review the code description, and compare it against what you actually received to spot billing errors.' },
       { q: 'Can CPT codes be wrong?', a: 'Yes. Upcoding (billing a more complex code) or unbundling (billing steps separately that should be grouped) are common medical billing errors.' },
-      { q: 'What is upcoding in medical billing?', a: 'Upcoding occurs when a provider submits a CPT code for a higher-level or more expensive service than what was actually performed or documented.' },
-      { q: 'What is the most commonly used CPT code?', a: 'CPT code 99213 (Office visit, 20-29 minutes) and 99214 (Office visit, 30-39 minutes) are among the most frequently billed codes in outpatient medicine.' },
-      { q: 'Are CPT codes the same worldwide?', a: 'CPT codes are a US standard maintained by the AMA. While other countries use similar systems (like OPCS-4 in the UK), code definitions vary globally.' }
+      { q: 'What is upcoding in medical billing?', a: 'Upcoding occurs when a provider submits a CPT code for a higher-level or more expensive service than what was actually performed or documented.' }
     ];
     if (window.renderFAQ) renderFAQ('faq-cpt', cptFaqs);
   </script>

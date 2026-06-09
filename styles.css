@@ -1593,6 +1593,14 @@ a:hover {
   padding-left: 2px; /* Slight offset for better visual alignment */
 }
 
+.result-desc-plain {
+  font-size: 13px;
+  color: var(--accent);
+  line-height: 1.5;
+  padding-left: 2px;
+  margin-top: 4px;
+}
+
 .region-badges {
   display: flex;
   gap: 6px;

@@ -4,10 +4,47 @@ let searchTimeout = null;
 let currentSearchId = 0; // Prevent race conditions
 const MAX_WAIT_ATTEMPTS = 20; // 2 seconds max wait for DB init
 
+// Curated plain-English overrides for high-traffic CPT/HCPCS codes
+const PLAIN_ENGLISH_OVERRIDES = {
+  '99202': 'Outpatient office visit for a new patient, low complexity',
+  '99203': 'Outpatient office visit for a new patient, moderate complexity',
+  '99204': 'Outpatient office visit for a new patient, moderate-high complexity',
+  '99205': 'Outpatient office visit for a new patient, high complexity',
+  '99211': 'Outpatient office visit for an established patient, minimal complexity',
+  '99212': 'Outpatient office visit for an established patient, low complexity',
+  '99213': 'Outpatient office visit for an established patient, low-moderate complexity, ~20 minutes',
+  '99214': 'Outpatient office visit for an established patient, moderate complexity, ~30 minutes',
+  '99215': 'Outpatient office visit for an established patient, high complexity, ~40 minutes',
+  '99221': 'Initial hospital inpatient care, low complexity',
+  '99222': 'Initial hospital inpatient care, moderate complexity',
+  '99223': 'Initial hospital inpatient care, high complexity',
+  '99283': 'Emergency department visit, moderate severity',
+  '99284': 'Emergency department visit, high severity',
+  '99285': 'Emergency department visit, high severity and risk',
+  '99291': 'Critical care, first 30–74 minutes',
+  '93000': 'Electrocardiogram (ECG) with interpretation and report',
+  '85025': 'Complete blood count (CBC) with automated differential',
+  '80053': 'Comprehensive metabolic panel (blood chemistry panel)',
+  '36415': 'Routine venipuncture (blood draw)',
+  '71046': 'Chest X-ray, two views',
+  '45378': 'Diagnostic colonoscopy',
+  '96372': 'Therapeutic injection (subcutaneous or intramuscular)',
+};
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
 });
+
+function selectRegion(btn, region) {
+  document.querySelectorAll('.tool-toggle-btn[data-region]').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  currentRegion = region;
+  clearTimeout(searchTimeout);
+  const searchInput = document.getElementById('code-search-input');
+  if (searchInput) performSearch(searchInput.value.trim());
+}
+window.selectRegion = selectRegion;
 
 
 
@@ -145,13 +182,13 @@ async function performSearch(query) {
     }
 
     if (isCodeLikely && !isPhrase) {
-      const allOrs = new Set([
-        `code.ilike."${safeQuery}%"`,
-        `code.ilike."${cleanQ}%"`,
-        `code.ilike."${cleanQFiltered}%"`,
-        `code.ilike."${dottedQ}%"`,
-        `short_description.ilike."%${safeQuery}%"`
-      ]);
+      // Code-only search: skip short_description ILIKE to avoid full-table scans and timeouts
+      const codeVariants = [...new Set([safeQuery, cleanQ, cleanQFiltered, dottedQ].filter(Boolean))];
+      const allOrs = new Set();
+      codeVariants.forEach(v => {
+        allOrs.add(`code.eq."${v}"`);
+        allOrs.add(`code.ilike."${v}%"`);
+      });
       dbQuery = dbQuery.or(Array.from(allOrs).join(','));
     } else {
       // Phrase search - deeply deduplicated to prevent AST parser timeouts
@@ -174,7 +211,14 @@ async function performSearch(query) {
     
     // [Medium] Always pull enough global records to safely group regions
     const fetchLimit = 300;
-    const { data, error, status } = await dbQuery.limit(fetchLimit);
+    let { data, error, status } = await dbQuery.limit(fetchLimit);
+
+    // Auto-retry once on statement timeout (cold-start / plan-cache warmup)
+    if (error && isTimeoutError(error) && searchId === currentSearchId) {
+      await new Promise(r => setTimeout(r, 350));
+      if (searchId !== currentSearchId) return;
+      ({ data, error, status } = await dbQuery.limit(fetchLimit));
+    }
     
     // Race Condition Guard: If a newer search has started, discard this result
     if (searchId !== currentSearchId) {
@@ -206,6 +250,7 @@ async function performSearch(query) {
           code: r.code,
           type: type,
           desc: cleanMedicalDescription(r.short_description),
+          plainDesc: getPlainEnglishDescription(r.code, type, r.short_description),
           regions: new Set([r.country || 'US'])
         };
       } else {
@@ -306,6 +351,7 @@ function renderResults(results, rawCount = 0, rawFetchLimit = 150) {
             </button>
           </div>
           <div class="result-desc">${escapeHtml(item.desc)}</div>
+          ${item.plainDesc ? `<div class="result-desc-plain">Plain English: ${escapeHtml(item.plainDesc)}</div>` : ''}
         </div>
       </div>
     `;
@@ -359,6 +405,87 @@ function renderNCCIResults(results, queryCode) {
   listContainer.innerHTML = html;
 }
 
+function isTimeoutError(error) {
+  const msg = (error?.message || '').toLowerCase();
+  return msg.includes('timeout') || msg.includes('canceling statement');
+}
+
+function isCptOrHcpcs(type) {
+  const t = (type || '').toUpperCase();
+  return t === 'HCPCS' || t === 'CPT' || t === 'CPT2';
+}
+
+function getPlainEnglishDescription(code, type, rawDesc) {
+  if (!isCptOrHcpcs(type)) return null;
+  const normalizedCode = (code || '').toUpperCase();
+  if (PLAIN_ENGLISH_OVERRIDES[normalizedCode]) {
+    return PLAIN_ENGLISH_OVERRIDES[normalizedCode];
+  }
+  return expandMedicareDescription(rawDesc);
+}
+
+function expandMedicareDescription(rawDesc) {
+  const desc = cleanMedicalDescription(rawDesc);
+  if (!desc || desc === '—') return null;
+
+  const abbrevs = [
+    ['w/o', 'without'], ['w/', 'with'], ['o/p', 'outpatient'], ['i/p', 'inpatient'],
+    ['est', 'established patient'], ['subsq', 'subsequent'], ['init', 'initial'],
+    ['preop', 'preoperative'], ['postop', 'postoperative'], ['new', 'new patient'],
+    ['mod', 'moderate complexity'], ['comp', 'comprehensive'], ['ther', 'therapeutic'],
+    ['diag', 'diagnostic'], ['eval', 'evaluation'], ['mgmt', 'management'],
+    ['admin', 'administration'], ['vacc', 'vaccine'], ['inj', 'injection'],
+    ['surg', 'surgical'], ['proc', 'procedure'], ['svc', 'service'],
+    ['abd', 'abdominal'], ['bk', 'back'], ['fx', 'fracture'], ['dx', 'diagnosis'],
+    ['tx', 'treatment'], ['xr', 'x-ray'], ['rad', 'radiology'], ['min', 'minutes'],
+    ['hr', 'hour'], ['hrs', 'hours'], ['obs', 'obstetric'], ['gyn', 'gynecologic'],
+    ['pulm', 'pulmonary'], ['card', 'cardiac'], ['neuro', 'neurological'],
+    ['l/s', 'lumbar spine'], ['c/s', 'cervical spine'], ['l/r', 'left or right'],
+  ];
+
+  let expanded = desc;
+  for (const [abbr, full] of abbrevs) {
+    expanded = expanded.replace(new RegExp(`\\b${abbr.replace('/', '\\/')}\\b`, 'gi'), full);
+  }
+
+  // E&M outpatient office visit pattern
+  const emOffice = expanded.match(
+    /^office\s+outpatient\s+(new patient|established patient)\s+((?:low(?:-moderate)?|moderate(?:-high)?|high|minimal)(?:\s+complexity)?)?\s*(\d+)?\s*minutes?/i
+  );
+  if (emOffice) {
+    const patientType = emOffice[1].toLowerCase();
+    let complexity = (emOffice[2] || '').replace(/\s+complexity/i, '').trim().toLowerCase();
+    if (complexity && !complexity.includes('complexity')) complexity += ' complexity';
+    const mins = emOffice[3];
+    const cxPart = complexity ? `, ${complexity}` : '';
+    const timePart = mins ? `, ~${mins} minutes` : '';
+    return `Outpatient office visit for a ${patientType}${cxPart}${timePart}`;
+  }
+
+  // Hospital / ED patterns
+  const emHospital = expanded.match(
+    /^(initial|subsequent)\s+hospital\s+(?:inpatient\s+)?care\s+((?:low|moderate|high)(?:\s+complexity)?)/i
+  );
+  if (emHospital) {
+    const phase = emHospital[1].toLowerCase();
+    const complexity = emHospital[2].replace(/\s+complexity/i, '').trim().toLowerCase();
+    return `${phase.charAt(0).toUpperCase() + phase.slice(1)} hospital inpatient care, ${complexity} complexity`;
+  }
+
+  const emEd = expanded.match(/^ed\s+visit\s+((?:low|moderate|high)(?:\s+severity)?)/i);
+  if (emEd) {
+    return `Emergency department visit, ${emEd[1].trim().toLowerCase()}`;
+  }
+
+  // General cleanup for fallback expansion
+  expanded = expanded.replace(/(\d+)\s+minutes?/gi, '~$1 minutes');
+  expanded = expanded.replace(/\s{2,}/g, ' ').trim();
+  expanded = expanded.charAt(0).toUpperCase() + expanded.slice(1);
+
+  if (expanded.toLowerCase() === desc.toLowerCase()) return null;
+  return expanded;
+}
+
 function cleanMedicalDescription(desc) {
   if (!desc || desc === '—') return '—';
   
@@ -366,10 +493,6 @@ function cleanMedicalDescription(desc) {
   let cleaned = desc.replace(/\s{2,}/g, ' ').trim();
   
   // 2. Remove trailing single character flags (I, J, M, etc.) common in Medicare files
-  // These usually indicate category flags (e.g. Cat II codes) or status indicators.
-  // We only remove if it's a single uppercase letter preceded by a space at the end.
-  // Exception: Common medical suffixes like 'A', 'B' (e.g., 'Type A') are usually part of a phrase.
-  // But flags like 'I', 'J', 'M' after "Bk pain" are definitely markers.
   if (/\s[I-Z]$/.test(cleaned)) {
     cleaned = cleaned.replace(/\s[I-Z]$/, '');
   }
