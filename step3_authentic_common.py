@@ -17,9 +17,22 @@ def build_stem(case: dict, age: int, gender_word: str, poss: str, cap: str) -> s
         intro = intro[0].lower() + intro[1:] if intro else intro
     opening = f"A {age}-year-old {gender_word} {intro}".strip()
     opening = re.sub(r"\s+", " ", opening)
+
+    # Format PE: add blank lines between subsections for clarity
+    pe_raw = case["pe"]
+    pe_formatted = "\n\n".join(line.strip() for line in pe_raw.split("\n") if line.strip())
+
+    # Format Labs: add blank lines between findings for clarity
+    labs_raw = case["labs"]
+    labs_formatted = "\n\n".join(line.strip() for line in labs_raw.split("\n") if line.strip())
+
     return (
-        f"{opening}\n\nPhysical Examination:\n\n{case['pe']}\n\n"
-        f"Laboratory Results:\n\n{case['labs']}\n\n\n{case['question']}"
+        f"{opening}\n\n"
+        f"Physical Examination:\n\n"
+        f"{pe_formatted}\n\n"
+        f"Laboratory Results:\n\n"
+        f"{labs_formatted}\n\n\n"
+        f"{case['question']}"
     )
 
 

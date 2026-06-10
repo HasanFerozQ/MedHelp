@@ -97,6 +97,7 @@ Which interpretation is most appropriate?', '["Case-fatality rate reported", "St
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -110,6 +111,7 @@ Which diagnostic study is most appropriate at this stage?', '["Empiric treatment
 Physical Examination:
 
 Vitals: HR 98 | BP 148/92.
+
 Abdomen: Right CVA tenderness; no peritoneal signs.
 
 Laboratory Results:
@@ -147,6 +149,7 @@ What is the most likely diagnosis?', '["Functional disorder", "Normal variant", 
 Physical Examination:
 
 Vitals: HR 96 | BP 118/74.
+
 HEENT: Petechiae on palate. No lymphadenopathy.
 
 Laboratory Results:
@@ -256,6 +259,7 @@ What is the most likely diagnosis?', '["Functional disorder", "Normal variant", 
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -293,6 +297,7 @@ What is the most appropriate physician response?', '["Use professional interpret
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -318,6 +323,7 @@ What is the most likely diagnosis?', '["Infective endocarditis", "Musculoskeleta
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -331,6 +337,7 @@ Which diagnostic study is most appropriate at this stage?', '["PET scan whole bo
 Physical Examination:
 
 Vitals: Temp 101.2°F | HR 100.
+
 Pharynx: Exudative tonsillitis. Skin: Circumoral pallor, accentuated neck folds.
 
 Laboratory Results:
@@ -392,6 +399,7 @@ What is the most appropriate physician response?', '["Guarantee cure", "Transfer
 Physical Examination:
 
 Vitals: BP 168/94.
+
 Eye: Afferent pupillary defect on affected side; fundoscopy difficult.
 
 Laboratory Results:
@@ -441,6 +449,7 @@ What is the most likely diagnosis?', '["Medication side effect", "Functional pai
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -886,6 +895,7 @@ What is the most appropriate physician response?', '["Avoid discussion", "Guaran
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -1031,6 +1041,7 @@ What is the most likely diagnosis?', '["Schizophrenia", "Medication side effect"
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -1248,6 +1259,7 @@ Which mechanism best describes how this drug class works?', '["Unknown mechanism
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -1885,6 +1897,7 @@ Which diagnostic study is most appropriate at this stage?', '["CT chest per Flei
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -1958,6 +1971,7 @@ Which mechanism best describes how this drug class works?', '["Unknown mechanism
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -2007,6 +2021,7 @@ What is the most likely diagnosis?', '["Anxiety disorder", "Medication side effe
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -2068,6 +2083,7 @@ What is the most likely diagnosis?', '["Conversion disorder", "Functional disord
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -2117,6 +2133,7 @@ What is the most likely diagnosis?', '["Medication adverse effect", "Normal vari
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -2142,6 +2159,7 @@ What is the most likely diagnosis?', '["Musculoskeletal strain", "Gastroenteriti
 Physical Examination:
 
 Vitals: HR 88 | BP 168/96.
+
 Neuro: Meningismus; no lateralizing signs initially.
 
 Laboratory Results:
@@ -2215,6 +2233,7 @@ What is the most likely diagnosis?', '["Atrial flutter", "Medication adverse eff
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -2252,6 +2271,7 @@ Which interpretation is most appropriate?', '["Exposure protective", "No associa
 Physical Examination:
 
 Vitals: Temp 99.8°F.
+
 Skin: Macules, papules, vesicles, crusted lesions simultaneously.
 
 Laboratory Results:
@@ -2433,6 +2453,7 @@ Which mechanism best explains metformin''s primary effect?', '["SGLT2-mediated g
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -2482,6 +2503,7 @@ Which mechanism primarily reduces mortality in HFrEF?', '["Arterial vasoconstric
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -2555,6 +2577,7 @@ What is the most likely diagnosis?', '["Conversion disorder", "Functional disord
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -2676,6 +2699,7 @@ What is the most likely diagnosis?', '["Medication side effect", "Anxiety disord
 Physical Examination:
 
 Vitals stable unless noted.
+
 Focused exam supports pretest suspicion.
 
 Laboratory Results:
@@ -2749,6 +2773,7 @@ Which diagnostic study is most appropriate at this stage?', '["Empiric treatment
 Physical Examination:
 
 Vitals: HR 124 (irregular) | BP 142/78.
+
 Thyroid: Diffusely enlarged, no nodules. Lid lag present.
 
 Laboratory Results:
@@ -2822,6 +2847,7 @@ Which mechanism best describes how this drug class works?', '["Hormone supplemen
 Physical Examination:
 
 Vitals stable.
+
 Lungs clear.
 
 Laboratory Results:
