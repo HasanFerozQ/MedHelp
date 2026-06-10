@@ -75,7 +75,8 @@ function formatMcqHtml(str) {
     .replace(/&lt;li&gt;/gi, '<li>')
     .replace(/&lt;\/li&gt;/gi, '</li>')
     .replace(/&amp;bull;/gi, '&bull;')
-    .replace(/&amp;nbsp;/gi, '&nbsp;');
+    .replace(/&amp;nbsp;/gi, '&nbsp;')
+    .replace(/\n/g, '<br>');
 }
 
 // 4. Shared Utils: FAQ Rendering
