@@ -1,20 +1,6 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    {
-      "source": "/medical-exam-preparation/:slug",
-      "destination": "/medical-exam-preparation.html"
-    },
-    {
-      "source": "/flash-cards/:slug",
-      "destination": "/flash-cards.html"
-    },
-    {
-      "source": "/medical-exam-semester/:slug",
-      "destination": "/medical-exam-semester.html"
-    }
-  ],
   "functions": {
     "api/*.js": {
       "maxDuration": 25
