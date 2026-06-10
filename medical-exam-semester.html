@@ -808,6 +808,22 @@
       localStorage.setItem('mh_prep_progress', JSON.stringify(userProgress));
     }
 
+    function topicHref(topic) {
+      if (!topic) return window.location.pathname;
+      if (topic.slug) return `/medical-exam-semester/${encodeURIComponent(topic.slug)}`;
+      if (typeof topic === 'string') return `${window.location.pathname}?topic_id=${encodeURIComponent(topic)}`;
+      return `${window.location.pathname}?topic_id=${encodeURIComponent(topic.id)}`;
+    }
+
+    function updateTopicUrl(topic) {
+      if (!topic) return;
+      const url = topic.slug
+        ? `/medical-exam-semester/${encodeURIComponent(topic.slug)}`
+        : `${window.location.pathname}?topic_id=${encodeURIComponent(topic.id)}`;
+      history.replaceState({ topicId: topic.id, slug: topic.slug || null }, '', url);
+      document.title = `${topic.title} | MediHelp Medical Exam Prep`;
+    }
+
     // --- SEARCH LOGIC ---
     async function initSearch() {
       const { data, error } = await window.dbClient
@@ -831,7 +847,7 @@
         
         if (matches.length > 0) {
           resultsContainer.innerHTML = matches.map(t => `
-            <a class="search-item" href="?topic_id=${t.id}" style="text-decoration:none;">
+            <a class="search-item" href="${topicHref(t)}" style="text-decoration:none;">
               <span class="search-item-title">${escapeHtml(t.title)}</span>
               <span class="search-item-sem">${t.year_id ? t.year_id + getYearSuffix(t.year_id) + ' Year' : 'General'}</span>
             </a>
@@ -901,8 +917,11 @@
         const isFreeDemo = card.dataset.freeDemo === 'true';
 
         // Full page navigation = same reliability as a hard refresh (clean Supabase + auth state).
+        const topicSlug = card.dataset.topicSlug || '';
         const goTopic = () => {
-          const u = `${window.location.pathname}?topic_id=${encodeURIComponent(topicId)}&cb=${Date.now()}`;
+          const u = topicSlug
+            ? `/medical-exam-semester/${encodeURIComponent(topicSlug)}`
+            : `${window.location.pathname}?topic_id=${encodeURIComponent(topicId)}`;
           window.location.assign(u);
         };
 
@@ -982,7 +1001,7 @@
       try {
         loadingYears.add(yearId);
         const { data } = await window.dbClient.from('topics')
-          .select('id, title, section, is_free_demo, "order", year_id, mcq_count, case_count')
+          .select('id, title, section, slug, is_free_demo, "order", year_id, mcq_count, case_count')
           .eq('year_id', yearId)
           .is('usmle_step', null)
           .order('order', { ascending: true });
@@ -1054,7 +1073,7 @@
         console.log(`MediHelp: Fetching fresh topics for Year ${yearId}...`);
         const { data: topics, error } = await window.dbClient
           .from('topics')
-          .select('id, title, section, is_free_demo, "order", year_id, mcq_count, case_count')
+          .select('id, title, section, slug, is_free_demo, "order", year_id, mcq_count, case_count')
           .eq('year_id', yearId)
           .is('usmle_step', null)
           .order('order', { ascending: true })
@@ -1198,7 +1217,7 @@
           const percent = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
 
           html += `
-            <a class="topic-card" href="?topic_id=${topic.id}" data-topic-id="${escapeAttr(topic.id)}" data-topic-title="${escapeAttr(topic.title)}" data-free-demo="${isFreeDemo}">
+            <a class="topic-card" href="${topicHref(topic)}" data-topic-id="${escapeAttr(topic.id)}" data-topic-slug="${escapeAttr(topic.slug || '')}" data-topic-title="${escapeAttr(topic.title)}" data-free-demo="${isFreeDemo}">
               <div>
                 ${isFreeDemo ? '<span style="display:inline-block; background:var(--accent); color:#fff; font-size:10px; font-weight:800; padding:3px 10px; border-radius:6px; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; box-shadow:0 4px 12px rgba(var(--accent-rgb),0.3);">Free Demo</span>' : ''}
                 <h3 style="margin-bottom: 8px;">${escapeHtml(topic.title)}</h3>
@@ -1236,11 +1255,11 @@
     // Prefetching removed to optimize initial load performance
 
     // --- QUIZ LOGIC ---
-    async function startQuiz(topicId, title, isFreeDemo = false) {
-      // Remember target topic even if we stop for auth/license — unlock flow reloads with ?topic_id=
+    async function startQuiz(topicId, title, isFreeDemo = false, topicSlug = null) {
       currentTopicId = topicId;
       const titleEl = document.getElementById('current-topic-title');
       if (titleEl) titleEl.textContent = title;
+      updateTopicUrl({ id: topicId, title, slug: topicSlug });
 
       if (!isFreeDemo) {
         const premium = await MediHelp.isPremium();
@@ -1302,8 +1321,11 @@
         showToast('Premium Access Activated!', 'success');
         closePremiumModal();
         const tid = currentTopicId ? encodeURIComponent(currentTopicId) : '';
+        const slugTopic = allTopicsIndex.find(t => t.id === currentTopicId);
         navigated = true;
-        window.location.href = window.location.pathname + (tid ? ('?topic_id=' + tid + '&cb=' + Date.now()) : ('?cb=' + Date.now()));
+        window.location.href = slugTopic?.slug
+          ? `/medical-exam-semester/${encodeURIComponent(slugTopic.slug)}`
+          : window.location.pathname + (tid ? (`?topic_id=${tid}`) : '');
       } catch (e) {
         console.error("License Verification Error:", e.message);
         if (e.message === "LICENSE_LIMIT_REACHED") {
@@ -1331,7 +1353,10 @@
         await MediHelp.License.restore();
         showToast('Access Restored Successfully!', 'success');
         closePremiumModal();
-        window.location.href = window.location.pathname + (currentTopicId ? ('?topic_id=' + encodeURIComponent(currentTopicId) + '&cb=' + Date.now()) : ('?cb=' + Date.now()));
+        const slugTopic = allTopicsIndex.find(t => t.id === currentTopicId);
+        window.location.href = slugTopic?.slug
+          ? `/medical-exam-semester/${encodeURIComponent(slugTopic.slug)}`
+          : window.location.pathname + (currentTopicId ? (`?topic_id=${encodeURIComponent(currentTopicId)}`) : '');
       } catch (e) {
         showToast(e.message || 'No saved license found.', 'error');
       } finally {
@@ -1487,7 +1512,7 @@
           
           if (nextTop && !nextErr) {
             endDiv.innerHTML = `
-              <a href="?topic_id=${nextTop.id}" class="btn btn-primary" style="display:inline-block; padding:16px 32px; font-size:16px; font-weight:800; text-decoration:none;">
+              <a href="${topicHref(nextTop)}" class="btn btn-primary" style="display:inline-block; padding:16px 32px; font-size:16px; font-weight:800; text-decoration:none;">
                 Proceed to Next Topic: ${escapeHtml(nextTop.title)}
               </a>
             `;
@@ -1692,7 +1717,8 @@
       const deepTopic = !!(urlParamsEarly.get('topic_id') || urlParamsEarly.get('slug') ||
         (() => {
           const p = window.location.pathname.split('/').filter(Boolean);
-          return p.length >= 2 && p[0] === 'medical-exam-preparation' && p[1];
+          return (p.length >= 2 && p[0] === 'medical-exam-preparation' && p[1]) ||
+            (p.length >= 2 && p[0] === 'medical-exam-semester' && p[1]);
         })());
 
       // Heavy all-topics query competes with MCQ/case fetches — defer when opening a topic from URL.
@@ -1721,13 +1747,16 @@
       if (!slug && pathParts.length >= 2 && pathParts[0] === 'medical-exam-preparation') {
         slug = pathParts[1];
       }
+      if (!slug && pathParts.length >= 2 && pathParts[0] === 'medical-exam-semester') {
+        slug = pathParts[1];
+      }
       
       if (urlParams.get('showActivation') === 'true') {
         openPremiumModal();
       }
 
       if (initialTopicId || slug) {
-        let query = window.dbClient.from('topics').select('id, title, year_id, usmle_step, is_free_demo');
+        let query = window.dbClient.from('topics').select('id, title, slug, year_id, usmle_step, is_free_demo');
         if (initialTopicId) query = query.eq('id', initialTopicId);
         else query = query.eq('slug', slug);
         
@@ -1736,10 +1765,8 @@
            const urlParams2 = new URLSearchParams(window.location.search);
            let isFreeDemo = urlParams2.get('free') === 'true';
 
-           // Always honor DB flag (was only applied inside year/usmle branch — missed some deep links).
            if (data.is_free_demo) isFreeDemo = true;
 
-           // First topic in year / USMLE track is free demo even if the flag was not set on the row.
            if (!isFreeDemo && (data.year_id != null || data.usmle_step != null)) {
              let firstQ = window.dbClient.from('topics').select('id').order('order', { ascending: true }).order('created_at', { ascending: true }).limit(1);
              if (data.year_id != null) {
@@ -1751,7 +1778,7 @@
              if (firstRow && firstRow.id === data.id) isFreeDemo = true;
            }
 
-           startQuiz(data.id, data.title, isFreeDemo);
+           startQuiz(data.id, data.title, isFreeDemo, data.slug);
         } else {
            initYears();
         }
