@@ -8,8 +8,8 @@ import re
 from supabase import create_client
 
 # Supabase configuration
-SUPABASE_URL = os.getenv('SUPABASE_URL', 'https://your-project.supabase.co')
-SUPABASE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY', 'your-service-role-key')
+SUPABASE_URL = os.getenv('SUPABASE_URL', 'https://bisqgousuvljttesjkkm.supabase.co')
+SUPABASE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTMwNDMxOSwiZXhwIjoyMDkwODgwMzE5fQ.PpVOWNEvMkLTuw8nJm7NwW30u8pKLbQL7tJVNh4jdn0')
 
 def slugify(text):
     """Convert text to a URL-friendly slug."""
