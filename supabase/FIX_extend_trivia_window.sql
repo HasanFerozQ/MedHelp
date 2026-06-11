@@ -33,7 +33,7 @@ AS $$
     ((s.scheduled_date::text || ' 20:00:00 America/New_York')::timestamptz) AS start_at,
     -- Closes: 11:59 PM ET same day (was 20:20 — only 20 min!)
     ((s.scheduled_date::text || ' 23:59:00 America/New_York')::timestamptz) AS end_at,
-    COALESCE(s.allow_retakes, true) AS allow_retakes
+    COALESCE(s.allow_retakes, false) AS allow_retakes
   FROM public.trivia_sets s
   CROSS JOIN et
   WHERE s.scheduled_date = et.today
@@ -126,12 +126,31 @@ BEGIN
     'status', v_set_status,
     'start_at', v_start_at,
     'end_at', v_end_at,
-    'allow_retakes', true
+    'allow_retakes', v_allow_retakes
   );
 
-  -- Always create a fresh session (retakes allowed)
   IF v_user_id IS NOT NULL THEN
-    DELETE FROM public.trivia_sessions WHERE set_id = v_set_id AND user_id = v_user_id;
+    SELECT status INTO v_existing_status
+    FROM public.trivia_sessions
+    WHERE set_id = v_set_id AND user_id = v_user_id
+    LIMIT 1;
+
+    IF v_allow_retakes AND v_existing_status IS NOT NULL THEN
+      DELETE FROM public.trivia_sessions WHERE set_id = v_set_id AND user_id = v_user_id;
+      v_existing_status := NULL;
+    END IF;
+
+    IF v_existing_status IS NOT NULL THEN
+      SELECT to_jsonb(s) INTO v_session
+      FROM (
+        SELECT id, set_id, status, started_at, ended_at, score, correct_count, share_grid
+        FROM public.trivia_sessions
+        WHERE set_id = v_set_id AND user_id = v_user_id
+        LIMIT 1
+      ) s;
+      RETURN jsonb_build_object('reused', true, 'session', v_session, 'set', v_set);
+    END IF;
+
     WITH ins AS (
       INSERT INTO public.trivia_sessions (
         set_id, user_id, timezone_snapshot, client_started_at, status
@@ -145,8 +164,26 @@ BEGIN
     RETURN jsonb_build_object('reused', false, 'session', v_session, 'set', v_set);
   END IF;
 
-  DELETE FROM public.trivia_sessions
-  WHERE set_id = v_set_id AND guest_token = trim(p_guest_token);
+  SELECT status INTO v_existing_status
+  FROM public.trivia_sessions
+  WHERE set_id = v_set_id AND guest_token = trim(p_guest_token)
+  LIMIT 1;
+
+  IF v_allow_retakes AND v_existing_status IS NOT NULL THEN
+    DELETE FROM public.trivia_sessions WHERE set_id = v_set_id AND guest_token = trim(p_guest_token);
+    v_existing_status := NULL;
+  END IF;
+
+  IF v_existing_status IS NOT NULL THEN
+    SELECT to_jsonb(s) INTO v_session
+    FROM (
+      SELECT id, set_id, status, started_at, ended_at, score, correct_count, share_grid
+      FROM public.trivia_sessions
+      WHERE set_id = v_set_id AND guest_token = trim(p_guest_token)
+      LIMIT 1
+    ) s;
+    RETURN jsonb_build_object('reused', true, 'session', v_session, 'set', v_set);
+  END IF;
 
   WITH ins AS (
     INSERT INTO public.trivia_sessions (

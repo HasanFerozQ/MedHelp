@@ -21,6 +21,18 @@ Deno.serve(async (req) => {
     if (!todaySetRows?.[0]) return jsonResponse({ error: "No trivia set scheduled for today" }, 404);
 
     const todaySet = todaySetRows[0];
+
+    // Time window validation (same as RPC trivia_join_session)
+    const now = new Date();
+    const startAt = todaySet.start_at ? new Date(todaySet.start_at) : null;
+    const endAt = todaySet.end_at ? new Date(todaySet.end_at) : null;
+    
+    if (startAt && now < startAt) {
+      return jsonResponse({ error: "Trivia opens at 8:00 PM Eastern Time." }, 403);
+    }
+    if (endAt && (now > endAt || todaySet.status === "closed")) {
+      return jsonResponse({ error: "Today's trivia has closed. Come back tomorrow at 8 PM ET!" }, 403);
+    }
     const identityColumn = userId ? "user_id" : "guest_token";
     const identityValue = userId ?? guestToken;
 

@@ -27,6 +27,7 @@
     liveScore: 0,
     questionStartedAt: null,
     questionTicker: null,
+    answered: false,
     muted: localStorage.getItem(MUTE_KEY) === "true",
     presenceTicker: null,
   };
@@ -44,7 +45,10 @@
   }
 
   function saveGuest(username) {
-    const token = crypto.randomUUID();
+    const token =
+      (typeof crypto !== "undefined" && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     const guest = { token, username };
     localStorage.setItem(GUEST_KEY, JSON.stringify(guest));
     return guest;
@@ -159,13 +163,8 @@
     const nowIso = new Date().toISOString();
 
     const setRes = await client.rpc("get_trivia_set_for_lobby", {});
-    if (setRes.error) {
-      const fallback = await client.rpc("get_today_set_for_play", {});
-      if (fallback.error) throw new Error(fallback.error.message || "Failed to load today’s trivia set");
-      ctx.todaySet = normalizeTodaySetRow(fallback.data);
-    } else {
-      ctx.todaySet = normalizeTodaySetRow(setRes.data);
-    }
+    if (setRes.error) throw new Error(setRes.error.message || "Failed to load trivia set");
+    ctx.todaySet = normalizeTodaySetRow(setRes.data);
 
     const stateRes = await client.rpc("get_current_trivia_state", { now_tz: nowIso });
     if (stateRes.error) throw new Error(stateRes.error.message || "Failed to load trivia state");
@@ -176,12 +175,14 @@
 
   async function updatePresence() {
     if (!ctx.todaySet?.set_id) return;
+    const client = db();
+    if (!client) return;
     const identity = await ensureGuestIdentity();
     const identityKey = identity.isAuth ? `user:${identity.user.id}` : `guest:${identity.guest?.token || "anon"}`;
     const username = identity.isAuth
       ? (identity.user?.user_metadata?.username || identity.user?.email || "user")
       : (identity.guest?.username || "guest");
-    await db().from("trivia_waiting_room_presence").upsert({
+    await client.from("trivia_waiting_room_presence").upsert({
       set_id: ctx.todaySet.set_id,
       identity_key: identityKey,
       username,

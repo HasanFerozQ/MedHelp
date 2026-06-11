@@ -36,7 +36,7 @@
     C.playAudio("clock");
     resetTimerBar();
 
-    const started = new Date(C.ctx.questionStartedAt).getTime();
+    const started = C.ctx.questionStartedAt ? new Date(C.ctx.questionStartedAt).getTime() : NaN;
     if (Number.isNaN(started)) {
       C.ctx.questionStartedAt = new Date().toISOString();
       C.saveActiveSession();
@@ -66,23 +66,38 @@
   }
 
   async function handleTimeout() {
+    if (C.ctx.answered) return;
     lockOptions();
     rationaleTextEl.textContent = "Time expired — moving to the next question.";
     rationalePanel.classList.remove("hidden");
-    try {
-      await submitAnswer(null, currentQuestionRationale || "No rationale provided.");
-    } catch (error) {
-      console.warn("Timeout answer submit failed:", error);
-      setTimeout(async () => {
-        C.ctx.questionOrder += 1;
-        C.ctx.questionStartedAt = null;
-        C.saveActiveSession();
-        if (C.ctx.questionOrder > C.TOTAL_QUESTIONS) {
-          await finishTrivia();
-          return;
-        }
-        await renderQuestion(C.ctx.questionOrder);
-      }, C.RATIONALE_PAUSE_MS);
+    let lastError;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        await submitAnswer(null, currentQuestionRationale || "No rationale provided.");
+        return;
+      } catch (error) {
+        lastError = error;
+        console.warn(`Timeout answer submit failed (attempt ${attempt + 1}):`, error);
+        if (attempt < 2) await new Promise((r) => setTimeout(r, 2000));
+      }
+    }
+    console.error("All timeout submission retries failed:", lastError);
+    C.ctx.questionOrder += 1;
+    C.ctx.questionStartedAt = null;
+    C.ctx.answered = false;
+    C.saveActiveSession();
+    if (C.ctx.questionOrder > C.TOTAL_QUESTIONS) {
+      try { await finishTrivia(); } catch (e) {
+        console.error("Finish after timeout fallback failed:", e);
+        alert("Could not finalize your session. Returning to lobby.");
+        window.location.href = "/med-trivia";
+      }
+      return;
+    }
+    try { await renderQuestion(C.ctx.questionOrder); } catch (e) {
+      console.error("Render after timeout fallback failed:", e);
+      alert("Quiz failed to load. Returning to lobby.");
+      window.location.href = "/med-trivia";
     }
   }
 
@@ -111,6 +126,7 @@
     if (!C.ctx.questionStartedAt || C.ctx.questionOrder !== order) {
       C.ctx.questionStartedAt = new Date().toISOString();
     }
+    C.ctx.answered = false;
     C.saveActiveSession();
 
     currentQuestionRationale = q.rationale || "";
@@ -142,6 +158,8 @@
   }
 
   async function submitAnswer(selectedIndex, rationale) {
+    if (C.ctx.answered) return;
+    C.ctx.answered = true;
     lockOptions();
     clearInterval(C.ctx.questionTicker);
     C.stopClock();
@@ -176,14 +194,21 @@
     rationalePanel.classList.remove("hidden");
 
     setTimeout(async () => {
-      C.ctx.questionOrder += 1;
-      C.ctx.questionStartedAt = null;
-      C.saveActiveSession();
-      if (C.ctx.questionOrder > C.TOTAL_QUESTIONS) {
-        await finishTrivia();
-        return;
+      try {
+        C.ctx.questionOrder += 1;
+        C.ctx.questionStartedAt = null;
+        C.ctx.answered = false;
+        C.saveActiveSession();
+        if (C.ctx.questionOrder > C.TOTAL_QUESTIONS) {
+          await finishTrivia();
+          return;
+        }
+        await renderQuestion(C.ctx.questionOrder);
+      } catch (e) {
+        console.error("Post-answer advancement failed:", e);
+        alert("Quiz failed to load. Returning to lobby.");
+        window.location.href = "/med-trivia";
       }
-      await renderQuestion(C.ctx.questionOrder);
     }, C.RATIONALE_PAUSE_MS);
   }
 
@@ -205,56 +230,66 @@
       }
 
       breakdownEl.innerHTML = results.map(q => {
-        const isRight = q.is_correct;
-        const statusColor = isRight ? "text-emerald-400" : "text-rose-400";
-        const statusIcon = isRight ? "fa-circle-check" : "fa-circle-xmark";
-        const statusBg = isRight ? "bg-emerald-400/10 border-emerald-500/20" : "bg-rose-400/10 border-rose-500/20";
-        
-        let optionsHtml = '';
-        const opts = Array.isArray(q.options) ? q.options : JSON.parse(q.options || "[]");
-        opts.forEach((opt, idx) => {
-          const isUserPick = idx === q.user_selected_index;
-          const isCorrectAns = idx === q.correct_index;
+        try {
+          const isRight = q.is_correct;
+          const statusColor = isRight ? "text-emerald-400" : "text-rose-400";
+          const statusIcon = isRight ? "fa-circle-check" : "fa-circle-xmark";
+          const statusBg = isRight ? "bg-emerald-400/10 border-emerald-500/20" : "bg-rose-400/10 border-rose-500/20";
           
-          let optClass = "border-slate-700 bg-slate-800 text-slate-300";
-          let iconHtml = '<i class="fa-regular fa-circle text-slate-600 text-[10px] shrink-0"></i>';
-          
-          if (isCorrectAns) {
-            optClass = "border-emerald-500 bg-emerald-500/10 text-emerald-100";
-            iconHtml = '<i class="fa-solid fa-check text-emerald-500 text-xs shrink-0"></i>';
-          } else if (isUserPick && !isCorrectAns) {
-            optClass = "border-rose-500 bg-rose-500/10 text-rose-100";
-            iconHtml = '<i class="fa-solid fa-xmark text-rose-500 text-xs shrink-0"></i>';
+          let optionsHtml = '';
+          let opts;
+          try {
+            opts = Array.isArray(q.options) ? q.options : JSON.parse(q.options || "[]");
+          } catch (_) {
+            opts = [];
           }
+          opts.forEach((opt, idx) => {
+            const isUserPick = idx === q.user_selected_index;
+            const isCorrectAns = idx === q.correct_index;
+            
+            let optClass = "border-slate-700 bg-slate-800 text-slate-300";
+            let iconHtml = '<i class="fa-regular fa-circle text-slate-600 text-[10px] shrink-0"></i>';
+            
+            if (isCorrectAns) {
+              optClass = "border-emerald-500 bg-emerald-500/10 text-emerald-100";
+              iconHtml = '<i class="fa-solid fa-check text-emerald-500 text-xs shrink-0"></i>';
+            } else if (isUserPick && !isCorrectAns) {
+              optClass = "border-rose-500 bg-rose-500/10 text-rose-100";
+              iconHtml = '<i class="fa-solid fa-xmark text-rose-500 text-xs shrink-0"></i>';
+            }
 
-          optionsHtml += `
-            <div class="p-2.5 sm:p-3 rounded-lg border ${optClass} flex items-center justify-between transition-colors">
-              <div class="flex items-center space-x-2.5 sm:space-x-3 pr-2 min-w-0">
-                <span class="w-6 h-6 shrink-0 rounded text-[10px] font-bold flex items-center justify-center ${isCorrectAns ? 'bg-emerald-500 text-slate-900' : isUserPick ? 'bg-rose-500 text-white' : 'bg-slate-700 text-slate-300'}">${LETTERS[idx]}</span>
-                <span class="text-[11px] sm:text-xs font-medium leading-tight">${escapeHtml(opt)}</span>
+            optionsHtml += `
+              <div class="p-2.5 sm:p-3 rounded-lg border ${optClass} flex items-center justify-between transition-colors">
+                <div class="flex items-center space-x-2.5 sm:space-x-3 pr-2 min-w-0">
+                  <span class="w-6 h-6 shrink-0 rounded text-[10px] font-bold flex items-center justify-center ${isCorrectAns ? 'bg-emerald-500 text-slate-900' : isUserPick ? 'bg-rose-500 text-white' : 'bg-slate-700 text-slate-300'}">${LETTERS[idx]}</span>
+                  <span class="text-[11px] sm:text-xs font-medium leading-tight">${escapeHtml(opt)}</span>
+                </div>
+                ${iconHtml}
               </div>
-              ${iconHtml}
+            `;
+          });
+
+          return `
+            <div class="p-3 sm:p-5 rounded-xl border ${statusBg}">
+              <div class="flex items-start justify-between mb-3">
+                <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest ${statusColor}">
+                  <i class="fa-solid ${statusIcon} mr-1"></i> Q${q.question_order}
+                </span>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-200 leading-relaxed mb-4 whitespace-pre-wrap">${escapeHtml(q.prompt)}</p>
+              <div class="flex flex-col space-y-2 mb-4">
+                ${optionsHtml}
+              </div>
+              <div class="bg-slate-950/50 rounded-lg p-3 sm:p-4 border border-slate-800/50">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5"><i class="fa-solid fa-lightbulb text-amber-400/80 mr-1"></i> Rationale</p>
+                <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">${escapeHtml(q.rationale)}</p>
+              </div>
             </div>
           `;
-        });
-
-        return `
-          <div class="p-3 sm:p-5 rounded-xl border ${statusBg}">
-            <div class="flex items-start justify-between mb-3">
-              <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest ${statusColor}">
-                <i class="fa-solid ${statusIcon} mr-1"></i> Q${q.question_order}
-              </span>
-            </div>
-            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed mb-4 whitespace-pre-wrap">${escapeHtml(q.prompt)}</p>
-            <div class="flex flex-col space-y-2 mb-4">
-              ${optionsHtml}
-            </div>
-            <div class="bg-slate-950/50 rounded-lg p-3 sm:p-4 border border-slate-800/50">
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5"><i class="fa-solid fa-lightbulb text-amber-400/80 mr-1"></i> Rationale</p>
-              <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">${escapeHtml(q.rationale)}</p>
-            </div>
-          </div>
-        `;
+        } catch (qe) {
+          console.warn("Failed to render breakdown for question:", q.question_order, qe);
+          return `<div class="p-3 sm:p-5 rounded-xl border border-slate-700 bg-slate-800/40"><p class="text-xs text-slate-400">Unable to load review for Question ${q.question_order}.</p></div>`;
+        }
       }).join('');
     } catch (e) {
       console.warn("Could not load rationales:", e);
@@ -316,7 +351,6 @@
     if (C.ctx.session?.status === "finished") {
       const row = C.ctx.session;
       C.clearActiveSession();
-      // If they somehow land here with a finished session locally, load their results.
       await showResultModal(
         row.score || 0,
         C.TOTAL_QUESTIONS,
@@ -324,6 +358,12 @@
         row.set_id,
         row.id
       );
+      return;
+    }
+
+    // Handle refresh during final rationale pause (questionOrder incremented to 11)
+    if (C.ctx.questionOrder > C.TOTAL_QUESTIONS) {
+      await finishTrivia();
       return;
     }
 
@@ -335,8 +375,7 @@
     });
 
     document.getElementById("share-result").addEventListener("click", async () => {
-      // FIX: use finalDbScore (from DB) not liveScore (client counter that can drift)
-      const score = finalDbScore || C.ctx.liveScore;
+      const score = typeof finalDbScore === "number" ? finalDbScore : C.ctx.liveScore;
       const text = `MedTrivia ${new Date().toLocaleDateString()}: ${score}/${C.TOTAL_QUESTIONS} — MediHelp Med Trivia`;
       try {
         await navigator.clipboard.writeText(text);
