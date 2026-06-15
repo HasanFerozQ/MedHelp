@@ -1,0 +1,744 @@
+const renalCards = [
+  {
+    "q": "What are the two types of nephrons and their key differences?",
+    "a": "<ul><li><b>Cortical Nephrons (85%):</b> Short loops of Henle, glomeruli in outer 2/3 of cortex, peritubular capillaries.</li><li><b>Juxtamedullary Nephrons (15%):</b> Long loops of Henle extending deep into medulla, vasa recta, crucial for urine concentration.</li></ul>"
+  },
+  {
+    "q": "State normal values for RBF, RPF, GFR, and Filtration Fraction.",
+    "a": "<ul><li><b>RBF:</b> 1.1 L/min (20–25% of cardiac output)</li><li><b>RPF:</b> ~625 mL/min</li><li><b>GFR:</b> 120–125 mL/min</li><li><b>Filtration Fraction (FF):</b> GFR/RPF ≈ 0.20 (20%)</li></ul>"
+  },
+  {
+    "q": "What is the formula for GFR using Starling forces?",
+    "a": "$$\\text{GFR} = K_f \\times [(P_{gc} - P_{bs}) - (\\pi_{gc} - \\pi_{bs})]$$<ul><li>Kf = filtration coefficient</li><li>Pgc = glomerular capillary hydrostatic pressure (~55 mmHg)</li><li>Pbs = Bowman’s space hydrostatic pressure (~15 mmHg)</li><li>πgc = glomerular oncotic pressure (~28 mmHg)</li></ul>"
+  },
+  {
+    "q": "How is GFR clinically measured? What is the gold standard?",
+    "a": "<ul><li><b>Gold standard:</b> Inulin clearance (freely filtered, neither reabsorbed nor secreted).</li><li><b>Clinical approximation:</b> Creatinine clearance (slightly overestimates due to tubular secretion).</li></ul>"
+  },
+  {
+    "q": "What is autoregulation of GFR and RBF? What is the range?",
+    "a": "Intrinsic ability of kidney to maintain constant RBF and GFR despite changes in mean arterial pressure.<br><b>Range:</b> 80–180 mmHg (mainly 60–160 mmHg).<br><b>Mechanisms:</b> Myogenic + Tubuloglomerular feedback."
+  },
+  {
+    "q": "Explain Tubuloglomerular Feedback.",
+    "a": "Macula densa senses ↑ NaCl delivery → releases adenosine/ATP → afferent arteriole constriction → ↓ GFR.<br><b>Purpose:</b> Protects glomerulus from hypertension and maintains distal delivery."
+  },
+  {
+    "q": "What is the effect of Angiotensin II on glomerular arterioles?",
+    "a": "Preferentially constricts <b>efferent arteriole</b> &gt; afferent → ↑ glomerular hydrostatic pressure → maintains GFR when renal perfusion is low."
+  },
+  {
+    "q": "Trace the Renin-Angiotensin-Aldosterone System (RAAS).",
+    "a": "↓ Renal perfusion / ↓ Na⁺ / ↑ sympathetic → Juxtaglomerular cells release <b>Renin</b> → Angiotensinogen → Ang I → (ACE) Ang II → vasoconstriction, aldosterone release, thirst, ADH."
+  },
+  {
+    "q": "Where is aldosterone produced and what are its main actions?",
+    "a": "Produced in Zona Glomerulosa of adrenal cortex.<br><b>Actions (Principal cells of CD):</b> ↑ ENaC and Na/K-ATPase → Na⁺ reabsorption, K⁺ & H⁺ secretion."
+  },
+  {
+    "q": "What is the countercurrent multiplier system?",
+    "a": "Mechanism in loop of Henle that creates hyperosmotic medullary interstitium.<ul><li>Descending limb: water permeable</li><li>Thick ascending limb: actively pumps NaCl (impermeable to water)</li></ul>"
+  },
+  {
+    "q": "What is the role of vasa recta in the kidney?",
+    "a": "Countercurrent exchanger that preserves the medullary osmotic gradient by removing excess solute and water without dissipating the gradient."
+  },
+  {
+    "q": "Compare the permeability of different parts of the nephron to water and solutes.",
+    "a": "<ul><li><b>PCT:</b> Highly permeable to water and solutes</li><li><b>Descending LoH:</b> Water permeable, solute impermeable</li><li><b>Ascending LoH:</b> Water impermeable, solute permeable (active transport)</li><li><b>CD:</b> ADH-dependent water permeability (aquaporins)</li></ul>"
+  },
+  {
+    "q": "What percentage of filtered load is reabsorbed in each segment?",
+    "a": "<ul><li><b>PCT:</b> 65–67%</li><li><b>Loop of Henle:</b> 25%</li><li><b>DCT:</b> 5–10%</li><li><b>Collecting Duct:</b> Variable (ADH & Aldosterone dependent)</li></ul>"
+  },
+  {
+    "q": "What is the effect of ADH (Vasopressin) on the kidney?",
+    "a": "Binds V2 receptors → insertion of Aquaporin-2 channels in collecting duct → ↑ water reabsorption → concentrated urine."
+  },
+  {
+    "q": "What is the action of Atrial Natriuretic Peptide (ANP)?",
+    "a": "Released in response to atrial stretch.<br><b>Effects:</b> ↑ GFR, ↓ renin, ↓ aldosterone, ↓ Na⁺ reabsorption → natriuresis and diuresis."
+  },
+  {
+    "q": "List the major classes of diuretics and their sites of action.",
+    "a": "<ul><li><b>Carbonic Anhydrase Inhibitors:</b> Proximal tubule</li><li><b>Loop diuretics:</b> Thick ascending limb</li><li><b>Thiazides:</b> Distal convoluted tubule</li><li><b>K⁺-sparing:</b> Collecting duct</li></ul>"
+  },
+  {
+    "q": "What is the most common cause of metabolic alkalosis from diuretics?",
+    "a": "Loop and Thiazide diuretics cause volume contraction → secondary hyperaldosteronism → increased H⁺ and K⁺ secretion → contraction alkalosis."
+  },
+  {
+    "q": "What is Fanconi Syndrome?",
+    "a": "Generalized dysfunction of proximal tubule → glycosuria, aminoaciduria, phosphaturia, bicarbonate wasting (Type 2 RTA)."
+  },
+  {
+    "q": "Compare the 4 types of Renal Tubular Acidosis (RTA).",
+    "a": "<ul><li><b>Type 1 (Distal):</b> Cannot excrete H⁺ → hypokalemia, urine pH &gt;5.5</li><li><b>Type 2 (Proximal):</b> Cannot reabsorb HCO₃⁻</li><li><b>Type 3:</b> Rare (mixed)</li><li><b>Type 4 (Hypoaldosteronism):</b> Hyperkalemia, mild acidosis</li></ul>"
+  },
+  {
+    "q": "What is the clearance formula?",
+    "a": "$$C_x = \\frac{U_x \\times V}{P_x}$$<br>Where Ux = urine concentration, V = urine flow rate, Px = plasma concentration."
+  },
+  {
+    "q": "What substances have clearance equal to GFR, RPF, and &gt; GFR?",
+    "a": "<ul><li><b>GFR:</b> Inulin</li><li><b>RPF:</b> PAH (Para-aminohippuric acid)</li><li><b>&gt; GFR:</b> Substances that are secreted (e.g., creatinine slightly)</li></ul>"
+  },
+  {
+    "q": "What is effective circulating volume (ECV)?",
+    "a": "Volume sensed by baroreceptors and kidneys (not the same as total body volume). Determines renin release."
+  },
+  {
+    "q": "What happens in SIADH?",
+    "a": "Inappropriate ADH secretion → water retention → hyponatremia with low plasma osmolality and high urine osmolality."
+  },
+  {
+    "q": "What is Diabetes Insipidus? Differentiate central vs nephrogenic.",
+    "a": "<b>Central:</b> ↓ ADH production<br><b>Nephrogenic:</b> Kidneys do not respond to ADH (V2 receptor or aquaporin defect).<br>Both cause polyuria and polydipsia with dilute urine."
+  },
+  {
+    "q": "How does the kidney handle potassium?",
+    "a": "Almost all filtered K⁺ is reabsorbed in PCT and LoH.<br><b>Regulation occurs in collecting duct:</b> Aldosterone → ↑ K⁺ secretion."
+  },
+  {
+    "q": "What is the juxtaglomerular apparatus composed of?",
+    "a": "<ol><li>Juxtaglomerular cells (renin)</li><li>Macula densa</li><li>Extraglomerular mesangial cells</li></ol>"
+  },
+  {
+    "q": "What is the effect of sympathetic stimulation on the kidney?",
+    "a": "Constricts afferent arterioles → ↓ RBF and GFR, ↑ renin release."
+  },
+  {
+    "q": "Name the segments of the nephron where Na⁺ is reabsorbed and the transporters.",
+    "a": "<ul><li><b>PCT:</b> NHE3, Na-glucose, Na-amino acid cotransporters</li><li><b>Thick Asc. LoH:</b> NKCC2</li><li><b>DCT:</b> NCC</li><li><b>CD:</b> ENaC</li></ul>"
+  },
+  {
+    "q": "What is the Henderson-Hasselbalch equation for blood pH?",
+    "a": "$$\\text{pH} = 6.1 + \\log\\left(\\frac{[\\text{HCO}_3^-]}{0.03 \\times P\\text{CO}_2}\\right)$$"
+  },
+  {
+    "q": "How does the kidney compensate for chronic respiratory acidosis?",
+    "a": "Increased HCO₃− reabsorption and generation (via glutamine metabolism → NH₄⁺ excretion)."
+  },
+  {
+    "q": "What is the role of PTH in the kidney?",
+    "a": "↑ Ca²⁺ reabsorption (DCT), ↓ PO₄ reabsorption (PCT), ↑ 1α-hydroxylase activity."
+  },
+  {
+    "q": "What is the role of Vitamin D in the kidney?",
+    "a": "Active form (1,25-dihydroxyvitamin D) increases Ca²⁺ and PO₄ reabsorption."
+  },
+  {
+    "q": "Define osmotic diuresis and give an example.",
+    "a": "Increased urine output due to non-reabsorbable solute in tubule (e.g., glucose in uncontrolled diabetes)."
+  },
+  {
+    "q": "What is the filtration barrier of the glomerulus?",
+    "a": "<ol><li>Fenestrated endothelium</li><li>Glomerular basement membrane</li><li>Podocyte slit diaphragm (nephrin)</li></ol>"
+  },
+  {
+    "q": "What is minimal change disease?",
+    "a": "Loss of podocyte foot processes → selective proteinuria (mostly albumin), normal light microscopy."
+  },
+  {
+    "q": "What is the most common cause of nephrotic syndrome in children?",
+    "a": "Minimal change disease."
+  },
+  {
+    "q": "What is the Starling force that favors filtration in glomerulus?",
+    "a": "Glomerular capillary hydrostatic pressure (Pgc)."
+  },
+  {
+    "q": "What is the main determinant of renal oxygen consumption?",
+    "a": "Sodium reabsorption (especially in PCT and thick ascending limb)."
+  },
+  {
+    "q": "What is the effect of NSAIDs on the kidney?",
+    "a": "Inhibit prostaglandins → unopposed afferent constriction (by Ang II) → ↓ RBF and GFR (especially in volume-depleted states)."
+  },
+  {
+    "q": "What is ACE inhibitor effect on GFR in bilateral renal artery stenosis?",
+    "a": "Dramatic drop in GFR (efferent arteriole dilation removes compensatory mechanism)."
+  },
+  {
+    "q": "Define free water clearance.",
+    "a": "Volume of water cleared from plasma per unit time beyond isotonic urine."
+  },
+  {
+    "q": "What is the urine to plasma osmolality ratio in central DI?",
+    "a": "Very low (&lt;1.0) even after water deprivation."
+  },
+  {
+    "q": "What hormone increases urea reabsorption in the inner medullary collecting duct?",
+    "a": "ADH (Vasopressin)."
+  },
+  {
+    "q": "What is the clinical significance of the macula densa?",
+    "a": "Senses NaCl delivery and modulates renin release and afferent arteriole tone."
+  },
+  {
+    "q": "What is the primary site of action of acetazolamide?",
+    "a": "Proximal convoluted tubule (carbonic anhydrase inhibitor)."
+  },
+  {
+    "q": "What is the most potent diuretic class?",
+    "a": "Loop diuretics (e.g., furosemide)."
+  },
+  {
+    "q": "What electrolyte abnormality is common with loop and thiazide diuretics?",
+    "a": "Hypokalemia."
+  },
+  {
+    "q": "What is the effect of spironolactone on acid-base balance?",
+    "a": "Can cause hyperkalemic metabolic acidosis (Type 4 RTA-like)."
+  },
+  {
+    "q": "What is the primary site of bicarbonate reabsorption in the kidney?",
+    "a": "<b>Proximal Convoluted Tubule (PCT)</b> — 80–90% of filtered HCO₃⁻ is reabsorbed here via carbonic anhydrase and Na/H exchanger."
+  },
+  {
+    "q": "How does the kidney generate new bicarbonate?",
+    "a": "Via <b>glutamine metabolism</b> in proximal tubule cells → NH₄⁺ excretion + new HCO₃⁻ generation (ammoniagenesis). Also via titratable acids (H₂PO₄⁻)."
+  },
+  {
+    "q": "What is the main buffer in urine for acid excretion?",
+    "a": "<b>Phosphate</b> (HPO₄²⁻ → H₂PO₄⁻) and <b>Ammonia</b> (NH₃ + H⁺ → NH₄⁺)."
+  },
+  {
+    "q": "Differentiate the 4 types of Renal Tubular Acidosis (full comparison).",
+    "a": "<b>Type 1 (Distal)</b>: Defective H⁺ secretion, hypokalemia, urine pH &gt;5.5<br><b>Type 2 (Proximal)</b>: Defective HCO₃⁻ reabsorption, hypokalemia<br><b>Type 4</b>: Aldosterone deficiency/resistance, hyperkalemia, mild acidosis"
+  },
+  {
+    "q": "What is the effect of hyperkalemia on renal acid-base handling?",
+    "a": "Hyperkalemia inhibits ammoniagenesis → reduced new HCO₃⁻ generation → metabolic acidosis (Type 4 RTA mechanism)."
+  },
+  {
+    "q": "How does aldosterone affect acid-base balance?",
+    "a": "Promotes H⁺ secretion by alpha-intercalated cells (via H⁺-ATPase) and K⁺ secretion. Aldosterone deficiency → hyperkalemic metabolic acidosis."
+  },
+  {
+    "q": "What is the anion gap in Type 4 RTA?",
+    "a": "Normal anion gap metabolic acidosis (hyperchloremic)."
+  },
+  {
+    "q": "What is the urine anion gap used for?",
+    "a": "To differentiate GI vs renal cause of normal anion gap metabolic acidosis.<br><b>Negative UAG</b>: GI loss (diarrhea)<br><b>Positive UAG</b>: Renal cause (RTA)"
+  },
+  {
+    "q": "What hormones regulate calcium reabsorption in the kidney?",
+    "a": "<b>PTH</b>: ↑ Ca²⁺ reabsorption in DCT<br><b>Vitamin D</b>: ↑ Ca²⁺ reabsorption<br><b>Calcitonin</b>: Minor inhibitory effect"
+  },
+  {
+    "q": "Where is phosphate primarily reabsorbed?",
+    "a": "<b>Proximal tubule</b> (80–90%) via Na⁺-Pi cotransporter. Regulated by PTH (↓ reabsorption)."
+  },
+  {
+    "q": "What is the effect of PTH on phosphate handling?",
+    "a": "Inhibits phosphate reabsorption in proximal tubule → phosphaturia (increases serum Ca²⁺ by reducing Ca-PO₄ precipitation)."
+  },
+  {
+    "q": "What is the role of FGF-23 in phosphate regulation?",
+    "a": "Fibroblast Growth Factor 23: ↓ phosphate reabsorption in PCT and ↓ 1α-hydroxylase activity."
+  },
+  {
+    "q": "What is the clearance of a substance that is completely reabsorbed?",
+    "a": "<b>Zero clearance</b> (e.g., glucose under normal conditions)."
+  },
+  {
+    "q": "What is the clearance of a substance that is completely secreted?",
+    "a": "Equals Renal Plasma Flow (e.g., PAH at low concentrations)."
+  },
+  {
+    "q": "Define filtration fraction and its normal value.",
+    "a": "GFR / RPF. Normal value ≈ 0.20 (20%)."
+  },
+  {
+    "q": "What happens to filtration fraction in dehydration?",
+    "a": "Increases due to preferential efferent constriction by Angiotensin II → maintains GFR."
+  },
+  {
+    "q": "What is the effect of high protein diet on GFR?",
+    "a": "Increases GFR (amino acids → afferent arteriolar dilation via tubuloglomerular feedback changes)."
+  },
+  {
+    "q": "What drugs cause afferent arteriole constriction?",
+    "a": "NSAIDs (↓ prostaglandins), cyclosporine, high-dose norepinephrine."
+  },
+  {
+    "q": "What is prerenal azotemia?",
+    "a": "Decreased renal perfusion → ↑ BUN:Creatinine ratio (&gt;20:1), low urine Na⁺ (&lt;20 mEq/L), high urine osmolality."
+  },
+  {
+    "q": "Differentiate ATN vs prerenal azotemia by urine indices.",
+    "a": "<b>Prerenal</b>: FENa &lt;1%, Uosm &gt;500, Urine Na &lt;20<br><b>ATN</b>: FENa &gt;2%, Uosm &lt;350, Urine Na &gt;40, muddy brown casts."
+  },
+  {
+    "q": "What is the fractional excretion of sodium (FENa) formula?",
+    "a": "$$\\text{FE}_{\\text{Na}} = \\frac{U_{\\text{Na}} / P_{\\text{Na}}}{U_{\\text{Cr}} / P_{\\text{Cr}}} \\times 100$$"
+  },
+  {
+    "q": "What is Bartter Syndrome?",
+    "a": "Defect in thick ascending limb (NKCC2 or ROMK) → mimics chronic loop diuretic use: hypokalemia, metabolic alkalosis, normal blood pressure."
+  },
+  {
+    "q": "What is Gitelman Syndrome?",
+    "a": "Defect in DCT (NCC transporter) → mimics chronic thiazide use: hypokalemia, metabolic alkalosis, hypomagnesemia, hypocalciuria."
+  },
+  {
+    "q": "What is Liddle Syndrome?",
+    "a": "Gain of function in ENaC → hypertension, hypokalemia, metabolic alkalosis, low renin/aldosterone."
+  },
+  {
+    "q": "What is pseudohypoaldosteronism Type 1?",
+    "a": "Resistance to aldosterone → hyperkalemia, hyponatremia, metabolic acidosis."
+  },
+  {
+    "q": "What is the effect of pregnancy on GFR?",
+    "a": "GFR increases by 40–50% due to increased renal blood flow."
+  },
+  {
+    "q": "What is the site of action of mannitol?",
+    "a": "Osmotic diuretic — works throughout the tubule, especially proximal tubule and descending loop."
+  },
+  {
+    "q": "What is the major side effect of acetazolamide?",
+    "a": "Metabolic acidosis (due to HCO₃⁻ loss) and hypokalemia."
+  },
+  {
+    "q": "Why do loop diuretics cause ototoxicity?",
+    "a": "Inhibition of NKCC1 in the inner ear (similar transporter as NKCC2 in kidney)."
+  },
+  {
+    "q": "What is the mechanism of thiazide-induced hypercalcemia?",
+    "a": "Volume depletion → ↑ proximal Ca²⁺ reabsorption + direct effect on DCT."
+  },
+  {
+    "q": "What is the primary use of potassium-sparing diuretics?",
+    "a": "To prevent hypokalemia when used with loop or thiazide diuretics; also in heart failure."
+  },
+  {
+    "q": "What is the danger of combining ACE inhibitors with spironolactone?",
+    "a": "Hyperkalemia (both reduce aldosterone effect)."
+  },
+  {
+    "q": "What is hepatorenal syndrome?",
+    "a": "Functional renal failure in advanced liver disease due to intense renal vasoconstriction (low effective circulating volume)."
+  },
+  {
+    "q": "What is the role of the kidney in erythropoiesis?",
+    "a": "Peritubular interstitial cells produce Erythropoietin (EPO) in response to hypoxia."
+  },
+  {
+    "q": "What is uremic frost?",
+    "a": "Deposition of urea crystals on skin in severe uremia."
+  },
+  {
+    "q": "What is the effect of acute ureteral obstruction on GFR?",
+    "a": "Initial increase then sharp decrease due to back pressure."
+  },
+  {
+    "q": "What is the Goldman equation used for in renal physiology?",
+    "a": "To calculate equilibrium potential for ions (especially in tubular cells)."
+  },
+  {
+    "q": "What is the main driving force for paracellular reabsorption in PCT?",
+    "a": "Solvent drag and electrochemical gradient created by active Na⁺ transport."
+  },
+  {
+    "q": "What is the juxtamedullary nephron's main advantage?",
+    "a": "Ability to create and maintain a steep corticomedullary osmotic gradient for water conservation."
+  },
+  {
+    "q": "What stimulates renin release from JG cells?",
+    "a": "<ol><li>↓ afferent arteriole pressure</li><li>↓ NaCl at macula densa</li><li>↑ sympathetic activity (β1 receptors)</li></ol>"
+  },
+  {
+    "q": "What inhibits renin release?",
+    "a": "Angiotensin II (negative feedback), high NaCl at macula densa, atrial natriuretic peptide."
+  },
+  {
+    "q": "What is the effect of dopamine on renal vessels at low dose?",
+    "a": "Vasodilation of afferent and efferent arterioles → ↑ RBF and GFR."
+  },
+  {
+    "q": "What is the clinical significance of the filtration slit diaphragm?",
+    "a": "Prevents protein loss; mutation in nephrin causes congenital nephrotic syndrome."
+  },
+  {
+    "q": "What is the normal daily urine output range?",
+    "a": "0.5–2.5 L/day (average ~1–1.5 L)."
+  },
+  {
+    "q": "What is the maximum urine concentrating ability of human kidney?",
+    "a": "Approximately 1200–1400 mOsm/L."
+  },
+  {
+    "q": "What is the minimum urine osmolality possible?",
+    "a": "Approximately 50 mOsm/L (in absence of ADH)."
+  },
+  {
+    "q": "What is the difference between osmolar clearance and free water clearance?",
+    "a": "<b>Osmolar clearance (Cosm)</b>: Volume of plasma cleared of osmoles per unit time.<br><b>Free water clearance (CH₂O)</b>: Volume of water cleared in excess of (or less than) isotonic urine.<br>Positive CH₂O = dilute urine; Negative = concentrated urine."
+  },
+  {
+    "q": "What is the clinical significance of FeNa in acute kidney injury?",
+    "a": "<b>FeNa &lt;1%</b>: Prerenal azotemia or acute glomerulonephritis<br><b>FeNa &gt;2%</b>: Acute tubular necrosis or post-renal obstruction"
+  },
+  {
+    "q": "What is the effect of sympathetic activation on renal blood flow during hemorrhage?",
+    "a": "Strong vasoconstriction of afferent arterioles → ↓ RBF and GFR to preserve blood flow to heart and brain."
+  },
+  {
+    "q": "What is the pressure natriuresis mechanism?",
+    "a": "Increase in arterial pressure → increased Na⁺ excretion (independent of hormones) to maintain long-term blood pressure control."
+  },
+  {
+    "q": "What is the role of the medullary interstitium in urine concentration?",
+    "a": "Hyperosmotic gradient (300–1200 mOsm/L) created by countercurrent multiplier allows water reabsorption in collecting duct under ADH influence."
+  },
+  {
+    "q": "How does ADH affect urea permeability in the inner medullary collecting duct?",
+    "a": "Increases urea permeability (via UT-A1 transporters) → contributes to medullary hypertonicity."
+  },
+  {
+    "q": "What is the effect of hypercalcemia on ADH action?",
+    "a": "Causes nephrogenic diabetes insipidus by downregulating aquaporin-2 channels."
+  },
+  {
+    "q": "What is the primary defect in nephrogenic diabetes insipidus?",
+    "a": "Defect in V2 receptor or aquaporin-2 channel → kidneys cannot respond to ADH."
+  },
+  {
+    "q": "What drugs can cause nephrogenic DI?",
+    "a": "Lithium, demeclocycline, amphotericin B, foscarnet."
+  },
+  {
+    "q": "What is the treatment of central vs nephrogenic DI?",
+    "a": "<ul><li><b>Central:</b> Desmopressin (DDAVP)</li><li><b>Nephrogenic:</b> Thiazide diuretics + amiloride + low salt diet</li></ul>"
+  },
+  {
+    "q": "What is SIADH? List common causes.",
+    "a": "Inappropriate ADH secretion → euvolemic hyponatremia.<br><b>Causes:</b> Small cell lung cancer, CNS disorders, pulmonary disease, drugs (SSRIs, carbamazepine)."
+  },
+  {
+    "q": "How do you correct hyponatremia in SIADH?",
+    "a": "Fluid restriction (first line). Severe/symptomatic: hypertonic saline + loop diuretic."
+  },
+  {
+    "q": "What is the danger of rapid correction of hyponatremia?",
+    "a": "Central Pontine Myelinolysis (Osmotic Demyelination Syndrome)."
+  },
+  {
+    "q": "What is the effect of aldosterone on principal cells?",
+    "a": "Increases number and activity of ENaC channels and Na⁺/K⁺-ATPase → Na⁺ reabsorption and K⁺ secretion."
+  },
+  {
+    "q": "What is the effect of atrial natriuretic peptide on the kidney?",
+    "a": "Increases GFR, inhibits Na⁺ reabsorption in collecting duct, inhibits renin and aldosterone."
+  },
+  {
+    "q": "What is the role of prostaglandins in the kidney?",
+    "a": "Maintain RBF and GFR during volume depletion by dilating afferent arterioles (oppose Ang II)."
+  },
+  {
+    "q": "Why are NSAIDs contraindicated in volume-depleted patients?",
+    "a": "Block prostaglandins → unopposed afferent constriction → acute drop in GFR."
+  },
+  {
+    "q": "What is the site of action of SGLT2 inhibitors?",
+    "a": "Proximal convoluted tubule — block Na⁺-glucose cotransporter 2 → glucosuria and natriuresis."
+  },
+  {
+    "q": "What is the mechanism of acetazolamide in altitude sickness?",
+    "a": "Causes metabolic acidosis → stimulates ventilation → increases PaO₂."
+  },
+  {
+    "q": "What is the effect of loop diuretics on calcium excretion?",
+    "a": "Increase Ca²⁺ excretion (used in hypercalcemia)."
+  },
+  {
+    "q": "What is the effect of thiazides on calcium excretion?",
+    "a": "Decrease Ca²⁺ excretion (used in calcium nephrolithiasis)."
+  },
+  {
+    "q": "What is pseudohyperaldosteronism?",
+    "a": "Conditions mimicking hyperaldosteronism but with low aldosterone (e.g., Liddle syndrome, licorice ingestion)."
+  },
+  {
+    "q": "What is the effect of cortisol on mineralocorticoid receptors?",
+    "a": "Cortisol can bind MR but is normally inactivated by 11β-HSD2 in kidney. Deficiency (apparent mineralocorticoid excess) → hypertension + hypokalemia."
+  },
+  {
+    "q": "What is the transtubular potassium gradient (TTKG)?",
+    "a": "Used to assess aldosterone activity in hyperkalemia."
+  },
+  {
+    "q": "What is the renal response to metabolic alkalosis?",
+    "a": "Increased HCO₃⁻ excretion (bicarbonaturia) and reduced H⁺ secretion."
+  },
+  {
+    "q": "What maintains metabolic alkalosis in volume-depleted patients?",
+    "a": "Secondary hyperaldosteronism → continued H⁺ and K⁺ loss."
+  },
+  {
+    "q": "What is the renal handling of magnesium?",
+    "a": "Primarily reabsorbed in thick ascending limb via paracellular route (driven by NKCC2-generated potential)."
+  },
+  {
+    "q": "What is the effect of hypomagnesemia on potassium?",
+    "a": "Causes refractory hypokalemia (impairs K⁺ reabsorption and increases renal K⁺ wasting)."
+  },
+  {
+    "q": "What is the role of the kidney in vitamin D activation?",
+    "a": "1α-hydroxylase in proximal tubule converts 25-OH vitamin D to active 1,25-(OH)₂ vitamin D."
+  },
+  {
+    "q": "What stimulates 1α-hydroxylase activity?",
+    "a": "PTH, low serum Ca²⁺, low phosphate."
+  },
+  {
+    "q": "What inhibits 1α-hydroxylase?",
+    "a": "High phosphate, FGF-23, high 1,25-(OH)₂ vitamin D (feedback)."
+  },
+  {
+    "q": "What is the effect of chronic kidney disease on vitamin D?",
+    "a": "Decreased 1α-hydroxylase → low active vitamin D → secondary hyperparathyroidism."
+  },
+  {
+    "q": "What is renal osteodystrophy?",
+    "a": "Bone disease in CKD due to secondary hyperparathyroidism, low vitamin D, and phosphate retention."
+  },
+  {
+    "q": "What is the mechanism of erythropoietin production?",
+    "a": "Peritubular interstitial fibroblasts sense hypoxia via HIF-1α → EPO synthesis."
+  },
+  {
+    "q": "What is the effect of ACE inhibitors on efferent arteriole?",
+    "a": "Dilation of efferent arteriole → ↓ glomerular hydrostatic pressure → ↓ GFR (especially in renal artery stenosis)."
+  },
+  {
+    "q": "What is the advantage of ARBs over ACE inhibitors?",
+    "a": "Do not increase bradykinin → less cough and angioedema."
+  },
+  {
+    "q": "What is the juxtaglomerular apparatus feedback loop?",
+    "a": "Macula densa senses low NaCl → adenosine/ATP → afferent constriction + renin release."
+  },
+  {
+    "q": "What is the myogenic mechanism of autoregulation?",
+    "a": "Increased pressure → stretch of afferent arteriole smooth muscle → vasoconstriction."
+  },
+  {
+    "q": "What is the filtration coefficient (Kf)?",
+    "a": "Product of hydraulic conductivity and surface area of glomerular capillaries."
+  },
+  {
+    "q": "What decreases Kf in glomerular disease?",
+    "a": "Reduced glomerular surface area (e.g., glomerulonephritis, diabetic nephropathy)."
+  },
+  {
+    "q": "What is the normal range of serum creatinine?",
+    "a": "0.6–1.2 mg/dL (varies with muscle mass)."
+  },
+  {
+    "q": "What is cystatin C and why is it useful?",
+    "a": "Marker of GFR; less affected by muscle mass, age, and sex than creatinine."
+  },
+  {
+    "q": "What is the Cockcroft-Gault equation used for?",
+    "a": "Estimates creatinine clearance (used for drug dosing)."
+  },
+  {
+    "q": "What is the MDRD/CKD-EPI equation?",
+    "a": "Estimates GFR based on serum creatinine, age, sex, and race."
+  },
+  {
+    "q": "What is the gold standard for measuring GFR?",
+    "a": "Inulin clearance (research setting)."
+  },
+  {
+    "q": "What is the effect of high blood glucose on GFR?",
+    "a": "Initially increases GFR (glomerular hyperfiltration) in early diabetes."
+  },
+  {
+    "q": "What is the renal response to acute respiratory acidosis?",
+    "a": "Increased H⁺ secretion and new HCO₃⁻ generation (via ammoniagenesis) to compensate."
+  },
+  {
+    "q": "What is the renal response to chronic respiratory alkalosis?",
+    "a": "Decreased HCO₃⁻ reabsorption and reduced ammoniagenesis → compensatory metabolic acidosis."
+  },
+  {
+    "q": "What is the difference between azotemia and uremia?",
+    "a": "<b>Azotemia</b>: Elevated BUN and creatinine.<br><b>Uremia</b>: Symptomatic azotemia (pericarditis, encephalopathy, platelet dysfunction, etc.)."
+  },
+  {
+    "q": "What are the uremic toxins?",
+    "a": "Urea, creatinine, guanidino compounds, middle molecules, and parathyroid hormone."
+  },
+  {
+    "q": "What is the most common cause of secondary hyperparathyroidism?",
+    "a": "Chronic Kidney Disease (due to low 1,25-vitamin D and phosphate retention)."
+  },
+  {
+    "q": "What is the effect of metabolic acidosis on potassium?",
+    "a": "Causes hyperkalemia (H⁺/K⁺ exchange across cell membranes)."
+  },
+  {
+    "q": "What is the effect of insulin on potassium handling?",
+    "a": "Drives K⁺ into cells via Na/K-ATPase stimulation."
+  },
+  {
+    "q": "What is the emergency treatment of severe hyperkalemia?",
+    "a": "<ol><li>Calcium gluconate (membrane stabilization)</li><li>Insulin + glucose, albuterol</li><li>Sodium bicarbonate (if acidotic)</li><li>Kayexalate / loop diuretics / dialysis</li></ol>"
+  },
+  {
+    "q": "What is the role of the kidney in blood pressure regulation (short vs long term)?",
+    "a": "<b>Short term</b>: Baroreceptors and sympathetic system.<br><b>Long term</b>: Pressure natriuresis and RAAS."
+  },
+  {
+    "q": "What is malignant hypertension?",
+    "a": "Severe hypertension with end-organ damage (papilledema, encephalopathy, acute kidney injury)."
+  },
+  {
+    "q": "What is the renal lesion in malignant hypertension?",
+    "a": "Hyperplastic arteriolosclerosis ('onion skin' lesions) and fibrinoid necrosis."
+  },
+  {
+    "q": "What is the effect of ACE inhibitors in diabetic nephropathy?",
+    "a": "Reduce intraglomerular pressure → slow progression of proteinuria and decline in GFR."
+  },
+  {
+    "q": "What is the hallmark of diabetic nephropathy on biopsy?",
+    "a": "Kimmelstiel-Wilson nodules (nodular glomerulosclerosis)."
+  },
+  {
+    "q": "What is the most common glomerulonephritis worldwide?",
+    "a": "IgA nephropathy (Berger disease)."
+  },
+  {
+    "q": "What is the presentation of Goodpasture syndrome?",
+    "a": "Pulmonary hemorrhage + rapidly progressive glomerulonephritis (anti-GBM antibodies)."
+  },
+  {
+    "q": "What is the classic finding in post-streptococcal glomerulonephritis?",
+    "a": "Subepithelial humps on electron microscopy, low C3."
+  },
+  {
+    "q": "What is the most common cause of nephrotic syndrome in adults?",
+    "a": "Focal segmental glomerulosclerosis (FSGS) or membranous nephropathy."
+  },
+  {
+    "q": "What is Alport syndrome?",
+    "a": "Hereditary nephritis with sensorineural deafness and ocular abnormalities (defect in type IV collagen)."
+  },
+  {
+    "q": "What is the triad of nephrotic syndrome?",
+    "a": "Proteinuria (&gt;3.5 g/day), hypoalbuminemia, edema (± hyperlipidemia)."
+  },
+  {
+    "q": "What is the most serious complication of nephrotic syndrome?",
+    "a": "Hypercoagulable state (loss of antithrombin III) → renal vein thrombosis."
+  },
+  {
+    "q": "What is the effect of hypoalbuminemia on GFR?",
+    "a": "Decreases oncotic pressure → increases GFR initially."
+  },
+  {
+    "q": "What is the renal handling of uric acid?",
+    "a": "Filtered, reabsorbed, and secreted in proximal tubule. Underexcretion is most common cause of gout."
+  },
+  {
+    "q": "What drugs increase uric acid reabsorption?",
+    "a": "Thiazides and loop diuretics (volume depletion → increased proximal reabsorption)."
+  },
+  {
+    "q": "What is the treatment of tumor lysis syndrome?",
+    "a": "Hydration, allopurinol or rasburicase, urinary alkalinization (controversial)."
+  },
+  {
+    "q": "What is the most common inherited cause of kidney stones?",
+    "a": "Hypercalciuria (idiopathic)."
+  },
+  {
+    "q": "What type of stone is associated with alkaline urine and infection?",
+    "a": "Struvite stones (Mg-ammonium-phosphate) — caused by urease-producing bacteria (Proteus)."
+  },
+  {
+    "q": "What is the most common type of kidney stone?",
+    "a": "Calcium oxalate."
+  },
+  {
+    "q": "What is the Randall plaque?",
+    "a": "Subepithelial calcification in the papilla that serves as nidus for calcium oxalate stones."
+  },
+  {
+    "q": "What is the treatment of uric acid stones?",
+    "a": "Urinary alkalinization (potassium citrate) + allopurinol."
+  },
+  {
+    "q": "What is the role of citrate in stone prevention?",
+    "a": "Inhibits calcium stone formation by binding calcium and increasing solubility."
+  },
+  {
+    "q": "What is autosomal dominant polycystic kidney disease (ADPKD)?",
+    "a": "Mutation in PKD1 or PKD2 → bilateral enlarged kidneys with multiple cysts, hypertension, berry aneurysms."
+  },
+  {
+    "q": "What is the inheritance of Alport syndrome?",
+    "a": "Usually X-linked (COL4A5 mutation)."
+  },
+  {
+    "q": "What is the most common cause of acute interstitial nephritis?",
+    "a": "Drug-induced (NSAIDs, antibiotics — especially beta-lactams, PPIs)."
+  },
+  {
+    "q": "What are the classic findings in acute interstitial nephritis?",
+    "a": "Fever, rash, eosinophilia, eosinophiluria, sterile pyuria."
+  },
+  {
+    "q": "What is analgesic nephropathy?",
+    "a": "Chronic interstitial nephritis + papillary necrosis due to long-term NSAID + phenacetin use."
+  },
+  {
+    "q": "What is the most common organism causing pyelonephritis?",
+    "a": "Escherichia coli."
+  },
+  {
+    "q": "What is the difference between pyelonephritis and cystitis?",
+    "a": "Pyelonephritis involves kidney (fever, flank pain, CVA tenderness); cystitis is bladder only (dysuria, frequency, no fever)."
+  },
+  {
+    "q": "What is renal papillary necrosis associated with?",
+    "a": "Diabetes, analgesic abuse, sickle cell disease, severe pyelonephritis."
+  },
+  {
+    "q": "What is the most common renal malignancy in adults?",
+    "a": "Renal cell carcinoma (clear cell type)."
+  },
+  {
+    "q": "What is the classic triad of renal cell carcinoma?",
+    "a": "Hematuria, flank pain, palpable mass (late finding)."
+  },
+  {
+    "q": "What paraneoplastic syndrome is associated with RCC?",
+    "a": "Erythrocytosis (EPO production), hypercalcemia (PTHrP), hypertension (renin)."
+  },
+  {
+    "q": "What is Wilms tumor?",
+    "a": "Most common renal malignancy in children; associated with WAGR syndrome."
+  },
+  {
+    "q": "What is the most common cause of end-stage renal disease in the US?",
+    "a": "Diabetes mellitus."
+  },
+  {
+    "q": "What is the second most common cause of ESRD?",
+    "a": "Hypertension."
+  },
+  {
+    "q": "What is the leading cause of death in dialysis patients?",
+    "a": "Cardiovascular disease."
+  }
+];
+
+module.exports = { renalCards };
