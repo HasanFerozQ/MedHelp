@@ -1,6 +1,13 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/audit",
+      "destination": "/medical-bill-audit",
+      "permanent": true
+    }
+  ],
   "functions": {
     "api/*.js": {
       "maxDuration": 25
