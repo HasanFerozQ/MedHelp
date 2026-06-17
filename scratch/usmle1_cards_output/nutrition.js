@@ -17,7 +17,7 @@ const nutritionCards = [
   },
   {
     "q": "What is the toxicity of excess Vitamin A?",
-    "a": "Teratogenic (cleft palate, cardiac defects), pseudotumor cerebri, hepatotoxicity."
+    "a": "Teratogenic (cleft palate, cardiac defects), pseudotumor cerebri, <b>hepatotoxicity</b>."
   },
   {
     "q": "What is the active form of Vitamin D?",
@@ -61,7 +61,7 @@ const nutritionCards = [
   },
   {
     "q": "What causes pellagra besides dietary deficiency?",
-    "a": "Hartnup disease, carcinoid syndrome, isoniazid."
+    "a": "Hartnup disease, carcinoid syndrome, <b>isoniazid</b>."
   },
   {
     "q": "Which vitamin deficiency causes cheilosis, glossitis, and seborrheic dermatitis?",
@@ -73,7 +73,7 @@ const nutritionCards = [
   },
   {
     "q": "Which drugs can cause B6 deficiency?",
-    "a": "Isoniazid, hydralazine, <b>penicillamine</b>."
+    "a": "<b>Isoniazid</b>, <b>hydralazine</b>, <b>penicillamine</b>."
   },
   {
     "q": "What is the function of Vitamin B12?",
@@ -81,7 +81,7 @@ const nutritionCards = [
   },
   {
     "q": "What causes B12 deficiency besides diet?",
-    "a": "<b>Pernicious anemia</b> (<b>intrinsic factor</b> deficiency), terminal ileum resection, metformin."
+    "a": "<b>Pernicious anemia</b> (<b>intrinsic factor</b> deficiency), terminal ileum resection, <b>metformin</b>."
   },
   {
     "q": "What is the most common cause of folate deficiency?",
@@ -396,11 +396,11 @@ const nutritionCards = [
     "a": "Fat-soluble vitamins (especially <b>Vitamin K</b> and <b>Vitamin C</b> if diet is poor)."
   },
   {
-    "q": "What is the mechanism of orlistat?",
+    "q": "What is the mechanism of <b>orlistat</b>?",
     "a": "Pancreatic and gastric lipase inhibitor → reduced dietary fat absorption."
   },
   {
-    "q": "What are the major side effects of orlistat?",
+    "q": "What are the major side effects of <b>orlistat</b>?",
     "a": "Steatorrhea, fecal incontinence, fat-soluble vitamin deficiencies."
   },
   {

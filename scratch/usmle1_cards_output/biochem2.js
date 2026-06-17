@@ -73,7 +73,7 @@ const biochem2Cards = [
   },
   {
     "q": "What is the rate-limiting enzyme of cholesterol synthesis?",
-    "a": "<b>HMG-CoA reductase</b> (target of statins)."
+    "a": "<b>HMG-CoA reductase</b> (target of <b>statins</b>)."
   },
   {
     "q": "What is the function of lipoprotein lipase (<b>LPL</b>)?",
@@ -181,7 +181,7 @@ const biochem2Cards = [
   },
   {
     "q": "Which drug inhibits dihydrofolate reductase?",
-    "a": "<b>Methotrexate</b>."
+    "a": "<b><b>Methotrexate</b></b>."
   },
   {
     "q": "Which drug inhibits thymidylate synthase?",
@@ -237,7 +237,7 @@ const biochem2Cards = [
   },
   {
     "q": "What triggers hemolytic anemia in G6PD deficiency?",
-    "a": "Oxidative stress (fava beans, primaquine, sulfa drugs, infections)."
+    "a": "Oxidative stress (fava beans, <b>primaquine</b>, sulfa drugs, infections)."
   },
   {
     "q": "What is the Heinz body?",
@@ -368,7 +368,7 @@ const biochem2Cards = [
     "a": "<b>ALA synthase</b> (requires vitamin B6)."
   },
   {
-    "q": "Which porphyria presents with photosensitivity and blistering skin lesions?",
+    "q": "Which porphyria presents with <b>photosensitivity</b> and blistering skin lesions?",
     "a": "<b>Porphyria cutanea tarda</b> (uroporphyrinogen decarboxylase deficiency)."
   },
   {
@@ -377,7 +377,7 @@ const biochem2Cards = [
   },
   {
     "q": "What drug class can precipitate acute porphyria attacks?",
-    "a": "Barbiturates, anticonvulsants (CYP450 inducers)."
+    "a": "<b>Barbiturates</b>, anticonvulsants (<b>CYP450</b> inducers)."
   },
   {
     "q": "What is the final product of purine degradation in humans?",
@@ -465,14 +465,14 @@ const biochem2Cards = [
   },
   {
     "q": "Which antibiotic inhibits peptidyl transferase on 50S subunit?",
-    "a": "<b>Chloramphenicol</b>."
+    "a": "<b><b>Chloramphenicol</b></b>."
   },
   {
     "q": "Which antibiotic blocks translocation on 30S subunit?",
-    "a": "<b>Tetracyclines</b>."
+    "a": "<b><b>Tetracyclines</b></b>."
   },
   {
-    "q": "What is the mechanism of action of erythromycin?",
+    "q": "What is the mechanism of action of <b>erythromycin</b>?",
     "a": "Binds 50S subunit and inhibits translocation."
   },
   {
@@ -576,7 +576,7 @@ const biochem2Cards = [
     "a": "Insulin resistance + relative insulin deficiency."
   },
   {
-    "q": "What is the mechanism of metformin?",
+    "q": "What is the mechanism of <b>metformin</b>?",
     "a": "Activates <b>AMPK</b> → inhibits gluconeogenesis."
   },
   {

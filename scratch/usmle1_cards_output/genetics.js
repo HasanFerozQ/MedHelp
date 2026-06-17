@@ -369,15 +369,15 @@ const geneticsCards = [
   },
   {
     "q": "What is pharmacogenetics?",
-    "a": "Study of how genetic variations affect drug response (e.g., CYP450 polymorphisms)"
+    "a": "Study of how genetic variations affect drug response (e.g., <b>CYP450</b> polymorphisms)"
   },
   {
     "q": "What is the clinical significance of CYP2D6 poor metabolizer?",
-    "a": "Increased risk of toxicity with codeine, tamoxifen, antidepressants (cannot convert to active form or clear drug)"
+    "a": "Increased risk of toxicity with codeine, <b>tamoxifen</b>, antidepressants (cannot convert to active form or clear drug)"
   },
   {
     "q": "What is G6PD deficiency inheritance and trigger?",
-    "a": "<b>X-linked recessive</b>. Triggers: fava beans, primaquine, sulfa drugs, infections → hemolytic anemia"
+    "a": "<b>X-linked recessive</b>. Triggers: fava beans, <b>primaquine</b>, sulfa drugs, infections → hemolytic anemia"
   },
   {
     "q": "What is the genetic basis of Warfarin sensitivity?",
@@ -569,7 +569,7 @@ const geneticsCards = [
   },
   {
     "q": "What is <b>Bloom syndrome</b>?",
-    "a": "<b>Autosomal recessive</b> — BLM gene (<b>DNA helicase</b>) → photosensitivity, short stature, increased cancer risk."
+    "a": "<b>Autosomal recessive</b> — BLM gene (<b>DNA helicase</b>) → <b>photosensitivity</b>, short stature, increased cancer risk."
   },
   {
     "q": "What is <b>Fanconi anemia</b>?",
@@ -629,7 +629,7 @@ const geneticsCards = [
   },
   {
     "q": "What is the genetic defect in ADA deficiency?",
-    "a": "<b>Autosomal recessive</b> — adenosine deaminase deficiency (a cause of <b>SCID</b>)."
+    "a": "<b>Autosomal recessive</b> — <b>adenosine</b> deaminase deficiency (a cause of <b>SCID</b>)."
   },
   {
     "q": "What HLA allele is strongly associated with <b>Celiac disease</b>?",
@@ -684,7 +684,7 @@ const geneticsCards = [
     "a": "Mutation in <b>NF2</b> (merlin) gene on chromosome 22."
   },
   {
-    "q": "What is pharmacogenomic testing for before starting abacavir?",
+    "q": "What is pharmacogenomic testing for before starting <b>abacavir</b>?",
     "a": "HLA-B*5701 allele (risk of <b>hypersensitivity</b> reaction)."
   },
   {

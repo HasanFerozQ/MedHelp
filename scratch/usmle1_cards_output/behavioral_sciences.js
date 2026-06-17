@@ -353,11 +353,11 @@ const behavioralSciencesCards = [
   },
   {
     "q": "What medications are used for alcohol use disorder?",
-    "a": "<b>Naltrexone</b> (reduce cravings/relapse), <b>Disulfiram</b> (aversion), <b>Acamprosate</b> (reduce withdrawal symptoms)."
+    "a": "<b><b>Naltrexone</b></b> (reduce cravings/relapse), <b>Disulfiram</b> (aversion), <b>Acamprosate</b> (reduce withdrawal symptoms)."
   },
   {
     "q": "What medication is used for opioid use disorder (maintenance)?",
-    "a": "<b>Methadone</b> or <b><b>Buprenorphine</b>-<b>naloxone</b> (Suboxone)</b>."
+    "a": "<b>Methadone</b> or <b>Buprenorphine</b>-<b><b>naloxone</b> (Suboxone)</b>."
   },
   {
     "q": "What is the AUDIT tool?",
@@ -481,11 +481,11 @@ const behavioralSciencesCards = [
   },
   {
     "q": "What are the first-line antidepressants?",
-    "a": "<b>SSRIs</b> (e.g., sertraline, fluoxetine) — first-line for MDD, anxiety disorders, OCD, PTSD."
+    "a": "<b><b>SSRIs</b></b> (e.g., sertraline, fluoxetine) — first-line for MDD, anxiety disorders, OCD, PTSD."
   },
   {
     "q": "What are the side effects of <b>SSRIs</b>?",
-    "a": "Sexual dysfunction, GI upset, insomnia, weight changes, <b><b>serotonin</b> syndrome</b> (with MAOIs — do not combine)."
+    "a": "Sexual dysfunction, <b>GI</b> upset, insomnia, weight changes, <b><b>serotonin</b> syndrome</b> (with <b>MAOIs</b> — do not combine)."
   },
   {
     "q": "What is <b>serotonin</b> syndrome?",
@@ -509,7 +509,7 @@ const behavioralSciencesCards = [
   },
   {
     "q": "What is <b>neuroleptic malignant syndrome</b> (NMS)?",
-    "a": "<b>FALTER:</b> Fever, Altered consciousness, Lead-pipe rigidity, Tachycardia, Elevated CPK, Rhabdomyolysis. Tx: <b>dantrolene</b> + <b>bromocriptine</b>."
+    "a": "<b>FALTER:</b> Fever, Altered consciousness, Lead-pipe rigidity, Tachycardia, Elevated CPK, Rhabdomyolysis. Tx: <b><b>dantrolene</b> + <b>bromocriptine</b></b>."
   },
   {
     "q": "What antipsychotics are second-generation (atypical)?",
@@ -524,7 +524,7 @@ const behavioralSciencesCards = [
     "a": "Late-onset involuntary repetitive movements (lip-smacking, tongue protrusion) from chronic D2 blockade. Rx: <b>valbenazine</b> or <b>tetrabenazine</b>."
   },
   {
-    "q": "What is the mechanism of action of benzodiazepines?",
+    "q": "What is the mechanism of action of <b>benzodiazepines</b>?",
     "a": "Enhance <b>GABA-A</b> receptor activity → ↑ Cl⁻ influx → neuronal hyperpolarization. Used for anxiety, alcohol withdrawal, seizures, sedation."
   },
   {

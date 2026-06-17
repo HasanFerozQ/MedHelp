@@ -341,11 +341,11 @@ const immunologyCards = [
   },
   {
     "q": "What is hereditary angioedema (HAE)?",
-    "a": "<b>C1 esterase inhibitor (C1-INH)</b> deficiency → uncontrolled <b>bradykinin</b> production → non-pitting edema"
+    "a": "<b>C1 esterase inhibitor (C1-<b>INH</b>)</b> deficiency → uncontrolled <b>bradykinin</b> production → non-pitting edema"
   },
   {
     "q": "What is the treatment for hereditary angioedema?",
-    "a": "C1-INH concentrate, icatibant (<b>bradykinin</b> B2 antagonist), or ecallantide"
+    "a": "C1-<b>INH</b> concentrate, icatibant (<b>bradykinin</b> B2 antagonist), or ecallantide"
   },
   {
     "q": "What is the difference between direct and indirect <b>Coombs test</b>?",
@@ -429,7 +429,7 @@ const immunologyCards = [
   },
   {
     "q": "What is the clinical presentation of selective <b>IgA</b> deficiency?",
-    "a": "Recurrent sinopulmonary and GI infections, anaphylaxis to blood products, increased autoimmune disease"
+    "a": "Recurrent sinopulmonary and <b>GI</b> infections, anaphylaxis to blood products, increased autoimmune disease"
   },
   {
     "q": "What is the defect in Severe Combined Immunodeficiency (<b>SCID</b>)?",
@@ -501,7 +501,7 @@ const immunologyCards = [
   },
   {
     "q": "What is the prophylaxis for PCP in HIV patients?",
-    "a": "<b>Trimethoprim-sulfamethoxazole (TMP-SMX)</b>"
+    "a": "<b><b>Trimethoprim</b>-sulfamethoxazole (TMP-SMX)</b>"
   },
   {
     "q": "What malignancy is strongly associated with HIV/AIDS?",
@@ -524,12 +524,12 @@ const immunologyCards = [
     "a": "Vascular fibrosis and obliterative arteriopathy (accelerated atherosclerosis)"
   },
   {
-    "q": "Which immunosuppressant is most associated with nephrotoxicity?",
-    "a": "<b>Cyclosporine</b> and <b>Tacrolimus</b> (calcineurin inhibitors)"
+    "q": "Which immunosuppressant is most associated with <b>nephrotoxicity</b>?",
+    "a": "<b><b>Cyclosporine</b> and <b>Tacrolimus</b></b> (calcineurin inhibitors)"
   },
   {
-    "q": "Which immunosuppressant is most associated with gingival hyperplasia and hirsutism?",
-    "a": "<b>Cyclosporine</b>"
+    "q": "Which immunosuppressant is most associated with <b>gingival hyperplasia</b> and hirsutism?",
+    "a": "<b><b>Cyclosporine</b></b>"
   },
   {
     "q": "Which immunosuppressant increases risk of post-transplant lymphoproliferative disorder (PTLD)?",
@@ -541,7 +541,7 @@ const immunologyCards = [
   },
   {
     "q": "What drug interaction is dangerous with <b>azathioprine</b>?",
-    "a": "Allopurinol (inhibits xanthine oxidase → increased toxicity)"
+    "a": "<b>Allopurinol</b> (inhibits xanthine oxidase → increased toxicity)"
   },
   {
     "q": "What is the mechanism of <b>basiliximab</b>?",
@@ -553,7 +553,7 @@ const immunologyCards = [
   },
   {
     "q": "What is <b>graft-versus-host disease</b> (<b>GVHD</b>)?",
-    "a": "Donor T cells attack recipient tissues (skin, liver, GI tract) after bone marrow transplant"
+    "a": "Donor T cells attack recipient tissues (skin, liver, <b>GI</b> tract) after bone marrow transplant"
   },
   {
     "q": "What is the difference between acute and chronic <b>GVHD</b>?",
@@ -661,7 +661,7 @@ const immunologyCards = [
   },
   {
     "q": "What is the treatment for acute <b>rheumatic fever</b>?",
-    "a": "Penicillin + anti-inflammatory agents (aspirin or corticosteroids)"
+    "a": "Penicillin + anti-inflammatory agents (<b>aspirin</b> or corticosteroids)"
   },
   {
     "q": "What is the major cause of death in untreated rheumatic heart disease?",

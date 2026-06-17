@@ -10,6 +10,7 @@ const { behavioralSciencesRawCards } = require('./behavioral_sciences_raw_cards.
 const { immunologyRawCards } = require('./immunology_raw_cards.js');
 const { agingRawCards } = require('./aging_raw_cards.js');
 const { geneticsRawCards } = require('./genetics_raw_cards.js');
+const { pharmacologyRawCards } = require('./pharmacology_raw_cards.js');
 
 const boldTerms = [
   'Waiter\'s tip', 'Claw hand', 'Horner syndrome', 'Wrist drop', 'Foot drop',
@@ -236,7 +237,56 @@ const boldTerms = [
   'Ataxia-Telangiectasia', 'Bloom syndrome', 'Fanconi anemia', 'Sickle Cell Disease',
   'β-Thalassemia', 'α-Thalassemia', 'Hemophilia A', 'Hemophilia B', 'von Willebrand Disease',
   'erythroblastosis fetalis', 'DNA methylation', 'histone acetylation', 'Kartagener syndrome',
-  'Polycystic Kidney Disease', 'Tuberous Sclerosis', 'Sturge-Weber', 'malignant hyperthermia'
+  'Polycystic Kidney Disease', 'Tuberous Sclerosis', 'Sturge-Weber', 'malignant hyperthermia',
+
+  // Pharmacology terms
+  'pharmacokinetic', 'pharmacodynamics', 'pharmacokinetics', 'pharmacodynamic',
+  'bioavailability', 'extraction ratio', 'loading dose', 'maintenance dose',
+  'zero-order elimination', 'zero-order kinetics', 'first-pass effect',
+  'Phase I metabolism', 'Phase II metabolism', 'glucuronidation', 'CYP3A4', 'CYP450',
+  'therapeutic index', 'competitive antagonists', 'non-competitive antagonists',
+  'inverse agonist', 'GPCR', 'Gs', 'Gi', 'Gq', 'tachyphylaxis', 'prodrug', 'protein binding',
+  'renal clearance', 'pH-dependent drug trapping', 'weak acids', 'weak bases',
+  'gingival hyperplasia', 'photosensitivity', 'lupus-like syndrome', 'ototoxicity',
+  'nephrotoxicity', 'hepatotoxicity', 'organophosphate', 'atropine', 'physostigmine',
+  'pralidoxime', 'neostigmine', 'bethanechol', 'pilocarpine', 'edrophonium', 'glycopyrrolate',
+  'sugammadex', 'dobutamine', 'albuterol', 'terbutaline', 'isoproterenol', 'phenoxybenzamine',
+  'prazosin', 'propranolol', 'metoprolol', 'succinylcholine', 'rocuronium', 'vecuronium',
+  'dantrolene', 'baclofen', 'tizanidine', 'nitroprusside', 'hydralazine', 'minoxidil',
+  'lisinopril', 'losartan', 'aliskiren', 'amlodipine', 'nifedipine', 'verapamil', 'diltiazem',
+  'digoxin', 'amiodarone', 'lidocaine', 'adenosine', 'statins', 'ezetimibe', 'gemfibrozil',
+  'niacin', 'cholestyramine', 'penicillins', 'cephalosporins', 'vancomycin', 'aminoglycosides',
+  'gentamicin', 'tobramycin', 'tetracyclines', 'macrolides', 'erythromycin', 'azithromycin',
+  'clindamycin', 'linezolid', 'chloramphenicol', 'sulfonamides', 'trimethoprim', 'fluoroquinolones',
+  'ciprofloxacin', 'metronidazole', 'rifampin', 'isoniazid', 'INH', 'pyrazinamide', 'ethambutol',
+  'acyclovir', 'valacyclovir', 'ganciclovir', 'oseltamivir', 'sofosbuvir', 'amphotericin B',
+  'fluconazole', 'itraconazole', 'caspofungin', 'terbinafine', 'griseofulvin', 'methotrexate',
+  '5-fluorouracil', '5-FU', 'cytarabine', 'cisplatin', 'carboplatin', 'doxorubicin', 'vincristine',
+  'vinblastine', 'paclitaxel', 'etoposide', 'imatinib', 'trastuzumab', 'rituximab', 'cyclophosphamide',
+  'mesna', 'prednisone', 'dexamethasone', 'tamoxifen', 'levothyroxine', 'PTU', 'propylthiouracil',
+  'methimazole', 'metformin', 'glipizide', 'pioglitazone', 'exenatide', 'dapagliflozin', 'omeprazole',
+  'pantoprazole', 'cimetidine', 'ranitidine', 'ondansetron', 'loperamide', 'lactulose', 'sucralfate',
+  'misoprostol', 'acetaminophen', 'aspirin', 'ibuprofen', 'naproxen', 'celecoxib', 'acetylcysteine',
+  'allopurinol', 'febuxostat', 'colchicine', 'probenecid', 'rasburicase', 'furosemide', 'hydrochlorothiazide',
+  'spironolactone', 'eplerenone', 'mannitol', 'acetazolamide', 'ethacrynic acid', 'SSRIs', 'SNRIs',
+  'TCAs', 'amitriptyline', 'MAOIs', 'bupropion', 'mirtazapine', 'lithium', 'valproate', 'lamotrigine',
+  'carbamazepine', 'phenytoin', 'benzodiazepines', 'barbiturates', 'buspirone', 'haloperidol',
+  'risperidone', 'olanzapine', 'clozapine', 'levodopa', 'carbidopa', 'selegiline', 'rasagiline',
+  'entacapone', 'memantine', 'donepezil', 'riluzole', 'primaquine', 'chloroquine', 'artemisinin',
+  'ivermectin', 'albendazole', 'mebendazole', 'praziquantel', 'niclosamide', 'pentamidine',
+  'miltefosine', 'abacavir', 'efavirenz', 'ritonavir', 'raltegravir', 'enfuvirtide', 'maraviroc',
+  'hydroxychloroquine', 'mycophenolate mofetil', 'azathioprine', 'cyclosporine', 'tacrolimus',
+  'sirolimus', 'rapamycin', 'basiliximab', 'natalizumab', 'infliximab', 'adalimumab', 'anakinra',
+  'tocilizumab', 'ustekinumab', 'secukinumab', 'omalizumab', 'eculizumab', 'leflunomide',
+  'sulfasalazine', 'finasteride', 'flutamide', 'bicalutamide', 'leuprolide', 'sildenafil',
+  'tadalafil', 'tamsulosin', 'oxybutynin', 'tolterodine', 'desmopressin', 'DDAVP', 'demeclocycline',
+  'conivaptan', 'tolvaptan', 'octreotide', 'cinacalcet', 'bisphosphonates', 'alendronate',
+  'zoledronate', 'teriparatide', 'denosumab', 'raloxifene', 'calcitonin', 'orlistat', 'rifaximin',
+  'alosetron', 'lubiprostone', 'teduglutide', 'montelukast', 'zafirlukast', 'theophylline',
+  'cromolyn', 'ipratropium', 'tiotropium', 'pseudoephedrine', 'dextromethorphan', 'guaifenesin',
+  'NAPQI', 'fomepizole', 'flumazenil', 'naloxone', 'naltrexone', 'protamine sulfate', 'idarucizumab',
+  'dabigatran', 'andexanet alfa', 'methylene blue', 'deferoxamine', 'dimercaprol', 'BAL', 'EDTA',
+  'penicillamine'
 ];
 
 function formatText(text, question, topic) {
@@ -497,6 +547,14 @@ const fullGeneticsCards = geneticsRawCards.map(c => ({
 }));
 console.log(`Genetics: ${fullGeneticsCards.length} cards`);
 
+// 9. Process Pharmacology
+console.log('Processing Pharmacology...');
+const fullPharmacologyCards = pharmacologyRawCards.map(c => ({
+  q: formatText(c.q, c.q, 'pharmacology'),
+  a: formatText(c.a, c.q, 'pharmacology')
+}));
+console.log(`Pharmacology: ${fullPharmacologyCards.length} cards`);
+
 // Perform self-checks
 function checkSanity(cards, name) {
   let issues = 0;
@@ -521,8 +579,9 @@ const behavioralSane = checkSanity(fullBehavioralSciencesCards, 'Behavioral Scie
 const immunologySane = checkSanity(fullImmunologyCards, 'Immunology');
 const agingSane = checkSanity(fullAgingCards, 'Aging');
 const geneticsSane = checkSanity(fullGeneticsCards, 'Genetics');
+const pharmacologySane = checkSanity(fullPharmacologyCards, 'Pharmacology');
 
-if (!anatSane || !pathSane || !biochemSane || !nutritionSane || !behavioralSane || !immunologySane || !agingSane || !geneticsSane) {
+if (!anatSane || !pathSane || !biochemSane || !nutritionSane || !behavioralSane || !immunologySane || !agingSane || !geneticsSane || !pharmacologySane) {
   console.error('Sanity check FAILED. Aborting insertion.');
   process.exit(1);
 }
@@ -537,6 +596,7 @@ fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/
 fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/immunology.js', `const immunologyCards = ${JSON.stringify(fullImmunologyCards, null, 2)};\nmodule.exports = { immunologyCards };\n`);
 fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/aging.js', `const agingCards = ${JSON.stringify(fullAgingCards, null, 2)};\nmodule.exports = { agingCards };\n`);
 fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/genetics.js', `const geneticsCards = ${JSON.stringify(fullGeneticsCards, null, 2)};\nmodule.exports = { geneticsCards };\n`);
+fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/pharmacology.js', `const pharmacologyCards = ${JSON.stringify(fullPharmacologyCards, null, 2)};\nmodule.exports = { pharmacologyCards };\n`);
 
 // 5. Load flash-cards.html
 const htmlPath = 'C:/Users/Hasan-PC/Desktop/MedHelp/flash-cards.html';
@@ -629,6 +689,13 @@ keptTopics.push({
   cards: fullGeneticsCards
 });
 
+keptTopics.push({
+  section: "Basic Sciences",
+  topic: "Pharmacology",
+  icon: "pill",
+  cards: fullPharmacologyCards
+});
+
 console.log(`New total topics: ${keptTopics.length}`);
 
 // Serialize the new usmle1 array
@@ -692,5 +759,5 @@ verifyTopics.forEach((t, i) => {
   console.log(`${i+1}. ${t.topic} (${t.section}): ${t.cards.length} cards`);
   totalCards += t.cards.length;
 });
-console.log(`Total topics: ${verifyTopics.length} (expected 18)`);
+console.log(`Total topics: ${verifyTopics.length} (expected 19)`);
 console.log(`Total cards: ${totalCards}`);

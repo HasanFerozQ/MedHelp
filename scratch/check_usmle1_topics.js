@@ -1,0 +1,13 @@
+const fs = require('fs');
+const h = fs.readFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/flash-cards.html', 'utf8');
+const s = h.indexOf("'usmle1': [");
+const e = h.indexOf("'usmle2': [", s);
+let c = h.substring(s, e).trim();
+if (c.endsWith(',')) c = c.slice(0, -1);
+c = c.replace("'usmle1':", "module.exports =");
+const tempFile = 'C:/Users/Hasan-PC/Desktop/MedHelp/scratch/tmp_u1_topics.js';
+fs.writeFileSync(tempFile, c, 'utf8');
+const topics = require(tempFile);
+fs.unlinkSync(tempFile);
+console.log(`Total topics: ${topics.length}`);
+topics.forEach((t, i) => console.log(`  ${i+1}. [${t.section}] ${t.topic} — ${t.cards.length} cards`));

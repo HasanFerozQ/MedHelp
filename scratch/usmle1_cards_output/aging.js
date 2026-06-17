@@ -48,11 +48,11 @@ const agingCards = [
     "a": "↓ Naive T cells, ↑ memory T cells, ↓ antibody affinity/diversity, chronic low-grade inflammation ('<b>inflammaging</b>') → poorer vaccine response, ↑ infections/autoimmunity/cancer."
   },
   {
-    "q": "Pharmacokinetic change in elderly: Volume of distribution for lipophilic drugs?",
-    "a": "↑ (due to ↑ body fat percentage) → prolonged half-life and effects of lipophilic drugs (e.g., diazepam, amiodarone)."
+    "q": "<b>Pharmacokinetic</b> change in elderly: Volume of distribution for lipophilic drugs?",
+    "a": "↑ (due to ↑ body fat percentage) → prolonged half-life and effects of lipophilic drugs (e.g., diazepam, <b>amiodarone</b>)."
   },
   {
-    "q": "Pharmacodynamic change in elderly: Sensitivity to <b>anticholinergics</b>?",
+    "q": "<b>Pharmacodynamic</b> change in elderly: Sensitivity to <b>anticholinergics</b>?",
     "a": "↑ Sensitivity → delirium, urinary retention, constipation, dry mouth (<b>BEERS criteria</b> highlight avoidance)."
   },
   {
@@ -65,7 +65,7 @@ const agingCards = [
   },
   {
     "q": "Age-related change in hepatic metabolism? Implication for Phase I drugs.",
-    "a": "↓ Phase I metabolism (CYP450 oxidation) more than Phase II (conjugation) → prolonged half-life of drugs like benzodiazepines, warfarin."
+    "a": "↓ <b>Phase I metabolism</b> (<b>CYP450</b> oxidation) more than Phase II (conjugation) → prolonged half-life of drugs like <b>benzodiazepines</b>, warfarin."
   },
   {
     "q": "What is the leading cause of accidental death in elderly?",
@@ -148,8 +148,8 @@ const agingCards = [
     "a": "Immobility, Instability (falls), Incontinence, Intellectual impairment (dementia/delirium)."
   },
   {
-    "q": "Pharmacokinetic change: Decreased lean body mass effect on hydrophilic drugs?",
-    "a": "↓ Volume of distribution → higher plasma concentration and effects (e.g., digoxin, aminoglycosides)."
+    "q": "<b>Pharmacokinetic</b> change: Decreased lean body mass effect on hydrophilic drugs?",
+    "a": "↓ Volume of distribution → higher plasma concentration and effects (e.g., <b>digoxin</b>, <b>aminoglycosides</b>)."
   },
   {
     "q": "Why is creatinine clearance preferred over serum creatinine for GFR in elderly?",
@@ -276,7 +276,7 @@ const agingCards = [
     "a": "High risk of confusion, dry mouth, constipation, urinary retention, and delirium."
   },
   {
-    "q": "Why avoid benzodiazepines in elderly (high-yield)?",
+    "q": "Why avoid <b>benzodiazepines</b> in elderly (high-yield)?",
     "a": "Increased risk of falls, fractures, cognitive impairment, delirium, and dependence."
   },
   {
@@ -284,8 +284,8 @@ const agingCards = [
     "a": "<b>Falls</b> and delirium (often due to polypharmacy, sedatives, antihypertensives, <b>anticholinergics</b>)."
   },
   {
-    "q": "Age-related change in pharmacokinetics: Protein binding?",
-    "a": "↓ Albumin (especially in illness/malnutrition) → increased free fraction of highly protein-bound drugs (e.g., warfarin, phenytoin)."
+    "q": "Age-related change in <b>pharmacokinetics</b>: <b>Protein binding</b>?",
+    "a": "↓ Albumin (especially in illness/malnutrition) → increased free fraction of highly protein-bound drugs (e.g., warfarin, <b>phenytoin</b>)."
   },
   {
     "q": "What is the <b>START/STOPP criteria</b> used for?",
@@ -421,7 +421,7 @@ const agingCards = [
   },
   {
     "q": "What drug class worsens cognition and increases fall risk in elderly?",
-    "a": "<b>Anticholinergics</b> (e.g., diphenhydramine, oxybutynin, tricyclic antidepressants)."
+    "a": "<b>Anticholinergics</b> (e.g., diphenhydramine, <b>oxybutynin</b>, tricyclic antidepressants)."
   },
   {
     "q": "Why avoid first-generation antihistamines in elderly?",
@@ -429,7 +429,7 @@ const agingCards = [
   },
   {
     "q": "Most common drug-induced cause of delirium in hospitalized elderly?",
-    "a": "<b><b>Anticholinergics</b>, benzodiazepines, and opioids</b>."
+    "a": "<b><b>Anticholinergics</b>, <b>benzodiazepines</b>, and opioids</b>."
   },
   {
     "q": "What is the <b>CHADS2-VASc</b> score used for in elderly?",
@@ -596,7 +596,7 @@ const agingCards = [
     "a": "↓ Mucociliary clearance, ↓ cough reflex, ↓ respiratory muscle strength, and ↑ residual volume."
   },
   {
-    "q": "GI change leading to constipation in elderly?",
+    "q": "<b>GI</b> change leading to constipation in elderly?",
     "a": "Decreased colonic motility, reduced fluid intake, medications (opioids, <b>anticholinergics</b>), and immobility."
   },
   {
@@ -617,7 +617,7 @@ const agingCards = [
   },
   {
     "q": "Why are elderly more susceptible to drug-induced hyponatremia?",
-    "a": "Reduced renal free water excretion + common use of thiazides, <b>SSRIs</b>, and carbamazepine."
+    "a": "Reduced renal free water excretion + common use of thiazides, <b>SSRIs</b>, and <b>carbamazepine</b>."
   },
   {
     "q": "<b>Beers Criteria</b>: Why avoid sliding-scale insulin in elderly?",
@@ -660,8 +660,8 @@ const agingCards = [
     "a": "<b>Aortic stenosis</b> (calcific degenerative)."
   },
   {
-    "q": "Why is digoxin toxicity more common in elderly?",
-    "a": "Reduced renal clearance and lower lean body mass → higher serum levels."
+    "q": "Why is <b>digoxin</b> toxicity more common in elderly?",
+    "a": "Reduced <b>renal clearance</b> and lower lean body mass → higher serum levels."
   },
   {
     "q": "What is the leading iatrogenic cause of morbidity in hospitalized elderly?",
