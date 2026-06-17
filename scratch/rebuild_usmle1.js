@@ -6,6 +6,8 @@ const { anatomyAppendRawCards } = require('./anatomy_append_raw_cards.js');
 const { pathologyRawCards } = require('./pathology_raw_cards.js');
 const { biochem2RawCards } = require('./biochem2_raw_cards.js');
 const { nutritionRawCards } = require('./nutrition_raw_cards.js');
+const { behavioralSciencesRawCards } = require('./behavioral_sciences_raw_cards.js');
+const { immunologyRawCards } = require('./immunology_raw_cards.js');
 
 const boldTerms = [
   'Waiter\'s tip', 'Claw hand', 'Horner syndrome', 'Wrist drop', 'Foot drop',
@@ -145,7 +147,53 @@ const boldTerms = [
 
   // Nutrition terms
   'Kwashiorkor', 'Marasmus', 'Refeeding syndrome', 'DASH diet', 'Mediterranean diet',
-  'Celiac disease', 'Dumping syndrome', 'Menkes disease'
+  'Celiac disease', 'Dumping syndrome', 'Menkes disease',
+
+  // Behavioral Sciences terms
+  'classical conditioning', 'operant conditioning', 'systematic desensitization',
+  'positive reinforcement', 'negative reinforcement',
+  'Kübler-Ross', 'DABDA',
+  'Erikson', 'Piaget', 'Kohlberg', 'Freud',
+  'object permanence', 'conservation',
+  'Oedipus', 'Electra',
+  'repression', 'suppression', 'denial', 'projection', 'displacement',
+  'reaction formation', 'rationalization', 'intellectualization',
+  'sublimation', 'altruism', 'splitting', 'regression',
+  'REM sleep', 'NREM', 'narcolepsy', 'cataplexy', 'orexin', 'hypocretin',
+  'sleep apnea', 'CPAP', 'CBT-I',
+  'Wernicke encephalopathy', 'Korsakoff syndrome',
+  'delirium tremens', 'naloxone', 'naltrexone', 'methadone', 'buprenorphine',
+  'disulfiram', 'acamprosate',
+  'autonomy', 'beneficence', 'non-maleficence', 'justice',
+  'Tarasoff', 'informed consent', 'DNR',
+  'Medicare', 'Medicaid',
+  'SSRIs', 'MAO inhibitors', 'lithium', 'clozapine', 'haloperidol',
+  'tardive dyskinesia', 'agranulocytosis',
+  'serotonin syndrome', 'neuroleptic malignant syndrome',
+  'buspirone', 'dantrolene', 'bromocriptine',
+  'lead-time bias', 'length-time bias', 'healthy worker effect',
+  'Maslow',
+
+  // Immunology terms
+  'Innate', 'Adaptive', 'Conventional DCs', 'Plasmacytoid DCs', 'NK cells', 'KIRs', 'PRRs',
+  'PAMPs', 'DAMPs', 'TLR4', 'TLR9', 'MHC Class I', 'MHC Class II', 'MHC I', 'MHC II',
+  'IgM', 'IgG', 'IgA', 'IgE', 'IgD', 'complement pathway', 'C3a', 'C3b', 'C5a', 'C5b-9',
+  'CD4 T helper', 'Th1', 'Th2', 'Th17', 'Treg', 'Tregs', 'Tfh', 'FoxP3', 'Foxp3', 'central tolerance',
+  'peripheral tolerance', 'hypersensitivity', 'Type I', 'Type II', 'Type III', 'Type IV',
+  'active immunity', 'passive immunity', 'superantigens', 'selective IgA deficiency',
+  'agammaglobulinemia', 'Bruton', 'SCID', 'DiGeorge', 'CATCH-22', 'Chronic Granulomatous Disease', 'CGD',
+  'nitroblue tetrazolium', 'NBT', 'Leukocyte Adhesion Deficiency', 'LAD', 'Chediak-Higashi',
+  'Job syndrome', 'Hyper-IgE', 'allograft', 'xenograft', 'isograft', 'hyperacute rejection',
+  'acute cellular rejection', 'chronic rejection', 'cyclosporine', 'tacrolimus', 'sirolimus',
+  'rapamycin', 'mycophenolate mofetil', 'azathioprine', 'basiliximab', 'pembrolizumab',
+  'nivolumab', 'ipilimumab', 'abatacept', 'tocilizumab', 'ustekinumab', 'secukinumab',
+  'Hashimoto thyroiditis', 'anti-TPO', 'Graves disease', 'TSI', 'Myasthenia Gravis',
+  'AChR', 'Lambert-Eaton', 'VGCC', 'pernicious anemia', 'primary biliary cholangitis',
+  'AMA', 'autoimmune hepatitis', 'ASMA', 'anti-Jo-1', 'anti-SSA', 'anti-SSB', 'Sjögren',
+  'molecular mimicry', 'rheumatic fever', 'Jones criterion', 'mitral stenosis', 'MMR',
+  'Varicella', 'Hib vaccine', 'herd immunity', 'AIRE gene', 'Coombs test', 'cold agglutinin',
+  'rituximab', 'infliximab', 'adalimumab', 'etanercept', 'graft-versus-host disease', 'GVHD',
+  'Kaposi sarcoma', 'PD-1', 'PD-L1', 'CTLA-4', 'Warburg effect', 'amyloidosis'
 ];
 
 function formatText(text, question, topic) {
@@ -374,6 +422,22 @@ const fullNutritionCards = nutritionRawCards.map(c => ({
 }));
 console.log(`Nutrition: ${fullNutritionCards.length} cards`);
 
+// 5. Process Behavioral Sciences
+console.log('Processing Behavioral Sciences...');
+const fullBehavioralSciencesCards = behavioralSciencesRawCards.map(c => ({
+  q: formatText(c.q, c.q, 'behavioral'),
+  a: formatText(c.a, c.q, 'behavioral')
+}));
+console.log(`Behavioral Sciences: ${fullBehavioralSciencesCards.length} cards`);
+
+// 6. Process Immunology
+console.log('Processing Immunology...');
+const fullImmunologyCards = immunologyRawCards.map(c => ({
+  q: formatText(c.q, c.q, 'immunology'),
+  a: formatText(c.a, c.q, 'immunology')
+}));
+console.log(`Immunology: ${fullImmunologyCards.length} cards`);
+
 // Perform self-checks
 function checkSanity(cards, name) {
   let issues = 0;
@@ -394,8 +458,10 @@ const anatSane = checkSanity(fullAnatomyCards, 'Anatomy');
 const pathSane = checkSanity(fullPathologyCards, 'Pathology');
 const biochemSane = checkSanity(fullBiochemCards, 'Biochemistry');
 const nutritionSane = checkSanity(fullNutritionCards, 'Nutrition');
+const behavioralSane = checkSanity(fullBehavioralSciencesCards, 'Behavioral Sciences');
+const immunologySane = checkSanity(fullImmunologyCards, 'Immunology');
 
-if (!anatSane || !pathSane || !biochemSane || !nutritionSane) {
+if (!anatSane || !pathSane || !biochemSane || !nutritionSane || !behavioralSane || !immunologySane) {
   console.error('Sanity check FAILED. Aborting insertion.');
   process.exit(1);
 }
@@ -406,6 +472,8 @@ fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/
 fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/pathology.js', `const pathologyCards = ${JSON.stringify(fullPathologyCards, null, 2)};\nmodule.exports = { pathologyCards };\n`);
 fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/biochem2.js', `const biochem2Cards = ${JSON.stringify(fullBiochemCards, null, 2)};\nmodule.exports = { biochem2Cards };\n`);
 fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/nutrition.js', `const nutritionCards = ${JSON.stringify(fullNutritionCards, null, 2)};\nmodule.exports = { nutritionCards };\n`);
+fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/behavioral_sciences.js', `const behavioralSciencesCards = ${JSON.stringify(fullBehavioralSciencesCards, null, 2)};\nmodule.exports = { behavioralSciencesCards };\n`);
+fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/immunology.js', `const immunologyCards = ${JSON.stringify(fullImmunologyCards, null, 2)};\nmodule.exports = { immunologyCards };\n`);
 
 // 5. Load flash-cards.html
 const htmlPath = 'C:/Users/Hasan-PC/Desktop/MedHelp/flash-cards.html';
@@ -468,6 +536,20 @@ keptTopics.push({
   topic: "Nutrition",
   icon: "apple",
   cards: fullNutritionCards
+});
+
+keptTopics.push({
+  section: "Basic Sciences",
+  topic: "Behavioral Sciences",
+  icon: "brain",
+  cards: fullBehavioralSciencesCards
+});
+
+keptTopics.push({
+  section: "Basic Sciences",
+  topic: "Immunology",
+  icon: "shield",
+  cards: fullImmunologyCards
 });
 
 console.log(`New total topics: ${keptTopics.length}`);
@@ -533,5 +615,5 @@ verifyTopics.forEach((t, i) => {
   console.log(`${i+1}. ${t.topic} (${t.section}): ${t.cards.length} cards`);
   totalCards += t.cards.length;
 });
-console.log(`Total topics: ${verifyTopics.length} (expected 14)`);
+console.log(`Total topics: ${verifyTopics.length} (expected 16)`);
 console.log(`Total cards: ${totalCards}`);

@@ -196,7 +196,7 @@ const biochem2Cards = [
     "a": "<b>Converts pyruvate → acetyl-CoA.</b> Requires 5 cofactors:<ul><li><b>TPP</b> (B1 — Thiamine)</li><li><b>Lipoic acid</b></li><li><b>CoA</b> (B5 — Pantothenate)</li><li><b>FAD</b> (B2 — Riboflavin)</li><li><b>NAD</b> (B3 — Niacin)</li></ul><b>Mnemonic: Tender Loving Care For Nancy</b>"
   },
   {
-    "q": "Which vitamin deficiency causes Wernicke-Korsakoff syndrome?",
+    "q": "Which vitamin deficiency causes Wernicke-<b>Korsakoff syndrome</b>?",
     "a": "<b><b>Thiamine</b> (B1)</b> deficiency — common in alcoholics. Damage to mammillary bodies."
   },
   {
@@ -324,7 +324,7 @@ const biochem2Cards = [
     "a": "ABCA1 deficiency → very low HDL, orange tonsils, peripheral neuropathy."
   },
   {
-    "q": "Which apolipoprotein is deficient in familial dysbetalipoproteinemia (Type III)?",
+    "q": "Which apolipoprotein is deficient in familial dysbetalipoproteinemia (<b>Type III</b>)?",
     "a": "<b>ApoE</b> (E2/E2 genotype)."
   },
   {
@@ -685,7 +685,7 @@ const biochem2Cards = [
   },
   {
     "q": "What is the classic presentation of <b>Tay-Sachs</b>?",
-    "a": "Ashkenazi Jewish infant with cherry-red spot, developmental regression, seizures."
+    "a": "Ashkenazi Jewish infant with cherry-red spot, developmental <b>regression</b>, seizures."
   },
   {
     "q": "What is the enzyme deficient in <b>Gaucher</b> disease?",
@@ -753,7 +753,7 @@ const biochem2Cards = [
   },
   {
     "q": "What is the <b>Schilling test</b> used for?",
-    "a": "Diagnosing cause of B12 deficiency (pernicious anemia vs malabsorption)."
+    "a": "Diagnosing cause of B12 deficiency (<b>pernicious anemia</b> vs malabsorption)."
   },
   {
     "q": "What is the function of <b>intrinsic factor</b>?",

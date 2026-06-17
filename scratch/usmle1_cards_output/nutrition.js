@@ -48,7 +48,7 @@ const nutritionCards = [
     "a": "<b><b>Biotin</b> (B7)</b>."
   },
   {
-    "q": "Which vitamin deficiency causes Wernicke-Korsakoff syndrome?",
+    "q": "Which vitamin deficiency causes Wernicke-<b>Korsakoff syndrome</b>?",
     "a": "<b><b>Thiamine</b> (B1)</b> — confusion, ataxia, ophthalmoplegia."
   },
   {
@@ -81,7 +81,7 @@ const nutritionCards = [
   },
   {
     "q": "What causes B12 deficiency besides diet?",
-    "a": "Pernicious anemia (<b>intrinsic factor</b> deficiency), terminal ileum resection, metformin."
+    "a": "<b>Pernicious anemia</b> (<b>intrinsic factor</b> deficiency), terminal ileum resection, metformin."
   },
   {
     "q": "What is the most common cause of folate deficiency?",
@@ -229,7 +229,7 @@ const nutritionCards = [
   },
   {
     "q": "What is the diagnostic test for <b>celiac disease</b>?",
-    "a": "Anti-tissue transglutaminase (tTG) IgA + duodenal biopsy."
+    "a": "Anti-tissue transglutaminase (tTG) <b>IgA</b> + duodenal biopsy."
   },
   {
     "q": "What is the treatment for <b>celiac disease</b>?",
@@ -336,11 +336,11 @@ const nutritionCards = [
     "a": "<b><b>Thiamine</b> (B1)</b>."
   },
   {
-    "q": "What is the Wernicke encephalopathy triad?",
+    "q": "What is the <b>Wernicke encephalopathy</b> triad?",
     "a": "Confusion, ataxia, ophthalmoplegia."
   },
   {
-    "q": "What is the treatment for Wernicke encephalopathy?",
+    "q": "What is the treatment for <b>Wernicke encephalopathy</b>?",
     "a": "High-dose IV <b>thiamine</b> before glucose."
   },
   {
@@ -373,7 +373,7 @@ const nutritionCards = [
   },
   {
     "q": "Why must <b>thiamine</b> be given before glucose in alcoholics?",
-    "a": "Glucose infusion can precipitate Wernicke encephalopathy in <b>thiamine</b>-deficient patients."
+    "a": "Glucose infusion can precipitate <b>Wernicke encephalopathy</b> in <b>thiamine</b>-deficient patients."
   },
   {
     "q": "A patient with short bowel syndrome develops night blindness and dry skin. Which vitamin is deficient?",
@@ -484,12 +484,12 @@ const nutritionCards = [
     "a": "Component of glucose tolerance factor; enhances insulin signaling."
   },
   {
-    "q": "What is the classic triad of Wernicke encephalopathy?",
+    "q": "What is the classic triad of <b>Wernicke encephalopathy</b>?",
     "a": "Ophthalmoplegia, ataxia, confusion (not <b>all</b> present in every case)."
   },
   {
     "q": "What is Korsakoff psychosis?",
-    "a": "Irreversible amnesia and confabulation following untreated Wernicke encephalopathy."
+    "a": "Irreversible amnesia and confabulation following untreated <b>Wernicke encephalopathy</b>."
   },
   {
     "q": "Which trace element deficiency causes acrodermatitis enteropathica?",

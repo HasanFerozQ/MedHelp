@@ -353,7 +353,7 @@ const pathologyCards = [
   },
   {
     "q": "What is the most common glomerulonephritis worldwide?",
-    "a": "<b>IgA nephropathy</b> (<b>Berger disease</b>)."
+    "a": "<b><b>IgA</b> nephropathy</b> (<b>Berger disease</b>)."
   },
   {
     "q": "What is the classic finding in post-streptococcal glomerulonephritis?",
