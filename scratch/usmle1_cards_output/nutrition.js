@@ -361,7 +361,7 @@ const nutritionCards = [
   },
   {
     "q": "What is the <b>Mediterranean diet</b> key components?",
-    "a": "Olive oil, fish, nuts, fruits, vegetables, moderate red wine."
+    "a": "Olive oil, <b>fish</b>, nuts, fruits, vegetables, moderate red wine."
   },
   {
     "q": "A malnourished patient is started on TPN. Day 2 he develops seizures and muscle weakness. What is the most likely cause?",
@@ -440,7 +440,7 @@ const nutritionCards = [
     "a": "Absorbed directly into <b>portal vein</b> without needing micelle formation."
   },
   {
-    "q": "A patient with cystic fibrosis has failure to thrive. What nutritional intervention is critical?",
+    "q": "A patient with <b>cystic fibrosis</b> has failure to thrive. What nutritional intervention is critical?",
     "a": "Pancreatic enzyme replacement + high-calorie diet with fat-soluble vitamin supplementation."
   },
   {
@@ -505,10 +505,10 @@ const nutritionCards = [
   },
   {
     "q": "What is the most common inherited disorder of iron metabolism?",
-    "a": "<b>Hereditary hemochromatosis</b> (HFE C282Y mutation)."
+    "a": "<b>Hereditary <b>hemochromatosis</b></b> (HFE C282Y mutation)."
   },
   {
-    "q": "What is the treatment for hereditary hemochromatosis?",
+    "q": "What is the treatment for hereditary <b>hemochromatosis</b>?",
     "a": "Therapeutic phlebotomy."
   },
   {
@@ -588,11 +588,11 @@ const nutritionCards = [
     "a": "Low-fat diet with medium-chain triglycerides (MCTs)."
   },
   {
-    "q": "What is the nutritional management of <b>phenylketonuria</b> (PKU)?",
+    "q": "What is the nutritional management of <b>phenylketonuria</b> (<b>PKU</b>)?",
     "a": "Phenylalanine-restricted diet + tyrosine supplementation."
   },
   {
-    "q": "What is the long-term risk if PKU is untreated?",
+    "q": "What is the long-term risk if <b>PKU</b> is untreated?",
     "a": "Intellectual disability, seizures, musty odor."
   }
 ];

@@ -145,7 +145,7 @@ const pathologyCards = [
   },
   {
     "q": "What is the role of <b>p53</b> in cell injury?",
-    "a": "Tumor suppressor; induces cell cycle arrest or <b>apoptosis</b> in response to DNA damage."
+    "a": "<b>Tumor suppressor</b>; induces cell cycle arrest or <b>apoptosis</b> in response to DNA damage."
   },
   {
     "q": "What are the two main categories of neoplasia?",
@@ -521,7 +521,7 @@ const pathologyCards = [
   },
   {
     "q": "What is the most common primary cardiac tumor in children?",
-    "a": "<b>Rhabdomyoma</b> (associated with tuberous sclerosis)."
+    "a": "<b>Rhabdomyoma</b> (associated with <b>tuberous sclerosis</b>)."
   },
   {
     "q": "What is the most common metastatic tumor to the heart?",

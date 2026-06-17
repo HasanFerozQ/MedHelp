@@ -289,7 +289,7 @@ const behavioralSciencesCards = [
   },
   {
     "q": "What is <b>REM sleep</b> behavior disorder?",
-    "a": "Loss of normal muscle atonia during REM → patient acts out dreams; associated with <b>Parkinson disease</b> and Lewy body dementia."
+    "a": "Loss of normal muscle atonia during REM → patient acts out dreams; associated with <b>Parkinson disease</b> and <b>Lewy body dementia</b>."
   },
   {
     "q": "What are the signs of opioid intoxication?",

@@ -52,11 +52,11 @@ const biochem2Cards = [
     "a": "<b>NADPH</b> (used for fatty acid synthesis, glutathione reduction)."
   },
   {
-    "q": "Which enzyme deficiency causes classic galactosemia?",
-    "a": "<b>Galactose-1-phosphate uridyltransferase (GALT)</b>. Cataracts, hepatomegaly, E. coli sepsis."
+    "q": "Which enzyme deficiency causes classic <b>galactosemia</b>?",
+    "a": "<b>Galactose-1-phosphate uridyltransferase (GALT)</b>. <b>Cataracts</b>, hepatomegaly, E. coli sepsis."
   },
   {
-    "q": "What is the defect in hereditary fructose intolerance?",
+    "q": "What is the defect in <b>hereditary fructose intolerance</b>?",
     "a": "<b>Aldolase B</b> deficiency → accumulation of fructose-1-phosphate → hypoglycemia, liver damage."
   },
   {
@@ -88,7 +88,7 @@ const biochem2Cards = [
     "a": "<b>ApoB-100</b>."
   },
   {
-    "q": "What is the defect in familial hypercholesterolemia?",
+    "q": "What is the defect in <b>familial hypercholesterolemia</b>?",
     "a": "<b>LDL receptor</b> mutation → very high LDL, early atherosclerosis."
   },
   {
@@ -144,8 +144,8 @@ const biochem2Cards = [
     "a": "<b>Glycine + <b>Succinyl-CoA</b></b>."
   },
   {
-    "q": "Which disease is caused by deficiency of phenylalanine hydroxylase?",
-    "a": "<b><b>Phenylketonuria</b> (PKU)</b>. Musty odor, fair skin, intellectual disability. Treated with low-phenylalanine diet."
+    "q": "Which disease is caused by deficiency of <b>phenylalanine hydroxylase</b>?",
+    "a": "<b><b>Phenylketonuria</b> (<b>PKU</b>)</b>. Musty odor, fair skin, intellectual disability. Treated with low-phenylalanine diet."
   },
   {
     "q": "What is the defect in alkaptonuria?",
@@ -285,7 +285,7 @@ const biochem2Cards = [
   },
   {
     "q": "What accumulates in galactokinase deficiency?",
-    "a": "Galactitol → cataracts."
+    "a": "Galactitol → <b>cataracts</b>."
   },
   {
     "q": "What is the committed step of fatty acid oxidation?",
@@ -412,7 +412,7 @@ const biochem2Cards = [
     "a": "Always 5' → 3'."
   },
   {
-    "q": "What are telomeres and what enzyme maintains them?",
+    "q": "What are <b>telomeres</b> and what enzyme maintains them?",
     "a": "TTAGGG repeats at chromosome ends. Maintained by <b>telomerase</b> (reverse transcriptase)."
   },
   {
@@ -476,19 +476,19 @@ const biochem2Cards = [
     "a": "Binds 50S subunit and inhibits translocation."
   },
   {
-    "q": "What is a frameshift mutation?",
+    "q": "What is a <b>frameshift mutation</b>?",
     "a": "Insertion or deletion of nucleotides not in multiples of 3 → altered reading frame."
   },
   {
-    "q": "What is a missense mutation?",
+    "q": "What is a <b>missense mutation</b>?",
     "a": "Single nucleotide change that results in a different amino acid."
   },
   {
-    "q": "What is a nonsense mutation?",
+    "q": "What is a <b>nonsense mutation</b>?",
     "a": "Creates a premature stop codon."
   },
   {
-    "q": "What is anticipation in genetics?",
+    "q": "What is <b>anticipation</b> in genetics?",
     "a": "Increasing severity/earlier onset in successive generations (seen in trinucleotide repeat disorders)."
   },
   {
@@ -596,27 +596,27 @@ const biochem2Cards = [
     "a": "Block glucose reabsorption in proximal tubule → glucosuria."
   },
   {
-    "q": "What is the most common mutation in cystic fibrosis?",
-    "a": "ΔF508 deletion in CFTR gene (impaired chloride channel folding)."
+    "q": "What is the most common mutation in <b>cystic fibrosis</b>?",
+    "a": "ΔF508 deletion in <b>CFTR</b> gene (impaired chloride channel folding)."
   },
   {
-    "q": "What is the inheritance pattern of Huntington disease?",
-    "a": "Autosomal dominant; trinucleotide repeat (CAG) on chromosome 4."
+    "q": "What is the inheritance pattern of <b>Huntington</b> disease?",
+    "a": "<b>Autosomal dominant</b>; trinucleotide repeat (CAG) on chromosome 4."
   },
   {
-    "q": "What is the inheritance pattern of Fragile X syndrome?",
-    "a": "X-linked; CGG repeat in FMR1 gene."
+    "q": "What is the inheritance pattern of <b>Fragile X</b> syndrome?",
+    "a": "X-linked; CGG repeat in <b>FMR1</b> gene."
   },
   {
-    "q": "What is genomic imprinting?",
-    "a": "Gene expression depends on parent of origin (e.g., Prader-Willi vs Angelman syndrome on chromosome 15)."
+    "q": "What is <b>genomic imprinting</b>?",
+    "a": "Gene expression depends on parent of origin (e.g., <b>Prader-Willi</b> vs <b>Angelman</b> syndrome on chromosome 15)."
   },
   {
     "q": "What is the function of <b>telomerase</b> in cancer?",
     "a": "Reactivation allows unlimited replication (immortality)."
   },
   {
-    "q": "What is the role of oncogenes vs tumor suppressor genes?",
+    "q": "What is the role of <b>oncogenes</b> vs <b>tumor suppressor</b> genes?",
     "a": "<ul><li><b>Oncogenes:</b> gain-of-function (one mutated copy sufficient — dominant)</li><li><b>Tumor suppressors:</b> loss-of-function (both copies usually lost — recessive, Knudson two-hit hypothesis)</li></ul>"
   },
   {
@@ -628,8 +628,8 @@ const biochem2Cards = [
     "a": "Defective DNA mismatch repair (MSH2, MLH1, etc.)."
   },
   {
-    "q": "What is the function of retinoblastoma (Rb) protein?",
-    "a": "Tumor suppressor; binds E2F → prevents G1 to S progression."
+    "q": "What is the function of <b>retinoblastoma</b> (Rb) protein?",
+    "a": "<b>Tumor suppressor</b>; binds E2F → prevents G1 to S progression."
   },
   {
     "q": "What is the most common enzyme deficiency causing hemolytic anemia?",
@@ -648,15 +648,15 @@ const biochem2Cards = [
     "a": "<b>Penicillamine</b> or trientine (copper chelators); zinc."
   },
   {
-    "q": "What is hemochromatosis?",
+    "q": "What is <b>hemochromatosis</b>?",
     "a": "Iron overload due to HFE gene mutation (C282Y) → bronze diabetes, <b>cirrhosis</b>, arthropathy."
   },
   {
-    "q": "What is the inheritance of hereditary hemochromatosis?",
-    "a": "Autosomal recessive."
+    "q": "What is the inheritance of hereditary <b>hemochromatosis</b>?",
+    "a": "<b>Autosomal recessive</b>."
   },
   {
-    "q": "What is the treatment for hereditary hemochromatosis?",
+    "q": "What is the treatment for hereditary <b>hemochromatosis</b>?",
     "a": "Phlebotomy."
   },
   {
@@ -669,14 +669,14 @@ const biochem2Cards = [
   },
   {
     "q": "What is the most common inborn error of metabolism?",
-    "a": "<b><b>Phenylketonuria</b> (PKU)</b>."
+    "a": "<b><b>Phenylketonuria</b> (<b>PKU</b>)</b>."
   },
   {
-    "q": "What is the newborn screening test for PKU?",
+    "q": "What is the newborn screening test for <b>PKU</b>?",
     "a": "Guthrie test (elevated phenylalanine)."
   },
   {
-    "q": "What is the treatment for PKU?",
+    "q": "What is the treatment for <b>PKU</b>?",
     "a": "Low-phenylalanine diet; avoid aspartame."
   },
   {
@@ -689,7 +689,7 @@ const biochem2Cards = [
   },
   {
     "q": "What is the enzyme deficient in <b>Gaucher</b> disease?",
-    "a": "<b>Glucocerebrosidase</b>."
+    "a": "<b><b>Glucocerebrosidase</b></b>."
   },
   {
     "q": "What is the enzyme deficient in <b>Niemann-Pick</b> disease?",
@@ -736,11 +736,11 @@ const biochem2Cards = [
     "a": "<b>α₂γ₂</b> — higher O₂ affinity than adult HbA (α₂β₂)."
   },
   {
-    "q": "What is the major hemoglobin in sickle cell disease?",
+    "q": "What is the major hemoglobin in <b>sickle cell disease</b>?",
     "a": "<b>HbS</b> (β6 Glu → Val)."
   },
   {
-    "q": "What triggers sickling in sickle cell disease?",
+    "q": "What triggers sickling in <b>sickle cell disease</b>?",
     "a": "Deoxygenation, acidosis, dehydration, infection."
   },
   {

@@ -8,6 +8,8 @@ const { biochem2RawCards } = require('./biochem2_raw_cards.js');
 const { nutritionRawCards } = require('./nutrition_raw_cards.js');
 const { behavioralSciencesRawCards } = require('./behavioral_sciences_raw_cards.js');
 const { immunologyRawCards } = require('./immunology_raw_cards.js');
+const { agingRawCards } = require('./aging_raw_cards.js');
+const { geneticsRawCards } = require('./genetics_raw_cards.js');
 
 const boldTerms = [
   'Waiter\'s tip', 'Claw hand', 'Horner syndrome', 'Wrist drop', 'Foot drop',
@@ -193,7 +195,48 @@ const boldTerms = [
   'molecular mimicry', 'rheumatic fever', 'Jones criterion', 'mitral stenosis', 'MMR',
   'Varicella', 'Hib vaccine', 'herd immunity', 'AIRE gene', 'Coombs test', 'cold agglutinin',
   'rituximab', 'infliximab', 'adalimumab', 'etanercept', 'graft-versus-host disease', 'GVHD',
-  'Kaposi sarcoma', 'PD-1', 'PD-L1', 'CTLA-4', 'Warburg effect', 'amyloidosis'
+  'Kaposi sarcoma', 'PD-1', 'PD-L1', 'CTLA-4', 'Warburg effect', 'amyloidosis',
+
+  // Aging terms
+  'replicative senescence', 'Hayflick limit', 'telomere', 'telomeres', 'sarcopenia', 'osteopenia',
+  'osteoporosis', 'osteomalacia', 'immunosenescence', 'inflammaging', 'Beers Criteria',
+  'START/STOPP criteria', 'homeostenosis', 'SASP', 'andropause', 'menopause', 'presbycusis',
+  'normal pressure hydrocephalus', 'NPH', 'donepezil', 'rivastigmine', 'galantamine', 'memantine',
+  'cerumen impaction', 'Shingrix', 'PCV20', 'PCV15', 'PPSV23', 'CHADS2-VASc', 'HAS-BLED',
+  'Rowe and Kahn', 'compression of morbidity', 'klotho gene', 'frailty syndrome', 'FRAIL mnemonic',
+  'lipofuscin', 'sirtuins', 'epigenetic drift', 'caloric restriction', 'intermittent fasting',
+  'Alzheimer disease', 'Vascular dementia', 'Pick disease', 'Lewy body dementia', 'sundowning',
+  'decubitus', 'pressure ulcers', 'age-related macular degeneration', 'AMD', 'cataracts',
+  'glaucoma', 'aortic stenosis', 'proteostasis collapse', 'MMM', 'MoCA', 'anticholinergics',
+
+  // Genetics terms
+  'Autosomal Dominant', 'Autosomal Recessive', 'X-linked Dominant', 'X-linked Recessive',
+  'incomplete penetrance', 'variable expressivity', 'anticipation', 'genomic imprinting',
+  'uniparental disomy', 'UPD', 'Down syndrome', 'AVSD', 'endocardial cushion defect',
+  'Edwards syndrome', 'Patau syndrome', 'Fragile X', 'Fragile X syndrome', 'FMR1',
+  'macroorchidism', 'Cystic Fibrosis', 'CFTR', 'Sweat chloride test', 'Phenylketonuria',
+  'PKU', 'phenylalanine hydroxylase', 'PAH', 'Tay-Sachs', 'β-hexosaminidase A',
+  'Gaucher', 'glucocerebrosidase', 'Huntington', 'HTT', 'Myotonic dystrophy', 'DMPK',
+  'Prader-Willi', 'Angelman', 'Duchenne Muscular Dystrophy', 'Dystrophin', 'Gower sign',
+  'Marfan', 'Marfan syndrome', 'FBN1', 'fibrillin-1', 'Familial Hypercholesterolemia',
+  'Hemochromatosis', 'Hardy-Weinberg', 'linkage disequilibrium', 'missense mutation',
+  'nonsense mutation', 'frameshift mutation', 'silent mutation', 'Lyonization',
+  'mitochondrial inheritance', 'Robertsonian translocation', 'Cri-du-chat', 'Beckwith-Wiedemann',
+  'Wolf-Hirschhorn', 'Klinefelter syndrome', 'Turner syndrome', 'Triple X syndrome',
+  'XYY syndrome', 'Williams syndrome', 'FISH', 'Sanger sequencing', 'next-generation sequencing',
+  'NGS', 'oncogenes', 'tumor suppressor', 'Li-Fraumeni', 'FAP', 'Lynch syndrome',
+  'microsatellite instability', 'MSI', 'Neurofibromatosis type 1', 'NF1', 'NF2',
+  'Wilson disease', 'Alpha-1 antitrypsin', 'SERPINA1', 'hereditary spherocytosis',
+  'Gilbert syndrome', 'UGT1A1', 'Crigler-Najjar', 'heteroplasmy', 'threshold effect',
+  'Lesch-Nyhan', 'Fabry disease', 'Hunter syndrome', 'Hurler syndrome', 'Pompe disease',
+  'McArdle disease', 'Von Gierke disease', 'Galactosemia', 'Hereditary Fructose Intolerance',
+  'founder effect', 'genetic drift', 'bottleneck effect', 'penetrance', 'expressivity',
+  'pleiotropy', 'locus heterogeneity', 'allelic heterogeneity', 'dominant negative mutation',
+  'haploinsufficiency', 'two-hit hypothesis', 'Retinoblastoma', 'RB1', 'Xeroderma Pigmentosum',
+  'Ataxia-Telangiectasia', 'Bloom syndrome', 'Fanconi anemia', 'Sickle Cell Disease',
+  'β-Thalassemia', 'α-Thalassemia', 'Hemophilia A', 'Hemophilia B', 'von Willebrand Disease',
+  'erythroblastosis fetalis', 'DNA methylation', 'histone acetylation', 'Kartagener syndrome',
+  'Polycystic Kidney Disease', 'Tuberous Sclerosis', 'Sturge-Weber', 'malignant hyperthermia'
 ];
 
 function formatText(text, question, topic) {
@@ -438,6 +481,22 @@ const fullImmunologyCards = immunologyRawCards.map(c => ({
 }));
 console.log(`Immunology: ${fullImmunologyCards.length} cards`);
 
+// 7. Process Aging
+console.log('Processing Aging...');
+const fullAgingCards = agingRawCards.map(c => ({
+  q: formatText(c.q, c.q, 'aging'),
+  a: formatText(c.a, c.q, 'aging')
+}));
+console.log(`Aging: ${fullAgingCards.length} cards`);
+
+// 8. Process Genetics
+console.log('Processing Genetics...');
+const fullGeneticsCards = geneticsRawCards.map(c => ({
+  q: formatText(c.q, c.q, 'genetics'),
+  a: formatText(c.a, c.q, 'genetics')
+}));
+console.log(`Genetics: ${fullGeneticsCards.length} cards`);
+
 // Perform self-checks
 function checkSanity(cards, name) {
   let issues = 0;
@@ -460,8 +519,10 @@ const biochemSane = checkSanity(fullBiochemCards, 'Biochemistry');
 const nutritionSane = checkSanity(fullNutritionCards, 'Nutrition');
 const behavioralSane = checkSanity(fullBehavioralSciencesCards, 'Behavioral Sciences');
 const immunologySane = checkSanity(fullImmunologyCards, 'Immunology');
+const agingSane = checkSanity(fullAgingCards, 'Aging');
+const geneticsSane = checkSanity(fullGeneticsCards, 'Genetics');
 
-if (!anatSane || !pathSane || !biochemSane || !nutritionSane || !behavioralSane || !immunologySane) {
+if (!anatSane || !pathSane || !biochemSane || !nutritionSane || !behavioralSane || !immunologySane || !agingSane || !geneticsSane) {
   console.error('Sanity check FAILED. Aborting insertion.');
   process.exit(1);
 }
@@ -474,6 +535,8 @@ fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/
 fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/nutrition.js', `const nutritionCards = ${JSON.stringify(fullNutritionCards, null, 2)};\nmodule.exports = { nutritionCards };\n`);
 fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/behavioral_sciences.js', `const behavioralSciencesCards = ${JSON.stringify(fullBehavioralSciencesCards, null, 2)};\nmodule.exports = { behavioralSciencesCards };\n`);
 fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/immunology.js', `const immunologyCards = ${JSON.stringify(fullImmunologyCards, null, 2)};\nmodule.exports = { immunologyCards };\n`);
+fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/aging.js', `const agingCards = ${JSON.stringify(fullAgingCards, null, 2)};\nmodule.exports = { agingCards };\n`);
+fs.writeFileSync('C:/Users/Hasan-PC/Desktop/MedHelp/scratch/usmle1_cards_output/genetics.js', `const geneticsCards = ${JSON.stringify(fullGeneticsCards, null, 2)};\nmodule.exports = { geneticsCards };\n`);
 
 // 5. Load flash-cards.html
 const htmlPath = 'C:/Users/Hasan-PC/Desktop/MedHelp/flash-cards.html';
@@ -552,6 +615,20 @@ keptTopics.push({
   cards: fullImmunologyCards
 });
 
+keptTopics.push({
+  section: "Basic Sciences",
+  topic: "Aging",
+  icon: "clock",
+  cards: fullAgingCards
+});
+
+keptTopics.push({
+  section: "Basic Sciences",
+  topic: "Genetics",
+  icon: "dna",
+  cards: fullGeneticsCards
+});
+
 console.log(`New total topics: ${keptTopics.length}`);
 
 // Serialize the new usmle1 array
@@ -615,5 +692,5 @@ verifyTopics.forEach((t, i) => {
   console.log(`${i+1}. ${t.topic} (${t.section}): ${t.cards.length} cards`);
   totalCards += t.cards.length;
 });
-console.log(`Total topics: ${verifyTopics.length} (expected 16)`);
+console.log(`Total topics: ${verifyTopics.length} (expected 18)`);
 console.log(`Total cards: ${totalCards}`);

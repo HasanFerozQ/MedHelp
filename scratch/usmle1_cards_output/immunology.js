@@ -205,7 +205,7 @@ const immunologyCards = [
   },
   {
     "q": "What is the major side effect of long-term steroid use in transplant patients?",
-    "a": "Osteoporosis, hyperglycemia, hypertension, Cushingoid features"
+    "a": "<b>Osteoporosis</b>, hyperglycemia, hypertension, Cushingoid features"
   },
   {
     "q": "Which cytokine is known as the 'macrophage activating factor'?",
@@ -313,7 +313,7 @@ const immunologyCards = [
   },
   {
     "q": "What is the inheritance pattern of <b>CGD</b>?",
-    "a": "Most common is X-linked (gp91phox), also autosomal recessive"
+    "a": "Most common is X-linked (gp91phox), also <b>autosomal recessive</b>"
   },
   {
     "q": "What is the classic triad of Wiskott-Aldrich syndrome?",
@@ -324,7 +324,7 @@ const immunologyCards = [
     "a": "<b>WASP</b> gene mutation (X-linked)"
   },
   {
-    "q": "What is the defect in Ataxia-Telangiectasia?",
+    "q": "What is the defect in <b>Ataxia-Telangiectasia</b>?",
     "a": "<b>ATM</b> gene (DNA repair defect) → cerebellar ataxia, telangiectasias, <b>IgA</b> deficiency, increased cancer risk"
   },
   {
@@ -453,7 +453,7 @@ const immunologyCards = [
   },
   {
     "q": "What is the inheritance of <b>Chronic Granulomatous Disease</b> (<b>CGD</b>)?",
-    "a": "70% X-linked (CYBB gene), 30% autosomal recessive"
+    "a": "70% X-linked (CYBB gene), 30% <b>autosomal recessive</b>"
   },
   {
     "q": "What organisms are most common in <b>CGD</b> infections?",
@@ -464,7 +464,7 @@ const immunologyCards = [
     "a": "Giant cytoplasmic granules in leukocytes"
   },
   {
-    "q": "What is the triad of <b>Job syndrome</b> (Autosomal dominant Hyper-<b>IgE</b> syndrome)?",
+    "q": "What is the triad of <b>Job syndrome</b> (<b>Autosomal dominant</b> Hyper-<b>IgE</b> syndrome)?",
     "a": "<ol><li>High IgE</li><li>Eczema</li><li>Recurrent cold staphylococcal abscesses</li></ol>"
   },
   {
