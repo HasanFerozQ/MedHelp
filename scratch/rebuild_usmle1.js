@@ -11,6 +11,8 @@ const { immunologyRawCards } = require('./immunology_raw_cards.js');
 const { agingRawCards } = require('./aging_raw_cards.js');
 const { geneticsRawCards } = require('./genetics_raw_cards.js');
 const { pharmacologyRawCards } = require('./pharmacology_raw_cards.js');
+const { hematologyRawCards } = require('./hematology_raw_cards.js');
+const { neuropharmacologyRawCards } = require('./neuropharmacology_raw_cards.js');
 
 const boldTerms = [
   'Waiter\'s tip', 'Claw hand', 'Horner syndrome', 'Wrist drop', 'Foot drop',
@@ -696,6 +698,20 @@ keptTopics.push({
   cards: fullPharmacologyCards
 });
 
+keptTopics.push({
+  section: "Basic Sciences",
+  topic: "Hematology",
+  icon: "droplet",
+  cards: hematologyRawCards
+});
+
+keptTopics.push({
+  section: "Basic Sciences",
+  topic: "Neuropharmacology",
+  icon: "brain",
+  cards: neuropharmacologyRawCards
+});
+
 console.log(`New total topics: ${keptTopics.length}`);
 
 // Serialize the new usmle1 array
@@ -759,5 +775,5 @@ verifyTopics.forEach((t, i) => {
   console.log(`${i+1}. ${t.topic} (${t.section}): ${t.cards.length} cards`);
   totalCards += t.cards.length;
 });
-console.log(`Total topics: ${verifyTopics.length} (expected 19)`);
+console.log(`Total topics: ${verifyTopics.length} (expected 21)`);
 console.log(`Total cards: ${totalCards}`);
