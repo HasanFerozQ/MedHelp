@@ -11,7 +11,7 @@ function smtpConfig(prefix = 'NEGOTIATION') {
     return { host, port, user, pass, from, to };
   }
 
-  const host = process.env[`${prefix}_SMTP_HOST`] || process.env.NEGOTIATION_SMTP_HOST || 'smtp.improvmx.com';
+  const host = process.env[`${prefix}_SMTP_HOST`] || process.env.NEGOTIATION_SMTP_HOST || 'smtp.purelymail.com';
   const port = Number(process.env[`${prefix}_SMTP_PORT`] || process.env.NEGOTIATION_SMTP_PORT || 587);
   const user = process.env[`${prefix}_SMTP_USER`] || process.env.NEGOTIATION_SMTP_USER;
   const pass = process.env[`${prefix}_SMTP_PASS`] || process.env.NEGOTIATION_SMTP_PASS;
