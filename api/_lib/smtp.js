@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 function smtpConfig(prefix = 'NEGOTIATION') {
   if (prefix === 'FEEDBACK') {
     const user = process.env.FEEDBACK_SMTP_USER;
-    const host = process.env.FEEDBACK_SMTP_HOST || 'smtp.gmail.com';
+    const host = process.env.FEEDBACK_SMTP_HOST || 'smtp.purelymail.com';
     const port = Number(process.env.FEEDBACK_SMTP_PORT || 587);
     const pass = process.env.FEEDBACK_SMTP_PASS;
     const to = process.env.FEEDBACK_TO_EMAIL || user;
@@ -34,7 +34,7 @@ function createSmtpTransport(prefix = 'NEGOTIATION') {
   const { host, port, user, pass } = smtpConfig(prefix);
   if (!user || !pass) {
     const hint = prefix === 'FEEDBACK'
-      ? 'Set FEEDBACK_SMTP_USER and FEEDBACK_SMTP_PASS (Gmail app password).'
+      ? 'Set FEEDBACK_SMTP_USER and FEEDBACK_SMTP_PASS (Purelymail password).'
       : 'Set NEGOTIATION_SMTP_USER and NEGOTIATION_SMTP_PASS.';
     throw new Error(`SMTP credentials are missing. ${hint}`);
   }
