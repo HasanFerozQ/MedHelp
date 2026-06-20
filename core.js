@@ -401,9 +401,26 @@ const MediHelp = {
           throw new Error(data.error || 'Could not send feedback.');
         }
 
-        alert('Thanks! Your feedback was received. Our team will review it soon.');
-        modal.classList.remove('active');
-        form.reset();
+        if (data.email_warning) {
+          form.innerHTML = `
+            <div style="text-align:center; padding: 20px;">
+              <h3 style="color:#ff5555; margin-bottom:8px;">Database Saved, Email Failed</h3>
+              <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">Your feedback was saved in the admin panel, but the email notification failed to send due to a configuration error:</p>
+              <div style="background:rgba(255,0,0,0.1); border: 1px solid rgba(255,0,0,0.2); color:#ff5555; padding:10px; border-radius:6px; font-size:12px; margin-bottom:16px;">${data.email_warning}</div>
+              <button onclick="document.getElementById('feedback-modal').classList.remove('active'); setTimeout(()=>location.reload(),300)" class="btn btn-ghost">Close</button>
+            </div>
+          `;
+          return;
+        }
+
+        form.innerHTML = `
+          <div style="text-align:center; padding: 20px;">
+            <div style="margin-bottom: 24px; display: flex; justify-content: center;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--accent);"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <h3 style="color:var(--accent); margin-bottom:8px;">Feedback Sent</h3>
+            <p style="font-size:13px; color:var(--text-muted);">Thank you! Our team will review it soon.</p>
+            <button onclick="document.getElementById('feedback-modal').classList.remove('active'); setTimeout(()=>location.reload(),300)" class="btn btn-ghost" style="margin-top:10px;">Close</button>
+          </div>
+        `;
       } catch (err) {
         alert(err.message || 'Failed to send feedback. Please try again.');
       } finally {
