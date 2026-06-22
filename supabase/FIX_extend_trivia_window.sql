@@ -32,7 +32,7 @@ AS $$
     -- Opens: 8:00 PM ET
     ((s.scheduled_date::text || ' 20:00:00 America/New_York')::timestamptz) AS start_at,
     -- Closes: 11:59 PM ET same day (was 20:20 — only 20 min!)
-    ((s.scheduled_date::text || ' 23:59:00 America/New_York')::timestamptz) AS end_at,
+    ((s.scheduled_date::text || ' 23:59:59 America/New_York')::timestamptz) AS end_at,
     COALESCE(s.allow_retakes, false) AS allow_retakes
   FROM public.trivia_sets s
   CROSS JOIN et

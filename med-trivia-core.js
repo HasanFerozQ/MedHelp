@@ -151,7 +151,7 @@
       set_id: setId,
       scheduled_date: row.scheduled_date,
       status: row.status,
-      allow_retakes: row.allow_retakes !== false,
+      allow_retakes: row.allow_retakes === true,
       start_at: row.start_at,
       end_at: row.end_at,
     };
@@ -166,7 +166,7 @@
     if (setRes.error) throw new Error(setRes.error.message || "Failed to load trivia set");
     ctx.todaySet = normalizeTodaySetRow(setRes.data);
 
-    const stateRes = await client.rpc("get_current_trivia_state", { now_tz: nowIso });
+    const stateRes = await client.rpc("get_current_trivia_state", {});
     if (stateRes.error) throw new Error(stateRes.error.message || "Failed to load trivia state");
     ctx.state = typeof stateRes.data === "string" ? stateRes.data : "no_content";
 

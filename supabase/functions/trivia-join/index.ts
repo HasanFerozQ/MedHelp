@@ -55,6 +55,7 @@ Deno.serve(async (req) => {
       guest_username: userId ? null : (guestUsername || null),
       timezone_snapshot: timezone,
       client_started_at: new Date().toISOString(),
+      status: 'active',
     };
 
     const { data: newSession, error: insertError } = await admin
