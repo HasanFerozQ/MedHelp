@@ -167,8 +167,10 @@ window.CalcSchemas = {
   'tidal-volume': {
     formula: 'Vt = 6–8 mL/kg IBW',
     inputs: [
-      { id: 'ibw', label: { en: 'Ideal body weight', es: 'Peso corporal ideal' }, type: 'number', unit: 'kg', default: 70 },
-      { id: 'mlPerKg', label: { en: 'mL/kg target', es: 'mL/kg objetivo' }, type: 'select', options: [{ v: 6, l: { en: '6 (lung-protective)', es: '6 (protectora)' } }, { v: 7, l: { en: '7', es: '7' } }, { v: 8, l: { en: '8', es: '8' } }], default: 6 }
+      { id: 'ibw', label: { en: 'Ideal body weight (optional if height/sex set)', es: 'Peso corporal ideal' }, type: 'number', unit: 'kg', default: '' },
+      { id: 'mlPerKg', label: { en: 'mL/kg target', es: 'mL/kg objetivo' }, type: 'select', options: [{ v: 6, l: { en: '6 (lung-protective)', es: '6 (protectora)' } }, { v: 7, l: { en: '7', es: '7' } }, { v: 8, l: { en: '8', es: '8' } }], default: 6 },
+      { id: 'height', label: { en: 'Height (to auto-calculate IBW)', es: 'Altura' }, type: 'number', unit: 'cm', default: '', advanced: true },
+      { id: 'sex', label: { en: 'Sex', es: 'Sexo' }, type: 'select', options: [{ v: 'male', l: { en: 'Male', es: 'Masculino' } }, { v: 'female', l: { en: 'Female', es: 'Femenino' } }], default: 'male', advanced: true }
     ]
   },
   apgar: {
@@ -202,7 +204,7 @@ window.CalcSchemas = {
     formula: 'Ca_corr = Ca + 0.8 × (4 − albumin)',
     inputs: [
       { id: 'ca', label: { en: 'Measured calcium', es: 'Calcio medido' }, type: 'number', unit: 'mg/dL', default: 8.5, step: 0.1 },
-      { id: 'albumin', label: { en: 'Albumin', es: 'Albúmina' }, type: 'number', unit: 'g/dL', default: 4.0, step: 0.1 }
+      { id: 'albumin', label: { en: 'Albumin', es: 'Albúmina' }, type: 'number', unit: 'g/dL', unitGroup: 'albumin', default: 4.0, step: 0.1 }
     ]
   },
   'corrected-sodium': {
@@ -233,12 +235,22 @@ window.CalcSchemas = {
       { id: 'from', label: { en: 'From', es: 'De' }, type: 'select', options: [
         { v: 'kg', l: { en: 'kg', es: 'kg' } }, { v: 'lb', l: { en: 'lb', es: 'lb' } },
         { v: 'cm', l: { en: 'cm', es: 'cm' } }, { v: 'in', l: { en: 'in', es: 'in' } },
-        { v: 'mg', l: { en: 'mg', es: 'mg' } }, { v: 'mcg', l: { en: 'mcg', es: 'mcg' } }
+        { v: 'mg', l: { en: 'mg', es: 'mg' } }, { v: 'mcg', l: { en: 'mcg', es: 'mcg' } },
+        { v: 'g', l: { en: 'g', es: 'g' } },
+        { v: 'mL', l: { en: 'mL', es: 'mL' } }, { v: 'L', l: { en: 'L', es: 'L' } },
+        { v: 'min', l: { en: 'min', es: 'min' } }, { v: 'hr', l: { en: 'hr', es: 'hr' } },
+        { v: 'C', l: { en: '°C', es: '°C' } }, { v: 'F', l: { en: '°F', es: '°F' } },
+        { v: 'mmol/L', l: { en: 'mmol/L', es: 'mmol/L' } }, { v: 'mg/dL', l: { en: 'mg/dL', es: 'mg/dL' } }
       ], default: 'kg' },
       { id: 'to', label: { en: 'To', es: 'A' }, type: 'select', options: [
         { v: 'kg', l: { en: 'kg', es: 'kg' } }, { v: 'lb', l: { en: 'lb', es: 'lb' } },
         { v: 'cm', l: { en: 'cm', es: 'cm' } }, { v: 'in', l: { en: 'in', es: 'in' } },
-        { v: 'mg', l: { en: 'mg', es: 'mg' } }, { v: 'mcg', l: { en: 'mcg', es: 'mcg' } }
+        { v: 'mg', l: { en: 'mg', es: 'mg' } }, { v: 'mcg', l: { en: 'mcg', es: 'mcg' } },
+        { v: 'g', l: { en: 'g', es: 'g' } },
+        { v: 'mL', l: { en: 'mL', es: 'mL' } }, { v: 'L', l: { en: 'L', es: 'L' } },
+        { v: 'min', l: { en: 'min', es: 'min' } }, { v: 'hr', l: { en: 'hr', es: 'hr' } },
+        { v: 'C', l: { en: '°C', es: '°C' } }, { v: 'F', l: { en: '°F', es: '°F' } },
+        { v: 'mmol/L', l: { en: 'mmol/L', es: 'mmol/L' } }, { v: 'mg/dL', l: { en: 'mg/dL', es: 'mg/dL' } }
       ], default: 'lb' }
     ]
   },

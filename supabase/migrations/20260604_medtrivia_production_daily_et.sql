@@ -103,7 +103,7 @@ BEGIN
   FROM public.get_trivia_set_for_lobby() AS gs
   LIMIT 1;
 
-  v_today := (now_tz AT TIME ZONE 'America/New_York')::date;
+  v_today := (now() AT TIME ZONE 'America/New_York')::date;
 
   IF v_set_id IS NULL THEN
     RETURN 'no_content';

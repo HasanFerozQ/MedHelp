@@ -3,12 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Medical Calculators for Doctors, Nurses &amp; Clinicians — 150+ Tools | MediHelp</title>
+  <title>Medical Calculators — 150+ Clinical Tools | MediHelp</title>
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.medihelp.live/medical-calculator">
-  <meta property="og:title" content="Free Medical Calculators for Doctors, Nurses &amp; Clinicians — 150+ Tools | MediHelp">
+  <meta property="og:title" content="Medical Calculators — 150+ Clinical Tools | MediHelp">
   <meta property="og:description" content="Role-based clinical calculators for bedside decisions. BMI, creatinine clearance, SOFA, APACHE-II, vancomycin dosing &amp; more. Works offline. Free for all specialties.">
+  <meta property="og:image" content="https://www.medihelp.live/icons/calculator-og.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.medihelp.live/medical-calculator">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Medical Calculators — 150+ Clinical Tools | MediHelp">
+  <meta name="twitter:description" content="Role-based clinical calculators for bedside decisions. BMI, creatinine clearance, SOFA, APACHE-II, vancomycin dosing &amp; more. Works offline. Free for all specialties.">
+  <meta name="twitter:image" content="https://www.medihelp.live/icons/calculator-og.png">
   <meta name="description" content="Role-based clinical calculators for bedside decisions. BMI, creatinine clearance, SOFA, APACHE-II, vancomycin dosing &amp; more. Works offline. Free for all specialties.">
+  <link rel="alternate" hreflang="en" href="https://www.medihelp.live/medical-calculator">
+  <link rel="alternate" hreflang="es" href="https://www.medihelp.live/medical-calculator">
+  <link rel="preload" href="tabs/calculator/formulas.js" as="script">
+  <link rel="preload" href="tabs/calculator/compute.js" as="script">
+  <link rel="preload" href="tabs/calculator/ui.js?v=1.3" as="script">
+  <link rel="preload" href="tabs/calculator/registry.js" as="script">
+  <link rel="preload" href="tabs/calculator/schemas.js" as="script">
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="manifest" href="calculator.webmanifest">
   <meta name="theme-color" content="#030b14">
@@ -237,7 +251,7 @@
   <script src="tabs/calculator/compute-new2.js"></script>
   <script src="tabs/calculator/ui.js?v=1.3"></script>
 
-  <!-- Structured Data: Organization + FAQ for SEO -->
+  <!-- Structured Data: Organization + FAQ + Breadcrumbs for SEO -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -257,17 +271,44 @@
         "inLanguage": "en-US"
       },
       {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.medihelp.live" },
+          { "@type": "ListItem", "position": 2, "name": "Medical Calculators", "item": "https://www.medihelp.live/medical-calculator" }
+        ]
+      },
+      {
         "@type": "FAQPage",
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Are these calculators clinically validated?",
-            "acceptedAnswer": {"@type": "Answer", "text": "Calculators are implemented from standard clinical formulas and guidelines. They are provided for informational use and should be confirmed against official sources for critical decisions."}
+            "name": "Are these medical calculators clinically validated?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Yes, our calculators implement standard clinical formulas and guidelines from trusted medical sources. However, they are provided for informational use and should be confirmed against official sources for critical clinical decisions."}
           },
           {
             "@type": "Question",
-            "name": "Do calculators work offline?",
-            "acceptedAnswer": {"@type": "Answer", "text": "Yes — a service worker caches calculator assets so many tools are available offline without storing patient-identifiable data."}
+            "name": "Do the calculators work offline?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Yes — a service worker caches calculator assets so many tools are available offline without storing patient-identifiable data, making them reliable for bedside use even with poor connectivity."}
+          },
+          {
+            "@type": "Question",
+            "name": "What medical calculators are available for nurses?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Our nurse-focused calculators include fluid balance, IV drip rate calculations, medication dosage conversions, vital sign assessment tools, and pediatric dosing calculators tailored to nursing workflows."}
+          },
+          {
+            "@type": "Question",
+            "name": "Which ICU scoring calculators are included?",
+            "acceptedAnswer": {"@type": "Answer", "text": "We offer critical care severity scores including SOFA, APACHE-II, qSOFA, Glasgow Coma Scale, and other ICU-specific assessment tools for rapid bedside evaluation of critically ill patients."}
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a vancomycin dosing calculator?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Yes, our pharmacists' collection includes AUC-based and trough-guided vancomycin dosing calculators with weight-adjusted calculations, renal function adjustments, and monitoring recommendations."}
+          },
+          {
+            "@type": "Question",
+            "name": "Are the calculators free to use?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Many basic calculators like BMI, BSA, and creatinine clearance are free. Advanced clinical calculators require a Medical Exam Mastery license ($24.99/year), which also unlocks our comprehensive exam preparation platform."}
           }
         ]
       }

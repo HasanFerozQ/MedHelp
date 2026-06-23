@@ -44,7 +44,8 @@
       formula: 'QTc = QT / √(RR), RR = 60/HR',
       inputs: [
         { id: 'qt', label: { en: 'QT interval', es: 'Intervalo QT' }, type: 'number', unit: 'ms', default: 400 },
-        { id: 'hr', label: { en: 'Heart rate', es: 'FC' }, type: 'number', unit: 'bpm', default: 75 }
+        { id: 'hr', label: { en: 'Heart rate', es: 'FC' }, type: 'number', unit: 'bpm', default: 75 },
+        { id: 'sex', label: { en: 'Sex', es: 'Sexo' }, type: 'select', options: [{ v: 'male', l: { en: 'Male', es: 'Masculino' } }, { v: 'female', l: { en: 'Female', es: 'Femenino' } }], default: 'male' }
       ]
     },
     'pf-ratio': {
@@ -71,10 +72,11 @@
       ]
     },
     'bicarbonate-deficit': {
-      formula: 'HCO₃⁻ deficit = 0.5 × weight × (24 − HCO₃⁻)',
+      formula: 'HCO₃⁻ deficit = 0.5 × weight × (target − HCO₃⁻)',
       inputs: [
         { id: 'weight', label: { en: 'Weight', es: 'Peso' }, type: 'number', unit: 'kg', default: 70 },
-        { id: 'hco3', label: { en: 'Current HCO₃⁻', es: 'HCO₃⁻ actual' }, type: 'number', unit: 'mEq/L', default: 16 }
+        { id: 'hco3', label: { en: 'Current HCO₃⁻', es: 'HCO₃⁻ actual' }, type: 'number', unit: 'mEq/L', default: 16 },
+        { id: 'target', label: { en: 'Target HCO₃⁻', es: 'HCO₃⁻ objetivo' }, type: 'number', unit: 'mEq/L', default: 24, min: 10, max: 30 }
       ]
     },
     'minute-ventilation': {
@@ -180,11 +182,31 @@
     'heart-score': {
       formula: 'HEART score (0–10)',
       inputs: [
-        { id: 'history', label: { en: 'Highly suspicious history', es: 'Historia muy sospechosa' }, type: 'toggle', default: false },
-        { id: 'ecg', label: { en: 'Significant ST deviation', es: 'Desviación ST significativa' }, type: 'toggle', default: false },
-        { id: 'age', label: { en: 'Age ≥65', es: 'Edad ≥65' }, type: 'toggle', default: false },
-        { id: 'risk', label: { en: '≥3 risk factors', es: '≥3 factores riesgo' }, type: 'toggle', default: false },
-        { id: 'troponin', label: { en: 'Elevated troponin', es: 'Troponina elevada' }, type: 'toggle', default: false }
+        { id: 'history', label: { en: 'History', es: 'Historia' }, type: 'select', options: [
+          { v: 0, l: { en: '0 — Slightly suspicious', es: '0 — Poco sospechosa' } },
+          { v: 1, l: { en: '1 — Moderately suspicious', es: '1 — Moderadamente sospechosa' } },
+          { v: 2, l: { en: '2 — Highly suspicious', es: '2 — Muy sospechosa' } }
+        ], default: 0 },
+        { id: 'ecg', label: { en: 'ECG', es: 'ECG' }, type: 'select', options: [
+          { v: 0, l: { en: '0 — Normal', es: '0 — Normal' } },
+          { v: 1, l: { en: '1 — Non-specific repolarization', es: '1 — Repolarización inespecífica' } },
+          { v: 2, l: { en: '2 — Significant ST deviation', es: '2 — Desviación ST significativa' } }
+        ], default: 0 },
+        { id: 'age', label: { en: 'Age', es: 'Edad' }, type: 'select', options: [
+          { v: 0, l: { en: '0 — <45 years', es: '0 — <45 años' } },
+          { v: 1, l: { en: '1 — 45–64 years', es: '1 — 45–64 años' } },
+          { v: 2, l: { en: '2 — ≥65 years', es: '2 — ≥65 años' } }
+        ], default: 0 },
+        { id: 'risk', label: { en: 'Risk factors', es: 'Factores de riesgo' }, type: 'select', options: [
+          { v: 0, l: { en: '0 — No known risk factors', es: '0 — Sin factores conocidos' } },
+          { v: 1, l: { en: '1 — 1–2 risk factors', es: '1 — 1–2 factores de riesgo' } },
+          { v: 2, l: { en: '2 — ≥3 risk factors or atherosclerosis', es: '2 — ≥3 factores o ateroesclerosis' } }
+        ], default: 0 },
+        { id: 'troponin', label: { en: 'Troponin', es: 'Troponina' }, type: 'select', options: [
+          { v: 0, l: { en: '0 — Normal limit', es: '0 — Límite normal' } },
+          { v: 1, l: { en: '1 — 1–3× normal limit', es: '1 — 1–3× límite normal' } },
+          { v: 2, l: { en: '2 — >3× normal limit', es: '2 — >3× límite normal' } }
+        ], default: 0 }
       ]
     },
     'dopamine-infusion': {
@@ -198,9 +220,9 @@
     'insulin-dose': {
       formula: 'Correction = (BG − target) / ISF',
       inputs: [
-        { id: 'bg', label: { en: 'Blood glucose', es: 'Glucemia' }, type: 'number', unit: 'mg/dL', default: 250 },
-        { id: 'target', label: { en: 'Target glucose', es: 'Glucosa objetivo' }, type: 'number', unit: 'mg/dL', default: 120 },
-        { id: 'isf', label: { en: 'Insulin sensitivity factor', es: 'Factor sensibilidad' }, type: 'number', unit: 'mg/dL per unit', default: 50 }
+        { id: 'bg', label: { en: 'Blood glucose', es: 'Glucemia' }, type: 'number', unit: 'mg/dL', unitGroup: 'glucose', default: 250 },
+        { id: 'target', label: { en: 'Target glucose', es: 'Glucosa objetivo' }, type: 'number', unit: 'mg/dL', unitGroup: 'glucose', default: 120 },
+        { id: 'isf', label: { en: 'Insulin sensitivity factor', es: 'Factor sensibilidad' }, type: 'number', unit: 'mg/dL per unit', unitGroup: 'glucose', default: 50 }
       ]
     },
     transfusion: {

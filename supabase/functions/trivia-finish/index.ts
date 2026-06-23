@@ -51,6 +51,52 @@ Deno.serve(async (req) => {
         .eq("id", sessionId);
     }
 
+    // Recalculate and upsert daily stats so the result modal shows real numbers
+    const { data: setRow } = await admin
+      .from("trivia_sets")
+      .select("scheduled_date")
+      .eq("id", sessionRow.set_id)
+      .single();
+
+    const { count: participants } = await admin
+      .from("trivia_sessions")
+      .select("*", { count: "exact", head: true })
+      .eq("set_id", sessionRow.set_id);
+
+    const { count: completers } = await admin
+      .from("trivia_sessions")
+      .select("*", { count: "exact", head: true })
+      .eq("set_id", sessionRow.set_id)
+      .eq("status", "finished");
+
+    const { count: perfect10 } = await admin
+      .from("trivia_sessions")
+      .select("*", { count: "exact", head: true })
+      .eq("set_id", sessionRow.set_id)
+      .eq("status", "finished")
+      .eq("score", 10);
+
+    const { data: avgRow } = await admin
+      .from("trivia_sessions")
+      .select("score")
+      .eq("set_id", sessionRow.set_id)
+      .eq("status", "finished");
+    const avgScore = avgRow && avgRow.length > 0
+      ? Number((avgRow.reduce((sum, r) => sum + (r.score || 0), 0) / avgRow.length).toFixed(2))
+      : 0;
+
+    await admin
+      .from("trivia_daily_stats")
+      .upsert({
+        set_id: sessionRow.set_id,
+        scheduled_date: setRow?.scheduled_date,
+        participants: participants || 0,
+        completers: completers || 0,
+        perfect_10: perfect10 || 0,
+        avg_score: avgScore,
+        refreshed_at: new Date().toISOString(),
+      }, { onConflict: "set_id" });
+
     const { data: stats } = await admin
       .from("trivia_daily_stats")
       .select("participants, completers, perfect_10, avg_score, refreshed_at")

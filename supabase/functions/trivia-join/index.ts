@@ -44,8 +44,16 @@ Deno.serve(async (req) => {
       .maybeSingle();
     if (existingError) throw existingError;
 
-    if (existingSession) {
+    if (existingSession && !todaySet.allow_retakes) {
       return jsonResponse({ reused: true, session: existingSession, set: todaySet });
+    }
+
+    if (existingSession && todaySet.allow_retakes) {
+      await admin
+        .from("trivia_sessions")
+        .delete()
+        .eq("set_id", todaySet.set_id)
+        .eq(identityColumn, identityValue);
     }
 
     const insertPayload = {

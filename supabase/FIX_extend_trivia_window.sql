@@ -100,6 +100,7 @@ DECLARE
   v_end_at timestamptz;
   v_session jsonb;
   v_set jsonb;
+  v_existing_status text;
 BEGIN
   IF v_user_id IS NULL AND (p_guest_token IS NULL OR length(trim(p_guest_token)) = 0) THEN
     RAISE EXCEPTION 'guest_token is required for unauthenticated users';

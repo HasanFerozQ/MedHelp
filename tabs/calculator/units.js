@@ -51,11 +51,17 @@ window.CalcUnits = {
       siRange: '135–145', usRange: '135–145',
       toUS: v => +v,
       toSI: v => +v
+    },
+    albumin: {
+      siUnit: 'g/L', usUnit: 'g/dL',
+      siRange: '35–55', usRange: '3.5–5.5',
+      toUS: v => +(v / 10).toFixed(2),
+      toSI: v => +(v * 10).toFixed(1)
     }
   },
 
   /** Groups where canonical (formula) unit is the US column (mg/dL, etc.) */
-  _CANONICAL_IS_US: { creatinine: true, bilirubin: true, glucose: true },
+  _CANONICAL_IS_US: { creatinine: true, bilirubin: true, glucose: true, albumin: true },
 
   inferGroup(inp) {
     if (!inp) return '';

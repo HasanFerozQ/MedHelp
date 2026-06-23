@@ -156,11 +156,11 @@ window.CalcCompute = {
   gcs(v) {
     if (!v.eye || !v.verbal || !v.motor) return { error: 'Select all three GCS components (E/V/M)' };
     const total = (+v.eye || 0) + (+v.verbal || 0) + (+v.motor || 0);
-    let interp = 'Minor head injury';
+    let interp = 'Normal — fully conscious';
     let status = 'normal';
     if (total <= 8) { interp = 'Severe brain injury — intubation often indicated'; status = 'critical'; }
     else if (total <= 12) { interp = 'Moderate brain injury'; status = 'high'; }
-    else if (total <= 14) { interp = 'Mild brain injury'; status = 'low'; }
+    else if (total <= 14) { interp = 'Minor head injury'; status = 'low'; }
     return { primary: total + ' / 15', interpretation: interp, chip: status };
   },
 
@@ -248,12 +248,27 @@ window.CalcCompute = {
   },
 
   'tidal-volume'(v) {
-    const vt = (+v.ibw) * (+v.mlPerKg);
+    let ibw = +v.ibw;
+    let autoCalcUsed = false;
+    if (!ibw && v.height) {
+      const heightCm = +v.height;
+      const inches = heightCm / 2.54;
+      const base = v.sex === 'female' ? 45.5 : 50;
+      ibw = base + 2.3 * (inches - 60);
+      autoCalcUsed = true;
+    }
+    if (!ibw) return { error: 'Enter ideal body weight or height/sex' };
+    if (ibw <= 0) return { error: 'Invalid ideal body weight' };
+    const vt = ibw * (+v.mlPerKg);
+    const details = [{ label: 'Range (6–8 mL/kg)', value: (ibw * 6).toFixed(0) + '–' + (ibw * 8).toFixed(0) + ' mL' }];
+    if (autoCalcUsed) {
+      details.unshift({ label: 'Calculated IBW', value: ibw.toFixed(1) + ' kg (via height/sex)' });
+    }
     return {
       primary: vt.toFixed(0) + ' mL',
       interpretation: 'Lung-protective tidal volume (' + v.mlPerKg + ' mL/kg IBW)',
       chip: 'normal',
-      details: [{ label: 'Range (6–8 mL/kg)', value: ((+v.ibw) * 6).toFixed(0) + '–' + ((+v.ibw) * 8).toFixed(0) + ' mL' }]
+      details: details
     };
   },
 
@@ -263,7 +278,6 @@ window.CalcCompute = {
     let status = 'normal';
     if (total <= 3) { interp = 'Critically low — immediate resuscitation'; status = 'critical'; }
     else if (total <= 6) { interp = 'Moderately abnormal — may need assistance'; status = 'high'; }
-    else if (total <= 7) { interp = 'Mildly abnormal — monitor closely'; status = 'low'; }
     return { primary: total + ' / 10', interpretation: interp, chip: status };
   },
 
@@ -287,7 +301,9 @@ window.CalcCompute = {
       const usDate = v.usDate ? new Date(v.usDate) : today;
       const daysAtUs = (+v.usWeeks * 7) + (+v.usDays || 0);
       const daysSince = Math.floor((today - usDate) / 86400000);
+      if (daysSince < 0) return { error: 'Ultrasound date cannot be in the future' };
       const totalDays = daysAtUs + daysSince;
+      if (totalDays < 0) return { error: 'Calculated GA is negative — check inputs' };
       const weeks = Math.floor(totalDays / 7);
       const rem = totalDays % 7;
       return { primary: weeks + 'w ' + rem + 'd', interpretation: 'GA from ultrasound + elapsed time', chip: 'normal' };
@@ -323,7 +339,7 @@ window.CalcCompute = {
     // mmol/L-like values, normalize defensively to keep the 400 mg/dL threshold valid.
     const sc = CalcFormulas.DOSAGES.sodium_correction;
     const glucose = +v.glucose;
-    const glucoseMgDl = glucose > 0 && glucose < 30 ? glucose * 18.016 : glucose;
+    const glucoseMgDl = glucose > 0 && glucose < 20 ? glucose * 18.016 : glucose;
     const factor = glucoseMgDl >= sc.glucose_threshold ? sc.factor_high : sc.factor_low;
     const corr = (+v.na) + factor * ((glucoseMgDl - 100) / 100);
     return {
@@ -371,7 +387,13 @@ window.CalcCompute = {
     const conv = {
       'kg-lb': x => x * 2.20462, 'lb-kg': x => x / 2.20462,
       'cm-in': x => x / 2.54, 'in-cm': x => x * 2.54,
-      'mg-mcg': x => x * 1000, 'mcg-mg': x => x / 1000
+      'mg-mcg': x => x * 1000, 'mcg-mg': x => x / 1000,
+      'mL-L': x => x / 1000, 'L-mL': x => x * 1000,
+      'min-hr': x => x / 60, 'hr-min': x => x * 60,
+      'mg-g': x => x / 1000, 'g-mg': x => x * 1000,
+      'mcg-g': x => x / 1000000, 'g-mcg': x => x * 1000000,
+      'C-F': x => (x * 9/5) + 32, 'F-C': x => (x - 32) * 5/9,
+      'mmol/L-mg/dL': x => x * 18.016, 'mg/dL-mmol/L': x => x / 18.016
     };
     const key = v.from + '-' + v.to;
     if (v.from === v.to) return { primary: val + ' ' + v.from, interpretation: 'Same unit', chip: 'normal' };
@@ -394,8 +416,12 @@ window.CalcCompute = {
       else if (dose > 0) factor = 4;
     }
     
-    let mme = dose * factor;
-    if (drug === 'fentanyl') mme = dose * factors.fentanyl_patch_mcg_hr;
+    let mme;
+    if (drug === 'fentanyl') {
+      mme = dose * factors.fentanyl_patch_mcg_hr;
+    } else {
+      mme = dose * factor;
+    }
     
     const details = [
       { label: 'CDC caution', value: 'Careful titration when ≥50 MME/day; avoid ≥90 MME/day when possible' }
@@ -440,12 +466,16 @@ window.CalcCompute = {
     if (!hr) return { error: 'Enter heart rate' };
     const rr = 60 / hr;
     const qtc = qt / Math.sqrt(rr);
-    let status = qtc > 500 ? 'critical' : qtc > 470 ? 'high' : qtc > 450 ? 'low' : 'normal';
-    return { primary: qtc.toFixed(0) + ' ms', interpretation: 'Bazett corrected QT (normal <450 ms ♂, <470 ms ♀)', chip: status };
+    const isFemale = v.sex === 'female';
+    const upperNormal = isFemale ? 470 : 450;
+    let status = qtc > 500 ? 'critical' : qtc > upperNormal ? 'high' : 'normal';
+    return { primary: qtc.toFixed(0) + ' ms', interpretation: 'Bazett QTc (normal <' + upperNormal + ' ms' + (isFemale ? ' ♀' : ' ♂') + ')', chip: status };
   },
 
   'pf-ratio'(v) {
-    const pf = (+v.pao2) / ((+v.fio2) / 100);
+    let fio2 = +v.fio2;
+    if (fio2 > 0 && fio2 <= 1) fio2 = fio2 * 100; // Auto-convert decimal to %
+    const pf = (+v.pao2) / (fio2 / 100);
     let interp = 'Normal';
     let status = 'normal';
     if (pf <= 100) { interp = 'Severe ARDS'; status = 'critical'; }
@@ -471,7 +501,8 @@ window.CalcCompute = {
   },
 
   'bicarbonate-deficit'(v) {
-    const deficit = 0.5 * (+v.weight) * (24 - (+v.hco3));
+    const target = +v.target || 24;
+    const deficit = 0.5 * (+v.weight) * (target - (+v.hco3));
     return { primary: Math.max(0, deficit).toFixed(0) + ' mEq', interpretation: 'HCO₃⁻ replacement estimate', chip: 'normal' };
   },
 
@@ -543,7 +574,10 @@ window.CalcCompute = {
 
   'blood-loss'(v) {
     const ebv = +v.bloodVol || (+v.weight ? (+v.weight * 70) : 5000);
-    const ebl = ebv * ((+v.preHb) - (+v.postHb)) / (((+v.preHb) + (+v.postHb)) / 2);
+    const preHb = +v.preHb;
+    const postHb = +v.postHb;
+    if (!preHb) return { error: 'Enter pre-op Hb' };
+    const ebl = ebv * (preHb - postHb) / preHb;
     return { primary: Math.max(0, ebl).toFixed(0) + ' mL', interpretation: 'Estimated blood loss (Gross formula) using EBV of ' + ebv.toFixed(0) + ' mL', chip: ebl > 1500 ? 'critical' : 'normal' };
   },
 
@@ -615,18 +649,13 @@ window.CalcCompute = {
   },
 
   'heart-score'(v) {
-    let score = 0;
-    if (v.history) score += 2;
-    if (v.ecg) score += 2;
-    if (v.age) score += 2;
-    if (v.risk) score += 2;
-    if (v.troponin) score += 2;
+    const score = (+v.history || 0) + (+v.ecg || 0) + (+v.age || 0) + (+v.risk || 0) + (+v.troponin || 0);
     const risk = score <= 3 ? 'Low (1.7% MACE at 6 weeks)' : score <= 6 ? 'Moderate (16.6% MACE)' : 'High (50%+ MACE)';
     return {
       primary: score + ' / 10',
       interpretation: risk,
       chip: score >= 7 ? 'critical' : score >= 4 ? 'high' : 'normal',
-      details: [{ label: '⚠️ Scoring Note', value: 'This is a simplified binary model assigning 0 or 2 points per category. Consult formal 0/1/2 scoring for complex patients.' }]
+      details: [{ label: 'Scoring', value: 'Standard 0/1/2 per category (History, ECG, Age, Risk factors, Troponin)' }]
     };
   },
 
@@ -696,7 +725,7 @@ window.CalcCompute = {
   osmolarity(v) {
     // Convert glucose to mg/dL if in SI mode (mmol/L) before applying divisors
     const osm = (+v.na) * 2 + (+v.glucose) / 18 + (+v.bun) / 2.8;
-    return { primary: osm.toFixed(0) + ' mOsm/L', interpretation: 'Calculated osmolarity', chip: 'normal' };
+    return { primary: osm.toFixed(0) + ' mOsm/L', interpretation: 'Calculated osmolarity (≈ osmolality in mOsm/kg for dilute solutions)', chip: osm > 320 ? 'high' : osm < 275 ? 'low' : 'normal' };
   },
 
   news2(v) {

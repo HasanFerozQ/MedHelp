@@ -756,11 +756,11 @@
     {
       "id": "heart-score",
       "inputs": {
-        "history": true,
-        "ecg": false,
-        "age": false,
-        "risk": false,
-        "troponin": false
+        "history": 2,
+        "ecg": 0,
+        "age": 0,
+        "risk": 0,
+        "troponin": 0
       },
       "expectPrimaryContains": "2",
       "expectChip": "normal"
@@ -1276,8 +1276,8 @@
         "postHb": 10,
         "bloodVol": ""
       },
-      "expectPrimaryContains": "1667 mL",
-      "expectChip": "critical"
+      "expectPrimaryContains": "1429 mL",
+      "expectChip": "normal"
     },
     {
       "id": "canadian-ct-head",
@@ -2136,8 +2136,8 @@
         "postHb": 10,
         "bloodVol": ""
       },
-      "expectPrimaryContains": "1667 mL",
-      "expectChip": "critical"
+      "expectPrimaryContains": "1429 mL",
+      "expectChip": "normal"
     },
     {
       "id": "surg-burn",

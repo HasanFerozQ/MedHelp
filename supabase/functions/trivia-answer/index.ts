@@ -8,11 +8,11 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const sessionId = body.session_id as string;
     const questionOrder = Number(body.question_order);
-    const selectedIndex = Number(body.selected_index);
+    const selectedIndex = body.selected_index === null ? null : Number(body.selected_index);
     const questionStartedAt = body.question_started_at as string;
     const idempotencyKey = (body.idempotency_key ?? "").toString() || null;
 
-    if (!sessionId || !questionStartedAt || !Number.isInteger(questionOrder) || !Number.isInteger(selectedIndex)) {
+    if (!sessionId || !questionStartedAt || !Number.isInteger(questionOrder) || (selectedIndex !== null && !Number.isInteger(selectedIndex))) {
       return jsonResponse({ error: "Missing required payload" }, 400);
     }
 
