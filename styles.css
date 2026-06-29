@@ -2436,28 +2436,28 @@ a:hover {
 
   /* Dropdown in mobile - fully expanded and flat */
   .nav-dropdown {
-    width: 100%;
+    display: contents !important;
   }
   .nav-dropdown-btn {
     display: none !important; /* Hide section header */
   }
   .nav-dropdown-menu {
-    position: static;
-    background: transparent;
-    border: none;
-    padding: 0; /* No indentation */
-    box-shadow: none;
-    display: block !important; /* Fully expanded, no dropdowns! */
+    display: contents !important;
   }
   .nav-dropdown-menu div {
     display: none !important; /* Hide any inline separators */
   }
-  .nav-dropdown-menu a {
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    padding: 12px 0 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-  }
+  
+  /* Explicit ordering for mobile menu flat list */
+  .nav-links a[href="/"] { order: 1; }
+  .nav-links a[href*="medical-exam"] { order: 2; }
+  .nav-links a[href*="medical-bill-audit"] { order: 3; }
+  .nav-links a[href*="medical-calculator"] { order: 4; }
+  .nav-links a[href*="cpt-code-search"] { order: 5; }
+  .nav-links a[href*="claim-denial-codes"] { order: 6; }
+  .nav-links a[href*="rx-savings"] { order: 7; }
+  .nav-links a[href*="providers"] { order: 8; }
+  .nav-links a[href*="blog"] { order: 9; }
 }
 
 @media (max-width: 600px) {
