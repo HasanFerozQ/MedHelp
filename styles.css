@@ -2439,29 +2439,24 @@ a:hover {
     width: 100%;
   }
   .nav-dropdown-btn {
-    pointer-events: none; /* Disable interactions since it's just a section header now */
-    font-size: 14px !important;
-    font-weight: 800 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--accent) !important;
-    background: transparent !important;
-    padding: 8px 0 !important;
-    margin-top: 10px;
+    display: none !important; /* Hide section header */
   }
   .nav-dropdown-menu {
     position: static;
     background: transparent;
     border: none;
-    padding: 0 0 0 15px;
+    padding: 0; /* No indentation */
     box-shadow: none;
     display: block !important; /* Fully expanded, no dropdowns! */
   }
+  .nav-dropdown-menu div {
+    display: none !important; /* Hide any inline separators */
+  }
   .nav-dropdown-menu a {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    padding: 10px 0 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    padding: 12px 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
   }
 }
 
