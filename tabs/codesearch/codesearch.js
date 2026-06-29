@@ -34,6 +34,17 @@ const PLAIN_ENGLISH_OVERRIDES = {
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
+  
+  // Parse query parameter on load to support direct SEO deep links
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialQuery = urlParams.get('q') || urlParams.get('code');
+  if (initialQuery) {
+    const searchInput = document.getElementById('code-search-input');
+    if (searchInput) {
+      searchInput.value = initialQuery;
+      performSearch(initialQuery.trim());
+    }
+  }
 });
 
 function selectRegion(btn, region) {

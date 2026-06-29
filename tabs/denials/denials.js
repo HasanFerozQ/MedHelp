@@ -154,7 +154,15 @@ async function showSuggestions(q) {
 
 async function searchDenials(query) {
   if (!window.dbClient) {
-    denialResults.innerHTML = '<div class="empty-state" style="color:var(--text-danger)">Database connection error.</div>';
+    denialResults.innerHTML = '<div class="empty-state"><span class="loading-dots">Initializing Secure Connection...</span></div>';
+    for (let i = 0; i < 20; i++) { 
+        await new Promise(r => setTimeout(r, 100));
+        if (window.dbClient) break;
+    }
+  }
+
+  if (!window.dbClient) {
+    denialResults.innerHTML = '<div class="empty-state" style="color:var(--text-danger)">Database connection error. Please refresh.</div>';
     return;
   }
 
@@ -324,4 +332,14 @@ function displayDenials(results, tokens) {
   
   denialResults.innerHTML = html;
 }
+
+// Parse query parameter on load to support direct SEO deep links
+document.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialQuery = urlParams.get('q') || urlParams.get('code');
+  if (initialQuery && denialInput) {
+    denialInput.value = initialQuery;
+    searchDenials(initialQuery.trim());
+  }
+});
 
