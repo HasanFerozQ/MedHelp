@@ -66,14 +66,16 @@ window.CalcUI = {
 
   goHome() {
     this.state = { view: 'home', role: null, calcId: null, emergency: this.state.emergency };
-    history.pushState({}, '', '/medical-calculator');
+    history.pushState({}, '', CalcSEO.localePath('/medical-calculator'));
     this.render();
   },
 
   goRole(roleId) {
     this.state = { view: 'role', role: roleId, calcId: null, emergency: ['er', 'icu'].includes(roleId) };
-    const path = location.pathname.startsWith('/calculators/') ? location.pathname : '/medical-calculator';
-    history.pushState({}, '', path + '?role=' + roleId);
+    const path = location.pathname.startsWith('/calculators/') || location.pathname.startsWith('/es/calculators/')
+      ? CalcSEO.stripLocale(location.pathname)
+      : '/medical-calculator';
+    history.pushState({}, '', CalcSEO.localePath(path) + '?role=' + roleId);
     this.render();
   },
 
@@ -101,14 +103,16 @@ window.CalcUI = {
     this._addRecent(id);
 
     // Dynamic SEO landing page redirections for top-4 calculators
-    if (id === 'bmi') { window.location.href = '/calculators/bmi-calculator'; return; }
-    if (id === 'creatinine-clearance') { window.location.href = '/calculators/creatinine-clearance-calculator'; return; }
-    if (id === 'bsa') { window.location.href = '/calculators/bsa-calculator'; return; }
-    if (id === 'bicarbonate-deficit') { window.location.href = '/calculators/bicarbonate-deficit-calculator'; return; }
+    if (id === 'bmi') { window.location.href = CalcSEO.localePath('/calculators/bmi-calculator'); return; }
+    if (id === 'creatinine-clearance') { window.location.href = CalcSEO.localePath('/calculators/creatinine-clearance-calculator'); return; }
+    if (id === 'bsa') { window.location.href = CalcSEO.localePath('/calculators/bsa-calculator'); return; }
+    if (id === 'bicarbonate-deficit') { window.location.href = CalcSEO.localePath('/calculators/bicarbonate-deficit-calculator'); return; }
 
     this.state = { view: 'calc', role: calc.role, calcId: id, emergency: this.state.emergency || ['er', 'icu'].includes(calc.role) };
-    const path = location.pathname.startsWith('/calculators/') ? location.pathname : '/medical-calculator';
-    history.pushState({}, '', path + '?calc=' + id);
+    const path = location.pathname.startsWith('/calculators/') || location.pathname.startsWith('/es/calculators/')
+      ? CalcSEO.stripLocale(location.pathname)
+      : '/medical-calculator';
+    history.pushState({}, '', CalcSEO.localePath(path) + '?calc=' + id);
     this.render();
   },
 
@@ -443,6 +447,7 @@ window.CalcUI = {
     else if (this.state.view === 'role') root.innerHTML = this._renderRole(this.state.role);
     else if (this.state.view === 'calc') root.innerHTML = this._renderCalculator(this.state.calcId);
     this._updateOfflineBadge();
+    if (window.CalcSEO) CalcSEO.update(this.state);
   },
 
   _renderHome() {
@@ -482,8 +487,8 @@ window.CalcUI = {
     setTimeout(() => {
       document.querySelectorAll('.role-card').forEach(btn => btn.onclick = () => this.goRole(btn.dataset.role));
       document.getElementById('calc-search')?.addEventListener('input', (e) => this._onSearch(e.target.value));
-      document.getElementById('lang-en')?.addEventListener('click', () => { CalcI18n.setLang('en'); this.render(); });
-      document.getElementById('lang-es')?.addEventListener('click', () => { CalcI18n.setLang('es'); this.render(); });
+      document.getElementById('lang-en')?.addEventListener('click', () => CalcSEO.navigateToLocale('en'));
+      document.getElementById('lang-es')?.addEventListener('click', () => CalcSEO.navigateToLocale('es'));
       document.getElementById('unit-us')?.addEventListener('click', () => { CalcUnits.setSystem('US'); this.render(); });
       document.getElementById('unit-si')?.addEventListener('click', () => { CalcUnits.setSystem('SI'); this.render(); });
       this._bindCalcCards();
