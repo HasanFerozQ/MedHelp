@@ -144,6 +144,10 @@ body::before {
 
 .calc-layout {
   display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start;
+  max-width: 900px; margin: 0 auto;
+}
+.calc-layout > .er-banner {
+  grid-column: 1 / -1;
 }
 @media (max-width: 768px) {
   .calc-layout { grid-template-columns: 1fr; }
