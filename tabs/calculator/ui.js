@@ -965,4 +965,8 @@ function closeCalcPremium() {
   document.getElementById('calc-premium-modal')?.classList.remove('visible');
 }
 
-document.addEventListener('DOMContentLoaded', () => CalcUI.init());
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => CalcUI.init());
+} else {
+  CalcUI.init();
+}

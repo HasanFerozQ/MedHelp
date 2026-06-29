@@ -6,6 +6,7 @@
   <meta name="robots" content="index, follow">
   <title>BMI Calculator — Body Mass Index Chart Adults | MediHelp</title>
   <meta name="description" content="Free evidence-based BMI calculator. Calculate body mass index (BMI), interpret adult ranges, review obesity classes, and read clinical guidance.">
+  <meta name="keywords" content="BMI calculator, body mass index calculator, free BMI calculator, adult BMI chart, obesity calculator, BMI formula, weight calculator, health BMI calculator, BMI for athletes, pediatric BMI percentile">
   <link rel="canonical" href="https://www.medihelp.live/calculators/bmi-calculator">
   <meta property="og:title" content="BMI Calculator — Body Mass Index Chart Adults | MediHelp">
   <meta property="og:description" content="Free evidence-based BMI calculator. Calculate body mass index (BMI), interpret adult ranges, review obesity classes, and read clinical guidance.">
@@ -20,6 +21,9 @@
   <link rel="alternate" hreflang="es" href="https://www.medihelp.live/es/calculators/bmi-calculator">
   <link rel="alternate" hreflang="x-default" href="https://www.medihelp.live/calculators/bmi-calculator">
   <link rel="icon" href="/icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://gumroad.com">
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/tabs/calculator/calculator.css?v=1.2">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -273,6 +277,23 @@
       <li>Centers for Disease Control and Prevention (CDC). About Adult BMI. <a href="https://www.cdc.gov" target="_blank" style="color:var(--accent);">https://www.cdc.gov</a></li>
       <li>National Institutes of Health (NIH). Clinical Guidelines on the Identification, Evaluation, and Treatment of Overweight and Obesity in Adults.</li>
     </ol>
+  
+    <h2>Related Clinical Calculators</h2>
+    <p style="color:var(--text-muted);">Explore other evidence-based tools used alongside this calculator in clinical practice:</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin:24px 0 40px;">
+      <a href="/calculators/bsa-calculator" style="display:block; background:var(--bg-elevated); border:1px solid var(--border); border-radius:12px; padding:20px; text-decoration:none; color:var(--text-h); font-weight:700; transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:12px; text-transform:uppercase; color:var(--accent); margin-bottom:8px; font-weight:800;">Clinical Tool</div>
+        BSA Calculator
+      </a>
+      <a href="/calculators/creatinine-clearance-calculator" style="display:block; background:var(--bg-elevated); border:1px solid var(--border); border-radius:12px; padding:20px; text-decoration:none; color:var(--text-h); font-weight:700; transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:12px; text-transform:uppercase; color:var(--accent); margin-bottom:8px; font-weight:800;">Clinical Tool</div>
+        Creatinine Clearance Calculator
+      </a>
+      <a href="/calculators/bicarbonate-deficit-calculator" style="display:block; background:var(--bg-elevated); border:1px solid var(--border); border-radius:12px; padding:20px; text-decoration:none; color:var(--text-h); font-weight:700; transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:12px; text-transform:uppercase; color:var(--accent); margin-bottom:8px; font-weight:800;">Clinical Tool</div>
+        Bicarbonate Deficit Calculator
+      </a>
+    </div>
   </article>
 
   <!-- PREMIUM MODAL OVERLAY -->
@@ -377,23 +398,23 @@
   </footer>
 
   <!-- Core Scripts for Computation -->
-  <script src="/tabs/calculator/formulas.js"></script>
-  <script src="/tabs/calculator/clinical-data.js"></script>
-  <script src="/tabs/calculator/i18n.js"></script>
-  <script src="/tabs/calculator/registry.js"></script>
-  <script src="/tabs/calculator/schemas.js"></script>
-  <script src="/tabs/calculator/schemas-extra.js"></script>
-  <script src="/tabs/calculator/schemas-remaining.js"></script>
-  <script src="/tabs/calculator/units.js?v=1.3"></script>
-  <script src="/tabs/calculator/compute.js"></script>
-  <script src="/tabs/calculator/compute-remaining.js"></script>
-  <script src="/tabs/calculator/clinical-grade.js"></script>
-  <script src="/tabs/calculator/schemas-new.js"></script>
-  <script src="/tabs/calculator/compute-new.js"></script>
-  <script src="/tabs/calculator/schemas-new2.js"></script>
-  <script src="/tabs/calculator/compute-new2.js"></script>
-  <script src="/tabs/calculator/seo.js"></script>
-  <script src="/tabs/calculator/ui.js?v=1.3"></script>
+  <script src="/tabs/calculator/formulas.js" defer></script>
+  <script src="/tabs/calculator/clinical-data.js" defer></script>
+  <script src="/tabs/calculator/i18n.js" defer></script>
+  <script src="/tabs/calculator/registry.js" defer></script>
+  <script src="/tabs/calculator/schemas.js" defer></script>
+  <script src="/tabs/calculator/schemas-extra.js" defer></script>
+  <script src="/tabs/calculator/schemas-remaining.js" defer></script>
+  <script src="/tabs/calculator/units.js?v=1.3" defer></script>
+  <script src="/tabs/calculator/compute.js" defer></script>
+  <script src="/tabs/calculator/compute-remaining.js" defer></script>
+  <script src="/tabs/calculator/clinical-grade.js" defer></script>
+  <script src="/tabs/calculator/schemas-new.js" defer></script>
+  <script src="/tabs/calculator/compute-new.js" defer></script>
+  <script src="/tabs/calculator/schemas-new2.js" defer></script>
+  <script src="/tabs/calculator/compute-new2.js" defer></script>
+  <script src="/tabs/calculator/seo.js" defer></script>
+  <script src="/tabs/calculator/ui.js?v=1.3" defer></script>
 
   <!-- Rich Clinical Schema Markups -->
   <script type="application/ld+json">
