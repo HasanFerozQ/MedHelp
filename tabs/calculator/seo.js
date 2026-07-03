@@ -168,10 +168,10 @@ window.CalcSEO = {
     let title;
     let description;
     if (lang === 'es') {
-      title = `${name} | MediHelp`;
+      title = `Calculadora Gratuita: ${name} | MediHelp`;
       description = this._schemaDescription(calc, 'es');
     } else {
-      title = `${calc.name.en} | MediHelp`;
+      title = `Free ${calc.name.en} | MediHelp`;
       description = this._schemaDescription(calc, 'en');
     }
 

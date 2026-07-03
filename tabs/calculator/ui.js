@@ -25,10 +25,7 @@ window.CalcUI = {
   },
 
   canAccess(calc) {
-    if (calc?.freeDemo) return 'ok';
-    if (!this._user) return 'auth';
-    if (this._premium) return 'ok';
-    return 'premium';
+    return 'ok';
   },
 
   _parseRoute() {
@@ -521,7 +518,6 @@ window.CalcUI = {
     const locked = access === 'premium';
     return `
       <article class="calc-card ${!c.implemented ? 'coming-soon' : ''} ${locked ? 'locked' : ''}" data-id="${c.id}">
-        ${c.freeDemo ? `<span class="chip chip-free">${CalcI18n.t('freeDemo')}</span>` : ''}
         ${!c.implemented ? `<span class="chip chip-soon">${CalcI18n.t('comingSoon')}</span>` : ''}
         <h3>${this._name(c)}</h3>
         <p>${this._desc(c)}</p>

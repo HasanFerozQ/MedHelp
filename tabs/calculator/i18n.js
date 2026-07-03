@@ -53,7 +53,7 @@ window.CalcI18n = {
       kg70: '70 kg',
       kg50: '50 kg',
       disclaimer: 'For educational and clinical support only. Verify all results independently before clinical use.',
-      metaTitle: 'Medical Calculators — 150+ Clinical Tools | MediHelp',
+      metaTitle: 'Free Medical Calculators — 150+ Clinical Tools | MediHelp',
       metaDescription: 'Role-based clinical calculators for bedside decisions. BMI, creatinine clearance, SOFA, APACHE-II, vancomycin dosing & more. Works offline. Free for all specialties.',
       roles: {
         doctors: 'Doctors',
@@ -118,7 +118,7 @@ window.CalcI18n = {
       kg70: '70 kg',
       kg50: '50 kg',
       disclaimer: 'Solo para apoyo educativo y clínico. Verifique todos los resultados antes del uso clínico.',
-      metaTitle: 'Calculadoras Médicas — 150+ Herramientas Clínicas | MediHelp',
+      metaTitle: 'Calculadoras Médicas Gratuitas — 150+ Herramientas Clínicas | MediHelp',
       metaDescription: 'Calculadoras clínicas por rol para decisiones en cabecera. IMC, aclaramiento de creatinina, SOFA, APACHE-II, dosificación de vancomicina y más. Funciona sin conexión. Gratis para todas las especialidades.',
       roles: {
         doctors: 'Médicos',
