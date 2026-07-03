@@ -3,7 +3,8 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/es/medical-calculator", "destination": "/medical-calculator" },
-    { "source": "/es/calculators/:path*", "destination": "/calculators/:path*" }
+    { "source": "/es/calculators/:path*", "destination": "/calculators/:path*" },
+    { "source": "/blog/:slug", "destination": "/blog-post?slug=:slug" }
   ],
   "headers": [
     {
