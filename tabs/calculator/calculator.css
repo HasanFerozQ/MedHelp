@@ -242,9 +242,9 @@ body::before {
 .er-banner-note {
   margin-left: auto;
   flex-shrink: 0;
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(148, 163, 184, 0.5);
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
   display: flex;
   align-items: center;
   gap: 5px;
