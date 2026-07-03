@@ -6,8 +6,8 @@
 window.CalcUnits = {
   _STORAGE: 'mh_unit_system',
 
-  get system() { return localStorage.getItem(this._STORAGE) || 'US'; },
-  setSystem(s) { localStorage.setItem(this._STORAGE, s); },
+  get system() { return 'US'; },
+  setSystem(s) { /* Unit system is fixed to US — no-op */ },
 
   GROUPS: {
     weight: {

@@ -132,7 +132,9 @@ body::before {
   height: 36px;
   color: var(--accent);
 }
-.calc-role-header.emergency { background: rgba(239,68,68,0.05); padding: 20px; border-radius: var(--radius); border: 1px solid rgba(239,68,68,0.2); }
+.calc-role-header.emergency { background: #ffffff; padding: 20px; border-radius: var(--radius); border: 1px solid rgba(239,68,68,0.3); box-shadow: 0 4px 20px rgba(239,68,68,0.12); }
+.calc-role-header.emergency h1 { color: #111827; }
+.calc-role-header.emergency p, .calc-role-header.emergency .role-count { color: #4b5563; }
 
 .emergency-presets { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
 .preset-btn {
@@ -242,14 +244,13 @@ body::before {
 .emergency-mode .result-primary { font-size: clamp(40px, 8vw, 56px); }
 
 /* Unit toggle badge */
-.unit-badge {
-  display: inline-flex; align-items: center; gap: 4px;
+.unit-label {
+  display: inline-flex; align-items: center;
   padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 700;
-  border: 1px solid var(--accent); color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.08); cursor: pointer;
-  transition: background 0.2s, color 0.2s; white-space: nowrap; flex-shrink: 0;
+  border: 1px solid var(--border); color: var(--text-muted);
+  background: var(--bg-elevated); white-space: nowrap; flex-shrink: 0;
+  pointer-events: none; user-select: none;
 }
-.unit-badge:hover { background: var(--accent); color: #fff; }
 .stepper { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
 /* Lang / Unit separator */
@@ -272,12 +273,12 @@ input[type="number"] {
 
 /* ER Shared Patient Panel Style */
 .er-patient-panel {
-  background: var(--bg-card);
-  border: 1px solid var(--accent);
+  background: #0a1628;
+  border: 1px solid #22c55e;
   border-radius: 16px;
   padding: 20px;
   margin: 20px 0;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 .er-patient-panel .panel-row {
   display: grid;

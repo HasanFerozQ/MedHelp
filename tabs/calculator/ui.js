@@ -461,9 +461,6 @@ window.CalcUI = {
         <div class="calc-lang">
           <button id="lang-en" class="lang-btn ${CalcI18n.lang === 'en' ? 'active' : ''}">EN</button>
           <button id="lang-es" class="lang-btn ${CalcI18n.lang === 'es' ? 'active' : ''}">ES</button>
-          <span class="lang-sep">|</span>
-          <button id="unit-us" class="lang-btn ${CalcUnits.system === 'US' ? 'active' : ''}" title="US units (lbs, in, mg/dL)">US</button>
-          <button id="unit-si" class="lang-btn ${CalcUnits.system === 'SI' ? 'active' : ''}" title="SI/metric units (kg, cm, µmol/L)">SI</button>
         </div>
         <div id="offline-badge" class="offline-badge">🟢 ${CalcI18n.t('offlineReady')}</div>
       </div>`;
@@ -486,8 +483,6 @@ window.CalcUI = {
       document.getElementById('calc-search')?.addEventListener('input', (e) => this._onSearch(e.target.value));
       document.getElementById('lang-en')?.addEventListener('click', () => CalcSEO.navigateToLocale('en'));
       document.getElementById('lang-es')?.addEventListener('click', () => CalcSEO.navigateToLocale('es'));
-      document.getElementById('unit-us')?.addEventListener('click', () => { CalcUnits.setSystem('US'); this.render(); });
-      document.getElementById('unit-si')?.addEventListener('click', () => { CalcUnits.setSystem('SI'); this.render(); });
       this._bindCalcCards();
     }, 0);
     return html;
@@ -654,24 +649,7 @@ window.CalcUI = {
         s.querySelector('.step-minus')?.addEventListener('click', () => this._step(s, -1));
         s.querySelector('.step-plus')?.addEventListener('click', () => this._step(s, 1));
       });
-      // Unit badge — toggle only this field's display unit (does not change global SI/US)
-      document.querySelectorAll('.unit-badge').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const grp = btn.dataset.group;
-          if (!grp) return;
-          const inp = document.querySelector(`[name="${btn.dataset.field}"]`);
-          if (!inp) return;
-          const currentDisplay = inp.dataset.displayUnit || CalcUnits.system;
-          const newDisplay = currentDisplay === 'SI' ? 'US' : 'SI';
-          const currentVal = parseFloat(inp.value);
-          if (!isNaN(currentVal)) {
-            const canonical = CalcUnits.displayToCanonical(currentVal, grp, currentDisplay);
-            inp.value = CalcUnits.canonicalToDisplay(canonical, grp, newDisplay);
-          }
-          inp.dataset.displayUnit = newDisplay;
-          btn.textContent = CalcUnits.getUnit(grp, newDisplay) + ' ⇆';
-        });
-      });
+      // Unit badges removed — US units are fixed
     }, 0);
     return html;
   },
@@ -721,7 +699,7 @@ window.CalcUI = {
     if (inp.type === 'datetime-local') {
       return `<label class="calc-field"><span>${label}</span><input type="datetime-local" name="${inp.id}" class="calc-input" value="${val}"></label>`;
     }
-    const unitBadge = displayUnit ? `<button type="button" class="unit-badge" data-field="${inp.id}" data-group="${grp || ''}" title="Toggle unit">${displayUnit} ⇆</button>` : '';
+    const unitBadge = displayUnit ? `<span class="unit-label">${displayUnit}</span>` : '';
     return `<label class="calc-field">
       <span>${label}${inp.optional ? ' <em class="opt-label">Optional</em>' : ''}</span>
       <div class="stepper">

@@ -6,7 +6,7 @@ window.CalcI18n = {
 
   strings: {
     en: {
-      appTitle: 'Medical Calculator',
+      appTitle: 'Free Medical Calculator',
       appSubtitle: 'Role-based clinical calculators for bedside use',
       searchPlaceholder: 'Search calculators… (e.g. vancomycin, GCS, parkland)',
       recentSearches: 'Recent',
@@ -71,7 +71,7 @@ window.CalcI18n = {
       }
     },
     es: {
-      appTitle: 'Calculadora Médica',
+      appTitle: 'Calculadora Médica Gratuita',
       appSubtitle: 'Calculadoras clínicas por rol para uso en cabecera',
       searchPlaceholder: 'Buscar calculadoras… (ej. vancomicina, GCS, parkland)',
       recentSearches: 'Recientes',
