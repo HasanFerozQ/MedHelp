@@ -149,6 +149,19 @@ body::before {
 .calc-layout > .er-banner {
   grid-column: 1 / -1;
 }
+.er-banner {
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  color: var(--text-body);
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.er-banner strong {
+  color: var(--text-h);
+}
 @media (max-width: 768px) {
   .calc-layout { grid-template-columns: 1fr; }
   .role-grid { grid-template-columns: repeat(2, 1fr); }
@@ -259,12 +272,12 @@ input[type="number"] {
 
 /* ER Shared Patient Panel Style */
 .er-patient-panel {
-  background: rgba(var(--accent-rgb), 0.05);
-  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
   border-radius: 16px;
   padding: 20px;
   margin: 20px 0;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 .er-patient-panel .panel-row {
   display: grid;
