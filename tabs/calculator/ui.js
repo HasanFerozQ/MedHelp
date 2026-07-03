@@ -894,13 +894,22 @@ window.CalcUI = {
       existing?.remove();
       return;
     }
-    const summary = [];
-    if (this._erPatient.age) summary.push(`Age ${this._erPatient.age}`);
-    if (this._erPatient.sex) summary.push(this._erPatient.sex.charAt(0).toUpperCase() + this._erPatient.sex.slice(1));
-    if (this._erPatient.weightText) summary.push(`Weight ${this._erPatient.weightText}`);
-    const bannerHtml = `<div id="er-patient-banner" class="er-banner"><strong>ER patient:</strong> ${summary.join(' · ')}. Saved across ER calculators.</div>`;
+    const pills = [];
+    if (this._erPatient.age) pills.push(`<span class="er-pill"><span class="er-pill-label">Age</span><span class="er-pill-value">${this._erPatient.age} yrs</span></span>`);
+    if (this._erPatient.sex) pills.push(`<span class="er-pill"><span class="er-pill-label">Sex</span><span class="er-pill-value">${this._erPatient.sex.charAt(0).toUpperCase() + this._erPatient.sex.slice(1)}</span></span>`);
+    if (this._erPatient.weightText) pills.push(`<span class="er-pill"><span class="er-pill-label">Weight</span><span class="er-pill-value">${this._erPatient.weightText}</span></span>`);
+    const bannerHtml = `<div id="er-patient-banner" class="er-banner">
+      <span class="er-banner-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </span>
+      <span class="er-banner-meta">
+        <span class="er-banner-title">Active Patient</span>
+        <span class="er-banner-pills">${pills.join('')}</span>
+      </span>
+      <span class="er-banner-note">Shared across ER calculators</span>
+    </div>`;
     if (existing) {
-      existing.innerHTML = bannerHtml;
+      existing.outerHTML = bannerHtml;
     } else {
       document.querySelector('.calc-layout')?.insertAdjacentHTML('afterbegin', bannerHtml);
     }

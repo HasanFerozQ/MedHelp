@@ -243,13 +243,18 @@ body::before {
 .emergency-mode .calc-input, .emergency-mode select { font-size: 18px; min-height: 52px; }
 .emergency-mode .result-primary { font-size: clamp(40px, 8vw, 56px); }
 
-/* Unit toggle badge */
+/* Unit label — static display, no toggle */
 .unit-label {
   display: inline-flex; align-items: center;
-  padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 700;
-  border: 1px solid var(--border); color: var(--text-muted);
-  background: var(--bg-elevated); white-space: nowrap; flex-shrink: 0;
+  padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 800;
+  color: var(--accent);
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.35);
+  box-shadow: 0 0 10px rgba(34,197,94,0.45), 0 0 20px rgba(34,197,94,0.2);
+  white-space: nowrap; flex-shrink: 0;
   pointer-events: none; user-select: none;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 8px rgba(34,197,94,0.8);
 }
 .stepper { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
