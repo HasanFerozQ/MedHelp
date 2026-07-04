@@ -572,6 +572,9 @@ window.CalcUI = {
     const schema = this._schemaFor(id);
     if (!calc || !schema) return '<p>Calculator not found</p>';
 
+    // Track the current role so the Active Patient banner shows the correct label
+    if (calc.role) this._currentRole = calc.role;
+
     const saved = JSON.parse(localStorage.getItem(this.STORAGE.values) || '{}')[id] || {};
 
     let html = `<div class="calc-view-header">
@@ -642,7 +645,8 @@ window.CalcUI = {
         e.preventDefault();
         this._runCalc(id);
       });
-      if (calc.role === 'er') {
+      const role = CalcRegistry.roles.find(r => r.id === calc.role);
+      if (role?.emergency) {
         this._pushErPatientToForms();
         this._showErBanner();
       }
