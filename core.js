@@ -522,8 +522,6 @@ const MediHelp = {
     footer.parentNode.insertBefore(wrap, footer);
   },
 
-  },
-
   initAuthModal: function() {
     if (document.getElementById('auth-modal')) return;
 
