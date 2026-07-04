@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCLEX-RN Full Mock Exam | medihelp.live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16262B;
+    --paper:#F6F5F1;
+    --paper-raised:#FFFFFF;
+    --teal:#0E7C7B;
+    --teal-dark:#0A5F5E;
+    --amber:#C98A2C;
+    --coral:#B94A3E;
+    --sage:#4C8B6E;
+    --line:#DDD8CC;
+    --muted:#6B7470;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+
+  /* ---------- Layout shells ---------- */
+  #app{max-width:820px;margin:0 auto;padding:0 20px 80px;}
+  .hidden{display:none !important;}
+
+  /* ---------- Start screen ---------- */
+  .start-wrap{padding-top:56px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    margin-bottom:14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:8px;height:8px;border-radius:50%;
+    background:var(--teal);
+    display:inline-block;
+  }
+  .start-wrap h1{font-size:clamp(32px,5vw,44px);line-height:1.08;margin:0 0 14px;}
+  .start-wrap p.lede{font-size:17px;line-height:1.6;color:#3B4A45;max-width:58ch;margin:0 0 32px;}
+
+  .stat-row{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:32px;}
+  .stat{flex:1;min-width:140px;padding:18px 20px;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .num{font-family:'Fraunces',serif;font-size:28px;font-weight:600;color:var(--teal-dark);line-height:1;}
+  .stat .lbl{font-size:12px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:0.06em;}
+
+  .format-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:36px;}
+  .format-chip{
+    border:1px solid var(--line);
+    background:var(--paper-raised);
+    padding:10px 12px;
+    font-size:13px;
+    border-radius:3px;
+  }
+  .format-chip b{display:block;font-family:'Fraunces',serif;font-size:14px;margin-bottom:2px;}
+
+  .btn{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:15px 28px;
+    border-radius:3px;
+    border:none;
+    cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn-primary{background:var(--teal);color:#fff;}
+  .btn-primary:hover{background:var(--teal-dark);}
+  .btn-primary:disabled{background:#a9b8b5;cursor:not-allowed;}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--ink);}
+  .btn:active{transform:translateY(1px);}
+  .btn:focus-visible{outline:3px solid var(--teal-dark);outline-offset:2px;}
+
+  .disclaimer{
+    font-size:12.5px;color:var(--muted);line-height:1.6;
+    border-left:3px solid var(--line); padding-left:14px; margin-top:36px; max-width:56ch;
+  }
+
+  /* ---------- Vitals strip (signature element) ---------- */
+  #vitals-strip{
+    position:sticky;top:0;z-index:20;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    padding:12px 0 0;
+  }
+  .vitals-inner{max-width:820px;margin:0 auto;padding:0 20px;}
+  .vitals-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+  .vitals-left{display:flex;align-items:center;gap:14px;}
+  .vitals-left .brand{font-family:'Fraunces',serif;font-weight:600;font-size:15px;}
+  .cat-chip{
+    font-size:11px;text-transform:uppercase;letter-spacing:0.05em;
+    background:#E7EFEC;color:var(--teal-dark);
+    padding:4px 9px;border-radius:20px;
+    font-weight:600;
+  }
+  .timer{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:19px;font-weight:600;
+    padding:5px 12px;border-radius:3px;
+    background:var(--ink);color:var(--paper);
+    letter-spacing:0.02em;
+  }
+  .timer.warn{background:var(--amber);}
+  .timer.danger{background:var(--coral);}
+  .qcount{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);}
+
+  svg#ecg{display:block;width:100%;height:34px;}
+  #ecg path.track{fill:none;stroke:var(--line);stroke-width:2;}
+  #ecg path.trace{fill:none;stroke:var(--teal);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* ---------- Question card ---------- */
+  .qwrap{padding-top:28px;}
+  .type-tag{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;
+    text-transform:uppercase;letter-spacing:0.08em;color:#fff;background:var(--ink);
+    padding:3px 9px;border-radius:3px;margin-bottom:14px;
+  }
+  .qcard{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px 26px 24px;
+    margin-bottom:24px;
+  }
+  .stem{font-size:17px;line-height:1.55;margin:0 0 20px;color:var(--ink);}
+  .subnote{font-size:13px;color:var(--muted);margin:-12px 0 18px;font-style:italic;}
+
+  .opt-list{display:flex;flex-direction:column;gap:10px;}
+  .opt{
+    display:flex;align-items:flex-start;gap:12px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:13px 15px;
+    cursor:pointer;
+    font-size:15px;line-height:1.45;
+    transition:border-color .1s ease, background .1s ease;
+  }
+  .opt:hover{border-color:var(--teal);}
+  .opt.selected{border-color:var(--teal);background:#EEF5F3;}
+  .opt input{margin-top:3px;accent-color:var(--teal-dark);flex-shrink:0;}
+
+  /* matrix */
+  table.matrix{width:100%;border-collapse:collapse;font-size:14px;}
+  table.matrix th{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;text-transform:uppercase;
+    letter-spacing:0.03em;color:var(--muted);text-align:center;padding:8px 6px;border-bottom:2px solid var(--ink);
+  }
+  table.matrix td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle;}
+  table.matrix td.rowlabel{text-align:left;font-weight:500;padding-right:14px;}
+  table.matrix input{accent-color:var(--teal-dark);width:17px;height:17px;}
+
+  /* bowtie */
+  .bowtie-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .bowtie-col h4{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;
+    color:var(--teal-dark);margin:0 0 10px;
+  }
+  .bowtie-col .opt{padding:10px 11px;font-size:13.5px;}
+  @media (max-width:640px){.bowtie-cols{grid-template-columns:1fr;}}
+
+  /* priority ordering */
+  .order-list{display:flex;flex-direction:column;gap:8px;}
+  .order-item{
+    display:flex;align-items:center;gap:12px;
+    border:1px solid var(--line);border-radius:4px;padding:12px 14px;background:var(--paper-raised);
+    font-size:14.5px;
+  }
+  .order-num{
+    font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--teal-dark);
+    background:#EEF5F3;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;
+  }
+  .order-controls{margin-left:auto;display:flex;gap:6px;}
+  .order-controls button{
+    border:1px solid var(--line);background:var(--paper-raised);border-radius:3px;width:28px;height:28px;cursor:pointer;font-size:13px;
+  }
+  .order-controls button:hover{border-color:var(--teal);}
+
+  /* highlight */
+  .passage{font-size:15.5px;line-height:1.9;border:1px solid var(--line);border-radius:4px;padding:16px 18px;background:#FCFBF8;}
+  .phrase{cursor:pointer;border-radius:3px;padding:1px 3px;transition:background .1s ease;}
+  .phrase:hover{background:#EEF5F3;}
+  .phrase.on{background:#FCE9C7;box-shadow:inset 0 0 0 1px var(--amber);}
+
+  /* cloze */
+  select.cloze-select{
+    font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--teal-dark);
+    border:none;border-bottom:2px solid var(--teal);background:transparent;padding:2px 4px;
+  }
+
+  .nav-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:6px;}
+  .hint{font-size:12.5px;color:var(--muted);}
+
+  /* ---------- Results ---------- */
+  .score-hero{
+    border:1px solid var(--line);border-radius:6px;background:var(--paper-raised);
+    padding:32px 28px;margin:24px 0 28px;text-align:center;
+  }
+  .score-hero .big{font-family:'Fraunces',serif;font-size:56px;font-weight:600;color:var(--teal-dark);line-height:1;}
+  .score-hero .sub{font-size:14px;color:var(--muted);margin-top:8px;}
+
+  .cat-bars{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+  .cat-bar-row{display:grid;grid-template-columns:200px 1fr 50px;gap:10px;align-items:center;font-size:13.5px;}
+  .cat-bar-track{background:#EAE7DD;border-radius:20px;height:12px;overflow:hidden;}
+  .cat-bar-fill{height:100%;border-radius:20px;background:var(--teal);}
+  .cat-bar-pct{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:right;color:var(--muted);}
+
+  details.review-item{border:1px solid var(--line);border-radius:5px;margin-bottom:10px;background:var(--paper-raised);}
+  details.review-item summary{
+    list-style:none;cursor:pointer;padding:14px 18px;display:flex;gap:12px;align-items:center;font-size:14px;
+  }
+  details.review-item summary::-webkit-details-marker{display:none;}
+  .rmark{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;}
+  .rmark.full{background:var(--sage);}
+  .rmark.part{background:var(--amber);}
+  .rmark.none{background:var(--coral);}
+  .review-body{padding:0 18px 18px;font-size:13.5px;line-height:1.6;border-top:1px solid var(--line);margin-top:2px;padding-top:14px;}
+  .review-body .rat{background:#F6F5F1;border-radius:4px;padding:12px 14px;margin-top:10px;}
+  .review-body .yourans{color:var(--coral);}
+  .review-body .correctans{color:var(--sage);}
+
+  .end-actions{display:flex;gap:12px;justify-content:center;margin:28px 0 8px;}
+</style>
+</head>
+<body>
+
+<div id="vitals-strip" class="hidden">
+  <div class="vitals-inner">
+    <div class="vitals-top">
+      <div class="vitals-left">
+        <span class="brand">medihelp<span style="color:var(--teal)">.</span>live</span>
+        <span class="cat-chip" id="cat-chip">—</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="qcount" id="qcount">Question 1 / 75</span>
+        <span class="timer mono" id="timer">150:00</span>
+      </div>
+    </div>
+    <svg id="ecg" viewBox="0 0 800 34" preserveAspectRatio="none">
+      <path class="track" d="M0,17 L800,17"></path>
+      <path class="trace" id="ecg-trace" d=""></path>
+    </svg>
+  </div>
+</div>
+
+<div id="app">
+
+  <!-- START SCREEN -->
+  <div id="screen-start" class="start-wrap">
+    <div class="eyebrow">NCLEX-RN &middot; Full Length Practice</div>
+    <h1>Full Mock Exam</h1>
+    <p class="lede">75 items covering all eight Client Needs categories from the 2026 NCLEX-RN Test Plan, using the same Next Generation NCLEX (NGN) item formats you'll see on exam day — multiple choice, SATA, cloze, matrix, bow-tie, ordered response, and highlight items.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="num">75</div><div class="lbl">Total Items</div></div>
+      <div class="stat"><div class="num">150</div><div class="lbl">Minutes</div></div>
+      <div class="stat"><div class="num">8</div><div class="lbl">Categories</div></div>
+      <div class="stat"><div class="num">7</div><div class="lbl">Item Formats</div></div>
+    </div>
+
+    <div class="format-list">
+      <div class="format-chip"><b>Multiple Choice</b>Single best answer</div>
+      <div class="format-chip"><b>SATA</b>Select all that apply</div>
+      <div class="format-chip"><b>Cloze</b>Fill in the blank</div>
+      <div class="format-chip"><b>Matrix</b>Grid response</div>
+      <div class="format-chip"><b>Bow-Tie</b>Cause / action / outcome</div>
+      <div class="format-chip"><b>Ordered Response</b>Sequence steps</div>
+      <div class="format-chip"><b>Highlight</b>Select relevant text</div>
+    </div>
+
+    <button class="btn btn-primary" id="btn-start">Begin Exam →</button>
+
+    <p class="disclaimer">This is an independent study tool built for exam-format familiarity and content review. It is not produced or endorsed by NCSBN and does not use the official passing-standard (logit) scoring model — your result below is a plain percentage-correct summary, not a predicted NCLEX outcome.</p>
+  </div>
+
+  <!-- EXAM SCREEN -->
+  <div id="screen-exam" class="hidden qwrap">
+    <div id="q-render"></div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div id="screen-results" class="hidden" style="padding-top:32px;">
+    <div class="eyebrow">Exam Complete</div>
+    <h2 style="margin:0 0 6px;">Your Results</h2>
+    <div class="score-hero">
+      <div class="big" id="score-big">—%</div>
+      <div class="sub" id="score-sub">— of 75 points earned</div>
+    </div>
+    <h3 style="margin:0 0 14px;font-size:17px;">Performance by Category</h3>
+    <div class="cat-bars" id="cat-bars"></div>
+    <h3 style="margin:26px 0 14px;font-size:17px;">Full Review &amp; Rationales</h3>
+    <div id="review-list"></div>
+    <div class="end-actions">
+      <button class="btn btn-ghost" id="btn-restart">Retake Exam</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+
+/* ============================================================
+   QUESTION BANK — 75 items, NCLEX-RN 2026 Test Plan categories
+   ============================================================ */
+const CATS = {
+  MOC:  {name:"Management of Care", color:"#0E7C7B"},
+  SIPC: {name:"Safety & Infection Prevention and Control", color:"#3E7CB1"},
+  HPM:  {name:"Health Promotion & Maintenance", color:"#4C8B6E"},
+  PSI:  {name:"Psychosocial Integrity", color:"#8C6BB1"},
+  BCC:  {name:"Basic Care & Comfort", color:"#B18A3E"},
+  PPT:  {name:"Pharmacological & Parenteral Therapies", color:"#B14C6B"},
+  RORP: {name:"Reduction of Risk Potential", color:"#4C7AB1"},
+  PA:   {name:"Physiological Adaptation", color:"#B94A3E"}
+};
+
+const Q = [
+// ---------------- MANAGEMENT OF CARE (13) ----------------
+{cat:"MOC",type:"mcq",stem:"A nurse is preparing to delegate tasks for the shift. Which task is most appropriate to delegate to unlicensed assistive personnel (UAP)?",
+ options:["Assessing a new admission's lung sounds","Ambulating a stable client to the bathroom","Teaching a client about a new insulin regimen","Evaluating a client's response to pain medication"],
+ correct:1, rationale:"Ambulating a stable client is within UAP scope. Assessment, teaching, and evaluation require nursing judgment and cannot be delegated."},
+
+{cat:"MOC",type:"mcq",stem:"The nurse is assigned to four clients. Which client should be assessed first?",
+ options:["A client with a chest tube whose drainage suddenly stopped","A client requesting pain medication for a 3/10 pain rating","A client due for a routine dressing change","A client asking about discharge paperwork"],
+ correct:0, rationale:"Sudden cessation of chest tube drainage may indicate an obstruction or tension pneumothorax — an airway/breathing priority."},
+
+{cat:"MOC",type:"mcq",stem:"Which task can the RN safely delegate to a licensed practical nurse (LPN)?",
+ options:["Initial assessment of a new admission","Administration of a routine oral medication to a stable client","Development of the initial plan of care","Client education on a new diagnosis"],
+ correct:1, rationale:"LPNs can administer routine medications to stable clients under RN supervision. Assessment, care planning, and initial education remain within RN scope."},
+
+{cat:"MOC",type:"priority",stem:"Place the following admission tasks in the order the nurse should complete them.",
+ items:["Complete the admission assessment","Notify the provider of any critical findings","Orient the client to the room and call system","Obtain baseline vital signs"],
+ correctOrder:[2,3,0,1],
+ rationale:"Orient the client and ensure safety first, obtain vital signs, complete the full assessment, then notify the provider of any critical findings."},
+
+{cat:"MOC",type:"mcq",stem:"A client with a terminal illness has a signed advance directive stating no cardiopulmonary resuscitation (CPR). The client's adult child insists 'do everything' during a code. What should the nurse do?",
+ options:["Perform CPR because the family member requested it","Follow the advance directive and withhold CPR","Call the ethics committee before deciding","Ask the physician to overrule the advance directive"],
+ correct:1, rationale:"A valid advance directive reflects the client's own wishes and legally takes precedence over family requests."},
+
+{cat:"MOC",type:"mcq",stem:"A nurse discusses a client's diagnosis with a coworker in the elevator, where other visitors can overhear. This is a violation of:",
+ options:["Informed consent","HIPAA / client confidentiality","Beneficence","Scope of practice"],
+ correct:1, rationale:"Discussing protected health information where others can overhear violates client confidentiality requirements."},
+
+{cat:"MOC",type:"mcq",stem:"What is the primary purpose of completing an incident report after a client fall?",
+ options:["To assign blame to the responsible staff member","To document the event for quality improvement and risk management","To become part of the client's permanent medical record","To notify the client's insurance company"],
+ correct:1, rationale:"Incident reports support internal quality and risk-management review; they are not part of the medical record and are not intended to assign blame."},
+
+{cat:"MOC",type:"sata",stem:"Which tasks are appropriate to delegate to unlicensed assistive personnel (UAP)? (Select all that apply.)",
+ options:["Measuring intake and output","Reporting a change in a client's mental status","Assisting a stable client with bathing","Feeding a client with a new swallowing impairment","Repositioning a client on a turning schedule"],
+ correctSet:[0,2,4],
+ rationale:"Measuring I&O, assisting with bathing, and repositioning are routine UAP tasks. Reporting mental status changes requires nursing judgment; feeding a client with a new swallowing impairment requires assessment first."},
+
+{cat:"MOC",type:"mcq",stem:"Discharge planning for a client with a new colostomy should begin:",
+ options:["The day of discharge","Within 24 hours of admission","Only after the client asks about it","When the wound care nurse is available"],
+ correct:1, rationale:"Discharge planning should start early in the admission to allow adequate time for teaching and coordination of home care needs."},
+
+{cat:"MOC",type:"mcq",stem:"A competent client refuses a blood transfusion for religious reasons despite a low hemoglobin. The nurse's best action is to:",
+ options:["Administer the transfusion because it is medically necessary","Respect the client's right to refuse treatment and document the discussion","Ask the family to convince the client","Delay care until the client changes their mind"],
+ correct:1, rationale:"Client autonomy supports the right to refuse treatment; the nurse's role is to ensure the client is informed and to document the refusal."},
+
+{cat:"MOC",type:"mcq",stem:"After a medication error is identified, the primary purpose of a root cause analysis is to:",
+ options:["Determine disciplinary action for the nurse involved","Identify system factors that contributed to the error and prevent recurrence","Satisfy state board reporting requirements only","Assign financial responsibility for any harm caused"],
+ correct:1, rationale:"Root cause analysis is a systems-focused, non-punitive process aimed at identifying contributing factors to prevent future errors."},
+
+{cat:"MOC",type:"priority",stem:"Place the following restraint-related actions in the correct order.",
+ items:["Obtain a healthcare provider's order","Try alternative, less restrictive measures first","Apply the restraint using manufacturer guidelines","Reassess the client at required intervals"],
+ correctOrder:[1,0,2,3],
+ rationale:"Least-restrictive alternatives must be attempted and documented before restraints are applied, followed by obtaining an order, correct application, and ongoing reassessment."},
+
+{cat:"MOC",type:"sata",stem:"Which elements must be included for a client's consent to a procedure to be legally valid? (Select all that apply.)",
+ options:["The nature of the proposed procedure","The risks and benefits of the procedure","The client's diagnosis stated in Latin medical terminology","Reasonable alternatives to the procedure","The name of the anesthesiologist's malpractice insurer"],
+ correctSet:[0,1,3],
+ rationale:"Valid informed consent requires disclosure of the procedure, its risks/benefits, and alternatives — not administrative or unrelated details."},
+
+// ---------------- SAFETY & INFECTION PREVENTION AND CONTROL (9) ----------------
+{cat:"SIPC",type:"mcq",stem:"A client has suspected active tuberculosis. Which precaution should the nurse implement?",
+ options:["Contact precautions","Droplet precautions","Airborne precautions with an N95 respirator","Standard precautions only"],
+ correct:2, rationale:"TB is spread via small airborne droplet nuclei, requiring airborne precautions and a fit-tested N95 or higher respirator."},
+
+{cat:"SIPC",type:"mcq",stem:"A client is diagnosed with Clostridioides difficile (C. diff) infection. Which precaution is required?",
+ options:["Airborne precautions","Droplet precautions","Contact precautions with soap-and-water hand hygiene","Standard precautions with alcohol-based hand rub only"],
+ correct:2, rationale:"C. diff spores are not killed by alcohol-based hand rub; contact precautions with soap-and-water handwashing are required."},
+
+{cat:"SIPC",type:"sata",stem:"Which actions are part of standard precautions? (Select all that apply.)",
+ options:["Hand hygiene before and after client contact","Wearing gloves when contact with body fluids is anticipated","Placing all clients in a private room","Safe injection practices","Wearing an N95 respirator for every client interaction"],
+ correctSet:[0,1,3],
+ rationale:"Standard precautions apply to all clients regardless of diagnosis and include hand hygiene, glove use when indicated, and safe injection practices. Private rooms and N95 respirators are transmission-based, not standard, precautions."},
+
+{cat:"SIPC",type:"mcq",stem:"An older adult client is identified as a high fall risk. What is the priority nursing action?",
+ options:["Restrain the client in bed","Place the bed in the lowest position with the call light within reach","Ask the family to stay 24/7","Administer a sedative at bedtime"],
+ correct:1, rationale:"Lowering the bed and ensuring the call light is accessible are least-restrictive, evidence-based fall-prevention interventions."},
+
+{cat:"SIPC",type:"mcq",stem:"Before applying a physical restraint, the nurse must first:",
+ options:["Obtain a PRN restraint order that lasts indefinitely","Document that less-restrictive measures were attempted and were unsuccessful","Notify the client's insurance company","Restrain the client and obtain the order afterward"],
+ correct:1, rationale:"Restraints require documentation of failed less-restrictive alternatives and a time-limited provider order; they are never a first-line intervention."},
+
+{cat:"SIPC",type:"priority",stem:"Using the RACE mnemonic, place these fire-response actions in the correct order.",
+ items:["Extinguish the fire if small and safe to do so","Rescue clients in immediate danger","Activate the fire alarm","Confine the fire by closing doors"],
+ correctOrder:[1,2,3,0],
+ rationale:"RACE = Rescue, Activate the alarm, Confine (close doors), Extinguish if safe — in that order."},
+
+{cat:"SIPC",type:"mcq",stem:"Immediately after a needlestick injury from a used needle, the nurse's first action should be to:",
+ options:["Report the injury to the supervisor","Wash the area with soap and water","Complete an incident report","Notify employee health for testing"],
+ correct:1, rationale:"Immediate wound care — washing with soap and water — comes first, followed by reporting and follow-up testing."},
+
+{cat:"SIPC",type:"matrix",stem:"For each condition, select the primary transmission-based precaution required.",
+ cols:["Droplet","Airborne","Contact"],
+ rows:["Influenza","Measles","MRSA wound infection"],
+ correctCols:[0,1,2],
+ rationale:"Influenza spreads via droplet, measles via the airborne route, and MRSA wound infections via contact."},
+
+{cat:"SIPC",type:"mcq",stem:"In a mass casualty triage system, a client with an airway obstruction that resolves with repositioning is tagged:",
+ options:["Green (minor)","Yellow (delayed)","Red (immediate)","Black (expectant)"],
+ correct:2, rationale:"Airway compromise requiring intervention places the client in the immediate (red) category."},
+
+// ---------------- HEALTH PROMOTION & MAINTENANCE (7) ----------------
+{cat:"HPM",type:"mcq",stem:"A newborn has a heart rate of 110, slow and irregular respirations, some flexion of extremities, a grimace with stimulation, and a pink body with blue extremities. What is the 1-minute APGAR score?",
+ options:["5","6","7","8"],
+ correct:1, rationale:"Scoring: heart rate over 100 = 2, slow/irregular respirations = 1, some flexion = 1, grimace = 1, acrocyanosis (blue extremities) = 1; total = 6."},
+
+{cat:"HPM",type:"mcq",stem:"According to the routine U.S. immunization schedule, which vaccine is typically first given at 2 months of age?",
+ options:["MMR","Varicella","DTaP (diphtheria, tetanus, acellular pertussis)","HPV"],
+ correct:2, rationale:"DTaP begins at 2 months; MMR and varicella start at 12–15 months, and HPV starts at age 9–11."},
+
+{cat:"HPM",type:"mcq",stem:"Which behavior is an expected developmental milestone for an 18-month-old toddler?",
+ options:["Riding a tricycle","Walking independently and beginning to run","Tying shoelaces","Printing letters"],
+ correct:1, rationale:"Walking independently and early running are expected gross motor milestones around 12–18 months."},
+
+{cat:"HPM",type:"mcq",stem:"A nurse is teaching a pregnant client about nutrition. Which statement indicates a need for further teaching?",
+ options:["\"I should increase my folic acid intake.\"","\"I will limit high-mercury fish like swordfish.\"","\"I can drink alcohol occasionally in the third trimester.\"","\"I need extra iron to support increased blood volume.\""],
+ correct:2, rationale:"No amount of alcohol is considered safe during pregnancy; this statement requires correction."},
+
+{cat:"HPM",type:"mcq",stem:"Which finding is an expected physiological change of menopause?",
+ options:["Increased vaginal lubrication","Hot flashes and night sweats","Decreased risk of osteoporosis","Increased fertility"],
+ correct:1, rationale:"Declining estrogen during menopause commonly causes vasomotor symptoms such as hot flashes and night sweats."},
+
+{cat:"HPM",type:"sata",stem:"Which teaching points should the nurse include in a healthy-aging program for older adults? (Select all that apply.)",
+ options:["Engage in regular weight-bearing exercise","Ensure adequate calcium and vitamin D intake","Avoid all physical activity to prevent injury","Schedule regular vision and hearing screenings","Maintain social engagement to reduce isolation"],
+ correctSet:[0,1,3,4],
+ rationale:"Weight-bearing exercise, adequate calcium/vitamin D, sensory screening, and social engagement all support healthy aging. Avoiding activity increases risk of deconditioning and falls."},
+
+{cat:"HPM",type:"cloze",stem:"A breastfeeding client asks how to know her newborn is feeding effectively. The nurse explains that an effective feeding pattern includes at least ___ wet diapers per day by day 5.",
+ options:["1–2","3–4","6 or more","10 or more"],
+ correct:2, rationale:"By day 5 of life, at least 6 wet diapers per day indicates adequate milk intake."},
+
+// ---------------- PSYCHOSOCIAL INTEGRITY (7) ----------------
+{cat:"PSI",type:"mcq",stem:"A client says, \"I don't know why I bother, nothing ever gets better.\" Which nursing response demonstrates therapeutic communication?",
+ options:["\"Everything will be fine, don't worry.\"","\"You sound discouraged. Tell me more about what's on your mind.\"","\"You shouldn't feel that way, you have so much to be thankful for.\"","\"Let's talk about something more positive.\""],
+ correct:1, rationale:"Reflecting feelings and inviting the client to elaborate is therapeutic; false reassurance and dismissing feelings are non-therapeutic."},
+
+{cat:"PSI",type:"cloze",stem:"A client whose spouse died recently states, \"I keep expecting him to walk through the door.\" According to Kübler-Ross, this best reflects the stage of ___.",
+ options:["Denial","Anger","Bargaining","Acceptance"],
+ correct:0, rationale:"Difficulty accepting the loss as real reflects the denial stage of grief."},
+
+{cat:"PSI",type:"mcq",stem:"A client who is angry about a cancer diagnosis begins criticizing the nursing staff for unrelated minor issues. This is an example of which defense mechanism?",
+ options:["Displacement","Regression","Projection","Sublimation"],
+ correct:0, rationale:"Displacement involves redirecting emotions from the real source (the diagnosis) onto a safer target (the staff)."},
+
+{cat:"PSI",type:"sata",stem:"Which findings should raise the nurse's suspicion for elder abuse? (Select all that apply.)",
+ options:["Unexplained bruising in various stages of healing","A caregiver who answers all questions for the client","Client appears well-groomed and engaged","Weight loss and signs of dehydration","Client is reluctant to speak in front of the caregiver"],
+ correctSet:[0,1,3,4],
+ rationale:"Unexplained injuries, a controlling caregiver, malnutrition/dehydration, and client reluctance to speak freely are red flags for abuse or neglect."},
+
+{cat:"PSI",type:"mcq",stem:"A client in alcohol withdrawal is at greatest risk for which life-threatening complication in the first 48 hours?",
+ options:["Wernicke's encephalopathy","Seizures and delirium tremens","Peripheral neuropathy","Korsakoff syndrome"],
+ correct:1, rationale:"Seizures and delirium tremens are the most acute, life-threatening risks during early alcohol withdrawal."},
+
+{cat:"PSI",type:"mcq",stem:"A client in acute crisis is pacing, speaking rapidly, and unable to focus. The nurse's priority action is to:",
+ options:["Provide a detailed explanation of hospital policies","Speak calmly, use short simple sentences, and reduce environmental stimuli","Leave the client alone to calm down","Immediately request a PRN sedative"],
+ correct:1, rationale:"During crisis, reducing stimulation and using calm, simple communication helps de-escalate before other interventions are needed."},
+
+{cat:"PSI",type:"mcq",stem:"A client from a culture that values family-based decision-making defers all care decisions to their eldest son. The nurse should:",
+ options:["Insist on speaking with the client alone to promote autonomy","Respect the family's decision-making structure while ensuring the client's wishes are honored","Refuse to provide care until the client speaks for themselves","Report the family to social services"],
+ correct:1, rationale:"Culturally competent care respects family decision-making structures while still safeguarding client autonomy and wishes."},
+
+// ---------------- BASIC CARE & COMFORT (7) ----------------
+{cat:"BCC",type:"mcq",stem:"Before administering a bolus tube feeding, the priority nursing action is to:",
+ options:["Flush the tube with 100 mL of water","Verify tube placement and check for gastric residual","Position the client supine","Warm the feeding to body temperature"],
+ correct:1, rationale:"Confirming placement and checking residual volume reduces aspiration risk before feeding."},
+
+{cat:"BCC",type:"mcq",stem:"A client with dysphagia is being fed. Which position best reduces aspiration risk?",
+ options:["Supine, head flat","High Fowler's, chin slightly tucked","Side-lying, head extended","Semi-Fowler's, head turned away from the nurse"],
+ correct:1, rationale:"Upright positioning with a slightly tucked chin narrows the airway and reduces aspiration risk during swallowing."},
+
+{cat:"BCC",type:"sata",stem:"Which interventions help prevent constipation in an immobile client? (Select all that apply.)",
+ options:["Increase fluid intake","Encourage a high-fiber diet","Restrict physical activity","Establish a regular toileting schedule","Limit fluid intake to reduce bowel activity"],
+ correctSet:[0,1,3],
+ rationale:"Adequate fluids, fiber, and a regular toileting routine promote bowel motility; restricting activity or fluids worsens constipation."},
+
+{cat:"BCC",type:"sata",stem:"Which are appropriate non-pharmacological pain management interventions? (Select all that apply.)",
+ options:["Guided imagery","Repositioning","Applying heat or cold as appropriate","Withholding all comfort measures until medication is given","Distraction techniques"],
+ correctSet:[0,1,2,4],
+ rationale:"Guided imagery, repositioning, thermal therapy, and distraction are evidence-based non-pharmacological pain interventions."},
+
+{cat:"BCC",type:"mcq",stem:"When assisting a client to move up in bed, which action reflects proper body mechanics for the nurse?",
+ options:["Bend at the waist and lift with the back","Keep the client far from the body while lifting","Bend the knees, keep the client close, and use leg muscles","Twist the torso while lifting"],
+ correct:2, rationale:"Bending the knees, keeping the load close, and using leg muscles reduces strain and injury risk."},
+
+{cat:"BCC",type:"mcq",stem:"Which teaching point should the nurse include to promote good sleep hygiene?",
+ options:["Exercise vigorously right before bed","Keep the bedroom cool, dark, and quiet","Use the bed for reading and watching TV","Take a long nap in the late afternoon"],
+ correct:1, rationale:"A cool, dark, quiet environment supports sleep; vigorous late exercise, using the bed for other activities, and late naps disrupt sleep."},
+
+{cat:"BCC",type:"mcq",stem:"A client using a cane for a weak right leg should be taught to:",
+ options:["Hold the cane in the right hand and move it with the right leg","Hold the cane in the left hand and advance it with the right (weaker) leg","Hold the cane in either hand, it does not matter","Advance the cane only after both legs have moved"],
+ correct:1, rationale:"The cane is held on the stronger side and advances together with the weaker leg to provide support."},
+
+// ---------------- PHARMACOLOGICAL & PARENTERAL THERAPIES (11) ----------------
+{cat:"PPT",type:"mcq",stem:"Regular insulin administered subcutaneously typically peaks in:",
+ options:["15–30 minutes","2–4 hours","6–8 hours","12–16 hours"],
+ correct:1, rationale:"Regular (short-acting) insulin peaks approximately 2–4 hours after subcutaneous administration."},
+
+{cat:"PPT",type:"mcq",stem:"The antidote for heparin overdose is:",
+ options:["Vitamin K","Protamine sulfate","Naloxone","Flumazenil"],
+ correct:1, rationale:"Protamine sulfate reverses the anticoagulant effect of heparin."},
+
+{cat:"PPT",type:"mcq",stem:"A client on warfarin therapy should have which lab value monitored regularly?",
+ options:["Activated partial thromboplastin time (aPTT)","International Normalized Ratio (INR)","Platelet count only","Hemoglobin A1c"],
+ correct:1, rationale:"INR is used to monitor warfarin therapy and guide dose adjustments."},
+
+{cat:"PPT",type:"sata",stem:"Which findings suggest digoxin toxicity? (Select all that apply.)",
+ options:["Nausea and vomiting","Visual disturbances (yellow-green halos)","Increased appetite","Bradycardia","Hypertension"],
+ correctSet:[0,1,3],
+ rationale:"GI upset, visual disturbances, and bradycardia are classic signs of digoxin toxicity."},
+
+{cat:"PPT",type:"mcq",stem:"A provider orders 500 mg of a medication. The medication is supplied as 250 mg / 5 mL. How many mL should the nurse administer?",
+ options:["2.5 mL","5 mL","10 mL","15 mL"],
+ correct:2, rationale:"500 mg ÷ 250 mg × 5 mL = 10 mL."},
+
+{cat:"PPT",type:"matrix",stem:"For each IV complication, select the finding that best matches.",
+ cols:["Redness/warmth along the vein","Cool, swollen skin with no blood return","Dyspnea and crackles"],
+ rows:["Infiltration","Phlebitis","Fluid overload"],
+ correctCols:[1,0,2],
+ rationale:"Infiltration presents as cool, swollen skin with no blood return; phlebitis shows redness/warmth along the vein; fluid overload causes dyspnea and crackles."},
+
+{cat:"PPT",type:"mcq",stem:"A client develops chills, low back pain, and dark urine 10 minutes into a blood transfusion. The nurse's first action is to:",
+ options:["Slow the infusion rate","Administer acetaminophen","Stop the transfusion and keep the IV line open with normal saline","Notify the blood bank after completing the unit"],
+ correct:2, rationale:"A suspected hemolytic transfusion reaction requires immediately stopping the transfusion and maintaining IV access with normal saline."},
+
+{cat:"PPT",type:"mcq",stem:"Which medication is the antidote for opioid overdose?",
+ options:["Flumazenil","Naloxone","Protamine sulfate","N-acetylcysteine"],
+ correct:1, rationale:"Naloxone reverses opioid-induced respiratory depression."},
+
+{cat:"PPT",type:"cloze",stem:"A client asks why furosemide was prescribed. The nurse explains that furosemide is classified as a ___.",
+ options:["Beta-blocker","Loop diuretic","ACE inhibitor","Calcium channel blocker"],
+ correct:1, rationale:"Furosemide is a loop diuretic used to reduce fluid volume."},
+
+{cat:"PPT",type:"mcq",stem:"Before administering insulin, which safety practice is essential?",
+ options:["Have a second nurse independently verify the dose","Administer without checking blood glucose if the client feels fine","Round the dose to the nearest 5 units for convenience","Administer via IV push routinely"],
+ correct:0, rationale:"Insulin is a high-alert medication requiring independent double-checking to prevent dosing errors."},
+
+{cat:"PPT",type:"mcq",stem:"A client taking lithium reports nausea, tremors, and confusion. The nurse should suspect:",
+ options:["A therapeutic lithium level","Lithium toxicity","Serotonin syndrome","Hypoglycemia"],
+ correct:1, rationale:"Nausea, tremor, and confusion are early signs of lithium toxicity, which has a narrow therapeutic range."},
+
+// ---------------- REDUCTION OF RISK POTENTIAL (10) ----------------
+{cat:"RORP",type:"mcq",stem:"A client's potassium level is 6.2 mEq/L. The nurse should prioritize which action?",
+ options:["Encourage a high-potassium diet","Obtain an ECG and notify the provider immediately","Document the value and recheck in 24 hours","Administer a potassium supplement"],
+ correct:1, rationale:"Severe hyperkalemia is life-threatening and requires immediate ECG monitoring and provider notification."},
+
+{cat:"RORP",type:"mcq",stem:"Before a client signs a surgical consent form, the nurse's role is to:",
+ options:["Explain the surgical procedure in detail","Confirm the client understands the information given by the surgeon and witness the signature","Convince the client to proceed with surgery","Determine if the client is a good surgical candidate"],
+ correct:1, rationale:"The surgeon obtains informed consent; the nurse verifies understanding and witnesses the signature."},
+
+{cat:"RORP",type:"mcq",stem:"Immediately after abdominal surgery, the priority nursing assessment is:",
+ options:["Airway, breathing, and level of consciousness","Wound dressing appearance","Bowel sounds","Ability to ambulate"],
+ correct:0, rationale:"Airway, breathing, and level of consciousness take priority in the immediate postoperative period."},
+
+{cat:"RORP",type:"mcq",stem:"Which client statement indicates a need for further teaching before a scheduled colonoscopy?",
+ options:["\"I will complete the bowel prep as instructed.\"","\"I can eat a regular breakfast the morning of the procedure.\"","\"I need someone to drive me home afterward.\"","\"I should stop certain blood thinners as directed by my provider.\""],
+ correct:1, rationale:"Clients are typically NPO for a period before colonoscopy; eating a regular breakfast indicates misunderstanding."},
+
+{cat:"RORP",type:"mcq",stem:"A client's vital signs trend over 3 hours: BP 128/78 → 116/70 → 98/58; HR 82 → 96 → 118. This trend most likely indicates:",
+ options:["Improving hemodynamic status","Early compensated shock","Effective pain control","Normal postoperative recovery"],
+ correct:1, rationale:"A downward blood pressure trend with rising heart rate reflects compensatory tachycardia in early shock."},
+
+{cat:"RORP",type:"priority",stem:"Place the following post-anesthesia care unit (PACU) actions in the correct order.",
+ items:["Assess level of consciousness and airway","Check the surgical dressing for bleeding","Assess vital signs","Determine readiness for discharge from PACU"],
+ correctOrder:[0,2,1,3],
+ rationale:"Airway/level of consciousness is assessed first, followed by vital signs, then the surgical site, before determining discharge readiness."},
+
+{cat:"RORP",type:"bowtie",stem:"A client reports crushing substernal chest pain radiating to the jaw, diaphoresis, and nausea.",
+ conditionOptions:["Acute myocardial infarction","Panic attack","Gastroesophageal reflux","Musculoskeletal strain"],
+ conditionCorrect:0,
+ actionOptions:["Obtain a 12-lead ECG","Administer aspirin per protocol","Encourage ambulation","Apply a heating pad to the chest","Delay intervention until pain resolves"],
+ actionsCorrect:[0,1],
+ outcomeOptions:["Relief of chest pain","Stable vital signs","Increased chest pain","Worsening diaphoresis"],
+ outcomesCorrect:[0,1],
+ rationale:"This is a classic acute coronary syndrome presentation requiring immediate ECG and aspirin administration; expected outcomes of correct action are pain relief and hemodynamic stability."},
+
+{cat:"RORP",type:"matrix",stem:"For each abnormal lab value, select the priority nursing action.",
+ cols:["Administer oral glucose/juice immediately","Notify provider and hold anticoagulant","Restrict free water and notify provider"],
+ rows:["Sodium 118 mEq/L","Glucose 45 mg/dL","INR 5.0"],
+ correctCols:[2,0,1],
+ rationale:"Severe hyponatremia requires water restriction and provider notification; hypoglycemia requires immediate glucose; a critically high INR requires holding anticoagulation and notifying the provider."},
+
+{cat:"RORP",type:"sata",stem:"Which findings suggest a client is hemorrhaging internally? (Select all that apply.)",
+ options:["Rising blood pressure","Falling blood pressure","Increasing heart rate","Warm, flushed skin","Cool, clammy skin"],
+ correctSet:[1,2,4],
+ rationale:"Internal hemorrhage causes falling blood pressure, compensatory tachycardia, and cool, clammy skin from vasoconstriction."},
+
+{cat:"RORP",type:"highlight",stem:"Nurse's note: Client reports increasing abdominal pain rated 8/10. Temperature 102.1°F (38.9°C), heart rate 118, blood pressure 88/56, respiratory rate 24. Abdomen is rigid and distended. Client appears anxious and diaphoretic.",
+ subnote:"Click the findings that are most concerning and require immediate provider notification.",
+ phrases:["reports increasing abdominal pain rated 8/10","Temperature 102.1°F (38.9°C)","heart rate 118","blood pressure 88/56","Abdomen is rigid and distended","appears anxious and diaphoretic"],
+ correctIdx:[1,2,3,4],
+ rationale:"Fever, tachycardia, hypotension, and a rigid/distended abdomen suggest possible peritonitis or sepsis and require immediate provider notification."},
+
+// ---------------- PHYSIOLOGICAL ADAPTATION (11) ----------------
+{cat:"PA",type:"mcq",stem:"A client develops a temperature of 39°C, heart rate 128, respiratory rate 26, and blood pressure 84/50 with a known urinary tract infection. The nurse should suspect:",
+ options:["An anxiety reaction","Sepsis","Dehydration only","A normal infection response"],
+ correct:1, rationale:"Fever, tachycardia, tachypnea, and hypotension in the setting of a known infection are consistent with sepsis and require rapid intervention."},
+
+{cat:"PA",type:"mcq",stem:"The priority initial nursing action for a client in diabetic ketoacidosis (DKA) is to:",
+ options:["Administer IV fluids","Administer a large bolus of insulin","Administer sodium bicarbonate","Restrict all fluids"],
+ correct:0, rationale:"IV fluid resuscitation is the priority initial intervention in DKA to correct dehydration before insulin therapy."},
+
+{cat:"PA",type:"mcq",stem:"Using the FAST mnemonic, which finding is most concerning for a possible stroke?",
+ options:["A mild headache that resolves with rest","Sudden facial drooping and arm weakness on one side","Slight fatigue after a long shift","Occasional dizziness when standing quickly"],
+ correct:1, rationale:"Sudden unilateral facial drooping and arm weakness are hallmark stroke findings requiring immediate action (Face, Arm, Speech, Time)."},
+
+{cat:"PA",type:"mcq",stem:"A client develops sudden hives, wheezing, and swelling of the lips after receiving a medication. The nurse's first action is to:",
+ options:["Administer diphenhydramine only and reassess in 30 minutes","Stop the medication and prepare to administer epinephrine","Document the reaction and continue the infusion at a slower rate","Give the client water to drink"],
+ correct:1, rationale:"Signs of anaphylaxis require stopping the causative agent immediately and preparing epinephrine, the first-line treatment."},
+
+{cat:"PA",type:"sata",stem:"Which findings indicate fluid volume overload? (Select all that apply.)",
+ options:["Crackles in the lung bases","Weight loss over 24 hours","Peripheral edema","Distended neck veins","Decreased blood pressure"],
+ correctSet:[0,2,3],
+ rationale:"Crackles, peripheral edema, and jugular venous distention indicate fluid overload; weight loss and hypotension are not typical findings."},
+
+{cat:"PA",type:"mcq",stem:"A client with a potassium level of 7.0 mEq/L would most likely show which ECG change?",
+ options:["Flattened T waves","Peaked T waves and a widened QRS","Prominent U waves","A shortened PR interval"],
+ correct:1, rationale:"Severe hyperkalemia classically produces peaked T waves and a widened QRS complex, risking fatal arrhythmias."},
+
+{cat:"PA",type:"bowtie",stem:"A client with a history of heart failure develops sudden shortness of breath, pink frothy sputum, and crackles throughout both lung fields.",
+ conditionOptions:["Acute pulmonary edema","Pneumonia","Asthma exacerbation","Pulmonary embolism"],
+ conditionCorrect:0,
+ actionOptions:["Position the client in high Fowler's position","Administer supplemental oxygen","Encourage supine positioning","Administer a diuretic per order","Restrict oxygen use"],
+ actionsCorrect:[0,1],
+ outcomeOptions:["Improved oxygen saturation","Decreased work of breathing","Increased pink frothy sputum","Worsening crackles"],
+ outcomesCorrect:[0,1],
+ rationale:"Acute pulmonary edema requires upright positioning and oxygen to improve gas exchange, with expected improvement in oxygenation and breathing effort."},
+
+{cat:"PA",type:"priority",stem:"Place the following code blue response actions in the correct order.",
+ items:["Call for help / activate the emergency response system","Check responsiveness and breathing","Begin chest compressions","Attach the defibrillator/AED and follow prompts"],
+ correctOrder:[1,0,2,3],
+ rationale:"Check responsiveness and breathing first, activate the emergency response, begin compressions, then attach the defibrillator as soon as it is available."},
+
+{cat:"PA",type:"mcq",stem:"In which stage of shock does the body activate compensatory mechanisms such as tachycardia to maintain blood pressure, with vital signs still near normal?",
+ options:["Initial stage","Compensatory stage","Progressive stage","Refractory stage"],
+ correct:1, rationale:"In the compensatory stage, the body's mechanisms (tachycardia, vasoconstriction) maintain perfusion and vital signs remain near normal."},
+
+{cat:"PA",type:"mcq",stem:"An arterial blood gas shows pH 7.30, PaCO2 55 mmHg, HCO3 24 mEq/L. This is consistent with:",
+ options:["Uncompensated respiratory acidosis","Uncompensated metabolic acidosis","Compensated respiratory alkalosis","Uncompensated metabolic alkalosis"],
+ correct:0, rationale:"A low pH with an elevated PaCO2 and normal HCO3 indicates uncompensated respiratory acidosis, often from hypoventilation."},
+
+{cat:"PA",type:"highlight",stem:"Nurse's note: Client with a urinary catheter reports feeling generally unwell. Temperature 38.7°C, heart rate 112, respiratory rate 24, blood pressure 92/58. Client is mildly confused, which is new since this morning. Skin is warm and flushed.",
+ subnote:"Click the findings that suggest early sepsis and warrant immediate provider notification.",
+ phrases:["reports feeling generally unwell","Temperature 38.7°C","heart rate 112","respiratory rate 24","blood pressure 92/58","mildly confused, which is new since this morning","Skin is warm and flushed"],
+ correctIdx:[1,2,3,4,5],
+ rationale:"Fever, tachycardia, tachypnea, hypotension, and new-onset confusion in a client with a urinary catheter (a likely infection source) are early sepsis indicators requiring immediate notification."}
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const TOTAL_SECONDS = 150*60;
+let idx = 0;
+let timeLeft = TOTAL_SECONDS;
+let timerHandle = null;
+let started = false;
+// answers[i] = {frac: 0..1, userSummary: string, correctSummary: string}
+let answers = new Array(Q.length).fill(null);
+// transient working state for the current question's UI interaction
+let work = {};
+
+const $ = (sel)=>document.querySelector(sel);
+const screenStart = $("#screen-start");
+const screenExam = $("#screen-exam");
+const screenResults = $("#screen-results");
+const vitalsStrip = $("#vitals-strip");
+
+/* ============================================================
+   TIMER
+   ============================================================ */
+function fmtTime(s){
+  const m = Math.floor(s/60);
+  const sec = s%60;
+  return String(m).padStart(2,'0')+":"+String(sec).padStart(2,'0');
+}
+function tick(){
+  timeLeft--;
+  const t = $("#timer");
+  t.textContent = fmtTime(Math.max(timeLeft,0));
+  t.classList.remove("warn","danger");
+  if(timeLeft<=300) t.classList.add("danger");
+  else if(timeLeft<=900) t.classList.add("warn");
+  if(timeLeft<=0){
+    clearInterval(timerHandle);
+    finishExam();
+  }
+}
+
+/* ============================================================
+   ECG PROGRESS TRACE (signature element)
+   ============================================================ */
+function buildEcgPath(progressFrac){
+  // Build a repeating QRS-like waveform across width 800, then clip to progress
+  const w=800,h=34,mid=17;
+  let d = "M0,"+mid;
+  const segments = 14;
+  const segW = w/segments;
+  for(let i=0;i<segments;i++){
+    const x0 = i*segW;
+    d += " L"+(x0+segW*0.35)+","+mid;
+    d += " L"+(x0+segW*0.45)+","+(mid+9);
+    d += " L"+(x0+segW*0.55)+","+(mid-14);
+    d += " L"+(x0+segW*0.65)+","+(mid+6);
+    d += " L"+(x0+segW*0.78)+","+mid;
+    d += " L"+(x0+segW)+","+mid;
+  }
+  return d;
+}
+function updateEcg(){
+  const trace = $("#ecg-trace");
+  const frac = Math.min(1, idx/Q.length);
+  trace.setAttribute("d", buildEcgPath());
+  // use stroke-dasharray to reveal progress
+  const total = 4200; // approx path length heuristic
+  trace.style.strokeDasharray = total;
+  trace.style.strokeDashoffset = total*(1-frac);
+}
+
+/* ============================================================
+   SCORING HELPERS
+   ============================================================ */
+function partialFraction(correctCount, wrongCount, totalCorrect){
+  if(totalCorrect<=0) return 0;
+  return Math.max(0, (correctCount-wrongCount))/totalCorrect;
+}
+
+/* ============================================================
+   RENDER: QUESTION ROUTER
+   ============================================================ */
+function renderQuestion(){
+  const q = Q[idx];
+  work = {}; // reset transient state
+  $("#cat-chip").textContent = CATS[q.cat].name;
+  $("#qcount").textContent = "Question "+(idx+1)+" / "+Q.length;
+  updateEcg();
+
+  const typeLabel = {
+    mcq:"Multiple Choice", sata:"Select All That Apply", cloze:"Cloze — Fill in the Blank",
+    matrix:"Matrix / Grid", bowtie:"Bow-Tie Item", priority:"Ordered Response", highlight:"Highlight"
+  }[q.type];
+
+  let inner = '<span class="type-tag">'+typeLabel+'</span><div class="qcard">';
+  inner += '<p class="stem">'+q.stem+'</p>';
+  if(q.subnote) inner += '<p class="subnote">'+q.subnote+'</p>';
+
+  if(q.type==="mcq"){
+    inner += '<div class="opt-list" id="opt-list">';
+    q.options.forEach((o,i)=>{
+      inner += '<label class="opt" data-i="'+i+'"><input type="radio" name="mcq" value="'+i+'"><span>'+o+'</span></label>';
+    });
+    inner += '</div>';
+  }
+  else if(q.type==="sata"){
+    inner += '<div class="opt-list" id="opt-list">';
+    q.options.forEach((o,i)=>{
+      inner += '<label class="opt" data-i="'+i+'"><input type="checkbox" value="'+i+'"><span>'+o+'</span></label>';
+    });
+    inner += '</div>';
+  }
+  else if(q.type==="cloze"){
+    inner += '<select class="cloze-select" id="cloze-select"><option value="">Select...</option>';
+    q.options.forEach((o,i)=>{ inner += '<option value="'+i+'">'+o+'</option>'; });
+    inner += '</select>';
+  }
+  else if(q.type==="matrix"){
+    inner += '<table class="matrix"><thead><tr><th></th>';
+    q.cols.forEach(c=>{ inner += '<th>'+c+'</th>'; });
+    inner += '</tr></thead><tbody>';
+    q.rows.forEach((r,ri)=>{
+      inner += '<tr><td class="rowlabel">'+r+'</td>';
+      q.cols.forEach((c,ci)=>{
+        inner += '<td><input type="radio" name="mrow'+ri+'" value="'+ci+'"></td>';
+      });
+      inner += '</tr>';
+    });
+    inner += '</tbody></table>';
+  }
+  else if(q.type==="bowtie"){
+    inner += '<div class="bowtie-cols">';
+    inner += '<div class="bowtie-col"><h4>Likely Condition</h4>';
+    q.conditionOptions.forEach((o,i)=>{
+      inner += '<label class="opt" data-cond="'+i+'"><input type="radio" name="bt-cond" value="'+i+'"><span>'+o+'</span></label>';
+    });
+    inner += '</div>';
+    inner += '<div class="bowtie-col"><h4>Priority Actions (choose 2)</h4>';
+    q.actionOptions.forEach((o,i)=>{
+      inner += '<label class="opt" data-act="'+i+'"><input type="checkbox" name="bt-act" value="'+i+'"><span>'+o+'</span></label>';
+    });
+    inner += '</div>';
+    inner += '<div class="bowtie-col"><h4>Expected Outcomes (choose 2)</h4>';
+    q.outcomeOptions.forEach((o,i)=>{
+      inner += '<label class="opt" data-out="'+i+'"><input type="checkbox" name="bt-out" value="'+i+'"><span>'+o+'</span></label>';
+    });
+    inner += '</div></div>';
+  }
+  else if(q.type==="priority"){
+    work.order = q.items.map((_,i)=>i); // current arrangement, as index into q.items
+    inner += '<div class="order-list" id="order-list"></div>';
+  }
+  else if(q.type==="highlight"){
+    work.selected = new Set();
+    inner += '<div class="passage" id="passage-el">';
+    q.phrases.forEach((p,i)=>{
+      inner += '<span class="phrase" data-i="'+i+'">'+p+'</span> ';
+    });
+    inner += '</div>';
+  }
+
+  inner += '</div>'; // end qcard
+
+  inner += '<div class="nav-row"><span class="hint">'+(idx===Q.length-1 ? "Final item" : "You cannot return to a previous item once submitted.")+'</span><button class="btn btn-primary" id="btn-next">'+(idx===Q.length-1?"Finish Exam":"Submit & Continue →")+'</button></div>';
+
+  $("#q-render").innerHTML = inner;
+
+  // Post-render wiring
+  if(q.type==="mcq"){
+    document.querySelectorAll('#opt-list .opt').forEach(el=>{
+      el.addEventListener('click',()=>{
+        document.querySelectorAll('#opt-list .opt').forEach(o=>o.classList.remove('selected'));
+        el.classList.add('selected');
+        el.querySelector('input').checked = true;
+      });
+    });
+  }
+  if(q.type==="sata"){
+    document.querySelectorAll('#opt-list .opt').forEach(el=>{
+      el.addEventListener('click',(e)=>{
+        if(e.target.tagName!=='INPUT'){
+          const box = el.querySelector('input');
+          box.checked = !box.checked;
+        }
+        el.classList.toggle('selected', el.querySelector('input').checked);
+      });
+    });
+  }
+  if(q.type==="bowtie"){
+    document.querySelectorAll('[data-cond]').forEach(el=>{
+      el.addEventListener('click',()=>{
+        document.querySelectorAll('[data-cond]').forEach(o=>o.classList.remove('selected'));
+        el.classList.add('selected'); el.querySelector('input').checked=true;
+      });
+    });
+    document.querySelectorAll('[data-act],[data-out]').forEach(el=>{
+      el.addEventListener('click',(e)=>{
+        if(e.target.tagName!=='INPUT'){ const box=el.querySelector('input'); box.checked=!box.checked; }
+        el.classList.toggle('selected', el.querySelector('input').checked);
+      });
+    });
+  }
+  if(q.type==="priority"){
+    renderOrderList(q);
+  }
+  if(q.type==="highlight"){
+    document.querySelectorAll('.phrase').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const i = +el.getAttribute('data-i');
+        if(work.selected.has(i)){ work.selected.delete(i); el.classList.remove('on'); }
+        else { work.selected.add(i); el.classList.add('on'); }
+      });
+    });
+  }
+
+  $("#btn-next").addEventListener('click', submitCurrent);
+}
+
+function renderOrderList(q){
+  const list = $("#order-list");
+  list.innerHTML = "";
+  work.order.forEach((itemIdx,pos)=>{
+    const row = document.createElement('div');
+    row.className = 'order-item';
+    row.innerHTML = '<span class="order-num">'+(pos+1)+'</span><span>'+q.items[itemIdx]+'</span><span class="order-controls">'+
+      '<button data-dir="up" data-pos="'+pos+'" aria-label="Move up">↑</button>'+
+      '<button data-dir="down" data-pos="'+pos+'" aria-label="Move down">↓</button></span>';
+    list.appendChild(row);
+  });
+  list.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const pos = +btn.getAttribute('data-pos');
+      const dir = btn.getAttribute('data-dir');
+      const swapWith = dir==='up'? pos-1 : pos+1;
+      if(swapWith<0 || swapWith>=work.order.length) return;
+      const tmp = work.order[pos];
+      work.order[pos] = work.order[swapWith];
+      work.order[swapWith] = tmp;
+      renderOrderList(q);
+    });
+  });
+}
+
+/* ============================================================
+   SUBMIT / SCORE CURRENT QUESTION
+   ============================================================ */
+function submitCurrent(){
+  const q = Q[idx];
+  let frac = 0, userSummary = "No answer selected", correctSummary = "";
+
+  if(q.type==="mcq"){
+    const sel = document.querySelector('#opt-list input:checked');
+    const chosen = sel ? +sel.value : -1;
+    frac = chosen===q.correct ? 1 : 0;
+    userSummary = chosen>=0 ? q.options[chosen] : "No answer selected";
+    correctSummary = q.options[q.correct];
+  }
+  else if(q.type==="sata"){
+    const checked = Array.from(document.querySelectorAll('#opt-list input:checked')).map(el=>+el.value);
+    const correctCount = checked.filter(i=>q.correctSet.includes(i)).length;
+    const wrongCount = checked.filter(i=>!q.correctSet.includes(i)).length;
+    frac = partialFraction(correctCount, wrongCount, q.correctSet.length);
+    userSummary = checked.length? checked.map(i=>q.options[i]).join("; ") : "No selections made";
+    correctSummary = q.correctSet.map(i=>q.options[i]).join("; ");
+  }
+  else if(q.type==="cloze"){
+    const sel = document.getElementById('cloze-select');
+    const chosen = sel.value!=="" ? +sel.value : -1;
+    frac = chosen===q.correct ? 1 : 0;
+    userSummary = chosen>=0 ? q.options[chosen] : "No answer selected";
+    correctSummary = q.options[q.correct];
+  }
+  else if(q.type==="matrix"){
+    let correctRows=0;
+    const userRows=[];
+    q.rows.forEach((r,ri)=>{
+      const sel = document.querySelector('input[name="mrow'+ri+'"]:checked');
+      const chosen = sel? +sel.value : -1;
+      userRows.push(chosen>=0? q.cols[chosen] : "—");
+      if(chosen===q.correctCols[ri]) correctRows++;
+    });
+    frac = correctRows/q.rows.length;
+    userSummary = q.rows.map((r,i)=>r+": "+userRows[i]).join(" | ");
+    correctSummary = q.rows.map((r,i)=>r+": "+q.cols[q.correctCols[i]]).join(" | ");
+  }
+  else if(q.type==="bowtie"){
+    const condSel = document.querySelector('input[name="bt-cond"]:checked');
+    const condChosen = condSel? +condSel.value : -1;
+    const condFrac = condChosen===q.conditionCorrect ? 1 : 0;
+
+    const actChecked = Array.from(document.querySelectorAll('input[name="bt-act"]:checked')).map(el=>+el.value);
+    const actCorrectCount = actChecked.filter(i=>q.actionsCorrect.includes(i)).length;
+    const actWrongCount = actChecked.filter(i=>!q.actionsCorrect.includes(i)).length;
+    const actFrac = partialFraction(actCorrectCount, actWrongCount, q.actionsCorrect.length);
+
+    const outChecked = Array.from(document.querySelectorAll('input[name="bt-out"]:checked')).map(el=>+el.value);
+    const outCorrectCount = outChecked.filter(i=>q.outcomesCorrect.includes(i)).length;
+    const outWrongCount = outChecked.filter(i=>!q.outcomesCorrect.includes(i)).length;
+    const outFrac = partialFraction(outCorrectCount, outWrongCount, q.outcomesCorrect.length);
+
+    frac = (condFrac+actFrac+outFrac)/3;
+    userSummary = "Condition: "+(condChosen>=0?q.conditionOptions[condChosen]:"—")+
+      " | Actions: "+(actChecked.length?actChecked.map(i=>q.actionOptions[i]).join(", "):"—")+
+      " | Outcomes: "+(outChecked.length?outChecked.map(i=>q.outcomeOptions[i]).join(", "):"—");
+    correctSummary = "Condition: "+q.conditionOptions[q.conditionCorrect]+
+      " | Actions: "+q.actionsCorrect.map(i=>q.actionOptions[i]).join(", ")+
+      " | Outcomes: "+q.outcomesCorrect.map(i=>q.outcomeOptions[i]).join(", ");
+  }
+  else if(q.type==="priority"){
+    let correctPos=0;
+    work.order.forEach((itemIdx,pos)=>{ if(itemIdx===q.correctOrder[pos]) correctPos++; });
+    frac = correctPos/q.correctOrder.length;
+    userSummary = work.order.map(i=>q.items[i]).join(" → ");
+    correctSummary = q.correctOrder.map(i=>q.items[i]).join(" → ");
+  }
+  else if(q.type==="highlight"){
+    const sel = Array.from(work.selected||[]);
+    const correctCount = sel.filter(i=>q.correctIdx.includes(i)).length;
+    const wrongCount = sel.filter(i=>!q.correctIdx.includes(i)).length;
+    frac = partialFraction(correctCount, wrongCount, q.correctIdx.length);
+    userSummary = sel.length? sel.map(i=>q.phrases[i]).join("; ") : "No selections made";
+    correctSummary = q.correctIdx.map(i=>q.phrases[i]).join("; ");
+  }
+
+  answers[idx] = {frac, userSummary, correctSummary};
+
+  idx++;
+  if(idx>=Q.length){
+    finishExam();
+  } else {
+    renderQuestion();
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+}
+
+/* ============================================================
+   START / FINISH
+   ============================================================ */
+function startExam(){
+  started = true;
+  screenStart.classList.add('hidden');
+  screenExam.classList.remove('hidden');
+  vitalsStrip.classList.remove('hidden');
+  renderQuestion();
+  timerHandle = setInterval(tick, 1000);
+}
+
+function finishExam(){
+  clearInterval(timerHandle);
+  screenExam.classList.add('hidden');
+  vitalsStrip.classList.add('hidden');
+  screenResults.classList.remove('hidden');
+
+  // total score
+  let totalFrac = 0;
+  answers.forEach(a=>{ if(a) totalFrac += a.frac; });
+  const pct = Math.round((totalFrac/Q.length)*100);
+  $("#score-big").textContent = pct+"%";
+  $("#score-sub").textContent = totalFrac.toFixed(1)+" of "+Q.length+" points earned";
+
+  // category breakdown
+  const catTotals = {};
+  const catCounts = {};
+  Q.forEach((q,i)=>{
+    catTotals[q.cat] = (catTotals[q.cat]||0) + (answers[i]? answers[i].frac : 0);
+    catCounts[q.cat] = (catCounts[q.cat]||0) + 1;
+  });
+  let barsHtml = "";
+  Object.keys(CATS).forEach(code=>{
+    const total = catTotals[code]||0;
+    const count = catCounts[code]||0;
+    const catPct = count? Math.round((total/count)*100) : 0;
+    barsHtml += '<div class="cat-bar-row"><span>'+CATS[code].name+'</span>'+
+      '<div class="cat-bar-track"><div class="cat-bar-fill" style="width:'+catPct+'%;background:'+CATS[code].color+'"></div></div>'+
+      '<span class="cat-bar-pct">'+catPct+'%</span></div>';
+  });
+  $("#cat-bars").innerHTML = barsHtml;
+
+  // full review
+  let reviewHtml = "";
+  Q.forEach((q,i)=>{
+    const a = answers[i] || {frac:0,userSummary:"Not answered",correctSummary:""};
+    const markClass = a.frac>=0.999 ? "full" : (a.frac>0 ? "part" : "none");
+    const markLabel = a.frac>=0.999 ? "✓" : (a.frac>0 ? "½" : "✕");
+    reviewHtml += '<details class="review-item"><summary><span class="rmark '+markClass+'">'+markLabel+'</span>'+
+      '<span><b>Q'+(i+1)+'.</b> '+q.stem.substring(0,90)+(q.stem.length>90?'…':'')+' <span style="color:var(--muted)">('+CATS[q.cat].name+')</span></span></summary>'+
+      '<div class="review-body">'+
+      '<div class="yourans"><b>Your answer:</b> '+a.userSummary+'</div>'+
+      (a.correctSummary? '<div class="correctans" style="margin-top:6px;"><b>Correct answer:</b> '+a.correctSummary+'</div>' : '')+
+      '<div class="rat"><b>Rationale:</b> '+q.rationale+'</div>'+
+      '</div></details>';
+  });
+  $("#review-list").innerHTML = reviewHtml;
+
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+function restartExam(){
+  idx = 0;
+  timeLeft = TOTAL_SECONDS;
+  answers = new Array(Q.length).fill(null);
+  screenResults.classList.add('hidden');
+  screenStart.classList.remove('hidden');
+  $("#timer").textContent = fmtTime(TOTAL_SECONDS);
+  $("#timer").classList.remove("warn","danger");
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+$("#btn-start").addEventListener('click', startExam);
+$("#btn-restart").addEventListener('click', restartExam);
+$("#timer").textContent = fmtTime(TOTAL_SECONDS);
+
+})();
+</script>
+</body>
+</html>
