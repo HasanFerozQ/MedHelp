@@ -521,6 +521,7 @@ window.CalcUI = {
   },
 
   _renderRole(roleId) {
+    this._currentRole = roleId;
     const role = CalcRegistry.roles.find(r => r.id === roleId);
     const calcs = CalcRegistry.getByRole(roleId);
     const bySpec = {};
@@ -548,7 +549,7 @@ window.CalcUI = {
             </div>
           </label>
         </div>
-        <div class="panel-note">Values are shared across all ER calculators for fast bedside input.</div>
+        <div class="panel-note">Values are shared across all ${roleId === 'icu' ? 'ICU / Critical Care' : 'ER'} calculators for fast bedside input.</div>
       </div>` : ''}
     </div>`;
 
@@ -906,7 +907,7 @@ window.CalcUI = {
         <span class="er-banner-title">Active Patient</span>
         <span class="er-banner-pills">${pills.join('')}</span>
       </span>
-      <span class="er-banner-note">Shared across ER calculators</span>
+      <span class="er-banner-note">Shared across ${this._currentRole === 'icu' ? 'ICU / Critical Care' : 'ER'} calculators</span>
     </div>`;
     if (existing) {
       existing.outerHTML = bannerHtml;
