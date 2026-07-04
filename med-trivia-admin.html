@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>MedTrivia Admin | MediHelp</title>
+  <title>MediHelp Admin Portal | MediHelp</title>
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -21,26 +21,16 @@
     .history-table th { color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
     .history-table tr:hover td { background: rgba(var(--accent-rgb), 0.06); }
     .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
-    .badge-scheduled { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
-    .badge-live { background: rgba(16, 185, 129, 0.15); color: #10b981; }
-    .badge-draft { background: rgba(148, 163, 184, 0.15); color: #94a3b8; }
-    .badge-closed { background: rgba(239, 68, 68, 0.12); color: #f87171; }
-    .badge-today { background: rgba(250, 204, 21, 0.2); color: #facc15; border: 1px solid rgba(250, 204, 21, 0.35); animation: pulse-today 2s ease-in-out infinite; }
-    @keyframes pulse-today { 0%,100% { box-shadow: 0 0 0 0 rgba(250,204,21,0.3); } 50% { box-shadow: 0 0 8px 2px rgba(250,204,21,0.25); } }
-    .row-today td { background: rgba(250, 204, 21, 0.04) !important; border-left: 3px solid #facc15; }
-    .row-today td:first-child { border-left: 3px solid #facc15; }
     .mono { font-family: ui-monospace, monospace; font-size: 12px; color: var(--text-muted); }
     .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .login-row { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: end; max-width: 520px; }
     .err { color: #f87171; font-size: 13px; margin-top: 8px; }
     .hidden { display: none !important; }
-    /* Action buttons in history table */
     .act-btn { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 600; border: 1px solid var(--border); background: transparent; color: var(--text-h); cursor: pointer; transition: all .15s ease; white-space: nowrap; }
     .act-btn:hover { background: rgba(var(--accent-rgb), 0.12); border-color: var(--accent); }
     .act-btn.danger { color: #f87171; }
     .act-btn.danger:hover { background: rgba(239, 68, 68, 0.12); border-color: #f87171; }
     .act-group { display: flex; gap: 6px; }
-    /* Modal overlay */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(4px); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
     .modal-overlay.open { opacity: 1; pointer-events: auto; }
     .modal-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; max-width: 420px; width: 92%; box-shadow: 0 16px 48px rgba(0,0,0,.4); transform: translateY(12px); transition: transform .2s ease; }
@@ -59,15 +49,15 @@
     <div class="admin-card">
       <div class="toolbar">
         <div>
-          <h1 style="margin:0 0 6px;">MedTrivia Admin</h1>
-          <p class="hint" style="margin:0;">Enter your <strong>Trivia Admin Secret</strong> to view quiz history and upload sets.</p>
+          <h1 style="margin:0 0 6px;">MediHelp Admin Portal</h1>
+          <p class="hint" style="margin:0;">Enter your <strong>Admin Secret</strong> to view user feedback and contact messages.</p>
         </div>
-        <a href="/med-trivia" class="btn btn-ghost">← Live lobby</a>
+        <a href="/" class="btn btn-ghost">← Home</a>
       </div>
 
       <div id="login-gate">
         <label class="admin-grid" style="max-width:520px;">
-          <span class="hint">Trivia Admin Secret</span>
+          <span class="hint">Admin Secret</span>
           <div class="login-row">
             <input id="admin-secret" type="password" placeholder="Enter admin secret" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
             <button type="button" id="unlock-btn" class="btn btn-primary">Unlock</button>
@@ -110,82 +100,6 @@
           <button type="button" id="prev-feedback-page" class="btn btn-ghost" style="padding: 6px 12px; font-size: 12px; border-radius: 8px;">← Previous</button>
           <span id="feedback-page-info" class="hint" style="margin: 0 4px; line-height: 2;">Page 1 of 1</span>
           <button type="button" id="next-feedback-page" class="btn btn-ghost" style="padding: 6px 12px; font-size: 12px; border-radius: 8px;">Next →</button>
-        </div>
-      </div>
-
-      <div class="admin-card">
-        <div class="toolbar">
-          <h2 style="margin:0;">Quiz history</h2>
-          <button type="button" id="refresh-list" class="btn btn-ghost">Refresh</button>
-        </div>
-        <p class="hint" style="margin:0 0 12px;">Newest created first. Same <strong>scheduled date</strong> = one row (re-upload updates that set).</p>
-        <p id="list-status" class="hint">—</p>
-        <div style="overflow-x:auto;">
-          <table class="history-table">
-            <thead>
-              <tr>
-                <th>Quiz date</th>
-                <th>Title</th>
-                <th>Questions</th>
-                <th>Participants</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th>Published</th>
-                <th>Set ID</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="sets-body">
-              <tr><td colspan="9" class="hint">—</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="admin-card admin-grid">
-        <h2 style="margin:0;">Upload next quiz</h2>
-        <p class="hint">Exactly 10 questions as JSON. Pick a <strong>new scheduled date</strong> for a new quiz, or the same date to replace questions.</p>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-          <label class="admin-grid" style="margin:0;">
-            <span class="hint">Scheduled date (unique key)</span>
-            <input id="scheduled-date" type="date">
-          </label>
-          <input id="title" placeholder="Set title" value="MedTrivia Daily">
-        </div>
-        <textarea id="questions-json" placeholder='[{"question_order":1,"prompt":"...","options":["A","B","C","D"],"correct_index":0,"rationale":"..."}]'></textarea>
-        <label style="display:flex;align-items:center;gap:8px;"><input id="publish" type="checkbox" checked style="width:auto;"> Publish immediately (status → scheduled)</label>
-        <button id="submit" class="btn btn-primary">Upload set</button>
-        <pre id="result" class="hint" style="margin:0; white-space:pre-wrap;"></pre>
-      </div>
-    </div>
-
-    <!-- Change-Date Modal -->
-    <div id="modal-change-date" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-change-date')">
-      <div class="modal-box">
-        <h3>📅 Change Quiz Date</h3>
-        <p id="cd-info"></p>
-        <label class="admin-grid" style="margin:0;">
-          <span class="hint">New scheduled date</span>
-          <input id="cd-new-date" type="date">
-        </label>
-        <p id="cd-error" class="err hidden"></p>
-        <div class="modal-actions">
-          <button class="btn btn-ghost" onclick="closeModal('modal-change-date')">Cancel</button>
-          <button id="cd-confirm" class="btn btn-primary">Change Date</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Delete Confirmation Modal -->
-    <div id="modal-delete" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-delete')">
-      <div class="modal-box">
-        <h3>🗑️ Delete Quiz</h3>
-        <p id="del-info"></p>
-        <p style="color:#f87171; font-size:13px; font-weight:600; margin:0 0 8px;">This will permanently delete the quiz, all questions, sessions, and responses. This cannot be undone.</p>
-        <p id="del-error" class="err hidden"></p>
-        <div class="modal-actions">
-          <button class="btn btn-ghost" onclick="closeModal('modal-delete')">Cancel</button>
-          <button id="del-confirm" class="btn btn-primary" style="background:#ef4444; border-color:#ef4444;">Delete Forever</button>
         </div>
       </div>
     </div>
@@ -243,18 +157,6 @@
       return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
     }
 
-    function fmtQuizDate(dateStr) {
-      if (!dateStr) return '—';
-      const d = new Date(dateStr + 'T12:00:00');
-      return d.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-    }
-
-    function statusBadge(status) {
-      const s = (status || 'draft').toLowerCase();
-      const cls = s === 'live' ? 'badge-live' : s === 'scheduled' ? 'badge-scheduled' : s === 'closed' ? 'badge-closed' : 'badge-draft';
-      return `<span class="badge ${cls}">${s}</span>`;
-    }
-
     function escapeHtml(s) {
       return String(s)
         .replace(/&/g, '&amp;')
@@ -264,52 +166,12 @@
         .replace(/'/g, '&#39;');
     }
 
-    function adminInvokePayload(extra) {
-      return { admin_secret: getSecret(), ...extra };
-    }
-
-    function formatInvokeError(error, data) {
-      if (data?.error) return data.error;
-      const msg = error?.message || '';
-      if (/edge function/i.test(msg) || /Failed to send/i.test(msg)) {
-        return 'Admin API not reachable. Redeploy Supabase function: trivia-admin-schedule (see README in repo).';
-      }
-      return msg || 'Request failed';
-    }
-
-    let lastLoadError = '';
-
     async function invokeAdminRpc(fn, args) {
       const db = window.initDbClient();
       if (!db) throw new Error('Database client not ready. Refresh the page.');
       const { data, error } = await db.rpc(fn, args);
       if (error) throw new Error(error.message || 'RPC failed');
       return data;
-    }
-
-    async function invokeAdminEdge(extra) {
-      const db = window.initDbClient();
-      const { data, error } = await db.functions.invoke('trivia-admin-schedule', {
-        body: adminInvokePayload(extra),
-      });
-      return { data, error };
-    }
-
-    async function adminListSets() {
-      try {
-        const data = await invokeAdminRpc('trivia_admin_list_sets', {
-          p_admin_secret: getSecret(),
-        });
-        if (data && typeof data === 'object') return { data, error: null };
-      } catch (rpcErr) {
-        const edge = await invokeAdminEdge({ action: 'list' });
-        if (!edge.error && edge.data) return edge;
-        return {
-          data: edge.data,
-          error: { message: rpcErr.message || formatInvokeError(edge.error, edge.data) },
-        };
-      }
-      return { data: null, error: { message: 'List failed' } };
     }
 
     /* ── Modal helpers ──────────────────────────────────── */
@@ -319,157 +181,6 @@
       // Clear errors
       const errEls = document.getElementById(id).querySelectorAll('.err');
       errEls.forEach(e => { e.textContent = ''; e.classList.add('hidden'); });
-    }
-
-    /* ── Change Date ───────────────────────────────────── */
-    let changeDateSetId = null;
-    let changeDateOldDate = null;
-
-    function openChangeDateModal(setId, currentDate, title) {
-      changeDateSetId = setId;
-      changeDateOldDate = currentDate;
-      document.getElementById('cd-info').innerHTML =
-        `Change the date for <strong>${escapeHtml(title)}</strong><br>` +
-        `Current date: <strong>${fmtQuizDate(currentDate)}</strong>`;
-      document.getElementById('cd-new-date').value = currentDate;
-      document.getElementById('cd-error').classList.add('hidden');
-      document.getElementById('cd-confirm').disabled = false;
-      document.getElementById('cd-confirm').textContent = 'Change Date';
-      openModal('modal-change-date');
-    }
-
-    document.getElementById('cd-confirm').onclick = async () => {
-      const newDate = document.getElementById('cd-new-date').value;
-      const errEl = document.getElementById('cd-error');
-      const btn = document.getElementById('cd-confirm');
-      if (!newDate) { errEl.textContent = 'Select a date'; errEl.classList.remove('hidden'); return; }
-      if (newDate === changeDateOldDate) { errEl.textContent = 'Pick a different date'; errEl.classList.remove('hidden'); return; }
-      btn.disabled = true;
-      btn.textContent = 'Saving…';
-      errEl.classList.add('hidden');
-      try {
-        const data = await invokeAdminRpc('trivia_admin_change_date', {
-          p_admin_secret: getSecret(),
-          p_set_id: changeDateSetId,
-          p_new_date: newDate,
-        });
-        if (!data?.ok) {
-          errEl.textContent = data?.error || 'Failed to change date';
-          errEl.classList.remove('hidden');
-          return;
-        }
-        closeModal('modal-change-date');
-        await loadHistory();
-      } catch (e) {
-        errEl.textContent = e.message || 'Request failed';
-        errEl.classList.remove('hidden');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Change Date';
-      }
-    };
-
-    /* ── Delete Set ────────────────────────────────────── */
-    let deleteSetId = null;
-
-    function openDeleteModal(setId, currentDate, title) {
-      deleteSetId = setId;
-      document.getElementById('del-info').innerHTML =
-        `You are about to delete <strong>${escapeHtml(title)}</strong>` +
-        ` (${fmtQuizDate(currentDate)}).`;
-      document.getElementById('del-error').classList.add('hidden');
-      document.getElementById('del-confirm').disabled = false;
-      document.getElementById('del-confirm').textContent = 'Delete Forever';
-      openModal('modal-delete');
-    }
-
-    document.getElementById('del-confirm').onclick = async () => {
-      const errEl = document.getElementById('del-error');
-      const btn = document.getElementById('del-confirm');
-      btn.disabled = true;
-      btn.textContent = 'Deleting…';
-      errEl.classList.add('hidden');
-      try {
-        const data = await invokeAdminRpc('trivia_admin_delete_set', {
-          p_admin_secret: getSecret(),
-          p_set_id: deleteSetId,
-        });
-        if (!data?.ok) {
-          errEl.textContent = data?.error || 'Failed to delete set';
-          errEl.classList.remove('hidden');
-          return;
-        }
-        closeModal('modal-delete');
-        await loadHistory();
-      } catch (e) {
-        errEl.textContent = e.message || 'Request failed';
-        errEl.classList.remove('hidden');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Delete Forever';
-      }
-    };
-
-    /* ── Helpers ──────────────────────────────────────── */
-    function getTodayET() {
-      const et = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
-      const y = et.getFullYear();
-      const m = String(et.getMonth() + 1).padStart(2, '0');
-      const d = String(et.getDate()).padStart(2, '0');
-      return `${y}-${m}-${d}`;
-    }
-
-    /* ── Render history table ──────────────────────────── */
-    function renderHistoryTable(sets) {
-      const statusEl = document.getElementById('list-status');
-      const body = document.getElementById('sets-body');
-
-      // Sort by scheduled_date descending (newest date first)
-      const sorted = [...sets].sort((a, b) => {
-        const da = a.scheduled_date || '';
-        const db = b.scheduled_date || '';
-        return db.localeCompare(da);
-      });
-
-      const todayET = getTodayET();
-      statusEl.textContent = `${sorted.length} set(s) — sorted by quiz date (newest first).`;
-
-      if (!sorted.length) {
-        body.innerHTML = '<tr><td colspan="9" class="hint">No sets yet. Upload below or run seed once in SQL.</td></tr>';
-        return;
-      }
-
-      body.innerHTML = sorted.map((row) => {
-        const qOk = row.question_count === 10;
-        const qLabel = qOk ? '10' : `<strong style="color:#f87171">${row.question_count}</strong>`;
-        const joined = row.participants ?? '—';
-        const finished = row.completers ?? '—';
-        const pLabel = `<span style="font-weight:600;">${joined}</span> <span style="color:var(--text-muted); font-size:11px;">joined</span> · <span style="font-weight:600;">${finished}</span> <span style="color:var(--text-muted); font-size:11px;">finished</span>`;
-        const safeTitle = escapeHtml(row.title || 'MedTrivia Daily');
-        const safeDate = escapeHtml(row.scheduled_date || '');
-        const safeId = escapeHtml(row.set_id || '');
-        const isToday = row.scheduled_date === todayET;
-        const todayTag = isToday ? ' <span class="badge badge-today">TODAY</span>' : '';
-        const rowClass = isToday ? ' class="row-today"' : '';
-        return `<tr${rowClass}>
-          <td>${fmtQuizDate(row.scheduled_date)}${todayTag}</td>
-          <td>${safeTitle}</td>
-          <td>${qLabel}</td>
-          <td>${pLabel}</td>
-          <td>${statusBadge(row.status)}</td>
-          <td>${fmtDate(row.created_at)}</td>
-          <td>${fmtDate(row.published_at)}</td>
-          <td class="mono">${row.set_id}</td>
-          <td>
-            <div class="act-group">
-              <button class="act-btn" onclick="openChangeDateModal('${safeId}','${safeDate}','${safeTitle.replace(/'/g, "\\'")}')"
-                title="Change scheduled date">📅 Date</button>
-              <button class="act-btn danger" onclick="openDeleteModal('${safeId}','${safeDate}','${safeTitle.replace(/'/g, "\\'")}')"
-                title="Delete this quiz permanently">🗑️ Delete</button>
-            </div>
-          </td>
-        </tr>`;
-      }).join('');
     }
 
     let allFeedback = [];
@@ -600,55 +311,23 @@
       }
     };
 
-    async function loadHistory() {
-      const statusEl = document.getElementById('list-status');
-      const body = document.getElementById('sets-body');
-      statusEl.textContent = 'Loading…';
-      lastLoadError = '';
-
-      const { data, error } = await adminListSets();
-
-      if (error) {
-        lastLoadError = formatInvokeError(error, data);
-        statusEl.textContent = lastLoadError;
-        body.innerHTML = `<tr><td colspan="9" class="hint">${escapeHtml(lastLoadError)}</td></tr>`;
-        return false;
-      }
-      if (!data?.ok) {
-        lastLoadError = data?.error || 'Could not load sets';
-        statusEl.textContent = lastLoadError;
-        body.innerHTML = '<tr><td colspan="9" class="hint">Could not load sets.</td></tr>';
-        return false;
-      }
-
-      renderHistoryTable(data.sets || []);
-      return true;
-    }
-
     async function unlockAdmin() {
       const secret = getSecret();
       const btn = document.getElementById('unlock-btn');
       if (!secret) {
-        showLoginError('Enter your Trivia Admin Secret.');
+        showLoginError('Enter your Admin Secret.');
         return;
       }
       document.getElementById('login-error').classList.add('hidden');
       btn.disabled = true;
       btn.textContent = 'Checking…';
       try {
-        const [historyOk, feedbackOk] = await Promise.all([loadHistory(), loadFeedback()]);
-        if (historyOk || feedbackOk) {
+        const feedbackOk = await loadFeedback();
+        if (feedbackOk) {
           setUnlocked(true);
           return;
         }
-        const msg = lastLoadError || 'Unlock failed';
-        if (/unauthorized/i.test(msg)) {
-          showLoginError('Wrong admin secret.');
-        } else if (/not configured/i.test(msg)) {
-          showLoginError(msg);
-        } else {
-          showLoginError(msg);
-        }
+        showLoginError('Wrong admin secret.');
       } catch (e) {
         showLoginError(e.message || 'Unlock failed');
       } finally {
@@ -658,11 +337,9 @@
     }
 
     document.getElementById('unlock-btn').onclick = () => unlockAdmin().catch((e) => showLoginError(e.message));
-    document.getElementById('refresh-list').onclick = () => loadHistory().catch((e) => alert(e.message));
     document.getElementById('refresh-feedback').onclick = () => loadFeedback().catch((e) => alert(e.message));
     document.getElementById('lock-btn').onclick = () => {
       setUnlocked(false);
-      document.getElementById('sets-body').innerHTML = '<tr><td colspan="9" class="hint">Locked.</td></tr>';
       document.getElementById('feedback-body').innerHTML = '<tr><td colspan="8" class="hint">Locked.</td></tr>';
       document.getElementById('feedback-status').textContent = 'Locked.';
       document.getElementById('feedback-pagination').classList.add('hidden');
@@ -682,66 +359,11 @@
       }
     };
 
-    document.getElementById('submit').onclick = async () => {
-      const scheduledDate = document.getElementById('scheduled-date').value;
-      const title = document.getElementById('title').value.trim();
-      const publish = document.getElementById('publish').checked;
-      const result = document.getElementById('result');
-      if (!scheduledDate) return alert('Select a scheduled date');
-      if (!getSecret()) return alert('Enter admin secret and unlock first');
-
-      let questions;
-      try {
-        questions = JSON.parse(document.getElementById('questions-json').value);
-      } catch (_) {
-        alert('Invalid JSON payload');
-        return;
-      }
-
-      result.textContent = 'Uploading…';
-      let data;
-      try {
-        data = await invokeAdminRpc('trivia_admin_upsert_set', {
-          p_admin_secret: getSecret(),
-          p_scheduled_date: scheduledDate,
-          p_title: title,
-          p_questions: questions,
-          p_publish: publish,
-        });
-      } catch (rpcErr) {
-        const edge = await invokeAdminEdge({
-          action: 'upload',
-          scheduled_date: scheduledDate,
-          title,
-          publish,
-          questions,
-        });
-        if (edge.error) {
-          result.textContent = formatInvokeError(edge.error, edge.data) || rpcErr.message;
-          return;
-        }
-        data = edge.data;
-      }
-      if (!data?.ok) {
-        result.textContent = data?.error || 'Upload failed';
-        return;
-      }
-      result.textContent = JSON.stringify(data, null, 2);
-      await loadHistory();
-    };
-
     (function init() {
-      // Clear any legacy stored secrets from older admin builds.
       try {
         localStorage.removeItem('mh_trivia_admin_secret');
         sessionStorage.removeItem('mh_trivia_admin_unlocked');
       } catch (_) {}
-
-      const et = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
-      const y = et.getFullYear();
-      const m = String(et.getMonth() + 1).padStart(2, '0');
-      const d = String(et.getDate()).padStart(2, '0');
-      document.getElementById('scheduled-date').value = `${y}-${m}-${d}`;
     })();
   </script>
 </body>

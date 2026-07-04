@@ -455,7 +455,6 @@ const MediHelp = {
             <li><a href="/rx-savings">Rx Savings Search</a></li>
             <li><a href="/providers">Provider Search</a></li>
             <li><a href="/medical-calculator">Medical Calculator</a></li>
-            <li><a href="/med-trivia">MedTrivia Daily</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -523,32 +522,6 @@ const MediHelp = {
     footer.parentNode.insertBefore(wrap, footer);
   },
 
-  initGlobalTriviaBanner: function() {
-    const path = window.location.pathname || '';
-    if (path.includes('/med-trivia')) return;
-    if (document.getElementById('global-trivia-banner')) return;
-
-    const footer = document.querySelector('.site-footer');
-    if (!footer || !footer.parentNode) return;
-
-    const wrap = document.createElement('section');
-    wrap.id = 'global-trivia-banner';
-    wrap.className = 'global-trivia-banner';
-    wrap.innerHTML = `
-      <div class="container">
-        <div style="background:linear-gradient(135deg, rgba(var(--accent-rgb),0.14), rgba(56,189,248,0.08)); border:1px solid rgba(var(--accent-rgb),0.35); border-radius:16px; padding:22px; margin:36px 0 24px;">
-          <div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;">
-            <div>
-              <div style="font-size:12px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em;">Free Daily Clinical Challenge</div>
-              <div style="font-size:22px; font-weight:900; color:var(--text-h); margin-top:4px;">MedTrivia Daily Live at 8:00 PM ET</div>
-              <div style="font-size:14px; color:var(--text-muted); margin-top:6px;">10 timed questions. Instant rationale. Share your score and percentile.</div>
-            </div>
-            <a class="btn" href="/med-trivia" style="white-space:nowrap;">Play MedTrivia</a>
-          </div>
-        </div>
-      </div>
-    `;
-    footer.parentNode.insertBefore(wrap, footer);
   },
 
   initAuthModal: function() {
@@ -564,7 +537,7 @@ const MediHelp = {
         <h2 id="auth-title">Sign In to MediHelp</h2>
         <form id="auth-form" class="auth-form">
           <input type="email" id="auth-email" placeholder="Email" required>
-          <input type="text" id="auth-username" placeholder="Username (for MedTrivia leaderboard)" maxlength="24" style="display:none;">
+          <input type="text" id="auth-username" placeholder="Username" maxlength="24" style="display:none;">
           <div class="password-wrapper">
             <input type="password" id="auth-password" placeholder="Password" required>
             <button type="button" class="password-toggle" id="password-toggle" title="Show/Hide Password">👁️</button>
@@ -814,7 +787,6 @@ const MediHelp = {
     if (path.startsWith('/medical-exam-usmle')) return true;
     if (path.startsWith('/flash-cards')) return true;
     if (path.startsWith('/medical-calculator')) return true;
-    if (path.startsWith('/med-trivia')) return true;
     if (path.includes('medical-exam')) return true;
     if (path.includes('flash-cards')) return true;
     if (path.includes('medical-calculator')) return true;
@@ -825,7 +797,6 @@ const MediHelp = {
     if (href.includes('medical-exam-usmle')) return true;
     if (href.includes('flash-cards')) return true;
     if (href.includes('medical-calculator')) return true;
-    if (href.includes('med-trivia')) return true;
 
     return false;
   },
@@ -1344,7 +1315,6 @@ const MediHelp = {
 document.addEventListener('DOMContentLoaded', async () => {
   MediHelp.initSiteFooter();
   MediHelp.initFeedbackWidget();
-  MediHelp.initGlobalTriviaBanner();
   MediHelp.initMobileNav();
   
   if (MediHelp.isAuthPage()) {
