@@ -26,7 +26,7 @@ Here are the top 10 most common denial codes patients and billers see in 2026, a
 
 ### 3. CO-97 – Service already adjudicated / bundled
 **Why it happens:** The insurer believes the procedure is already covered by another payment. This often happens with surgical "global periods" or when minor services (like a blood draw) are considered part of a larger office visit.
-**How to fix/appeal:** Check if the service was truly secondary. Use our [Medical Bill Audit tool](https://www.medihelp.live/audit) to see if the unbundling was inappropriate. If the services were distinct, appeal with a modifier (like -59) to show they were separate.
+**How to fix/appeal:** Check if the service was truly secondary. Use our [Medical Bill Audit tool](https://www.medihelp.live/medical-bill-audit) to see if the unbundling was inappropriate. If the services were distinct, appeal with a modifier (like -59) to show they were separate.
 
 ### 4. CO-4 – Modifier issues
 **Why it happens:** Modifiers (the two-digit codes like -25 or -51) provide extra context. If they are missing or used incorrectly, the claim is auto-denied.
@@ -76,7 +76,7 @@ Many first-level appeals succeed when you provide the right evidence. Follow the
 
 Stop leaving money on the table. Most denials are fixable with the right knowledge.
 
-👉 **[Audit your medical bill for errors now](https://www.medihelp.live/audit)**
+👉 **[Audit your medical bill for errors now](https://www.medihelp.live/medical-bill-audit)**
 👉 **[Lookup an official CPT Code](https://www.medihelp.live/cpt-code-search)**
 👉 **[Find a local Provider NPI](https://www.medihelp.live/providers)**
 

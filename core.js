@@ -496,7 +496,7 @@ const MediHelp = {
 
   initGlobalNegotiationBanner: function() {
     const path = window.location.pathname || '';
-    if (path.includes('/audit')) return; // audit page has dedicated CTA block
+    if (path.includes('/medical-bill-audit') || path.includes('/audit')) return; // audit page has dedicated CTA block
     if (document.getElementById('global-negotiation-banner')) return;
 
     const footer = document.querySelector('.site-footer');
@@ -516,7 +516,7 @@ const MediHelp = {
             <span>$15 initiation fee</span>
             <span>15% success-based only on realized savings</span>
           </div>
-          <a class="btn global-negotiation-banner__btn" href="/audit#human-negotiation">Start Full Audit + Negotiation</a>
+          <a class="btn global-negotiation-banner__btn" href="/medical-bill-audit#human-negotiation">Start Full Audit + Negotiation</a>
         </div>
       </div>
     `;

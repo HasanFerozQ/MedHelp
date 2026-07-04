@@ -104,7 +104,7 @@ The 2026 hantavirus clusters are a reminder that while we have conquered many di
 
 In the absence of a vaccine or cure, information is your best defense. If you are navigating medical bills or insurance denials related to recent viral testing, MediHelp’s tools are here to help.
 
-**[Decode your insurance denial codes →](https://www.medihelp.live/claim-denial-codes)** **[Look up any CPT or drug billing code →](https://www.medihelp.live/cpt-code-search)** **[Run a free audit on any medical bill →](https://www.medihelp.live/audit)**
+**[Decode your insurance denial codes →](https://www.medihelp.live/claim-denial-codes)** **[Look up any CPT or drug billing code →](https://www.medihelp.live/cpt-code-search)** **[Run a free audit on any medical bill →](https://www.medihelp.live/medical-bill-audit)**
 
 ---
 

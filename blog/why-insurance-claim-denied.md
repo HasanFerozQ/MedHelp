@@ -58,7 +58,7 @@ Understand the exact reason for denial using the lookup tool mentioned above.
 ### Step 2: Check your medical bill
 Look for errors, incorrect charges, or coding issues that might have triggered the denial.
 
-👉 Use our [medical bill audit tool](https://www.medihelp.live/audit) to run a automated check for billing errors.
+👉 Use our [medical bill audit tool](https://www.medihelp.live/medical-bill-audit) to run a automated check for billing errors.
 
 ### Step 3: Verify CPT codes
 Ensure the code billed matches the procedure you received. Incorrect coding is a major cause of total denials.

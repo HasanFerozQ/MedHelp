@@ -76,7 +76,7 @@ Despite the risk signals, experts are not calling for patients to abandon GLP-1 
 
 ---
 
-**[Run your free medical bill audit now →](https://www.medihelp.live/audit)**
+**[Run your free medical bill audit now →](https://www.medihelp.live/medical-bill-audit)**
 
 ---
 *Medical Disclaimer: This content is for informational purposes only and does not constitute medical advice. Always consult with a licensed healthcare provider.*

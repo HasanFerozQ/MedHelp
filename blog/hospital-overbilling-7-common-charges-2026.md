@@ -29,7 +29,7 @@ It can happen because:
 - Two departments both submitted a charge for the same item
 - A procedure performed on one day was mistakenly billed on two separate dates
 
-**What to do:** Request a fully itemized bill — not the summary version. Go through every line item and look for the same CPT code appearing more than once without a clinical reason. MediHelp's [free Bill Audit Tool](https://www.medihelp.live/audit) automatically flags duplicate CPT codes in real time.
+**What to do:** Request a fully itemized bill — not the summary version. Go through every line item and look for the same CPT code appearing more than once without a clinical reason. MediHelp's [free Bill Audit Tool](https://www.medihelp.live/medical-bill-audit) automatically flags duplicate CPT codes in real time.
 
 ---
 
@@ -134,7 +134,7 @@ Now that you know what to look for, here's a simple process to audit any hospita
 ![MediHelp — Free medical bill audit tool](https://www.medihelp.live/images/homepage-hero.png)
 
 > **Studies show 80% of medical bills contain errors.** MediHelp's free tools and expert human advocates help patients find and fight back before they pay.  
-> **[Run a Free Audit →](https://www.medihelp.live/audit)**
+> **[Run a Free Audit →](https://www.medihelp.live/medical-bill-audit)**
 
 ---
 
@@ -161,7 +161,7 @@ Hospital billing is one of the most error-prone processes in any industry — an
 
 The average overbilling error MediHelp identifies is **$2,300**. A 10-minute audit could save you more than most people make in a week.
 
-**[Run your free medical bill audit now →](https://www.medihelp.live/audit)**
+**[Run your free medical bill audit now →](https://www.medihelp.live/medical-bill-audit)**
 
 ---
 

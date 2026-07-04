@@ -136,7 +136,7 @@ In the meantime, your state medical marijuana program works exactly as it did ye
 
 **[Decode your insurance denial codes →](https://www.medihelp.live/claim-denial-codes)**  
 **[Look up any CPT or drug billing code →](https://www.medihelp.live/cpt-code-search)**  
-**[Run a free audit on any medical bill →](https://www.medihelp.live/audit)**
+**[Run a free audit on any medical bill →](https://www.medihelp.live/medical-bill-audit)**
 
 ---
 

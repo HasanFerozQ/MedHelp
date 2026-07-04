@@ -86,4 +86,4 @@ If you want a professional team to **audit your bill and negotiate directly with
 - 15% success-based fee only on realized savings
 - Structured case ID and consent-backed intake process
 
-[Start Full Audit + Human Negotiation](https://www.medihelp.live/audit)
+[Start Full Audit + Human Negotiation](https://www.medihelp.live/medical-bill-audit)

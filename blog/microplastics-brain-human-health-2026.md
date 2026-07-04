@@ -74,7 +74,7 @@ The science is still evolving, but practical steps can meaningfully reduce your 
 
 ---
 
-**[Run your free medical bill audit now →](https://www.medihelp.live/audit)**
+**[Run your free medical bill audit now →](https://www.medihelp.live/medical-bill-audit)**
 
 ---
 *Medical Disclaimer: This content is for informational purposes only and does not constitute medical advice. Always consult with a licensed healthcare provider.*

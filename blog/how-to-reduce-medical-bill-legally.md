@@ -29,7 +29,7 @@ Many patients pay more than they should simply because they don’t question the
 ### 1) Audit your medical bill
 The first step is checking for errors like duplicate charges, unbundled procedures, or incorrect services. 
 
-👉 Use our [medical bill audit tool](https://www.medihelp.live/audit) to identify coding mistakes and overcharges instantly.
+👉 Use our [medical bill audit tool](https://www.medihelp.live/medical-bill-audit) to identify coding mistakes and overcharges instantly.
 
 ### 2) Verify CPT codes
 Healthcare providers use CPT codes to identify services. If the code on your bill doesn't match the service you received, you are likely overpaying.
@@ -79,4 +79,4 @@ Medical bills are not always final — and they are not always correct. Taking a
 ---
 
 ### Ready to reduce your costs?
-👉 **[Start auditing your medical bill and reduce your balance today. Check your medical bill now.](https://www.medihelp.live/audit)**
+👉 **[Start auditing your medical bill and reduce your balance today. Check your medical bill now.](https://www.medihelp.live/medical-bill-audit)**

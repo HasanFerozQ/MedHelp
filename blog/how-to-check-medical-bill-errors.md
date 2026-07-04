@@ -61,7 +61,7 @@ Many patients save hundreds to thousands of dollars by auditing their bills. Eve
 
 Instead of doing everything manually, you can use automation to catch what the human eye might miss.
 
-👉 Use our [medical bill audit tool](https://www.medihelp.live/audit) to:
+👉 Use our [medical bill audit tool](https://www.medihelp.live/medical-bill-audit) to:
 - **Enter bill items** or upload a PDF.
 - **Detect errors** and unbundling automatically.
 - **Identify overcharges** with precision.
@@ -79,4 +79,4 @@ Medical bills are not always accurate. Taking just a few minutes to review your 
 ---
 
 ### Ready to take control?
-👉 **[Check your medical bill now and avoid overpaying. Start your audit here.](https://www.medihelp.live/audit)**
+👉 **[Check your medical bill now and avoid overpaying. Start your audit here.](https://www.medihelp.live/medical-bill-audit)**
