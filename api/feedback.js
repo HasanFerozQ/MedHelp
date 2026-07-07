@@ -1,5 +1,30 @@
 const { createClient } = require('@supabase/supabase-js');
 const { createSmtpTransport, smtpConfig, friendlySmtpError } = require('./_lib/smtp');
+const { verifyRecaptchaToken } = require('./_lib/recaptcha');
+
+const DEFAULT_ALLOWED_ORIGINS = [
+  'https://www.medihelp.live',
+  'https://medihelp.live',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000'
+];
+
+function getAllowedOrigins() {
+  const configured = String(process.env.CORS_ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
+  return configured.length > 0 ? configured : DEFAULT_ALLOWED_ORIGINS;
+}
+
+function setCorsHeaders(req, res) {
+  const origin = req.headers.origin;
+  const allowed = getAllowedOrigins();
+  if (origin && allowed.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+}
+
 
 function required(value) {
   return value !== undefined && value !== null && String(value).trim() !== '';
@@ -59,15 +84,22 @@ async function sendFeedbackEmail({ source, type, name, email, phone, message, pa
 }
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCorsHeaders(req, res);
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Method not allowed' });
 
   try {
     const body = req.body || {};
+    const recaptchaToken = body.recaptcha_token;
+
+    // Verify reCAPTCHA v3 bot protection token
+    const clientIp = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || '';
+    const recaptchaResult = await verifyRecaptchaToken(recaptchaToken, clientIp.split(',')[0].trim());
+    if (!recaptchaResult.success) {
+      return res.status(400).json({ ok: false, error: 'Security validation failed (reCAPTCHA v3). Please refresh and try again.' });
+    }
+
     const source = sanitize(body.source || 'website');
     const type = sanitize(body.type || 'General Inquiry');
     const email = sanitize(body.email);

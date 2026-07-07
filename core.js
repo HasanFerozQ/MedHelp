@@ -9,6 +9,8 @@ const SUPABASE_URL  = 'https://bisqgousuvljttesjkkm.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpc3Fnb3VzdXZsanR0ZXNqa2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDQzMTksImV4cCI6MjA5MDg4MDMxOX0.FSsHfe3gfXc9Ch9oYjcTXm69SS1U2O8JNQcw637Eyy4';
 
 // 1. Initialize Supabase globally with retry logic
+window.RECAPTCHA_SITE_KEY = '6LeXyEctAAAAAH_iOMGLxvMGtQ1doCo3j1lSwVuR';
+
 window.initDbClient = function() {
   if (window.dbClient) return window.dbClient;
   if (window.supabase) {
@@ -299,6 +301,15 @@ const MediHelp = {
     fab.title = "Send Feedback";
     document.body.appendChild(fab);
 
+    // Load reCAPTCHA v3 script dynamically if not present
+    if (!document.querySelector('script[src*="recaptcha/api.js"]')) {
+      const script = document.createElement('script');
+      script.src = `https://www.google.com/recaptcha/api.js?render=${window.RECAPTCHA_SITE_KEY}`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
     // 2. Create Modal
     const modal = document.createElement('div');
     modal.className = 'feedback-modal';
@@ -369,63 +380,80 @@ const MediHelp = {
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending...';
 
-      try {
-        const resp = await fetch('/api/feedback', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            source: 'feedback-widget',
-            type,
-            name,
-            email,
-            phone,
-            message: msg,
-            page_url: window.location.href
-          })
-        });
+      const sendFormData = async (recaptchaToken = '') => {
+        try {
+          const resp = await fetch('/api/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              source: 'feedback-widget',
+              type,
+              name,
+              email,
+              phone,
+              message: msg,
+              page_url: window.location.href,
+              recaptcha_token: recaptchaToken
+            })
+          });
 
-        const data = await resp.json().catch(() => ({}));
-        if (!resp.ok || !data.ok) {
-          if (data.fallback_mailto) {
-            const useMailto = confirm(
-              (data.error || 'Could not send feedback.') +
-              '\n\nOpen your email app to send this message to support instead?'
-            );
-            if (useMailto) {
-              openFeedbackMailto({ type, name, email, phone, message: msg, support_email: data.support_email });
-              modal.classList.remove('active');
-              form.reset();
-              return;
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok || !data.ok) {
+            if (data.fallback_mailto) {
+              const useMailto = confirm(
+                (data.error || 'Could not send feedback.') +
+                '\n\nOpen your email app to send this message to support instead?'
+              );
+              if (useMailto) {
+                openFeedbackMailto({ type, name, email, phone, message: msg, support_email: data.support_email });
+                modal.classList.remove('active');
+                form.reset();
+                return;
+              }
             }
+            throw new Error(data.error || 'Could not send feedback.');
           }
-          throw new Error(data.error || 'Could not send feedback.');
-        }
 
-        if (data.email_warning) {
+          if (data.email_warning) {
+            form.innerHTML = `
+              <div style="text-align:center; padding: 20px;">
+                <h3 style="color:#ff5555; margin-bottom:8px;">Database Saved, Email Failed</h3>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">Your feedback was saved in the admin panel, but the email notification failed to send due to a configuration error:</p>
+                <div style="background:rgba(255,0,0,0.1); border: 1px solid rgba(255,0,0,0.2); color:#ff5555; padding:10px; border-radius:6px; font-size:12px; margin-bottom:16px;">${escapeHtml(data.email_warning)}</div>
+                <button type="button" onclick="document.getElementById('feedback-modal').classList.remove('active'); setTimeout(()=>location.reload(),300)" class="btn btn-ghost">Close</button>
+              </div>
+            `;
+            return;
+          }
+
           form.innerHTML = `
             <div style="text-align:center; padding: 20px;">
-              <h3 style="color:#ff5555; margin-bottom:8px;">Database Saved, Email Failed</h3>
-              <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">Your feedback was saved in the admin panel, but the email notification failed to send due to a configuration error:</p>
-              <div style="background:rgba(255,0,0,0.1); border: 1px solid rgba(255,0,0,0.2); color:#ff5555; padding:10px; border-radius:6px; font-size:12px; margin-bottom:16px;">${data.email_warning}</div>
-              <button type="button" onclick="document.getElementById('feedback-modal').classList.remove('active'); setTimeout(()=>location.reload(),300)" class="btn btn-ghost">Close</button>
+              <div style="margin-bottom: 24px; display: flex; justify-content: center;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--accent);"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <h3 style="color:var(--accent); margin-bottom:8px;">Feedback Sent</h3>
+              <p style="font-size:13px; color:var(--text-muted);">Thank you! Our team will review it soon.</p>
+              <button type="button" onclick="document.getElementById('feedback-modal').classList.remove('active'); setTimeout(()=>location.reload(),300)" class="btn btn-ghost" style="margin-top:10px;">Close</button>
             </div>
           `;
-          return;
+        } catch (err) {
+          alert(err.message || 'Failed to send feedback. Please try again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Feedback';
         }
+      };
 
-        form.innerHTML = `
-          <div style="text-align:center; padding: 20px;">
-            <div style="margin-bottom: 24px; display: flex; justify-content: center;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--accent);"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <h3 style="color:var(--accent); margin-bottom:8px;">Feedback Sent</h3>
-            <p style="font-size:13px; color:var(--text-muted);">Thank you! Our team will review it soon.</p>
-            <button type="button" onclick="document.getElementById('feedback-modal').classList.remove('active'); setTimeout(()=>location.reload(),300)" class="btn btn-ghost" style="margin-top:10px;">Close</button>
-          </div>
-        `;
-      } catch (err) {
-        alert(err.message || 'Failed to send feedback. Please try again.');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Feedback';
+      if (typeof grecaptcha !== 'undefined') {
+        grecaptcha.ready(() => {
+          grecaptcha.execute(window.RECAPTCHA_SITE_KEY, { action: 'feedback' })
+            .then((token) => {
+              sendFormData(token);
+            })
+            .catch(() => {
+              sendFormData('');
+            });
+        });
+      } else {
+        sendFormData('');
       }
     };
   },
@@ -911,7 +939,7 @@ const MediHelp = {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
           </svg>
-          <span style="overflow:hidden;text-overflow:ellipsis;">${emailShort}</span>
+          <span style="overflow:hidden;text-overflow:ellipsis;">${escapeHtml(emailShort)}</span>
         `;
 
         const logoutBtn = document.createElement('button');
@@ -977,9 +1005,9 @@ const MediHelp = {
     notif.innerHTML = `
       <div class="mh-notif-icon">${icon}</div>
       <div class="mh-notif-content">
-        <div class="mh-notif-h">${title}</div>
-        <div class="mh-notif-p">${message}</div>
-        ${action ? `<a href="${action.url}" class="mh-notif-btn">${action.text}</a>` : ''}
+        <div class="mh-notif-h">${escapeHtml(title)}</div>
+        <div class="mh-notif-p">${escapeHtml(message)}</div>
+        ${action ? `<a href="${escapeHtml(action.url)}" class="mh-notif-btn">${escapeHtml(action.text)}</a>` : ''}
       </div>
       <button class="mh-notif-close" style="background:none; border:none; color:inherit; opacity:0.5; cursor:pointer; padding:5px; margin-left:10px; font-size:18px;" onclick="this.parentElement.remove()">×</button>
     `;

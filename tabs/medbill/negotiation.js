@@ -66,6 +66,15 @@ console.log('MediHelp: negotiation.js loaded.');
     const form = document.getElementById('negotiator-form');
     if (!form) return;
 
+    // Load reCAPTCHA v3 script dynamically if not present
+    if (window.RECAPTCHA_SITE_KEY && !document.querySelector('script[src*="recaptcha/api.js"]')) {
+      const script = document.createElement('script');
+      script.src = `https://www.google.com/recaptcha/api.js?render=${window.RECAPTCHA_SITE_KEY}`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
     const visitType = document.getElementById('neg-visit-type');
     const visitOther = document.getElementById('neg-visit-other');
     const fullName = document.getElementById('neg-full-name');
@@ -141,99 +150,116 @@ console.log('MediHelp: negotiation.js loaded.');
         return;
       }
 
-      const fd = new FormData();
-      fd.append('bill', billFile);
-      const eobFile = document.getElementById('neg-eob')?.files?.[0];
-      if (eobFile) fd.append('eob', eobFile);
+      const submitForm = async (recaptchaToken = '') => {
+        const fd = new FormData();
+        fd.append('bill', billFile);
+        const eobFile = document.getElementById('neg-eob')?.files?.[0];
+        if (eobFile) fd.append('eob', eobFile);
 
-      fd.append('fullName', (fullName?.value || '').trim());
-      fd.append('email', (document.getElementById('neg-email')?.value || '').trim());
-      fd.append('phone', (document.getElementById('neg-phone')?.value || '').trim());
-      fd.append('providerName', (document.getElementById('neg-provider-name')?.value || '').trim());
-      fd.append('billAmount', (document.getElementById('neg-bill-amount')?.value || '').trim());
-      fd.append('dateOfService', (document.getElementById('neg-dos')?.value || '').trim());
-      fd.append('hasInsurance', (document.getElementById('neg-insurance')?.value || '').trim());
-      fd.append('claimStatus', (document.getElementById('neg-claim-status')?.value || '').trim());
-      fd.append('visitType', (visitType?.value || '').trim());
-      fd.append('visitTypeOther', (visitOther?.value || '').trim());
-      fd.append('financialDifficulty', (document.getElementById('neg-financial-diff')?.value || '').trim());
-      fd.append('monthlyIncome', (document.getElementById('neg-income-range')?.value || '').trim());
-      fd.append('hardshipChecked', String(!!document.getElementById('neg-hardship')?.checked));
-      fd.append('negotiationGoal', selectedGoal.value);
-      fd.append('authorizationConsent', String(!!document.getElementById('neg-auth-consent')?.checked));
-      fd.append('successFeeConsent', String(!!document.getElementById('neg-success-fee')?.checked));
-      fd.append('upfrontFeeConsent', String(!!document.getElementById('neg-upfront-fee')?.checked));
-      fd.append('signatureName', (signName?.value || '').trim());
-      fd.append('signatureDate', (signDate?.value || '').trim());
-      fd.append('savingsPotential', getCurrentSavingsValue().toFixed(2));
-      fd.append('findingsCount', String(getCurrentFindingsCount()));
-      fd.append('source', 'audit-page');
-
-      if (result) {
-        result.style.color = 'var(--text-muted)';
-        result.textContent = 'Submitting intake...';
-      }
-
-      try {
-        const baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-          ? 'http://localhost:3000'
-          : '';
-        const res = await fetch(`${baseUrl}/api/negotiation-intake`, { method: 'POST', body: fd });
-        const raw = await res.text();
-        let d = {};
-        try { d = JSON.parse(raw); } catch { throw new Error(`Server returned non-JSON response: ${raw.slice(0, 120)}`); }
-        if (!d.ok) throw new Error(d.error || 'Submission failed');
+        fd.append('fullName', (fullName?.value || '').trim());
+        fd.append('email', (document.getElementById('neg-email')?.value || '').trim());
+        fd.append('phone', (document.getElementById('neg-phone')?.value || '').trim());
+        fd.append('providerName', (document.getElementById('neg-provider-name')?.value || '').trim());
+        fd.append('billAmount', (document.getElementById('neg-bill-amount')?.value || '').trim());
+        fd.append('dateOfService', (document.getElementById('neg-dos')?.value || '').trim());
+        fd.append('hasInsurance', (document.getElementById('neg-insurance')?.value || '').trim());
+        fd.append('claimStatus', (document.getElementById('neg-claim-status')?.value || '').trim());
+        fd.append('visitType', (visitType?.value || '').trim());
+        fd.append('visitTypeOther', (visitOther?.value || '').trim());
+        fd.append('financialDifficulty', (document.getElementById('neg-financial-diff')?.value || '').trim());
+        fd.append('monthlyIncome', (document.getElementById('neg-income-range')?.value || '').trim());
+        fd.append('hardshipChecked', String(!!document.getElementById('neg-hardship')?.checked));
+        fd.append('negotiationGoal', selectedGoal.value);
+        fd.append('authorizationConsent', String(!!document.getElementById('neg-auth-consent')?.checked));
+        fd.append('successFeeConsent', String(!!document.getElementById('neg-success-fee')?.checked));
+        fd.append('upfrontFeeConsent', String(!!document.getElementById('neg-upfront-fee')?.checked));
+        fd.append('signatureName', (signName?.value || '').trim());
+        fd.append('signatureDate', (signDate?.value || '').trim());
+        fd.append('savingsPotential', getCurrentSavingsValue().toFixed(2));
+        fd.append('findingsCount', String(getCurrentFindingsCount()));
+        fd.append('source', 'audit-page');
+        fd.append('recaptcha_token', recaptchaToken);
 
         if (result) {
-          result.style.color = '#22c55e';
-          result.innerHTML = `
-            <div style="border:1px solid rgba(34,197,94,0.45); background:rgba(34,197,94,0.08); border-radius:10px; padding:12px;">
-              <div style="font-size:13px; font-weight:800; color:#22c55e; margin-bottom:6px;">Submission Completed Successfully</div>
-              <div style="font-size:12px; color:var(--text-main); margin-bottom:8px;">
-                Please save your Case ID for future communication:
-                <span style="font-weight:800; color:var(--text-h); margin-left:6px;">${d.caseId}</span>
+          result.style.color = 'var(--text-muted)';
+          result.textContent = 'Submitting intake...';
+        }
+
+        try {
+          const baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+            ? 'http://localhost:3000'
+            : '';
+          const res = await fetch(`${baseUrl}/api/negotiation-intake`, { method: 'POST', body: fd });
+          const raw = await res.text();
+          let d = {};
+          try { d = JSON.parse(raw); } catch { throw new Error(`Server returned non-JSON response: ${raw.slice(0, 120)}`); }
+          if (!d.ok) throw new Error(d.error || 'Submission failed');
+
+          if (result) {
+            result.style.color = '#22c55e';
+            result.innerHTML = `
+              <div style="border:1px solid rgba(34,197,94,0.45); background:rgba(34,197,94,0.08); border-radius:10px; padding:12px;">
+                <div style="font-size:13px; font-weight:800; color:#22c55e; margin-bottom:6px;">Submission Completed Successfully</div>
+                <div style="font-size:12px; color:var(--text-main); margin-bottom:8px;">
+                  Please save your Case ID for future communication:
+                  <span style="font-weight:800; color:var(--text-h); margin-left:6px;">${d.caseId}</span>
+                </div>
+                <ol style="margin:0 0 0 16px; padding:0; font-size:12px; color:var(--text-main); line-height:1.6;">
+                  <li>Process will take 3-5 working days.</li>
+                  <li>SupportDesk will email payment link and details to your provided email for the $15 initiation fee.</li>
+                  <li>After submission of initiation fee, negotiator starts audit and negotiations and contacts you with results.</li>
+                  <li>Final payment details are shared after successful negotiations (15% of saved amount).</li>
+                </ol>
               </div>
-              <ol style="margin:0 0 0 16px; padding:0; font-size:12px; color:var(--text-main); line-height:1.6;">
-                <li>Process will take 3-5 working days.</li>
-                <li>SupportDesk will email payment link and details to your provided email for the $15 initiation fee.</li>
-                <li>After submission of initiation fee, negotiator starts audit and negotiations and contacts you with results.</li>
-                <li>Final payment details are shared after successful negotiations (15% of saved amount).</li>
-              </ol>
-            </div>
-          `;
+            `;
+          }
+        } catch (err) {
+          const fallback = openMailtoFallback({
+            fullName: (fullName?.value || '').trim(),
+            email: (document.getElementById('neg-email')?.value || '').trim(),
+            phone: (document.getElementById('neg-phone')?.value || '').trim(),
+            providerName: (document.getElementById('neg-provider-name')?.value || '').trim(),
+            billAmount: (document.getElementById('neg-bill-amount')?.value || '').trim(),
+            dateOfService: (document.getElementById('neg-dos')?.value || '').trim(),
+            hasInsurance: (document.getElementById('neg-insurance')?.value || '').trim(),
+            claimStatus: (document.getElementById('neg-claim-status')?.value || '').trim(),
+            visitType: (visitType?.value || '').trim(),
+            visitTypeOther: (visitOther?.value || '').trim(),
+            financialDifficulty: (document.getElementById('neg-financial-diff')?.value || '').trim(),
+            monthlyIncome: (document.getElementById('neg-income-range')?.value || '').trim(),
+            hardshipChecked: String(!!document.getElementById('neg-hardship')?.checked),
+            negotiationGoal: selectedGoal.value,
+            authorizationConsent: String(!!document.getElementById('neg-auth-consent')?.checked),
+            successFeeConsent: String(!!document.getElementById('neg-success-fee')?.checked),
+            upfrontFeeConsent: String(!!document.getElementById('neg-upfront-fee')?.checked),
+            signatureName: (signName?.value || '').trim(),
+            signatureDate: (signDate?.value || '').trim(),
+            savingsPotential: getCurrentSavingsValue().toFixed(2),
+            findingsCount: String(getCurrentFindingsCount()),
+            billFileName: billFile?.name || '',
+            eobFileName: eobFile?.name || ''
+          });
+          if (result) {
+            result.style.color = fallback ? '#f59e0b' : '#ef4444';
+            result.textContent = fallback
+              ? 'API unavailable. Opened email draft fallback. Please attach Bill/EOB and send.'
+              : `Submission failed: ${err.message}`;
+          }
         }
-      } catch (err) {
-        const fallback = openMailtoFallback({
-          fullName: (fullName?.value || '').trim(),
-          email: (document.getElementById('neg-email')?.value || '').trim(),
-          phone: (document.getElementById('neg-phone')?.value || '').trim(),
-          providerName: (document.getElementById('neg-provider-name')?.value || '').trim(),
-          billAmount: (document.getElementById('neg-bill-amount')?.value || '').trim(),
-          dateOfService: (document.getElementById('neg-dos')?.value || '').trim(),
-          hasInsurance: (document.getElementById('neg-insurance')?.value || '').trim(),
-          claimStatus: (document.getElementById('neg-claim-status')?.value || '').trim(),
-          visitType: (visitType?.value || '').trim(),
-          visitTypeOther: (visitOther?.value || '').trim(),
-          financialDifficulty: (document.getElementById('neg-financial-diff')?.value || '').trim(),
-          monthlyIncome: (document.getElementById('neg-income-range')?.value || '').trim(),
-          hardshipChecked: String(!!document.getElementById('neg-hardship')?.checked),
-          negotiationGoal: selectedGoal.value,
-          authorizationConsent: String(!!document.getElementById('neg-auth-consent')?.checked),
-          successFeeConsent: String(!!document.getElementById('neg-success-fee')?.checked),
-          upfrontFeeConsent: String(!!document.getElementById('neg-upfront-fee')?.checked),
-          signatureName: (signName?.value || '').trim(),
-          signatureDate: (signDate?.value || '').trim(),
-          savingsPotential: getCurrentSavingsValue().toFixed(2),
-          findingsCount: String((window.currentEngineFindings || []).length),
-          billFileName: billFile?.name || '',
-          eobFileName: eobFile?.name || ''
+      };
+
+      if (typeof grecaptcha !== 'undefined') {
+        grecaptcha.ready(() => {
+          grecaptcha.execute(window.RECAPTCHA_SITE_KEY, { action: 'intake' })
+            .then((token) => {
+              submitForm(token);
+            })
+            .catch(() => {
+              submitForm('');
+            });
         });
-        if (result) {
-          result.style.color = fallback ? '#f59e0b' : '#ef4444';
-          result.textContent = fallback
-            ? 'API unavailable. Opened email draft fallback. Please attach Bill/EOB and send.'
-            : `Submission failed: ${err.message}`;
-        }
+      } else {
+        submitForm('');
       }
     });
 

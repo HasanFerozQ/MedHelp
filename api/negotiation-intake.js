@@ -2,6 +2,31 @@ const multer = require('multer');
 const crypto = require('crypto');
 const PDFDocument = require('pdfkit');
 const nodemailer = require('nodemailer');
+const { verifyRecaptchaToken } = require('./_lib/recaptcha');
+
+const DEFAULT_ALLOWED_ORIGINS = [
+  'https://www.medihelp.live',
+  'https://medihelp.live',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000'
+];
+
+function getAllowedOrigins() {
+  const configured = String(process.env.CORS_ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
+  return configured.length > 0 ? configured : DEFAULT_ALLOWED_ORIGINS;
+}
+
+function setCorsHeaders(req, res) {
+  const origin = req.headers.origin;
+  const allowed = getAllowedOrigins();
+  if (origin && allowed.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+}
+
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -246,9 +271,7 @@ async function sendViaSmtp({ caseId, fields, attachments, integrityMeta, consent
 }
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCorsHeaders(req, res);
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Method not allowed' });
@@ -260,6 +283,15 @@ module.exports = async (req, res) => {
     ]));
 
     const b = req.body || {};
+    const recaptchaToken = b.recaptcha_token;
+
+    // Verify reCAPTCHA v3 bot protection token
+    const clientIp = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || '';
+    const recaptchaResult = await verifyRecaptchaToken(recaptchaToken, clientIp.split(',')[0].trim());
+    if (!recaptchaResult.success) {
+      return res.status(400).json({ ok: false, error: 'Security validation failed (reCAPTCHA v3). Please refresh and try again.' });
+    }
+
     const authConsent = parseBool(b.authorizationConsent);
     const successConsent = parseBool(b.successFeeConsent);
     const upfrontConsent = parseBool(b.upfrontFeeConsent);

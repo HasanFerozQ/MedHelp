@@ -294,12 +294,12 @@
       // Header
       const headerEl = document.getElementById('post-header');
       headerEl.innerHTML = `
-        <span class="blog-tag" style="margin-bottom:16px; display:block;">${post.category}</span>
-        <h1 id="article-main-title" style="font-size:clamp(26px,4vw,42px); font-weight:900; color:var(--text-h); line-height:1.15; letter-spacing:-1px; margin-bottom:0;">${post.title}</h1>`;
+        <span class="blog-tag" style="margin-bottom:16px; display:block;">${escapeHtml(post.category)}</span>
+        <h1 id="article-main-title" style="font-size:clamp(26px,4vw,42px); font-weight:900; color:var(--text-h); line-height:1.15; letter-spacing:-1px; margin-bottom:0;">${escapeHtml(post.title)}</h1>`;
 
       // Stats bar
       document.getElementById('stat-date').childNodes[1].textContent = ` ${new Date(post.date).toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})}`;
-      document.getElementById('stat-category').innerHTML = `<span style="font-family:var(--font-mono); color:var(--accent); font-size:11px;">${post.category}</span>`;
+      document.getElementById('stat-category').innerHTML = `<span style="font-family:var(--font-mono); color:var(--accent); font-size:11px;">${escapeHtml(post.category)}</span>`;
 
       // Thumbnail
       if (post.thumbnail) {
@@ -325,9 +325,9 @@
       document.getElementById('sidebar-suggested').innerHTML = suggested.length > 0
         ? suggested.map(s => `
           <a href="/blog-post?slug=${encodeURIComponent(s.slug)}" class="sidebar-post-link">
-            <img src="${s.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&q=60'}" alt="${s.title}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&q=60'">
+            <img src="${s.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&q=60'}" alt="${escapeHtml(s.title)}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&q=60'">
             <div>
-              <div class="sp-title">${s.title}</div>
+              <div class="sp-title">${escapeHtml(s.title)}</div>
               <div class="sp-date">${new Date(s.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>
             </div>
           </a>`).join('')
