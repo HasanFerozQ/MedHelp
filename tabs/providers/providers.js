@@ -3,6 +3,121 @@
  * Handles: National Provider Search (NPPES API)
  */
 
+const TAXONOMY_MAP = {
+  'cardiology': '207RC0000X',
+  'cardiologist': '207RC0000X',
+  'pediatrics': '208000000X',
+  'pediatrician': '208000000X',
+  'pediatric': '208000000X',
+  'dermatology': '207N00000X',
+  'dermatologist': '207N00000X',
+  'orthopedics': '207X00000X',
+  'orthopedic': '207X00000X',
+  'gastroenterology': '207RG0100X',
+  'gastroenterologist': '207RG0100X',
+  'neurology': '2084N0400X',
+  'neurologist': '2084N0400X',
+  'oncology': '207RX0202X',
+  'oncologist': '207RX0202X',
+  'radiology': '2085R0202X',
+  'radiologist': '2085R0202X',
+  'psychiatry': '2084P0800X',
+  'psychiatrist': '2084P0800X',
+  'optometry': '152W00000X',
+  'optometrist': '152W00000X',
+  'dentistry': '122300000X',
+  'dentist': '122300000X',
+  'dental': '122300000X',
+  'podiatry': '213E00000X',
+  'podiatrist': '213E00000X',
+  'urology': '208800000X',
+  'urologist': '208800000X',
+  'gynecology': '207V00000X',
+  'gynecologist': '207V00000X',
+  'obstetrics': '207V00000X',
+  'obstetrician': '207V00000X',
+  'obgyn': '207V00000X',
+  'anesthesiology': '207L00000X',
+  'anesthesiologist': '207L00000X',
+  'pathology': '207P00000X',
+  'pathologist': '207P00000X',
+  'pharmacy': '333600000X',
+  'pharmacist': '183500000X',
+  'chiropractic': '111N00000X',
+  'chiropractor': '111N00000X',
+  'dialysis': '261QE0700X',
+  'therapy': '225X00000X',
+  'therapist': '225X00000X',
+  'physical therapy': '225X00000X'
+};
+
+const POPULAR_CITIES = new Set([
+  'new york', 'los angeles', 'chicago', 'houston', 'phoenix', 'philadelphia',
+  'san antonio', 'san diego', 'dallas', 'san jose', 'austin', 'jacksonville',
+  'fort worth', 'columbus', 'charlotte', 'san francisco', 'indianapolis',
+  'seattle', 'denver', 'washington', 'boston', 'el paso', 'nashville',
+  'detroit', 'oklahoma city', 'portland', 'las vegas', 'memphis', 'louisville',
+  'baltimore', 'milwaukee', 'albuquerque', 'tucson', 'fresno', 'sacramento',
+  'mesa', 'kansas city', 'atlanta', 'omaha', 'colorado springs', 'raleigh',
+  'miami', 'virginia beach', 'oakland', 'minneapolis', 'tulsa', 'tampa',
+  'arlington', 'new orleans', 'wichita', 'bakersfield', 'cleveland', 'aurora',
+  'anaheim', 'honolulu', 'santa ana', 'riverside', 'corpus christi', 'lexington',
+  'henderson', 'stockton', 'saint paul', 'cincinnati', 'st louis', 'st. louis',
+  'pittsburgh', 'greensboro', 'lincoln', 'anchorage', 'plano', 'orlando',
+  'irvine', 'newark', 'durham', 'chula vista', 'toledo', 'fort wayne',
+  'st petersburg', 'st. petersburg', 'laredo', 'jersey city', 'chandler',
+  'madison', 'lubbock', 'scottsdale', 'reno', 'buffalo', 'gilbert',
+  'glendale', 'north las vegas', 'winston-salem', 'chesapeake', 'norfolk',
+  'fremont', 'garland', 'irving', 'hialeah', 'boise', 'richmond', 'spokane',
+  'baton rouge', 'tacoma', 'san bernardino', 'modesto', 'des moines',
+  'lindenhurst', 'league city', 'galveston', 'waukegan', 'brentwood'
+]);
+
+function normalizeAbbreviations(text) {
+  if (!text) return '';
+  const ABBREVIATIONS = {
+    'ctr': 'center',
+    'hosp': 'hospital',
+    'med': 'medical',
+    'assoc': 'associates',
+    'grp': 'group',
+    'dept': 'department',
+    'div': 'division',
+    'fac': 'facility',
+    'cli': 'clinic',
+    'surg': 'surgical',
+    'peds': 'pediatrics',
+    'fam': 'family'
+  };
+  
+  return text.split(/\s+/).map(word => {
+    const cleanWord = word.toLowerCase().replace(/[^a-z]/g, '');
+    if (ABBREVIATIONS[cleanWord]) {
+      const mapped = ABBREVIATIONS[cleanWord];
+      if (word[0] === word[0].toUpperCase()) {
+        return mapped.charAt(0).toUpperCase() + mapped.slice(1);
+      }
+      return mapped;
+    }
+    return word;
+  }).join(' ');
+}
+
+function detectCity(text) {
+  if (!text) return { city: null, cleanedText: text };
+  const lower = text.toLowerCase();
+  const cities = Array.from(POPULAR_CITIES).sort((a, b) => b.length - a.length);
+  
+  for (const city of cities) {
+    const regex = new RegExp(`\\b${city}\\b`, 'i');
+    if (regex.test(lower)) {
+      const cleaned = text.replace(regex, '').replace(/\s+/g, ' ').trim();
+      return { city: city.toUpperCase(), cleanedText: cleaned };
+    }
+  }
+  return { city: null, cleanedText: text };
+}
+
 function mergeNPIResults(resultSets) {
   const merged = [];
   const seen = new Set();
@@ -28,8 +143,11 @@ function parseLabeledNPIQuery(raw) {
 
   if (!raw || !raw.trim()) return result;
 
+  // Normalize abbreviations (e.g. Med Ctr -> Medical Center)
+  let normalizedRaw = normalizeAbbreviations(raw);
+
   // Normalize accents and diacritics (e.g. René -> Rene, Muñoz -> Munoz)
-  const normalizedRaw = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  normalizedRaw = normalizedRaw.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const text = normalizedRaw.replace(/\r\n/g, '\n').trim();
   const inlineLabelPattern = /(Practitioner(?:\s+Name)?|Facility(?:\s+Name)?|NPI(?:\s+Number)?|With\s+State|State)\s*:/gi;
   const labelCount = (text.match(inlineLabelPattern) || []).length;
@@ -122,6 +240,61 @@ function extractPractitionerName(cleanName) {
   return { firstName: null, lastName: null };
 }
 
+async function executeStepDownFacilitySearch(cleanName, stateCode, { city = '', taxonomyCode = '' } = {}) {
+  if (!cleanName) return [];
+  const tokens = cleanName.split(/\s+/).filter(Boolean);
+  const minWords = tokens.length > 2 ? 2 : 1;
+
+  for (let i = tokens.length; i >= minWords; i--) {
+    const queryStr = tokens.slice(0, i).join(' ');
+    try {
+      const parsed = { cleanName: queryStr, isOrg: true, city, taxonomyCode };
+      const res = await executeNPISearch(parsed, stateCode, { forceOrg: true });
+      if (res.results?.length) {
+        return res.results;
+      }
+    } catch (e) {
+      console.warn(`Facility step-down search failed for "${queryStr}":`, e);
+    }
+  }
+  return [];
+}
+
+async function executeStepDownPractitionerSearch(cleanName, stateCode, { city = '', taxonomyCode = '' } = {}) {
+  if (!cleanName) return [];
+  const tokens = cleanName.split(/\s+/).filter(Boolean);
+
+  for (let i = tokens.length; i >= 1; i--) {
+    const queryStr = tokens.slice(0, i).join(' ');
+    const practNames = extractPractitionerName(queryStr);
+    if (!practNames.lastName) continue;
+
+    const indParsed = {
+      firstName: practNames.firstName,
+      lastName: practNames.lastName,
+      isOrg: false,
+      city,
+      taxonomyCode
+    };
+
+    try {
+      const res = await executeNPISearch(indParsed, stateCode);
+      if (res.results?.length) {
+        if (practNames.firstName && practNames.lastName) {
+          const revRes = await executeNPISearch(indParsed, stateCode, { reverseName: true });
+          if (revRes.results?.length) {
+            return mergeNPIResults([res.results, revRes.results]);
+          }
+        }
+        return res.results;
+      }
+    } catch (e) {
+      console.warn(`Practitioner step-down search failed for "${queryStr}":`, e);
+    }
+  }
+  return [];
+}
+
 async function executeStructuredNPISearch(structured, dropdownState) {
   const stateCode = dropdownState || structured.stateCode || '';
   const resultSets = [];
@@ -141,24 +314,22 @@ async function executeStructuredNPISearch(structured, dropdownState) {
       if (npiData.results?.length) return npiData;
     }
     if (parsed?.cleanName || parsed?.lastName) {
-      const indiv = await executeNPISearch(parsed, stateCode);
-      if (indiv.results?.length) resultSets.push(indiv.results);
-      if (!parsed.isOrg && parsed.firstName && parsed.lastName) {
-        const reversed = await executeNPISearch(parsed, stateCode, { reverseName: true });
-        if (reversed.results?.length) resultSets.push(reversed.results);
-      }
+      const practResults = await executeStepDownPractitionerSearch(
+        parsed.cleanName, stateCode,
+        { city: parsed.city || '', taxonomyCode: parsed.taxonomyCode || '' }
+      );
+      if (practResults?.length) resultSets.push(practResults);
     }
   }
 
   if (structured.facility) {
     const parsed = parseNPIQuery(structured.facility);
     if (parsed?.cleanName) {
-      const orgNameQuery = stripTrailingGenericWords(parsed.cleanName);
-      if (orgNameQuery) {
-        const orgParsed = { ...parsed, cleanName: orgNameQuery };
-        const org = await executeNPISearch(orgParsed, stateCode, { forceOrg: true });
-        if (org.results?.length) resultSets.push(org.results);
-      }
+      const facResults = await executeStepDownFacilitySearch(
+        parsed.cleanName, stateCode,
+        { city: parsed.city || '', taxonomyCode: parsed.taxonomyCode || '' }
+      );
+      if (facResults?.length) resultSets.push(facResults);
     }
   }
 
@@ -169,47 +340,16 @@ async function executeDualNPISearch(parsed, dropdownState) {
   if (parsed.npiNumber) return executeNPISearch(parsed, dropdownState);
 
   const stateCode = dropdownState || parsed.stateCode || '';
-  const resultSets = [];
+  const city = parsed.city || '';
+  const taxonomyCode = parsed.taxonomyCode || '';
 
-  // 1. Search as Organization (Facility)
-  const orgNameQuery = stripTrailingGenericWords(parsed.cleanName);
-  if (orgNameQuery) {
-    const orgParsed = { ...parsed, cleanName: orgNameQuery, isOrg: true };
-    try {
-      const orgResults = await executeNPISearch(orgParsed, stateCode, { forceOrg: true });
-      if (orgResults.results?.length) resultSets.push(orgResults.results);
-    } catch (e) {
-      console.warn('Organization search failed:', e);
-    }
-  }
+  // Run both step-down searches in parallel to optimize search speed
+  const [facResults, practResults] = await Promise.all([
+    executeStepDownFacilitySearch(parsed.cleanName, stateCode, { city, taxonomyCode }),
+    executeStepDownPractitionerSearch(parsed.cleanName, stateCode, { city, taxonomyCode })
+  ]);
 
-  // 2. Search as Practitioner (Individual)
-  const practNames = extractPractitionerName(parsed.cleanName);
-  if (practNames.lastName) {
-    const indParsed = {
-      ...parsed,
-      firstName: practNames.firstName,
-      lastName: practNames.lastName,
-      isOrg: false
-    };
-    try {
-      const indResults = await executeNPISearch(indParsed, stateCode);
-      if (indResults.results?.length) resultSets.push(indResults.results);
-    } catch (e) {
-      console.warn('Practitioner search failed:', e);
-    }
-
-    if (practNames.firstName && practNames.lastName) {
-      try {
-        const reversedResults = await executeNPISearch(indParsed, stateCode, { reverseName: true });
-        if (reversedResults.results?.length) resultSets.push(reversedResults.results);
-      } catch (e) {
-        console.warn('Reversed practitioner search failed:', e);
-      }
-    }
-  }
-
-  return { results: mergeNPIResults(resultSets) };
+  return { results: mergeNPIResults([facResults, practResults]) };
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -221,17 +361,38 @@ async function executeDualNPISearch(parsed, dropdownState) {
 function parseNPIQuery(raw) {
   if (!raw || !raw.trim()) return null;
 
+  // Normalize abbreviations (e.g. Med Ctr -> Medical Center)
+  let normalizedRaw = normalizeAbbreviations(raw);
+
   // Normalize accents and diacritics (e.g. René -> Rene, Muñoz -> Munoz)
-  const normalizedRaw = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  normalizedRaw = normalizedRaw.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
   // ── 1. Extract any 10-digit NPI number embedded anywhere in input ──
   const npiMatch = normalizedRaw.match(/\b(\d{10})\b/);
   if (npiMatch) {
-    return { npiNumber: npiMatch[1], cleanName: null, firstName: null, lastName: null, isOrg: false, stateCode: null };
+    return { npiNumber: npiMatch[1], cleanName: null, firstName: null, lastName: null, isOrg: false, stateCode: null, city: null, taxonomyCode: null };
   }
 
-  // ── 2. Normalize: collapse dotted credentials (m.d.→md, r.n.→rn) BEFORE stripping punctuation ──
-  let input = normalizedRaw.replace(/\b([a-zA-Z])\.([a-zA-Z])\.?\b/g, '$1$2');
+  // 2. Detect and extract City
+  const cityResult = detectCity(normalizedRaw);
+  const city = cityResult.city;
+  let input = cityResult.cleanedText;
+
+  // 3. Detect and extract Taxonomy (Specialty) Code
+  let taxonomyCode = null;
+  let lowerInput = input.toLowerCase();
+  for (const [key, code] of Object.entries(TAXONOMY_MAP)) {
+    const regex = new RegExp(`\\b${key}\\b`, 'i');
+    if (regex.test(lowerInput)) {
+      taxonomyCode = code;
+      // Strip taxonomy keyword from name input to clean it
+      input = input.replace(regex, ' ');
+      break;
+    }
+  }
+
+  // ── 4. Normalize: collapse dotted credentials (m.d.→md, r.n.→rn) BEFORE stripping punctuation ──
+  input = input.replace(/\b([a-zA-Z])\.([a-zA-Z])\.?\b/g, '$1$2');
   // Strip remaining punctuation (keep hyphens for hyphenated names)
   input = input.replace(/[,\.;:!?()'"]/g, ' ').replace(/\s+/g, ' ').trim();
 
@@ -403,7 +564,7 @@ function parseNPIQuery(raw) {
     }
   }
 
-  return { npiNumber: null, cleanName, firstName, lastName, isOrg, stateCode };
+  return { npiNumber: null, cleanName, firstName, lastName, isOrg, stateCode, city, taxonomyCode };
 }
 
 
@@ -415,6 +576,8 @@ async function executeNPISearch(parsed, dropdownState, { forceOrg = false, rever
 
   // Dropdown state always wins over detected state
   const stateCode = dropdownState || parsed.stateCode || '';
+  const city = parsed.city || '';
+  const taxonomyCode = parsed.taxonomyCode || '';
 
   let url = '/api/npi?';
 
@@ -424,16 +587,22 @@ async function executeNPISearch(parsed, dropdownState, { forceOrg = false, rever
     const orgQuery = parsed.cleanName || '';
     if (!orgQuery) return { results: [] };
     url += `organization_name=${encodeURIComponent(orgQuery)}*`;
-    if (stateCode) url += `&state=${encodeURIComponent(stateCode)}`;
+    if (stateCode)    url += `&state=${encodeURIComponent(stateCode)}`;
+    if (city)         url += `&city=${encodeURIComponent(city)}`;
+    if (taxonomyCode) url += `&taxonomy_code=${encodeURIComponent(taxonomyCode)}`;
   } else if (parsed.firstName && parsed.lastName) {
     const fn = reverseName ? parsed.lastName  : parsed.firstName;
     const ln = reverseName ? parsed.firstName : parsed.lastName;
     url += `first_name=${encodeURIComponent(fn)}*&last_name=${encodeURIComponent(ln)}*`;
-    if (stateCode) url += `&state=${encodeURIComponent(stateCode)}`;
+    if (stateCode)    url += `&state=${encodeURIComponent(stateCode)}`;
+    if (city)         url += `&city=${encodeURIComponent(city)}`;
+    if (taxonomyCode) url += `&taxonomy_code=${encodeURIComponent(taxonomyCode)}`;
   } else if (parsed.lastName) {
     // Single-token: search as last name
     url += `last_name=${encodeURIComponent(parsed.lastName)}*`;
-    if (stateCode) url += `&state=${encodeURIComponent(stateCode)}`;
+    if (stateCode)    url += `&state=${encodeURIComponent(stateCode)}`;
+    if (city)         url += `&city=${encodeURIComponent(city)}`;
+    if (taxonomyCode) url += `&taxonomy_code=${encodeURIComponent(taxonomyCode)}`;
   } else {
     return { results: [] };
   }
@@ -598,27 +767,8 @@ function renderNPIResults(results, container, prefixHtml = '') {
     const status = p.basic.status === 'A' ? '✓ Active' : '⚠ Inactive';
     const statusColor = p.basic.status === 'A' ? 'var(--success)' : 'var(--warning)';
 
-    // Extract Doing Business As (DBA) or other names for organization
-    let dbaNamesHtml = '';
-    let dbaText = '';
-    if (isOrg && p.other_names && p.other_names.length > 0) {
-      const dbaList = p.other_names
-        .map(n => {
-          const typeStr = n.type ? ` (${n.type})` : '';
-          return toTitleCase(n.organization_name) + typeStr;
-        })
-        .filter(Boolean);
-      if (dbaList.length > 0) {
-        dbaNamesHtml = `
-          <div style="font-size: 13.5px; color: var(--text-muted); margin-top: 6px; font-weight: 600; line-height: 1.4;">
-            <span style="color: var(--accent); font-weight: 800;">Also known as:</span> ${window.escapeHtml(dbaList.join(', '))}
-          </div>`;
-        dbaText = ' | DBA: ' + p.other_names.map(n => n.organization_name).join(', ');
-      }
-    }
-
     // Copy string exact format matching user request (includes mailing address if distinct)
-    const copyText = `${name}${dbaText} | NPI: ${p.number} | ${taxonomy} | Practice: ${addressLine}${showMailing ? ' | Mailing: ' + mailingLine : ''}${officialName ? ' | Official : ' + officialName : ''}`;
+    const copyText = `${name} | NPI: ${p.number} | ${taxonomy} | Practice: ${addressLine}${showMailing ? ' | Mailing: ' + mailingLine : ''}${officialName ? ' | Official : ' + officialName : ''}`;
     const escapedCopyText = window.escapeHtml(copyText);
 
     return `
@@ -652,7 +802,6 @@ function renderNPIResults(results, container, prefixHtml = '') {
             ${window.escapeHtml(name)}
             ${credential ? `<span class="npi-credential" style="font-size: 12px; margin-left: 8px; vertical-align: middle;">${window.escapeHtml(credential)}</span>` : ''}
           </h3>
-          ${dbaNamesHtml}
         </div>
 
         <!-- Affiliated Org placeholder (filled async for individual NPI) -->

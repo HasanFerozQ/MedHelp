@@ -8,7 +8,9 @@ module.exports = async (req, res) => {
     organization_name,
     state,
     authorized_official_first_name,
-    authorized_official_last_name
+    authorized_official_last_name,
+    taxonomy_code,
+    city
   } = req.query;
 
   // Validate exact NPI number format before forwarding
@@ -31,6 +33,8 @@ module.exports = async (req, res) => {
     if (last_name)         url += `&last_name=${encodeURIComponent(last_name)}`;
     if (organization_name) url += `&organization_name=${encodeURIComponent(organization_name)}`;
     if (state)             url += `&state=${encodeURIComponent(state)}`;
+    if (taxonomy_code)     url += `&taxonomy_code=${encodeURIComponent(taxonomy_code)}`;
+    if (city)              url += `&city=${encodeURIComponent(city)}`;
 
     if (organization_name && !first_name && !last_name) {
       url += '&enumeration_type=NPI-2';
