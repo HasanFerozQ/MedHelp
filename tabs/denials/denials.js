@@ -23,6 +23,24 @@ const SYNONYMS = {
   'ADJ': 'ADJUSTMENT'
 };
 
+const GROUP_CODES = new Set(['CO', 'PR', 'OA', 'PI', 'CR']);
+
+// Helper to parse complex denial codes (supporting group prefix, letter prefix, and digits)
+function parseDenialCode(tok) {
+  const cleaned = tok.replace(/[\-\.\,"']/g, '').toUpperCase();
+  // Group 1: Optional standard Group code (CO, PR, OA, PI, CR)
+  // Group 2: Optional standard RARC/CARC single or double letter prefix (A, B, M, N, MA)
+  // Group 3: Required digits sequence
+  const m = cleaned.match(/^(CO|PR|OA|PI|CR)?(MA|[A-Z])?(\d+)$/i);
+  if (!m) return null;
+  return {
+    group: m[1],
+    prefix: m[2],
+    digits: m[3],
+    cleaned: cleaned
+  };
+}
+
 const DENIAL_INSIGHTS = {
   'CO-1': {
     plain: "This is your annual deductible. You are responsible for this amount until your yearly limit is met.",
@@ -117,33 +135,52 @@ async function showSuggestions(q) {
   if (!window.dbClient) return;
 
   // Scan ALL tokens for a code pattern — works whether the code is first, last, or middle
-  // e.g. "CO-216 denial code" → token[0]="CO-216" ✅
-  // e.g. "denial code CO-216" → token[2]="CO-216" ✅
   const qTokens = q.trim().split(/\s+/);
   let match = null;
-  let cleanCode = null;
   for (const tok of qTokens) {
-    const cleaned = tok.replace(/[\-\.\,"']/g, '').toUpperCase();
-    const m = cleaned.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
-    if (m) { match = m; cleanCode = cleaned; break; }
+    const parsed = parseDenialCode(tok);
+    if (parsed) { match = parsed; break; }
   }
-  // Fallback: use first token if no code pattern was found anywhere
-  if (!cleanCode) cleanCode = qTokens[0].replace(/[\-\.\,"']/g, '').toUpperCase();
-  const normQ = match ? `${match[1]}-${match[2]}` : cleanCode;
-  const safeDescQ = q.replace(/"/g, '').trim();
 
-  // Build OR parts: all code variants from the detected code token
-  // + description keyword fallback from the full query
-  // Never broadens to prefix-only (e.g. "CO") — only digits are used as bare variant
-  const suggestOrParts = [
-    `code.ilike."${normQ}%"`,
-    `code.ilike."${cleanCode}%"`,
-    `description.ilike."%${safeDescQ}%"`
-  ];
+  let normQ, cleanCode;
+  const suggestOrParts = [];
+  const safeDescQ = q.replace(/"/g, '').trim();
+  suggestOrParts.push(`description.ilike."%${safeDescQ}%"`);
+
   if (match) {
-    const bareNum = match[2]; // e.g. "216" from "CO-216"
-    suggestOrParts.push(`code.eq."${bareNum}"`);
-    suggestOrParts.push(`code.ilike."${bareNum}%"`);
+    const { group, prefix, digits, cleaned } = match;
+    if (group && prefix) {
+      const realCode = prefix + digits; // B13
+      normQ = realCode;
+      cleanCode = realCode;
+      suggestOrParts.push(`code.ilike."${realCode}%"`);
+      suggestOrParts.push(`code.ilike."${cleaned}%"`);
+      suggestOrParts.push(`code.ilike."${group}-${realCode}%"`);
+    } else if (group && !prefix) {
+      const standardCode = group + "-" + digits; // CO-216
+      const joinedCode = group + digits; // CO216
+      normQ = standardCode;
+      cleanCode = joinedCode;
+      suggestOrParts.push(`code.ilike."${standardCode}%"`);
+      suggestOrParts.push(`code.ilike."${joinedCode}%"`);
+    } else if (!group && prefix) {
+      const realCode = prefix + digits; // B13
+      normQ = realCode;
+      cleanCode = realCode;
+      suggestOrParts.push(`code.ilike."${realCode}%"`);
+    } else {
+      normQ = digits;
+      cleanCode = digits;
+    }
+    // Bare number match variants for matching CARC/RARC digit code
+    suggestOrParts.push(`code.eq."${digits}"`);
+    suggestOrParts.push(`code.ilike."${digits}%"`);
+  } else {
+    // Fallback: use first token
+    cleanCode = qTokens[0].replace(/[\-\.\,"']/g, '').toUpperCase();
+    normQ = cleanCode;
+    suggestOrParts.push(`code.ilike."${normQ}%"`);
+    suggestOrParts.push(`code.ilike."${cleanCode}%"`);
   }
 
   const searchId = ++currentDenialSearchId; 
@@ -203,38 +240,58 @@ async function searchDenials(query) {
 
   try {
     // [Smart] Code detection — scan ALL tokens for a code pattern
-    // Handles any position: "CO-216 denial code" OR "denial code CO-216" OR just "CO-216"
     const qTokens = query.trim().split(/\s+/);
     let codeMatch = null;
-    let cleanCode = null;
     for (const tok of qTokens) {
-      const cleaned = tok.replace(/[\-\.\,"']/g, '').toUpperCase();
-      const m = cleaned.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
-      if (m) { codeMatch = m; cleanCode = cleaned; break; }
+      const parsed = parseDenialCode(tok);
+      if (parsed) { codeMatch = parsed; break; }
     }
-    // Fallback: if no code found in any token, use first token as the search term
-    if (!cleanCode) cleanCode = qTokens[0].replace(/[\-\.\,"']/g, '').toUpperCase();
-    const normQ = codeMatch ? `${codeMatch[1]}-${codeMatch[2]}` : cleanCode;
 
-    // Build the query
-    let dbQueryCarc = window.dbClient.from('carc_codes').select('*');
-    let dbQueryRarc = window.dbClient.from('rarc_codes').select('*');
+    let normQ, cleanCode;
+    const allOrs = new Set();
 
-    // Code variant OR conditions (never broadens to prefix-only like "CO")
-    const allOrs = new Set([
-      `code.ilike."${normQ}%"`,
-      `code.ilike."${cleanCode}%"`
-    ]);
-
-    // Also match bare number if a prefixed code was found (e.g. "216" from "CO-216")
     if (codeMatch) {
-      const bareNum = codeMatch[2];
-      allOrs.add(`code.eq."${bareNum}"`);
-      allOrs.add(`code.ilike."${bareNum}%"`);
+      const { group, prefix, digits, cleaned } = codeMatch;
+      if (group && prefix) {
+        const realCode = prefix + digits; // B13
+        normQ = realCode;
+        cleanCode = realCode;
+        allOrs.add(`code.ilike."${realCode}%"`);
+        allOrs.add(`code.ilike."${cleaned}%"`);
+        allOrs.add(`code.ilike."${group}-${realCode}%"`);
+      } else if (group && !prefix) {
+        const standardCode = group + "-" + digits; // CO-216
+        const joinedCode = group + digits; // CO216
+        normQ = standardCode;
+        cleanCode = joinedCode;
+        allOrs.add(`code.ilike."${standardCode}%"`);
+        allOrs.add(`code.ilike."${joinedCode}%"`);
+      } else if (!group && prefix) {
+        const realCode = prefix + digits; // B13
+        normQ = realCode;
+        cleanCode = realCode;
+        allOrs.add(`code.ilike."${realCode}%"`);
+      } else {
+        normQ = digits;
+        cleanCode = digits;
+      }
+      // Bare number match variants
+      allOrs.add(`code.eq."${digits}"`);
+      allOrs.add(`code.ilike."${digits}%"`);
+    } else {
+      // Fallback
+      cleanCode = qTokens[0].replace(/[\-\.\,"']/g, '').toUpperCase();
+      normQ = cleanCode;
+      allOrs.add(`code.ilike."${normQ}%"`);
+      allOrs.add(`code.ilike."${cleanCode}%"`);
     }
 
     tokens.forEach(tok => {
       const t = tok.toUpperCase();
+      // Exclude group codes and the exact matched code token from description search
+      if (GROUP_CODES.has(t)) return;
+      if (codeMatch && t === codeMatch.cleaned) return;
+
       allOrs.add(`description.ilike."%${tok}%"`);
       if (SYNONYMS[t]) allOrs.add(`description.ilike."%${SYNONYMS[t]}%"`);
     });
