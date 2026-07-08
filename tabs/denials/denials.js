@@ -250,6 +250,10 @@ async function searchDenials(query) {
     let normQ, cleanCode;
     const allOrs = new Set();
 
+    // Supabase query builders
+    const dbQueryCarc = window.dbClient.from('carc_codes').select('*');
+    const dbQueryRarc = window.dbClient.from('rarc_codes').select('*');
+
     if (codeMatch) {
       const { group, prefix, digits, cleaned } = codeMatch;
       if (group && prefix) {
