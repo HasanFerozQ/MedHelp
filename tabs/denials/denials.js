@@ -48,6 +48,10 @@ const DENIAL_INSIGHTS = {
     plain: "Duplicate Claim. This service was already submitted and processed under a different claim number.",
     step: "Ignore this if the first claim was paid. If both were denied, the doctor needs to reconcile their records."
   },
+  'CO-216': {
+    plain: "Denied by a review organization (e.g. utilization management). The payer determined the service was not medically necessary, lacked clinical documentation, or failed pre-authorization criteria.",
+    step: "You DO NOT owe this amount. This is a contractual write-off — the provider must absorb it. If you were billed, contact the billing office immediately and cite CO-216."
+  },
   'MA01': {
     plain: "Primary Insurance. This claim was processed as your primary coverage.",
     step: "If you have a secondary plan (like AARP or a spouse's plan), give them this EOB to pay the remaining balance."
@@ -112,17 +116,42 @@ denialInput.addEventListener('input', (e) => {
 async function showSuggestions(q) {
   if (!window.dbClient) return;
 
-  const cleanQ = q.replace(/[\-\s\.\,"']/g, '').toUpperCase();
-  const match = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
-  const normQ = match ? `${match[1]}-${match[2]}` : cleanQ; 
-  const safeDescQ = q.replace(/"/g, '').trim(); 
-  
+  // Scan ALL tokens for a code pattern — works whether the code is first, last, or middle
+  // e.g. "CO-216 denial code" → token[0]="CO-216" ✅
+  // e.g. "denial code CO-216" → token[2]="CO-216" ✅
+  const qTokens = q.trim().split(/\s+/);
+  let match = null;
+  let cleanCode = null;
+  for (const tok of qTokens) {
+    const cleaned = tok.replace(/[\-\.\,"']/g, '').toUpperCase();
+    const m = cleaned.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
+    if (m) { match = m; cleanCode = cleaned; break; }
+  }
+  // Fallback: use first token if no code pattern was found anywhere
+  if (!cleanCode) cleanCode = qTokens[0].replace(/[\-\.\,"']/g, '').toUpperCase();
+  const normQ = match ? `${match[1]}-${match[2]}` : cleanCode;
+  const safeDescQ = q.replace(/"/g, '').trim();
+
+  // Build OR parts: all code variants from the detected code token
+  // + description keyword fallback from the full query
+  // Never broadens to prefix-only (e.g. "CO") — only digits are used as bare variant
+  const suggestOrParts = [
+    `code.ilike."${normQ}%"`,
+    `code.ilike."${cleanCode}%"`,
+    `description.ilike."%${safeDescQ}%"`
+  ];
+  if (match) {
+    const bareNum = match[2]; // e.g. "216" from "CO-216"
+    suggestOrParts.push(`code.eq."${bareNum}"`);
+    suggestOrParts.push(`code.ilike."${bareNum}%"`);
+  }
+
   const searchId = ++currentDenialSearchId; 
   try {
     const { data } = await window.dbClient
       .from('carc_codes')
       .select('code, description')
-      .or(`code.ilike."${normQ}%",code.ilike."${cleanQ}%",description.ilike."%${safeDescQ}%"`)
+      .or(suggestOrParts.join(','))
       .limit(3);
 
     if (searchId !== currentDenialSearchId) return;
@@ -173,18 +202,37 @@ async function searchDenials(query) {
   denialResults.innerHTML = '<div class="empty-state">Decoding Registry...</div>';
 
   try {
-    // [Smart] Code detection
-    const cleanQ = qUpper.replace(/[\-\s\.\,"']/g, '');
-    const codeMatch = cleanQ.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
-    const normQ = codeMatch ? `${codeMatch[1]}-${codeMatch[2]}` : cleanQ; 
+    // [Smart] Code detection — scan ALL tokens for a code pattern
+    // Handles any position: "CO-216 denial code" OR "denial code CO-216" OR just "CO-216"
+    const qTokens = query.trim().split(/\s+/);
+    let codeMatch = null;
+    let cleanCode = null;
+    for (const tok of qTokens) {
+      const cleaned = tok.replace(/[\-\.\,"']/g, '').toUpperCase();
+      const m = cleaned.match(/^(CO|PR|OA|PI|CR|MA|M|N)(\d+)$/i);
+      if (m) { codeMatch = m; cleanCode = cleaned; break; }
+    }
+    // Fallback: if no code found in any token, use first token as the search term
+    if (!cleanCode) cleanCode = qTokens[0].replace(/[\-\.\,"']/g, '').toUpperCase();
+    const normQ = codeMatch ? `${codeMatch[1]}-${codeMatch[2]}` : cleanCode;
 
     // Build the query
     let dbQueryCarc = window.dbClient.from('carc_codes').select('*');
     let dbQueryRarc = window.dbClient.from('rarc_codes').select('*');
 
-    // Cross-field OR logic for all tokens + code variants
-    const allOrs = new Set([`code.ilike."${normQ}%"`, `code.ilike."${cleanQ}%"`]);
-    
+    // Code variant OR conditions (never broadens to prefix-only like "CO")
+    const allOrs = new Set([
+      `code.ilike."${normQ}%"`,
+      `code.ilike."${cleanCode}%"`
+    ]);
+
+    // Also match bare number if a prefixed code was found (e.g. "216" from "CO-216")
+    if (codeMatch) {
+      const bareNum = codeMatch[2];
+      allOrs.add(`code.eq."${bareNum}"`);
+      allOrs.add(`code.ilike."${bareNum}%"`);
+    }
+
     tokens.forEach(tok => {
       const t = tok.toUpperCase();
       allOrs.add(`description.ilike."%${tok}%"`);
