@@ -128,12 +128,12 @@
         </div>
 
         <!-- Search Filters -->
-        <div class="grid-stack-mobile" style="display:grid; grid-template-columns:1fr 1fr auto; gap:12px; margin-bottom:24px; align-items:end;">
+        <div class="grid-stack-mobile" style="display:grid; grid-template-columns:3fr 1.2fr auto; gap:12px; margin-bottom:24px; align-items:end;">
           <div style="text-align: left;">
             <label style="font-size:12px; font-weight:700; color:var(--text-muted); letter-spacing:0.1em; text-transform:uppercase; display:block; margin-bottom:8px;">Provider Name, Facility, NPI, or Labeled Fields</label>
             <div class="search-box" style="margin-bottom:0;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <textarea id="npi-name" class="search-input" rows="3" placeholder="Practitioner: Christal Smith&#10;Facility: Fresh Start Service Support&#10;NPI: 1548497795&#10;With State: John Smith TX&#10;&#10;Or type any name, facility, or NPI"></textarea>
+              <input type="text" id="npi-name" class="search-input" placeholder="Search by practitioner, facility, NPI, or state (e.g. Victory Lakes, 1548497795)">
             </div>
           </div>
           <div style="text-align: left;">
@@ -155,7 +155,7 @@
               <option>WI</option><option>WY</option>
             </select>
           </div>
-          <button class="btn btn-primary" id="npi-search-btn" onclick="searchNPI()">
+          <button class="btn btn-primary" id="npi-search-btn" onclick="searchNPI()" style="height: 54px; padding: 0 28px; border-radius: var(--radius); font-size: 16px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             Search
           </button>

@@ -28,7 +28,9 @@ function parseLabeledNPIQuery(raw) {
 
   if (!raw || !raw.trim()) return result;
 
-  const text = raw.replace(/\r\n/g, '\n').trim();
+  // Normalize accents and diacritics (e.g. René -> Rene, Muñoz -> Munoz)
+  const normalizedRaw = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const text = normalizedRaw.replace(/\r\n/g, '\n').trim();
   const inlineLabelPattern = /(Practitioner(?:\s+Name)?|Facility(?:\s+Name)?|NPI(?:\s+Number)?|With\s+State|State)\s*:/gi;
   const labelCount = (text.match(inlineLabelPattern) || []).length;
 
@@ -81,6 +83,45 @@ function applyStateLine(value, result) {
   }
 }
 
+function stripTrailingGenericWords(query) {
+  if (!query) return '';
+  const genericWords = [
+    'center', 'clinic', 'hospital', 'facility', 'services', 'service',
+    'group', 'llc', 'inc', 'corp', 'corporation', 'pllc', 'associates',
+    'surgical', 'surgery', 'medical', 'health', 'healthcare', 'care',
+    'practice', 'office', 'provider', 'providers', 'dialysis'
+  ];
+  
+  let tokens = query.split(/\s+/);
+  while (tokens.length > 1) {
+    const lastWord = tokens[tokens.length - 1].toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (genericWords.includes(lastWord)) {
+      tokens.pop();
+    } else {
+      break;
+    }
+  }
+  return tokens.join(' ');
+}
+
+function extractPractitionerName(cleanName) {
+  if (!cleanName) return { firstName: null, lastName: null };
+  const baseName = stripTrailingGenericWords(cleanName);
+  const tokens = baseName.split(/\s+/).filter(Boolean);
+  if (tokens.length >= 2) {
+    return {
+      firstName: tokens[0],
+      lastName: tokens.slice(1).join(' ')
+    };
+  } else if (tokens.length === 1) {
+    return {
+      firstName: null,
+      lastName: tokens[0]
+    };
+  }
+  return { firstName: null, lastName: null };
+}
+
 async function executeStructuredNPISearch(structured, dropdownState) {
   const stateCode = dropdownState || structured.stateCode || '';
   const resultSets = [];
@@ -112,8 +153,12 @@ async function executeStructuredNPISearch(structured, dropdownState) {
   if (structured.facility) {
     const parsed = parseNPIQuery(structured.facility);
     if (parsed?.cleanName) {
-      const org = await executeNPISearch(parsed, stateCode, { forceOrg: true });
-      if (org.results?.length) resultSets.push(org.results);
+      const orgNameQuery = stripTrailingGenericWords(parsed.cleanName);
+      if (orgNameQuery) {
+        const orgParsed = { ...parsed, cleanName: orgNameQuery };
+        const org = await executeNPISearch(orgParsed, stateCode, { forceOrg: true });
+        if (org.results?.length) resultSets.push(org.results);
+      }
     }
   }
 
@@ -126,16 +171,43 @@ async function executeDualNPISearch(parsed, dropdownState) {
   const stateCode = dropdownState || parsed.stateCode || '';
   const resultSets = [];
 
-  const primary = await executeNPISearch(parsed, stateCode);
-  if (primary.results?.length) resultSets.push(primary.results);
-
-  if (!parsed.isOrg && parsed.firstName && parsed.lastName) {
-    const reversed = await executeNPISearch(parsed, stateCode, { reverseName: true });
-    if (reversed.results?.length) resultSets.push(reversed.results);
+  // 1. Search as Organization (Facility)
+  const orgNameQuery = stripTrailingGenericWords(parsed.cleanName);
+  if (orgNameQuery) {
+    const orgParsed = { ...parsed, cleanName: orgNameQuery, isOrg: true };
+    try {
+      const orgResults = await executeNPISearch(orgParsed, stateCode, { forceOrg: true });
+      if (orgResults.results?.length) resultSets.push(orgResults.results);
+    } catch (e) {
+      console.warn('Organization search failed:', e);
+    }
   }
 
-  const asOrg = await executeNPISearch(parsed, stateCode, { forceOrg: true });
-  if (asOrg.results?.length) resultSets.push(asOrg.results);
+  // 2. Search as Practitioner (Individual)
+  const practNames = extractPractitionerName(parsed.cleanName);
+  if (practNames.lastName) {
+    const indParsed = {
+      ...parsed,
+      firstName: practNames.firstName,
+      lastName: practNames.lastName,
+      isOrg: false
+    };
+    try {
+      const indResults = await executeNPISearch(indParsed, stateCode);
+      if (indResults.results?.length) resultSets.push(indResults.results);
+    } catch (e) {
+      console.warn('Practitioner search failed:', e);
+    }
+
+    if (practNames.firstName && practNames.lastName) {
+      try {
+        const reversedResults = await executeNPISearch(indParsed, stateCode, { reverseName: true });
+        if (reversedResults.results?.length) resultSets.push(reversedResults.results);
+      } catch (e) {
+        console.warn('Reversed practitioner search failed:', e);
+      }
+    }
+  }
 
   return { results: mergeNPIResults(resultSets) };
 }
@@ -149,14 +221,17 @@ async function executeDualNPISearch(parsed, dropdownState) {
 function parseNPIQuery(raw) {
   if (!raw || !raw.trim()) return null;
 
+  // Normalize accents and diacritics (e.g. René -> Rene, Muñoz -> Munoz)
+  const normalizedRaw = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
   // ── 1. Extract any 10-digit NPI number embedded anywhere in input ──
-  const npiMatch = raw.match(/\b(\d{10})\b/);
+  const npiMatch = normalizedRaw.match(/\b(\d{10})\b/);
   if (npiMatch) {
     return { npiNumber: npiMatch[1], cleanName: null, firstName: null, lastName: null, isOrg: false, stateCode: null };
   }
 
   // ── 2. Normalize: collapse dotted credentials (m.d.→md, r.n.→rn) BEFORE stripping punctuation ──
-  let input = raw.replace(/\b([a-zA-Z])\.([a-zA-Z])\.?\b/g, '$1$2');
+  let input = normalizedRaw.replace(/\b([a-zA-Z])\.([a-zA-Z])\.?\b/g, '$1$2');
   // Strip remaining punctuation (keep hyphens for hyphenated names)
   input = input.replace(/[,\.;:!?()'"]/g, ' ').replace(/\s+/g, ' ').trim();
 
@@ -523,8 +598,27 @@ function renderNPIResults(results, container, prefixHtml = '') {
     const status = p.basic.status === 'A' ? '✓ Active' : '⚠ Inactive';
     const statusColor = p.basic.status === 'A' ? 'var(--success)' : 'var(--warning)';
 
+    // Extract Doing Business As (DBA) or other names for organization
+    let dbaNamesHtml = '';
+    let dbaText = '';
+    if (isOrg && p.other_names && p.other_names.length > 0) {
+      const dbaList = p.other_names
+        .map(n => {
+          const typeStr = n.type ? ` (${n.type})` : '';
+          return toTitleCase(n.organization_name) + typeStr;
+        })
+        .filter(Boolean);
+      if (dbaList.length > 0) {
+        dbaNamesHtml = `
+          <div style="font-size: 13.5px; color: var(--text-muted); margin-top: 6px; font-weight: 600; line-height: 1.4;">
+            <span style="color: var(--accent); font-weight: 800;">Also known as:</span> ${window.escapeHtml(dbaList.join(', '))}
+          </div>`;
+        dbaText = ' | DBA: ' + p.other_names.map(n => n.organization_name).join(', ');
+      }
+    }
+
     // Copy string exact format matching user request (includes mailing address if distinct)
-    const copyText = `${name} | NPI: ${p.number} | ${taxonomy} | Practice: ${addressLine}${showMailing ? ' | Mailing: ' + mailingLine : ''}${officialName ? ' | Official : ' + officialName : ''}`;
+    const copyText = `${name}${dbaText} | NPI: ${p.number} | ${taxonomy} | Practice: ${addressLine}${showMailing ? ' | Mailing: ' + mailingLine : ''}${officialName ? ' | Official : ' + officialName : ''}`;
     const escapedCopyText = window.escapeHtml(copyText);
 
     return `
@@ -558,6 +652,7 @@ function renderNPIResults(results, container, prefixHtml = '') {
             ${window.escapeHtml(name)}
             ${credential ? `<span class="npi-credential" style="font-size: 12px; margin-left: 8px; vertical-align: middle;">${window.escapeHtml(credential)}</span>` : ''}
           </h3>
+          ${dbaNamesHtml}
         </div>
 
         <!-- Affiliated Org placeholder (filled async for individual NPI) -->
