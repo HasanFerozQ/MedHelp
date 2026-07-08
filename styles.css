@@ -3324,6 +3324,26 @@ html, body {
   box-shadow: 0 12px 24px rgba(0,0,0,0.15);
 }
 
+.npi-match-highlight {
+  color: #ef4444;
+  font-weight: 800;
+  background: rgba(239, 68, 68, 0.14);
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+.npi-match-reasons span {
+  line-height: 1.4;
+}
+
+.npi-location-group .npi-group-toggle:hover {
+  background: rgba(var(--accent-rgb), 0.12);
+}
+
+.npi-card-compact {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18) !important;
+}
+
 .npi-header {
   display: flex;
   justify-content: space-between;

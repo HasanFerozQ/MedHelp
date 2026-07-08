@@ -10,7 +10,9 @@ module.exports = async (req, res) => {
     authorized_official_first_name,
     authorized_official_last_name,
     taxonomy_code,
-    city
+    city,
+    postal_code,
+    skip
   } = req.query;
 
   // Validate exact NPI number format before forwarding
@@ -19,6 +21,10 @@ module.exports = async (req, res) => {
   }
 
   let url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=20';
+
+  if (skip && /^\d+$/.test(String(skip))) {
+    url += `&skip=${encodeURIComponent(skip)}`;
+  }
 
   if (number) {
     // Exact NPI lookup — number only, no enumeration_type, no other filters
@@ -35,6 +41,7 @@ module.exports = async (req, res) => {
     if (state)             url += `&state=${encodeURIComponent(state)}`;
     if (taxonomy_code)     url += `&taxonomy_code=${encodeURIComponent(taxonomy_code)}`;
     if (city)              url += `&city=${encodeURIComponent(city)}`;
+    if (postal_code)       url += `&postal_code=${encodeURIComponent(postal_code)}`;
 
     if (organization_name && !first_name && !last_name) {
       url += '&enumeration_type=NPI-2';
