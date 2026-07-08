@@ -290,10 +290,14 @@ async function searchDenials(query) {
       allOrs.add(`code.ilike."${cleanCode}%"`);
     }
 
+    // Generic stop words that match too broadly and pollute results
+    const STOP_WORDS = new Set(['DENIAL', 'CODE', 'CODES', 'THE', 'AND', 'FOR', 'WITH', 'FROM', 'REMARK']);
+
     tokens.forEach(tok => {
       const t = tok.toUpperCase();
-      // Exclude group codes and the exact matched code token from description search
+      // Exclude group codes, stop words, and the exact matched code token from description search
       if (GROUP_CODES.has(t)) return;
+      if (STOP_WORDS.has(t)) return;
       if (codeMatch && t === codeMatch.cleaned) return;
 
       allOrs.add(`description.ilike."%${tok}%"`);
@@ -345,9 +349,11 @@ async function searchDenials(query) {
       const aCombined = `${aCode} ${aDesc}`;
       const bCombined = `${bCode} ${bDesc}`;
 
-      // 1. Exact Code Match
-      const aExact = a.code === normQ || a.code === cleanCode;
-      const bExact = b.code === normQ || b.code === cleanCode;
+      // 1. Exact Code Match — use bare digits only when no letter prefix detected
+      const digits = codeMatch ? codeMatch.digits : null;
+      const hasPrefix = codeMatch && codeMatch.prefix;
+      const aExact = a.code === normQ || a.code === cleanCode || (!hasPrefix && digits && a.code === digits);
+      const bExact = b.code === normQ || b.code === cleanCode || (!hasPrefix && digits && b.code === digits);
       if (aExact && !bExact) return -1;
       if (bExact && !aExact) return 1;
 
