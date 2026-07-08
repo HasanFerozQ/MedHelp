@@ -349,14 +349,28 @@ function renderNPIResults(results, container) {
 
     const credential = p.basic.credential || '';
     const taxonomy = p.taxonomies?.[0]?.desc || 'Medical Professional';
-    const addr = p.addresses?.[0];
-    const addressLine = addr ? `${addr.address_1 || ''}, ${addr.city || ''}, ${addr.state || ''} ${(addr.postal_code || '').substring(0, 5)}` : 'Address details unavailable';
-    const mapsUrl = addr ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}` : '#';
+
+    // Helper to format addresses nicely (including unit/suite address_2)
+    const formatAddress = (addrObj) => {
+      if (!addrObj) return '';
+      const street = [addrObj.address_1, addrObj.address_2].filter(Boolean).join(', ');
+      return `${street}, ${addrObj.city || ''}, ${addrObj.state || ''} ${(addrObj.postal_code || '').substring(0, 5)}`.trim().replace(/\s+/g, ' ');
+    };
+
+    // Extract physical location and mailing addresses
+    const locationAddr = p.addresses?.find(a => a.address_purpose === 'LOCATION') || p.addresses?.[0];
+    const mailingAddr = p.addresses?.find(a => a.address_purpose === 'MAILING');
+
+    const addressLine = locationAddr ? formatAddress(locationAddr) : 'Address details unavailable';
+    const mailingLine = mailingAddr ? formatAddress(mailingAddr) : null;
+    const showMailing = mailingLine && mailingLine !== addressLine;
+
+    const mapsUrl = locationAddr ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}` : '#';
     const status = p.basic.status === 'A' ? '✓ Active' : '⚠ Inactive';
     const statusColor = p.basic.status === 'A' ? 'var(--success)' : 'var(--warning)';
 
-    // Copy string exact format matching user request
-    const copyText = `${name} | NPI: ${p.number} | ${taxonomy} | ${addressLine}${officialName ? ' | Official : ' + officialName : ''}`;
+    // Copy string exact format matching user request (includes mailing address if distinct)
+    const copyText = `${name} | NPI: ${p.number} | ${taxonomy} | Practice: ${addressLine}${showMailing ? ' | Mailing: ' + mailingLine : ''}${officialName ? ' | Official : ' + officialName : ''}`;
     const escapedCopyText = window.escapeHtml(copyText);
 
     return `
@@ -438,14 +452,23 @@ function renderNPIResults(results, container) {
 
         <!-- Address & Action -->
         <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; margin-top: 8px;">
-          <div>
+          <div style="flex: 1; min-width: 250px;">
             <div style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: var(--text-muted); letter-spacing: 0.08em; margin-bottom: 4px;">
-              Practice Location
+              Practice Location (Physical)
             </div>
-            <div style="display: flex; gap: 8px; align-items: flex-start; color: var(--text-body); font-size: 14px; line-height: 1.5;">
+            <div style="display: flex; gap: 8px; align-items: flex-start; color: var(--text-body); font-size: 14px; line-height: 1.5; margin-bottom: ${showMailing ? '12px' : '0'};">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top: 2px; flex-shrink: 0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
               <span>${window.escapeHtml(addressLine)}</span>
             </div>
+            ${showMailing ? `
+            <div style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: var(--text-muted); letter-spacing: 0.08em; margin-bottom: 4px;">
+              Mailing Address
+            </div>
+            <div style="display: flex; gap: 8px; align-items: flex-start; color: var(--text-body); font-size: 14px; line-height: 1.5;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top: 2px; flex-shrink: 0;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              <span>${window.escapeHtml(mailingLine)}</span>
+            </div>
+            ` : ''}
           </div>
           ${mapsUrl !== '#' ? `
             <a href="${mapsUrl}" target="_blank" rel="noopener" class="btn-location" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 13.5px; text-decoration: none; border: 1px solid var(--border); transition: all 0.2s;">

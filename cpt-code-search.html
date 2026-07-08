@@ -156,11 +156,12 @@
           <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 14px; opacity: 0.8;">This helps you verify charges on your medical bill and identify possible errors manually or with expert help.</p>
         </div>
 
-        <div class="tool-toggle-group">
-          <button class="tool-toggle-btn active" data-region="US" onclick="selectRegion(this, 'US')">US (ICD-10-CM)</button>
-          <button class="tool-toggle-btn" data-region="UK" onclick="selectRegion(this, 'UK')">UK (ICD-10 WHO)</button>
-          <button class="tool-toggle-btn" data-region="ME" onclick="selectRegion(this, 'ME')">Middle East (WHO)</button>
+        <div class="coverage-badge-group" aria-label="Supported code regions">
+          <span class="coverage-badge">US (ICD-10-CM)</span>
+          <span class="coverage-badge">UK (ICD-10 WHO)</span>
+          <span class="coverage-badge">Middle East (WHO)</span>
         </div>
+        <p class="coverage-note">Coverage across all three regions — each result shows where the code is available (US / UK / ME).</p>
 
         <div class="search-wrapper">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -240,9 +241,8 @@
       <h2 style="margin-bottom: 16px;">How to Find a CPT Code</h2>
       <p style="color: var(--text-muted); margin-bottom: 16px;">To find a CPT code and verify billing accuracy, follow these steps:</p>
       <ul style="color: var(--text-muted); line-height: 2.0; margin-bottom: 20px; padding-left: 20px; list-style-type: decimal;">
-        <li>Enter the procedure name or code in the search tool above</li>
-        <li>Select your region (US, UK, etc.)</li>
-        <li>Review the code description and billing details</li>
+        <li>Enter the procedure name or code in the search bar above</li>
+        <li>Review the code description and regional availability (US, UK, ME)</li>
       </ul>
       <p style="color: var(--text-h); font-weight: 600; display: flex; align-items: center; gap: 8px;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--accent);"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>

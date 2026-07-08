@@ -1,5 +1,5 @@
 let currentFilter = 'ALL';
-let currentRegion = 'US'; // Default to US
+let currentRegion = 'ALL'; // Search all regions; badges on results show US/UK/ME availability
 let searchTimeout = null;
 let currentSearchId = 0; // Prevent race conditions
 const MAX_WAIT_ATTEMPTS = 20; // 2 seconds max wait for DB init
@@ -406,6 +406,55 @@ function getWildcardPrefixes(codes) {
   return [...prefixes];
 }
 
+function getIcd10SearchSuffix(code) {
+  if (!code) return null;
+  const dotted = buildCodeVariants(code).find((v) => /^[A-TV-Z]\d{2}\.[0-9A-Z]+$/i.test(v));
+  if (dotted) return dotted.substring(1);
+  const compact = String(code).toUpperCase().replace(/[\.\-\s]/g, '');
+  if (/^[A-TV-Z]\d{2}[A-Z0-9]{1,4}$/i.test(compact)) {
+    return `${compact.substring(1, 3)}.${compact.substring(3)}`;
+  }
+  return null;
+}
+
+function getIcd10CategoryPrefix(code) {
+  const compact = String(code || '').toUpperCase().replace(/[\.\-\s]/g, '');
+  if (/^[A-TV-Z]\d{2}/i.test(compact)) return compact.substring(0, 3);
+  return null;
+}
+
+function getIcd10LetterPrefix(code) {
+  const compact = String(code || '').toUpperCase().replace(/[\.\-\s]/g, '');
+  return /^[A-TV-Z]/.test(compact) ? compact[0] : null;
+}
+
+async function fetchIcd10NearMatches(client, code, limit) {
+  const rows = [];
+  const seen = new Set();
+  const addRows = (data) => {
+    (data || []).forEach((row) => {
+      const key = `${row.code}_${row.code_type}_${row.country}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        rows.push(row);
+      }
+    });
+  };
+
+  const suffix = getIcd10SearchSuffix(code);
+  if (suffix) addRows(await fetchIcd10SuffixMatches(client, suffix, limit));
+
+  const category = getIcd10CategoryPrefix(code);
+  if (category) addRows(await fetchPrefixCodeMatches(client, [category], limit));
+
+  const fuzzyVariants = generateIcd10FuzzyVariants(code);
+  if (fuzzyVariants.length > 0) {
+    addRows(await fetchExactCodeMatches(client, fuzzyVariants, Math.min(limit, 30)));
+  }
+
+  return rows;
+}
+
 function applyRegionAndFilter(query) {
   if (currentRegion !== 'ALL') query = query.eq('country', currentRegion);
   if (currentFilter !== 'ALL') query = query.eq('code_type', currentFilter);
@@ -490,8 +539,18 @@ async function executeSmartCodeSearch(client, parsed, codeVariants, fetchLimit) 
 
   addRows(await fetchExactCodeMatches(client, codeVariants, fetchLimit));
 
+  const hasExactVariantHit = codeVariants.some((v) =>
+    merged.some((r) => r.code.toUpperCase() === v.toUpperCase())
+  );
+
+  if (!hasExactVariantHit && parsed.primaryCode && (
+    parsed.primaryType === 'ICD10' || isCompleteIcd10Code(parsed.primaryCode)
+  )) {
+    addRows(await fetchIcd10NearMatches(client, parsed.primaryCode, fetchLimit));
+  }
+
   const needsPrefix = parsed.isPartialCode || (
-    parsed.primaryCode && codeVariants.every((v) => !merged.some((r) => r.code.toUpperCase() === v.toUpperCase()))
+    parsed.primaryCode && !hasExactVariantHit && merged.length === 0
   );
   if (needsPrefix) {
     addRows(await fetchPrefixCodeMatches(client, codeVariants, fetchLimit));
@@ -634,10 +693,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-function selectRegion(btn, region) {
-  document.querySelectorAll('.tool-toggle-btn[data-region]').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  currentRegion = region;
+function selectRegion(_btn, region) {
+  // Region toggles removed — search always covers US, UK, and ME.
+  currentRegion = 'ALL';
   clearTimeout(searchTimeout);
   const searchInput = document.getElementById('code-search-input');
   if (searchInput) performSearch(searchInput.value.trim());
@@ -649,7 +707,6 @@ window.selectRegion = selectRegion;
 function setupEventListeners() {
   const searchInput = document.getElementById('code-search-input');
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const regionBtns = document.querySelectorAll('.region-pill');
 
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.trim();
@@ -665,17 +722,6 @@ function setupEventListeners() {
       e.currentTarget.classList.add('active');
       
       currentFilter = e.currentTarget.dataset.filter;
-      clearTimeout(searchTimeout); 
-      performSearch(searchInput.value.trim());
-    });
-  });
-
-  regionBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      regionBtns.forEach(b => b.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-      
-      currentRegion = e.currentTarget.dataset.region;
       clearTimeout(searchTimeout); 
       performSearch(searchInput.value.trim());
     });
@@ -881,6 +927,19 @@ async function performSearch(query) {
     let fuzzyKind = null;
     let crossCodeSetFallback = false;
 
+    if ((!data || data.length === 0) && parsed.primaryCode && (
+      parsed.primaryType === 'ICD10' || isCompleteIcd10Code(parsed.primaryCode)
+    )) {
+      const nearMatches = await fetchIcd10NearMatches(window.dbClient, parsed.primaryCode, fetchLimit);
+      if (searchId !== currentSearchId) return;
+      if (nearMatches.length > 0) {
+        data = nearMatches;
+        usedFuzzy = true;
+        fuzzyFrom = parsed.primaryCode;
+        fuzzyKind = 'ICD10';
+      }
+    }
+
     if ((!data || data.length === 0) && parsed.primaryCode && /^\d{5}$/.test(cleanQFiltered)) {
       const fuzzyVariants = generateCptFuzzyVariants(cleanQFiltered);
       if (fuzzyVariants.length > 0) {
@@ -894,23 +953,6 @@ async function performSearch(query) {
           usedFuzzy = true;
           fuzzyFrom = cleanQFiltered;
           fuzzyKind = 'CPT';
-        }
-      }
-    }
-
-    if ((!data || data.length === 0) && parsed.primaryType === 'ICD10' && parsed.primaryCode) {
-      const icdFuzzyVariants = generateIcd10FuzzyVariants(parsed.primaryCode);
-      if (icdFuzzyVariants.length > 0) {
-        let fuzzyQuery = applyRegionAndFilter(
-          window.dbClient.from('medical_codes').select('code, short_description, country, code_type')
-        );
-        const fuzzyResult = await fuzzyQuery.in('code', icdFuzzyVariants).limit(20);
-        if (searchId !== currentSearchId) return;
-        if (!fuzzyResult.error && fuzzyResult.data && fuzzyResult.data.length > 0) {
-          data = fuzzyResult.data;
-          usedFuzzy = true;
-          fuzzyFrom = parsed.primaryCode;
-          fuzzyKind = 'ICD10';
         }
       }
     }
@@ -973,6 +1015,21 @@ async function performSearch(query) {
         if (bIcd && !aIcd) return 1;
         if (a.type === 'ICD10' && b.type !== 'ICD10') return -1;
         if (b.type === 'ICD10' && a.type !== 'ICD10') return 1;
+      }
+
+      const icdLetter = getIcd10LetterPrefix(parsed.primaryCode);
+      const icdCategory = getIcd10CategoryPrefix(parsed.primaryCode);
+      if (icdLetter) {
+        const aLetter = a.code.toUpperCase().startsWith(icdLetter);
+        const bLetter = b.code.toUpperCase().startsWith(icdLetter);
+        if (aLetter && !bLetter) return -1;
+        if (bLetter && !aLetter) return 1;
+      }
+      if (icdCategory) {
+        const aCat = a.code.toUpperCase().startsWith(icdCategory);
+        const bCat = b.code.toUpperCase().startsWith(icdCategory);
+        if (aCat && !bCat) return -1;
+        if (bCat && !aCat) return 1;
       }
 
       const aStarts = codeVariants.some((v) => a.code.toUpperCase().startsWith(v.toUpperCase()));
@@ -1141,7 +1198,7 @@ function renderSearchNotices(searchMeta) {
     const kindLabel = searchMeta.fuzzyKind === 'ICD10' ? 'ICD-10' : 'CPT';
     html += `<div class="search-notice search-notice-info">
       No exact match for <strong>${escapeHtml(searchMeta.fuzzyFrom)}</strong>.
-      Showing close ${escapeHtml(kindLabel)} code matches — did you mean one of these?
+      Showing close ${escapeHtml(kindLabel)} matches (same category, suffix, or typo correction).
     </div>`;
   }
 

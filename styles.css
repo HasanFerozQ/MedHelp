@@ -1081,6 +1081,37 @@ a:hover {
   box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.3);
 }
 
+.coverage-badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto 10px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.coverage-badge {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.coverage-note {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 0 auto 24px;
+  line-height: 1.5;
+}
+
 /* Dashboard Console Grid (Audit) */
 .console-grid {
   display: grid;
