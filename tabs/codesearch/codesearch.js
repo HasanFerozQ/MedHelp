@@ -60,6 +60,77 @@ const TERMINOLOGY_SYNONYMS = {
 };
 
 const CATEGORY_PREFIX_RE = /^(icd[- ]?10(?:[- ]?(?:cm|pcs))?|icd|hcpcs|drg|cpt(?:[- ]?(?:code|codes))?)\s+/i;
+const MIN_NUMERIC_SEARCH_LEN = 3;
+
+function normalizeBillLineText(text) {
+  return String(text || '')
+    .replace(/\$\s*[\d,]+\.?\d*/g, ' ')
+    .replace(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/g, ' ')
+    .replace(/\b\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}\b/g, ' ')
+    .replace(/\b(qty|quantity|units?|amt|amount|total|balance|paid|charge[s]?)\s*:?\s*/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function expandWildcardToken(token) {
+  if (!token) return { base: token, isWildcard: false, prefix: null };
+  const upper = token.toUpperCase().trim();
+
+  const icdDotWild = upper.match(/^([A-TV-Z]\d{2})\.X$/);
+  if (icdDotWild) return { base: `${icdDotWild[1]}.`, isWildcard: true, prefix: `${icdDotWild[1]}.` };
+
+  const icdWild = upper.match(/^([A-TV-Z]\d{2})X$/);
+  if (icdWild) return { base: icdWild[1], isWildcard: true, prefix: icdWild[1] };
+
+  const numDotWild = upper.match(/^(\d{2,4})\.X$/);
+  if (numDotWild) return { base: `${numDotWild[1]}.`, isWildcard: true, prefix: `${numDotWild[1]}.` };
+
+  const numWild = upper.match(/^(\d{2,4})X$/);
+  if (numWild) return { base: numWild[1], isWildcard: true, prefix: numWild[1] };
+
+  const xxxWild = upper.match(/^(\d{2,3})X{2,}$/);
+  if (xxxWild) return { base: xxxWild[1], isWildcard: true, prefix: xxxWild[1] };
+
+  return { base: upper, isWildcard: false, prefix: null };
+}
+
+function validateSearchQuery(parsed, query) {
+  const trimmed = (query || '').trim();
+  if (trimmed.length < 2) {
+    return { ok: false, message: 'Start typing to search instantly...' };
+  }
+  if (trimmed.length === 1) {
+    return { ok: false, message: 'Please enter at least 2 characters to search.' };
+  }
+  if (/^\d{1,2}$/.test(trimmed) && !parsed.codeRange) {
+    return {
+      ok: false,
+      message: 'Enter at least 3 digits for a numeric code search, or include a letter prefix (e.g. Z43.05 for ICD-10).',
+    };
+  }
+  if (parsed.isNumericOnly && parsed.primaryCode && parsed.primaryCode.length < MIN_NUMERIC_SEARCH_LEN && !parsed.codeRange) {
+    return {
+      ok: false,
+      message: `Enter at least ${MIN_NUMERIC_SEARCH_LEN} digits for a numeric-only search, or add a letter prefix for ICD-10.`,
+    };
+  }
+  return { ok: true };
+}
+
+function getPreferredCodeType(parsed) {
+  if (parsed.typeMismatch?.detected) return parsed.typeMismatch.detected;
+  if (parsed.primaryType) return parsed.primaryType;
+  if (parsed.hintedType) return parsed.hintedType;
+  return null;
+}
+
+function buildAllCodeVariants(codes) {
+  const all = new Set();
+  (codes || []).forEach((code) => {
+    buildCodeVariants(code).forEach((variant) => all.add(variant));
+  });
+  return [...all];
+}
 
 function parseSearchQuery(rawQuery) {
   let q = (rawQuery || '').trim();
@@ -83,38 +154,58 @@ function parseSearchQuery(rawQuery) {
 
   const codeRange = parseCodeRange(q);
   const extractedCodes = extractCodesFromQuery(q);
+  const wildcardCodes = extractedCodes.filter((code) => expandWildcardToken(code).isWildcard);
   const primaryCode = pickPrimaryCode(extractedCodes, q);
-  const primaryType = primaryCode ? detectCodeType(primaryCode) : null;
+  const primaryWildcard = primaryCode ? expandWildcardToken(primaryCode) : null;
+  const primaryType = primaryCode ? detectCodeType(primaryWildcard?.isWildcard ? primaryWildcard.prefix : primaryCode) : null;
   const numericCore = primaryCode ? primaryCode.replace(/[^\d]/g, '') : '';
-  const isPartialCode = !!primaryCode && /^\d{2,4}$/.test(numericCore);
+  const isCompleteIcd10 = isCompleteIcd10Code(primaryCode);
+  const isNumericOnly = !!primaryCode && /^\d{2,5}$/.test(primaryCode);
+  const icd10SuffixHint = isNumericOnly ? inferIcd10DecimalSuffix(primaryCode) : null;
+  const isWildcardSearch = wildcardCodes.length > 0 || !!primaryWildcard?.isWildcard;
+  const isPartialCode = !!primaryCode && !isCompleteIcd10 && !isWildcardSearch && (
+    (/^\d{2,4}$/.test(numericCore) && !/^[A-TV-Z]/i.test(primaryCode)) ||
+    /^[A-TV-Z]\d{1,2}$/i.test((primaryCode || '').replace(/\./g, ''))
+  );
   const semanticTerms = expandSemanticTerms(extractSemanticTerms(q, extractedCodes));
+  const allCodeVariants = buildAllCodeVariants(extractedCodes);
   const codeVariants = buildCodeVariants(primaryCode);
   const deletedInfo = primaryCode
     ? DELETED_CODE_REPLACEMENTS[normalizeCodeKey(primaryCode)]
     : null;
 
-  const isCodeSearch = !!primaryCode || !!codeRange;
-  const isDescriptionSearch = !primaryCode && !codeRange && semanticTerms.length > 0;
-  const isHybrid = !!primaryCode && semanticTerms.length > 0;
+  const isCodeSearch = extractedCodes.length > 0 || !!codeRange || isWildcardSearch;
+  const isDescriptionSearch = extractedCodes.length === 0 && !codeRange && semanticTerms.length > 0;
+  const isHybrid = extractedCodes.length > 0 && semanticTerms.length > 0;
+  const isMultiCode = extractedCodes.length > 1;
+  const typeMismatch = hintedType && primaryType && hintedType !== primaryType
+    ? { hinted: hintedType, detected: primaryType }
+    : null;
 
   return {
     raw: rawQuery,
     normalized: q,
     hintedType,
+    preferredType: getPreferredCodeType({ hintedType, primaryType, typeMismatch }),
     primaryType,
     extractedCodes,
     primaryCode,
     codeVariants,
+    allCodeVariants,
+    wildcardCodes,
     codeRange,
     isPartialCode,
+    isCompleteIcd10,
+    isNumericOnly,
+    isWildcardSearch,
+    isMultiCode,
+    icd10SuffixHint,
     isCodeSearch,
     isDescriptionSearch,
     isHybrid,
     semanticTerms,
     deletedInfo,
-    typeMismatch: hintedType && primaryType && hintedType !== primaryType
-      ? { hinted: hintedType, detected: primaryType }
-      : null,
+    typeMismatch,
   };
 }
 
@@ -149,17 +240,27 @@ function looksLikeCodeToken(token) {
   if (/^[A-Z]\d{3,4}[A-Z]?$/.test(compact)) return true;
   if (/^\d{2,5}(-\d{2})?$/.test(upper)) return true;
   if (/^\d{2}\.\d{1,4}$/.test(upper)) return true;
-  if (/^\d{4,5}x$/i.test(upper)) return true;
+  if (/^\d{2,4}x$/i.test(upper)) return true;
+  if (/^[A-TV-Z]\d{2}\.X$/i.test(upper)) return true;
+  if (/^\d{2,4}\.X$/i.test(upper)) return true;
+  if (/^\d{2,3}X{2,}$/i.test(upper)) return true;
   return false;
 }
 
 function extractCodesFromQuery(text) {
   const found = new Set();
-  const tokens = text.split(/[\s,;]+/).filter(Boolean);
+  const normalized = normalizeBillLineText(text);
+  const segments = normalized.split(/[\|\t]+/).flatMap((part) => part.split(/[\s,;]+/)).filter(Boolean);
 
-  tokens.forEach((token) => {
+  segments.forEach((token) => {
     const lower = token.toLowerCase();
     if (SEARCH_STOP_WORDS.has(lower)) return;
+
+    const wild = expandWildcardToken(token);
+    if (wild.isWildcard) {
+      found.add(token.toUpperCase());
+      return;
+    }
 
     if (looksLikeCodeToken(token)) {
       found.add(token.toUpperCase());
@@ -174,18 +275,25 @@ function extractCodesFromQuery(text) {
     /\b(?:cpt|hcpcs|icd[- ]?10)[-\s]*([A-Z0-9][A-Z0-9.\-]{1,10})\b/gi,
     /\b([A-TV-Z]\d{2}\.[0-9A-Z]{1,4})\b/gi,
     /\b([A-TV-Z]\d{2}[A-Z0-9]{1,4})\b/gi,
+    /\b([A-TV-Z]\d{2}\.X)\b/gi,
+    /\b([A-TV-Z]\d{2}X)\b/gi,
     /\b([A-Z]\d{4}[A-Z]?)\b/g,
     /\b(\d{4,5}-\d{2})\b/g,
-    /\b(\d{2,5})\b/g,
+    /\b(\d{5})\b/g,
+    /\b(\d{2,4})\b/g,
     /\b(\d{2}\.\d{1,4})\b/g,
+    /\b(\d{2,4}\.X)\b/gi,
+    /\b(\d{2,3}X{2,})\b/gi,
   ];
 
   inlinePatterns.forEach((pattern) => {
     let match;
-    while ((match = pattern.exec(text)) !== null) {
+    while ((match = pattern.exec(normalized)) !== null) {
       const candidate = match[1].toUpperCase();
       if (SEARCH_STOP_WORDS.has(candidate.toLowerCase())) continue;
-      if (looksLikeCodeToken(candidate)) found.add(candidate);
+      if (looksLikeCodeToken(candidate) || expandWildcardToken(candidate).isWildcard) {
+        found.add(candidate);
+      }
     }
   });
 
@@ -241,8 +349,26 @@ function parseCodeRange(text) {
   return { start: match[1], end: match[2] };
 }
 
+function isCompleteIcd10Code(code) {
+  if (!code) return false;
+  const compact = code.toUpperCase().replace(/[\.\-\s]/g, '');
+  return /^[A-TV-Z]\d{2}[A-Z0-9]{1,4}$/i.test(compact);
+}
+
+function inferIcd10DecimalSuffix(numericCode) {
+  const digits = String(numericCode || '').replace(/\D/g, '');
+  if (digits.length === 4) return `${digits.slice(0, 2)}.${digits.slice(2)}`;
+  if (digits.length === 5) return `${digits.slice(0, 3)}.${digits.slice(3)}`;
+  return null;
+}
+
 function buildCodeVariants(code) {
   if (!code) return [];
+  const wild = expandWildcardToken(code);
+  if (wild.isWildcard && wild.prefix) {
+    return [wild.prefix];
+  }
+
   const variants = new Set();
   const upper = code.toUpperCase().trim();
   variants.add(upper);
@@ -271,6 +397,189 @@ function buildCodeVariants(code) {
   return [...variants].filter(Boolean);
 }
 
+function getWildcardPrefixes(codes) {
+  const prefixes = new Set();
+  (codes || []).forEach((code) => {
+    const wild = expandWildcardToken(code);
+    if (wild.isWildcard && wild.prefix) prefixes.add(wild.prefix);
+  });
+  return [...prefixes];
+}
+
+function applyRegionAndFilter(query) {
+  if (currentRegion !== 'ALL') query = query.eq('country', currentRegion);
+  if (currentFilter !== 'ALL') query = query.eq('code_type', currentFilter);
+  return query;
+}
+
+async function fetchExactCodeMatches(client, codes, limit) {
+  const exact = [...new Set(codes.filter(Boolean))];
+  if (exact.length === 0) return [];
+
+  let query = applyRegionAndFilter(
+    client.from('medical_codes').select('code, short_description, country, code_type')
+  );
+  const { data, error } = await query.in('code', exact.slice(0, 80)).limit(limit);
+  if (error) throw error;
+  return data || [];
+}
+
+function toIlikePrefix(prefix) {
+  const cleanPrefix = String(prefix || '').toUpperCase();
+  if (cleanPrefix.endsWith('.')) return `${cleanPrefix}%`;
+  if (cleanPrefix.includes('.')) return `${cleanPrefix.replace(/\./g, '%')}%`;
+  return `${cleanPrefix}%`;
+}
+
+async function fetchPrefixCodeMatches(client, prefixes, limit) {
+  const merged = [];
+  const seen = new Set();
+
+  for (const prefix of prefixes) {
+    const cleanPrefix = String(prefix || '').toUpperCase();
+    if (!cleanPrefix || cleanPrefix.length < 2) continue;
+
+    let query = applyRegionAndFilter(
+      client.from('medical_codes').select('code, short_description, country, code_type')
+    );
+    const { data, error } = await query.ilike('code', toIlikePrefix(cleanPrefix)).limit(limit);
+    if (error) throw error;
+
+    (data || []).forEach((row) => {
+      const key = `${row.code}_${row.code_type}_${row.country}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push(row);
+      }
+    });
+  }
+
+  return merged;
+}
+
+async function fetchIcd10SuffixMatches(client, suffix, limit) {
+  if (!suffix) return [];
+
+  let query = applyRegionAndFilter(
+    client.from('medical_codes').select('code, short_description, country, code_type')
+  );
+  if (currentFilter === 'ALL') query = query.eq('code_type', 'ICD10');
+  const { data, error } = await query.ilike('code', `%${suffix}`).limit(limit);
+  if (error) throw error;
+  return data || [];
+}
+
+async function executeSmartCodeSearch(client, parsed, codeVariants, fetchLimit) {
+  const merged = [];
+  const seen = new Set();
+  const addRows = (rows) => {
+    (rows || []).forEach((row) => {
+      const key = `${row.code}_${row.code_type}_${row.country}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push(row);
+      }
+    });
+  };
+
+  const wildcardPrefixes = getWildcardPrefixes(parsed.extractedCodes);
+  if (wildcardPrefixes.length > 0) {
+    addRows(await fetchPrefixCodeMatches(client, wildcardPrefixes, fetchLimit));
+    return merged;
+  }
+
+  addRows(await fetchExactCodeMatches(client, codeVariants, fetchLimit));
+
+  const needsPrefix = parsed.isPartialCode || (
+    parsed.primaryCode && codeVariants.every((v) => !merged.some((r) => r.code.toUpperCase() === v.toUpperCase()))
+  );
+  if (needsPrefix) {
+    addRows(await fetchPrefixCodeMatches(client, codeVariants, fetchLimit));
+  }
+
+  if (parsed.isNumericOnly && parsed.icd10SuffixHint) {
+    addRows(await fetchIcd10SuffixMatches(client, parsed.icd10SuffixHint, 50));
+  }
+
+  return merged;
+}
+
+async function executeCrossCodeSetFallback(client, parsed, codeVariants, fetchLimit) {
+  const typesToTry = ['ICD10', 'CPT', 'HCPCS'].filter((type) => {
+    if (currentFilter !== 'ALL' && currentFilter !== type) return false;
+    return type !== parsed.primaryType;
+  });
+
+  const merged = [];
+  const seen = new Set();
+  for (const codeType of typesToTry) {
+    let query = client.from('medical_codes').select('code, short_description, country, code_type');
+    if (currentRegion !== 'ALL') query = query.eq('country', currentRegion);
+    query = query.eq('code_type', codeType);
+
+    const exact = await query.in('code', codeVariants.slice(0, 50)).limit(fetchLimit);
+    if (exact.error) continue;
+
+    (exact.data || []).forEach((row) => {
+      const key = `${row.code}_${row.code_type}_${row.country}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push(row);
+      }
+    });
+
+    if (parsed.isPartialCode || parsed.isWildcardSearch) {
+      for (const prefix of codeVariants.slice(0, 10)) {
+        let prefixQuery = client.from('medical_codes').select('code, short_description, country, code_type');
+        if (currentRegion !== 'ALL') prefixQuery = prefixQuery.eq('country', currentRegion);
+        prefixQuery = prefixQuery.eq('code_type', codeType).ilike('code', toIlikePrefix(prefix));
+        const prefixResult = await prefixQuery.limit(Math.min(fetchLimit, 80));
+        if (prefixResult.error) continue;
+        (prefixResult.data || []).forEach((row) => {
+          const key = `${row.code}_${row.code_type}_${row.country}`;
+          if (!seen.has(key)) {
+            seen.add(key);
+            merged.push(row);
+          }
+        });
+      }
+    }
+  }
+
+  return merged;
+}
+
+function generateIcd10FuzzyVariants(code) {
+  const compact = String(code || '').toUpperCase().replace(/[\.\-\s]/g, '');
+  if (!/^[A-TV-Z]\d{2}[A-Z0-9]{1,4}$/i.test(compact)) return [];
+
+  const variants = new Set();
+  for (let i = 3; i < compact.length; i++) {
+    const ch = compact[i];
+    if (/\d/.test(ch)) {
+      const digit = Number(ch);
+      if (digit > 0) variants.add(compact.slice(0, i) + String(digit - 1) + compact.slice(i + 1));
+      if (digit < 9) variants.add(compact.slice(0, i) + String(digit + 1) + compact.slice(i + 1));
+    } else if (/[A-Z]/.test(ch)) {
+      variants.add(compact.slice(0, i) + String.fromCharCode(ch.charCodeAt(0) - 1) + compact.slice(i + 1));
+      variants.add(compact.slice(0, i) + String.fromCharCode(ch.charCodeAt(0) + 1) + compact.slice(i + 1));
+    }
+  }
+
+  for (let i = 3; i < compact.length - 1; i++) {
+    const arr = compact.split('');
+    [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+    variants.add(arr.join(''));
+  }
+
+  variants.delete(compact);
+  const expanded = new Set();
+  [...variants].slice(0, 12).forEach((variant) => {
+    buildCodeVariants(variant).forEach((v) => expanded.add(v));
+  });
+  return [...expanded].slice(0, 20);
+}
+
 function generateCptFuzzyVariants(code) {
   const compact = (code || '').replace(/\D/g, '');
   if (!/^\d{5}$/.test(compact)) return [];
@@ -296,9 +605,16 @@ function buildSearchMeta(parsed, extra = {}) {
     parsed,
     deletedInfo: parsed.deletedInfo,
     isPartialCode: parsed.isPartialCode,
+    isNumericOnly: parsed.isNumericOnly,
+    isMultiCode: parsed.isMultiCode,
+    isWildcardSearch: parsed.isWildcardSearch,
+    icd10SuffixHint: parsed.icd10SuffixHint,
     typeMismatch: parsed.typeMismatch,
+    preferredType: parsed.preferredType || getPreferredCodeType(parsed),
     usedFuzzy: extra.usedFuzzy || false,
     fuzzyFrom: extra.fuzzyFrom || null,
+    fuzzyKind: extra.fuzzyKind || null,
+    crossCodeSetFallback: extra.crossCodeSetFallback || false,
   };
 }
 
@@ -395,10 +711,10 @@ function setupEventListeners() {
 async function performSearch(query) {
   const listContainer = document.getElementById('search-results-list');
   const parsed = parseSearchQuery(query);
-  const minLength = parsed.isCodeSearch ? 2 : 2;
+  const validation = validateSearchQuery(parsed, query);
 
-  if (query.length < minLength) {
-    listContainer.innerHTML = '<div class="empty-state">Start typing to search instantly...</div>';
+  if (!validation.ok) {
+    listContainer.innerHTML = `<div class="empty-state">${escapeHtml(validation.message)}</div>`;
     return;
   }
 
@@ -452,33 +768,30 @@ async function performSearch(query) {
       .replace(/[^a-zA-Z0-9\s.\-,]/g, '')
       .trim();
     const codeVariants = [...new Set([
-      ...(parsed.primaryCode ? parsed.codeVariants : []),
-      ...(parsed.primaryCode ? [safeQuery, cleanQ, cleanQFiltered, dottedQ] : []),
+      ...buildAllCodeVariants(parsed.extractedCodes),
+      ...(parsed.extractedCodes.length === 1 && parsed.primaryCode ? [safeQuery, cleanQ, cleanQFiltered, dottedQ] : []),
       ...(parsed.deletedInfo ? [parsed.deletedInfo.replacement] : []),
     ].filter(Boolean))];
 
-    let dbQuery = window.dbClient
-      .from('medical_codes')
-      .select('code, short_description, country, code_type');
-
-    if (currentRegion !== 'ALL') {
-      dbQuery = dbQuery.eq('country', currentRegion);
-    }
-    if (currentFilter !== 'ALL') {
-      dbQuery = dbQuery.eq('code_type', currentFilter);
-    }
+    const fetchLimit = 300;
+    let data = null;
+    let error = null;
+    let status = null;
 
     if (parsed.codeRange) {
+      let dbQuery = applyRegionAndFilter(
+        window.dbClient.from('medical_codes').select('code, short_description, country, code_type')
+      );
       dbQuery = dbQuery
         .gte('code', parsed.codeRange.start)
         .lte('code', parsed.codeRange.end);
+      ({ data, error, status } = await dbQuery.limit(fetchLimit));
     } else if (parsed.isCodeSearch && !parsed.isHybrid) {
-      const allOrs = new Set();
-      codeVariants.forEach((v) => {
-        allOrs.add(`code.eq."${v}"`);
-        allOrs.add(`code.ilike."${v}%"`);
-      });
-      dbQuery = dbQuery.or(Array.from(allOrs).join(','));
+      try {
+        data = await executeSmartCodeSearch(window.dbClient, parsed, codeVariants, fetchLimit);
+      } catch (searchErr) {
+        error = searchErr;
+      }
     } else if (parsed.isDescriptionSearch) {
       const allOrs = new Set();
       const phrase = parsed.semanticTerms.join(' ');
@@ -490,33 +803,63 @@ async function performSearch(query) {
         renderResults([], 0, fetchLimit, buildSearchMeta(parsed));
         return;
       }
+      let dbQuery = applyRegionAndFilter(
+        window.dbClient.from('medical_codes').select('code, short_description, country, code_type')
+      );
       dbQuery = dbQuery.or(Array.from(allOrs).join(','));
+      ({ data, error, status } = await dbQuery.limit(fetchLimit));
     } else {
       const allOrs = new Set();
-      codeVariants.forEach((v) => {
-        allOrs.add(`code.eq."${v}"`);
-        allOrs.add(`code.ilike."${v}%"`);
-      });
       parsed.semanticTerms.forEach((w) => {
         if (w.length >= 2) allOrs.add(`short_description.ilike."%${w}%"`);
       });
       if (parsed.semanticTerms.length > 0) {
         allOrs.add(`short_description.ilike."%${parsed.normalized}%"`);
       }
-      if (allOrs.size === 0) {
+
+      if (parsed.primaryCode) {
+        try {
+          data = await executeSmartCodeSearch(window.dbClient, parsed, codeVariants, fetchLimit);
+        } catch (searchErr) {
+          error = searchErr;
+        }
+      }
+
+      if (!error && parsed.semanticTerms.length > 0) {
+        let dbQuery = applyRegionAndFilter(
+          window.dbClient.from('medical_codes').select('code, short_description, country, code_type')
+        );
+        dbQuery = dbQuery.or(Array.from(allOrs).join(','));
+        const descResult = await dbQuery.limit(fetchLimit);
+        if (descResult.error) error = descResult.error;
+        else {
+          status = descResult.status;
+          const merged = [...(data || []), ...(descResult.data || [])];
+          const seen = new Set();
+          data = merged.filter((row) => {
+            const key = `${row.code}_${row.code_type}_${row.country}`;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+        }
+      } else if (!parsed.primaryCode && allOrs.size === 0) {
         renderResults([], 0, fetchLimit, buildSearchMeta(parsed));
         return;
       }
-      dbQuery = dbQuery.or(Array.from(allOrs).join(','));
     }
-
-    const fetchLimit = 300;
-    let { data, error, status } = await dbQuery.limit(fetchLimit);
 
     if (error && isTimeoutError(error) && searchId === currentSearchId) {
       await new Promise(r => setTimeout(r, 350));
       if (searchId !== currentSearchId) return;
-      ({ data, error, status } = await dbQuery.limit(fetchLimit));
+      if (parsed.isCodeSearch && !parsed.isHybrid) {
+        try {
+          data = await executeSmartCodeSearch(window.dbClient, parsed, codeVariants, fetchLimit);
+          error = null;
+        } catch (retryErr) {
+          error = retryErr;
+        }
+      }
     }
 
     if (searchId !== currentSearchId) {
@@ -535,30 +878,54 @@ async function performSearch(query) {
 
     let usedFuzzy = false;
     let fuzzyFrom = null;
+    let fuzzyKind = null;
+    let crossCodeSetFallback = false;
 
     if ((!data || data.length === 0) && parsed.primaryCode && /^\d{5}$/.test(cleanQFiltered)) {
       const fuzzyVariants = generateCptFuzzyVariants(cleanQFiltered);
       if (fuzzyVariants.length > 0) {
-        const fuzzyOrs = fuzzyVariants.map((v) => `code.eq."${v}"`).join(',');
-        let fuzzyQuery = window.dbClient
-          .from('medical_codes')
-          .select('code, short_description, country, code_type');
-        if (currentRegion !== 'ALL') fuzzyQuery = fuzzyQuery.eq('country', currentRegion);
-        if (currentFilter !== 'ALL') fuzzyQuery = fuzzyQuery.eq('code_type', currentFilter);
-        fuzzyQuery = fuzzyQuery.or(fuzzyOrs);
-
-        const fuzzyResult = await fuzzyQuery.limit(20);
+        let fuzzyQuery = applyRegionAndFilter(
+          window.dbClient.from('medical_codes').select('code, short_description, country, code_type')
+        );
+        const fuzzyResult = await fuzzyQuery.in('code', fuzzyVariants).limit(20);
         if (searchId !== currentSearchId) return;
         if (!fuzzyResult.error && fuzzyResult.data && fuzzyResult.data.length > 0) {
           data = fuzzyResult.data;
           usedFuzzy = true;
           fuzzyFrom = cleanQFiltered;
+          fuzzyKind = 'CPT';
         }
       }
     }
 
+    if ((!data || data.length === 0) && parsed.primaryType === 'ICD10' && parsed.primaryCode) {
+      const icdFuzzyVariants = generateIcd10FuzzyVariants(parsed.primaryCode);
+      if (icdFuzzyVariants.length > 0) {
+        let fuzzyQuery = applyRegionAndFilter(
+          window.dbClient.from('medical_codes').select('code, short_description, country, code_type')
+        );
+        const fuzzyResult = await fuzzyQuery.in('code', icdFuzzyVariants).limit(20);
+        if (searchId !== currentSearchId) return;
+        if (!fuzzyResult.error && fuzzyResult.data && fuzzyResult.data.length > 0) {
+          data = fuzzyResult.data;
+          usedFuzzy = true;
+          fuzzyFrom = parsed.primaryCode;
+          fuzzyKind = 'ICD10';
+        }
+      }
+    }
+
+    if ((!data || data.length === 0) && parsed.isCodeSearch && codeVariants.length > 0) {
+      const crossData = await executeCrossCodeSetFallback(window.dbClient, parsed, codeVariants, fetchLimit);
+      if (searchId !== currentSearchId) return;
+      if (crossData.length > 0) {
+        data = crossData;
+        crossCodeSetFallback = true;
+      }
+    }
+
     if (!data || data.length === 0) {
-      renderResults([], 0, fetchLimit, buildSearchMeta(parsed, { usedFuzzy, fuzzyFrom }));
+      renderResults([], 0, fetchLimit, buildSearchMeta(parsed, { usedFuzzy, fuzzyFrom, fuzzyKind, crossCodeSetFallback }));
       return;
     }
 
@@ -585,12 +952,28 @@ async function performSearch(query) {
     const rankKeys = new Set(codeVariants.map((v) => v.toUpperCase()));
 
     finalResults.sort((a, b) => {
+      const preferredType = parsed.preferredType || getPreferredCodeType(parsed);
+      if (preferredType) {
+        if (a.type === preferredType && b.type !== preferredType) return -1;
+        if (b.type === preferredType && a.type !== preferredType) return 1;
+      }
+
       const aKey = normalizeCodeKey(a.code);
       const bKey = normalizeCodeKey(b.code);
       const aExact = rankKeys.has(a.code.toUpperCase()) || rankKeys.has(aKey);
       const bExact = rankKeys.has(b.code.toUpperCase()) || rankKeys.has(bKey);
       if (aExact && !bExact) return -1;
       if (bExact && !aExact) return 1;
+
+      if (parsed.isNumericOnly && parsed.icd10SuffixHint) {
+        const suffix = parsed.icd10SuffixHint;
+        const aIcd = a.type === 'ICD10' && a.code.toUpperCase().includes(suffix);
+        const bIcd = b.type === 'ICD10' && b.code.toUpperCase().includes(suffix);
+        if (aIcd && !bIcd) return -1;
+        if (bIcd && !aIcd) return 1;
+        if (a.type === 'ICD10' && b.type !== 'ICD10') return -1;
+        if (b.type === 'ICD10' && a.type !== 'ICD10') return 1;
+      }
 
       const aStarts = codeVariants.some((v) => a.code.toUpperCase().startsWith(v.toUpperCase()));
       const bStarts = codeVariants.some((v) => b.code.toUpperCase().startsWith(v.toUpperCase()));
@@ -621,7 +1004,7 @@ async function performSearch(query) {
       finalResults,
       data.length,
       fetchLimit,
-      buildSearchMeta(parsed, { usedFuzzy, fuzzyFrom })
+      buildSearchMeta(parsed, { usedFuzzy, fuzzyFrom, fuzzyKind, crossCodeSetFallback })
     );
 
     if (finalResults.length > 0 && finalResults.length < 50) {
@@ -717,10 +1100,32 @@ function renderSearchNotices(searchMeta) {
 
   let html = '';
 
+  if (searchMeta.isMultiCode && searchMeta.parsed?.extractedCodes?.length) {
+    html += `<div class="search-notice search-notice-info">
+      Searching <strong>${searchMeta.parsed.extractedCodes.length}</strong> codes from your query:
+      <strong>${escapeHtml(searchMeta.parsed.extractedCodes.join(', '))}</strong>
+    </div>`;
+  }
+
+  if (searchMeta.isWildcardSearch && searchMeta.parsed?.wildcardCodes?.length) {
+    html += `<div class="search-notice search-notice-info">
+      Wildcard search — showing all codes matching
+      <strong>${escapeHtml(searchMeta.parsed.wildcardCodes.join(', '))}</strong>.
+    </div>`;
+  }
+
   if (searchMeta.isPartialCode && searchMeta.parsed?.primaryCode) {
     html += `<div class="search-notice search-notice-info">
       Showing codes starting with <strong>${escapeHtml(searchMeta.parsed.primaryCode)}</strong>.
       Select the exact code from your bill if you see multiple matches.
+    </div>`;
+  }
+
+  if (searchMeta.isNumericOnly && searchMeta.icd10SuffixHint) {
+    html += `<div class="search-notice search-notice-info">
+      Numeric-only search — ICD-10 codes require a letter prefix.
+      Prioritizing ICD-10 matches ending in <strong>${escapeHtml(searchMeta.icd10SuffixHint)}</strong>
+      (e.g. <strong>Z${escapeHtml(searchMeta.icd10SuffixHint)}</strong>).
     </div>`;
   }
 
@@ -733,9 +1138,16 @@ function renderSearchNotices(searchMeta) {
   }
 
   if (searchMeta.usedFuzzy && searchMeta.fuzzyFrom) {
+    const kindLabel = searchMeta.fuzzyKind === 'ICD10' ? 'ICD-10' : 'CPT';
     html += `<div class="search-notice search-notice-info">
       No exact match for <strong>${escapeHtml(searchMeta.fuzzyFrom)}</strong>.
-      Showing close CPT code matches — did you mean one of these?
+      Showing close ${escapeHtml(kindLabel)} code matches — did you mean one of these?
+    </div>`;
+  }
+
+  if (searchMeta.crossCodeSetFallback) {
+    html += `<div class="search-notice search-notice-info">
+      No exact match in the expected code type — expanded search across CPT, ICD-10, and HCPCS.
     </div>`;
   }
 

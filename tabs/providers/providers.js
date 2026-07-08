@@ -513,7 +513,7 @@ function renderNPIResults(results, container) {
 // Global hook for Search Button
 window.searchNPI = searchNPI;
 
-// Allow pressing Enter in NPI name field to trigger search
+// Allow pressing Enter in NPI name field to trigger search & click listener for guide pills
 document.addEventListener('DOMContentLoaded', () => {
   const npiInput = document.getElementById('npi-name');
   if (npiInput) {
@@ -521,4 +521,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Enter') searchNPI();
     });
   }
+
+  // Handle recommended format pills
+  document.querySelectorAll('.npi-fmt-pill').forEach(pill => {
+    pill.onclick = (e) => {
+      e.preventDefault();
+      const query = pill.dataset.query;
+      if (npiInput) {
+        npiInput.value = query;
+        searchNPI();
+      }
+    };
+  });
 });

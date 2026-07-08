@@ -161,6 +161,86 @@
           </button>
         </div>
 
+        <!-- ── FORMAT GUIDE ── -->
+        <div id="npi-format-guide" style="
+          margin-top: -12px;
+          margin-bottom: 24px;
+          padding: 16px 20px;
+          background: rgba(var(--accent-rgb), 0.03);
+          border: 1px solid rgba(var(--accent-rgb), 0.12);
+          border-radius: 16px;
+          text-align: left;
+        ">
+          <div style="display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px;">
+            <span style="font-size: 16px; margin-top: 1px;">💡</span>
+            <div>
+              <strong style="color: var(--text-h); font-size: 13.5px; display: block; margin-bottom: 2px;">Search Tip: Keep Queries Simple</strong>
+              <span style="font-size: 12px; color: var(--text-muted); line-height: 1.5; display: block;">
+                The official CMS registry matches exact practitioner names, facility names, or 10-digit NPIs. Avoid adding sentence fragments, generic terms, or city names (e.g. do <strong>NOT</strong> search: <em>"department of health provider lanard npi nyc"</em>).
+              </span>
+            </div>
+          </div>
+          
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; margin-top: 6px;">
+            <span style="font-size: 10.5px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px;">
+              Click to try recommended formats:
+            </span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <button class="npi-fmt-pill" data-query="Christal Smith" title="Practitioner Name" style="
+                all: unset; cursor: pointer;
+                font-size: 12px; font-weight: 700;
+                padding: 4px 10px; border-radius: 6px;
+                background: rgba(var(--accent-rgb), 0.08);
+                border: 1px solid rgba(var(--accent-rgb), 0.22);
+                color: var(--accent); white-space: nowrap;
+                transition: all 0.2s;
+              " onmouseover="this.style.background='rgba(var(--accent-rgb),0.18)';this.style.transform='translateY(-1px)'"
+                 onmouseout="this.style.background='rgba(var(--accent-rgb),0.08)';this.style.transform='none'">
+                Practitioner: <span style="font-weight: 800; color: var(--text-h);">Christal Smith</span>
+              </button>
+
+              <button class="npi-fmt-pill" data-query="Fresh Start Service Support" title="Facility Name" style="
+                all: unset; cursor: pointer;
+                font-size: 12px; font-weight: 700;
+                padding: 4px 10px; border-radius: 6px;
+                background: rgba(var(--accent-rgb), 0.08);
+                border: 1px solid rgba(var(--accent-rgb), 0.22);
+                color: var(--accent); white-space: nowrap;
+                transition: all 0.2s;
+              " onmouseover="this.style.background='rgba(var(--accent-rgb),0.18)';this.style.transform='translateY(-1px)'"
+                 onmouseout="this.style.background='rgba(var(--accent-rgb),0.08)';this.style.transform='none'">
+                Facility: <span style="font-weight: 800; color: var(--text-h);">Fresh Start Service Support</span>
+              </button>
+
+              <button class="npi-fmt-pill" data-query="1548497795" title="10-Digit NPI" style="
+                all: unset; cursor: pointer;
+                font-family: monospace; font-size: 12px; font-weight: 700;
+                padding: 4px 10px; border-radius: 6px;
+                background: rgba(var(--accent-rgb), 0.08);
+                border: 1px solid rgba(var(--accent-rgb), 0.22);
+                color: var(--accent); white-space: nowrap;
+                transition: all 0.2s;
+              " onmouseover="this.style.background='rgba(var(--accent-rgb),0.18)';this.style.transform='translateY(-1px)'"
+                 onmouseout="this.style.background='rgba(var(--accent-rgb),0.08)';this.style.transform='none'">
+                NPI: <span style="font-weight: 800; color: var(--text-h);">1548497795</span>
+              </button>
+
+              <button class="npi-fmt-pill" data-query="John Smith TX" title="Name with State" style="
+                all: unset; cursor: pointer;
+                font-size: 12px; font-weight: 700;
+                padding: 4px 10px; border-radius: 6px;
+                background: rgba(var(--accent-rgb), 0.08);
+                border: 1px solid rgba(var(--accent-rgb), 0.22);
+                color: var(--accent); white-space: nowrap;
+                transition: all 0.2s;
+              " onmouseover="this.style.background='rgba(var(--accent-rgb),0.18)';this.style.transform='translateY(-1px)'"
+                 onmouseout="this.style.background='rgba(var(--accent-rgb),0.08)';this.style.transform='none'">
+                With State: <span style="font-weight: 800; color: var(--text-h);">John Smith TX</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div id="npi-results" class="results-area">
           <p class="status-msg">Enter a name or NPI number to search the registry.</p>
         </div>
