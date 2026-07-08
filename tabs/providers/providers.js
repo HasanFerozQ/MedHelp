@@ -3,6 +3,143 @@
  * Handles: National Provider Search (NPPES API)
  */
 
+function mergeNPIResults(resultSets) {
+  const merged = [];
+  const seen = new Set();
+  (resultSets || []).forEach((set) => {
+    (set || []).forEach((provider) => {
+      if (!provider?.number || seen.has(provider.number)) return;
+      seen.add(provider.number);
+      merged.push(provider);
+    });
+  });
+  return merged;
+}
+
+function parseLabeledNPIQuery(raw) {
+  const result = {
+    practitioner: null,
+    facility: null,
+    npiNumber: null,
+    stateCode: null,
+    hasLabels: false,
+    freeText: null,
+  };
+
+  if (!raw || !raw.trim()) return result;
+
+  const text = raw.replace(/\r\n/g, '\n').trim();
+  const inlineLabelPattern = /(Practitioner(?:\s+Name)?|Facility(?:\s+Name)?|NPI(?:\s+Number)?|With\s+State|State)\s*:/gi;
+  const labelCount = (text.match(inlineLabelPattern) || []).length;
+
+  if (labelCount === 0) {
+    result.freeText = text;
+    return result;
+  }
+
+  result.hasLabels = true;
+  const unlabeled = [];
+
+  const consume = (pattern, assign) => {
+    const match = text.match(pattern);
+    if (match && match[1]) assign(match[1].trim());
+  };
+
+  consume(/Practitioner(?:\s+Name)?\s*:\s*([^\n]+?)(?=\s*(?:Facility(?:\s+Name)?|NPI(?:\s+Number)?|With\s+State|State)\s*:|$)/is, (v) => {
+    result.practitioner = v.replace(/\s+/g, ' ').trim();
+  });
+  consume(/Facility(?:\s+Name)?\s*:\s*([^\n]+?)(?=\s*(?:Practitioner(?:\s+Name)?|NPI(?:\s+Number)?|With\s+State|State)\s*:|$)/is, (v) => {
+    result.facility = v.replace(/\s+/g, ' ').trim();
+  });
+  consume(/NPI(?:\s+Number)?\s*:\s*([^\n]+?)(?=\s*(?:Practitioner(?:\s+Name)?|Facility(?:\s+Name)?|With\s+State|State)\s*:|$)/is, (v) => {
+    const digits = v.replace(/\D/g, '');
+    if (digits.length === 10) result.npiNumber = digits;
+  });
+  consume(/With\s+State\s*:\s*([^\n]+?)(?=\s*(?:Practitioner(?:\s+Name)?|Facility(?:\s+Name)?|NPI(?:\s+Number)?|State)\s*:|$)/is, (v) => {
+    applyStateLine(v, result);
+  });
+  consume(/^State\s*:\s*([^\n]+?)(?=\s*(?:Practitioner(?:\s+Name)?|Facility(?:\s+Name)?|NPI(?:\s+Number)?|With\s+State)\s*:|$)/ims, (v) => {
+    applyStateLine(v, result);
+  });
+
+  text.split('\n').forEach((line) => {
+    const trimmed = line.trim();
+    if (!trimmed) return;
+    if (/^(Practitioner(?:\s+Name)?|Facility(?:\s+Name)?|NPI(?:\s+Number)?|With\s+State|State)\s*:/i.test(trimmed)) return;
+    unlabeled.push(trimmed);
+  });
+
+  result.freeText = unlabeled.join(' ').trim() || null;
+  return result;
+}
+
+function applyStateLine(value, result) {
+  const parsed = parseNPIQuery(value);
+  if (parsed?.stateCode) result.stateCode = parsed.stateCode;
+  if (!result.practitioner && parsed?.cleanName) {
+    result.practitioner = parsed.cleanName;
+  }
+}
+
+async function executeStructuredNPISearch(structured, dropdownState) {
+  const stateCode = dropdownState || structured.stateCode || '';
+  const resultSets = [];
+
+  if (structured.npiNumber) {
+    const npiData = await executeNPISearch(
+      { npiNumber: structured.npiNumber, cleanName: null, firstName: null, lastName: null, isOrg: false, stateCode: null },
+      stateCode
+    );
+    if (npiData.results?.length) return npiData;
+  }
+
+  if (structured.practitioner) {
+    const parsed = parseNPIQuery(structured.practitioner);
+    if (parsed?.npiNumber) {
+      const npiData = await executeNPISearch(parsed, stateCode);
+      if (npiData.results?.length) return npiData;
+    }
+    if (parsed?.cleanName || parsed?.lastName) {
+      const indiv = await executeNPISearch(parsed, stateCode);
+      if (indiv.results?.length) resultSets.push(indiv.results);
+      if (!parsed.isOrg && parsed.firstName && parsed.lastName) {
+        const reversed = await executeNPISearch(parsed, stateCode, { reverseName: true });
+        if (reversed.results?.length) resultSets.push(reversed.results);
+      }
+    }
+  }
+
+  if (structured.facility) {
+    const parsed = parseNPIQuery(structured.facility);
+    if (parsed?.cleanName) {
+      const org = await executeNPISearch(parsed, stateCode, { forceOrg: true });
+      if (org.results?.length) resultSets.push(org.results);
+    }
+  }
+
+  return { results: mergeNPIResults(resultSets) };
+}
+
+async function executeDualNPISearch(parsed, dropdownState) {
+  if (parsed.npiNumber) return executeNPISearch(parsed, dropdownState);
+
+  const stateCode = dropdownState || parsed.stateCode || '';
+  const resultSets = [];
+
+  const primary = await executeNPISearch(parsed, stateCode);
+  if (primary.results?.length) resultSets.push(primary.results);
+
+  if (!parsed.isOrg && parsed.firstName && parsed.lastName) {
+    const reversed = await executeNPISearch(parsed, stateCode, { reverseName: true });
+    if (reversed.results?.length) resultSets.push(reversed.results);
+  }
+
+  const asOrg = await executeNPISearch(parsed, stateCode, { forceOrg: true });
+  if (asOrg.results?.length) resultSets.push(asOrg.results);
+
+  return { results: mergeNPIResults(resultSets) };
+}
+
 /* ─────────────────────────────────────────────────────────────────────────
  *  parseNPIQuery  — Smart Query Parser
  *  Handles all edge cases: noise words, credentials, specialties,
@@ -31,7 +168,8 @@ function parseNPIQuery(raw) {
     'cms', 'national', 'identifier', 'what', 'is', 'are', 'a', 'an', 'and', 'or',
     'by', 'at', 'with', 'their', 'his', 'her', 'its', 'my', 'our', 'your', 'who',
     'where', 'how', 'i', 'want', 'need', 'check', 'verify', 'this', 'that',
-    'tell', 'give', 'look', 'in', 'about'
+    'tell', 'give', 'look', 'in', 'about',
+    'practitioner', 'facility', 'organization', 'provider', 'official', 'state'
   ]);
 
   // Credentials — always stripped from name queries (dots already removed)
@@ -65,7 +203,9 @@ function parseNPIQuery(raw) {
     'rehabilitation', 'outpatient', 'inpatient', 'multispecialty', 'support',
     'university', 'college', 'school', 'academy', 'association', 'society',
     'team', 'company', 'co', 'enterprise', 'enterprises', 'organization',
-    'agency', 'bureau', 'office', 'program', 'project', 'initiative'
+    'agency', 'bureau', 'office', 'program', 'project', 'initiative',
+    'surgical', 'lakes', 'medical', 'health', 'healthcare', 'care', 'home',
+    'nursing', 'therapy', 'diagnostic', 'imaging', 'dental', 'surgery'
   ]);
 
   // Specialty words — stripped from INDIVIDUAL searches only (kept for org names)
@@ -239,7 +379,7 @@ async function searchNPI() {
   const btn        = document.getElementById('npi-search-btn');
   if (!nameInput || !resultsEl) return;
 
-  const rawQuery    = nameInput.value.trim().replace(/\s+/g, ' ');
+  const rawQuery = nameInput.value.trim();
   const dropdownState = stateInput ? stateInput.value.trim().toUpperCase() : '';
 
   if (rawQuery.length < 2) {
@@ -247,7 +387,6 @@ async function searchNPI() {
     return;
   }
 
-  // Show loading state
   resultsEl.innerHTML = `
     <div style="text-align:center; padding: 40px 0;">
       <div class="spinner" style="margin: 0 auto 16px; width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation: spin 1s linear infinite;"></div>
@@ -256,52 +395,67 @@ async function searchNPI() {
   if (btn) btn.disabled = true;
 
   try {
-    const parsed = parseNPIQuery(rawQuery);
+    const structured = parseLabeledNPIQuery(rawQuery);
+    let data = { results: [] };
+    let searchLabel = '';
 
-    // Guard: if parser found nothing useful, tell the user
-    if (!parsed || (!parsed.npiNumber && !parsed.cleanName)) {
-      resultsEl.innerHTML = `
-        <div class="status-msg">
-          Could not extract a valid provider name or NPI from <strong>"${window.escapeHtml(rawQuery)}"</strong>.
-          <br><small>Try: "John Smith", "Valley Medical Group", or a 10-digit NPI number.</small>
-        </div>`;
-      return;
+    if (structured.hasLabels) {
+      const hasAnyField = structured.npiNumber || structured.practitioner || structured.facility || structured.stateCode;
+      if (!hasAnyField && !structured.freeText) {
+        resultsEl.innerHTML = `
+          <div class="status-msg">
+            Could not extract a practitioner, facility, NPI, or state from your labeled query.
+            <br><small>Try: <code>Practitioner: Christal Smith</code>, <code>Facility: Fresh Start Service Support</code>, <code>NPI: 1548497795</code>, or <code>With State: John Smith TX</code></small>
+          </div>`;
+        return;
+      }
+
+      data = await executeStructuredNPISearch(structured, dropdownState);
+      searchLabel = [
+        structured.npiNumber ? `NPI ${structured.npiNumber}` : null,
+        structured.practitioner ? `Practitioner "${structured.practitioner}"` : null,
+        structured.facility ? `Facility "${structured.facility}"` : null,
+        (structured.stateCode || dropdownState) ? `State ${structured.stateCode || dropdownState}` : null,
+      ].filter(Boolean).join(' · ');
+
+      if ((!data.results || data.results.length === 0) && structured.freeText) {
+        const parsedFree = parseNPIQuery(structured.freeText);
+        if (parsedFree && (parsedFree.npiNumber || parsedFree.cleanName)) {
+          data = await executeDualNPISearch(parsedFree, dropdownState || structured.stateCode);
+        }
+      }
+    } else {
+      const parsed = parseNPIQuery(rawQuery);
+      if (!parsed || (!parsed.npiNumber && !parsed.cleanName)) {
+        resultsEl.innerHTML = `
+          <div class="status-msg">
+            Could not extract a valid provider name or NPI from <strong>"${window.escapeHtml(rawQuery)}"</strong>.
+            <br><small>Try: "John Smith", "Victory Lakes Surgical Center", "Practitioner: Christal Smith", or a 10-digit NPI.</small>
+          </div>`;
+        return;
+      }
+
+      if (parsed.npiNumber) {
+        data = await executeNPISearch(parsed, dropdownState);
+      } else {
+        data = await executeDualNPISearch(parsed, dropdownState);
+      }
+      searchLabel = parsed.cleanName || rawQuery;
     }
-
-    // ── Stage 1: Primary search ──
-    let data = await executeNPISearch(parsed, dropdownState);
 
     if (data.results && data.results.length > 0) {
-      renderNPIResults(data.results, resultsEl);
+      const prefix = searchLabel
+        ? `<p style="font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:16px;">Showing matches for ${window.escapeHtml(searchLabel)} — practitioners and facilities</p>`
+        : '';
+      renderNPIResults(data.results, resultsEl, prefix);
       return;
     }
 
-    // ── Stage 2: Reverse name order (e.g., "Evans Thomas" → try "Thomas Evans") ──
-    if (!parsed.isOrg && parsed.firstName && parsed.lastName) {
-      resultsEl.innerHTML += '<p style="font-size:11px;color:var(--accent);text-align:center;margin-top:8px;">Trying reversed name order...</p>';
-      data = await executeNPISearch(parsed, dropdownState, { reverseName: true });
-      if (data.results && data.results.length > 0) {
-        renderNPIResults(data.results, resultsEl);
-        return;
-      }
-    }
-
-    // ── Stage 3: Retry as organization (maybe it's an org without obvious keywords) ──
-    if (!parsed.isOrg && parsed.cleanName) {
-      resultsEl.innerHTML += '<p style="font-size:11px;color:var(--accent);text-align:center;margin-top:8px;">Trying as Organization...</p>';
-      data = await executeNPISearch(parsed, dropdownState, { forceOrg: true });
-      if (data.results && data.results.length > 0) {
-        renderNPIResults(data.results, resultsEl);
-        return;
-      }
-    }
-
-    // ── Stage 4: All fallbacks exhausted ──
-    const displayName = parsed.cleanName || rawQuery;
+    const displayName = searchLabel || rawQuery;
     resultsEl.innerHTML = `
       <div class="status-msg">
-        No providers found for "<strong>${window.escapeHtml(displayName)}</strong>"${dropdownState ? ' in ' + dropdownState : ''}.
-        <br><small>Check spelling, or search by a 10-digit NPI number directly.</small>
+        No providers found for "<strong>${window.escapeHtml(displayName)}</strong>"${dropdownState ? ` in ${dropdownState}` : ''}.
+        <br><small>Check spelling, try a single field (Practitioner, Facility, or NPI), or search by 10-digit NPI number.</small>
       </div>`;
 
   } catch (err) {
@@ -320,14 +474,14 @@ async function searchNPI() {
 }
 
 
-function renderNPIResults(results, container) {
+function renderNPIResults(results, container, prefixHtml = '') {
   // Helper to convert names to Title Case
   const toTitleCase = (str) => {
     if (!str) return '';
     return str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   };
 
-  container.innerHTML = results.map(p => {
+  container.innerHTML = prefixHtml + results.map(p => {
     const isOrg = p.enumeration_type === 'NPI-2';
     const typeLabel = isOrg ? 'Organization' : 'Individual';
     const typeClass = isOrg ? 'badge-org' : 'badge-indiv';
@@ -541,7 +695,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const npiInput = document.getElementById('npi-name');
   if (npiInput) {
     npiInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') searchNPI();
+      if (e.key !== 'Enter') return;
+      const isTextarea = npiInput.tagName === 'TEXTAREA';
+      if (isTextarea) {
+        if (e.ctrlKey || e.metaKey) {
+          e.preventDefault();
+          searchNPI();
+        }
+        return;
+      }
+      e.preventDefault();
+      searchNPI();
     });
   }
 

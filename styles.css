@@ -1573,6 +1573,19 @@ a:hover {
   transition: var(--transition);
 }
 
+textarea.search-input {
+  resize: vertical;
+  min-height: 72px;
+  line-height: 1.5;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.search-box:has(textarea.search-input) svg {
+  top: 18px;
+  transform: none;
+}
+
 .search-input::placeholder { color: var(--text-muted); }
 
 .search-input:focus {
