@@ -31,6 +31,277 @@ const PLAIN_ENGLISH_OVERRIDES = {
   '96372': 'Therapeutic injection (subcutaneous or intramuscular)',
 };
 
+// AMA-deleted / replaced CPT codes (show replacement + history)
+const DELETED_CODE_REPLACEMENTS = {
+  '43272': {
+    replacement: '43278',
+    reason: 'Deleted by the AMA — this ERCP-related code was replaced.',
+  },
+};
+
+const SEARCH_STOP_WORDS = new Set([
+  'cpt', 'icd', 'icd10', 'icd-10', 'icd10-cm', 'icd10-pcs', 'hcpcs', 'drg',
+  'code', 'codes', 'lookup', 'search', 'find', 'free', 'online', 'description',
+  'what', 'is', 'the', 'for', 'a', 'an', 'of', 'in', 'to', 'how', 'do', 'i',
+  'my', 'bill', 'billing', 'medical', 'procedure', 'diagnosis', 'meaning',
+  'define', 'definition', 'explain', 'show', 'me', 'tell', 'about', 'get',
+  'number', 'no', 'num', 'tool', 'instantly', 'verify', 'check', 'list',
+]);
+
+const TERMINOLOGY_SYNONYMS = {
+  mri: ['magnetic', 'resonance'],
+  ekg: ['electrocardiogram', 'ecg'],
+  ecg: ['electrocardiogram'],
+  pap: ['cervical', 'cytology', 'smear'],
+  flu: ['influenza', 'vaccine', 'vaccination'],
+  ercp: ['endoscopic', 'retrograde', 'cholangiopancreatography'],
+  cholecystectomy: ['gallbladder', 'removal'],
+  laparoscopic: ['laparoscopy', 'minimally', 'invasive'],
+};
+
+const CATEGORY_PREFIX_RE = /^(icd[- ]?10(?:[- ]?(?:cm|pcs))?|icd|hcpcs|drg|cpt(?:[- ]?(?:code|codes))?)\s+/i;
+
+function parseSearchQuery(rawQuery) {
+  let q = (rawQuery || '').trim();
+  let hintedType = null;
+
+  const prefixMatch = q.match(CATEGORY_PREFIX_RE);
+  if (prefixMatch) {
+    const prefix = prefixMatch[1].toLowerCase();
+    if (/icd/.test(prefix)) hintedType = 'ICD10';
+    else if (/hcpcs/.test(prefix)) hintedType = 'HCPCS';
+    else if (/cpt/.test(prefix)) hintedType = 'CPT';
+    else if (/drg/.test(prefix)) hintedType = 'DRG';
+    q = q.slice(prefixMatch[0].length).trim();
+  }
+
+  if (!hintedType) {
+    if (/\bicd[- ]?10\b/i.test(rawQuery)) hintedType = 'ICD10';
+    else if (/\bhcpcs\b/i.test(rawQuery)) hintedType = 'HCPCS';
+    else if (/\bcpt\b/i.test(rawQuery)) hintedType = 'CPT';
+  }
+
+  const codeRange = parseCodeRange(q);
+  const extractedCodes = extractCodesFromQuery(q);
+  const primaryCode = pickPrimaryCode(extractedCodes, q);
+  const primaryType = primaryCode ? detectCodeType(primaryCode) : null;
+  const numericCore = primaryCode ? primaryCode.replace(/[^\d]/g, '') : '';
+  const isPartialCode = !!primaryCode && /^\d{2,4}$/.test(numericCore);
+  const semanticTerms = expandSemanticTerms(extractSemanticTerms(q, extractedCodes));
+  const codeVariants = buildCodeVariants(primaryCode);
+  const deletedInfo = primaryCode
+    ? DELETED_CODE_REPLACEMENTS[normalizeCodeKey(primaryCode)]
+    : null;
+
+  const isCodeSearch = !!primaryCode || !!codeRange;
+  const isDescriptionSearch = !primaryCode && !codeRange && semanticTerms.length > 0;
+  const isHybrid = !!primaryCode && semanticTerms.length > 0;
+
+  return {
+    raw: rawQuery,
+    normalized: q,
+    hintedType,
+    primaryType,
+    extractedCodes,
+    primaryCode,
+    codeVariants,
+    codeRange,
+    isPartialCode,
+    isCodeSearch,
+    isDescriptionSearch,
+    isHybrid,
+    semanticTerms,
+    deletedInfo,
+    typeMismatch: hintedType && primaryType && hintedType !== primaryType
+      ? { hinted: hintedType, detected: primaryType }
+      : null,
+  };
+}
+
+function normalizeCodeKey(code) {
+  if (!code) return '';
+  const base = code.toUpperCase().trim();
+  const modMatch = base.match(/^(.+)-(\d{2})$/);
+  return modMatch ? modMatch[1] : base;
+}
+
+function detectCodeType(token) {
+  if (!token) return null;
+  const upper = token.toUpperCase().trim();
+  const compact = upper.replace(/[\.\-\s]/g, '');
+
+  if (/^[A-TV-Z]\d{2}(\.[0-9A-Z]{1,4})?$/i.test(upper)) return 'ICD10';
+  if (/^[A-TV-Z]\d{2}[A-Z0-9]{1,4}$/i.test(compact) && /^[A-TV-Z]/.test(compact)) return 'ICD10';
+  if (/^[A-Z]\d{4}[A-Z]?$/.test(compact)) return 'HCPCS';
+  if (/^\d{4}T$/i.test(compact)) return 'CPT';
+  if (/^\d{5}$/.test(compact) || /^\d{4,5}-\d{2}$/.test(upper)) return 'CPT';
+  if (/^\d{2,4}(\.\d+)?$/.test(upper)) return 'CPT';
+  if (/^[0-9A-HJ-NP-Z]{3,7}$/i.test(compact) && /\d/.test(compact)) return 'ICD10';
+  return null;
+}
+
+function looksLikeCodeToken(token) {
+  if (!token || token.length < 2) return false;
+  const upper = token.toUpperCase();
+  const compact = upper.replace(/[\.\-\s]/g, '');
+
+  if (/^[A-TV-Z]\d/.test(compact)) return true;
+  if (/^[A-Z]\d{3,4}[A-Z]?$/.test(compact)) return true;
+  if (/^\d{2,5}(-\d{2})?$/.test(upper)) return true;
+  if (/^\d{2}\.\d{1,4}$/.test(upper)) return true;
+  if (/^\d{4,5}x$/i.test(upper)) return true;
+  return false;
+}
+
+function extractCodesFromQuery(text) {
+  const found = new Set();
+  const tokens = text.split(/[\s,;]+/).filter(Boolean);
+
+  tokens.forEach((token) => {
+    const lower = token.toLowerCase();
+    if (SEARCH_STOP_WORDS.has(lower)) return;
+
+    if (looksLikeCodeToken(token)) {
+      found.add(token.toUpperCase());
+      return;
+    }
+
+    const modMatch = token.match(/^(\d{4,5})-(\d{2})$/i);
+    if (modMatch) found.add(`${modMatch[1]}-${modMatch[2]}`.toUpperCase());
+  });
+
+  const inlinePatterns = [
+    /\b(?:cpt|hcpcs|icd[- ]?10)[-\s]*([A-Z0-9][A-Z0-9.\-]{1,10})\b/gi,
+    /\b([A-TV-Z]\d{2}\.[0-9A-Z]{1,4})\b/gi,
+    /\b([A-TV-Z]\d{2}[A-Z0-9]{1,4})\b/gi,
+    /\b([A-Z]\d{4}[A-Z]?)\b/g,
+    /\b(\d{4,5}-\d{2})\b/g,
+    /\b(\d{2,5})\b/g,
+    /\b(\d{2}\.\d{1,4})\b/g,
+  ];
+
+  inlinePatterns.forEach((pattern) => {
+    let match;
+    while ((match = pattern.exec(text)) !== null) {
+      const candidate = match[1].toUpperCase();
+      if (SEARCH_STOP_WORDS.has(candidate.toLowerCase())) continue;
+      if (looksLikeCodeToken(candidate)) found.add(candidate);
+    }
+  });
+
+  return [...found];
+}
+
+function pickPrimaryCode(codes, text) {
+  if (codes.length === 0) return null;
+  if (codes.length === 1) return codes[0];
+
+  const tokens = text.split(/[\s,;]+/).filter(Boolean);
+  for (const token of tokens) {
+    const upper = token.toUpperCase();
+    if (codes.includes(upper)) return upper;
+    const modMatch = token.match(/^(\d{4,5})-(\d{2})$/i);
+    if (modMatch) {
+      const modCode = `${modMatch[1]}-${modMatch[2]}`.toUpperCase();
+      if (codes.includes(modCode)) return modCode;
+    }
+  }
+
+  return codes.sort((a, b) => b.replace(/\D/g, '').length - a.replace(/\D/g, '').length)[0];
+}
+
+function extractSemanticTerms(text, extractedCodes) {
+  const codeSet = new Set((extractedCodes || []).map((c) => c.toLowerCase()));
+  const terms = new Set();
+
+  text.split(/[\s,;]+/).filter(Boolean).forEach((token) => {
+    const lower = token.toLowerCase();
+    if (SEARCH_STOP_WORDS.has(lower)) return;
+    if (codeSet.has(lower)) return;
+    if (looksLikeCodeToken(token)) return;
+    if (lower.length >= 2) terms.add(lower);
+  });
+
+  return [...terms];
+}
+
+function expandSemanticTerms(terms) {
+  const expanded = new Set();
+  terms.forEach((term) => {
+    expanded.add(term);
+    const synonyms = TERMINOLOGY_SYNONYMS[term];
+    if (synonyms) synonyms.forEach((s) => expanded.add(s));
+  });
+  return [...expanded];
+}
+
+function parseCodeRange(text) {
+  const match = text.match(/\b(\d{4,5})\s*-\s*(\d{4,5})\b/);
+  if (!match) return null;
+  return { start: match[1], end: match[2] };
+}
+
+function buildCodeVariants(code) {
+  if (!code) return [];
+  const variants = new Set();
+  const upper = code.toUpperCase().trim();
+  variants.add(upper);
+
+  const modMatch = upper.match(/^(.+)-(\d{2})$/);
+  const base = modMatch ? modMatch[1] : upper;
+  variants.add(base);
+
+  const noSep = base.replace(/[\.\-\s,]/g, '');
+  variants.add(noSep);
+
+  if (/\d+\.\d+/.test(base)) variants.add(base);
+
+  if (/^0+\d+$/.test(noSep) && noSep.length >= 5) {
+    variants.add(noSep.replace(/^0+/, ''));
+  }
+
+  if (/^[A-Z]\d{2}[A-Z0-9]+$/i.test(noSep) && !base.includes('.')) {
+    variants.add(`${noSep.substring(0, 3)}.${noSep.substring(3)}`);
+  }
+
+  if (/^\d{2,4}x$/i.test(base)) {
+    variants.add(base.replace(/x$/i, ''));
+  }
+
+  return [...variants].filter(Boolean);
+}
+
+function generateCptFuzzyVariants(code) {
+  const compact = (code || '').replace(/\D/g, '');
+  if (!/^\d{5}$/.test(compact)) return [];
+
+  const variants = new Set();
+  for (let i = 0; i < 5; i++) {
+    const digit = Number(compact[i]);
+    if (digit > 0) variants.add(compact.slice(0, i) + String(digit - 1) + compact.slice(i + 1));
+    if (digit < 9) variants.add(compact.slice(0, i) + String(digit + 1) + compact.slice(i + 1));
+  }
+  for (let i = 0; i < 4; i++) {
+    const arr = compact.split('');
+    [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+    variants.add(arr.join(''));
+  }
+
+  variants.delete(compact);
+  return [...variants].slice(0, 12);
+}
+
+function buildSearchMeta(parsed, extra = {}) {
+  return {
+    parsed,
+    deletedInfo: parsed.deletedInfo,
+    isPartialCode: parsed.isPartialCode,
+    typeMismatch: parsed.typeMismatch,
+    usedFuzzy: extra.usedFuzzy || false,
+    fuzzyFrom: extra.fuzzyFrom || null,
+  };
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
@@ -123,8 +394,10 @@ function setupEventListeners() {
 
 async function performSearch(query) {
   const listContainer = document.getElementById('search-results-list');
-  
-  if (query.length < 2) {
+  const parsed = parseSearchQuery(query);
+  const minLength = parsed.isCodeSearch ? 2 : 2;
+
+  if (query.length < minLength) {
     listContainer.innerHTML = '<div class="empty-state">Start typing to search instantly...</div>';
     return;
   }
@@ -132,9 +405,9 @@ async function performSearch(query) {
   // UI Feedback during DB initialization
   if (!window.dbClient) {
     listContainer.innerHTML = '<div class="empty-state"><span class="loading-dots">Initializing Secure Connection...</span></div>';
-    for (let i = 0; i < MAX_WAIT_ATTEMPTS; i++) { 
-        await new Promise(r => setTimeout(r, 100));
-        if (window.dbClient) break;
+    for (let i = 0; i < MAX_WAIT_ATTEMPTS; i++) {
+      await new Promise(r => setTimeout(r, 100));
+      if (window.dbClient) break;
     }
   }
 
@@ -143,48 +416,51 @@ async function performSearch(query) {
     return;
   }
 
-  const searchId = ++currentSearchId; 
-  const cleanQ = query.replace(/[\.\-\s\,]/g, '').toUpperCase();
-  // Create a dotted variant automatically for 4+ char ICD-10 codes missing the dot (Smart Dot Injection)
-  let dottedQ = cleanQ;
-  if (/^[A-Z]\d{2}[A-Z0-9]+$/.test(cleanQ) && !cleanQ.includes('.')) {
+  const searchId = ++currentSearchId;
+  const searchMeta = buildSearchMeta(parsed);
+  const primaryCode = parsed.primaryCode;
+  const cleanQ = (primaryCode || parsed.normalized || query).replace(/[\.\-\s,]/g, '').toUpperCase();
+  const cleanQFiltered = (cleanQ.startsWith('0') && cleanQ.length >= 5 && /^\d+$/.test(cleanQ))
+    ? cleanQ.replace(/^0+/, '')
+    : cleanQ;
+
+  let dottedQ = primaryCode ? primaryCode.toUpperCase() : cleanQ;
+  if (/^[A-Z]\d{2}[A-Z0-9]+$/i.test(cleanQ) && !String(primaryCode || '').includes('.')) {
     dottedQ = cleanQ.substring(0, 3) + '.' + cleanQ.substring(3);
   }
 
-  // [High] Handle leading zeros for numeric CPT codes (e.g. 099213 -> 99213)
-  const cleanQFiltered = (cleanQ.startsWith('0') && cleanQ.length >= 5 && /^\d+$/.test(cleanQ)) ? cleanQ.replace(/^0+/, '') : cleanQ;
-  
   listContainer.innerHTML = '<div class="empty-state">Querying Global Registry...</div>';
 
   try {
     // 1. Handle NCCI Edits separately (check both comprehensive and component columns)
     if (currentFilter === 'NCCI') {
+      const ncciCode = normalizeCodeKey(parsed.primaryCode || cleanQFiltered || cleanQ);
       const { data, error } = await window.dbClient
         .from('ncci_ptp_edits')
         .select('*')
-        .or(`column1_code.eq."${cleanQ}",column2_code.eq."${cleanQ}"`)
+        .or(`column1_code.eq."${ncciCode}",column2_code.eq."${ncciCode}"`)
         .limit(50);
-        
+
       if (error) throw error;
-      // [High] Add race guard to NCCI branch
       if (searchId !== currentSearchId) return;
 
-      renderNCCIResults(data, cleanQ); // Pass query to highlight the match
+      renderNCCIResults(data, ncciCode);
       return;
     }
 
-    // [Medium] Robust sanitization for safeQuery (dots and commas allowed to be parsed/ignored safely)
-    const safeQuery = query.replace(/[^a-zA-Z0-9\s\.\-\,]/g, '').trim();
-    // [High] Support hyphens in code-likelihood detection (e.g. I-10)
-    const isCodeLikely = /^[A-Z0-9.\-\,]+$/i.test(query.trim()) && query.trim().length < 10;
-    const isPhrase = query.trim().includes(' ');
+    const safeQuery = (parsed.primaryCode || parsed.normalized || query)
+      .replace(/[^a-zA-Z0-9\s.\-,]/g, '')
+      .trim();
+    const codeVariants = [...new Set([
+      ...(parsed.primaryCode ? parsed.codeVariants : []),
+      ...(parsed.primaryCode ? [safeQuery, cleanQ, cleanQFiltered, dottedQ] : []),
+      ...(parsed.deletedInfo ? [parsed.deletedInfo.replacement] : []),
+    ].filter(Boolean))];
 
     let dbQuery = window.dbClient
       .from('medical_codes')
       .select('code, short_description, country, code_type');
 
-    // [High] Reinstate strict country filter to prevent catastrophic PostgREST timeouts
-    // This allows PostgreSQL to use partitioning/indexing to return results in 20ms instead of timing out.
     if (currentRegion !== 'ALL') {
       dbQuery = dbQuery.eq('country', currentRegion);
     }
@@ -192,66 +468,100 @@ async function performSearch(query) {
       dbQuery = dbQuery.eq('code_type', currentFilter);
     }
 
-    if (isCodeLikely && !isPhrase) {
-      // Code-only search: skip short_description ILIKE to avoid full-table scans and timeouts
-      const codeVariants = [...new Set([safeQuery, cleanQ, cleanQFiltered, dottedQ].filter(Boolean))];
+    if (parsed.codeRange) {
+      dbQuery = dbQuery
+        .gte('code', parsed.codeRange.start)
+        .lte('code', parsed.codeRange.end);
+    } else if (parsed.isCodeSearch && !parsed.isHybrid) {
       const allOrs = new Set();
-      codeVariants.forEach(v => {
+      codeVariants.forEach((v) => {
         allOrs.add(`code.eq."${v}"`);
         allOrs.add(`code.ilike."${v}%"`);
       });
       dbQuery = dbQuery.or(Array.from(allOrs).join(','));
+    } else if (parsed.isDescriptionSearch) {
+      const allOrs = new Set();
+      const phrase = parsed.semanticTerms.join(' ');
+      if (phrase.length >= 2) allOrs.add(`short_description.ilike."%${phrase}%"`);
+      parsed.semanticTerms.forEach((w) => {
+        if (w.length >= 2) allOrs.add(`short_description.ilike."%${w}%"`);
+      });
+      if (allOrs.size === 0) {
+        renderResults([], 0, fetchLimit, buildSearchMeta(parsed));
+        return;
+      }
+      dbQuery = dbQuery.or(Array.from(allOrs).join(','));
     } else {
-      // Phrase search - deeply deduplicated to prevent AST parser timeouts
-      const words = safeQuery.replace(/[\.\-\,]/g, ' ').split(/\s+/).filter(w => w.length >= 2);
-      const allOrs = new Set([
-        `code.ilike."${safeQuery}%"`,
-        `code.ilike."${cleanQ}%"`,
-        `code.ilike."${cleanQFiltered}%"`,
-        `code.ilike."${dottedQ}%"`
-      ]);
-      
-      if (words.length > 0) {
-        words.forEach(w => allOrs.add(`short_description.ilike."%${w}%"`));
-        allOrs.add(`short_description.ilike."%${safeQuery}%"`);
-      } else {
-        allOrs.add(`short_description.ilike."%${safeQuery}%"`);
+      const allOrs = new Set();
+      codeVariants.forEach((v) => {
+        allOrs.add(`code.eq."${v}"`);
+        allOrs.add(`code.ilike."${v}%"`);
+      });
+      parsed.semanticTerms.forEach((w) => {
+        if (w.length >= 2) allOrs.add(`short_description.ilike."%${w}%"`);
+      });
+      if (parsed.semanticTerms.length > 0) {
+        allOrs.add(`short_description.ilike."%${parsed.normalized}%"`);
+      }
+      if (allOrs.size === 0) {
+        renderResults([], 0, fetchLimit, buildSearchMeta(parsed));
+        return;
       }
       dbQuery = dbQuery.or(Array.from(allOrs).join(','));
     }
-    
-    // [Medium] Always pull enough global records to safely group regions
+
     const fetchLimit = 300;
     let { data, error, status } = await dbQuery.limit(fetchLimit);
 
-    // Auto-retry once on statement timeout (cold-start / plan-cache warmup)
     if (error && isTimeoutError(error) && searchId === currentSearchId) {
       await new Promise(r => setTimeout(r, 350));
       if (searchId !== currentSearchId) return;
       ({ data, error, status } = await dbQuery.limit(fetchLimit));
     }
-    
-    // Race Condition Guard: If a newer search has started, discard this result
-    if (searchId !== currentSearchId) {
-        console.log('Stale search result discarded:', query);
-        return;
-    }
-    
-    if (error) {
-        console.error('Search error:', error, 'Query:', cleanQ);
-        listContainer.innerHTML = `<div class="empty-state" style="color:var(--text-danger)">
-            <strong>Database Error [${status}]:</strong> ${escapeHtml(error.message) || 'Unknown error'}<br>
-            <span style="font-size:10px; opacity:0.7;">Check console for query details</span>
-        </div>`;
-        return;
-    }
 
-    if (!data || data.length === 0) {
-      renderResults([], 0, fetchLimit);
+    if (searchId !== currentSearchId) {
+      console.log('Stale search result discarded:', query);
       return;
     }
 
-    // 3. Group by Code & Type
+    if (error) {
+      console.error('Search error:', error, 'Query:', parsed);
+      listContainer.innerHTML = `<div class="empty-state" style="color:var(--text-danger)">
+            <strong>Database Error [${status}]:</strong> ${escapeHtml(error.message) || 'Unknown error'}<br>
+            <span style="font-size:10px; opacity:0.7;">Check console for query details</span>
+        </div>`;
+      return;
+    }
+
+    let usedFuzzy = false;
+    let fuzzyFrom = null;
+
+    if ((!data || data.length === 0) && parsed.primaryCode && /^\d{5}$/.test(cleanQFiltered)) {
+      const fuzzyVariants = generateCptFuzzyVariants(cleanQFiltered);
+      if (fuzzyVariants.length > 0) {
+        const fuzzyOrs = fuzzyVariants.map((v) => `code.eq."${v}"`).join(',');
+        let fuzzyQuery = window.dbClient
+          .from('medical_codes')
+          .select('code, short_description, country, code_type');
+        if (currentRegion !== 'ALL') fuzzyQuery = fuzzyQuery.eq('country', currentRegion);
+        if (currentFilter !== 'ALL') fuzzyQuery = fuzzyQuery.eq('code_type', currentFilter);
+        fuzzyQuery = fuzzyQuery.or(fuzzyOrs);
+
+        const fuzzyResult = await fuzzyQuery.limit(20);
+        if (searchId !== currentSearchId) return;
+        if (!fuzzyResult.error && fuzzyResult.data && fuzzyResult.data.length > 0) {
+          data = fuzzyResult.data;
+          usedFuzzy = true;
+          fuzzyFrom = cleanQFiltered;
+        }
+      }
+    }
+
+    if (!data || data.length === 0) {
+      renderResults([], 0, fetchLimit, buildSearchMeta(parsed, { usedFuzzy, fuzzyFrom }));
+      return;
+    }
+
     const grouped = {};
     data.forEach(r => {
       const type = r.code_type || 'HCPCS';
@@ -262,95 +572,122 @@ async function performSearch(query) {
           type: type,
           desc: cleanMedicalDescription(r.short_description),
           plainDesc: getPlainEnglishDescription(r.code, type, r.short_description),
-          regions: new Set([r.country || 'US'])
+          regions: new Set([r.country || 'US']),
+          isDeleted: !!DELETED_CODE_REPLACEMENTS[normalizeCodeKey(r.code)],
+          replacement: DELETED_CODE_REPLACEMENTS[normalizeCodeKey(r.code)]?.replacement || null,
         };
       } else {
         grouped[key].regions.add(r.country || 'US');
       }
     });
 
-    // 4. Convert map to array for sorting
     let finalResults = Object.values(grouped);
+    const rankKeys = new Set(codeVariants.map((v) => v.toUpperCase()));
 
-    // 5. Sort by relevance (Exact matches first, then starts-with phrases)
     finalResults.sort((a, b) => {
-      const aExact = a.code === cleanQ || a.code === cleanQFiltered || a.code === dottedQ;
-      const bExact = b.code === cleanQ || b.code === cleanQFiltered || b.code === dottedQ;
+      const aKey = normalizeCodeKey(a.code);
+      const bKey = normalizeCodeKey(b.code);
+      const aExact = rankKeys.has(a.code.toUpperCase()) || rankKeys.has(aKey);
+      const bExact = rankKeys.has(b.code.toUpperCase()) || rankKeys.has(bKey);
       if (aExact && !bExact) return -1;
       if (bExact && !aExact) return 1;
-      
-      const aStartsCode = a.code.startsWith(cleanQ) || a.code.startsWith(cleanQFiltered);
-      const bStartsCode = b.code.startsWith(cleanQ) || b.code.startsWith(cleanQFiltered);
-      if (aStartsCode && !bStartsCode) return -1;
-      if (bStartsCode && !aStartsCode) return 1;
 
-      // [Medium] Description phrase ranking (Starts with query gets priority)
-      const aStartsDesc = a.desc.toUpperCase().startsWith(safeQuery.toUpperCase());
-      const bStartsDesc = b.desc.toUpperCase().startsWith(safeQuery.toUpperCase());
-      if (aStartsDesc && !bStartsDesc) return -1;
-      if (bStartsDesc && !aStartsDesc) return 1;
-      
+      const aStarts = codeVariants.some((v) => a.code.toUpperCase().startsWith(v.toUpperCase()));
+      const bStarts = codeVariants.some((v) => b.code.toUpperCase().startsWith(v.toUpperCase()));
+      if (aStarts && !bStarts) return -1;
+      if (bStarts && !aStarts) return 1;
+
+      if (parsed.deletedInfo) {
+        if (a.code === parsed.primaryCode) return -1;
+        if (b.code === parsed.primaryCode) return 1;
+        if (a.code === parsed.deletedInfo.replacement) return -1;
+        if (b.code === parsed.deletedInfo.replacement) return 1;
+      }
+
+      const phrase = parsed.semanticTerms.join(' ').toUpperCase();
+      if (phrase) {
+        const aDesc = a.desc.toUpperCase();
+        const bDesc = b.desc.toUpperCase();
+        const aStartsDesc = aDesc.startsWith(phrase) || parsed.semanticTerms.some((t) => aDesc.includes(t.toUpperCase()));
+        const bStartsDesc = bDesc.startsWith(phrase) || parsed.semanticTerms.some((t) => bDesc.includes(t.toUpperCase()));
+        if (aStartsDesc && !bStartsDesc) return -1;
+        if (bStartsDesc && !aStartsDesc) return 1;
+      }
+
       return a.code.localeCompare(b.code);
     });
 
-    renderResults(finalResults, data.length, fetchLimit);
+    renderResults(
+      finalResults,
+      data.length,
+      fetchLimit,
+      buildSearchMeta(parsed, { usedFuzzy, fuzzyFrom })
+    );
 
-    // [New] Asynchronous Badge Illuminator
-    // We launch a non-blocking background fetch to perfectly light up the global US/UK/ME badges
     if (finalResults.length > 0 && finalResults.length < 50) {
       const extractedCodes = finalResults.map(r => r.code);
       window.dbClient.from('medical_codes')
         .select('code, country')
         .in('code', extractedCodes)
-        .then(({data: locData}) => {
+        .then(({ data: locData }) => {
           if (!locData) return;
           locData.forEach(row => {
             const safeCode = row.code.replace(/"/g, '\\"');
             const domBadges = document.querySelectorAll(`.reg-badge-async[data-badgecode="${safeCode}"]`);
             domBadges.forEach(badge => {
-               if (badge.dataset.val === row.country || badge.dataset.val === 'ALL') {
-                 badge.classList.remove('inactive');
-                 if (badge.innerText.includes('N/A')) {
-                   badge.innerText = badge.dataset.val; // Strip the N/A
-                 }
-               }
+              if (badge.dataset.val === row.country || badge.dataset.val === 'ALL') {
+                badge.classList.remove('inactive');
+                if (badge.innerText.includes('N/A')) {
+                  badge.innerText = badge.dataset.val;
+                }
+              }
             });
           });
         });
     }
 
-  } catch(err) {
+  } catch (err) {
     console.error('Unexpected search failure:', err);
     listContainer.innerHTML = `<div class="empty-state" style="color:var(--text-danger)">Unexpected Error: ${escapeHtml(err.message) || 'Check connection'}</div>`;
   }
 }
 
-function renderResults(results, rawCount = 0, rawFetchLimit = 150) {
+function renderResults(results, rawCount = 0, rawFetchLimit = 150, searchMeta = null) {
   const listContainer = document.getElementById('search-results-list');
-  
+
   if (!results || results.length === 0) {
-    listContainer.innerHTML = '<div class="empty-state">No matching codes found in database.</div>';
+    let html = renderSearchNotices(searchMeta);
+    html += '<div class="empty-state">No matching codes found in database.</div>';
+    if (searchMeta?.deletedInfo) {
+      html += `<div class="search-notice search-notice-warning" style="margin-top:12px;">
+        <strong>CPT ${escapeHtml(searchMeta.parsed.primaryCode)}</strong> is a deleted code.
+        Try searching <strong>${escapeHtml(searchMeta.deletedInfo.replacement)}</strong> instead.
+      </div>`;
+    }
+    listContainer.innerHTML = html;
     return;
   }
 
   const regionList = ['US', 'UK', 'ME'];
-  let html = '';
+  let html = renderSearchNotices(searchMeta);
 
-  // [Low] Show result count based on raw DB record threshold
   const count = results.length;
-  const isCapped = rawCount >= rawFetchLimit; 
+  const isCapped = rawCount >= rawFetchLimit;
   html += `<div class="results-count">Showing <b>${count}</b> unique codes${isCapped ? ' (Limit reached, narrow query)' : ''}</div>`;
-  
+
   results.forEach(item => {
     let tagClass = `tag-${escapeHtml(item.type)}`;
     let displayType = item.type.replace('ICD10', 'ICD-10');
-    
+    const deletedMeta = DELETED_CODE_REPLACEMENTS[normalizeCodeKey(item.code)];
+    const isDeleted = item.isDeleted || !!deletedMeta;
+
     html += `
-      <div class="result-card">
+      <div class="result-card${isDeleted ? ' result-card-deleted' : ''}">
         <div class="result-main-area">
           <div class="result-header">
             <span class="code-val">${escapeHtml(item.code)}</span>
             <span class="code-tag ${tagClass}">${escapeHtml(displayType)}</span>
+            ${isDeleted ? '<span class="code-tag tag-deleted">Deleted</span>' : ''}
             <div class="region-badges">
               ${regionList.map(reg => {
                 const active = item.regions.has(reg);
@@ -361,14 +698,55 @@ function renderResults(results, rawCount = 0, rawFetchLimit = 150) {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             </button>
           </div>
+          ${isDeleted ? `<div class="search-notice search-notice-warning" style="margin:8px 0 0;">
+            ${escapeHtml(deletedMeta?.reason || 'This code is deleted or obsolete.')}
+            ${deletedMeta?.replacement ? ` Use <strong>${escapeHtml(deletedMeta.replacement)}</strong> instead.` : ''}
+          </div>` : ''}
           <div class="result-desc">${escapeHtml(item.desc)}</div>
           ${item.plainDesc ? `<div class="result-desc-plain">Plain English: ${escapeHtml(item.plainDesc)}</div>` : ''}
         </div>
       </div>
     `;
   });
-  
+
   listContainer.innerHTML = html;
+}
+
+function renderSearchNotices(searchMeta) {
+  if (!searchMeta) return '';
+
+  let html = '';
+
+  if (searchMeta.isPartialCode && searchMeta.parsed?.primaryCode) {
+    html += `<div class="search-notice search-notice-info">
+      Showing codes starting with <strong>${escapeHtml(searchMeta.parsed.primaryCode)}</strong>.
+      Select the exact code from your bill if you see multiple matches.
+    </div>`;
+  }
+
+  if (searchMeta.typeMismatch) {
+    html += `<div class="search-notice search-notice-info">
+      Your query looks like a <strong>${escapeHtml(searchMeta.typeMismatch.detected.replace('ICD10', 'ICD-10'))}</strong> code,
+      not ${escapeHtml(searchMeta.typeMismatch.hinted.replace('ICD10', 'ICD-10'))}.
+      Showing the best matching ${escapeHtml(searchMeta.typeMismatch.detected.replace('ICD10', 'ICD-10'))} results.
+    </div>`;
+  }
+
+  if (searchMeta.usedFuzzy && searchMeta.fuzzyFrom) {
+    html += `<div class="search-notice search-notice-info">
+      No exact match for <strong>${escapeHtml(searchMeta.fuzzyFrom)}</strong>.
+      Showing close CPT code matches — did you mean one of these?
+    </div>`;
+  }
+
+  if (searchMeta.deletedInfo) {
+    html += `<div class="search-notice search-notice-warning">
+      <strong>CPT ${escapeHtml(searchMeta.parsed.primaryCode)}</strong> is deleted.
+      Replacement: <strong>${escapeHtml(searchMeta.deletedInfo.replacement)}</strong>.
+    </div>`;
+  }
+
+  return html;
 }
 
 function renderNCCIResults(results, queryCode) {

@@ -1,7 +1,15 @@
 const https = require('https');
 
 module.exports = async (req, res) => {
-  const { number, first_name, last_name, organization_name, state } = req.query;
+  const {
+    number,
+    first_name,
+    last_name,
+    organization_name,
+    state,
+    authorized_official_first_name,
+    authorized_official_last_name
+  } = req.query;
 
   // Validate exact NPI number format before forwarding
   if (number && !/^\d{10}$/.test(number)) {
@@ -13,6 +21,11 @@ module.exports = async (req, res) => {
   if (number) {
     // Exact NPI lookup — number only, no enumeration_type, no other filters
     url += `&number=${encodeURIComponent(number)}`;
+  } else if (authorized_official_first_name || authorized_official_last_name) {
+    // Reverse lookup: find organizations by their authorized official name
+    if (authorized_official_first_name) url += `&authorized_official_first_name=${encodeURIComponent(authorized_official_first_name)}`;
+    if (authorized_official_last_name)  url += `&authorized_official_last_name=${encodeURIComponent(authorized_official_last_name)}`;
+    url += '&enumeration_type=NPI-2'; // Always orgs for reverse lookup
   } else {
     if (first_name)        url += `&first_name=${encodeURIComponent(first_name)}`;
     if (last_name)         url += `&last_name=${encodeURIComponent(last_name)}`;

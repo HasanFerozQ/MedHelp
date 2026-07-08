@@ -1572,6 +1572,32 @@ a:hover {
   background: var(--bg-card-hover);
 }
 
+.result-card-deleted {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.04);
+}
+
+.search-notice {
+  font-size: 13px;
+  line-height: 1.55;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+}
+
+.search-notice-info {
+  color: var(--text-body);
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.search-notice-warning {
+  color: var(--text-body);
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
 .result-code-group {
   display: flex;
   align-items: center;
@@ -2802,6 +2828,7 @@ html, body {
 .tag-ICD10, .tag-icd10 { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
 .tag-CPT, .tag-cpt   { color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
 .tag-HCPCS, .tag-hcpcs { color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
+.tag-deleted { color: #f59e0b; background: rgba(245, 158, 11, 0.12); }
 .tag-CARC, .tag-carc  { color: var(--expert-amber); background: rgba(var(--amber-rgb), 0.1); }
 .tag-RARC, .tag-rarc  { color: #10b981; background: rgba(16, 185, 129, 0.1); }
 

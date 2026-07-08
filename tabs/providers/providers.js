@@ -3,6 +3,235 @@
  * Handles: National Provider Search (NPPES API)
  */
 
+/* ─────────────────────────────────────────────────────────────────────────
+ *  parseNPIQuery  — Smart Query Parser
+ *  Handles all edge cases: noise words, credentials, specialties,
+ *  honorific titles, US state detection, org vs individual detection,
+ *  punctuation stripping, and embedded NPI numbers.
+ * ────────────────────────────────────────────────────────────────────────*/
+function parseNPIQuery(raw) {
+  if (!raw || !raw.trim()) return null;
+
+  // ── 1. Extract any 10-digit NPI number embedded anywhere in input ──
+  const npiMatch = raw.match(/\b(\d{10})\b/);
+  if (npiMatch) {
+    return { npiNumber: npiMatch[1], cleanName: null, firstName: null, lastName: null, isOrg: false, stateCode: null };
+  }
+
+  // ── 2. Normalize: collapse dotted credentials (m.d.→md, r.n.→rn) BEFORE stripping punctuation ──
+  let input = raw.replace(/\b([a-zA-Z])\.([a-zA-Z])\.?\b/g, '$1$2');
+  // Strip remaining punctuation (keep hyphens for hyphenated names)
+  input = input.replace(/[,\.;:!?()'"]/g, ' ').replace(/\s+/g, ' ').trim();
+
+  // ── 3. Word-level dictionaries ──
+
+  const NOISE_WORDS = new Set([
+    'npi', 'number', 'no', 'find', 'lookup', 'search', 'the', 'for', 'of', 'from',
+    'get', 'show', 'me', 'look', 'up', 'please', 'can', 'you', 'code', 'registry',
+    'cms', 'national', 'identifier', 'what', 'is', 'are', 'a', 'an', 'and', 'or',
+    'by', 'at', 'with', 'their', 'his', 'her', 'its', 'my', 'our', 'your', 'who',
+    'where', 'how', 'i', 'want', 'need', 'check', 'verify', 'this', 'that',
+    'tell', 'give', 'look', 'in', 'about'
+  ]);
+
+  // Credentials — always stripped from name queries (dots already removed)
+  const CREDENTIALS = new Set([
+    'md', 'do', 'rn', 'np', 'fnp', 'lcsw', 'lpc', 'dds', 'dpm', 'dc', 'phd',
+    'dpt', 'crnp', 'aprn', 'cns', 'cnm', 'crna', 'facp', 'facs', 'mba', 'mph',
+    'msn', 'bsn', 'adn', 'lpn', 'lvn', 'cna', 'emt', 'nrp', 'cen', 'ccrn',
+    'rph', 'pharmd', 'od', 'ot', 'pt', 'slp', 'scd', 'dsc', 'edd', 'psyd',
+    'atc', 'rdh', 'rda', 'cst', 'rrt', 'rdms', 'rt', 'arrt', 'agpcnp', 'pmhnp',
+    'cfnp', 'acnp', 'dnp', 'anp', 'gnp', 'whnp', 'rnc', 'cns', 'chfn', 'cmd',
+    'lmft', 'lmhc', 'lcadc', 'lac', 'cad', 'cadc', 'ladc', 'mft', 'lpha',
+    'cpnp', 'cpen', 'cfrn', 'ctrn', 'tcrn', 'msw', 'lmsw', 'llmsw', 'csw',
+    'acsw', 'dcsw', 'licsw', 'lisw', 'apsw', 'bcba', 'bcba-d', 'rbt',
+    'ccc', 'slpa', 'aud', 'scfei', 'cota', 'ota', 'pta', 'cpht', 'rph',
+    'bspharm', 'mph', 'drph', 'dpth', 'mhsa', 'mha', 'mhm'
+  ]);
+
+  // Honorific / title prefixes — always stripped
+  const TITLE_PREFIXES = new Set([
+    'dr', 'doctor', 'mr', 'mrs', 'ms', 'miss', 'prof', 'professor',
+    'sir', 'rev', 'nurse', 'sister', 'brother', 'father', 'st'
+  ]);
+
+  // Org-detection keywords — strong signal that the query is an organization
+  const ORG_DETECTION_KEYWORDS = new Set([
+    'clinic', 'hospital', 'llc', 'center', 'group', 'inc', 'pllc', 'corp',
+    'corporation', 'associates', 'institute', 'foundation', 'services', 'service',
+    'system', 'network', 'alliance', 'partners', 'solutions', 'authority',
+    'trust', 'council', 'board', 'department', 'division', 'district',
+    'urgent', 'emergency', 'pharmacy', 'laboratory', 'labs', 'wellness',
+    'rehabilitation', 'outpatient', 'inpatient', 'multispecialty', 'support',
+    'university', 'college', 'school', 'academy', 'association', 'society',
+    'team', 'company', 'co', 'enterprise', 'enterprises', 'organization',
+    'agency', 'bureau', 'office', 'program', 'project', 'initiative'
+  ]);
+
+  // Specialty words — stripped from INDIVIDUAL searches only (kept for org names)
+  const SPECIALTY_WORDS = new Set([
+    'paramedic', 'cardiologist', 'cardiology', 'surgeon', 'surgery', 'physician',
+    'gastroenterologist', 'gastroenterology', 'radiologist', 'radiology',
+    'neurologist', 'neurology', 'oncologist', 'oncology', 'therapist',
+    'dentist', 'psychiatrist', 'psychiatry', 'psychologist', 'psychology',
+    'dermatologist', 'dermatology', 'ophthalmologist', 'ophthalmology',
+    'orthopedic', 'orthopedics', 'pediatrician', 'pediatrics', 'pediatric',
+    'endocrinologist', 'endocrinology', 'nephrologist', 'nephrology',
+    'pulmonologist', 'pulmonology', 'rheumatologist', 'rheumatology',
+    'urologist', 'urology', 'obstetrician', 'obstetrics', 'gynecologist', 'gynecology',
+    'obgyn', 'anesthesiologist', 'anesthesiology', 'pathologist',
+    'allergist', 'immunologist', 'immunology', 'hematologist', 'hematology',
+    'geriatrician', 'geriatrics', 'neonatologist', 'neonatology',
+    'hospitalist', 'internist', 'chiropractor', 'chiropractic',
+    'optometrist', 'optometry', 'podiatrist', 'podiatry', 'audiologist', 'audiology',
+    'vascular', 'plastic', 'cosmetic', 'colorectal', 'bariatric', 'transplant',
+    'trauma', 'pain', 'addiction', 'palliative', 'hospice', 'wound', 'sleep',
+    'reproductive', 'fertility', 'genetics', 'nuclear', 'diagnostic',
+    'preventive', 'behavioral', 'mental', 'acupuncture', 'naturopath',
+    'naturopathic', 'integrative', 'holistic', 'specialist', 'clinician',
+    'practitioner', 'professional'
+  ]);
+
+  // US State full names → abbreviation
+  const STATE_NAMES = {
+    'alabama':'AL','alaska':'AK','arizona':'AZ','arkansas':'AR','california':'CA',
+    'colorado':'CO','connecticut':'CT','delaware':'DE','florida':'FL','georgia':'GA',
+    'hawaii':'HI','idaho':'ID','illinois':'IL','indiana':'IN','iowa':'IA',
+    'kansas':'KS','kentucky':'KY','louisiana':'LA','maine':'ME','maryland':'MD',
+    'massachusetts':'MA','michigan':'MI','minnesota':'MN','mississippi':'MS',
+    'missouri':'MO','montana':'MT','nebraska':'NE','nevada':'NV',
+    'ohio':'OH','oklahoma':'OK','oregon':'OR','pennsylvania':'PA',
+    'tennessee':'TN','texas':'TX','utah':'UT','vermont':'VT','virginia':'VA',
+    'washington':'WA','wisconsin':'WI','wyoming':'WY'
+  };
+
+  // Safe 2-letter state abbreviations (excludes PA/MD/IN/OR/MA/DC to avoid credential conflicts)
+  const SAFE_STATE_ABBREVS = new Set([
+    'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID',
+    'IL','IA','KS','KY','LA','ME','MI','MN','MS','MO','MT','NE',
+    'NV','NH','NJ','NM','NY','NC','ND','OH','OK','RI','SC',
+    'SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
+  ]);
+
+  // ── 4. Multi-word state detection (must happen before tokenizing) ──
+  let stateCode = null;
+  const MULTI_STATES = {
+    'new hampshire':'NH','new jersey':'NJ','new mexico':'NM','new york':'NY',
+    'north carolina':'NC','north dakota':'ND','south carolina':'SC','south dakota':'SD',
+    'west virginia':'WV','rhode island':'RI','district of columbia':'DC'
+  };
+  const inputLower = input.toLowerCase();
+  for (const [stateName, abbrev] of Object.entries(MULTI_STATES)) {
+    if (inputLower.includes(stateName)) {
+      stateCode = abbrev;
+      input = input.replace(new RegExp(stateName, 'gi'), ' ');
+      break;
+    }
+  }
+
+  // ── 5. Tokenize ──
+  const tokens = input.split(/\s+/).filter(t => t.length > 0);
+
+  // ── 6. Quick-scan: does it look like an org? (before stripping anything) ──
+  const hasOrgKeyword = tokens.some(t => ORG_DETECTION_KEYWORDS.has(t.toLowerCase()));
+
+  // ── 7. Filter tokens ──
+  const nameTokens = [];
+
+  for (const tok of tokens) {
+    const tokL  = tok.toLowerCase();
+    const tokU  = tok.toUpperCase();
+    const tokNP = tokL.replace(/\./g, ''); // strip dots: "m.d." → "md"
+
+    // Noise words
+    // For org queries keep connectors like 'of', 'and' (they may be part of org name)
+    if (NOISE_WORDS.has(tokL) && !(hasOrgKeyword && ['of', 'and', 'for', 'at', 'in', 'the'].includes(tokL))) continue;
+
+    // Credentials (strip for everyone — if it's an org the org name won't contain these)
+    if (CREDENTIALS.has(tokNP)) continue;
+
+    // Honorific titles
+    if (TITLE_PREFIXES.has(tokL) || TITLE_PREFIXES.has(tokNP)) continue;
+
+    // State abbreviation (safe set only, and only if we already have some name tokens)
+    // Accept both upper and lower case: 'CA' and 'ca' both match
+    if (!stateCode && SAFE_STATE_ABBREVS.has(tokU) && tok.length === 2 && nameTokens.length > 0) {
+      stateCode = tokU;
+      continue;
+    }
+
+    // State full name (single-word states)
+    if (!stateCode && STATE_NAMES[tokL]) {
+      stateCode = STATE_NAMES[tokL];
+      continue;
+    }
+
+    // Specialty words — only strip for individual searches
+    if (!hasOrgKeyword && SPECIALTY_WORDS.has(tokL)) continue;
+
+    nameTokens.push(tok);
+  }
+
+  // ── 8. Build result ──
+  const cleanName = nameTokens.join(' ').trim();
+  const isOrg     = hasOrgKeyword;
+
+  let firstName = null;
+  let lastName  = null;
+
+  if (!isOrg) {
+    if (nameTokens.length >= 2) {
+      firstName = nameTokens[0];
+      lastName  = nameTokens.slice(1).join(' ');
+    } else if (nameTokens.length === 1) {
+      lastName = nameTokens[0]; // treat single token as last name
+    }
+  }
+
+  return { npiNumber: null, cleanName, firstName, lastName, isOrg, stateCode };
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+ *  executeNPISearch — Builds URL and fetches from NPPES via proxy
+ * ────────────────────────────────────────────────────────────────────────*/
+async function executeNPISearch(parsed, dropdownState, { forceOrg = false, reverseName = false } = {}) {
+  if (!parsed) return { results: [] };
+
+  // Dropdown state always wins over detected state
+  const stateCode = dropdownState || parsed.stateCode || '';
+
+  let url = '/api/npi?';
+
+  if (parsed.npiNumber) {
+    url += `number=${parsed.npiNumber}`;
+  } else if (forceOrg || parsed.isOrg) {
+    const orgQuery = parsed.cleanName || '';
+    if (!orgQuery) return { results: [] };
+    url += `organization_name=${encodeURIComponent(orgQuery)}*`;
+    if (stateCode) url += `&state=${encodeURIComponent(stateCode)}`;
+  } else if (parsed.firstName && parsed.lastName) {
+    const fn = reverseName ? parsed.lastName  : parsed.firstName;
+    const ln = reverseName ? parsed.firstName : parsed.lastName;
+    url += `first_name=${encodeURIComponent(fn)}*&last_name=${encodeURIComponent(ln)}*`;
+    if (stateCode) url += `&state=${encodeURIComponent(stateCode)}`;
+  } else if (parsed.lastName) {
+    // Single-token: search as last name
+    url += `last_name=${encodeURIComponent(parsed.lastName)}*`;
+    if (stateCode) url += `&state=${encodeURIComponent(stateCode)}`;
+  } else {
+    return { results: [] };
+  }
+
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`API error ${res.status}`);
+  return res.json();
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+ *  searchNPI — Main entry point with smart 4-stage fallback
+ * ────────────────────────────────────────────────────────────────────────*/
 async function searchNPI() {
   const nameInput = document.getElementById('npi-name');
   const stateInput = document.getElementById('npi-state');
@@ -10,10 +239,10 @@ async function searchNPI() {
   const btn        = document.getElementById('npi-search-btn');
   if (!nameInput || !resultsEl) return;
 
-  const query = nameInput.value.trim().replace(/\s+/g, ' '); // Normalize spaces
-  const state = stateInput ? stateInput.value.trim().toUpperCase() : '';
+  const rawQuery    = nameInput.value.trim().replace(/\s+/g, ' ');
+  const dropdownState = stateInput ? stateInput.value.trim().toUpperCase() : '';
 
-  if (query.length < 2) {
+  if (rawQuery.length < 2) {
     resultsEl.innerHTML = '<p class="status-msg">Please enter at least 2 characters.</p>';
     return;
   }
@@ -27,36 +256,61 @@ async function searchNPI() {
   if (btn) btn.disabled = true;
 
   try {
-    const data = await executeNPISearch(query, state);
+    const parsed = parseNPIQuery(rawQuery);
 
-    if (!data.results || data.results.length === 0) {
-      // Intelligent Fallback Logic (v4.0)
-      // If a multi-word search failed as "First/Last", retry as "Organization"
-      const parts = query.split(' ');
-      if (parts.length >= 2 && !isOrgHint(query)) {
-        resultsEl.innerHTML = `<p class="status-msg" style="font-size:12px; color:var(--accent);">No individual matches. Retrying as Organization...</p>`;
-        const fallbackData = await executeNPISearch(query, state, true); // forceOrg = true
-        if (fallbackData.results && fallbackData.results.length > 0) {
-          renderNPIResults(fallbackData.results, resultsEl);
-          return;
-        }
-      }
-
+    // Guard: if parser found nothing useful, tell the user
+    if (!parsed || (!parsed.npiNumber && !parsed.cleanName)) {
       resultsEl.innerHTML = `
         <div class="status-msg">
-          No providers found for "<strong>${window.escapeHtml(query)}</strong>"${state ? ' in ' + state : ''}. 
-          <br><small>Try check spelling, or search by a 10-digit NPI number.</small>
+          Could not extract a valid provider name or NPI from <strong>"${window.escapeHtml(rawQuery)}"</strong>.
+          <br><small>Try: "John Smith", "Valley Medical Group", or a 10-digit NPI number.</small>
         </div>`;
-    } else {
-      renderNPIResults(data.results, resultsEl);
+      return;
     }
+
+    // ── Stage 1: Primary search ──
+    let data = await executeNPISearch(parsed, dropdownState);
+
+    if (data.results && data.results.length > 0) {
+      renderNPIResults(data.results, resultsEl);
+      return;
+    }
+
+    // ── Stage 2: Reverse name order (e.g., "Evans Thomas" → try "Thomas Evans") ──
+    if (!parsed.isOrg && parsed.firstName && parsed.lastName) {
+      resultsEl.innerHTML += '<p style="font-size:11px;color:var(--accent);text-align:center;margin-top:8px;">Trying reversed name order...</p>';
+      data = await executeNPISearch(parsed, dropdownState, { reverseName: true });
+      if (data.results && data.results.length > 0) {
+        renderNPIResults(data.results, resultsEl);
+        return;
+      }
+    }
+
+    // ── Stage 3: Retry as organization (maybe it's an org without obvious keywords) ──
+    if (!parsed.isOrg && parsed.cleanName) {
+      resultsEl.innerHTML += '<p style="font-size:11px;color:var(--accent);text-align:center;margin-top:8px;">Trying as Organization...</p>';
+      data = await executeNPISearch(parsed, dropdownState, { forceOrg: true });
+      if (data.results && data.results.length > 0) {
+        renderNPIResults(data.results, resultsEl);
+        return;
+      }
+    }
+
+    // ── Stage 4: All fallbacks exhausted ──
+    const displayName = parsed.cleanName || rawQuery;
+    resultsEl.innerHTML = `
+      <div class="status-msg">
+        No providers found for "<strong>${window.escapeHtml(displayName)}</strong>"${dropdownState ? ' in ' + dropdownState : ''}.
+        <br><small>Check spelling, or search by a 10-digit NPI number directly.</small>
+      </div>`;
+
   } catch (err) {
     console.error('NPI Proxy Error:', err);
     resultsEl.innerHTML = `
       <div class="audit-finding" style="border-left: 3px solid var(--danger); background: rgba(239, 68, 68, 0.05);">
         <div class="finding-icon danger">●</div>
         <div>
-          <strong style="color:var(--text-h);">NPS Registry Offline</strong>
+          <strong style="color:var(--text-h);">NPI Registry Offline</strong>
           <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">The CMS registry search failed. This usually happens due to rate limiting or maintenance.</p>
         </div>
       </div>`;
@@ -65,48 +319,6 @@ async function searchNPI() {
   }
 }
 
-/**
- * executeNPISearch - Core fetcher for NPPES API via Proxy
- */
-async function executeNPISearch(query, state, forceOrg = false) {
-  let url = '/api/npi?';
-
-  const isNPINumber = /^\d{10}$/.test(query.trim());
-
-  if (isNPINumber) {
-    // Exact NPI lookup — no wildcards, no name parsing, no state filter
-    url += `number=${query.trim()}`;
-    // Note: intentionally skip state for exact NPI lookups (NPI is globally unique)
-  } else {
-    const queryUpper = query.toUpperCase();
-    const isOrg = forceOrg || isOrgHint(queryUpper);
-    const parts = query.trim().split(/\s+/);
-
-    if (isOrg || parts.length === 1) {
-      url += `organization_name=${encodeURIComponent(query)}*`;
-    } else {
-      url += `first_name=${encodeURIComponent(parts[0])}*&last_name=${encodeURIComponent(parts.slice(1).join(' '))}*`;
-    }
-
-    if (state) url += `&state=${encodeURIComponent(state)}`;
-  }
-
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`API error ${res.status}`);
-  return res.json();
-}
-
-/**
- * isOrgHint - Detect if query looks like a business entity
- */
-function isOrgHint(q) {
-  const keywords = [
-    'CLINIC', 'HOSPITAL', 'LLC', 'CENTER', 'MEDICAL', 'GROUP', 'CARE', 'UNIVERSITY', 'HEALTH', 'INC', 'SPECIALISTS',
-    'FOUNDATION', 'SERVICES', 'PRACTICE', 'MANAGEMENT', 'SURGERY', 'ASSOCIATES', 'INSTITUTE', 'REHAB', 'NURSING', 'HOME', 'PLLC'
-  ];
-  const upper = q.toUpperCase();
-  return keywords.some(kw => upper.includes(kw));
-}
 
 function renderNPIResults(results, container) {
   // Helper to convert names to Title Case
@@ -179,6 +391,12 @@ function renderNPIResults(results, container) {
             ${credential ? `<span class="npi-credential" style="font-size: 12px; margin-left: 8px; vertical-align: middle;">${window.escapeHtml(credential)}</span>` : ''}
           </h3>
         </div>
+
+        <!-- Affiliated Org placeholder (filled async for individual NPI) -->
+        ${!isOrg ? `<div class="npi-affiliated-org" data-first="${window.escapeHtml(p.basic.first_name || '')}" data-last="${window.escapeHtml(p.basic.last_name || '')}" style="display:none; margin-bottom:16px;">
+          <div style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: var(--text-muted); letter-spacing: 0.08em; margin-bottom: 4px;">Affiliated Facility</div>
+          <div class="npi-affiliated-org-name" style="font-size: 15px; font-weight: 800; color: var(--text-h);"></div>
+        </div>` : ''}
 
         <!-- Official Full Name Section -->
         ${officialName ? `
@@ -255,6 +473,40 @@ function renderNPIResults(results, container) {
         }, 2000);
       });
     };
+  });
+
+  // ── Async reverse-org lookup for individual cards ──
+  container.querySelectorAll('.npi-affiliated-org').forEach(async (placeholder) => {
+    const firstName = placeholder.dataset.first;
+    const lastName  = placeholder.dataset.last;
+    if (!firstName && !lastName) return;
+
+    try {
+      const params = new URLSearchParams();
+      if (firstName) params.set('authorized_official_first_name', firstName);
+      if (lastName)  params.set('authorized_official_last_name',  lastName);
+      const res  = await fetch(`/api/npi?${params.toString()}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const orgs = data.results || [];
+      if (orgs.length === 0) return;
+
+      // Pick the first org with a real name
+      const org = orgs.find(o => o.basic?.organization_name) || orgs[0];
+      const orgName = org?.basic?.organization_name;
+      if (!orgName) return;
+
+      // Show the affiliated org section
+      placeholder.querySelector('.npi-affiliated-org-name').textContent = orgName;
+      placeholder.style.display = 'block';
+
+      // Also update the copy button to include the org name
+      const card    = placeholder.closest('.npi-card');
+      const copyBtn = card?.querySelector('.npi-copy-btn');
+      if (copyBtn && !copyBtn.dataset.details.includes(orgName)) {
+        copyBtn.dataset.details += ` | Facility: ${orgName}`;
+      }
+    } catch (_) { /* silently skip if lookup fails */ }
   });
 }
 
