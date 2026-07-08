@@ -285,8 +285,8 @@ async function searchDenials(query) {
       const bCombined = `${bCode} ${bDesc}`;
 
       // 1. Exact Code Match
-      const aExact = a.code === normQ || a.code === cleanQ;
-      const bExact = b.code === normQ || b.code === cleanQ;
+      const aExact = a.code === normQ || a.code === cleanCode;
+      const bExact = b.code === normQ || b.code === cleanCode;
       if (aExact && !bExact) return -1;
       if (bExact && !aExact) return 1;
 
