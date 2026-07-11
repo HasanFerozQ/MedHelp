@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About MediHelp – Medical Billing Transparency &amp; Patient Advocacy</title>
+  <meta name="description" content="MediHelp empowers patients with free medical bill audit tools, clinical calculators, and expert advocacy. Learn about our mission, values, and commitment to accurate, HIPAA-safe healthcare resources.">
+  <link rel="canonical" href="https://www.medihelp.live/about">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MediHelp">
+  <meta property="og:title" content="About MediHelp – Medical Billing Transparency &amp; Patient Advocacy">
+  <meta property="og:description" content="MediHelp empowers patients with free medical bill audit tools, clinical calculators, and expert advocacy. Learn about our mission, values, and commitment to accurate, HIPAA-safe healthcare resources.">
+  <meta property="og:url" content="https://www.medihelp.live/about">
+  <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About MediHelp – Medical Billing Transparency &amp; Patient Advocacy">
+  <meta name="twitter:description" content="MediHelp empowers patients with free medical bill audit tools, clinical calculators, and expert advocacy.">
+  <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+
+  <!-- JSON-LD Organization Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "MediHelp",
+    "url": "https://www.medihelp.live",
+    "logo": "https://www.medihelp.live/icons/logo.png",
+    "description": "MediHelp is a patient-first platform dedicated to demystifying medical billing and providing accessible clinical tools.",
+    "email": "supportdesk@medihelp.live",
+    "sameAs": ["https://www.linkedin.com/company/medihelplive/"]
+  }
+  </script>
+
+  <style>
+    /* ── About Page Styles ── */
+    .about-hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(ellipse, rgba(34,197,94,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .about-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(34,197,94,0.1);
+      color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 100px;
+      padding: 7px 18px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .about-hero h1 {
+      font-size: clamp(32px, 5vw, 58px);
+      font-weight: 900;
+      color: var(--text-h);
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      max-width: 780px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .about-hero h1 span {
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .about-hero-lead {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+    .hero-trust-pills {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid;
+    }
+    .trust-pill.green { background: rgba(34,197,94,0.1); color: #22c55e; border-color: rgba(34,197,94,0.25); }
+    .trust-pill.blue  { background: rgba(56,189,248,0.1); color: #38bdf8; border-color: rgba(56,189,248,0.25); }
+    .trust-pill.amber { background: rgba(251,191,36,0.1); color: #fbbf24; border-color: rgba(251,191,36,0.25); }
+    .trust-pill.purple{ background: rgba(167,139,250,0.1); color: #a78bfa; border-color: rgba(167,139,250,0.25); }
+
+    /* Stats Row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin: 0 0 80px;
+    }
+    .stat-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .stat-box:hover {
+      transform: translateY(-4px);
+      border-color: #22c55e;
+    }
+    .stat-box .stat-num {
+      font-size: 42px;
+      font-weight: 900;
+      color: #22c55e;
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-box .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    /* Mission Section */
+    .about-section {
+      margin-bottom: 72px;
+    }
+    .section-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #38bdf8;
+      margin-bottom: 14px;
+    }
+    .about-section h2 {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 900;
+      color: var(--text-h);
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+    .about-section p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    /* Mission Banner */
+    .mission-banner {
+      background: linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(56,189,248,0.04) 100%);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 24px;
+      padding: 48px;
+      margin-bottom: 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .mission-banner::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 32px;
+      font-size: 200px;
+      color: rgba(34,197,94,0.06);
+      font-family: Georgia, serif;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .mission-banner blockquote {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-h);
+      line-height: 1.6;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .mission-banner blockquote span {
+      color: #22c55e;
+    }
+
+    /* What We Provide */
+    .provide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .provide-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+    .provide-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56,189,248,0.4);
+      box-shadow: 0 12px 32px rgba(56,189,248,0.08);
+    }
+    .provide-card .pc-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .provide-card h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-h);
+      margin-bottom: 10px;
+    }
+    .provide-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Values Grid */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .value-card {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      transition: border-color 0.25s;
+    }
+    .value-card:hover { border-color: rgba(34,197,94,0.35); }
+    .value-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .value-card h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-h);
+      margin-bottom: 8px;
+    }
+    .value-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Tools showcase */
+    .tools-showcase {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      margin-top: 32px;
+    }
+    .tools-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .tools-list a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text-body);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .tools-list a:hover {
+      border-color: #22c55e;
+      color: #22c55e;
+      background: rgba(34,197,94,0.06);
+      transform: translateX(4px);
+    }
+    .tools-list a svg { flex-shrink: 0; opacity: 0.6; }
+    .tools-list a:hover svg { opacity: 1; }
+
+    /* Independence & Contact */
+    .independence-block {
+      background: linear-gradient(135deg, rgba(167,139,250,0.05) 0%, rgba(56,189,248,0.04) 100%);
+      border: 1px solid rgba(167,139,250,0.2);
+      border-radius: 24px;
+      padding: 40px;
+      margin-top: 32px;
+    }
+    .independence-block p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .independence-block p:last-child { margin-bottom: 0; }
+
+    /* Disclaimer box */
+    .disclaimer-box {
+      background: rgba(251,191,36,0.06);
+      border: 1px solid rgba(251,191,36,0.25);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-top: 48px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .disclaimer-box strong { color: #fbbf24; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .provide-grid { grid-template-columns: 1fr 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .provide-grid { grid-template-columns: 1fr; }
+      .tools-list { grid-template-columns: 1fr; }
+      .mission-banner { padding: 32px 24px; }
+      .mission-banner blockquote { font-size: 18px; }
+      .tools-showcase { padding: 28px 20px; }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3792974281439123"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png?v=1.1" alt="MediHelp — Medical Bill Audit">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/medical-exam-preparation">Medical Exams</a>
+        <a href="/medical-bill-audit">Medical Bill Audit</a>
+        <a href="/cpt-code-search">CPT Codes</a>
+        <a href="/claim-denial-codes">Denial Codes</a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">More ▼</div>
+          <div class="nav-dropdown-menu">
+            <a href="/rx-savings">Rx Savings</a>
+            <a href="/providers">Provider Search</a>
+            <a href="/blog">Blog</a>
+            <div style="border-top: 1px solid var(--border); margin: 8px 0;"></div>
+            <a href="/medical-calculator" style="color: gold; font-weight: 700;">Medical Calculator</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="/pricing" class="btn btn-ghost" style="padding:8px 18px; font-size:14px; border-radius:10px;">Expert Help</a>
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
+        <div class="nav-toggle" onclick="MediHelp.toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="about-hero" aria-labelledby="about-hero-heading">
+    <div class="container">
+      <div class="about-hero-eyebrow">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        Our Mission & Story
+      </div>
+      <h1 id="about-hero-heading">Transparent Healthcare.<br><span>For Every Patient.</span></h1>
+      <p class="about-hero-lead">MediHelp is a patient-first platform dedicated to demystifying medical billing and providing accessible clinical tools — so patients, clinicians, and coders can make informed decisions.</p>
+      <div class="hero-trust-pills">
+        <span class="trust-pill green">✓ HIPAA-Conscious Design</span>
+        <span class="trust-pill blue">✓ CMS-Backed Data</span>
+        <span class="trust-pill amber">✓ No Signup Required</span>
+        <span class="trust-pill purple">✓ Fully Independent</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">150+</div>
+        <div class="stat-label">Free clinical calculators</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">80%</div>
+        <div class="stat-label">Of hospital bills contain errors</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">6M+</div>
+        <div class="stat-label">NPI provider records searchable</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">$0</div>
+        <div class="stat-label">Cost for all free tools — no signup</div>
+      </div>
+    </div>
+
+    <!-- ── MISSION QUOTE ── -->
+    <div class="mission-banner" role="complementary">
+      <blockquote>
+        Medical billing errors affect up to <span>80% of hospital bills</span>, contributing to massive wasteful spending in U.S. healthcare. MediHelp was created to give patients the same powerful information and leverage that hospitals and insurers use — <span>for free</span> where possible, and with transparent paid options when expert help is needed.
+      </blockquote>
+    </div>
+
+    <!-- ── ABOUT INTRO ── -->
+    <div class="about-section">
+      <div class="section-chip">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+        About Us
+      </div>
+      <h2>A Patient-First Platform for Healthcare Clarity</h2>
+      <p>MediHelp is a patient-first platform dedicated to demystifying medical billing and providing accessible clinical tools. We help individuals audit hospital bills, verify charges, appeal denials, and reduce out-of-pocket costs using reliable, CMS-backed resources.</p>
+      <p>We believe every person — regardless of their insurance literacy or income — deserves access to the same tools professionals use. That's why we've built everything from our bill audit engine to our 150+ clinical calculators to be free, fast, and private by design.</p>
+    </div>
+
+    <!-- ── WHAT WE PROVIDE ── -->
+    <div class="about-section">
+      <div class="section-chip">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        Our Platform
+      </div>
+      <h2>What We Provide</h2>
+      <p>Everything on MediHelp is built around one principle: patients deserve the same tools and knowledge that hospitals and insurers use every day.</p>
+      <div class="provide-grid">
+        <div class="provide-card">
+          <span class="pc-icon">🛠️</span>
+          <h3>Free Tools</h3>
+          <p>Medical bill audit engine, CPT code lookup, CARC/RARC denial code explanations, NPI provider search, prescription price comparison, and 150+ clinical calculators (BMI, SOFA, CrCl, and more).</p>
+        </div>
+        <div class="provide-card">
+          <span class="pc-icon">📚</span>
+          <h3>Educational Content</h3>
+          <p>Evidence-based guides on billing errors, insurance appeals, and medical exam preparation for USMLE, MBBS, and clinical licensing candidates.</p>
+        </div>
+        <div class="provide-card">
+          <span class="pc-icon">🤝</span>
+          <h3>Professional Advocacy</h3>
+          <p>Human bill advocates who review complex cases and negotiate directly with hospitals and insurers on your behalf — you only pay if we save you money.</p>
+        </div>
+      </div>
+
+      <!-- Tools Showcase -->
+      <div class="tools-showcase">
+        <div class="section-chip" style="margin-bottom: 8px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Explore Our Free Tools
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin:0 0 4px;">All tools are 100% free, no account required.</p>
+        <div class="tools-list">
+          <a href="/medical-bill-audit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            Free Medical Bill Audit
+          </a>
+          <a href="/medical-calculator">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+            150+ Medical Calculators
+          </a>
+          <a href="/cpt-code-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            Free CPT Code Lookup
+          </a>
+          <a href="/claim-denial-codes">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Free Denial Code Lookup
+          </a>
+          <a href="/providers">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            Free NPI Provider Search
+          </a>
+          <a href="/rx-savings">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            Free Rx Price Comparison
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── OUR VALUES ── -->
+    <div class="about-section">
+      <div class="section-chip">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Core Principles
+      </div>
+      <h2>Our Values &amp; Approach</h2>
+      <p>Every decision at MediHelp is guided by four principles that keep us independent and patient-focused.</p>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon" style="background:rgba(34,197,94,0.12);">🎯</div>
+          <div>
+            <h3>Accuracy &amp; Evidence-Based</h3>
+            <p>All tools and content draw from official sources including CMS Medicare fee schedules, NCCI edits, and peer-reviewed medical guidelines. We prioritize primary sources over secondary interpretations.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" style="background:rgba(56,189,248,0.12);">🔒</div>
+          <div>
+            <h3>Privacy First</h3>
+            <p>Local browser-based processing for bill audits — your sensitive itemized data never leaves your device. Registry lookups use public APIs only. We do not store personal health information.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" style="background:rgba(251,191,36,0.12);">💡</div>
+          <div>
+            <h3>Transparency</h3>
+            <p>Clear pricing, no hidden fees, and prominent disclaimers on all tools and calculators. Any promotional content is clearly labeled and will never influence our editorial decisions.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" style="background:rgba(167,139,250,0.12);">👥</div>
+          <div>
+            <h3>User-Focused</h3>
+            <p>Designed for patients, students, nurses, physicians, and anyone navigating medical costs. No jargon, no paywalls, no signup required for our free tools — just answers when you need them.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TEAM & EXPERTISE ── -->
+    <div class="about-section">
+      <div class="section-chip">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        Our Team
+      </div>
+      <h2>Team &amp; Expertise</h2>
+      <div class="independence-block">
+        <p>Our content and tools are developed and reviewed by professionals with backgrounds in healthcare administration, medical billing, and clinical practice. We collaborate with subject-matter experts to ensure information is current, reliable, and actionable.</p>
+        <p>We are committed to ethical practices and continuous improvement. <strong style="color: var(--text-h);">MediHelp is not affiliated with any insurance company or hospital system</strong>, allowing us to remain truly independent and advocate solely for patients and healthcare professionals.</p>
+        <p style="margin-bottom: 0;">For questions, corrections, or suggestions, contact us at: <a href="mailto:supportdesk@medihelp.live" style="color: #22c55e; font-weight: 700; text-decoration: none;">supportdesk@medihelp.live</a></p>
+      </div>
+    </div>
+
+    <!-- ── DISCLAIMER ── -->
+    <div class="disclaimer-box" role="note">
+      <strong>Important Disclaimer:</strong> The information on MediHelp is for educational and informational purposes only. It is not a substitute for professional medical, legal, or financial advice. Clinical calculators and billing tools are decision-support aids only — always consult qualified professionals for your personal situation. Last updated: July 2026.
+    </div>
+
+    <!-- ── LAST UPDATED ── -->
+    <p style="font-size: 13px; color: var(--text-muted); margin-top: 24px; margin-bottom: 60px;">
+      <em>Page last updated: July 2026</em> · <a href="/editorial-policy" style="color: var(--accent); text-decoration: none;">Read our Editorial Policy →</a>
+    </p>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Free tools and professional advocates helping patients fight medical billing errors and reduce hospital costs.</p>
+          <div style="margin-top:16px; display:flex; gap:12px; margin-bottom: 16px;">
+            <a href="https://www.linkedin.com/company/medihelplive/" target="_blank" rel="noopener" style="color:var(--text-muted); transition:0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'" title="Follow MediHelp on LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+          </div>
+          <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; background:rgba(var(--accent-rgb),0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--accent-rgb),0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
+            <span style="font-size:11px; background:rgba(var(--amber-rgb),0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--amber-rgb),0.2);">No Signup</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Free Tools</h4>
+          <ul>
+            <li><a href="/medical-bill-audit">Bill Audit Tool</a></li>
+            <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings Search</a></li>
+            <li><a href="/providers">Provider Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/pricing" style="color:var(--expert-amber); display: inline-flex; align-items: center; gap: 6px;">Human Bill Negotiation <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m12 3 1.91 5.82L21 12l-7.09 3.18L12 21l-1.91-5.82L3 12l7.09-3.18L12 3z"/></svg></a></li>
+            <li><a href="/medical-exam-preparation" style="color:var(--accent); font-weight:700;">Medical Exam Mastery</a></li>
+            <li><a href="/blog">Patient Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/about" style="color:var(--accent); font-weight:600;">About Us</a></li>
+            <li><a href="/editorial-policy">Editorial Policy</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
+        <span>© 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms &amp; Disclaimer</a></span>
+        <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

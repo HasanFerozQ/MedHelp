@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editorial Policy | MediHelp</title>
+  <meta name="description" content="Read MediHelp's Editorial Policy for standards on content accuracy, sourcing, review process, and corrections. We prioritize trustworthy, evidence-based information on medical billing and clinical topics.">
+  <link rel="canonical" href="https://www.medihelp.live/editorial-policy">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MediHelp">
+  <meta property="og:title" content="Editorial Policy | MediHelp">
+  <meta property="og:description" content="MediHelp's editorial standards: accuracy, sourcing, expert oversight, transparency, and corrections policy for all medical billing and clinical content.">
+  <meta property="og:url" content="https://www.medihelp.live/editorial-policy">
+  <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Editorial Policy | MediHelp">
+  <meta name="twitter:description" content="MediHelp's editorial standards for accuracy, sourcing, expert oversight, and corrections.">
+  <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+
+  <style>
+    /* ── Editorial Policy Page Styles ── */
+    .ep-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 60px;
+      padding-top: 120px;
+      padding-bottom: 80px;
+      align-items: start;
+    }
+    .ep-sticky-nav {
+      position: sticky;
+      top: 90px;
+    }
+    .ep-toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+    }
+    .ep-toc h4 {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .ep-toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .ep-toc ul li a {
+      display: block;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+    }
+    .ep-toc ul li a:hover {
+      color: var(--accent);
+      background: rgba(var(--accent-rgb), 0.06);
+      border-left-color: var(--accent);
+      padding-left: 16px;
+    }
+    .ep-cta-box {
+      background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(56,189,248,0.05) 100%);
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 20px;
+      padding: 24px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .ep-cta-box p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .ep-cta-box a {
+      display: block;
+      background: linear-gradient(135deg, #22c55e, #10b981);
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      transition: opacity 0.2s;
+    }
+    .ep-cta-box a:hover { opacity: 0.88; }
+
+    /* Main Content */
+    .ep-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56,189,248,0.1);
+      color: #38bdf8;
+      border: 1px solid rgba(56,189,248,0.25);
+      border-radius: 100px;
+      padding: 7px 18px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .ep-main h1 {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 900;
+      color: var(--text-h);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .ep-intro {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 8px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ep-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .ep-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Sections */
+    .ep-section {
+      margin-bottom: 56px;
+      scroll-margin-top: 100px;
+    }
+    .ep-section-chip {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #38bdf8;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ep-section h2 {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text-h);
+      letter-spacing: -0.5px;
+      margin-bottom: 18px;
+    }
+    .ep-section p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+    .ep-section p:last-child { margin-bottom: 0; }
+
+    /* Principles grid */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .principle-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px 20px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .principle-card:hover {
+      border-color: rgba(56,189,248,0.35);
+      transform: translateY(-2px);
+    }
+    .principle-card .pc-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .principle-card h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-h);
+      margin-bottom: 8px;
+    }
+    .principle-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Process Steps */
+    .process-steps {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .process-step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      position: relative;
+      padding-bottom: 28px;
+    }
+    .process-step:last-child { padding-bottom: 0; }
+    .process-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 44px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(56,189,248,0.4), transparent);
+    }
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(56,189,248,0.1);
+      border: 2px solid rgba(56,189,248,0.3);
+      color: #38bdf8;
+      font-size: 14px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-content h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-h);
+      margin-bottom: 6px;
+      padding-top: 8px;
+    }
+    .step-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Corrections box */
+    .corrections-box {
+      background: rgba(34,197,94,0.06);
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 20px;
+      padding: 32px 28px;
+      margin-top: 24px;
+    }
+    .corrections-box h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-h);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .corrections-box p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .corrections-box a {
+      color: #22c55e;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .corrections-box a:hover { text-decoration: underline; }
+
+    /* Independence block */
+    .independence-info {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      margin-top: 24px;
+    }
+    .independence-info p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .independence-info p:last-child { margin-bottom: 0; }
+
+    /* Disclaimers list */
+    .disclaimer-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .disclaimer-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 16px 20px;
+      background: rgba(251,191,36,0.05);
+      border: 1px solid rgba(251,191,36,0.18);
+      border-radius: 14px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .disclaimer-list li::before {
+      content: '⚠';
+      color: #fbbf24;
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .ep-layout { grid-template-columns: 1fr; }
+      .ep-sticky-nav { display: none; }
+      .principles-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3792974281439123"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png?v=1.1" alt="MediHelp — Medical Bill Audit">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/medical-exam-preparation">Medical Exams</a>
+        <a href="/medical-bill-audit">Medical Bill Audit</a>
+        <a href="/cpt-code-search">CPT Codes</a>
+        <a href="/claim-denial-codes">Denial Codes</a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">More ▼</div>
+          <div class="nav-dropdown-menu">
+            <a href="/rx-savings">Rx Savings</a>
+            <a href="/providers">Provider Search</a>
+            <a href="/blog">Blog</a>
+            <div style="border-top: 1px solid var(--border); margin: 8px 0;"></div>
+            <a href="/medical-calculator" style="color: gold; font-weight: 700;">Medical Calculator</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="/pricing" class="btn btn-ghost" style="padding:8px 18px; font-size:14px; border-radius:10px;">Expert Help</a>
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">🌙</button>
+        <div class="nav-toggle" onclick="MediHelp.toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="ep-layout">
+
+      <!-- ── MAIN CONTENT ── -->
+      <main class="ep-main">
+        <div style="font-size:13px; color:var(--text-muted); margin-bottom:24px;">
+          <a href="/" style="color:var(--accent); text-decoration:none;">Home</a>
+          <span style="margin: 0 8px;">›</span>
+          <a href="/about" style="color:var(--accent); text-decoration:none;">About Us</a>
+          <span style="margin: 0 8px;">›</span>
+          Editorial Policy
+        </div>
+
+        <div class="ep-hero-eyebrow">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Content Standards
+        </div>
+        <h1>Editorial Policy</h1>
+        <p class="ep-intro">MediHelp maintains strict editorial standards to ensure all content is accurate, helpful, and trustworthy. This policy applies to our blog articles, tool descriptions, guides, and all website content.</p>
+        <div class="ep-meta">
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Last updated: July 2026
+          </span>
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            MediHelp Editorial Team
+          </span>
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Reviewed periodically
+          </span>
+        </div>
+
+        <!-- 1. Core Principles -->
+        <section class="ep-section" id="core-principles">
+          <div class="ep-section-chip">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Section 1
+          </div>
+          <h2>Core Principles</h2>
+          <p>Every piece of content published on MediHelp is held to the following non-negotiable standards:</p>
+          <div class="principles-grid">
+            <div class="principle-card">
+              <div class="pc-num">Principle 01</div>
+              <h3>High-Quality, Original Content</h3>
+              <p>All articles and resources are original, researched, and created to genuinely help users understand and solve real problems in medical billing and healthcare. We do not republish or spin third-party content.</p>
+            </div>
+            <div class="principle-card">
+              <div class="pc-num">Principle 02</div>
+              <h3>Accuracy &amp; Authoritative Sourcing</h3>
+              <p>Claims are backed by authoritative sources such as the Centers for Medicare &amp; Medicaid Services (CMS), official coding guidelines (CPT, ICD-10, HCPCS), NCCI edits, and peer-reviewed medical literature. We prioritize primary sources over secondary interpretations.</p>
+            </div>
+            <div class="principle-card">
+              <div class="pc-num">Principle 03</div>
+              <h3>Expert Oversight</h3>
+              <p>Content is written or reviewed by individuals with relevant expertise in medical billing, clinical practice, or healthcare administration. Tools and calculators are validated against established medical formulas and clinical guidelines.</p>
+            </div>
+            <div class="principle-card">
+              <div class="pc-num">Principle 04</div>
+              <h3>Transparency</h3>
+              <p>We clearly label any promotional elements (e.g., our paid advocacy service) and disclose limitations or disclaimers prominently. Our editorial decisions are never influenced by commercial relationships.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Content Creation Process -->
+        <section class="ep-section" id="content-process">
+          <div class="ep-section-chip">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            Section 2
+          </div>
+          <h2>Content Creation &amp; Review Process</h2>
+          <p>Every article and tool description on MediHelp follows a structured pipeline to ensure accuracy and usefulness before it reaches readers:</p>
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h3>Research from Reliable Sources</h3>
+                <p>Authors begin with primary sources — CMS publications, official CPT/ICD manuals, peer-reviewed journals, and established clinical guidelines. Secondary sources are cross-referenced and verified.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <h3>Drafting with Clear, Actionable Language</h3>
+                <p>Content is written in plain, patient-friendly language without sacrificing clinical accuracy. We avoid unnecessary jargon and define technical terms where they are essential.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <h3>Internal Review for Accuracy &amp; Clarity</h3>
+                <p>All content undergoes an internal editorial review for medical and billing accuracy, factual correctness, and clarity of explanation before publication.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <h3>Regular Updates</h3>
+                <p>Content is reviewed and updated to reflect changes in CMS regulations, CPT code updates, insurance policy changes, or new clinical evidence. Major updates are indicated with a revision date.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">5</div>
+              <div class="step-content">
+                <h3>Reader Feedback Integration</h3>
+                <p>User feedback submitted via <a href="mailto:supportdesk@medihelp.live" style="color:var(--accent);">supportdesk@medihelp.live</a> is monitored and incorporated where appropriate to improve content quality and address gaps.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Corrections Policy -->
+        <section class="ep-section" id="corrections">
+          <div class="ep-section-chip">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Section 3
+          </div>
+          <h2>Corrections Policy</h2>
+          <div class="corrections-box">
+            <h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              We Correct Errors Promptly
+            </h3>
+            <p>We are committed to correcting factual inaccuracies as quickly as possible. If you identify an error in any of our content, tools, or descriptions, please notify us at <a href="mailto:supportdesk@medihelp.live">supportdesk@medihelp.live</a>.</p>
+            <p>Significant updates or corrections will include a visible revision date on the affected page. Minor corrections (typos, formatting) may be made without a formal revision notice.</p>
+            <p style="margin-bottom:0;">We appreciate reader participation in keeping our content accurate and up to date.</p>
+          </div>
+        </section>
+
+        <!-- 4. Independence & Advertising -->
+        <section class="ep-section" id="independence">
+          <div class="ep-section-chip">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Section 4
+          </div>
+          <h2>Independence &amp; Advertising</h2>
+          <div class="independence-info">
+            <p>MediHelp maintains <strong style="color: var(--text-h);">full editorial independence</strong>. We are not affiliated with any insurance company, hospital system, pharmaceutical company, or medical coding vendor. This independence allows us to advocate solely for patients and healthcare professionals.</p>
+            <p>Any future advertising (including Google AdSense display ads) will <strong style="color: var(--text-h);">not influence our editorial decisions or content</strong>. Advertisements are clearly distinguished from editorial content. We do not publish sponsored articles or pay-to-rank content that could compromise reader trust.</p>
+            <p>Our paid service (Human Bill Advocacy) is our primary revenue source. It is clearly labeled as a paid service on all pages and is not bundled with or disguised as free content.</p>
+          </div>
+        </section>
+
+        <!-- 5. Disclaimers -->
+        <section class="ep-section" id="disclaimers">
+          <div class="ep-section-chip">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Section 5
+          </div>
+          <h2>Disclaimers</h2>
+          <p>MediHelp is an educational and informational platform. The following limitations apply to all content and tools:</p>
+          <ul class="disclaimer-list">
+            <li>Clinical calculators and billing tools are provided for educational and decision-support purposes only and should not replace professional clinical judgment or official medical advice.</li>
+            <li>Medical billing rules, CPT codes, and reimbursement rates can vary significantly by payer, state, geographic locality, and individual contract. Always verify specific details with your healthcare provider, insurance company, or a qualified billing professional.</li>
+            <li>MediHelp does not provide medical diagnosis, treatment recommendations, or legal advice. Always consult licensed medical, legal, or financial professionals for your personal situation.</li>
+            <li>CMS data, NPPES registry information, and other third-party databases are accessed via public APIs. While we strive to present current data, we are not responsible for inaccuracies in upstream data sources.</li>
+          </ul>
+        </section>
+
+        <div style="padding: 32px 0; border-top: 1px solid var(--border); margin-top: 24px;">
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.7;">
+            This Editorial Policy is reviewed and updated periodically to maintain the highest standards of integrity. For questions about our editorial standards, contact <a href="mailto:supportdesk@medihelp.live" style="color: var(--accent); text-decoration: none; font-weight: 700;">supportdesk@medihelp.live</a>.
+          </p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 12px;">
+            <em>Last updated: July 2026</em> · <a href="/about" style="color: var(--accent); text-decoration: none;">← Back to About Us</a>
+          </p>
+        </div>
+      </main>
+
+      <!-- ── SIDEBAR TOC ── -->
+      <aside class="ep-sticky-nav">
+        <div class="ep-toc">
+          <h4>On This Page</h4>
+          <ul>
+            <li><a href="#core-principles">Core Principles</a></li>
+            <li><a href="#content-process">Content Process</a></li>
+            <li><a href="#corrections">Corrections Policy</a></li>
+            <li><a href="#independence">Independence &amp; Ads</a></li>
+            <li><a href="#disclaimers">Disclaimers</a></li>
+          </ul>
+        </div>
+        <div class="ep-cta-box">
+          <p>Questions about our content standards? Spotted an error?</p>
+          <a href="mailto:supportdesk@medihelp.live">Contact Editorial Team</a>
+        </div>
+        <div class="ep-cta-box" style="margin-top: 16px; background: rgba(56,189,248,0.06); border-color: rgba(56,189,248,0.2);">
+          <p style="margin-bottom: 12px;">Read our full mission and team information.</p>
+          <a href="/about" style="background: linear-gradient(135deg, #38bdf8, #0ea5e9);">About MediHelp →</a>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Free tools and professional advocates helping patients fight medical billing errors and reduce hospital costs.</p>
+          <div style="margin-top:16px; display:flex; gap:12px; margin-bottom: 16px;">
+            <a href="https://www.linkedin.com/company/medihelplive/" target="_blank" rel="noopener" style="color:var(--text-muted); transition:0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'" title="Follow MediHelp on LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+          </div>
+          <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; background:rgba(var(--accent-rgb),0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--accent-rgb),0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
+            <span style="font-size:11px; background:rgba(var(--amber-rgb),0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--amber-rgb),0.2);">No Signup</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Free Tools</h4>
+          <ul>
+            <li><a href="/medical-bill-audit">Bill Audit Tool</a></li>
+            <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings Search</a></li>
+            <li><a href="/providers">Provider Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/pricing" style="color:var(--expert-amber); display: inline-flex; align-items: center; gap: 6px;">Human Bill Negotiation <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m12 3 1.91 5.82L21 12l-7.09 3.18L12 21l-1.91-5.82L3 12l7.09-3.18L12 3z"/></svg></a></li>
+            <li><a href="/medical-exam-preparation" style="color:var(--accent); font-weight:700;">Medical Exam Mastery</a></li>
+            <li><a href="/blog">Patient Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/editorial-policy" style="color:var(--accent); font-weight:600;">Editorial Policy</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
+        <span>© 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms &amp; Disclaimer</a></span>
+        <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
