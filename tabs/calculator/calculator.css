@@ -132,8 +132,8 @@ body::before {
   height: 36px;
   color: var(--accent);
 }
-.calc-role-header.emergency { background: #ffffff; padding: 20px; border-radius: var(--radius); border: 1px solid rgba(239,68,68,0.3); box-shadow: 0 4px 20px rgba(239,68,68,0.12); }
-.calc-role-header.emergency h1 { color: #111827; }
+.calc-role-header.emergency { background: #0E0D0C; padding: 20px; border-radius: var(--radius); border: 1px solid rgba(239,68,68,0.3); box-shadow: 0 4px 20px rgba(239,68,68,0.12); }
+.calc-role-header.emergency h1 { color: #ffffff; }
 .calc-role-header.emergency p, .calc-role-header.emergency .role-count { color: #4b5563; }
 
 .emergency-presets { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }

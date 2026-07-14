@@ -542,14 +542,18 @@ window.CalcUI = {
           <label style="display:flex; flex-direction:column;">Weight
             <div style="display:flex; align-items:center;">
               <input type="number" id="er-weight" placeholder="150" step="any" style="flex:1; border-top-right-radius:0; border-bottom-right-radius:0;">
-              <select id="er-weight-unit" style="border-left:none; border-top-left-radius:0; border-bottom-left-radius:0; padding-left:4px; padding-right:8px; width:auto; background:var(--bg-input);">
-                <option value="lbs">lbs</option>
-                <option value="kg">kg</option>
-              </select>
+              <input type="hidden" id="er-weight-unit" value="lbs">
+              <span style="border: 1px solid var(--border); border-left: none; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding: 0 16px; background: var(--bg-card); color: var(--text-muted); font-size: 14px; font-weight: 700; height: 44px; display: inline-flex; align-items: center; user-select: none;">lbs</span>
             </div>
           </label>
         </div>
-        <div class="panel-note">Values are shared across all ${roleId === 'icu' ? 'ICU / Critical Care' : 'ER'} calculators for fast bedside input.</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:12px;">
+          <div class="panel-note" style="margin-top:0;">Values are shared across all ${roleId === 'icu' ? 'ICU / Critical Care' : 'ER'} calculators for fast bedside input.</div>
+          <button id="er-reset-patient" class="btn btn-ghost btn-sm" style="color:var(--text-muted); font-size:12px; font-weight:700; padding:6px 14px; border-radius:10px; display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.03); border:1px solid var(--border); cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.borderColor='var(--accent)';" onmouseout="this.style.background='rgba(255,255,255,0.03)'; this.style.borderColor='var(--border)';">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M3 21v-5h5"/></svg>
+            Reset Patient
+          </button>
+        </div>
       </div>` : ''}
     </div>`;
 
@@ -821,6 +825,7 @@ window.CalcUI = {
     const sexEl = document.getElementById('er-sex');
     const weightEl = document.getElementById('er-weight');
     const weightUnitEl = document.getElementById('er-weight-unit');
+    const resetEl = document.getElementById('er-reset-patient');
     if (!ageEl || !sexEl || !weightEl) return;
 
     ageEl.value = this._erPatient?.age || '';
@@ -862,6 +867,40 @@ window.CalcUI = {
     sexEl.addEventListener('change', save);
     weightEl.addEventListener('input', save);
     if (weightUnitEl) weightUnitEl.addEventListener('change', save);
+
+    if (resetEl) {
+      resetEl.addEventListener('click', () => {
+        ageEl.value = '';
+        sexEl.value = 'male';
+        weightEl.value = '';
+        save();
+
+        // Clear active calculator fields if any
+        document.querySelectorAll('[name="age"]').forEach(el => {
+          el.value = '';
+        });
+        document.querySelectorAll('[name="weight"]').forEach(el => {
+          if (el.type === 'radio') el.checked = false;
+          else el.value = '';
+        });
+        document.querySelectorAll('[name="sex"]').forEach(el => {
+          if (el.type === 'checkbox') {
+            el.checked = false;
+          } else if (el.type === 'radio') {
+            el.checked = el.value === 'male';
+          } else {
+            el.value = 'male';
+          }
+        });
+
+        // Reset result output area
+        const resultBox = document.getElementById('calc-result');
+        if (resultBox) {
+          resultBox.innerHTML = `<div class="result-placeholder">${CalcI18n.t('result')}</div>`;
+          resultBox.classList.add('empty');
+        }
+      });
+    }
   },
 
   _pushErPatientToForms() {
