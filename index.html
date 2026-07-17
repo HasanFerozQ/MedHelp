@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
   <meta name="google-site-verification" content="5qSgIce5-N4XK8YJHpfBOtlbj-VfyJCvTbiZEsDy7VM" />
@@ -28,9 +28,12 @@
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link rel="dns-prefetch" href="https://gumroad.com">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <!-- Preload LCP hero background image (WebP, 126 KB vs 2.2 MB PNG) -->
+  <link rel="preload" as="image" href="images/hero-bg.webp" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="core.js"></script>
+  <!-- defer prevents these scripts from blocking first paint -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="core.js" defer></script>
 
   <script type="application/ld+json">
 {
@@ -323,7 +326,8 @@
        HERO — Emotional, World-Class
   ══════════════════════════════════════════ -->
   <section class="hero-section" aria-label="Medical bill audit hero">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('images/hero-bg.png') center/cover no-repeat; opacity: 0.2; z-index: 0;"></div>
+    <!-- Hero background: WebP (126 KB) with PNG fallback for older browsers -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: image-set(url('images/hero-bg.webp') type('image/webp'), url('images/hero-bg.png') type('image/png')); background-position: center; background-size: cover; background-repeat: no-repeat; opacity: 0.2; z-index: 0;"></div>
     <div class="container" style="position:relative; z-index:1;">
 
       <div class="hero-eyebrow-badge">

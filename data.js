@@ -6854,7 +6854,7 @@ const FLASH_DATA = {
   "usmle1": [],
   "usmle2": [
   {
-    "section": "Cardiology",
+    "section": "Internal Medicine",
     "topic": "Cardiology",
     "icon": "heart",
     "cards": [
@@ -7061,7 +7061,7 @@ const FLASH_DATA = {
     ]
   },
   {
-    "section": "Pulmonology",
+    "section": "Internal Medicine",
     "topic": "Pulmonology",
     "icon": "wind",
     "cards": [
@@ -7268,7 +7268,7 @@ const FLASH_DATA = {
     ]
   },
   {
-    "section": "GI/Hepatology",
+    "section": "Internal Medicine",
     "topic": "GI/Hepatology",
     "icon": "activity",
     "cards": [
@@ -7475,7 +7475,7 @@ const FLASH_DATA = {
     ]
   },
   {
-    "section": "Nephrology",
+    "section": "Internal Medicine",
     "topic": "Nephrology",
     "icon": "filter",
     "cards": [
@@ -7682,7 +7682,7 @@ const FLASH_DATA = {
     ]
   },
   {
-    "section": "Endocrinology",
+    "section": "Internal Medicine",
     "topic": "Endocrinology",
     "icon": "zap",
     "cards": [
@@ -7889,7 +7889,7 @@ const FLASH_DATA = {
     ]
   },
   {
-    "section": "Hematology/Oncology",
+    "section": "Internal Medicine",
     "topic": "Hematology/Oncology",
     "icon": "droplet",
     "cards": [
@@ -8096,7 +8096,7 @@ const FLASH_DATA = {
     ]
   },
   {
-    "section": "Rheumatology",
+    "section": "Internal Medicine",
     "topic": "Rheumatology",
     "icon": "bone",
     "cards": [
@@ -8303,7 +8303,7 @@ const FLASH_DATA = {
     ]
   },
   {
-    "section": "Infectious Disease",
+    "section": "Internal Medicine",
     "topic": "Infectious Disease",
     "icon": "bug",
     "cards": [
@@ -8510,7 +8510,7 @@ const FLASH_DATA = {
     ]
   },
   {
-    "section": "Allergy/Immunology",
+    "section": "Internal Medicine",
     "topic": "Allergy/Immunology",
     "icon": "shield-alert",
     "cards": [
@@ -8717,7 +8717,7 @@ const FLASH_DATA = {
     ]
   },
   {
-    "section": "Dermatology",
+    "section": "Internal Medicine",
     "topic": "Dermatology",
     "icon": "layers",
     "cards": [
