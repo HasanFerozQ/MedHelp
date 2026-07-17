@@ -6852,6 +6852,2077 @@ const FLASH_DATA = {
     }
   ],
   "usmle1": [],
-  "usmle2": [],
+  "usmle2": [
+  {
+    "section": "Cardiology",
+    "topic": "Cardiology",
+    "icon": "heart",
+    "cards": [
+      {
+        "q": "What is the immediate first-line medical therapy for a patient presenting with suspected Acute Coronary Syndrome (ACS)?",
+        "a": "<b>Aspirin 325 mg chewed</b> (non-enteric coated) to achieve rapid antiplatelet effect.<br><i>Note:</i> Oxygen is only administered if oxygen saturation is < 90% or the patient is in respiratory distress."
+      },
+      {
+        "q": "What are the absolute contraindications to Nitroglycerin therapy in patients presenting with acute chest pain?",
+        "a": "1. <b>Right Ventricular (RV) Infarction</b> (leads to severe hypotension due to preload dependence).<br>2. <b>Hypotension</b> (systolic BP < 90 mmHg).<br>3. <b>Phosphodiesterase-5 (PDE-5) inhibitor use</b> within the last 24–48 hours (e.g., sildenafil, tadalafil)."
+      },
+      {
+        "q": "What is the target 'door-to-balloon' time for a patient presenting with STEMI at a PCI-capable hospital?",
+        "a": "<b>&le; 90 minutes</b> from first medical contact to device activation."
+      },
+      {
+        "q": "What is the target 'door-to-needle' time for fibrinolysis in a STEMI patient when primary PCI is unavailable or cannot be performed within 120 minutes?",
+        "a": "<b>&le; 30 minutes</b> from arrival to initiation of fibrinolytic infusion (e.g., alteplase, tenecteplase). Fibrinolysis is indicated if symptom onset is < 12 hours."
+      },
+      {
+        "q": "Which post-MI mechanical complication presents 1–14 days post-MI with sudden cardiogenic shock, PEA, and cardiac tamponade signs?",
+        "a": "<b>Free Wall Rupture</b>.<br><br><b>Key Features:</b> hemopericardium, tamponade (Beck's triad). Requires immediate pericardiocentesis and surgical repair."
+      },
+      {
+        "q": "Which post-MI mechanical complication presents 2–7 days post-MI with sudden pulmonary edema and a new harsh holosystolic murmur at the apex radiating to the axilla?",
+        "a": "<b>Papillary Muscle Rupture</b> (causing acute mitral regurgitation).<br><br><b>Key Feature:</b> Severe pulmonary congestion, often involving rupture of the posteromedial papillary muscle (supplied solely by the PDA)."
+      },
+      {
+        "q": "Which post-MI complication presents 3–5 days post-MI with a new harsh holosystolic murmur at the left lower sternal border and an oxygen saturation step-up from the right atrium to the right ventricle?",
+        "a": "<b>Interventricular Septum Rupture</b> (Ventricular Septal Defect).<br><br><b>Key Feature:</b> Left-to-right shunt detectable via oxygen saturation measurements during right heart catheterization."
+      },
+      {
+        "q": "What post-MI complication presents weeks to months later with persistent ST-segment elevation, progressive heart failure, and risk of mural thrombus formation?",
+        "a": "<b>Left Ventricular Aneurysm</b>.<br><br><b>Key Feature:</b> Outpocketing of thin, dyskinetic myocardium visible on echocardiography. Warfarin is indicated if mural thrombus is present."
+      },
+      {
+        "q": "What is Dressler Syndrome, and what is the preferred first-line therapy?",
+        "a": "An autoimmune-mediated <b>post-MI pericarditis</b> occurring 2–10 weeks after myocardial infarction.<br><br><b>First-line Treatment:</b> High-dose <b>Aspirin</b> + <b>Colchicine</b>.<br><i>Note:</i> Standard NSAIDs (like ibuprofen) are avoided post-MI as they interfere with myocardial scar healing."
+      },
+      {
+        "q": "Contrast Systolic vs. Diastolic Heart Failure by Ejection Fraction (EF) and pathophysiological mechanism.",
+        "a": "• <b>Systolic HF (HFrEF):</b> EF &le; 40%. Decreased myocardial contractility/dilated ventricle (e.g., post-MI).<br>• <b>Diastolic HF (HFpEF):</b> EF &ge; 50%. Impaired ventricular compliance/stiff ventricle (e.g., chronic HTN, amyloidosis)."
+      },
+      {
+        "q": "List the classes of medications proven to reduce mortality in patients with Heart Failure with Reduced Ejection Fraction (HFrEF).",
+        "a": "1. <b>ACE Inhibitors / ARBs</b><br>2. <b>Beta-Blockers</b> (specifically: Carvedilol, Metoprolol Succinate, or Bisoprolol)<br>3. <b>Aldosterone Antagonists</b> (Spironolactone, Eplerenone)<br>4. <b>SGLT2 Inhibitors</b> (Dapagliflozin, Empagliflozin)<br>5. <b>ARNI</b> (Sacubitril/Valsartan)<br>6. <b>Hydralazine + Isosorbide Dinitrate</b> (specifically in African American patients with persistent NYHA Class III-IV symptoms)."
+      },
+      {
+        "q": "Which heart failure medications improve symptoms and reduce hospitalizations but do NOT improve overall survival/mortality?",
+        "a": "• <b>Loop Diuretics</b> (e.g., Furosemide, Bumetanide)<br>• <b>Digoxin</b>"
+      },
+      {
+        "q": "What is the mechanism of action of Sacubitril/Valsartan (ARNI) therapy in HFrEF?",
+        "a": "• <b>Sacubitril:</b> Inhibits <i>neprilysin</i>, preventing the breakdown of beneficial vasoactive peptides (ANP, BNP, bradykinin) &rarr; vasodilation, natriuresis.<br>• <b>Valsartan:</b> Blocks the angiotensin II type 1 (AT1) receptor &rarr; opposes vasoconstriction and aldosterone release."
+      },
+      {
+        "q": "What are the classic clinical signs and ECG findings associated with Digoxin toxicity?",
+        "a": "• <b>Clinical Signs:</b> Nausea, vomiting, abdominal pain, confusion, and <b>yellow-green visual halos</b>.<br>• <b>ECG Findings:</b> Downsloping ST depression ('scooped' ST segments), prolonged PR, shortened QT, and ventricular arrhythmias (bidirectional VT).<br><i>Note:</i> Hypokalemia predisposes to digoxin toxicity because digoxin competes with potassium for binding to the \\(Na^+/K^+\\) ATPase."
+      },
+      {
+        "q": "What is the management strategy for Atrial Fibrillation based on rate control vs. rhythm control?",
+        "a": "• <b>Rate Control</b> (Beta-blockers, Diltiazem/Verapamil, Digoxin) is the standard first-line strategy. There is no survival advantage of rhythm control over rate control for most patients.<br>• <b>Rhythm Control</b> (Amiodarone, Flecainide, Dofetilide, cardioversion) is reserved for persistent symptoms, inability to achieve rate control, or active heart failure."
+      },
+      {
+        "q": "Define the CHA\\(_2\\)DS\\(_2\\)-VASc score criteria and the threshold for initiating oral anticoagulation in Atrial Fibrillation.",
+        "a": "• <b>C:</b> Congestive HF (1 pt)<br>• <b>H:</b> Hypertension (1 pt)<br>• <b>A\\(_2\\):</b> Age &ge; 75 (2 pts)<br>• <b>D:</b> Diabetes (1 pt)<br>• <b>S\\(_2\\):</b> Stroke/TIA/Thromboembolism history (2 pts)<br>• <b>V:</b> Vascular disease (MI, PAD, aortic plaque) (1 pt)<br>• <b>A:</b> Age 65–74 (1 pt)<br>• <b>Sc:</b> Sex category Female (1 pt)<br><br><b>Threshold:</b> Oral anticoagulation (DOACs preferred) is recommended for score <b>&ge; 2 in males</b> or <b>&ge; 3 in females</b>."
+      },
+      {
+        "q": "Why are Direct Oral Anticoagulants (DOACs) preferred over Warfarin in non-valvular Atrial Fibrillation?",
+        "a": "DOACs (Apixaban, Rivaroxaban, Dabigatran) carry a <b>lower risk of intracranial hemorrhage</b>, do not require routine coagulation monitoring (INR), and have fewer dietary/drug interactions."
+      },
+      {
+        "q": "What are the classic ECG features of Wolff-Parkinson-White (WPW) syndrome?",
+        "a": "1. <b>Shortened PR interval</b> (< 120 ms).<br>2. <b>Delta wave</b> (slurred upstroke of the QRS complex).<br>3. <b>Widened QRS duration</b> (> 120 ms).<br><i>Pathophysiology:</i> Conduction through an accessory pathway (Bundle of Kent) bypassing the AV node."
+      },
+      {
+        "q": "What is the treatment of choice for a patient with Wolff-Parkinson-White (WPW) presenting with rapid, irregular Atrial Fibrillation?",
+        "a": "• <b>Hemodynamically unstable:</b> Immediate synchronized cardioversion.<br>• <b>Hemodynamically stable:</b> IV <b>Procainamide</b> or <b>Ibutilide</b>.<br><i>Contraindicated:</i> AV nodal blocking agents (Beta-blockers, Calcium channel blockers, Digoxin, Adenosine) as they promote conduction down the accessory pathway, potentially causing ventricular fibrillation."
+      },
+      {
+        "q": "What is the emergency treatment of choice for a patient presenting with Ventricular Fibrillation (VF) or Pulseless Ventricular Tachycardia (VT)?",
+        "a": "Immediate <b>unsynchronized defibrillation</b> (high-energy shock) followed by CPR.<br><i>Note:</i> In contrast, hemodynamically unstable patients with a *pulse* (e.g., VT with pulse) receive *synchronized* cardioversion."
+      },
+      {
+        "q": "What is the diagnostic evaluation and treatment of choice for Torsades de Pointes?",
+        "a": "• <b>ECG:</b> Polymorphic VT with a continuous twisting of QRS complexes around the baseline.<br>• <b>Treatment:</b> IV <b>Magnesium Sulfate</b> (first-line, even if serum magnesium is normal) + withdrawal of QT-prolonging drugs."
+      },
+      {
+        "q": "How do you distinguish Mobitz Type I (Wenckebach) from Mobitz Type II second-degree AV block on ECG?",
+        "a": "• <b>Mobitz I:</b> Progressive prolongation of the PR interval until a QRS complex is dropped (dropped beat). Typically benign; localized to the AV node.<br>• <b>Mobitz II:</b> Constant PR interval followed by a sudden, unexpected dropped QRS complex. High risk of progression to complete heart block; localized below the AV node (His-Purkinje system) and requires a <b>pacemaker</b>."
+      },
+      {
+        "q": "What clinical and ECG findings define Third-degree (Complete) Heart Block?",
+        "a": "• <b>ECG:</b> Complete dissociation between P waves (atrial rate ~100 bpm) and QRS complexes (junctional/ventricular escape rate 30–40 bpm). PR interval varies randomly.<br>• <b>Clinical:</b> Bradycardia, syncope, and <b>cannon 'a' waves</b> in the jugular venous pulse (due to RA contracting against a closed tricuspid valve). Requires a permanent pacemaker."
+      },
+      {
+        "q": "Describe the classic murmur of Aortic Stenosis and its key physical exam findings.",
+        "a": "• <b>Murmur:</b> Harsh, crescendo-decrescendo systolic murmur at the 2nd right intercostal space, radiating to the carotid arteries.<br>• <b>Exam findings:</b> <b>Pulsus parvus et tardus</b> (weak and delayed carotid pulses), soft/absent S2, and late-peaking murmur (indicating severe stenosis).<br>• <b>SAD symptoms:</b> Syncope, Angina, Dyspnea."
+      },
+      {
+        "q": "Describe the classic murmur and radiation of Mitral Regurgitation.",
+        "a": "• <b>Murmur:</b> Blowing, holosystolic murmur best heard at the apex.<br>• <b>Radiation:</b> Radiates to the <b>left axilla</b>.<br><i>Note:</i> Murmur intensity increases with handgrip (increased afterload) and squatting (increased preload)."
+      },
+      {
+        "q": "What are the auscultatory findings in Mitral Valve Prolapse (MVP), and how does preload alteration affect them?",
+        "a": "• <b>Findings:</b> A <b>mid-systolic click</b> followed by a late-systolic murmur at the apex.<br>• <b>Preload reduction (Valsalva, Standing):</b> Click and murmur occur <b>earlier</b> in systole (smaller LV volume leads to earlier leaflet prolapse).<br>• <b>Preload elevation (Squatting):</b> Click and murmur occur <b>later</b> (larger LV delays prolapse)."
+      },
+      {
+        "q": "Describe the classic murmur and peripheral exam signs of Aortic Regurgitation.",
+        "a": "• <b>Murmur:</b> High-pitched, blowing early diastolic decrescendo murmur best heard at the left sternal border (third intercostal space) with the patient leaning forward.<br>• <b>Peripheral Signs:</b> Wide pulse pressure, <b>Water-hammer pulse</b> (rapid upstroke and collapse), head bobbing with systole (de Musset sign), and capillary pulsations in nail beds (Quincke's pulse)."
+      },
+      {
+        "q": "Describe the auscultatory features and primary etiology of Mitral Stenosis.",
+        "a": "• <b>Murmur:</b> Low-pitched mid-diastolic rumble best heard at the apex in the left lateral decubitus position, preceded by a loud S1 and a high-pitched <b>opening snap</b>.<br>• <b>Etiology:</b> Almost exclusively caused by <b>Rheumatic Heart Disease</b>.<br><i>Note:</i> A shorter A2-to-opening snap interval indicates more severe stenosis."
+      },
+      {
+        "q": "How do you differentiate the murmur of Hypertrophic Obstructive Cardiomyopathy (HOCM) from Aortic Stenosis (AS)?",
+        "a": "• <b>Murmur:</b> Both are systolic crescendo-decrescendo murmurs.<br>• <b>HOCM murmur:</b> Increases with <b>Valsalva / Standing</b> (decreased preload worsens outflow tract obstruction) and decreases with <b>Squatting / Handgrip</b>.<br>• <b>AS murmur:</b> Decreases with Valsalva / Standing (decreased flow across the stenotic valve) and increases with Squatting."
+      },
+      {
+        "q": "What are the ECG stages and diagnostic features of Acute Pericarditis?",
+        "a": "• <b>ECG Features:</b> Widespread, diffuse concave <b>ST-segment elevation</b> and <b>PR-segment depression</b> (PR elevation in lead aVR).<br>• <b>Clinical:</b> Pleuritic chest pain that is relieved by sitting up and leaning forward; pericardial friction rub."
+      },
+      {
+        "q": "What is the first-line therapy for acute idiopathic or viral pericarditis?",
+        "a": "<b>NSAIDs</b> (e.g., ibuprofen) or <b>Aspirin</b> + <b>Colchicine</b>.<br><i>Note:</i> Colchicine is added to reduce the rate of recurrent pericarditis. Glucocorticoids are second-line and reserved for contraindications to NSAIDs or autoimmune causes."
+      },
+      {
+        "q": "What diagnostic findings and clinical signs are associated with Cardiac Tamponade?",
+        "a": "• <b>Beck's Triad:</b> Hypotension, muffled heart sounds, elevated JVD.<br>• <b>Echocardiography:</b> Diastolic collapse of the right atrium and right ventricle, respiratory variation in transvalvular flow.<br>• <b>ECG:</b> Low voltage QRS and <b>electrical alternans</b> (due to heart swinging back and forth in fluid)."
+      },
+      {
+        "q": "Define Pulsus Paradoxus and explain its pathophysiology.",
+        "a": "A drop in systolic blood pressure <b>> 10 mmHg during inspiration</b>.<br><br><b>Pathophysiology:</b> During inspiration, increased venous return distends the right ventricle. In cardiac tamponade or constrictive pericarditis, the rigid pericardium prevents outward expansion, forcing the interventricular septum to bulge into the left ventricle. This decreases LV filling, stroke volume, and systolic BP."
+      },
+      {
+        "q": "What clinical features differentiate Constrictive Pericarditis from Restrictive Cardiomyopathy?",
+        "a": "• <b>Constrictive Pericarditis:</b> Calcification of the pericardium on CXR/CT, <b>pericardial knock</b> (early diastolic sound), and <b>Kussmaul's sign</b> (paradoxical rise in JVP during inspiration).<br>• <b>Restrictive Cardiomyopathy:</b> Normal pericardial thickness, biopsy shows amyloid/sarcoid/iron deposition, BNP is typically much higher."
+      },
+      {
+        "q": "What is the definition of Hypertension based on 2017 ACC/AHA guidelines?",
+        "a": "• <b>Stage 1:</b> Systolic 130–139 mmHg OR Diastolic 80–89 mmHg.<br>• <b>Stage 2:</b> Systolic &ge; 140 mmHg OR Diastolic &ge; 90 mmHg.<br><i>Diagnosis:</i> Requires &ge; 2 readings on &ge; 2 separate occasions."
+      },
+      {
+        "q": "What are the first-line antihypertensive drug classes for the general non-black population?",
+        "a": "1. <b>Thiazide Diuretics</b> (e.g., Chlorthalidone, Hydrochlorothiazide)<br>2. <b>ACE Inhibitors / ARBs</b><br>3. <b>Dihydropyridine Calcium Channel Blockers</b> (e.g., Amlodipine)"
+      },
+      {
+        "q": "Name the metabolic side effects of Thiazide Diuretics.",
+        "a": "• <b>Elevated (Hyper-):</b> Hyperglycemia, Hyperuricemia (can trigger gout), Hypercalcemia, Hyperlipidemia.<br>• <b>Decreased (Hypo-):</b> Hypokalemia, Hyponatremia, Hypomagnesemia."
+      },
+      {
+        "q": "Name the key side effects of Loop Diuretics (e.g., Furosemide).",
+        "a": "Hypokalemia, Hyponatremia, <b>Hypocalcemia</b> (unlike thiazides, loops lose calcium), <b>Ototoxicity</b> (especially when combined with aminoglycosides), and acute kidney injury."
+      },
+      {
+        "q": "What are the characteristic side effects of dihydropyridine Calcium Channel Blockers (e.g., Amlodipine)?",
+        "a": "<b>Peripheral edema</b> (due to preferential precapillary vasodilation), flushing, headache, and reflex tachycardia."
+      },
+      {
+        "q": "Why are ACE Inhibitors and ARBs contraindicated in patients with bilateral renal artery stenosis?",
+        "a": "Bilateral renal artery stenosis reduces renal perfusion pressure, making GFR dependent on Angiotensin II-mediated vasoconstriction of the <b>efferent arteriole</b>. Dilation of the efferent arteriole by ACE inhibitors/ARBs drops filtration pressure, causing acute kidney injury (precipitous drop in GFR)."
+      },
+      {
+        "q": "Define the Modified Duke Criteria for Infective Endocarditis (IE).",
+        "a": "• <b>Major Criteria:</b><br>1. Positive blood cultures for typical organisms (e.g., <i>S. aureus, S. viridans</i>) from 2 separate cultures.<br>2. Echocardiogram showing vegetation, abscess, or new valvular regurgitation.<br>• <b>Minor Criteria:</b> Predisposing condition (IVDU, prosthetic valve), fever &ge; 38°C, vascular phenomena (emboli, Janeway lesions), immunologic phenomena (Glomerulonephritis, Osler nodes, Roth spots, RF), microbiological evidence (1 positive culture)."
+      },
+      {
+        "q": "Identify the physical exam findings of Infective Endocarditis: Janeway Lesions vs. Osler Nodes.",
+        "a": "• <b>Janeway Lesions:</b> Flat, erythematous, <b>painless</b> macules on the palms/soles (due to septic microemboli).<br>• <b>Osler Nodes:</b> Raised, painful, tender <b>erythematous nodules</b> on the pads of fingers/toes (immune-complex mediated)."
+      },
+      {
+        "q": "Which patients require antibiotic prophylaxis before dental procedures to prevent Infective Endocarditis?",
+        "a": "Prophylaxis (Amoxicillin 2g PO 1 hour before procedure) is indicated only for:<br>1. <b>Prosthetic heart valves</b> or prosthetic material used for valve repair.<br>2. <b>History of Infective Endocarditis</b>.<br>3. Unrepaired cyanotic congenital heart disease.<br>4. Cardiac transplant recipients with valvulopathy."
+      },
+      {
+        "q": "What is the diagnostic imaging strategy of choice for suspected Aortic Dissection?",
+        "a": "• <b>Hemodynamically stable:</b> <b>CT Angiography</b> of the chest and abdomen (gold standard).<br>• <b>Hemodynamically unstable or severe renal failure:</b> <b>Transesophageal Echocardiogram (TEE)</b> (done at bedside)."
+      },
+      {
+        "q": "Describe the classification and management of Stanford Type A vs. Type B Aortic Dissections.",
+        "a": "• <b>Stanford Type A:</b> Involves the ascending aorta. <b>Treatment:</b> Immediate surgical emergency.<br>• <b>Stanford Type B:</b> Confined to the descending aorta. <b>Treatment:</b> Medical management first-line with IV Beta-blockers (e.g., Esmolol, Labetalol) to reduce blood pressure (target systolic 100–120 mmHg) and heart rate (target < 60 bpm)."
+      },
+      {
+        "q": "What are the USPSTF screening guidelines for Abdominal Aortic Aneurysm (AAA)?",
+        "a": "One-time screening with <b>abdominal ultrasound</b> for <b>men aged 65 to 75 who have ever smoked</b> (defined as &ge; 100 lifetime cigarettes)."
+      },
+      {
+        "q": "What are the indications for surgical repair of an Abdominal Aortic Aneurysm (AAA)?",
+        "a": "1. Aneurysm diameter <b>&ge; 5.5 cm</b>.<br>2. Rapid expansion rate (<b>> 0.5 cm in 6 months</b> or > 1.0 cm in 1 year).<br>3. Any symptomatic aneurysm (e.g., back pain, abdominal pain) regardless of size."
+      },
+      {
+        "q": "Compare the hemodynamics of Hypovolemic vs. Cardiogenic shock.",
+        "a": "• <b>Hypovolemic Shock:</b> Decreased Cardiac Output (CO), Decreased Pulmonary Capillary Wedge Pressure (PCWP), Increased Systemic Vascular Resistance (SVR), Decreased Mixed Venous Oxygen Saturation (\\(S_vO_2\\)).<br>• <b>Cardiogenic Shock:</b> Decreased CO, <b>Increased PCWP</b> (preload accumulates behind failing LV), Increased SVR, Decreased \\(S_vO_2\\)."
+      },
+      {
+        "q": "Compare the hemodynamics of Distributive (Septic) vs. Obstructive shock.",
+        "a": "• <b>Septic Shock:</b> <b>Increased CO</b> (hyperdynamic phase), Decreased PCWP, <b>Decreased SVR</b> (severe peripheral vasodilation), Increased \\(S_vO_2\\) (tissues cannot extract oxygen due to shunting).<br>• <b>Obstructive Shock (e.g., PE, Tamponade):</b> Decreased CO, Variable PCWP (increased in tamponade, decreased in PE), Increased SVR, Decreased \\(S_vO_2\\)."
+      },
+      {
+        "q": "What is the first-line vasopressor of choice for patients in Septic Shock unresponsive to fluid resuscitation?",
+        "a": "<b>Norepinephrine</b> (acts primarily as an \\(\\alpha_1\\) agonist to cause vasoconstriction, with mild \\(\\beta_1\\) agonist activity to maintain cardiac output)."
+      }
+    ]
+  },
+  {
+    "section": "Pulmonology",
+    "topic": "Pulmonology",
+    "icon": "wind",
+    "cards": [
+      {
+        "q": "What is the criteria for diagnosing COPD on spirometry?",
+        "a": "A post-bronchodilator <b>FEV1/FVC ratio < 0.70</b>.<br><i>Note:</i> In contrast to asthma, this airflow obstruction is typically not fully reversible."
+      },
+      {
+        "q": "What long-term therapies are proven to reduce mortality in COPD patients with chronic hypoxemia?",
+        "a": "<b>Long-term Oxygen Therapy (LTOT)</b> for &ge; 15 hours/day.<br><br><b>Indications:</b><br>1. Resting \\(P_aO_2\\) &le; 55 mmHg or \\(S_aO_2\\) &le; 88%.<br>2. Resting \\(P_aO_2\\) 56–59 mmHg with signs of cor pulmonale, pulmonary hypertension, or erythrocytosis (hematocrit > 55%)."
+      },
+      {
+        "q": "What is the management of a patient presenting with an acute COPD exacerbation?",
+        "a": "1. <b>Oxygen:</b> Target saturation of 88–92% to avoid hypercapnia and respiratory drive suppression.<br>2. <b>Bronchodilators:</b> Inhaled short-acting beta-agonists (SABA, e.g., albuterol) + short-acting anticholinergics (SAMA, e.g., ipratropium).<br>3. <b>Systemic Glucocorticoids:</b> Oral prednisone or IV methylprednisolone (usually 5-day course).<br>4. <b>Antibiotics:</b> (e.g., macrolide, doxycycline, or fluoroquinolone) if the patient has increased sputum volume, increased purulence, and/or increased dyspnea."
+      },
+      {
+        "q": "What is the stepwise approach to chronic asthma management?",
+        "a": "• <b>Step 1:</b> As-needed low-dose ICS-formoterol (preferred) or SABA.<br>• <b>Step 2:</b> Daily low-dose inhaled corticosteroid (ICS) + PRN SABA, or as-needed low-dose ICS-formoterol.<br>• <b>Step 3:</b> Low-dose ICS + Long-acting beta-agonist (LABA).<br>• <b>Step 4:</b> Medium-dose ICS + LABA.<br>• <b>Step 5:</b> High-dose ICS + LABA + consider phenotypic add-on therapies (e.g., LAMA, anti-IgE omalizumab)."
+      },
+      {
+        "q": "What is the Samter Triad (Aspirin-Exacerbated Respiratory Disease, AERD)?",
+        "a": "1. <b>Asthma</b><br>2. <b>Chronic rhinosinusitis with nasal polyps</b><br>3. <b>Aspirin/NSAID hypersensitivity</b> (due to leukotriene overproduction)."
+      },
+      {
+        "q": "List the components of the Wells Criteria for Pulmonary Embolism (PE) and their point values.",
+        "a": "• <b>3.0 pts:</b> Clinical signs/symptoms of DVT; PE is the #1 diagnosis or equally likely.<br>• <b>1.5 pts:</b> HR > 100 bpm; Immobilization (&ge; 3 days) or surgery within last 4 weeks; Previous DVT/PE.<br>• <b>1.0 pt:</b> Hemoptysis; Malignancy (active or treated within 6 months)."
+      },
+      {
+        "q": "Outline the diagnostic algorithm for suspected PE based on Wells score.",
+        "a": "• <b>Wells Score &le; 4 (PE Unlikely):</b> Perform a high-sensitivity <b>D-Dimer</b>. If normal, PE is excluded. If elevated, proceed to CTPA.<br>• <b>Wells Score > 4 (PE Likely):</b> Bypass D-dimer and proceed directly to <b>CT Pulmonary Angiography (CTPA)</b> (or V/Q scan if CTPA is contraindicated, e.g., in severe renal impairment or contrast allergy)."
+      },
+      {
+        "q": "What is the management of a hemodynamically unstable (hypotensive) patient with a confirmed or highly suspected PE?",
+        "a": "Immediate <b>systemic thrombolytic therapy</b> (e.g., alteplase) or catheter-directed embolectomy if thrombolysis is contraindicated."
+      },
+      {
+        "q": "Define Light's Criteria for pleural fluid analysis.",
+        "a": "A pleural effusion is classified as <b>exudative</b> if at least one of the following is met:<br>1. Pleural fluid protein / Serum protein ratio <b>> 0.5</b>.<br>2. Pleural fluid LDH / Serum LDH ratio <b>> 0.6</b>.<br>3. Pleural fluid LDH <b>> 2/3 the upper limit of normal</b> for serum LDH.<br><i>Note:</i> If none are met, the fluid is transudative."
+      },
+      {
+        "q": "Compare common etiologies of Transudative vs. Exudative pleural effusions.",
+        "a": "• <b>Transudative:</b> Heart Failure (most common), Cirrhosis (hepatic hydrothorax), Nephrotic syndrome (due to low oncotic pressure).<br>• <b>Exudative:</b> Parapneumonic effusion/pneumonia, malignancy, pulmonary infarction/PE, autoimmune diseases (SLE, RA), uremic pleuritis."
+      },
+      {
+        "q": "What pleural fluid findings define a complicated parapneumonic effusion or empyema?",
+        "a": "• Pleural fluid pH <b>< 7.2</b>.<br>• Pleural fluid glucose <b>< 60 mg/dL</b>.<br>• Pleural fluid LDH <b>> 1,000 U/L</b>.<br>• Presence of bacteria on Gram stain/culture or gross pus.<br><b>Management:</b> Requires chest tube drainage in addition to IV antibiotics."
+      },
+      {
+        "q": "What is the CURB-65 scoring system for Community-Acquired Pneumonia (CAP) disposition?",
+        "a": "• <b>C:</b> Confusion (new)<br>• <b>U:</b> Urea > 19 mg/dL (BUN > 20 mg/dL)<br>• <b>R:</b> Respiratory Rate &ge; 30/min<br>• <b>B:</b> Blood Pressure (Systolic < 90 or Diastolic &le; 60 mmHg)<br>• <b>65:</b> Age &ge; 65 years<br><br><b>Disposition:</b><br>• 0–1 points: Outpatient management.<br>• 2 points: Inpatient (ward) admission.<br>• &ge; 3 points: Consider ICU admission."
+      },
+      {
+        "q": "What is the empiric outpatient treatment for CAP in a healthy patient with no comorbidities?",
+        "a": "• <b>Amoxicillin</b> (high dose) OR<br>• <b>Doxycycline</b> OR<br>• <b>Macrolide</b> (Azithromycin/Clarithromycin, only if local pneumococcal resistance is < 25%)."
+      },
+      {
+        "q": "What is the empiric outpatient treatment for CAP in a patient with significant comorbidities (e.g., CKD, DM, HF, COPD)?",
+        "a": "• <b>Respiratory Fluoroquinolone</b> monotherapy (e.g., Levofloxacin, Moxifloxacin) OR<br>• <b>Beta-lactam</b> (e.g., Amoxicillin-clavulanate, Cefuroxime) + <b>Macrolide</b> or Doxycycline."
+      },
+      {
+        "q": "What is the empiric inpatient (non-ICU) treatment for CAP?",
+        "a": "• IV <b>Beta-lactam</b> (e.g., Ceftriaxone, Ampicillin-sulbactam) + IV <b>Macrolide</b> (e.g., Azithromycin) OR<br>• Monotherapy with an IV <b>Respiratory Fluoroquinolone</b> (e.g., Levofloxacin)."
+      },
+      {
+        "q": "Define Hospital-Acquired Pneumonia (HAP) and state the key pathogens to cover empirically.",
+        "a": "Pneumonia occurring <b>&ge; 48 hours after hospital admission</b>.<br><br><b>Pathogens & Treatment:</b> Must cover <b>Pseudomonas aeruginosa</b> and <b>MRSA</b>. Empiric regimen includes an anti-pseudomonal beta-lactam (e.g., Piperacillin-tazobactam, Cefepime) + Vancomycin or Linezolid."
+      },
+      {
+        "q": "What diagnostic criteria define Acute Respiratory Distress Syndrome (ARDS)?",
+        "a": "1. <b>Acute onset</b> (within 1 week of a known clinical insult).<br>2. <b>Bilateral opacities</b> on chest imaging not fully explained by pleural effusions, collapse, or nodules.<br>3. <b>Respiratory failure</b> not fully explained by heart failure or fluid overload (objective exclusion via echocardiogram if no risk factor present).<br>4. <b>Severe hypoxemia:</b> \\(P_aO_2/F_iO_2\\) ratio <b>&le; 300 mmHg</b> with PEEP &ge; 5 \\(cmH_2O\\)."
+      },
+      {
+        "q": "What mechanical ventilation settings are proven to reduce mortality in patients with ARDS?",
+        "a": "• <b>Low tidal volume ventilation:</b> 6 mL/kg of predicted body weight (prevents barotrauma/volutrauma).<br>• <b>Permissive hypercapnia:</b> Allowing elevated \\(P_aCO_2\\) to maintain low tidal volumes, keeping plateau pressure < 30 \\(cmH_2O\\).<br>• <b>High PEEP:</b> To recruit alveoli and improve oxygenation."
+      },
+      {
+        "q": "Describe the clinical presentation, laboratory findings, and diagnostic biopsy finding of Sarcoidosis.",
+        "a": "• <b>Clinical:</b> Young African American female, dry cough, dyspnea, erythema nodosum, uveitis, lupus pernio.<br>• <b>Imaging:</b> Bilateral hilar lymphadenopathy on CXR.<br>• <b>Labs:</b> Elevated serum <b>ACE</b>, <b>hypercalcemia / hypercalciuria</b> (due to 1-alpha-hydroxylase activity in granulomas producing active Vitamin D).<br>• <b>Biopsy:</b> <b>Non-caseating granulomas</b>."
+      },
+      {
+        "q": "What are the spirometry and lung volume findings in restrictive lung disease?",
+        "a": "• <b>FEV1/FVC ratio:</b> Normal or increased (> 70–80%).<br>• <b>TLC (Total Lung Capacity):</b> Decreased (< 80% predicted).<br>• <b>RV (Residual Volume) & FVC:</b> Decreased."
+      },
+      {
+        "q": "Describe the imaging features and clinical course of Idiopathic Pulmonary Fibrosis (IPF).",
+        "a": "• <b>HRCT Chest:</b> Peripheral, subpleural reticular opacities with <b>honeycombing</b> and traction bronchiectasis.<br>• <b>Clinical:</b> Progressive exertional dyspnea and nonproductive cough in older adults; bibasilar inspiratory Velcro-like crackles; digital clubbing."
+      },
+      {
+        "q": "Contrast Obstructive Sleep Apnea (OSA) and Central Sleep Apnea (CSA) by pathogenesis and diagnosis.",
+        "a": "• <b>OSA:</b> Physical collapse of the upper airway (pharyngeal tissues) during sleep despite ongoing respiratory effort. Strongly associated with obesity.<br>• <b>CSA:</b> Temporary loss of respiratory drive from the brainstem (CNS dysfunction) with absent respiratory effort. Associated with heart failure (Cheyne-Stokes breathing), opioid use, and stroke.<br>• <b>Diagnosis:</b> Polysomnography showing Apnea-Hypopnea Index (AHI) &ge; 5/hour."
+      },
+      {
+        "q": "What is the initial diagnostic test for a patient suspected of having OSA?",
+        "a": "<b>Polysomnography</b> (in-lab sleep study) or home sleep apnea testing."
+      },
+      {
+        "q": "What is the management algorithm for a solitary pulmonary nodule (< 3 cm) detected on chest X-ray?",
+        "a": "1. Compare with <b>prior chest imaging</b> to assess stability.<br>2. If no prior imaging, perform a <b>high-resolution chest CT</b>.<br>3. Management is based on risk factors (size, edge characteristics, patient smoking history):<br>   • Low risk/small (< 6 mm): No follow-up or routine CT scan in 12 months.<br>   • Intermediate risk/growing: Biopsy (bronchoscopy or CT-guided FNA) or PET scan.<br>   • High risk (> 2 cm, spiculates, elderly smoker): Surgical resection."
+      },
+      {
+        "q": "How does a tension pneumothorax cause hemodynamic collapse?",
+        "a": "One-way valve allows air to enter the pleural space but not exit. The accumulating intrapleural pressure shifts the mediastinum to the contralateral side, compressing the <b>superior and inferior vena cava</b>, which reduces venous return (preload) to the heart and causes obstructive shock."
+      },
+      {
+        "q": "What is the immediate emergency management of a tension pneumothorax?",
+        "a": "<b>Needle decompression</b> with a large-bore needle in the 2nd intercostal space at the midclavicular line (or 4th/5th intercostal space at the anterior/midaxillary line), followed immediately by chest tube thoracostomy."
+      },
+      {
+        "q": "What is the clinical presentation and management of a small (< 2 cm) primary spontaneous pneumothorax?",
+        "a": "• <b>Presentation:</b> Sudden-onset pleuritic chest pain and dyspnea in a tall, thin male smoker.<br>• <b>Management:</b> Observation and <b>supplemental oxygen</b> (promotes nitrogen resorption from the pleural space)."
+      },
+      {
+        "q": "Define Bronchiectasis and its classic clinical presentation.",
+        "a": "Permanent, abnormal dilation and destruction of major bronchi due to chronic infection and inflammation.<br><br><b>Key Presentation:</b> Copious, purulent, foul-smelling sputum production; recurrent respiratory infections; hemoptysis.<br><b>Imaging:</b> High-resolution CT showing <b>tram-track sign</b> and <b>signet-ring sign</b>."
+      },
+      {
+        "q": "What is the genetic defect and clinical presentation of Kartagener Syndrome?",
+        "a": "Autosomal recessive mutation causing a defect in the <b>dynein arms of cilia</b> (primary ciliary dyskinesia).<br><br><b>Triad:</b><br>1. Situs inversus<br>2. Chronic sinusitis/nasal polyps<br>3. Bronchiectasis<br><i>Associated with:</i> Male infertility (immotile sperm)."
+      },
+      {
+        "q": "Which occupational lung disease is associated with shipyards, construction, and insulation work, and increases the risk of bronchogenic carcinoma and mesothelioma?",
+        "a": "<b>Asbestosis</b>.<br><br><b>Key Feature:</b> CXR shows pleural plaques (calcified plaques on the diaphragm) and interstitial fibrosis in the lower lobes. Asbestos bodies (ferruginous bodies) on histology. Bronchogenic carcinoma is more common than mesothelioma in these patients."
+      },
+      {
+        "q": "Which occupational lung disease is associated with sandblasting, mining, and stonecutting, and predisposes patients to tuberculosis?",
+        "a": "<b>Silicosis</b>.<br><br><b>Key Feature:</b> CXR shows nodular opacities in the upper lobes with <b>eggshell calcifications</b> of the hilar lymph nodes. Silica impairs macrophage phagolysosome formation, increasing susceptibility to <i>Mycobacterium tuberculosis</i>."
+      },
+      {
+        "q": "Which occupational lung disease is associated with aerospace, electronics, and manufacturing industries, and presents similarly to sarcoidosis with non-caseating granulomas?",
+        "a": "<b>Berylliosis</b>. Diagnosed with a positive beryllium lymphocyte proliferation test (BeLPT)."
+      },
+      {
+        "q": "Describe the clinical features and laboratory findings of Carbon Monoxide (CO) poisoning.",
+        "a": "• <b>Presentation:</b> Headache, dizziness, nausea, confusion, coma. Cherry-red skin color (rare, post-mortem).<br>• <b>Labs:</b> Normal \\(P_aO_2\\) on ABG, but severely reduced oxygen saturation on co-oximetry. Elevated <b>carboxyhemoglobin</b> level.<br>• <b>Treatment:</b> 100% normobaric oxygen (competes with CO binding to hemoglobin) or hyperbaric oxygen in severe cases."
+      },
+      {
+        "q": "What is Methemoglobinemia, and what is the treatment of choice?",
+        "a": "Oxidation of iron in hemoglobin from ferrous (\\(Fe^{2+}\\)) to ferric (\\(Fe^{3+}\\)) state, which cannot bind oxygen. Caused by local anesthetics (benzocaine), dapsone, and nitrites.<br><br><b>Presentation:</b> Cyanosis, chocolate-colored blood, normal \\(P_aO_2\\), but low oxygen saturation.<br><b>Treatment:</b> IV <b>Methylene Blue</b>."
+      },
+      {
+        "q": "What is the diagnostic gold standard for confirming Pulmonary Hypertension?",
+        "a": "<b>Right heart catheterization</b> demonstrating a mean pulmonary artery pressure (mPAP) <b>> 20 mmHg</b> at rest."
+      },
+      {
+        "q": "What ECG findings are associated with severe cor pulmonale / pulmonary hypertension?",
+        "a": "Right ventricular hypertrophy (large R wave in V1), right axis deviation, right atrial enlargement (P pulmonale: tall, peaked P waves in lead II), and RBBB."
+      },
+      {
+        "q": "What is the initial diagnostic test for a patient suspected of having a pleural effusion?",
+        "a": "<b>Chest X-ray</b> (upright PA and lateral). Pleural effusions present as blunting of the costophrenic angle."
+      },
+      {
+        "q": "What is the utility of lateral decubitus chest X-rays in the evaluation of a pleural effusion?",
+        "a": "Assesses if the effusion is <b>free-flowing or loculated</b>, and determines if there is sufficient fluid volume (&ge; 1 cm thick layer) to safely perform thoracentesis."
+      },
+      {
+        "q": "What is the definition of a massive hemoptysis, and what is the immediate management priority?",
+        "a": "• <b>Definition:</b> Expectoration of > 100–600 mL of blood in 24 hours.<br>• <b>Priority:</b> Airway protection. Place the patient in the <b>lateral decubitus position with the bleeding lung down</b> (prevents blood from aspirating into the healthy lung) and secure the airway via intubation, followed by bronchoscopy."
+      },
+      {
+        "q": "Explain the classic clinical presentation of a pulmonary embolism.",
+        "a": "Sudden-onset pleuritic chest pain, dyspnea, tachypnea, tachycardia, and hypoxemia. Hemoptysis and low-grade fever may also be present."
+      },
+      {
+        "q": "What ECG sign is highly specific (though insensitive) for right ventricular strain due to a massive PE?",
+        "a": "The <b>S1Q3T3 pattern</b> (deep S wave in lead I, Q wave in lead III, inverted T wave in lead III)."
+      },
+      {
+        "q": "What are the contraindications to systemic thrombolytic therapy in a patient with a massive PE?",
+        "a": "Active internal bleeding, recent intracranial or spinal surgery/trauma (within 2 months), history of hemorrhagic stroke, ischemic stroke within 3 months, or intracranial neoplasm."
+      },
+      {
+        "q": "What is the preferred treatment for a pregnant patient with a confirmed DVT or PE?",
+        "a": "<b>Low-Molecular-Weight Heparin (LMWH)</b> (e.g., enoxaparin). LMWH does not cross the placenta, unlike warfarin which is teratogenic."
+      },
+      {
+        "q": "What is the next best step for a patient with a PE who has an absolute contraindication to anticoagulation?",
+        "a": "Placement of an <b>Inferior Vena Cava (IVC) filter</b>."
+      },
+      {
+        "q": "What is the definition of Obesity Hypoventilation Syndrome (Pickwickian Syndrome)?",
+        "a": "• Daytime hypercapnia (\\(P_aCO_2\\) &ge; 45 mmHg) in an obese patient (BMI &ge; 30 \\(kg/m^2\\)) that is not explained by another pulmonary disease."
+      },
+      {
+        "q": "Which pneumonia pathogen is classically associated with hyponatremia, diarrhea, high fever, and neurologic symptoms, often spread via contaminated water systems?",
+        "a": "<b>Legionella pneumophila</b>.<br><br><b>Diagnosis:</b> Urine antigen test or PCR. Treatment: Macrolides (azithromycin) or Respiratory Fluoroquinolones."
+      },
+      {
+        "q": "Which pneumonia pathogen is classically associated with bullous myringitis, cold agglutinins, and interstitial infiltrates in young adults?",
+        "a": "<b>Mycoplasma pneumoniae</b> ('walking pneumonia'). Treatment: Macrolides or Doxycycline (beta-lactams are ineffective because Mycoplasma lacks a cell wall)."
+      },
+      {
+        "q": "Which pneumonia pathogen is classically associated with current-jelly sputum in alcoholic or diabetic patients?",
+        "a": "<b>Klebsiella pneumoniae</b>. Often causes cavitary lesions in the upper lobes."
+      },
+      {
+        "q": "What is the primary diagnostic test of choice to confirm suspected Active Tuberculosis?",
+        "a": "<b>Sputum acid-fast bacilli (AFB) smear and culture</b> (three morning sputum samples), along with nucleic acid amplification testing (NAAT)."
+      },
+      {
+        "q": "What are the target blood gas parameters in a patient with chronic respiratory acidosis (e.g., severe COPD)?",
+        "a": "Elevated \\(P_aCO_2\\) with a near-normal pH due to renal compensation (metabolic alkalosis with elevated bicarbonate, \\(HCO_3^-\\))."
+      }
+    ]
+  },
+  {
+    "section": "GI/Hepatology",
+    "topic": "GI/Hepatology",
+    "icon": "activity",
+    "cards": [
+      {
+        "q": "What is the Serum-Ascites Albumin Gradient (SAAG), and how do you interpret its values?",
+        "a": "SAAG = (Serum Albumin) &minus; (Ascitic Fluid Albumin).<br><br><b>Interpretation:</b><br>• <b>SAAG &ge; 1.1 g/dL:</b> Indicates portal hypertension (transudative process, e.g., Heart Failure, Cirrhosis, Budd-Chiari syndrome).<br>• <b>SAAG < 1.1 g/dL:</b> Indicates no portal hypertension (exudative process, e.g., Peritoneal carcinomatosis, TB, nephrotic syndrome, pancreatitis)."
+      },
+      {
+        "q": "What is the diagnostic criteria and treatment of choice for Spontaneous Bacterial Peritonitis (SBP)?",
+        "a": "• <b>Diagnosis:</b> Ascitic fluid analysis showing absolute <b>neutrophil (PMN) count &ge; 250 cells/mm\\(^3\\)</b>.<br>• <b>Treatment:</b> IV <b>Cefotaxime</b> or Ceftriaxone. Add IV albumin (reduces risk of hepatorenal syndrome).<br><i>Prophylaxis:</i> Oral fluoroquinolone (e.g., ciprofloxacin) or TMP-SMX for patients with prior SBP, or low protein ascites (< 1.5 g/dL) + renal/hepatic impairment."
+      },
+      {
+        "q": "Compare Crohn's Disease and Ulcerative Colitis (UC) by anatomical distribution and depth of inflammation.",
+        "a": "• <b>Crohn's Disease:</b> Transmural inflammation; can affect any part of the GI tract from mouth to anus (skip lesions). Terminal ileum is most commonly involved; rectal sparing.<br>• <b>Ulcerative Colitis:</b> Mucosal and submucosal inflammation only; limited to the colon and rectum, spreading continuously proximally from the rectum."
+      },
+      {
+        "q": "Compare Crohn's Disease and Ulcerative Colitis (UC) by histology and endoscopy findings.",
+        "a": "• <b>Crohn's Disease:</b> Non-caseating granulomas; cobblestone mucosa, aphthous ulcers, creeping fat, and strictures (string sign on barium swallow).<br>• <b>Ulcerative Colitis:</b> Crypt abscesses and architectural distortion; pseudopolyps, mucosal friability, and loss of haustra (lead-pipe colon)."
+      },
+      {
+        "q": "List the high-yield extraintestinal manifestations of Inflammatory Bowel Disease (IBD).",
+        "a": "• <b>Both:</b> Erythema nodosum, pyoderma gangrenosum, episcleritis, uveitis, aphthous stomatitis, seronegative arthritis.<br>• <b>Crohn's only:</b> Nephrolithiasis (oxalate stones due to fat malabsorption binding calcium), gallstones.<br>• <b>UC only:</b> Primary Sclerosing Cholangitis (PSC) &mdash; strongly associated."
+      },
+      {
+        "q": "Interpret the following Hepatitis B serology: HBsAg positive, anti-HBc IgM positive, HBeAg positive, anti-HBs negative.",
+        "a": "<b>Acute Hepatitis B infection (high infectivity).</b><br>• HBsAg = Active infection.<br>• anti-HBc IgM = Acute/recent infection.<br>• HBeAg = High viral replication/infectivity."
+      },
+      {
+        "q": "Interpret the following Hepatitis B serology: HBsAg negative, anti-HBc IgG positive, anti-HBs positive, anti-HBc IgM negative.",
+        "a": "<b>Recovery/Immunity from natural infection.</b><br>• anti-HBs positive = Immunity.<br>• anti-HBc IgG positive = Exposed to natural virus (not vaccinated)."
+      },
+      {
+        "q": "Interpret the following Hepatitis B serology: HBsAg negative, anti-HBc negative, anti-HBs positive.",
+        "a": "<b>Immunity from Hepatitis B vaccination.</b><br>• anti-HBs positive = Immunity.<br>• anti-HBc negative = Never exposed to the core antigen (not exposed to natural virus)."
+      },
+      {
+        "q": "Interpret the following Hepatitis B serology: HBsAg positive for > 6 months, anti-HBc IgG positive, anti-HBs negative.",
+        "a": "<b>Chronic Hepatitis B infection.</b> HBsAg positivity persisting for > 6 months defines chronic infection."
+      },
+      {
+        "q": "What is the definition of the Hepatitis B 'Window Period'?",
+        "a": "The time interval between the disappearance of HBsAg and the appearance of anti-HBs. During this time, the only diagnostic marker of acute infection may be <b>anti-HBc IgM</b>."
+      },
+      {
+        "q": "What diagnostic criteria define Acute Pancreatitis?",
+        "a": "Requires &ge; 2 of the following:<br>1. <b>Acute onset of severe, epigastric pain</b> radiating to the back.<br>2. <b>Lipase or Amylase levels &ge; 3 times the upper limit of normal</b>.<br>3. Characteristic findings on <b>abdominal imaging</b> (CT abdomen with contrast or MRI)."
+      },
+      {
+        "q": "What is the most common cause of acute pancreatitis, and what is the initial imaging test of choice?",
+        "a": "• <b>Most common cause:</b> Gallstones (followed closely by alcohol).<br>• <b>Imaging of choice:</b> <b>Right upper quadrant ultrasound</b> (to evaluate for gallstones/biliary tree dilation). CT abdomen is not required for diagnosis if clinical and lab criteria are met."
+      },
+      {
+        "q": "What is the cornerstone of initial medical management for acute pancreatitis?",
+        "a": "<b>Aggressive intravenous fluid resuscitation</b> (preferably with Lactated Ringer's) to prevent pancreatic necrosis, along with bowel rest and pain control."
+      },
+      {
+        "q": "What is a pancreatic pseudocyst, and what is the management?",
+        "a": "A fibrous wall (lacking epithelial lining) surrounding fluid, enzymes, and debris, occurring 4+ weeks after pancreatitis.<br><br><b>Management:</b> Observation if asymptomatic and stable. Drainage (endoscopic or surgical) is indicated if symptomatic, infected, or expanding."
+      },
+      {
+        "q": "Describe the screening and surveillance guidelines for Barrett's Esophagus.",
+        "a": "• <b>Screening:</b> Screen patients with chronic GERD (> 5 years) + &ge; 2 risk factors (male, age > 50, white, obesity, smoking) using <b>endoscopy with biopsy</b>.<br>• <b>Surveillance:</b><br>  &bull; No dysplasia: Endoscopy in 3–5 years.<br>  &bull; Low-grade dysplasia: Endoscopic ablation or surveillance in 6–12 months.<br>  &bull; High-grade dysplasia: Endoscopic mucosal resection or ablation."
+      },
+      {
+        "q": "Describe the clinical presentation and diagnostic workup for Achalasia.",
+        "a": "• <b>Presentation:</b> Progressive dysphagia to <b>both solids and liquids</b>, regurgitation of undigested food, and weight loss.<br>• <b>Barium Swallow:</b> 'Bird's beak' deformity (tapering of the distal esophagus).<br>• <b>Gold Standard:</b> <b>Esophageal Manometry</b> showing incomplete relaxation of the lower esophageal sphincter (LES) and aperistalsis."
+      },
+      {
+        "q": "What is Diffuse Esophageal Spasm (DES), and what are its diagnostic features?",
+        "a": "Impaired inhibitory innervation leading to uncoordinated, simultaneous contractions of the esophageal body.<br><br><b>Presentation:</b> Chest pain mimicking angina, dysphagia to solids/liquids.<br><b>Barium Swallow:</b> 'Corkscrew' or 'rosary bead' esophagus.<br><b>Manometry:</b> High-amplitude, simultaneous non-peristaltic contractions."
+      },
+      {
+        "q": "Compare the clinical presentation of Gastric vs. Duodenal ulcers.",
+        "a": "• <b>Gastric Ulcers:</b> Pain is <b>worse with meals</b> (food triggers acid release &rarr; irritation), leading to weight loss.<br>• <b>Duodenal Ulcers:</b> Pain is <b>relieved by meals</b> (food triggers bicarbonate-rich alkaline secretion in duodenum) and recurs 2–5 hours later; pain awake at night is common; weight gain."
+      },
+      {
+        "q": "What is the preferred empiric triple and quadruple therapy for H. pylori eradication?",
+        "a": "• <b>Triple Therapy</b> (only if local clarithromycin resistance is < 15%): PPI + Clarithromycin + Amoxicillin (or Metronidazole if penicillin-allergic).<br>• <b>Quadruple Therapy</b> (preferred/first-line due to resistance): PPI + Bismuth Subsalicylate + Metronidazole + Tetracycline."
+      },
+      {
+        "q": "What is the screening and confirmatory test of choice for Celiac Disease?",
+        "a": "• <b>Screening:</b> Serum <b>IgA anti-tissue transglutaminase (anti-tTG)</b> antibody + total serum IgA (to rule out IgA deficiency).<br>• <b>Confirmatory:</b> <b>Duodenal biopsy</b> showing villous atrophy, crypt hyperplasia, and intraepithelial lymphocytosis."
+      },
+      {
+        "q": "What is the pathogenesis and treatment of choice for Hepatic Encephalopathy?",
+        "a": "Accumulation of neurotoxins (primarily <b>ammonia</b>, \\(NH_3\\)) due to hepatic dysfunction and portosystemic shunting.<br><br><b>Treatment:</b> First-line is <b>Lactulose</b> (metabolized by gut bacteria to lactic acid, trapping ammonia as non-absorbable ammonium, \\(NH_4^+\\)), and <b>Rifaximin</b> (non-absorbable antibiotic that eliminates ammonia-producing gut bacteria)."
+      },
+      {
+        "q": "What is the first-line medication for the prevention (primary prophylaxis) of variceal bleeding in a patient with cirrhosis and medium/large esophageal varices?",
+        "a": "Non-selective beta-blockers (e.g., <b>Nadolol</b> or <b>Propranolol</b>) to reduce portal pressure by causing splanchnic vasoconstriction."
+      },
+      {
+        "q": "What is the immediate management for a patient with acute variceal bleeding?",
+        "a": "1. Hemodynamic stabilization (target hemoglobin 7–8 g/dL).<br>2. IV <b>Octreotide</b> (somatostatin analog that decreases splanchnic blood flow).<br>3. Prophylactic antibiotics (IV <b>Ceftriaxone</b> for &le; 7 days, prevents SBP/infections).<br>4. Urgent <b>esophagogastroduodenoscopy (EGD)</b> for endoscopic band ligation."
+      },
+      {
+        "q": "Compare Primary Biliary Cholangitis (PBC) and Primary Sclerosing Cholangitis (PSC) by site of damage, antibody association, and imaging findings.",
+        "a": "• <b>PBC:</b> Autoimmune destruction of intrahepatic bile ducts. Associated with <b>Antimitochondrial Antibodies (AMA)</b>. Normal biliary tree on imaging.<br>• <b>PSC:</b> Inflammation/fibrosis of intra- and extrahepatic bile ducts. Associated with <b>p-ANCA</b> and strongly linked to <b>Ulcerative Colitis</b>. MRCP/ERCP shows 'beaded' appearance (strictures and dilations)."
+      },
+      {
+        "q": "What are the classic manifestations, laboratory findings, and treatment of Hereditary Hemochromatosis?",
+        "a": "• <b>Manifestations:</b> Hyperpigmentation ('bronze diabetes'), hepatomegaly/cirrhosis, restrictive cardiomyopathy/arrhythmias, pseudogout, hypogonadism.<br>• <b>Labs:</b> Elevated serum iron, elevated ferritin, <b>transferrin saturation > 45%</b> (often > 50-60%). HFE gene mutation (C282Y).<br>• <b>Treatment:</b> Therapeutic <b>phlebotomy</b>."
+      },
+      {
+        "q": "What is the diagnostic test of choice and management for acute Diverticulitis?",
+        "a": "• <b>Diagnostic Test:</b> <b>CT Abdomen/Pelvis with contrast</b> (shows colonic wall thickening, fat stranding).<br>• <b>Treatment:</b> Bowel rest, oral/IV antibiotics (ciprofloxacin + metronidazole, or amoxicillin-clavulanate).<br><i>Contraindicated:</i> Avoid colonoscopy or barium enema during the acute phase due to high risk of bowel perforation."
+      },
+      {
+        "q": "What vascular GI condition is classically associated with calcific Aortic Stenosis and End-Stage Renal Disease (ESRD)?",
+        "a": "<b>Angiodysplasia</b> (vascular ectasia). Associated with Heyde's Syndrome (destruction of Von Willebrand factor multimers across the stenotic aortic valve, leading to bleeding from GI angiodysplasias)."
+      },
+      {
+        "q": "Describe the clinical features and diagnostic workup of Gastroparesis.",
+        "a": "Delayed gastric emptying in the absence of mechanical obstruction. Associated with diabetes.<br><br><b>Presentation:</b> Postprandial fullness, early satiety, nausea, vomiting of undigested food.<br><b>Diagnosis:</b> Gastric emptying scintigraphy showing retention of > 10% of solid meal at 4 hours.<br><b>Treatment:</b> Metoclopramide (prokinetic, dopamine antagonist) or erythromycin."
+      },
+      {
+        "q": "What is the autoantibody association in Autoimmune Hepatitis?",
+        "a": "• <b>Type 1:</b> <b>Anti-Smooth Muscle Antibodies (ASMA)</b> and ANA. Most common in adults.<br>• <b>Type 2:</b> Anti-liver-kidney microsomal-1 (anti-LKM-1) antibodies. More common in children."
+      },
+      {
+        "q": "What is Zollinger-Ellison Syndrome (ZES), and how is it diagnosed?",
+        "a": "A gastrin-producing tumor (gastrinoma), often located in the duodenum or pancreas, causing recurrent refractory peptic ulcers.<br><br><b>Diagnosis:</b> Elevated fasting serum gastrin (> 1000 pg/mL) + positive <b>Secretin stimulation test</b> (secretin paradoxically increases gastrin levels in gastrinomas)."
+      },
+      {
+        "q": "Contrast Acute Mesenteric Ischemia vs. Ischemic Colitis by clinical presentation and risk factors.",
+        "a": "• <b>Acute Mesenteric Ischemia:</b> Sudden occlusion of the SMA (often embolic from AF). Presents as severe <b>abdominal pain out of proportion to physical exam</b>. Acidosis and elevated lactate. Emergency CT angiogram.<br>• <b>Ischemic Colitis:</b> Hypoperfusion of 'watershed' areas of the colon (e.g., splenic flexure, rectosigmoid junction) due to transient hypotension. Presents as crampy left-sided abdominal pain followed by hematochezia/bloody diarrhea. Diagnose via colonoscopy."
+      },
+      {
+        "q": "What is the treatment of choice for Clostridioides difficile infection (CDI)?",
+        "a": "Oral <b>Vancomycin</b> or oral <b>Fidaxomicin</b>.<br><i>Note:</i> IV metronidazole is only added in cases of fulminant C. diff (characterized by hypotension, shock, ileus, or megacolon)."
+      },
+      {
+        "q": "Define Hepatorenal Syndrome (HRS) and its clinical diagnostic criterion.",
+        "a": "Acute kidney injury in a patient with advanced cirrhosis and ascites, caused by renal vasoconstriction due to splanchnic vasodilation.<br><br><b>Diagnosis:</b> Serum creatinine increase &ge; 0.3 mg/dL within 48 hours or &ge; 50% increase from baseline, that <b>does not improve after 48 hours of fluid challenge (albumin infusion)</b> and withdrawal of diuretics."
+      },
+      {
+        "q": "What is the medical management for Hepatorenal Syndrome (HRS)?",
+        "a": "Combination of vasoconstrictors (<b>Terlipressin</b> or Midodrine + Octreotide) + IV <b>Albumin</b>."
+      },
+      {
+        "q": "What diagnostic findings characterize Wilson's Disease?",
+        "a": "Defect in biliary copper excretion (ATP7B mutation) &rarr; copper accumulation in liver, brain, cornea.<br><br><b>Diagnosis:</b> <b>Low serum ceruloplasmin</b>, increased 24h urinary copper excretion, Kayser-Fleischer rings on slit-lamp exam.<br><b>Treatment:</b> Chelators (Penicillamine, Trientine) or zinc."
+      },
+      {
+        "q": "Describe the clinical features and risk factors for Budd-Chiari Syndrome.",
+        "a": "Thrombosis/obstruction of the hepatic veins leading to hepatic congestion.<br><br><b>Presentation:</b> Triad of hepatomegaly, ascites, and right upper quadrant abdominal pain.<br><b>Risk factors:</b> Polycythemia vera (JAK2 mutation), hypercoagulable states, pregnancy, HCC."
+      },
+      {
+        "q": "What is the next best step in management for a patient with suspected Achalasia after a barium swallow is performed?",
+        "a": "<b>Esophagogastroduodenoscopy (EGD)</b> (endoscopy) to rule out pseudoachalasia (esophageal cancer at the GE junction mimicking achalasia) before performing manometry."
+      },
+      {
+        "q": "What is the diagnostic evaluation of choice for a patient presenting with new-onset dyspepsia who is &ge; 60 years old?",
+        "a": "Upper endoscopy (EGD) to evaluate for gastric cancer. In patients < 60 with no alarm features (weight loss, dysphagia, anemia), use a 'test-and-treat' strategy for H. pylori."
+      },
+      {
+        "q": "Name the key laboratory findings in Hepatic Osteodystrophy / Primary Biliary Cholangitis.",
+        "a": "Marked elevation of <b>Alkaline Phosphatase (ALP)</b> and GGT, with normal or mildly elevated AST/ALT. Hyperbilirubinemia occurs in late-stage disease."
+      },
+      {
+        "q": "What is the clinical presentation and management of toxic megacolon?",
+        "a": "Life-threatening complication of UC or C. diff infection.<br><br><b>Presentation:</b> Severe bloody diarrhea, systemic toxicity (fever, tachycardia, leukocytosis, altered mental status), and colonic dilation > 6 cm on abdominal X-ray.<br><b>Treatment:</b> IV fluids, IV steroids, bowel decompression, broad-spectrum antibiotics. Emergency colectomy if no improvement in 24–48 hours."
+      },
+      {
+        "q": "Define Courvoisier's Law / Sign.",
+        "a": "A <b>palpable, non-tender, distended gallbladder</b> in the presence of mild jaundice. Suggests malignant obstruction of the common bile duct (e.g., pancreatic adenocarcinoma) rather than gallstones."
+      },
+      {
+        "q": "What is the classic presentation of acute ascending Cholangitis?",
+        "a": "• <b>Charcot's Triad:</b> Fever, RUQ pain, jaundice.<br>• <b>Reynold's Pentad:</b> Charcot's triad + Hypotension/shock + altered mental status (indicates severe sepsis/pus in the biliary tree)."
+      },
+      {
+        "q": "What is the immediate management for acute ascending cholangitis?",
+        "a": "IV antibiotics (e.g., piperacillin-tazobactam) + urgent biliary decompression via <b>Endoscopic Retrograde Cholangiopancreatography (ERCP)</b>."
+      },
+      {
+        "q": "Describe the clinical significance of a positive antimitochondrial antibody (AMA).",
+        "a": "Highly specific (95%) for <b>Primary Biliary Cholangitis (PBC)</b>. PBC is treated with <b>Ursodeoxycholic Acid (UDCA)</b> to slow disease progression."
+      },
+      {
+        "q": "What is the association between Primary Sclerosing Cholangitis (PSC) and Cholangiocarcinoma?",
+        "a": "Patients with PSC have a significantly increased lifetime risk of developing <b>cholangiocarcinoma</b> (bile duct cancer), requiring periodic screening with CA 19-9 and imaging."
+      },
+      {
+        "q": "What is the screening recommendation for colorectal cancer in patients with a history of Ulcerative Colitis?",
+        "a": "Screening colonoscopy with surveillance biopsies every 1–2 years, beginning <b>8 years after the initial diagnosis</b> of UC (covers the entire colon except in patients with isolated proctitis)."
+      },
+      {
+        "q": "What is the presentation of acute mesenteric ischemia on CT angiography?",
+        "a": "Focal segment of bowel wall thickening, lack of bowel wall enhancement, pneumatosis intestinalis (air in the bowel wall), or portal venous gas (indicates bowel infarction)."
+      },
+      {
+        "q": "What is the diagnosis and diagnostic test of choice for suspected Lactose Intolerance?",
+        "a": "Malabsorption of lactose due to lactase deficiency.<br><br><b>Diagnostic test:</b> <b>Hydrogen Breath Test</b> (demonstrates rise in breath hydrogen after oral lactose ingestion due to bacterial fermentation of unabsorbed lactose in the colon)."
+      },
+      {
+        "q": "Explain the difference between unconjugated (indirect) and conjugated (direct) hyperbilirubinemia.",
+        "a": "• <b>Unconjugated:</b> Excess production (hemolysis) or impaired conjugation (Gilbert's, Crigler-Najjar). Biliary excretion is normal; urine is normal color (bilirubin is bound to albumin and not filtered).<br>• <b>Conjugated:</b> Impaired biliary excretion (biliary obstruction, Dubin-Johnson, Rotor, hepatitis). Conjugated bilirubin is water-soluble and filtered by kidneys &rarr; <b>dark, tea-colored urine</b>."
+      },
+      {
+        "q": "What is the diagnostic marker of choice for Gilbert's Syndrome, and what is its prognosis?",
+        "a": "Mild, intermittent, unconjugated hyperbilirubinemia triggered by stress, fasting, infection, or exercise, with completely normal liver enzymes and no hemolysis.<br><br><b>Prognosis:</b> Benign autosomal recessive condition caused by reduced activity of UGT1A1. No treatment required."
+      }
+    ]
+  },
+  {
+    "section": "Nephrology",
+    "topic": "Nephrology",
+    "icon": "filter",
+    "cards": [
+      {
+        "q": "What is Winter's Formula, and what does it evaluate?",
+        "a": "Winter's Formula: <b>\\(P_aCO_2 = (1.5 \\times [HCO_3^-]) + 8 \\pm 2\\)</b>.<br><br><b>Evaluation:</b> Evaluates the adequacy of respiratory compensation in a patient with <b>metabolic acidosis</b>. If the measured \\(P_aCO_2\\) is higher than the calculated range, there is a co-existing respiratory acidosis. If it is lower, there is a co-existing respiratory alkalosis."
+      },
+      {
+        "q": "What is the formula for the Serum Anion Gap, and what is a normal value?",
+        "a": "Anion Gap = <b>\\([Na^+] - ([Cl^-] + [HCO_3^-])\\)</b>.<br>• <b>Normal Value:</b> 10–12 mEq/L.<br><i>Note:</i> A high anion gap indicates accumulation of unmeasured organic anions (e.g., lactate, ketones, toxins)."
+      },
+      {
+        "q": "State the mnemonic and causes of High Anion Gap Metabolic Acidosis (HAGMA).",
+        "a": "Mnemonic: <b>MUDPILES</b> (or GOLDMARK).<br>• <b>M:</b> Methanol<br>• <b>U:</b> Uremia (renal failure)<br>• <b>D:</b> Diabetic (or starvation/alcoholic) Ketoacidosis<br>• <b>P:</b> Propylene glycol / Paracetamol<br>• <b>I:</b> Iron / Isoniazid<br>• <b>L:</b> Lactic Acidosis<br>• <b>E:</b> Ethylene glycol (antifreeze)<br>• <b>S:</b> Salicylates (aspirin toxicity &mdash; causing mixed respiratory alkalosis and metabolic acidosis)."
+      },
+      {
+        "q": "What is the calculated serum osmolality formula, and how do you calculate the Osmolar Gap?",
+        "a": "• Calculated Osmolality = <b>\\(2 \\times [Na^+] + \\frac{[Glucose]}{18} + \\frac{[BUN]}{2.8}\\)</b>.<br>• <b>Osmolar Gap</b> = Measured Osmolality (via freezing point depression) &minus; Calculated Osmolality.<br>• <b>Significance:</b> A gap <b>> 10 mOsm/kg</b> suggests the presence of unmeasured osmoles (e.g., methanol, ethylene glycol, isopropyl alcohol, ethanol)."
+      },
+      {
+        "q": "What is the Delta-Delta (\\(\\Delta-\\Delta\\)) ratio, and how do you interpret it in mixed acid-base disorders?",
+        "a": "Delta-Delta = <b>\\(\\frac{\\Delta AG}{\\Delta [HCO_3^-]} = \\frac{AG - 12}{24 - [HCO_3^-]}\\)</b>.<br><br><b>Interpretation in HAGMA:</b><br>• <b>Ratio < 1:</b> Mixed HAGMA and normal anion gap (non-gap) metabolic acidosis (NAGMA).<br>• <b>Ratio 1–2:</b> Pure HAGMA.<br>• <b>Ratio > 2:</b> Mixed HAGMA and metabolic alkalosis (e.g., due to concurrent vomiting or diuretic use)."
+      },
+      {
+        "q": "Compare Prerenal Acute Kidney Injury (AKI) and Intrinsic AKI (Acute Tubular Necrosis, ATN) by FENa, Urine Sodium, and BUN/Cr ratio.",
+        "a": "• <b>Prerenal AKI (volume depletion):</b> FENa <b>< 1%</b>, Urine Sodium <b>< 20 mEq/L</b>, BUN/Cr ratio <b>> 20</b> (kidney avidly reabsorbs water/urea).<br>• <b>Intrinsic AKI (ATN):</b> FENa <b>> 2%</b>, Urine Sodium <b>> 40 mEq/L</b>, BUN/Cr ratio <b>10–15</b> (damaged tubules cannot reabsorb sodium/urea)."
+      },
+      {
+        "q": "What urine microscopy findings are characteristic of Acute Tubular Necrosis (ATN) vs. Acute Interstitial Nephritis (AIN)?",
+        "a": "• <b>ATN:</b> <b>Muddy brown granular casts</b> (sloughed tubular epithelial cells).<br>• <b>AIN:</b> <b>WBC casts and eosinophils</b> (allergic/inflammatory reaction)."
+      },
+      {
+        "q": "What is the classic clinical triad of Acute Interstitial Nephritis (AIN), and what are the most common offending drugs?",
+        "a": "• <b>Triad (present in < 15% of patients):</b> Fever, maculopapular rash, and peripheral eosinophilia + sterile pyuria/eosinophiluria.<br>• <b>Offending Drugs:</b> <b>P</b>enicillins/cephalosporins, <b>P</b>PIs (omeprazole), <b>N</b>SAIDs, <b>S</b>ulfonamides, <b>R</b>ifampin (Mnemonic: 5 Ps &mdash; Pee, Penicillins, PPIs, Pain-killers, Rifam-Pin)."
+      },
+      {
+        "q": "How is Contrast-Induced Nephropathy prevented, and what is its typical clinical course?",
+        "a": "• <b>Prevention:</b> <b>Intravenous hydration with normal saline</b> (or sodium bicarbonate) before and after the administration of contrast media. Avoid volume depletion.<br>• <b>Course:</b> Transient rise in creatinine peaking 3–5 days post-contrast, usually resolving within 7–10 days. Characterized by low FENa despite intrinsic injury (due to afferent arteriolar vasoconstriction)."
+      },
+      {
+        "q": "What are the core diagnostic features of Nephrotic Syndrome?",
+        "a": "1. <b>Nephrotic-range proteinuria</b> (> 3.5 g/24 hours).<br>2. <b>Hypoalbuminemia</b> (< 3.0 g/dL).<br>3. <b>Generalized edema</b>.<br>4. <b>Hyperlipidemia and lipiduria</b> (fatty casts, 'maltese crosses' on microscopy).<br><i>Complication:</i> Hypercoagulability due to loss of Antithrombin III in urine."
+      },
+      {
+        "q": "Describe the clinical associations, biopsy findings, and treatment of Minimal Change Disease.",
+        "a": "• <b>Associations:</b> Most common cause of nephrotic syndrome in children; associated with Hodgkin Lymphoma.<br>• <b>Biopsy:</b> Light microscopy is normal; electron microscopy shows <b>effacement of podocyte foot processes</b>.<br>• <b>Treatment:</b> Highly responsive to <b>Corticosteroids</b> (prednisone)."
+      },
+      {
+        "q": "Identify the primary patient populations and etiologies associated with Focal Segmental Glomerulosclerosis (FSGS).",
+        "a": "Most common cause of nephrotic syndrome in African Americans and adults.<br><br><b>Etiologies:</b> Idiopathic, <b>HIV infection</b>, <b>heroin abuse</b>, obesity, and interferon therapy."
+      },
+      {
+        "q": "What autoantibody is associated with primary Membranous Nephropathy, and what secondary causes must be screened?",
+        "a": "• <b>Autoantibody:</b> <b>Anti-phospholipase A2 receptor (PLA2R)</b> antibody (present in 70-80% of primary cases).<br>• <b>Secondary Causes:</b> Solid tumor malignancies (lung, colon, breast), <b>Hepatitis B</b>, Hepatitis C, NSAID use, and SLE."
+      },
+      {
+        "q": "What is the earliest clinical marker of Diabetic Nephropathy, and what histological finding is pathognomonic?",
+        "a": "• <b>Earliest Marker:</b> <b>Microalbuminuria</b> (30–300 mg/day). Managed by initiating an ACE inhibitor or ARB.<br>• <b>Histology:</b> <b>Kimmelstiel-Wilson nodules</b> (nodular mesangial expansion/glomerulosclerosis)."
+      },
+      {
+        "q": "Contrast Post-Streptococcal Glomerulonephritis (PSGN) and IgA Nephropathy by timing relative to infection and serum complement levels.",
+        "a": "• <b>IgA Nephropathy (Berger's):</b> Hematuria occurs <b>synpharyngitically</b> (1–2 days after upper respiratory infection). Serum complement (C3/C4) levels are <b>normal</b>.<br>• <b>PSGN:</b> Hematuria occurs <b>post-pharyngitic</b> (1–3 weeks) or post-impetigo (3–6 weeks). Serum complement (C3) levels are <b>persistently low</b> for 6–8 weeks."
+      },
+      {
+        "q": "What is the genetic defect and clinical triad of Alport Syndrome?",
+        "a": "Mutation in the <b>COL4A5</b> gene encoding Type IV Collagen, causing splitting and thinning of the glomerular basement membrane ('basket-weave' appearance).<br><br><b>Clinical Triad:</b><br>1. Hereditary nephritis (hematuria/proteinuria)<br>2. Sensorineural deafness<br>3. Ocular abnormalities (anterior lenticonus, cataracts)."
+      },
+      {
+        "q": "Describe the pathophysiology and diagnostic findings of Goodpasture's Disease.",
+        "a": "Autoantibodies directed against the <b>alpha-3 chain of Type IV collagen</b> in glomerular and alveolar basement membranes.<br><br><b>Presentation:</b> Hemoptysis (pulmonary hemorrhage) + Hematuria (RPGN).<br><b>Renal Biopsy:</b> Crescentic GN with <b>linear immunofluorescence</b> showing IgG deposition along the GBM."
+      },
+      {
+        "q": "What renal biopsy class of Lupus Nephritis requires aggressive immunosuppression, and what is the treatment regimen?",
+        "a": "• <b>Class III/IV:</b> Focal / Diffuse proliferative lupus nephritis (characterized by subendothelial deposits and 'wire-looping' on light microscopy).<br>• <b>Treatment:</b> High-dose IV corticosteroids + <b>Mycophenolate Mofetil</b> or <b>Cyclophosphamide</b>."
+      },
+      {
+        "q": "Define the diagnostic criteria for SIADH (Syndrome of Inappropriate ADH).",
+        "a": "1. Euvolemic hyponatremia.<br>2. <b>Hypo-osmolality</b> of serum (< 275 mOsm/kg).<br>3. <b>Inappropriate urine concentration</b> (Urine osmolality > 100 mOsm/kg).<br>4. High urine sodium concentration (Urine sodium > 40 mEq/L).<br>5. Normal renal, adrenal, and thyroid function."
+      },
+      {
+        "q": "What is the management of SIADH based on severity of symptoms?",
+        "a": "• <b>Mild/Moderate:</b> Fluid restriction, oral salt tablets, loop diuretics, or demeclocycline (blocks ADH action in renal tubules).<br>• <b>Severe (seizures, coma):</b> Hypertonic (3%) saline + limit correction rate to prevent osmotic demyelination syndrome."
+      },
+      {
+        "q": "Explain the correction limit for hyponatremia and the consequence of rapid correction.",
+        "a": "• <b>Limit:</b> Correct sodium at a rate of <b>< 8–12 mEq/L in 24 hours</b> (e.g., 0.5 mEq/L per hour).<br>• <b>Consequence:</b> Rapid correction of chronic hyponatremia causes <b>Osmotic Demyelination Syndrome</b> (Central Pontine Myelinolysis), presenting with dysarthria, dysphagia, paraparesis, and locked-in syndrome.<br><i>Mnemonic:</i> From low to high, your pons will die! (From high to low, your brain will blow &mdash; refers to cerebral edema in rapid hypernatremia correction)."
+      },
+      {
+        "q": "What is the progression of ECG changes seen in Hyperkalemia?",
+        "a": "1. <b>Peaked T waves</b> (earliest change).<br>2. Prolonged PR interval, flat/absent P waves.<br>3. Widening of the QRS complex.<br>4. <b>Sine wave</b> pattern (fusion of QRS and T wave).<br>5. Ventricular fibrillation / Asystole."
+      },
+      {
+        "q": "What is the stepwise emergency treatment of severe Hyperkalemia (&ge; 6.5 mEq/L or ECG changes)?",
+        "a": "1. <b>Calcium Gluconate</b> (or Calcium Chloride): IV infusion to stabilize the cardiac membrane (does not lower potassium).<br>2. <b>Insulin + Glucose</b> (IV) and/or inhaled Albuterol: Shifts potassium intracellularly.<br>3. <b>Sodium Bicarbonate:</b> Shifts potassium intracellularly (specifically in metabolic acidosis).<br>4. <b>Furosemide</b> or <b>Patiromer/SPS</b>: Promotes potassium elimination via urine or GI tract.<br>5. <b>Hemodialysis:</b> Definitive treatment for refractory cases."
+      },
+      {
+        "q": "What are the ECG findings of Hypokalemia?",
+        "a": "Flattened T waves, ST depression, prolonged QT interval, and the presence of <b>U waves</b> (a wave following the T wave)."
+      },
+      {
+        "q": "Why is hypokalemia sometimes refractory to potassium replacement, and how is this managed?",
+        "a": "Co-existing <b>hypomagnesemia</b> promotes renal potassium wasting by removing inhibition of ROMK channels in the collecting duct. <b>Management:</b> You must check and correct magnesium first (replete magnesium) before potassium levels can normalize."
+      },
+      {
+        "q": "What is the pathophysiology of Renal Osteodystrophy in chronic kidney disease?",
+        "a": "1. Decreased GFR leads to <b>phosphate retention</b>.<br>2. Hyperphosphatemia binds free calcium, causing <b>hypocalcemia</b>.<br>3. Damaged kidneys cannot convert Vitamin D to its active form (1,25-\\(OH)_2\\) Vitamin D, worsening hypocalcemia.<br>4. Hypocalcemia and hyperphosphatemia stimulate parathyroid glands &rarr; <b>Secondary Hyperparathyroidism</b> &rarr; high bone turnover, osteitis fibrosa cystica."
+      },
+      {
+        "q": "What is the target hemoglobin for patients with anemia of CKD on Erythropoiesis-Stimulating Agents (ESAs), and why?",
+        "a": "• <b>Target:</b> 10–11 g/dL.<br>• <b>Why:</b> Normalizing hemoglobin (> 11.5–12 g/dL) with ESAs (e.g., epoetin alfa) increases the risk of stroke, cardiovascular events, and thromboembolism."
+      },
+      {
+        "q": "Compare the 4 major types of Nephrolithiasis (kidney stones) by urine pH, shape, and radiopacity.",
+        "a": "• <b>Calcium Oxalate:</b> Acidic/normal pH; <b>envelope/dumble-shaped</b>; radiopaque (most common).<br>• <b>Struvite (MAP):</b> Alkaline pH (> 7.2); <b>coffin-lid shape</b>/staghorn calculi; radiopaque.<br>• <b>Uric Acid:</b> Acidic pH (< 5.5); <b>rhomboid/rosette shape</b>; <b>radiolucent</b> (invisible on plain X-ray).<br>• <b>Cystine:</b> Acidic pH; <b>hexagonal shape</b>; radiopaque/faint."
+      },
+      {
+        "q": "What organism is associated with Struvite (staghorn) calculi, and what is its mechanism?",
+        "a": "Urease-producing bacteria (e.g., <b>Proteus mirabilis</b>, <i>Klebsiella</i>). Urease hydrolyzes urea to ammonia and CO\\(_2\\), alkalinizing the urine (pH > 7.2), which precipitates magnesium ammonium phosphate."
+      },
+      {
+        "q": "What is the initial treatment of choice for Uric Acid stones?",
+        "a": "<b>Urine alkalinization</b> with oral <b>Potassium Citrate</b> (increases urine pH to &ge; 6.5, which solubilizes uric acid) + high hydration."
+      },
+      {
+        "q": "How is Cystinuria diagnosed and managed?",
+        "a": "Defect in the PCT amino acid transporter for COLA (Cystine, Ornithine, Lysine, Arginine).<br><br><b>Diagnosis:</b> Hexagonal crystals in acidic urine; positive <b>sodium nitroprusside cyanide test</b> (urine turns purple).<br><b>Management:</b> High hydration, urine alkalinization, chelating agents (penicillamine)."
+      },
+      {
+        "q": "Contrast the three types of Renal Tubular Acidosis (RTA 1, 2, and 4) by urine pH, serum potassium, and defect.",
+        "a": "• <b>Type 1 (Distal):</b> Urine pH <b>> 5.5</b>; Hypokalemia; Defect in distal \\(H^+\\) secretion. Associated with nephrolithiasis.<br>• <b>Type 2 (Proximal):</b> Urine pH <b>< 5.5</b> (eventually); Hypokalemia; Defect in proximal \\(HCO_3^-\\) reabsorption. Associated with Fanconi syndrome.<br>• <b>Type 4 (Hyperkalemic):</b> Urine pH <b>< 5.5</b>; <b>Hyperkalemia</b>; Aldosterone deficiency or resistance. Seen in diabetic nephropathy (hyporeninemic hypoaldosteronism)."
+      },
+      {
+        "q": "What is the etiology and treatment of Type 4 RTA?",
+        "a": "• <b>Etiology:</b> Hyporeninemic hypoaldosteronism (diabetic nephropathy, adrenal insufficiency, drugs like ACEi, spironolactone).<br>• <b>Treatment:</b> Dietary potassium restriction, loop diuretics, and Fludrocortisone (aldosterone analog, for primary deficiency)."
+      },
+      {
+        "q": "What is the next best step for a patient presenting with suspected nephrolithiasis?",
+        "a": "<b>Non-contrast helical CT scan</b> of the abdomen and pelvis (gold standard, detects all stone types)."
+      },
+      {
+        "q": "What is the conservative management strategy for a ureteral stone < 5–10 mm without complications?",
+        "a": "High fluid intake, pain control (NSAIDs preferred), and <b>Tamsulosin</b> (alpha-1 blocker to relax distal ureter/facilitate stone passage)."
+      },
+      {
+        "q": "Under what conditions is urgent urological intervention (decompression) indicated for a kidney stone?",
+        "a": "Ureteral obstruction with <b>concurrent UTI/pyelonephritis (fever)</b>, acute kidney injury/anuria, or intractable pain/vomiting. Management includes retrograde ureteral stent placement or percutaneous nephrostomy."
+      },
+      {
+        "q": "What is the formula for calculating Fractional Excretion of Sodium (FENa)?",
+        "a": "FENa = <b>\\(\\frac{U_{Na} \\times P_{Cr}}{P_{Na} \\times U_{Cr}} \\times 100\\)</b>.<br><i>Note:</i> In patients taking diuretics, FENa is unreliable; use Fractional Excretion of Urea (FEUrea) instead (FEUrea < 35% indicates prerenal state)."
+      },
+      {
+        "q": "What is the mechanism of action of Loop Diuretics (e.g., Furosemide)?",
+        "a": "Inhibits the <b>\\(Na^+/K^+/2Cl^-\\) cotransporter</b> in the thick ascending limb of the loop of Henle, destroying the corticomedullary osmotic gradient and preventing urine concentration."
+      },
+      {
+        "q": "What is the mechanism of action of Thiazide Diuretics (e.g., Hydrochlorothiazide)?",
+        "a": "Inhibits the <b>\\(Na^+/Cl^-\\) cotransporter</b> in the distal convoluted tubule."
+      },
+      {
+        "q": "What is the mechanism of action of Potassium-Sparing Diuretics?",
+        "a": "• <b>Spironolactone / Eplerenone:</b> Aldosterone receptor antagonists in the cortical collecting duct.<br>• <b>Amiloride / Triamterene:</b> Direct blockers of the epithelial sodium channel (ENaC) in the cortical collecting duct."
+      },
+      {
+        "q": "What electrolyte abnormality classically causes nephrogenic diabetes insipidus?",
+        "a": "Severe <b>hypercalcemia</b> or chronic <b>hypokalemia</b> (induces ADH resistance in the collecting duct)."
+      },
+      {
+        "q": "What is the treatment of choice for Lithium-induced Nephrogenic Diabetes Insipidus?",
+        "a": "<b>Amiloride</b> (blocks lithium entry through ENaC channels in the collecting duct) + stop lithium if possible."
+      },
+      {
+        "q": "Describe the clinical presentation of Autosomal Dominant Polycystic Kidney Disease (ADPKD) and its high-yield extrarenal manifestations.",
+        "a": "• <b>Presentation:</b> Bilateral flank pain, hematuria, hypertension, progressive renal failure in young adults.<br>• <b>Extrarenal:</b> <b>Berry aneurysms</b> (circle of Willis &mdash; risk of subarachnoid hemorrhage), hepatic cysts, mitral valve prolapse (MVP), diverticulosis."
+      },
+      {
+        "q": "Define the diagnostic features of Henoch-Schönlein Purpura (IgA Vasculitis) nephritis.",
+        "a": "Most common systemic vasculitis in children. Characterized by IgA immune complex deposition in the mesangium.<br><br><b>Presentation:</b> Palpable purpura on buttocks/lower limbs, arthralgias, abdominal pain (intussusception risk), and hematuria."
+      },
+      {
+        "q": "Contrast the indications for Hemodialysis in acute kidney injury (Mnemonic AEIOU).",
+        "a": "• <b>A:</b> Refractory metabolic <b>A</b>cidosis (pH < 7.1–7.2).<br>• <b>E:</b> Refractory <b>E</b>lectrolyte abnormalities (hyperkalemia > 6.5 or ECG changes).<br>• <b>I:</b> <b>I</b>ntoxications (methanol, ethylene glycol, lithium, salicylates).<br>• <b>O:</b> Volume <b>O</b>verload (refractory to diuretics with respiratory failure).<br>• <b>U:</b> symptomatic <b>U</b>remia (uremic pericarditis, encephalopathy, bleeding)."
+      },
+      {
+        "q": "What is the mechanism of Hypercalciuria in patients with normal serum calcium who form calcium stones, and how is it treated?",
+        "a": "• <b>Mechanism:</b> Idiopathic hypercalciuria (most common cause of calcium stones).<br>• <b>Treatment:</b> <b>Thiazide diuretics</b> (promotes calcium reabsorption in the distal tubule, lowering urine calcium levels) + dietary sodium restriction."
+      },
+      {
+        "q": "Why is oral calcium restriction contraindicated in patients with calcium oxalate kidney stones?",
+        "a": "Restricting dietary calcium decreases calcium in the GI tract. Less calcium is available to bind dietary oxalate in the gut, causing increased absorption of free oxalate, leading to <b>hyperoxaluria</b> and increased risk of calcium oxalate stone formation."
+      },
+      {
+        "q": "What nephrotoxicity is classically associated with Acyclovir, and how is it prevented?",
+        "a": "• <b>Toxicity:</b> <b>Crystalline nephropathy</b> (acyclovir precipitates in renal tubules, causing obstruction and AKI).<br>• <b>Prevention:</b> Co-administration of aggressive IV fluids."
+      },
+      {
+        "q": "What is the definition of severe metabolic alkalosis unresponsive to normal saline, and how do you differentiate it?",
+        "a": "• <b>Saline-Responsive (Urine Cl < 20 mEq/L):</b> Caused by vomiting, nasogastric suction, or diuretic use. Normalizes with normal saline infusion.<br>• <b>Saline-Unresponsive (Urine Cl > 20 mEq/L):</b> Caused by mineralocorticoid excess (Conn's, Cushing's) or severe hypokalemia. Does not normalize with saline."
+      },
+      {
+        "q": "Explain the difference in etiology between IgA Nephropathy and IgA Vasculitis (HSP).",
+        "a": "They share the same underlying pathology (IgA deposition in tissues), but IgA Nephropathy is <b>isolated to the kidneys</b>, while IgA Vasculitis (HSP) is a <b>systemic vasculitis</b> involving skin, joints, GI tract, and kidneys."
+      }
+    ]
+  },
+  {
+    "section": "Endocrinology",
+    "topic": "Endocrinology",
+    "icon": "zap",
+    "cards": [
+      {
+        "q": "Compare Diabetic Ketoacidosis (DKA) and Hyperosmolar Hyperglycemic State (HHS) by glucose, pH, ketones, and serum osmolality.",
+        "a": "• <b>DKA (typically Type 1):</b> Glucose usually 250–600 mg/dL, <b>pH < 7.3</b> (metabolic acidosis with anion gap), <b>positive ketones</b> in blood/urine, mild increase in osmolality.<br>• <b>HHS (typically Type 2):</b> <b>Glucose > 600 mg/dL</b> (often > 1000), pH > 7.3 (no acidosis), <b>negative/minimal ketones</b>, serum osmolality <b>> 320 mOsm/kg</b>."
+      },
+      {
+        "q": "What is the cornerstone management of DKA and HHS, and what are the rules for potassium management?",
+        "a": "1. <b>Aggressive IV Fluids</b> (Normal Saline first, add 5% dextrose once glucose is < 200–250 mg/dL).<br>2. <b>IV Insulin</b> (hold if potassium is < 3.3 mEq/L).<br>3. <b>Potassium Repletion:</b><br>   &bull; If \\(K^+\\) < 3.3 mEq/L: Hold insulin, give IV potassium until > 3.3.<br>   &bull; If \\(K^+\\) 3.3–5.3 mEq/L: Give 20–30 mEq of potassium per liter of IV fluid.<br>   &bull; If \\(K^+\\) > 5.3 mEq/L: Do not give potassium; monitor every 2 hours."
+      },
+      {
+        "q": "What is the autoantibody association in Graves' Disease and Hashimoto's Thyroiditis?",
+        "a": "• <b>Graves' Disease:</b> <b>Thyrotropin (TSH) Receptor Antibodies (TRAb)</b> / Thyroid Stimulating Immunoglobulins (TSI).<br>• <b>Hashimoto's Thyroiditis:</b> <b>Anti-Thyroid Peroxidase (anti-TPO)</b> and Anti-Thyroglobulin (anti-Tg) antibodies."
+      },
+      {
+        "q": "Name the 4 medications used in order for the treatment of Thyroid Storm and their rationales.",
+        "a": "1. <b>Beta-Blocker</b> (Propranolol): Blocks adrenergic symptoms and inhibits peripheral conversion of T4 to T3.<br>2. <b>Thionamide</b> (PTU preferred over methimazole): Blocks new hormone synthesis and peripheral conversion.<br>3. <b>Iodine Solution</b> (SSKI or Lugol's): Blocks hormone release (Wolff-Chaikoff effect). <i>Must be given at least 1 hour after thionamides</i> to prevent iodine from being used as substrate.<br>4. <b>Glucocorticoids</b> (Hydrocortisone/Dexamethasone): Inhibits peripheral T4 to T3 conversion and treats potential adrenal insufficiency."
+      },
+      {
+        "q": "What are the indications for treating Subclinical Hypothyroidism?",
+        "a": "Subclinical Hypothyroidism = Elevated TSH with normal free T4.<br><br><b>Treat with Levothyroxine only if:</b><br>1. TSH &ge; 10 mU/L.<br>2. Patient has symptoms of hypothyroidism.<br>3. Positive anti-TPO antibodies.<br>4. Pregnancy or plans to become pregnant."
+      },
+      {
+        "q": "What is the initial screening algorithm for suspected Cushing's Syndrome?",
+        "a": "Perform at least 2 of the following:<br>1. <b>24-hour urine free cortisol</b> (elevated).<br>2. <b>Late-night salivary cortisol</b> (elevated).<br>3. <b>Overnight low-dose (1 mg) Dexamethasone suppression test</b> (failure to suppress morning cortisol < 1.8 \\(\\mu\\)g/dL)."
+      },
+      {
+        "q": "How do you localize the source of Cushing's Syndrome once hypercortisolism is confirmed?",
+        "a": "1. Measure baseline <b>ACTH level</b>:<br>   &bull; ACTH < 5 pg/mL: ACTH-independent (adrenal tumor or exogenous steroids). Perform CT adrenals.<br>   &bull; ACTH > 15 pg/mL: ACTH-dependent. Proceed to next step.<br>2. <b>High-dose (8 mg) Dexamethasone suppression test</b> or CRH stimulation:<br>   &bull; Cortisol suppresses (> 50% drop): <b>Cushing's Disease</b> (pituitary ACTH adenoma). Perform MRI pituitary.<br>   &bull; Cortisol does not suppress: <b>Ectopic ACTH secretion</b> (e.g., small cell lung cancer). Perform CT chest/abdomen."
+      },
+      {
+        "q": "Contrast Primary Adrenal Insufficiency (Addison's Disease) and Secondary Adrenal Insufficiency by ACTH levels, electrolyte abnormalities, and skin findings.",
+        "a": "• <b>Primary (destruction of adrenal cortex):</b> High ACTH; <b>hyperpigmentation</b> (ACTH stimulates melanocytes); <b>hypoaldosteronism</b> (hyperkalemia, hyponatremia, non-gap metabolic acidosis).<br>• <b>Secondary (pituitary dysfunction):</b> Low ACTH; no hyperpigmentation; <b>normal aldosterone</b> levels (potassium is normal because aldosterone is regulated by RAAS, not ACTH)."
+      },
+      {
+        "q": "What is the diagnostic test of choice for Adrenal Insufficiency?",
+        "a": "<b>Cosyntropin (synthetic ACTH) stimulation test</b>. Measure serum cortisol before and 30–60 minutes after administration. Cortisol level failing to rise > 18–20 \\(\\mu\\)g/dL confirms adrenal insufficiency."
+      },
+      {
+        "q": "What is the management of primary vs. secondary Adrenal Insufficiency?",
+        "a": "• <b>Primary (Addison's):</b> Daily Glucocorticoid (<b>Hydrocortisone</b> or prednisone) + Mineralocorticoid (<b>Fludrocortisone</b>).<br>• <b>Secondary:</b> Daily Glucocorticoid only (mineralocorticoids are not needed because aldosterone is intact)."
+      },
+      {
+        "q": "What is the emergency management of an acute Adrenal Crisis?",
+        "a": "Immediate IV bolus of <b>Hydrocortisone 100 mg</b> (preferred due to mineralocorticoid activity) + aggressive IV fluid resuscitation (normal saline/dextrose)."
+      },
+      {
+        "q": "What is Primary Hyperaldosteronism (Conn's Syndrome), and how is it screened?",
+        "a": "Aldosterone-producing adrenal adenoma or bilateral adrenal hyperplasia.<br><br><b>Presentation:</b> Treatment-resistant hypertension, hypokalemia (often mild/absent), and metabolic alkalosis.<br><b>Screening Test:</b> Plasma <b>Aldosterone-to-Renin Ratio (ARR) > 20–30</b>, with plasma aldosterone > 15 ng/dL."
+      },
+      {
+        "q": "How is Conn's Syndrome confirmed, and what is the treatment for unilateral vs. bilateral disease?",
+        "a": "• <b>Confirmation:</b> Oral or IV saline suppression test (aldosterone fails to suppress < 5–10 ng/dL after saline load). Perform adrenal CT and adrenal vein sampling.<br>• <b>Unilateral Adenoma Treatment:</b> Surgical resection (adrenalectomy).<br>• <b>Bilateral Hyperplasia Treatment:</b> Medical management with aldosterone antagonists (<b>Spironolactone</b> or Eplerenone)."
+      },
+      {
+        "q": "How is Pheochromocytoma diagnosed, and what is the preoperative management?",
+        "a": "Catecholamine-secreting tumor of the adrenal medulla.<br><br><b>Diagnosis:</b> 24-hour urine fractionated <b>metanephrines</b> and catecholamines, or plasma free metanephrines.<br><b>Preoperative Prep (Critical):</b> <b>Alpha-blockade FIRST</b> (e.g., Phenoxybenzamine) for 10–14 days, followed by <b>Beta-blockade</b>. Never give beta-blocker first, as unopposed alpha-1 vasoconstriction can trigger a hypertensive crisis."
+      },
+      {
+        "q": "What are the components of Multiple Endocrine Neoplasia Type 1 (MEN 1) syndrome?",
+        "a": "Mnemonic: The 3 Ps.<br>1. <b>P</b>arathyroid hyperplasia/adenoma (hypercalcemia)<br>2. <b>P</b>ancreatic neuroendocrine tumors (gastrinoma/ZES, insulinoma, VIPoma)<br>3. <b>P</b>ituitary adenoma (prolactinoma)."
+      },
+      {
+        "q": "What are the components of Multiple Endocrine Neoplasia Type 2A (MEN 2A) and 2B (MEN 2B) syndromes?",
+        "a": "Both are associated with mutations in the <b>RET proto-oncogene</b>.<br>• <b>MEN 2A:</b> Medullary Thyroid Cancer + Pheochromocytoma + Parathyroid hyperplasia.<br>• <b>MEN 2B:</b> Medullary Thyroid Cancer + Pheochromocytoma + mucosal neuromas/marfanoid habitus."
+      },
+      {
+        "q": "Compare the clinical presentation and laboratory findings of Primary Hyperparathyroidism.",
+        "a": "• <b>Presentation:</b> Stones (nephrolithiasis), bones (osteitis fibrosa cystica/osteoporosis), groans (abdominal pain/constipation), and psychiatric overtones (depression/confusion).<br>• <b>Labs:</b> <b>Hypercalcemia</b>, hypophosphatemia, and inappropriately <b>elevated PTH</b>. 24h urinary calcium is normal/elevated (excludes FHH)."
+      },
+      {
+        "q": "How do you differentiate Primary Hyperparathyroidism from Familial Hypocalciuric Hypercalcemia (FHH)?",
+        "a": "Both present with elevated calcium and PTH.<br><br><b>Differentiating marker:</b> 24-hour urine calcium.<br>• Primary Hyperparathyroidism: Urine calcium excretion is high/normal (fractional excretion of calcium > 2%).<br>• FHH (inactivating calcium-sensing receptor mutation): <b>Low urine calcium</b> (fractional excretion of calcium < 1%). Surgery is contraindicated in FHH."
+      },
+      {
+        "q": "What is the diagnostic criteria for Diabetes Mellitus?",
+        "a": "Requires one of the following:<br>1. <b>Fasting Plasma Glucose &ge; 126 mg/dL</b>.<br>2. <b>HbA1c &ge; 6.5%</b>.<br>3. <b>Two-hour oral glucose tolerance test (OGTT) &ge; 200 mg/dL</b>.<br>4. Random plasma glucose &ge; 200 mg/dL in a patient with classic symptoms of hyperglycemia (polyuria, polydipsia, weight loss)."
+      },
+      {
+        "q": "What is the mechanism of action and key side effect of Metformin?",
+        "a": "• <b>Mechanism:</b> Inhibits hepatic gluconeogenesis and increases peripheral insulin sensitivity.<br>• <b>Side Effects:</b> Diarrhea, abdominal cramps, B12 deficiency, and <b>Lactic Acidosis</b> (rare but serious; contraindications include eGFR < 30 mL/min)."
+      },
+      {
+        "q": "What is the mechanism of action and key side effect of Sulfonylureas (e.g., Glipizide, Glimepiride)?",
+        "a": "• <b>Mechanism:</b> Closes ATP-sensitive \\(K^+\\) channels on pancreatic beta cells, depolarizing the cell and stimulating endogenous insulin secretion.<br>• <b>Side Effects:</b> <b>Hypoglycemia</b> and weight gain."
+      },
+      {
+        "q": "What is the mechanism of action and key side effects of SGLT2 Inhibitors (e.g., Empagliflozin, Canagliflozin)?",
+        "a": "• <b>Mechanism:</b> Inhibits the sodium-glucose cotransporter 2 in the proximal tubule, promoting glycosuria.<br>• <b>Side Effects:</b> <b>Genitourinary tract infections</b> (vulvovaginal candidiasis), dehydration/hypotension, and <b>euglycemic DKA</b>."
+      },
+      {
+        "q": "What is the mechanism of action and key side effects of GLP-1 Receptor Agonists (e.g., Semaglutide, Liraglutide)?",
+        "a": "• <b>Mechanism:</b> Mimics incretin hormone to enhance glucose-dependent insulin secretion, slow gastric emptying, and promote satiety.<br>• <b>Side Effects:</b> Nausea/vomiting, gastroparesis, and risk of <b>acute pancreatitis</b>. Contraindicated in patients with a history of Medullary Thyroid Cancer."
+      },
+      {
+        "q": "What is the first-line medical therapy for a patient with a symptomatic Prolactinoma?",
+        "a": "<b>Dopamine Agonists</b> (e.g., <b>Cabergoline</b> or Bromocriptine). They decrease prolactin secretion and reduce tumor size. Surgery is only indicated if refractory to medical therapy."
+      },
+      {
+        "q": "Describe the diagnostic workup for suspected Acromegaly.",
+        "a": "1. <b>Screening Test:</b> Serum <b>IGF-1</b> level (highly stable, elevated in acromegaly).<br>2. <b>Confirmatory Test:</b> <b>Oral Glucose Tolerance Test (OGTT)</b>. Fail to suppress growth hormone (GH) < 1 ng/mL after 75g oral glucose load confirms diagnosis.<br>3. <b>Localization:</b> Pituitary MRI."
+      },
+      {
+        "q": "What is the screening recommendation for Osteoporosis, and how is it diagnosed?",
+        "a": "• <b>Screening:</b> All women <b>age &ge; 65</b> (or younger women with equivalent risk factors) using a DEXA scan.<br>• <b>Diagnosis:</b> <b>T-score &le; &minus;2.5</b> at the femoral neck or spine.<br><i>Note:</i> Osteopenia is defined as T-score between &minus;1.0 and &minus;2.5."
+      },
+      {
+        "q": "What are the key side effects and administration instructions for Bisphosphonates (e.g., Alendronate)?",
+        "a": "• <b>Side Effects:</b> Pill-induced esophagitis, <b>osteonecrosis of the jaw</b>, and atypical subtrochanteric femur fractures.<br>• <b>Instructions:</b> Take with a full glass of water first thing in the morning on an empty stomach, and remain upright for at least 30 minutes (prevents esophageal irritation)."
+      },
+      {
+        "q": "Contrast Central vs. Nephrogenic Diabetes Insipidus (DI) by pathophysiology and response to desmopressin.",
+        "a": "• <b>Central DI:</b> Lack of ADH production by the hypothalamus/posterior pituitary. <b>Desmopressin (dDAVP) response:</b> Urine osmolality increases by <b>> 50%</b>.<br>• <b>Nephrogenic DI:</b> ADH resistance in the renal collecting duct. <b>Desmopressin response:</b> No significant increase in urine osmolality (< 10%)."
+      },
+      {
+        "q": "Describe the results of the Water Deprivation Test in Diabetes Insipidus.",
+        "a": "Withholding water will fail to concentrate urine (urine osmolality remains low, < 300 mOsm/kg, while serum osmolality and sodium rise)."
+      },
+      {
+        "q": "What are the clinical and laboratory features of Primary Hypothyroidism?",
+        "a": "• <b>Clinical:</b> Weight gain, fatigue, cold intolerance, constipation, dry skin, bradycardia, delayed relaxation of deep tendon reflexes ('hung-up' reflexes).<br>• <b>Labs:</b> Elevated TSH, decreased free T4."
+      },
+      {
+        "q": "What is Myxedema Coma, and how is it managed?",
+        "a": "Severe, life-threatening hypothyroidism presenting with altered mental status, hypothermia, bradycardia, hypoventilation, and hyponatremia.<br><br><b>Treatment:</b> IV <b>Levothyroxine</b> (T4) + IV Liothyronine (T3) + <b>IV Glucocorticoids</b> (hydrocortisone, must be given prior to thyroid hormone to prevent adrenal crisis if co-existing adrenal insufficiency is present)."
+      },
+      {
+        "q": "What is the next best step for a solitary thyroid nodule (> 1 cm) with normal/high TSH?",
+        "a": "<b>Thyroid Ultrasound</b> to assess nodule characteristics, followed by <b>Fine Needle Aspiration (FNA)</b> if ultrasound shows high-risk features (e.g., microcalcifications, solid hypoechoic, irregular margins)."
+      },
+      {
+        "q": "What is the next best step for a thyroid nodule (> 1 cm) with a low TSH?",
+        "a": "Perform a <b>Thyroid Scintigraphy (Radioactive Iodine Uptake Scan)</b>:<br>• <b>'Hot' nodule</b> (increased uptake): Benign hyperfunctioning nodule. Treat hyperthyroidism (no FNA needed).<br>• <b>'Cold' nodule</b> (decreased uptake): Higher risk of malignancy. Proceed to thyroid ultrasound and FNA."
+      },
+      {
+        "q": "Name the 4 major types of Thyroid Cancer and their key clinical characteristics.",
+        "a": "1. <b>Papillary Carcinoma:</b> Most common (80%); excellent prognosis; histology shows Orphan Annie eyes and Psammoma bodies.<br>2. <b>Follicular Carcinoma:</b> Invades thyroid capsule and hematogenously spreads. Cannot diagnose with FNA (requires surgical lobectomy to assess capsular invasion).<br>3. <b>Medullary Carcinoma:</b> Arises from parafollicular C-cells (produces calcitonin); associated with RET mutation/MEN 2A & 2B.<br>4. <b>Anaplastic Carcinoma:</b> Highly aggressive, rapidly expanding neck mass in elderly; dismal prognosis."
+      },
+      {
+        "q": "What is the diagnostic test of choice for a patient suspected of having a Gastrinoma?",
+        "a": "Fasting serum gastrin levels. If elevated but non-diagnostic (100–1000 pg/mL), perform a <b>Secretin Stimulation Test</b> (gastrin rises > 120–200 pg/mL in gastrinomas)."
+      },
+      {
+        "q": "What is the presentation and diagnostic features of VIPoma?",
+        "a": "Neuroendocrine tumor secreting Vasoactive Intestinal Peptide (VIP).<br><br><b>Presentation:</b> WDHA syndrome: <b>W</b>atery <b>D</b>iarrhea (tea-colored), <b>H</b>ypokalemia, <b>A</b>chlorhydria (decreased gastric acid).<br><b>Labs:</b> VIP level > 75 pg/mL, hypokalemia, hyperglycemia, hypercalcemia."
+      },
+      {
+        "q": "Describe the clinical presentation of Glucagonoma.",
+        "a": "A glucagon-secreting tumor of the pancreatic alpha cells.<br><br><b>Presentation:</b> 5 Ds: <b>D</b>ermatitis (<b>Necrolytic Migratory Erythema</b> &mdash; red, painful, blistering rash in perineum/extremities), <b>D</b>iabetes (mild hyperglycemia), <b>D</b>VT, <b>D</b>ecline (weight loss), and <b>D</b>epression."
+      },
+      {
+        "q": "What are the diagnostic features of Primary Hyperaldosteronism due to bilateral adrenal hyperplasia vs. adrenal adenoma?",
+        "a": "• Both have elevated aldosterone and low renin.<br>• Adrenal vein sampling (AVS) is the gold standard to differentiate: lateralized aldosterone gradient indicates unilateral adenoma, symmetric elevation indicates bilateral hyperplasia."
+      },
+      {
+        "q": "Name the classic clinical triad of a Pheochromocytoma.",
+        "a": "Mnemonic: 5 Ps.<br>Classic Triad: Episodic headache, sweating (diaphoresis), and tachycardia/palpitations (with severe hypertension).<br><i>Associated with:</i> Anxiety, weight loss, tremor."
+      },
+      {
+        "q": "What is the diagnostic criteria for Diabetic Nephropathy based on albuminuria?",
+        "a": "Persistent albumin excretion <b>> 300 mg/day</b> (severely increased albuminuria) confirmed on at least 2 readings over 3–6 months."
+      },
+      {
+        "q": "What class of diabetes medications should be avoided in a patient with a history of recurrent heart failure hospitalizations?",
+        "a": "<b>Thiazolidinediones</b> (TZDs, e.g., Pioglitazone, Rosiglitazone) as they promote fluid retention and exacerbate heart failure."
+      },
+      {
+        "q": "What is the screening target for Diabetes Mellitus in asymptomatic adults according to the ADA?",
+        "a": "All adults starting at <b>age 35</b> (or younger if overweight/obese with &ge; 1 cardiovascular risk factor), repeated every 3 years."
+      },
+      {
+        "q": "What is the most common cause of Primary Hyperparathyroidism?",
+        "a": "A single benign <b>parathyroid adenoma</b> (~85% of cases), followed by parathyroid hyperplasia."
+      },
+      {
+        "q": "Describe the clinical significance of pseudohypoparathyroidism.",
+        "a": "End-organ resistance to PTH (caused by maternal transmission of GNAS1 mutation).<br><br><b>Labs:</b> Hypocalcemia, hyperphosphatemia, but <b>inappropriately elevated PTH</b>.<br><b>Physical features:</b> Albright Hereditary Osteodystrophy (short stature, round face, short 4th/5th metacarpals)."
+      },
+      {
+        "q": "What is the first-line pharmacotherapy for a patient with acute severe Hypercalcemia (> 14 mg/dL)?",
+        "a": "Immediate <b>aggressive IV hydration with normal saline</b>, followed by IV loop diuretics (only once volume-repleted). Add IV <b>Bisphosphonates</b> (Pamidronate/Zoledronic acid) for long-term control (takes 2-4 days to work) + Calcitonin (rapid, short-term effect)."
+      },
+      {
+        "q": "Explain the difference in etiology between Pituitary Cushing's Disease and Ectopic ACTH syndrome.",
+        "a": "• <b>Cushing's Disease:</b> Pituitary ACTH adenoma. Responds to high-dose dexamethasone suppression and CRH stimulation.<br>• <b>Ectopic ACTH:</b> ACTH-secreting tumor (e.g., small cell lung cancer, bronchial carcinoid). Independent of feedback control; does not suppress with high-dose dexamethasone."
+      },
+      {
+        "q": "What is the association between Thyroid Peroxidase (TPO) antibodies and pregnancy?",
+        "a": "Women with positive anti-TPO antibodies are at increased risk of <b>miscarriage</b>, gestational hypothyroidism, and postpartum thyroiditis."
+      },
+      {
+        "q": "What is the clinical presentation and management of De Quervain (Subacute Granulomatous) Thyroiditis?",
+        "a": "• <b>Presentation:</b> <b>Painful, tender thyroid gland</b>, fever, and transient hyperthyroidism following a viral upper respiratory infection. Very high ESR.<br>• <b>Uptake scan:</b> Low radioactive iodine uptake.<br>• <b>Treatment:</b> NSAIDs/Aspirin (first-line) or steroids if severe; self-limiting."
+      },
+      {
+        "q": "Describe the mechanism and presentation of secondary hyperparathyroidism.",
+        "a": "Chronic hypocalcemia (e.g., CKD, severe Vitamin D deficiency) leads to chronic overstimulation of all four parathyroid glands. Presents with normal/low calcium, elevated phosphate, and elevated PTH."
+      },
+      {
+        "q": "What is the diagnosis of a patient with hypercalcemia, low PTH, and a history of sarcoidosis or tuberculosis?",
+        "a": "<b>Granulomatous disease-induced hypercalcemia</b> (macrophages inside granulomas express 1-alpha-hydroxylase, causing extra-renal conversion of Vitamin D to its active form, leading to calcium hyperabsorption). Treated with glucocorticoids."
+      }
+    ]
+  },
+  {
+    "section": "Hematology/Oncology",
+    "topic": "Hematology/Oncology",
+    "icon": "droplet",
+    "cards": [
+      {
+        "q": "How do you differentiate Iron Deficiency Anemia from Anemia of Chronic Disease (ACD) on iron studies?",
+        "a": "• <b>Iron Deficiency Anemia:</b> Low serum iron, <b>low ferritin</b> (most sensitive marker), <b>high TIBC</b> (transferrin), and low transferrin saturation.<br>• <b>Anemia of Chronic Disease:</b> Low serum iron, <b>normal/high ferritin</b> (acute phase reactant sequestering iron in macrophages), <b>low/normal TIBC</b>, and low/normal transferrin saturation."
+      },
+      {
+        "q": "How do you differentiate Vitamin B12 deficiency from Folate deficiency on laboratory testing?",
+        "a": "Both cause macrocytic megaloblastic anemia (hypersegmented neutrophils, MCV > 100).<br>• <b>Vitamin B12 Deficiency:</b> Elevated <b>Methylmalonic Acid (MMA)</b> and elevated Homocysteine. Associated with neurological symptoms (subacute combined degeneration).<br>• <b>Folate Deficiency:</b> Normal MMA, elevated Homocysteine. No neurological symptoms."
+      },
+      {
+        "q": "What is the clinical presentation and diagnostic findings of G6PD Deficiency?",
+        "a": "X-linked recessive disorder causing episodic hemolysis triggered by oxidative stress (fava beans, sulfa drugs, infections).<br><br><b>Blood Smear:</b> <b>Heinz bodies</b> (denatured hemoglobin) and <b>Bite cells</b> (macrophages biting out Heinz bodies in spleen).<br><i>Diagnostic Note:</i> G6PD enzyme levels can be falsely normal during an acute hemolytic episode because older, enzyme-deficient RBCs have already lysed."
+      },
+      {
+        "q": "What is the diagnostic test of choice and management for Hereditary Spherocytosis?",
+        "a": "Defect in RBC membrane proteins (ankyrin, spectrin).<br><br><b>Diagnosis:</b> Spherocytes on blood smear, elevated MCHC, negative Direct Coombs test, and positive <b>eosin-5-maleimide (EMA) binding test</b> or <b>osmotic fragility test</b>.<br><b>Treatment:</b> Folic acid supplementation, splenectomy for severe/symptomatic cases (cures anemia/gallstone risk, but spherocytes remain)."
+      },
+      {
+        "q": "Contrast Warm vs. Cold Autoimmune Hemolytic Anemia (AIHA) by antibody type, site of hemolysis, and clinical associations.",
+        "a": "• <b>Warm AIHA:</b> <b>IgG</b> antibodies coating RBCs. Hemolysis occurs <b>extravascularly</b> in the spleen. Associated with SLE, CLL, and drugs (alpha-methyldopa, penicillins). Treated with corticosteroids.<br>• <b>Cold AIHA:</b> <b>IgM</b> antibodies. Hemolysis is complement-mediated in cold extremities. Associated with <b>Mycoplasma pneumoniae</b> and <b>EBV/mononucleosis</b>. Treated by avoiding cold; steroids are ineffective."
+      },
+      {
+        "q": "What is the pathophysiology and gold standard diagnosis of Paroxysmal Nocturnal Hemoglobinuria (PNH)?",
+        "a": "Acquired PIGA gene mutation leading to loss of GPI-anchor proteins that bind <b>CD55 and CD59</b>, which normally protect RBCs from complement destruction.<br><br><b>Presentation:</b> Coombs-negative hemolytic anemia, pancytopenia, and <b>venous thrombosis</b> (especially hepatic/portal veins).<br><b>Diagnosis:</b> <b>Flow cytometry</b> demonstrating absent CD55/CD59 on RBCs/WBCs.<br><b>Treatment:</b> <b>Eculizumab</b> (monoclonal antibody against C5 complement)."
+      },
+      {
+        "q": "Compare Hemophilia A/B and Von Willebrand Disease (vWD) by Platelet Count, Bleeding Time, PT, and PTT.",
+        "a": "• <b>Hemophilia A/B:</b> Normal platelet count, normal bleeding time, normal PT, and <b>prolonged PTT</b> (intrinsic pathway defect: Factor VIII or IX).<br>• <b>vWD:</b> Normal platelet count (usually), <b>prolonged bleeding time</b> (impaired platelet adhesion), normal PT, and normal or <b>prolonged PTT</b> (vWF stabilizes Factor VIII)."
+      },
+      {
+        "q": "What is the clinical presentation and management of Von Willebrand Disease (vWD)?",
+        "a": "Mnemonic: bleeding from mucous membranes (nosebleeds, easy bruising, menorrhagia).<br>• <b>Diagnosis:</b> Reduced vWF antigen, reduced ristocetin cofactor activity, and decreased Factor VIII activity.<br>• <b>Treatment:</b> <b>Desmopressin (dDAVP)</b> (stimulates release of vWF/Factor VIII from endothelial Weibel-Palade bodies) for mild/moderate type 1; vWF/Factor VIII concentrates for severe cases."
+      },
+      {
+        "q": "Explain the difference in diagnostic test results between a Factor Deficiency (e.g., Hemophilia) and a Factor Inhibitor (e.g., Lupus Anticoagulant) using a Mixing Study.",
+        "a": "In a patient with a prolonged PTT:<br>• <b>Mixing Study (patient plasma + normal pool):</b><br>  &bull; PTT <b>corrects</b> to normal: Indicates a <b>Factor Deficiency</b> (normal plasma supplied the missing factor).<br>  &bull; PTT <b>fails to correct</b>: Indicates the presence of a <b>Factor Inhibitor</b> or anticoagulant."
+      },
+      {
+        "q": "What are the classic clinical features and laboratory findings of Disseminated Intravascular Coagulation (DIC)?",
+        "a": "Systemic activation of coagulation depleting platelets and coagulation factors, leading to simultaneous thrombosis and hemorrhage.<br><br><b>Labs:</b> <b>Thrombocytopenia</b>, <b>prolonged PT and PTT</b>, <b>decreased fibrinogen</b>, and <b>elevated D-Dimer / FDPs</b>. Schistocytes on blood smear. Associated with sepsis, trauma, APML, and obstetrical complications."
+      },
+      {
+        "q": "Describe the pathophysiology and classic clinical pentad of Thrombotic Thrombocytopenic Purpura (TTP). Mnemonic: FAT RN.",
+        "a": "Deficiency or inhibition of the <b>ADAMTS13</b> metalloprotease, preventing cleavage of ultra-large vWF multimers, leading to microvascular platelet thrombi.<br><br><b>Pentad (FAT RN):</b><br>1. <b>F</b>ever<br>2. <b>A</b>nemia (microangiopathic hemolytic anemia with schistocytes)<br>3. <b>T</b>hrombocytopenia (with normal PT/PTT)<br>4. <b>R</b>enal insufficiency<br>5. <b>N</b>eurologic symptoms (headache, confusion, seizures)."
+      },
+      {
+        "q": "What is the emergency management of choice for Thrombotic Thrombocytopenic Purpura (TTP), and what is contraindicated?",
+        "a": "• <b>Management:</b> Immediate <b>therapeutic plasma exchange (plasmapheresis, PEX)</b> + corticosteroids.<br>• <b>Contraindicated:</b> <b>Platelet transfusions</b> are absolutely contraindicated as they 'fuel the fire' of microvascular thrombosis."
+      },
+      {
+        "q": "Describe the clinical triad and etiology of Hemolytic Uremic Syndrome (HUS).",
+        "a": "• <b>Etiology:</b> Shiga-like toxin produced by <b>Escherichia coli O157:H7</b> (often after eating undercooked beef).<br>• <b>Clinical Triad:</b> Microangiopathic hemolytic anemia + Thrombocytopenia + Acute Kidney Injury.<br>• <b>Management:</b> Supportive. Avoid antibiotics and antimotility agents as they increase toxin release."
+      },
+      {
+        "q": "What is the pathophysiology and treatment of Heparin-Induced Thrombocytopenia (HIT)?",
+        "a": "Autoantibodies directed against <b>platelet factor 4 (PF4)-heparin complexes</b> leading to platelet activation and severe arterial/venous thrombosis.<br><br><b>Clinical:</b> > 50% drop in platelet count 5–10 days after starting heparin.<br><b>Treatment:</b> Stop all heparin products immediately, and start a non-heparin anticoagulant (e.g., <b>Argatroban</b> or Bivalirudin)."
+      },
+      {
+        "q": "What is Immune Thrombocytopenia (ITP), and what is the treatment algorithm based on platelet count and symptoms?",
+        "a": "Autoantibodies (IgG) against platelet GPIIb/IIIa receptors, causing splenic destruction of platelets.<br><br><b>Management:</b><br>• Platelets &ge; 30,000/\\(\\mu\\)L and no bleeding: Observation.<br>• Platelets < 30,000/\\(\\mu\\)L or bleeding: <b>Corticosteroids</b> first-line, IVIG (if rapid increase needed), or anti-D immunoglobulin. Splenectomy or rituximab for refractory cases."
+      },
+      {
+        "q": "Define the CRAB criteria for Multiple Myeloma diagnosis.",
+        "a": "• <b>C:</b> hyper<b>C</b>alcemia.<br>• <b>R:</b> <b>R</b>enal insufficiency (creatinine > 2 mg/dL or uremic cast nephropathy).<br>• <b>A:</b> <b>A</b>nemia (normocytic normochromic).<br>• <b>B:</b> <b>B</b>one lytic lesions (osteolytic 'punched-out' lesions on skeletal survey).<br><i>Diagnostic markers:</i> M-spike on serum protein electrophoresis (SPEP), monoclonal plasma cells &ge; 10% on bone marrow biopsy."
+      },
+      {
+        "q": "What is Monoclonal Gammopathy of Undetermined Significance (MGUS), and how is it managed?",
+        "a": "Asymptomatic clonal plasma cell proliferation.<br><br><b>Criteria:</b> M-protein < 3 g/dL, < 10% bone marrow plasma cells, and <b>NO CRAB symptoms</b>.<br><b>Management:</b> Observation/surveillance (risk of progression to multiple myeloma is 1% per year)."
+      },
+      {
+        "q": "What is the chromosome translocation, fusion gene, and treatment of choice for Acute Promyelocytic Leukemia (APML)?",
+        "a": "• <b>Translocation:</b> <b>t(15;17)</b>.<br>• <b>Fusion Gene:</b> PML-RARA (retinoic acid receptor alpha).<br>• <b>Treatment:</b> <b>All-Trans Retinoic Acid (ATRA)</b> + arsenic trioxide. Promotes differentiation of promyelocytes. High risk of DIC at presentation."
+      },
+      {
+        "q": "What histopathologic finding is diagnostic for Acute Myeloid Leukemia (AML)?",
+        "a": "Bone marrow biopsy showing &ge; 20% myeloblasts, and presence of <b>Auer rods</b> (needle-like cytoplasmic inclusions of crystalized myeloperoxidase)."
+      },
+      {
+        "q": "What is the chromosome translocation, fusion gene, and first-line treatment for Chronic Myeloid Leukemia (CML)?",
+        "a": "• <b>Translocation:</b> <b>t(9;22)</b> (Philadelphia Chromosome).<br>• <b>Fusion Gene:</b> BCR-ABL (constitutively active tyrosine kinase).<br>• <b>Treatment:</b> Tyrosine Kinase Inhibitors (e.g., <b>Imatinib</b>, Dasatinib)."
+      },
+      {
+        "q": "How do you differentiate Chronic Myeloid Leukemia (CML) from a leukemoid reaction on laboratory testing?",
+        "a": "Both present with leukocytosis (> 50,000) with left shift.<br>• <b>CML:</b> <b>Low Leukocyte Alkaline Phosphatase (LAP) score</b>, splenomegaly, and positive t(9;22) translocation.<br>• <b>Leukemoid Reaction (reactive to infection):</b> <b>High LAP score</b>, no splenomegaly, no t(9;22)."
+      },
+      {
+        "q": "What clinical and peripheral blood smear findings characterize Chronic Lymphocytic Leukemia (CLL)?",
+        "a": "• <b>Presentation:</b> Asymptomatic lymphocytosis in an elderly patient, hepatosplenomegaly, lymphadenopathy.<br>• <b>Smear:</b> Mature-looking lymphocytes with fragile membranes that rupture during preparation, appearing as <b>Smudge Cells</b>.<br>• <b>Complication:</b> Richter Transformation (transformation of CLL into diffuse large B-cell lymphoma)."
+      },
+      {
+        "q": "What is the clinical presentation and diagnostic findings of Hodgkin Lymphoma?",
+        "a": "• <b>Presentation:</b> Bimodal age distribution (20s and 60s); painless localized lymphadenopathy (cervical/mediastinal) that can be painful after alcohol consumption; B symptoms (fever, night sweats, weight loss).<br>• <b>Biopsy:</b> <b>Reed-Sternberg Cells</b> ('owl-eye' multinucleated giant cells) which are CD15 and CD30 positive."
+      },
+      {
+        "q": "State the electrolyte abnormalities that define Tumor Lysis Syndrome (TLS).",
+        "a": "1. <b>Hyperuricemia</b> (nucleic acid breakdown &rarr; uric acid precipitating in renal tubules).<br>2. <b>Hyperkalemia</b> (intracellular potassium release).<br>3. <b>Hyperphosphatemia</b> (intracellular phosphate release).<br>4. <b>Hypocalcemia</b> (phosphate binds calcium &rarr; precipitation).<br><i>Prevention:</i> Aggressive IV hydration + Allopurinol or Rasburicase."
+      },
+      {
+        "q": "What is the emergency management of suspected malignant Spinal Cord Compression?",
+        "a": "Immediate administration of <b>IV Dexamethasone</b> (reduces vasogenic spinal cord edema) before obtaining an MRI of the entire spine."
+      },
+      {
+        "q": "What mutation, clinical presentation, and treatment characterize Polycythemia Vera (PV)?",
+        "a": "Clonal myeloproliferative disorder causing erythrocytosis.<br><br><b>Key Mutation:</b> <b>JAK2 mutation</b> (V617F) in &ge; 95% of cases.<br><b>Presentation:</b> <b>Pruritus after a hot bath/shower</b> (aquagenic pruritus due to histamine release), erythromelalgia, headache, thrombosis.<br><b>Treatment:</b> Therapeutic <b>phlebotomy</b> (target hematocrit < 45%) + low-dose aspirin + Hydroxyurea for high-risk."
+      },
+      {
+        "q": "How do you differentiate Polycythemia Vera from secondary polycythemia (e.g., due to hypoxia or EPO-secreting tumors)?",
+        "a": "• <b>Polycythemia Vera:</b> <b>Low serum Erythropoietin (EPO)</b> level (negative feedback from high RBC mass).<br>• <b>Secondary Polycythemia:</b> <b>High/elevated EPO</b> level."
+      },
+      {
+        "q": "What is the clinical presentation and management of Heparin-Induced Thrombocytopenia Type I vs. Type II?",
+        "a": "• <b>Type I:</b> Non-immune-mediated direct effect of heparin on platelets. Occurs within 1–2 days, mild drop in platelets (> 100,000), no thrombosis. <b>Management:</b> Continue heparin, monitor.<br>• <b>Type II (True HIT):</b> Immune-mediated (anti-PF4-heparin IgG). Occurs 5–10 days, severe drop (30–50k), high risk of thrombosis. <b>Management:</b> Stop heparin, start argatroban."
+      },
+      {
+        "q": "Contrast Hemolytic, Febrile Non-Hemolytic, and Anaphylactic transfusion reactions by timing and pathophysiology.",
+        "a": "• <b>Acute Hemolytic:</b> Within minutes. ABO incompatibility (Type II hypersensitivity) &rarr; intravascular hemolysis. Fever, flank pain, hemoglobinuria, DIC.<br>• <b>Febrile Non-Hemolytic:</b> Within 1–6 hours. Cytokines accumulated in storage of donor blood. Fever, chills, no hemolysis. Treat with acetaminophen.<br>• <b>Anaphylactic:</b> Within seconds. IgA-deficient recipient receiving IgA-containing blood. Dyspnea, bronchospasm, shock. Treat with epinephrine."
+      },
+      {
+        "q": "Contrast TRALI (Transfusion-Related Acute Lung Injury) and TACO (Transfusion-Associated Circulatory Overload) by pathophysiology and volume status.",
+        "a": "• <b>TRALI:</b> Donor antibodies react against recipient neutrophils in pulmonary vasculature &rarr; non-cardiogenic pulmonary edema. <b>Euvolemic</b> status, normal PCWP, no response to diuretics.<br>• <b>TACO:</b> Fluid overload from rapid transfusion. <b>Hypervolemic</b> status (elevated JVP, S3, high BNP/PCWP), responds well to diuretics."
+      },
+      {
+        "q": "What genetic defect, clinical features, and treatment characterize Sickle Cell Disease?",
+        "a": "Autosomal recessive mutation in the beta-globin gene (glutamic acid substituted by valine at position 6).<br><br><b>Clinical:</b> Vaso-occlusive pain crises, acute chest syndrome, splenic autoinfarction by age 5, risk of stroke.<br><b>Treatment:</b> <b>Hydroxyurea</b> (increases production of fetal hemoglobin HbF, reducing sickling) + vaccinations against encapsulated organisms."
+      },
+      {
+        "q": "What is the most common cause of osteomyelitis in patients with Sickle Cell Disease?",
+        "a": "<b>Salmonella species</b> (followed closely by <i>Staphylococcus aureus</i>)."
+      },
+      {
+        "q": "What infection classically triggers an aplastic crisis in patients with Sickle Cell Disease or Hereditary Spherocytosis?",
+        "a": "<b>Parvovirus B19</b> (selectively infects and destroys erythroid progenitor cells in the bone marrow, causing a temporary halt in RBC production)."
+      },
+      {
+        "q": "What is the clinical presentation and management of Acute Chest Syndrome in a patient with Sickle Cell Disease?",
+        "a": "• <b>Presentation:</b> Fever, chest pain, tachypnea, cough, hypoxemia, and a new pulmonary infiltrate on chest X-ray.<br>• <b>Management:</b> IV fluids, pain control, oxygen, empiric antibiotics (ceftriaxone + macrolide), and <b>exchange transfusion</b> if severe/hypoxemic."
+      },
+      {
+        "q": "What screening is recommended for pediatric patients with Sickle Cell Disease to prevent stroke, and what is the prevention strategy?",
+        "a": "• <b>Screening:</b> Annual <b>Transcranial Doppler (TCD) ultrasound</b> for children aged 2–16 years.<br>• <b>Prevention:</b> Chronic monthly simple or exchange blood transfusions if TCD shows high velocity (indicates stenosis/stroke risk)."
+      },
+      {
+        "q": "What is Aplastic Anemia, and what is the diagnostic bone marrow finding?",
+        "a": "Pancytopenia caused by bone marrow failure (often autoimmune-mediated T-cell destruction of stem cells).<br><br><b>Bone Marrow:</b> Severe hypocellularity with replacement of hematopoietic elements by <b>fat cells</b> (fatty marrow)."
+      },
+      {
+        "q": "Name the key laboratory findings in Lead Poisoning.",
+        "a": "Microcytic anemia, elevated serum lead, elevated zinc protoporphyrin, and <b>basophilic stippling</b> of RBCs on blood smear (due to inhibition of pyrimidine 5'-nucleotidase)."
+      },
+      {
+        "q": "What is the treatment of choice for Lead Poisoning based on lead level?",
+        "a": "• <b>Mild (< 45 \\(\\mu\\)g/dL):</b> Remove source of exposure.<br>• <b>Moderate (45–69 \\(\\mu\\)g/dL):</b> Oral <b>Succimer</b> (DMSA).<br>• <b>Severe (&ge; 70 \\(\\mu\\)g/dL):</b> IV/IM <b>Dimercaprol</b> (BAL) + IV <b>EDTA</b> (calcium disodium)."
+      },
+      {
+        "q": "Describe the bone marrow biopsy finding of Sideroblastic Anemia.",
+        "a": "Bone marrow aspirate showing <b>ringed sideroblasts</b> (Prussian blue stain showing iron-laden mitochondria forming a ring around the nucleus of erythroid precursors). Caused by alcohol, isoniazid (B6 antagonist), lead, or myelodysplasia."
+      },
+      {
+        "q": "Compare Beta-Thalassemia Minor vs. Major by hemoglobin electrophoresis findings.",
+        "a": "• <b>Beta-Thalassemia Minor (trait):</b> Mild asymptomatic microcytic anemia. Electrophoresis shows elevated <b>HbA\\(_2\\) (> 3.5%)</b> and mildly elevated HbF.<br>• <b>Beta-Thalassemia Major:</b> Severe transfusion-dependent anemia. Electrophoresis shows <b>absent HbA</b>, with almost all hemoglobin being HbF and HbA\\(_2\\)."
+      },
+      {
+        "q": "What is the clinical presentation and management of Heparin-Induced Thrombocytopenia (HIT) with active thrombosis vs. without thrombosis?",
+        "a": "Both require immediate cessation of all heparin and initiation of a non-heparin anticoagulant (Argatroban). You do not wait for antibody confirmation to switch therapy. FONDAPARINUX can be used once platelets recover."
+      },
+      {
+        "q": "What is the therapeutic target and clinical indication for Erythropoietin (EPO) therapy in cancer patients?",
+        "a": "Indicated only for chemotherapy-induced anemia with Hb < 10 g/dL. Target is Hb 10-11 g/dL. Avoid in patients with curative-intent chemotherapy as ESAs can stimulate tumor growth and shorten survival."
+      },
+      {
+        "q": "Define Superior Vena Cava (SVC) Syndrome and its management.",
+        "a": "Obstruction of the SVC (most commonly due to lung cancer or lymphoma).<br><br><b>Presentation:</b> Face/neck swelling, upper extremity edema, dilated collateral chest wall veins, dyspnea.<br><b>Management:</b> Elevation of head, oxygen, urgent radiation therapy (for lung cancer/metastasis) or chemotherapy (for lymphoma), or SVC stenting."
+      },
+      {
+        "q": "Describe the clinical presentation of Spinal Cord Compression in a cancer patient.",
+        "a": "Localized back pain (worse when lying down, percussion tenderness over spine), followed by progressive motor weakness, sensory deficit, and late bowel/bladder dysfunction (urinary retention/incontinence)."
+      },
+      {
+        "q": "What is the diagnostic test of choice and treatment for Hyperviscosity Syndrome in Waldenström Macroglobulinemia?",
+        "a": "• <b>Presentation:</b> Headache, blurry vision, mucosal bleeding, retinal hemorrhages ('sausage-link' veins).<br>• <b>Diagnosis:</b> Serum viscosity measurement, IgM M-spike, &ge; 10% lymphoplasmacytic cells on bone marrow.<br>• <b>Treatment:</b> Immediate <b>plasmapheresis</b>."
+      },
+      {
+        "q": "Describe the difference between Hemophilia A and Hemophilia B.",
+        "a": "• <b>Hemophilia A:</b> Factor VIII deficiency. Treated with recombinant Factor VIII.<br>• <b>Hemophilia B (Christmas disease):</b> Factor IX deficiency. Treated with recombinant Factor IX.<br>They are clinically indistinguishable and both are X-linked recessive."
+      },
+      {
+        "q": "What is the next best step for a patient presenting with an asymptomatic platelet count of 8,000/\\(\\mu\\)L?",
+        "a": "Hospitalization, activity restriction (avoid trauma), and initiation of IVIG or high-dose corticosteroids to prevent spontaneous intracranial hemorrhage (risk increases dramatically when platelets < 10,000)."
+      },
+      {
+        "q": "What is Heparin reversal agent, and what is Warfarin reversal agent?",
+        "a": "• <b>Heparin Reversal:</b> <b>Protamine Sulfate</b>.<br>• <b>Warfarin Reversal:</b> <b>Prothrombin Complex Concentrate (PCC)</b> + IV Vitamin K for life-threatening bleeding; Vitamin K alone for elevated INR without bleeding."
+      },
+      {
+        "q": "What is the reversal agent for Dabigatran, and what is the reversal agent for Rivaroxaban/Apixaban?",
+        "a": "• <b>Dabigatran Reversal:</b> <b>Idarucizumab</b>.<br>• <b>Rivaroxaban/Apixaban Reversal:</b> <b>Andexanet Alfa</b>."
+      },
+      {
+        "q": "What is the target international normalized ratio (INR) for patients on Warfarin for atrial fibrillation vs. a mechanical mitral valve?",
+        "a": "• <b>Atrial Fibrillation / DVT:</b> Target INR <b>2.0–3.0</b>.<br>• <b>Mechanical Mitral Valve:</b> Target INR <b>2.5–3.5</b> (due to higher thrombogenicity of the mitral position compared to the aortic position)."
+      }
+    ]
+  },
+  {
+    "section": "Rheumatology",
+    "topic": "Rheumatology",
+    "icon": "bone",
+    "cards": [
+      {
+        "q": "What autoantibodies are most sensitive and most specific for Systemic Lupus Erythematosus (SLE)?",
+        "a": "• <b>Most Sensitive:</b> <b>ANA</b> (Antinuclear Antibody) &mdash; positive in > 95% of cases; good screening test.<br>• <b>Most Specific:</b> <b>Anti-dsDNA</b> (correlated with lupus nephritis activity) and <b>Anti-Smith (anti-Sm)</b> antibodies."
+      },
+      {
+        "q": "What antibody is associated with Drug-Induced Lupus, and which organs are typically spared?",
+        "a": "• <b>Antibody:</b> <b>Anti-Histone Antibodies</b> (present in > 95% of cases).<br>• <b>Spared Organs:</b> The <b>kidneys and central nervous system (CNS)</b> are rarely affected (unlike systemic SLE). Common drugs include hydralazine, procainamide, and isoniazid."
+      },
+      {
+        "q": "What antibody is associated with neonatal lupus and congenital heart block?",
+        "a": "<b>Anti-Ro/SSA</b> antibodies (cross the placenta and can damage the fetal cardiac conduction system, leading to congenital third-degree heart block)."
+      },
+      {
+        "q": "Describe the clinical presentation of Rheumatoid Arthritis (RA) and joint distribution.",
+        "a": "• <b>Presentation:</b> Symmetric inflammatory arthritis, <b>morning stiffness lasting > 1 hour</b> that improves with use, constitutional symptoms.<br>• <b>Distribution:</b> Affects MCP and PIP joints of hands, wrists, and MTP joints of feet. <b>Spares the DIP joints</b> (unlike osteoarthritis)."
+      },
+      {
+        "q": "What autoantibody is most specific for Rheumatoid Arthritis (RA)?",
+        "a": "<b>Anti-Cyclic Citrullinated Peptide (anti-CCP)</b> antibody (specificity > 95%). Rheumatoid Factor (RF) is sensitive but less specific."
+      },
+      {
+        "q": "What is the first-line disease-modifying antirheumatic drug (DMARD) of choice for RA, and what is its main toxicity?",
+        "a": "• <b>Drug:</b> <b>Methotrexate</b>.<br>• <b>Toxicity:</b> Hepatotoxicity, stomatitis/oral ulcers, bone marrow suppression, and pulmonary fibrosis. <b>Folic acid supplementation</b> is co-administered to reduce side effects. Absolutely contraindicated in pregnancy."
+      },
+      {
+        "q": "What screening must be performed before starting a patient on anti-TNF DMARDs (e.g., Infliximab, Adalimumab, Etanercept)?",
+        "a": "Screening for <b>latent Tuberculosis</b> (via PPD or interferon-gamma release assay [IGRA]) and Hepatitis B. Anti-TNF agents can cause reactivation of latent TB (due to breakdown of granulomas)."
+      },
+      {
+        "q": "Describe the classic clinical features and X-ray findings of Ankylosing Spondylitis.",
+        "a": "Seronegative spondyloarthropathy associated with <b>HLA-B27</b>.<br><br><b>Clinical:</b> Young male with chronic low back pain that is <b>worse at rest/night</b> and <b>improves with exercise</b>; enthesitis; anterior uveitis.<br><b>X-ray:</b> Sacroiliitis (earliest finding), syndesmophytes leading to <b>bamboo spine</b>."
+      },
+      {
+        "q": "What is the classic clinical triad of Reactive Arthritis (formerly Reiter Syndrome)?",
+        "a": "Mnemonic: 'Can't see, can't pee, can't climb a tree.'<br>1. <b>Conjunctivitis / Uveitis</b><br>2. <b>Urethritis / Cervicitis</b><br>3. <b>Asymmetric Oligoarthritis</b><br><i>Etiology:</i> Occurs weeks after a GI (<i>Salmonella, Shigella, Campylobacter</i>) or GU (<i>Chlamydia trachomatis</i>) infection."
+      },
+      {
+        "q": "What are the X-ray findings in Psoriatic Arthritis?",
+        "a": "Asymmetric inflammatory arthritis in patients with psoriasis. Classic X-ray finding in fingers is the <b>'pencil-in-cup' deformity</b>."
+      },
+      {
+        "q": "How do you differentiate Gout from Pseudogout on joint fluid analysis under polarized light microscopy?",
+        "a": "• <b>Gout:</b> <b>Monosodium urate</b> crystals; <b>needle-shaped</b>, <b>negatively birefringent</b> (yellow when parallel to the compensator axis).<br>• <b>Pseudogout (CPPD):</b> <b>Calcium pyrophosphate</b> crystals; <b>rhomboid/weekly positive birefringent</b> (blue when parallel)."
+      },
+      {
+        "q": "What is the first-line pharmacotherapy for an acute Gout flare?",
+        "a": "<b>NSAIDs</b> (e.g., Indomethacin), <b>Colchicine</b>, or systemic/intra-articular <b>Corticosteroids</b>.<br><i>Note:</i> Do not initiate or change the dose of allopurinol during an acute flare, as shifting uric acid levels can worsen the inflammation."
+      },
+      {
+        "q": "What is the mechanism of action and primary indication for Allopurinol in gout?",
+        "a": "• <b>Mechanism:</b> <b>Xanthine oxidase inhibitor</b>, blocking the conversion of hypoxanthine to xanthine, and xanthine to uric acid.<br>• <b>Indication:</b> Long-term chronic gout prevention (uratelowering therapy). Check for <b>HLA-B*5801 allele</b> in Asian patients before starting (high risk of SJS/DRESS)."
+      },
+      {
+        "q": "Describe the clinical features and risk of Giant Cell (Temporal) Arteritis (GCA).",
+        "a": "Large-vessel vasculitis in patients aged > 50.<br><br><b>Presentation:</b> Unilateral headache, jaw claudication (highly specific), scalp tenderness, high ESR (> 50–100). Strongly associated with Polymyalgia Rheumatica.<br><b>Risk:</b> <b>Anterior ischemic optic neuropathy</b> causing permanent blindness."
+      },
+      {
+        "q": "What is the next best step in management for a patient with suspected Giant Cell Arteritis?",
+        "a": "Immediate initiation of <b>high-dose systemic Corticosteroids</b> (e.g., prednisone 60 mg daily). <b>Do not wait for temporal artery biopsy results</b> to start steroids, as delaying treatment can lead to irreversible blindness."
+      },
+      {
+        "q": "What medium-vessel vasculitis is classically associated with Hepatitis B infection, and what organ system is spared?",
+        "a": "• <b>Vasculitis:</b> <b>Polyarteritis Nodosa (PAN)</b> (necrotizing vasculitis of medium arteries, leading to microaneurysms 'string of pearls' appearance on angiography).<br>• <b>Spared System:</b> The <b>lungs / pulmonary circulation</b> are spared."
+      },
+      {
+        "q": "Contrast Granulomatosis with Polyangiitis (GPA / Wegener's) and Microscopic Polyangiitis (MPA) by antibody association and clinical involvement.",
+        "a": "• <b>GPA:</b> Associated with <b>c-ANCA</b> (anti-PR3). Triad of <b>upper respiratory tract</b> (sinusitis, saddle nose, otitis), <b>lower respiratory tract</b> (cavitary nodules/hemoptysis), and <b>renal</b> (pauci-immune crescentic GN). Histology shows granulomas.<br>• <b>MPA:</b> Associated with <b>p-ANCA</b> (anti-MPO). Similar lung/renal involvement but <b>spares the upper respiratory tract</b>. Histology shows necrotizing vasculitis <i>without</i> granulomas."
+      },
+      {
+        "q": "What is the antibody profile and clinical features of Diffuse Systemic Sclerosis?",
+        "a": "Widespread skin involvement (trunk and proximal limbs) + early visceral organ disease (renal crisis, interstitial lung disease).<br><br><b>Antibody:</b> <b>Anti-Scl-70 (Anti-Topoisomerase I)</b> antibody."
+      },
+      {
+        "q": "What is Limited Systemic Sclerosis (CREST Syndrome), and what is its associated autoantibody?",
+        "a": "Skin involvement limited to face and distal extremities.<br><br><b>CREST:</b> <b>C</b>alcinosis cutis, <b>R</b>aynaud's phenomenon, <b>E</b>sophageal dysmotility, <b>S</b>clerodactyly, <b>T</b>elangiectasias.<br><b>Antibody:</b> <b>Anti-Centromere</b> antibody.<br><i>Complication:</i> Pulmonary Arterial Hypertension (PAH)."
+      },
+      {
+        "q": "What is Scleroderma Renal Crisis, and what is the treatment of choice?",
+        "a": "Sudden onset of severe malignant hypertension, oliguric acute kidney injury, and microangiopathic hemolytic anemia.<br><br><b>Treatment of Choice:</b> <b>ACE Inhibitors</b> (specifically Captopril, short-acting). Steroids are avoided as they can precipitate a renal crisis."
+      },
+      {
+        "q": "Compare Polymyositis and Dermatomyositis by biopsy histology and skin findings.",
+        "a": "Both present with symmetric proximal muscle weakness, elevated CK/aldolase, and <b>anti-Jo-1</b> antibodies.<br>• <b>Polymyositis:</b> Endomysial CD8+ T-cell infiltration. No skin findings.<br>• <b>Dermatomyositis:</b> Perimysial CD4+ T-cell infiltration (perifascicular atrophy). Skin findings include <b>Heliotrope rash</b> (purple eyelids), <b>Gottron papules</b> (scaly plaques on knuckles), and shawl sign. Strongly associated with underlying malignancy."
+      },
+      {
+        "q": "Describe the clinical presentation of Polymyalgia Rheumatica (PMR) and its lab profile.",
+        "a": "• <b>Presentation:</b> Pain and stiffness in the shoulder and pelvic girdles in a patient > 50 years. <b>No objective muscle weakness</b> on exam (unlike myositis).<br>• <b>Labs:</b> Significantly elevated ESR/CRP; normal CK and aldolase.<br>• <b>Treatment:</b> Rapid response to <b>low-dose prednisone</b> (10–20 mg/day)."
+      },
+      {
+        "q": "What is Fibromyalgia, and how is it diagnosed and managed?",
+        "a": "Chronic widespread pain syndrome.<br><br><b>Diagnosis:</b> Widespread pain for &ge; 3 months + &ge; 11 of 18 specific tender points on exam. Normal inflammatory markers (ESR, CRP) and normal CK.<br><b>Management:</b> Regular aerobic exercise, sleep hygiene, and tricyclic antidepressants (<b>Amitriptyline</b>) or SNRIs (Duloxetine)."
+      },
+      {
+        "q": "What is Sjogren's Syndrome, and what autoantibodies are associated?",
+        "a": "Autoimmune destruction of exocrine glands (salivary and lacrimal).<br><br><b>Presentation:</b> Keratoconjunctivitis sicca (dry eyes), xerostomia (dry mouth), dental cavities. Positive Schirmer test (measures tear production).<br><b>Antibodies:</b> <b>Anti-Ro/SSA</b> and <b>Anti-La/SSB</b>.<br><i>Complication:</i> 40-fold increased risk of <b>B-cell non-Hodgkin Lymphoma</b>."
+      },
+      {
+        "q": "What is Antiphospholipid Syndrome (APS), and what are its diagnostic criteria?",
+        "a": "Hypercoagulable state requiring at least 1 clinical and 1 laboratory criterion:<br>• <b>Clinical:</b> Vascular thrombosis (arterial or venous) OR pregnancy morbidity (&ge; 3 consecutive miscarriages < 10 weeks, or &ge; 1 premature birth due to preeclampsia/placental insufficiency).<br>• <b>Labs:</b> <b>Lupus anticoagulant</b>, <b>anticardiolipin IgG/IgM</b>, or <b>anti-beta-2-glycoprotein I IgG/IgM</b> on 2 occasions 12 weeks apart."
+      },
+      {
+        "q": "Why does a patient with Antiphospholipid Syndrome paradoxically have a prolonged PTT on routine labs?",
+        "a": "Lupus anticoagulant antibodies bind to the phospholipid reagents used in the PTT assay, preventing clotting in vitro (prolonging PTT). This prolongation <b>does not correct</b> in a 1:1 mixing study, yet in vivo it causes a highly hypercoagulable state."
+      },
+      {
+        "q": "What is Behçet's Disease, and what is the pathergy test?",
+        "a": "Systemic vasculitis of variable-sized vessels.<br><br><b>Presentation:</b> Recurrent, painful <b>oral aphthous ulcers</b> + <b>genital ulcers</b> + uveitis + erythema nodosum.<br><b>Pathergy Test:</b> Sterile pustule formation 24–48 hours after skin puncture with a sterile needle (demonstrates hyper-reactivity)."
+      },
+      {
+        "q": "What antibody is highly specific for Mixed Connective Tissue Disease (MCTD)?",
+        "a": "<b>Anti-U1-RNP</b> (ribonucleoprotein) antibody."
+      },
+      {
+        "q": "What is the autoantibody association in Drug-Induced Lupus vs. Systemic Lupus?",
+        "a": "• Drug-Induced Lupus: <b>Anti-histone antibodies</b> (95%), ANA (99%), anti-dsDNA (< 5%).<br>• Systemic Lupus: ANA (> 95%), <b>anti-dsDNA</b> (70%), <b>anti-Smith</b> (30%), anti-histone (< 30%)."
+      },
+      {
+        "q": "What are the common side effects of Hydroxychloroquine, and what monitoring is required?",
+        "a": "Used as baseline therapy in SLE.<br><br><b>Side Effect:</b> <b>Retinal toxicity</b> (maculopathy / 'bull's-eye' retinopathy).<br><b>Monitoring:</b> Baseline and annual ophthalmologic examinations (slit-lamp, visual fields, OCT) after 5 years of use."
+      },
+      {
+        "q": "What is IgA Vasculitis (Henoch-Schönlein Purpura) clinical presentation, and what is its histology?",
+        "a": "• <b>Presentation:</b> Palpable purpura on lower extremities, abdominal pain, arthralgia, and hematuria (IgA nephropathy) in a child.<br>• <b>Histology:</b> Leukocytoclastic vasculitis with deposition of IgA immune complexes in vessel walls."
+      },
+      {
+        "q": "Describe the clinical features and risk of Kawasaki Disease.",
+        "a": "Medium-vessel vasculitis in children.<br><br><b>Presentation:</b> Fever &ge; 5 days + &ge; 4 of: conjunctival injection, oral changes (strawberry tongue, cracked lips), cervical lymphadenopathy, polymorphous rash, extremity changes (desquamation, erythema of palms/soles).<br><b>Risk:</b> <b>Coronary artery aneurysms</b>."
+      },
+      {
+        "q": "What is the treatment of choice for Kawasaki Disease?",
+        "a": "IV <b>Immunoglobulin (IVIG)</b> + <b>High-dose Aspirin</b> (reduces risk of coronary artery aneurysm).<br><i>Note:</i> This is one of the rare indications where aspirin is given to children despite the risk of Reye syndrome."
+      },
+      {
+        "q": "Describe the clinical features of Churg-Strauss Syndrome (Eosinophilic Granulomatosis with Polyangiitis, EGPA).",
+        "a": "Small-vessel vasculitis.<br><br><b>Presentation:</b> Severe <b>asthma</b>, chronic rhinosinusitis, transient pulmonary infiltrates, mononeuritis multiplex, and marked peripheral <b>eosinophilia</b>. Associated with <b>p-ANCA</b>."
+      },
+      {
+        "q": "What is Buerger's Disease (Thromboangiitis Obliterans), and what is the key treatment?",
+        "a": "Segmental, thrombosing vasculitis of small/medium vessels in extremities.<br><br><b>Presentation:</b> Male smoker < 45 years with distal extremity ischemia, gangrene, autoamputation, and superficial migratory thrombophlebitis.<br><b>Treatment:</b> Complete <b>smoking cessation</b> (only effective therapy)."
+      },
+      {
+        "q": "What is the diagnostic test of choice for Sjögren's syndrome if serologies are negative?",
+        "a": "<b>Minor salivary gland biopsy</b> (lip biopsy) showing focal lymphocytic sialadenitis."
+      },
+      {
+        "q": "Explain the difference in joint pain improvement between Osteoarthritis (OA) and Rheumatoid Arthritis (RA).",
+        "a": "• <b>Osteoarthritis:</b> Pain is <b>worse with activity/use</b>, improves with rest. Morning stiffness is short-lived (< 30 minutes).<br>• <b>Rheumatoid Arthritis:</b> Pain and stiffness are <b>worse in the morning / after inactivity</b>, and improve with movement/exercise."
+      },
+      {
+        "q": "What physical exam findings differentiate Osteoarthritis from Rheumatoid Arthritis in the hands?",
+        "a": "• <b>Osteoarthritis:</b> Heberden's nodes (DIP joints) and Bouchard's nodes (PIP joints). Hard and bony.<br>• <b>Rheumatoid Arthritis:</b> Swan-neck deformity, boutonniere deformity, ulnar deviation of MCP joints. Soft, warm, and boggy."
+      },
+      {
+        "q": "What is Felty Syndrome, and what is its associated risk?",
+        "a": "A severe complication of long-standing Rheumatoid Arthritis.<br><br><b>Triad:</b><br>1. Rheumatoid Arthritis<br>2. Splenomegaly<br>3. Neutropenia<br><i>Associated with:</i> High risk of recurrent bacterial infections."
+      },
+      {
+        "q": "What is the clinical presentation and management of a patient presenting with an acute, hot, swollen joint (Monoarthritis)?",
+        "a": "• <b>Presentation:</b> Warm, red, tender monoarticular swelling with limited range of motion. Must assume <b>Septic Arthritis</b>.<br>• <b>Immediate Step:</b> <b>Arthrocentesis</b> (joint aspiration) to obtain synovial fluid for Gram stain, culture, cell count (septic is > 50,000 WBC with > 75% PMNs), and crystal analysis."
+      },
+      {
+        "q": "What is the empiric antibiotic therapy for a patient with suspected Septic Arthritis?",
+        "a": "IV <b>Vancomycin</b> (covers Gram-positives/MRSA) + IV <b>Ceftriaxone</b> or Ceftazidime (covers Gram-negatives/Pseudomonas)."
+      },
+      {
+        "q": "What is the treatment of choice for Raynaud's Phenomenon?",
+        "a": "• <b>Non-pharmacologic:</b> Keep hands warm, avoid smoking/caffeine.<br>• <b>Pharmacologic:</b> Dihydropyridine <b>Calcium Channel Blockers</b> (e.g., Nifedipine, Amlodipine) to promote vasodilation."
+      },
+      {
+        "q": "Describe the clinical presentation of Adult-Onset Still's Disease (AOSD).",
+        "a": "Inflammatory disorder presenting with <b>high spiking daily fevers</b>, a salmon-pink maculopapular rash (transient, occurs during fever spikes), polyarthritis, hepatosplenomegaly, and extremely high serum <b>ferritin</b> levels (> 10,000 ng/mL)."
+      },
+      {
+        "q": "What is the mechanism of bone loss in glucocorticoid-induced osteoporosis, and how is it managed?",
+        "a": "• <b>Mechanism:</b> Steroids inhibit osteoblast function, stimulate osteoclast activity, and decrease GI calcium absorption.<br>• <b>Management:</b> Initiate calcium + Vitamin D supplementation + <b>bisphosphonates</b> for patients on prednisone &ge; 7.5 mg/day for &ge; 3 months."
+      },
+      {
+        "q": "What is the clinical presentation and pathophysiology of Paget's Disease of Bone?",
+        "a": "Disordered bone remodeling (hyperactive osteoclasts followed by chaotic osteoblast bone deposition).<br><br><b>Presentation:</b> Bone pain, increasing hat size, hearing loss (due to narrowing of auditory canal), high <b>Alkaline Phosphatase (ALP)</b> with normal calcium/phosphate.<br><b>X-ray:</b> Osteolytic and osteoblastic lesions, thickened cortex.<br><b>Treatment:</b> Bisphosphonates."
+      },
+      {
+        "q": "Describe the antibody association and clinical features of Antiphospholipid Syndrome (APS) during pregnancy.",
+        "a": "Lupus anticoagulant or anticardiolipin antibodies promote thrombosis in placental vessels, leading to placental infarction and recurrent miscarriages. Treated with low-dose aspirin + prophylactic LMWH (heparin) during pregnancy."
+      },
+      {
+        "q": "What is the clinical significance of a positive HLA-B27?",
+        "a": "Associated with seronegative spondyloarthropathies: Ankylosing Spondylitis, Reactive Arthritis, Psoriatic Arthritis, Enteropathic Arthritis. HLA-B27 is present in 90% of AS patients but only 8% of the general population."
+      },
+      {
+        "q": "What is the difference between inflammatory and non-inflammatory synovial fluid based on WBC count?",
+        "a": "• <b>Non-inflammatory (e.g., Osteoarthritis):</b> WBC < 2,000 cells/mm\\(^3\\).<br>• <b>Inflammatory (e.g., RA, Gout):</b> WBC 2,000–50,000 cells/mm\\(^3\\).<br>• <b>Septic:</b> WBC > 50,000 cells/mm\\(^3\\)."
+      },
+      {
+        "q": "What is the clinical presentation of Fibromyalgia tender points?",
+        "a": "18 specific tender points located at insertion sites of muscles (e.g., occiput, low cervical, trapezius, supraspinatus, second rib, lateral epicondyle, gluteal, greater trochanter, knee). Digital palpation with ~4 kg of pressure triggers localized pain without radiation."
+      },
+      {
+        "q": "Name the key side effects of Leflunomide in RA management.",
+        "a": "Inhibits pyrimidine synthesis (dihydroorotate dehydrogenase).<br><br><b>Side Effects:</b> Diarrhea, hepatotoxicity, hypertension, alopecia, and severe <b>teratogenicity</b> (must be washed out with cholestyramine before pregnancy)."
+      }
+    ]
+  },
+  {
+    "section": "Infectious Disease",
+    "topic": "Infectious Disease",
+    "icon": "bug",
+    "cards": [
+      {
+        "q": "What is the empiric antibiotic regimen for bacterial meningitis in adults aged 1 month to 50 years?",
+        "a": "IV <b>Ceftriaxone</b> (or Cefotaxime) + IV <b>Vancomycin</b> + IV <b>Dexamethasone</b>.<br><i>Note:</i> Dexamethasone is administered before or with the first dose of antibiotics to reduce risk of hearing loss/neurological sequelae from <i>Streptococcus pneumoniae</i>."
+      },
+      {
+        "q": "What is the empiric antibiotic regimen for bacterial meningitis in adults aged > 50 years or immunocompromised patients?",
+        "a": "IV <b>Ceftriaxone</b> + IV <b>Vancomycin</b> + IV <b>Ampicillin</b> (covers <i>Listeria monocytogenes</i>) + IV <b>Dexamethasone</b>."
+      },
+      {
+        "q": "Compare the CSF findings of Bacterial, Viral, and Fungal/Tubercular Meningitis.",
+        "a": "• <b>Bacterial:</b> WBC <b>> 1,000</b> (mostly PMNs), <b>elevated protein</b> (> 250), <b>low glucose</b> (< 40, or ratio < 0.4), elevated opening pressure.<br>• <b>Viral:</b> WBC 10–500 (mostly lymphocytes), normal/mild protein, <b>normal glucose</b>, normal/mild opening pressure.<br>• <b>Fungal/TB:</b> WBC 100–500 (mostly lymphocytes), elevated protein, <b>low glucose</b>, elevated opening pressure."
+      },
+      {
+        "q": "State the CD4 threshold and prophylaxis of choice for Pneumocystis pneumonia (PCP) in HIV.",
+        "a": "• <b>CD4 Threshold:</b> <b>< 200 cells/\\(\\mu\\)L</b>.<br>• <b>Prophylaxis of Choice:</b> <b>Trimethoprim-Sulfamethoxazole (TMP-SMX)</b> (daily or 3x/week).<br><i>Alternative:</i> Dapsone or inhaled pentamidine (if sulfa-allergic)."
+      },
+      {
+        "q": "State the CD4 threshold, clinical presentation, and prophylaxis of choice for Toxoplasma gondii in HIV.",
+        "a": "• <b>CD4 Threshold:</b> <b>< 100 cells/\\(\\mu\\)L</b> (in patients with positive Toxoplasma IgG serology).<br>• <b>Prophylaxis:</b> <b>TMP-SMX</b> (daily).<br>• <b>Presentation:</b> Multiple ring-enhancing brain lesions on MRI with focal deficits. Treated with pyrimethamine + sulfadiazine."
+      },
+      {
+        "q": "State the CD4 threshold, clinical presentation, and prophylaxis of choice for Mycobacterium avium complex (MAC) in HIV.",
+        "a": "• <b>CD4 Threshold:</b> <b>< 50 cells/\\(\\mu\\)L</b>.<br>• <b>Prophylaxis:</b> <b>Azithromycin</b> (weekly).<br><i>Note:</i> MAC prophylaxis is no longer routinely recommended in patients who immediately start antiretroviral therapy (ART), but remains highly tested.<br>• <b>Presentation:</b> Fever, night sweats, weight loss, diarrhea, splenomegaly, elevated alkaline phosphatase."
+      },
+      {
+        "q": "What is the clinical presentation and treatment of choice for Lyme Disease stages?",
+        "a": "Caused by <i>Borrelia burgdorferi</i> transmitted by <i>Ixodes</i> ticks.<br><br><b>Stages & Treatment:</b><br>• <b>Early Localized:</b> Erythema migrans ('bull's-eye' rash). Treatment: Oral <b>Doxycycline</b> (Amoxicillin or cefuroxime in pregnant women or children < 8 years).<br>• <b>Early Disseminated:</b> Bilateral Bell's palsy, AV heart block. Treatment: IV <b>Ceftriaxone</b> (for carditis or meningitis).<br>• <b>Late:</b> Lyme arthritis. Treatment: Oral doxycycline."
+      },
+      {
+        "q": "What is the diagnostic algorithm for screening and confirming Syphilis?",
+        "a": "1. <b>Screening (Nontreponemal):</b> <b>VDRL</b> or <b>RPR</b> (sensitive but non-specific; titers used to monitor treatment response).<br>2. <b>Confirmation (Treponemal):</b> <b>FTA-ABS</b> or <b>TP-PA</b> (specific for <i>Treponema pallidum</i>; remains positive for life regardless of treatment)."
+      },
+      {
+        "q": "What is the treatment of choice for Syphilis by stage?",
+        "a": "• <b>Primary, Secondary, or Early Latent:</b> A single IM dose of <b>Benzathine Penicillin G (2.4 million units)</b>.<br>• <b>Late Latent or Unknown Duration:</b> Three doses of IM Benzathine Penicillin G (weekly intervals).<br>• <b>Neurosyphilis:</b> IV <b>Aqueous Penicillin G</b> for 10–14 days.<br><i>Note:</i> Pregnant patients with penicillin allergy must be desensitized and treated with penicillin."
+      },
+      {
+        "q": "What is the Jarisch-Herxheimer Reaction, and how is it managed?",
+        "a": "Acute febrile reaction (fever, chills, headache, myalgias, worsening rash) occurring within 24 hours of starting penicillin therapy for syphilis, caused by rapid lysis of spirochetes releasing endotoxins.<br><br><b>Management:</b> Supportive (NSAIDs, fluids, rest); self-limiting."
+      },
+      {
+        "q": "What is the diagnostic criteria and treatment of choice for uncomplicated acute Cystitis?",
+        "a": "• <b>Diagnosis:</b> Dysuria, frequency, urgency, absence of vaginal discharge, positive nitrite/leukocyte esterase on urinalysis.<br>• <b>First-line Treatment:</b> Nitrofurantoin (5 days), TMP-SMX (3 days), or Fosfomycin (1 dose). Avoid nitrofurantoin if eGFR < 30."
+      },
+      {
+        "q": "What are the indications for screening and treating Asymptomatic Bacteriuria?",
+        "a": "Only indicated for:<br>1. <b>Pregnant women</b> (at 12–16 weeks gestation; untreated bacteriuria leads to pyelonephritis and low birth weight).<br>2. Patients undergoing <b>invasive urological procedures</b> involving mucosal bleeding."
+      },
+      {
+        "q": "What is the outpatient and inpatient treatment of choice for acute Pyelonephritis?",
+        "a": "• <b>Outpatient (mild/moderate, hemodynamically stable):</b> Oral <b>Ciprofloxacin</b> or Levofloxacin for 7 days.<br>• <b>Inpatient (severe, vomiting, pregnant, hemodynamically unstable):</b> IV <b>Ceftriaxone</b>, Cefepime, or Piperacillin-tazobactam, transitioned to oral therapy once afebrile for 24–48 hours."
+      },
+      {
+        "q": "What is the diagnostic gold standard for confirming Osteomyelitis?",
+        "a": "<b>Bone biopsy with histopathology and culture</b>. Superficial wound cultures are unreliable."
+      },
+      {
+        "q": "Name the key toxicities of the RIPE antitubercular regimen.",
+        "a": "• <b>R:</b> Rifampin &rarr; Hepatotoxicity, <b>red-orange discoloration of bodily fluids</b>, potent CYP450 inducer.<br>• <b>I:</b> Isoniazid &rarr; Hepatotoxicity, <b>peripheral neuropathy</b> (prevented by co-administering <b>Pyridoxine / Vitamin B6</b>), drug-induced lupus.<br>• <b>P:</b> Pyrazinamide &rarr; Hepatotoxicity, <b>hyperuricemia</b> (can trigger gout).<br>• <b>E:</b> Ethambutol &rarr; <b>Optic Neuritis</b> (reversible loss of red-green color vision, blurry vision)."
+      },
+      {
+        "q": "What is the diagnostic test of choice and treatment for Clostridioides difficile infection (CDI)?",
+        "a": "• <b>Diagnostic Test:</b> C. diff toxin PCR or enzyme immunoassay (EIA) in stool.<br>• <b>Treatment:</b> Oral <b>Vancomycin</b> 125 mg QID or oral <b>Fidaxomicin</b> 200 mg BID for 10 days."
+      },
+      {
+        "q": "Define Neutropenic Fever and its immediate management.",
+        "a": "• <b>Definition:</b> A single oral temperature <b>&ge; 38.3°C (101°F)</b> or &ge; 38.0°C (100.4°F) sustained for 1 hour, in a patient with absolute neutrophil count (ANC) <b>< 500 cells/\\(\\mu\\)L</b>.<br>• <b>Immediate Management:</b> Obtain blood cultures and start empiric IV <b>antipseudomonal monotherapy</b> (e.g., <b>Cefepime</b>, Piperacillin-tazobactam, or Meropenem) within 1 hour. Do not wait for labs/cultures."
+      },
+      {
+        "q": "What is the definition of SIRS (Systemic Inflammatory Response Syndrome) criteria?",
+        "a": "Requires &ge; 2 of the following:<br>1. Temp > 38°C (100.4°F) or < 36°C (96.8°F).<br>2. HR > 90 bpm.<br>3. RR > 20/min or \\(P_aCO_2\\) < 32 mmHg.<br>4. WBC > 12,000, < 4,000, or > 10% bands."
+      },
+      {
+        "q": "What are the components of the quick SOFA (qSOFA) score used to identify patients at risk of poor sepsis outcomes?",
+        "a": "Requires &ge; 2 of the following:<br>1. <b>Altered mental status</b> (GCS < 15).<br>2. <b>Tachypnea</b> (RR &ge; 22/min).<br>3. <b>Hypotension</b> (Systolic BP &le; 100 mmHg)."
+      },
+      {
+        "q": "How is Septic Shock defined clinical-hemodynamically?",
+        "a": "Sepsis with persistent hypotension requiring <b>vasopressors</b> to maintain a mean arterial pressure (MAP) <b>&ge; 65 mmHg</b>, and a serum <b>lactate level > 2 mmol/L</b> despite adequate volume resuscitation."
+      },
+      {
+        "q": "How do you clinically differentiate Cellulitis from Erysipelas?",
+        "a": "• <b>Erysipelas:</b> Involves the upper dermis and superficial lymphatics (most commonly caused by <i>Streptococcus pyogenes</i>). Presents as a bright-red, raised, indurated rash with <b>sharp, well-demarcated borders</b>.<br>• <b>Cellulitis:</b> Involves the deep dermis and subcutaneous fat (caused by <i>S. pyogenes</i> or <i>S. aureus</i>). Presents as warm, flat, erythematous swelling with <b>poorly-demarcated, diffuse borders</b>."
+      },
+      {
+        "q": "What is the clinical presentation and management of Necrotizing Fasciitis?",
+        "a": "Severe, deep tissue infection involving muscle fascia.<br><br><b>Presentation:</b> <b>Pain out of proportion to physical exam</b>, rapid progression of swelling/erythema, crepitus, purple bullae, and gas on imaging.<br><b>Management:</b> Immediate <b>surgical debridement</b> (priority) + empiric broad-spectrum antibiotics (Vancomycin + Piperacillin-tazobactam + Clindamycin &mdash; clindamycin inhibits toxin production)."
+      },
+      {
+        "q": "What is Infectious Mononucleosis, and what counseling is critical?",
+        "a": "Caused by Epstein-Barr Virus (EBV).<br><br><b>Presentation:</b> Fever, pharyngitis with tonsillar exudates, posterior cervical lymphadenopathy, atypical lymphocytes, positive monospot test (heterophile antibodies).<br><b>Counseling:</b> <b>Avoid contact sports for &ge; 3–4 weeks</b> due to the risk of <b>splenic rupture</b>."
+      },
+      {
+        "q": "Why does a patient with mononucleosis develop a diffuse maculopapular rash after receiving Ampicillin or Amoxicillin?",
+        "a": "A benign, immune-mediated drug reaction (not a true allergy) that occurs in &ge; 80% of patients with EBV infection who are treated with aminopenicillins."
+      },
+      {
+        "q": "What is the treatment window and drug of choice for uncomplicated Influenza?",
+        "a": "• <b>Drug:</b> <b>Oseltamivir</b> (Tamiflu) &mdash; neuraminidase inhibitor.<br>• <b>Window:</b> Initiated within <b>48 hours of symptom onset</b>. Patients with severe disease (hospitalized) or high-risk factors (elderly, pregnant, comorbid) receive treatment even after 48 hours."
+      },
+      {
+        "q": "Contrast the treatment of Plasmodium falciparum vs. Plasmodium vivax/ovale malaria.",
+        "a": "• <b>P. falciparum (uncomplicated):</b> Artemether-lumefantrine or Atovaquone-proguanil.<br>• <b>P. vivax / P. ovale:</b> Chloroquine + <b>Primaquine</b>. Primaquine is required to eradicate the dormant liver form (<b>hypnozoites</b>) to prevent relapses. You must screen for <b>G6PD deficiency</b> before giving primaquine (causes severe hemolysis)."
+      },
+      {
+        "q": "What is the treatment of choice for severe malaria?",
+        "a": "IV <b>Artesunate</b> (preferred over IV quinidine)."
+      },
+      {
+        "q": "What is the treatment of choice for Cat-Scratch Disease?",
+        "a": "Caused by <i>Bartonella henselae</i>.<br><br><b>Presentation:</b> Painful, unilateral lymphadenopathy near a scratch site.<br><b>Treatment:</b> Oral <b>Azithromycin</b> (shortens duration of lymphadenopathy)."
+      },
+      {
+        "q": "What is the treatment of choice for animal/human bites, and what organism are we targeting?",
+        "a": "• <b>First-line Treatment:</b> Oral <b>Amoxicillin-Clavulanate</b> (Augmentin).<br>• <b>Pathogens:</b> <b>Pasteurella multocida</b> (dog/cat bites), <b>Eikenella corrodens</b> (human bites), and oral anaerobes."
+      },
+      {
+        "q": "What is the prophylaxis strategy for suspected Rabies exposure in an unvaccinated patient?",
+        "a": "<b>Post-Exposure Prophylaxis (PEP):</b><br>1. Immediate wound cleansing.<br>2. <b>Rabies Immune Globulin (RIG)</b>: Infiltrated around the wound site.<br>3. <b>Rabies Vaccine</b>: 4-dose series (days 0, 3, 7, 14) administered IM in the deltoid."
+      },
+      {
+        "q": "Describe the clinical features and risk factors for secondary/reactivation Tuberculosis.",
+        "a": "Reactivation of latent TB (usually in upper lobes of lungs).<br><br><b>Presentation:</b> Productive cough, hemoptysis, night sweats, weight loss, low-grade fever.<br><b>Risk factors:</b> TNF-alpha inhibitor use, HIV, immunosuppressive therapy, silicosis."
+      },
+      {
+        "q": "What is Extrapulmonary Tuberculosis in the spine called, and what are its features?",
+        "a": "<b>Pott's Disease</b>. Tuberculous osteomyelitis of the spine. Presents with chronic back pain, thoracic kyphosis (gibbus deformity), and cold paraspinal abscesses."
+      },
+      {
+        "q": "What is the clinical presentation and management of toxic shock syndrome (TSS)?",
+        "a": "Superantigen-mediated disease caused by TSS toxin-1 (TSST-1) from <i>Staphylococcus aureus</i> (tampons, nasal packing, wound infection) or exotoxins from <i>Streptococcus pyogenes</i>.<br><br><b>Presentation:</b> High fever, hypotension, diffuse erythroderma (sunburn-like rash followed by desquamation of palms/soles), multi-organ failure.<br><b>Treatment:</b> IV fluids, wound debridement, and IV antibiotics (Vancomycin + Clindamycin)."
+      },
+      {
+        "q": "Describe the clinical presentation of Cryptococcal Meningitis in HIV, and the diagnostic test.",
+        "a": "• <b>Presentation:</b> Subacute headache, fever, neck stiffness (often minimal). CD4 typically < 100.<br>• <b>Diagnosis:</b> <b>Cryptococcal antigen (CrAg)</b> in CSF or serum. CSF opening pressure is often very high. India ink shows encapsulated yeast.<br>• <b>Treatment:</b> Amphotericin B + Flucytosine, followed by long-term Fluconazole."
+      },
+      {
+        "q": "What is the treatment of choice for pulmonary Nocardiosis vs. Actinomycosis?",
+        "a": "• <b>Nocardia</b> (acid-fast, branching, filamentous): <b>TMP-SMX</b>. Mnemonic: <b>S</b>nap (<b>S</b>ulfonamides for <b>N</b>ocardia).<br>• <b>Actinomyces</b> (non-acid-fast, sulfur granules): <b>Penicillin G</b>. Mnemonic: <b>A</b>bandon (<b>A</b>ctinomyces gets <b>P</b>enicillin)."
+      },
+      {
+        "q": "What is the treatment of choice for a patient with suspected Mucormycosis?",
+        "a": "Angioinvasive fungal infection seen in diabetic ketoacidosis (DKA) or neutropenia.<br><br><b>Presentation:</b> Black eschar on nasal turbinates/palate, orbital swelling, cranial nerve palsies.<br><b>Treatment:</b> Immediate <b>surgical debridement</b> + IV <b>Liposomal Amphotericin B</b>."
+      },
+      {
+        "q": "What is the prophylaxis strategy for Pneumocystis pneumonia (PCP) in a patient with a severe sulfa allergy?",
+        "a": "Oral <b>Dapsone</b> or <b>Atovaquone</b> suspension (or monthly inhaled pentamidine)."
+      },
+      {
+        "q": "Describe the clinical features and diagnostic test for Histoplasmosis.",
+        "a": "Endemic mycosis of Ohio/Mississippi River valleys (bat/bird droppings).<br><br><b>Presentation:</b> Pneumonia, hepatosplenomegaly, palatal ulcers in immunocompromised.<br><b>Diagnosis:</b> <b>Histoplasma urinary antigen</b> test (high sensitivity in disseminated disease). Histology shows small intracellular yeasts inside macrophages."
+      },
+      {
+        "q": "What is the treatment of choice for Coccidioidomycosis vs. Blastomycosis?",
+        "a": "• <b>Coccidioidomycosis</b> (Southwest US/desert, spherules on biopsy): Fluconazole for mild; Amphotericin B for severe.<br>• <b>Blastomycosis</b> (Great Lakes/broad-based budding yeast): Itraconazole for mild; Amphotericin B for severe."
+      },
+      {
+        "q": "What are the indications for prophylaxis against Mycobacterium avium complex (MAC) in HIV?",
+        "a": "MAC prophylaxis with azithromycin is only recommended for CD4 < 50 <b>who are not on effective ART</b>. If ART is initiated immediately, MAC prophylaxis is not required because immune reconstitution occurs."
+      },
+      {
+        "q": "Describe the presentation and diagnostic features of Brucellosis.",
+        "a": "Exposure to unpasteurized dairy products or infected livestock.<br><br><b>Presentation:</b> Undulant (rising and falling) fever, night sweats with moldy odor, arthralgias/osteomyelitis of spine.<br><b>Diagnosis:</b> Blood cultures, Brucella serologies."
+      },
+      {
+        "q": "What is the treatment of choice for Brucellosis?",
+        "a": "<b>Doxycycline</b> + <b>Rifampin</b> (or Gentamicin) for &ge; 6 weeks."
+      },
+      {
+        "q": "What are the clinical manifestations of leptospirosis, and what is its severe form called?",
+        "a": "Exposure to water contaminated with animal urine (rodents, dogs).<br><br><b>Presentation:</b> Flu-like symptoms, conjunctival suffusion (redness without exudate), muscle pain.<br><b>Weil's Disease:</b> Severe form with renal failure, jaundice, and hemorrhage."
+      },
+      {
+        "q": "What is the treatment of choice for Leptospirosis?",
+        "a": "Oral Doxycycline for mild; IV Penicillin G for severe."
+      },
+      {
+        "q": "What is the clinical presentation and diagnostic findings of Ehrlichiosis vs. Anaplasmosis?",
+        "a": "Tick-borne diseases causing flu-like symptoms and cytopenias.<br>• <b>Ehrlichiosis:</b> Transmitted by Lone Star tick. Histology shows morulae inside <b>monocytes</b>.<br>• <b>Anaplasmosis:</b> Transmitted by Ixodes tick. Histology shows morulae inside <b>granulocytes/neutrophils</b>.<br><b>Treatment:</b> Doxycycline."
+      },
+      {
+        "q": "What is the presentation of primary, secondary, and tertiary Lyme disease?",
+        "a": "• Primary: Erythema migrans.<br>• Secondary: Multiple erythema migrans lesions, AV blocks, carditis, unilateral/bilateral facial nerve palsy.<br>• Tertiary: Encephalopathy, polyneuropathy, chronic large joint arthritis (e.g., knee)."
+      },
+      {
+        "q": "What is the next best step for a patient presenting with suspected Lyme disease and erythema migrans?",
+        "a": "<b>Immediate empiric treatment</b> with oral Doxycycline. Do not perform Lyme serologies (ELISA/Western blot) in early localized disease, as antibodies have not yet formed and testing is insensitive."
+      },
+      {
+        "q": "What is the most common cause of traveler's diarrhea, and what is the treatment of choice?",
+        "a": "• <b>Pathogen:</b> Enterotoxigenic E. coli (ETEC).<br>• <b>Treatment:</b> Hydration. Fluoroquinolones (ciprofloxacin) or Azithromycin (preferred in pregnant women/children and travelers to Southeast Asia due to Campylobacter resistance) for severe/febrile cases."
+      },
+      {
+        "q": "What is the clinical presentation and diagnostic findings of typhoid fever?",
+        "a": "Caused by <i>Salmonella typhi</i>.<br><br><b>Presentation:</b> Fever with bradycardia (Faget's sign), abdominal pain, <b>rose spots</b> (faint salmon-colored macules on chest/abdomen), splenomegaly, and leukopenia.<br><b>Treatment:</b> Ceftriaxone or Fluoroquinolones."
+      },
+      {
+        "q": "What is the drug of choice for empirical treatment of severe community-acquired sepsis of unknown origin?",
+        "a": "IV <b>Piperacillin-Tazobactam</b> or Cefepime + IV <b>Vancomycin</b> (covers MRSA and Pseudomonas)."
+      }
+    ]
+  },
+  {
+    "section": "Allergy/Immunology",
+    "topic": "Allergy/Immunology",
+    "icon": "shield-alert",
+    "cards": [
+      {
+        "q": "What is the immediate drug of choice and route of administration for Anaphylaxis?",
+        "a": "<b>Intramuscular Epinephrine</b> (0.3 mg in adults, 0.15 mg in children; 1:1000 concentration) administered in the <b>anterolateral thigh</b>.<br><i>Note:</i> IM administration achieves faster and more reliable plasma levels than subcutaneous injection. Antihistamines and steroids are secondary therapies and do not treat airway obstruction or hypotension."
+      },
+      {
+        "q": "What is the genetic defect and clinical presentation of Bruton (X-linked) Agammaglobulinemia?",
+        "a": "Mutation in the <b>Bruton Tyrosine Kinase (BTK)</b> gene, leading to block in B-cell maturation.<br><br><b>Presentation:</b> Recurrent sinopulmonary and GI infections (e.g., <i>S. pneumoniae, H. influenzae, Giardia</i>) starting after 6 months of age (after maternal IgG wanes). Lymph nodes and tonsils are absent/hypoplastic.<br><b>Labs:</b> Absent/decreased B cells (CD19/CD20) and decreased all immunoglobulins."
+      },
+      {
+        "q": "Compare Common Variable Immunodeficiency (CVID) and Bruton Agammaglobulinemia by B-cell count and age of onset.",
+        "a": "• <b>CVID:</b> Presents in late childhood / young adulthood (typically 20s–30s). <b>Normal numbers of B cells</b>, but they cannot differentiate into plasma cells. Decreased immunoglobulins.<br>• <b>Bruton's:</b> Presents in infancy (> 6 months). <b>Absent B cells</b>."
+      },
+      {
+        "q": "What is Selective IgA Deficiency, and what critical transfusion risk is associated with it?",
+        "a": "Most common primary immunodeficiency. Often asymptomatic; presents with recurrent sinopulmonary and GI infections, celiac disease, and allergies.<br><br><b>Transfusion Risk:</b> <b>Anaphylaxis during blood transfusions</b>, caused by anti-IgA IgE antibodies reacting against IgA present in donor blood/plasma. Requires washed RBC transfusions."
+      },
+      {
+        "q": "What are the key genetic defects, clinical presentation, and treatment of Severe Combined Immunodeficiency (SCID)?",
+        "a": "• <b>Defects:</b> X-linked IL-2 receptor gamma chain mutation (most common) or autosomal recessive adenosine deaminase (ADA) deficiency.<br>• <b>Presentation:</b> Failure to thrive, chronic diarrhea, thrush, and recurrent severe infections (viral, bacterial, fungal, opportunistic) in infancy.<br>• <b>Labs:</b> Absent T cells, absent/nonfunctional B cells, and absent thymic shadow.<br>• <b>Treatment:</b> Stem cell transplant (curative)."
+      },
+      {
+        "q": "What is the defect and presentation of Hyper-IgM Syndrome?",
+        "a": "Defect in <b>CD40 Ligand (CD40L)</b> on T cells, preventing class-switch recombination in B cells.<br><br><b>Labs:</b> <b>Elevated/normal IgM</b> with severely <b>low IgG, IgA, and IgE</b>.<br><b>Presentation:</b> Recurrent bacterial infections + opportunistic infections (PCP pneumonia, Cryptosporidium diarrhea due to impaired macrophage activation)."
+      },
+      {
+        "q": "What is the genetic defect and classic triad of Wiskott-Aldrich Syndrome?",
+        "a": "Mutation in the <b>WASP</b> gene (impaired actin cytoskeleton reorganization in leukocytes and platelets).<br><br><b>Classic Triad (Mnemonic: WATER):</b><br>1. <b>W</b>iskott-<b>A</b>ldrich<br>2. <b>T</b>hrombocytopenia (presents with <b>microthrombocytes / small platelets</b> and bleeding)<br>3. <b>E</b>czema<br>4. <b>R</b>ecurrent infections (progressive loss of T/B cells)."
+      },
+      {
+        "q": "What is the enzymatic defect, diagnostic test of choice, and common pathogens in Chronic Granulomatous Disease (CGD)?",
+        "a": "• <b>Defect:</b> <b>NADPH Oxidase deficiency</b> &rarr; inability of neutrophils to generate superoxide/reactive oxygen species (impaired respiratory burst).<br>• <b>Pathogens:</b> Recurrent infections/abscesses with <b>catalase-positive organisms</b> (which degrade their own \\(H_2O_2\\), leaving neutrophils without substrate; e.g., <i>Staphylococcus aureus, Aspergillus, Nocardia, Serratia marcescens, Burkholderia cepacia</i>).<br>• <b>Diagnosis:</b> <b>Dihydrorhodamine (DHR) flow cytometry</b> (preferred, shows absent green fluorescence) or Nitroblue tetrazolium (NBT) slide test."
+      },
+      {
+        "q": "What is Hereditary Angioedema, and what is contraindicated?",
+        "a": "Autosomal dominant deficiency of <b>C1 Esterase Inhibitor</b>, leading to unregulated activation of kallikrein-kinin system and accumulation of <b>bradykinin</b>.<br><br><b>Presentation:</b> Recurrent episodes of painless, non-pruritic angioedema (face, limbs, larynx) <i>without urticaria</i>. Low C4 levels during episodes.<br><b>Contraindicated:</b> <b>ACE Inhibitors</b> (which block bradykinin breakdown, triggering life-threatening attacks)."
+      },
+      {
+        "q": "Name the 4 types of Hypersensitivity Reactions and their mechanisms.",
+        "a": "• <b>Type I (Immediate):</b> IgE-mediated mast cell and basophil degranulation (e.g., anaphylaxis, asthma).<br>• <b>Type II (Cytotoxic):</b> IgG/IgM antibodies binding cell-surface antigens &rarr; complement or macrophage phagocytosis (e.g., autoimmune hemolytic anemia, Goodpasture's).<br>• <b>Type III (Immune Complex):</b> Antigen-antibody complexes depositing in tissues &rarr; complement/neutrophil activation (e.g., SLE, Serum Sickness, PSGN).<br>• <b>Type IV (Delayed):</b> T-cell mediated (helper or cytotoxic) tissue damage; takes 48–72 hours (e.g., contact dermatitis, tuberculin skin test)."
+      },
+      {
+        "q": "What is Serum Sickness, and what is its hypersensitivity type and clinical presentation?",
+        "a": "• <b>Hypersensitivity:</b> <b>Type III</b> (immune complex deposition). Occurs 1–2 weeks after administration of foreign protein/drug (e.g., penicillin, monoclonal antibodies).<br>• <b>Presentation:</b> Triad of <b>fever, urticarial rash, and arthralgias</b>, with lymphadenopathy and low complement (C3/C4) levels."
+      },
+      {
+        "q": "What is the genetic defect and clinical triad of DiGeorge Syndrome?",
+        "a": "Mnemonic: CATCH-22.<br>Microdeletion on chromosome <b>22q11.2</b> leading to failure of the <b>3rd and 4th pharyngeal pouches</b> to develop.<br><br><b>Triad:</b><br>1. Hypocalcemic tetany/seizures (due to absent parathyroids)<br>2. Thymic hypoplasia (causing T-cell deficiency)<br>3. Conotruncal cardiac anomalies (Tetralogy of Fallot, truncated arteriosus). Abnormally low T-cell count."
+      },
+      {
+        "q": "What is the defect and clinical features of Leukocyte Adhesion Deficiency Type 1 (LAD-1)?",
+        "a": "Autosomal recessive defect in <b>CD18 / LFA-1 integrin</b> (integrin beta-2), preventing leukocyte adhesion and migration into tissues.<br><br><b>Clinical Features:</b><br>1. <b>Delayed separation of the umbilical cord</b> (> 30 days).<br>2. Recurrent skin/mucosal infections <b>without pus formation</b> (no neutrophils can reach the tissue).<br>3. Extreme leukocytosis / neutrophilia (neutrophils trapped in blood vessels)."
+      },
+      {
+        "q": "What is the defect and clinical features of Chediak-Higashi Syndrome?",
+        "a": "Autosomal recessive mutation in the <b>LYST</b> gene (impaired lysosomal-trafficking regulator causing defective vesicle fusion).<br><br><b>Clinical Features:</b><br>1. <b>Partial oculocutaneous albinism</b>.<br>2. Recurrent pyogenic infections (neutrophils cannot kill bacteria).<br>3. Progressive peripheral neuropathy.<br>4. Giant lysosomal granules inside neutrophils on blood smear."
+      },
+      {
+        "q": "What is Hyper-IgE Syndrome (Job Syndrome)?",
+        "a": "Autosomal dominant mutation in the <b>STAT3</b> gene, causing impaired Th17 differentiation and neutrophil recruitment.<br><br><b>FATED Mnemonic:</b><br>• <b>F</b>acies (coarse facial features)<br>• <b>A</b>bscesses (recurrent <b>cold staphylococcal abscesses</b> &mdash; lacking warmth/erythema due to no inflammatory response)<br>• <b>T</b>eeth (retained primary teeth)<br>• <b>E</b>levated IgE (often > 2,000)<br>• <b>D</b>ermatitis (eczema)."
+      },
+      {
+        "q": "What immunodeficiency is characterized by cerebellar ataxia, oculocutaneous telangiectasias, recurrent sinopulmonary infections, and high risk of cancer?",
+        "a": "<b>Ataxia-Telangiectasia</b>.<br><br><b>Defect:</b> Mutation in the <b>ATM</b> gene (defective double-strand DNA repair).<br><b>Labs:</b> IgA deficiency, lymphopenia, and <b>elevated Alpha-Fetoprotein (AFP)</b>."
+      },
+      {
+        "q": "Compare the clinical presentation of early complement (C1, C2, C4) vs. late complement (C5-C9) deficiencies.",
+        "a": "• <b>Early Complement (C1, C2, C4) Deficiency:</b> Impaired clearance of immune complexes. Strongly predisposes to developing <b>SLE</b> (systemic lupus).<br>• <b>Late Complement (C5–C9) Deficiency:</b> Inability to form the Membrane Attack Complex (MAC). Predisposes to recurrent, severe <b>Neisseria</b> infections (e.g., meningococcal meningitis, disseminated gonorrhea)."
+      },
+      {
+        "q": "What is the diagnosis of a patient presenting with high fever, hypotension, and a diffuse sunburn-like rash after using nasal packing?",
+        "a": "<b>Staphylococcal Toxic Shock Syndrome (TSS)</b>.<br><br><b>Pathophysiology:</b> TSST-1 acts as a <b>superantigen</b> that binds directly to the MHC II and T-cell receptor (TCR) beta chain, causing massive activation of T cells and cytokine storm (TNF-alpha, IL-1, IFN-gamma). Treated with IV fluids and clindamycin + vancomycin."
+      },
+      {
+        "q": "How do you differentiate a food-induced Type I hypersensitivity reaction from food intolerance?",
+        "a": "• <b>Type I Hypersensitivity:</b> Mediated by IgE. Occurs within minutes to 2 hours of ingestion; involves pruritus, urticaria, angioedema, wheezing, vomiting, or anaphylaxis.<br>• <b>Food Intolerance (e.g., lactose):</b> Non-immune-mediated. Involves localized GI symptoms (cramping, bloating, diarrhea) without systemic or IgE-mediated signs."
+      },
+      {
+        "q": "What is the first-line long-term controller therapy for moderate-to-severe Allergic Rhinitis?",
+        "a": "<b>Intranasal Glucocorticoid Sprays</b> (e.g., Fluticasone, Budesonide). They are more effective than oral antihistamines for treating nasal congestion."
+      },
+      {
+        "q": "Define the immunology of allergic asthma.",
+        "a": "Exposure to allergens triggers a <b>Th2-dominated response</b>, producing IL-4 (stimulates IgE class switching), IL-5 (activates eosinophils), and IL-13 (stimulates mucus production and airway hyperresponsiveness)."
+      },
+      {
+        "q": "What is the utility of a C1 Esterase Inhibitor level and function test in suspected angioedema?",
+        "a": "A low C1 inhibitor level or function confirms Hereditary Angioedema. During an acute flare, C4 level is also invariably low and serves as an excellent screening test."
+      },
+      {
+        "q": "What is the emergency management of laryngeal edema in a patient with hereditary angioedema?",
+        "a": "Give IV <b>C1 Esterase Inhibitor concentrate</b>, <b>Ecallantide</b> (kallikrein inhibitor), or <b>Icatibant</b> (bradykinin receptor antagonist). Secure the airway. Epinephrine, antihistamines, and steroids are ineffective."
+      },
+      {
+        "q": "What is the drug of choice for allergic bronchopulmonary aspergillosis (ABPA)?",
+        "a": "Hypersensitivity reaction to <i>Aspergillus fumigatus</i> in asthma/CF patients.<br><br><b>Treatment:</b> Systemic <b>Corticosteroids</b> + oral <b>Itraconazole</b> (voriconazole)."
+      },
+      {
+        "q": "Describe the clinical features of an IgA-mediated anaphylactic transfusion reaction.",
+        "a": "Occurs within seconds of starting blood transfusion in an IgA-deficient patient. Presents with sudden hypotension, bronchospasm, urticaria, and respiratory distress. Stop transfusion immediately and administer epinephrine."
+      },
+      {
+        "q": "What is the treatment of choice for chronic urticaria refractory to standard antihistamines?",
+        "a": "Add <b>Omalizumab</b> (monoclonal anti-IgE antibody) or increase H1-antihistamine dose up to 4-fold."
+      },
+      {
+        "q": "What primary immunodeficiency presents with recurrent infections and is associated with thymus hypoplasia and midline defects?",
+        "a": "<b>DiGeorge Syndrome</b> (22q11.2 deletion)."
+      },
+      {
+        "q": "Explain the difference in immune response between live-attenuated and inactivated vaccines.",
+        "a": "• <b>Live-Attenuated (e.g., MMR, Varicella):</b> Triggers both <b>humoral (antibody) and cell-mediated (T-cell) immunity</b>. Long-lasting protection. Contraindicated in immunocompromised and pregnancy.<br>• <b>Inactivated/subunit:</b> Triggers primarily <b>humoral immunity</b>. Often requires boosters and adjuvants."
+      },
+      {
+        "q": "What immunodeficiency is characterized by recurrent sinopulmonary infections with encapsulated organisms, combined with autoimmune diseases and splenomegaly?",
+        "a": "<b>Common Variable Immunodeficiency (CVID)</b>."
+      },
+      {
+        "q": "What is the immunology of poison ivy contact dermatitis?",
+        "a": "Type IV delayed-type hypersensitivity. Urushiol from the plant acts as a hapten, binding to skin proteins. Langerhans cells present it to T cells, sensitizing them. Re-exposure triggers CD8+ T-cell-mediated epidermal cell apoptosis, causing vesicles/pruritus 48h later."
+      },
+      {
+        "q": "What is the treatment of choice for moderate-to-severe contact dermatitis involving the face or hands?",
+        "a": "A <b>2–3 week taper of oral Prednisone</b>. Short courses (< 2 weeks) often lead to rebound flares."
+      },
+      {
+        "q": "What laboratory marker is elevated in systemic mastocytosis, and what is its role?",
+        "a": "• <b>Marker:</b> Elevated serum <b>tryptase</b> (released by mast cell degranulation).<br>• <b>Pathophysiology:</b> Clonal mast cell proliferation (KIT D816V mutation) causing flushing, abdominal pain, diarrhea, pruritus, and anaphylaxis."
+      },
+      {
+        "q": "What primary immunodeficiency is characterized by recurrent infections with catalase-positive organisms?",
+        "a": "<b>Chronic Granulomatous Disease (CGD)</b>."
+      },
+      {
+        "q": "What is the inheritance and screening recommendation for relatives of patients with CVID?",
+        "a": "Sporadic in most cases, but family members should be screened with quantitative immunoglobulin levels (IgG, IgA, IgM) as subclinical cases can exist."
+      },
+      {
+        "q": "What is the primary treatment for patients with Bruton's Agammaglobulinemia or CVID?",
+        "a": "Regular lifelong administration of <b>Intravenous Immunoglobulin (IVIG)</b> or Subcutaneous Immunoglobulin (SCIG) to provide passive immunity against pathogens."
+      },
+      {
+        "q": "Why is IVIG therapy ineffective for preventing infections in patients with SCID?",
+        "a": "While IVIG provides antibodies, it does not replace the missing <b>T-cell cellular immunity</b>, which is required to fight viral, fungal, and opportunistic infections. Patients with SCID still die of infections without a stem cell transplant."
+      },
+      {
+        "q": "What is the clinical presentation and management of acute serum sickness-like reaction in a child?",
+        "a": "• <b>Presentation:</b> Fever, urticaria, and polyarthralgias occurring 1–3 weeks after starting an antibiotic (commonly cefaclor, amoxicillin). Normal complement levels (unlike true serum sickness).<br>• <b>Management:</b> Discontinue the offending drug, administer antihistamines and oral steroids if severe; self-limiting."
+      },
+      {
+        "q": "What complement factor deficiency is associated with systemic lupus erythematosus?",
+        "a": "Deficiency of <b>C1q, C1r, C1s, C4, or C2</b> (leads to failed clearance of apoptotic cells, triggering autoantibody production)."
+      },
+      {
+        "q": "Explain the difference in immune mechanism between Hereditary Angioedema (HAE) and allergic angioedema.",
+        "a": "• <b>HAE:</b> Mediated by <b>bradykinin</b> (no urticaria, no pruritus, no response to epinephrine/antihistamines).<br>• <b>Allergic Angioedema:</b> Mediated by <b>histamine</b> (accompanied by urticaria/hives, pruritus, responds well to antihistamines/epinephrine)."
+      },
+      {
+        "q": "What antibody is highly associated with idiopathic anaphylaxis or systemic mastocytosis?",
+        "a": "Not an antibody, but the KIT D816V mutation in mast cells. No specific IgE antibody is identified, but serum tryptase levels are elevated."
+      },
+      {
+        "q": "What is the primary immunological defect in patients with Job Syndrome?",
+        "a": "Deficiency of Th17 helper T cells, leading to impaired recruitment of neutrophils to sites of infection."
+      },
+      {
+        "q": "What immunodeficiency is characterized by giant granules inside neutrophils?",
+        "a": "<b>Chediak-Higashi Syndrome</b>."
+      },
+      {
+        "q": "Explain the difference in inheritance between Bruton's Agammaglobulinemia and CVID.",
+        "a": "• Bruton's: X-linked recessive (BTK gene). Affects males.<br>• CVID: Autosomal dominant or polygenic/sporadic. Affects both males and females."
+      },
+      {
+        "q": "What is the drug of choice for allergic conjunctivitis?",
+        "a": "Topical antihistamines with mast cell stabilizing properties (e.g., <b>Olopatadine</b> or Ketotifen)."
+      },
+      {
+        "q": "What is the definition of cold urticaria, and how is it diagnosed?",
+        "a": "Physical urticaria triggered by cold exposure.<br><br><b>Diagnosis:</b> <b>Ice Cube Test</b> (placement of an ice cube on the forearm for 5 minutes triggers a localized hive/wheal upon rewarming)."
+      },
+      {
+        "q": "What is the treatment of choice for cold urticaria?",
+        "a": "Second-generation H1 antihistamines (e.g., cetirizine) at standard or high doses."
+      },
+      {
+        "q": "What primary immunodeficiency presents with microthrombocytopenia?",
+        "a": "<b>Wiskott-Aldrich Syndrome</b>."
+      },
+      {
+        "q": "What is the role of IgE antibodies in parasite defense?",
+        "a": "Parasitic antigens crosslink IgE bound to IgE receptors on eosinophils, triggering eosinophil degranulation and release of Major Basic Protein, which is toxic to helminths."
+      },
+      {
+        "q": "What immunodeficiency is associated with delayed separation of the umbilical cord?",
+        "a": "<b>Leukocyte Adhesion Deficiency (LAD-1)</b>."
+      },
+      {
+        "q": "What is the primary treatment for severe IgA anaphylactic transfusion reaction?",
+        "a": "Immediate injection of IM Epinephrine (1:1000) + airway protection, followed by IV fluids and antihistamines. Discontinue transfusion."
+      }
+    ]
+  },
+  {
+    "section": "Dermatology",
+    "topic": "Dermatology",
+    "icon": "layers",
+    "cards": [
+      {
+        "q": "Compare Pemphigus Vulgaris and Bullous Pemphigoid by target antigen, blister description, and mucosal involvement.",
+        "a": "• <b>Pemphigus Vulgaris:</b> Autoantibodies against <b>desmoglein-1 / desmoglein-3</b> (desmosomes). Blisters are <b>flaccid</b>, easily ruptured, and <b>mucosal involvement is common</b>.<br>• <b>Bullous Pemphigoid:</b> Autoantibodies against <b>hemidesmosomes</b> (dystrophin BP180/BP230). Blisters are <b>tense</b>, pruritic, and <b>mucosal involvement is rare</b>."
+      },
+      {
+        "q": "Compare Pemphigus Vulgaris and Bullous Pemphigoid by Nikolsky Sign and immunofluorescence pattern.",
+        "a": "• <b>Pemphigus Vulgaris:</b> <b>Nikolsky positive</b> (gentle rubbing sloughs skin). Immunofluorescence shows intercellular IgG/C3 in a <b>'net-like' / chicken-wire</b> pattern.<br>• <b>Bullous Pemphigoid:</b> <b>Nikolsky negative</b>. Immunofluorescence shows IgG/C3 deposition in a <b>linear band along the basement membrane zone</b>."
+      },
+      {
+        "q": "What is the pathophysiology, body surface area threshold, and clinical management of SJS vs. TEN?",
+        "a": "Severe, life-threatening drug reaction causing widespread keratinocyte apoptosis.<br><br><b>Thresholds:</b><br>• <b>Stevens-Johnson Syndrome (SJS):</b> <b>< 10%</b> body surface area (BSA) epidermal detachment.<br>• <b>SJS/TEN Overlap:</b> 10–30% BSA.<br>• <b>Toxic Epidermal Necrolysis (TEN):</b> <b>> 30%</b> BSA.<br><b>Management:</b> Immediate discontinuation of offending drug, admission to a <b>burn unit</b>, supportive fluid resuscitation; Nikolsky positive, mucosal involvement (mouth, eyes, genitals)."
+      },
+      {
+        "q": "What is the most important prognostic factor for cutaneous Melanoma, and how is it managed?",
+        "a": "• <b>Prognostic Factor:</b> <b>Breslow Depth</b> (thickness of the tumor in millimeters from the granular layer of the epidermis to the deepest tumor cell).<br>• <b>Management:</b> Wide local excision with surgical margins determined by Breslow depth. Sentinel lymph node biopsy is indicated for depth &ge; 0.8 mm."
+      },
+      {
+        "q": "What are the ABCDE criteria for screening suspicious pigmented lesions for melanoma?",
+        "a": "• <b>A:</b> <b>A</b>symmetry.<br>• <b>B:</b> <b>B</b>order irregularity.<br>• <b>C:</b> <b>C</b>olor variation (multiple shades).<br>• <b>D:</b> <b>D</b>iameter &ge; 6 mm.<br>• <b>E:</b> <b>E</b>volving (changing in size, shape, color, or symptoms like itching/bleeding)."
+      },
+      {
+        "q": "What is Psoriasis Vulgaris, and what are the classic clinical signs on exam?",
+        "a": "Chronic inflammatory skin disease mediated by Th17/IL-17.<br><br><b>Signs:</b> Well-demarcated erythematous plaques with <b>silvery scales</b> on extensor surfaces (elbows, knees).<br>• <b>Koebner Phenomenon:</b> New plaques forming at sites of skin trauma.<br>• <b>Auspitz Sign:</b> Pinpoint bleeding when silvery scales are scraped off."
+      },
+      {
+        "q": "Describe the clinical presentation of Atopic Dermatitis (Eczema) by age group.",
+        "a": "Mnemonic: 'Itch that rashes.' Pruritic, erythematous, dry skin.<br>• <b>Infants:</b> Affects the <b>face, scalp, and extensor surfaces</b> of limbs.<br>• <b>Children/Adults:</b> Affects the <b>flexural creases</b> (antecubital and popliteal fossae), neck, and hands."
+      },
+      {
+        "q": "What is Erythema Multiforme, and what are its most common etiologies?",
+        "a": "Type IV hypersensitivity reaction presenting with classic <b>targetoid lesions</b> (three zones: dusky center, pale ring, erythematous halo) on extremities.<br><br><b>Etiologies:</b> Most commonly triggered by <b>Herpes Simplex Virus (HSV)</b> or <i>Mycoplasma pneumoniae</i>; can also be drug-induced (sulfas, anticonvulsants)."
+      },
+      {
+        "q": "What clinical conditions are associated with Acanthosis Nigricans?",
+        "a": "Hyperpigmented, velvety plaques in intertriginous areas (axilla, neck).<br><br><b>Associations:</b> Insulin resistance (diabetes, obesity, PCOS). If sudden, severe, and eruptive, it indicates <b>Gastric Adenocarcinoma</b> (malignant acanthosis nigricans)."
+      },
+      {
+        "q": "What is Rosacea, and how do you differentiate it from Acne Vulgaris?",
+        "a": "Inflammatory dermatosis presenting with facial flushing, telangiectasias, papules, and pustules on cheeks/nose. Chronic cases lead to rhinophyma (bulbous nose).<br><br><b>Differentiating Feature:</b> Rosacea is characterized by the <b>absence of comedones</b> (blackheads/whiteheads), which are required for the diagnosis of acne."
+      },
+      {
+        "q": "What is the enzyme defect, clinical presentation, and triggers of Porphyria Cutanea Tarda (PCT)?",
+        "a": "Deficiency of <b>Uroporphyrinogen Decarboxylase (UROD)</b>.<br><br><b>Presentation:</b> Painful, blistering, and fragile skin in <b>sun-exposed areas</b> (back of hands), leading to hyperpigmentation, scarring, and facial hypertrichosis (excessive hair). Urine glows coral-red under Wood's lamp.<br><b>Triggers:</b> Alcohol, estrogen, iron overload, and strongly associated with <b>Hepatitis C infection</b>."
+      },
+      {
+        "q": "What is the clinical significance of Leser-Trélat Sign?",
+        "a": "Sudden eruption of multiple <b>seborrheic keratoses</b> (benign 'stuck-on' waxy lesions). Indicates an underlying <b>internal malignancy</b> (most commonly gastric adenocarcinoma) as a paraneoplastic syndrome."
+      },
+      {
+        "q": "What is the clinical presentation and histologic description of Basal Cell Carcinoma (BCC)?",
+        "a": "Most common skin cancer. Slow-growing, rarely metastasizes.<br><br><b>Presentation:</b> Pearly nodule with <b>telangiectasias</b> (prominent blood vessels) and central ulceration ('rodent ulcer') on sun-exposed head/neck.<br><b>Histology:</b> <b>Palisading nuclei</b> at the periphery of tumor nests."
+      },
+      {
+        "q": "What is Squamous Cell Carcinoma (SCC) of the skin, its precursor lesion, and histology?",
+        "a": "Second most common skin cancer. Has metastatic potential.<br><br><b>Precursor:</b> Actinic Keratosis (rough, scaly, sand-paper feel plaque on sun-exposed skin).<br><b>Presentation:</b> Ulcerated, scaling, or keratotic nodule/plaque. Histology shows <b>keratin pearls</b>."
+      },
+      {
+        "q": "What is Dermatitis Herpetiformis, its autoantibody target, and treatment of choice?",
+        "a": "Extremely pruritic vesicular eruption on extensor surfaces (elbows, knees, buttocks). Strongly associated with <b>Celiac Disease</b>.<br><br><b>Pathophysiology:</b> IgA antibodies react against epidermal transglutaminase, depositing as <b>granular IgA in dermal papillae</b>.<br><b>Treatment:</b> Gluten-free diet + oral <b>Dapsone</b> (provides rapid symptomatic relief)."
+      },
+      {
+        "q": "Describe the clinical features and etiologies of Erythema Nodosum.",
+        "a": "Inflammatory panniculitis (inflammation of subcutaneous fat).<br><br><b>Presentation:</b> Painful, erythematous, tender nodules on the <b>anterior shins</b>.<br><b>Etiologies:</b> Idiopathic, Strep infection, <b>Sarcoidosis</b> (Löfgren syndrome), <b>IBD</b>, Coccidioidomycosis, and drugs (oral contraceptives, sulfonamides)."
+      },
+      {
+        "q": "What is the clinical presentation, diagnosis, and treatment of Scabies?",
+        "a": "Infestation by <i>Sarcoptes scabiei</i> mites.<br><br><b>Presentation:</b> Intense nocturnal generalized pruritus with linear burrows in the <b>web spaces of fingers/wrists</b>, axillae, and groin.<br><b>Diagnosis:</b> Skin scraping demonstrating mites, eggs, or scybala (feces) under microscopy.<br><b>Treatment:</b> Topical <b>Permethrin 5% cream</b> (applied from neck down, washed off after 8–14 hours, repeated in 1 week) OR oral <b>Ivermectin</b>. Treat all close contacts."
+      },
+      {
+        "q": "What is Pityriasis Rosea, and what is its typical course?",
+        "a": "Self-limiting inflammatory dermatosis. Often associated with HHV-6 or HHV-7.<br><br><b>Presentation:</b> Starts with a single, large 2-10 cm <b>'Herald Patch'</b> on the trunk, followed 1-2 weeks later by a generalized eruption of smaller oval plaques along skin cleavage lines in a <b>'Christmas Tree' distribution</b>.<br><b>Course:</b> Self-limiting; resolves spontaneously in 4–8 weeks; symptomatic treatment."
+      },
+      {
+        "q": "What are the 5 Ps of Lichen Planus, and what key clinical associations exist?",
+        "a": "• <b>5 Ps:</b> <b>P</b>urple, <b>P</b>ruritic, <b>P</b>olygonal, <b>P</b>lanar <b>P</b>apules/Plaques, typically on flexor wrists and shins.<br>• <b>Wickham Striae:</b> Fine white reticular lines on the surface of papules or oral mucosa.<br>• <b>Association:</b> Strongly associated with <b>Hepatitis C</b> virus."
+      },
+      {
+        "q": "What is Alopecia Areata, its pathophysiology, and diagnostic hair finding?",
+        "a": "Autoimmune-mediated hair loss.<br><br><b>Presentation:</b> Smooth, circular, well-demarcated patches of hair loss on the scalp.<br><b>Hair Finding:</b> <b>'Exclamation point' hairs</b> (short, broken hairs that are narrower near the scalp).<br><b>Treatment:</b> Intralesional corticosteroids."
+      },
+      {
+        "q": "What is Vitiligo, and how is it clinically evaluated?",
+        "a": "Autoimmune destruction of melanocytes causing depigmented patches of skin.<br><br><b>Evaluation:</b> Clinically or using Wood's lamp (depigmented patches show bright blue-white fluorescence). Associated with other autoimmune diseases (Hashimoto's, Type 1 DM, Addison's)."
+      },
+      {
+        "q": "Describe the clinical presentation of Seborrheic Dermatitis and its first-line treatment.",
+        "a": "Inflammatory scaling dermatosis affecting areas with high sebaceous gland density (scalp, eyebrows, nasolabial folds, external ear canal). Associated with <i>Malassezia</i> yeast and highly prevalent in Parkinson's disease and HIV.<br><br><b>Presentation:</b> Erythematous plaques with <b>greasy, yellowish scales</b> ('cradle cap' in infants, dandruff in adults).<br><b>Treatment:</b> Topical antifungals (ketoconazole shampoo/cream) or low-potency topical steroids."
+      },
+      {
+        "q": "What is the diagnosis of a patient presenting with an expanding, painful, necrotic ulcer with a violaceous, ragged border, often associated with IBD?",
+        "a": "<b>Pyoderma Gangrenosum</b>.<br><br><b>Pathophysiology:</b> Neutrophilic dermatosis. Exhibits pathergy (worsens with trauma/biopsy). Associated with IBD, RA, and AML.<br><b>Treatment:</b> Systemic <b>Corticosteroids</b> or cyclosporine. Do not perform surgical debridement (pathergy will cause rapid expansion of the ulcer)."
+      },
+      {
+        "q": "How is Acne Vulgaris managed in a stepwise manner?",
+        "a": "• <b>Mild (comedonal):</b> Topical retinoids (tretinoin, adapalene) + benzoyl peroxide.<br>• <b>Moderate (inflammatory papules):</b> Add topical antibiotics (clindamycin) or oral antibiotics (doxycycline/sarecycline).<br>• <b>Severe (nodulocystic / scarring):</b> Oral <b>Isotretinoin</b> (Accutane)."
+      },
+      {
+        "q": "What are the critical monitoring and safety rules for initiating oral Isotretinoin (Accutane)?",
+        "a": "• <b>Toxicity:</b> Highly <b>teratogenic</b>.<br>• <b>Safety Rules (iPLEDGE):</b> Requires 2 negative pregnancy tests prior to initiation, monthly pregnancy tests, and use of 2 forms of contraception.<br>• <b>Monitoring:</b> Baseline and periodic monitoring of fasting lipids and LFTs (causes hypertriglyceridemia and hepatotoxicity)."
+      },
+      {
+        "q": "What is the treatment of choice for Tinea Versicolor?",
+        "a": "Caused by overgrowth of <i>Malassezia furfur</i>.<br><br><b>Presentation:</b> Hypopigmented or hyperpigmented macules on the chest/back that do not tan in summer. KOH prep shows <b>'spaghetti and meatballs'</b> appearance (short hyphae and yeast cells).<br><b>Treatment:</b> Topical <b>Selenium Sulfide</b> lotion or topical ketoconazole."
+      },
+      {
+        "q": "What is Erythema Toxicum Neonatorum, and what is the management?",
+        "a": "Benign neonatal rash appearing within 24–72 hours of birth. Presents as erythematous macules with central yellow/white pustules on the trunk/extremities, sparing palms and soles. Smear of pustule shows <b>eosinophils</b>.<br><br><b>Management:</b> Reassurance. Self-limiting, resolves in 1–2 weeks."
+      },
+      {
+        "q": "What is the clinical presentation and treatment of choice for Impetigo?",
+        "a": "Superficial bacterial skin infection (usually <i>S. aureus</i> or <i>S. pyogenes</i>).<br><br><b>Presentation:</b> Erythematous macules progressing to vesicles/pustules that rupture, forming <b>honey-colored crusts</b> on the face/mouth.<br><b>Treatment:</b> Topical <b>Mupirocin</b> for localized lesions; oral cephalexin for widespread (bullous) impetigo."
+      },
+      {
+        "q": "What is the clinical presentation of Molluscum Contigiosum, and what pathogen causes it?",
+        "a": "• <b>Pathogen:</b> Poxvirus.<br>• <b>Presentation:</b> Firm, dome-shaped, flesh-colored, <b>umbilicated papules</b> with a central dimple. Often self-limiting in children. Widespread facial lesions in adults suggest HIV infection."
+      },
+      {
+        "q": "What is the next best step for a patient presenting with suspected venous stasis dermatitis?",
+        "a": "Compression therapy, leg elevation, and emollients. Stasis dermatitis is caused by venous hypertension and valve incompetence, presenting as bilateral lower extremity erythema, hyperpigmentation (hemosiderin deposition), and medial malleolus ulcers."
+      },
+      {
+        "q": "Contrast the ulcers of Arterial Insufficiency vs. Venous Insufficiency vs. Neuropathic (Diabetic) disease.",
+        "a": "• <b>Arterial:</b> Located on <b>tips of toes / lateral malleolus</b>. Punched-out appearance, pale/necrotic base, very painful, cold skin, absent pulses.<br>• <b>Venous:</b> Located on <b>medial malleolus</b>. Irregular borders, wet/exudative, hyperpigmentation of surrounding skin, minimally painful, warm skin.<br>• <b>Neuropathic (Diabetic):</b> Located on <b>pressure points (soles of feet/plantar metatarsal heads)</b>. Deep, painless, surrounded by thick callus, warm skin."
+      },
+      {
+        "q": "What is Hidradenitis Suppurativa, and what is its chronic management?",
+        "a": "Chronic inflammatory occlusion of follicular infundibulum in apocrine gland-bearing areas (axillae, groin, perineum).<br><br><b>Presentation:</b> Recurrent painful nodules, abscesses, draining sinus tracts, and double-comedones leading to severe scarring.<br><b>Management:</b> Topical clindamycin for mild; oral tetracyclines for moderate; TNF inhibitors (adalimumab) or surgical excision of the entire gland-bearing area for severe."
+      },
+      {
+        "q": "Describe the clinical features of Erythema Infectiosum (Fifth Disease) and the causative pathogen.",
+        "a": "• <b>Pathogen:</b> <b>Parvovirus B19</b>.<br>• <b>Presentation:</b> Low-grade fever followed by a bright-red <b>'slapped-cheek' rash</b> on the face, which then spreads to the body as a reticular, lacy maculopapular eruption."
+      },
+      {
+        "q": "What is the clinical presentation of roseola infantum (sixth disease), and what pathogen causes it?",
+        "a": "• <b>Pathogen:</b> HHV-6 or HHV-7.<br>• <b>Presentation:</b> <b>High fever</b> (often > 104°F) for 3–5 days in an infant, which <b>resolves abruptly</b>, followed immediately by the onset of a rose-pink maculopapular rash on the trunk spreading to extremities."
+      },
+      {
+        "q": "What is the next best step for a patient presenting with suspected toxic epidermal necrolysis?",
+        "a": "<b>Discontinue all non-essential medications</b> immediately and admit the patient to an intensive care or burn unit for supportive fluid and electrolyte management."
+      },
+      {
+        "q": "Explain the difference in etiology between a cherry angioma and a strawberry (infantile) hemangioma.",
+        "a": "• <b>Cherry Angioma:</b> Benign vascular proliferation in adults. Bright red, small papules, increase with age. Do not regress.<br>• <b>Strawberry Hemangioma:</b> Benign capillary hemangioma of infancy. Appears within weeks of birth, grows rapidly, and then <b>regresses spontaneously</b> by age 5–9. Treated with beta-blockers (propranolol) if obstructing vision/airway."
+      },
+      {
+        "q": "What is the treatment of choice for a patient with tinea capitis?",
+        "a": "Oral <b>Griseofulvin</b> or oral <b>Terbinafine</b>. Topical antifungals are ineffective because they do not penetrate the hair shaft."
+      },
+      {
+        "q": "Describe the diagnostic test and treatment of choice for Intertrigo.",
+        "a": "Inflammation of skin folds caused by <i>Candida albicans</i>.<br><br><b>Presentation:</b> Erythematous macerated plaques in groin/axillae/under breasts with <b>satellite lesions</b> (small pustules nearby).<br><b>Diagnosis:</b> KOH prep showing pseudohyphae and budding yeast.<br><b>Treatment:</b> Topical <b>Nystatin</b> or topical Clotrimazole."
+      },
+      {
+        "q": "What is the clinical presentation of Actinic Keratosis, and why is it treated?",
+        "a": "• <b>Presentation:</b> Small, rough, scaly, erythematous papule with a sandpaper-like feel on sun-exposed skin (face, scalp, forearms).<br>• <b>Why:</b> It is a premalignant lesion that can progress to <b>Squamous Cell Carcinoma</b>. Treated with cryotherapy or topical 5-Fluorouracil (5-FU)."
+      },
+      {
+        "q": "What is the diagnosis of an elderly patient presenting with multiple waxy, stuck-on, brown plaques on the trunk?",
+        "a": "<b>Seborrheic Keratosis</b> (benign, non-malignant, no treatment required unless irritated)."
+      },
+      {
+        "q": "What is the treatment of choice for a patient presenting with localized Shingles (Herpes Zoster) within 72 hours of symptom onset?",
+        "a": "Oral <b>Valacyclovir</b> or Famciclovir for 7 days (reduces duration of rash and severity of postherpetic neuralgia)."
+      },
+      {
+        "q": "What is the definition of postherpetic neuralgia, and what is the treatment of choice?",
+        "a": "• <b>Definition:</b> Persistent pain lasting &ge; 4 months after the resolution of a shingles rash.<br>• <b>Treatment:</b> <b>Gabapentin</b>, Pregabalin, or Tricyclic Antidepressants (Amitriptyline)."
+      },
+      {
+        "q": "What is the clinical presentation and management of a keloid?",
+        "a": "Hypertrophic scar that <b>extends beyond the borders of the original wound</b>, caused by overproduction of collagen (Type I and III). Common in patients with dark skin.<br><br><b>Management:</b> Intralesional corticosteroid injections (triamcinolone). Surgical excision alone is contraindicated due to high recurrence rates."
+      },
+      {
+        "q": "What is the clinical presentation of bullous impetigo, and what toxin causes it?",
+        "a": "• <b>Presentation:</b> Large, flaccid, fluid-filled bullae that rupture, leaving scaly rim. Occurs in infants/young children.<br>• <b>Pathogenesis:</b> Caused by <i>Staphylococcus aureus</i> producing <b>exfoliative toxin A</b>, which targets desmoglein-1 (causing intraepidermal cleavage, similar to pemphigus)."
+      },
+      {
+        "q": "What is the clinical presentation and causative pathogen of Hand-Foot-Mouth Disease?",
+        "a": "• <b>Pathogen:</b> Coxsackievirus A16.<br>• <b>Presentation:</b> Painful oral ulcers (herpangina) + vesicular lesions on the palms of hands, soles of feet, and buttocks, accompanied by fever."
+      },
+      {
+        "q": "Describe the clinical features and management of Pityriasis Versicolor.",
+        "a": "Malassezia furfur overgrowth. Presents as hypo- or hyperpigmented macules on the upper chest/back that do not tan. Diagnosed by KOH prep showing short septate hyphae and spores. Treated with topical selenium sulfide."
+      },
+      {
+        "q": "What is the definition of Erythroderma (Exfoliative Dermatitis)?",
+        "a": "Inflammatory skin condition involving <b>&ge; 90%</b> of the body surface area with diffuse erythema and scaling. Can be caused by psoriasis, atopic dermatitis, drug reactions, or cutaneous T-cell lymphoma (Sezary syndrome). Requires hospitalization for fluid/electrolyte management."
+      },
+      {
+        "q": "Explain the difference in presentation between drug-induced urticaria and serum sickness-like reaction.",
+        "a": "• <b>Urticaria:</b> Type I IgE-mediated. Occurs within minutes/hours of drug administration. Presents as transient pruritic wheals.<br>• <b>Serum Sickness-like Reaction:</b> Type III immune-complex-mediated. Occurs 1-3 weeks after drug administration. Presents with fever, hives/rash, and joint pain."
+      },
+      {
+        "q": "What is the diagnosis of an infant presenting with scaling, yellow, greasy plaques on the scalp?",
+        "a": "<b>Seborrheic Dermatitis</b> (specifically 'cradle cap')."
+      },
+      {
+        "q": "What is the primary treatment for mild localized plaque psoriasis?",
+        "a": "Topical <b>Corticosteroids</b> (high-potency) + topical Vitamin D analogs (<b>Calcipotriene</b>)."
+      }
+    ]
+  }
+],
   "usmle3": []
 };
