@@ -1403,7 +1403,13 @@
         a: 'Savings depend on the complexity and size of your bill. Even a routine office visit can contain $50-200 in errors. For hospital stays, ER visits, or surgical bills, professionally identified overcharges frequently range from 15% to 50% of the total billed amount.'
       },
     ];
-    if (window.renderFAQ) renderFAQ('faq-home', homeFaqs);
+    if (window.renderFAQ) {
+      renderFAQ('faq-home', homeFaqs);
+    } else {
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.renderFAQ) renderFAQ('faq-home', homeFaqs);
+      });
+    }
   </script>
 </body>
 </html>
