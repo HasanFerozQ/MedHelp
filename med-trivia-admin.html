@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
@@ -42,6 +42,39 @@
       .history-table { display: block; overflow-x: auto; }
       .login-row { grid-template-columns: 1fr; }
     }
+
+    /* Management Education Styles */
+    :root {
+      --admin-primary: #6366f1;
+      --admin-primary-dark: #4f46e5;
+      --admin-glow: rgba(99, 102, 241, 0.2);
+    }
+    .f-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .f-full { grid-column: 1 / -1; }
+    .f-group label { display: block; font-size: 11px; font-weight: 800; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
+    .f-input, .f-select, .f-textarea { 
+      width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 14px; color: var(--text-h); font-size: 14px; outline: none; transition: 0.2s ease;
+    }
+    .f-input:focus, .f-select:focus, .f-textarea:focus { border-color: var(--admin-primary); box-shadow: 0 0 0 3px var(--admin-glow); }
+    .btn-submit {
+      background: var(--admin-primary); color: white; border: none; padding: 12px 24px; border-radius: 10px;
+      font-weight: 700; cursor: pointer; transition: 0.3s; width: 100%;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--admin-primary-dark); transform: translateY(-1px); box-shadow: 0 5px 15px var(--admin-glow); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .data-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-radius: 10px; background: rgba(255,255,255,0.02); margin-bottom: 8px; border: 1px solid var(--border); }
+    .data-info h4 { font-size: 14px; margin: 0 0 4px; font-weight: 600; }
+    .data-info p { font-size: 11px; color: var(--text-muted); margin: 0; }
+    #m-toast {
+      position: fixed; bottom: 40px; right: 40px; transform: translateX(150%);
+      background: var(--bg-card); border: 1px solid var(--border); padding: 18px 28px; border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-left: 5px solid var(--admin-primary); z-index: 10002;
+      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 12px;
+    }
+    #m-toast.on { transform: translateX(0); }
+    #m-toast.error { border-left-color: var(--danger); }
   </style>
 </head>
 <body>
@@ -115,6 +148,186 @@
           <button type="button" id="next-feedback-page" class="btn btn-ghost" style="padding: 6px 12px; font-size: 12px; border-radius: 8px;">Next →</button>
         </div>
       </div>
+      <!-- Management Education Section starts here -->
+      <div id="management-education-section" style="margin-top: 40px;">
+        <hr style="border: 0; border-top: 1px solid var(--border); margin-bottom: 40px;">
+        <h2 style="font-size: 24px; margin-bottom: 20px;">Medical Education Content Management</h2>
+        
+        <!-- Auth Gate Card for Content Management -->
+        <div id="m-auth-card" class="admin-card">
+          <h3 style="margin-top: 0;">Management Login Required</h3>
+          <p class="hint">Enter Supabase credentials to edit topics, MCQs, and case studies.</p>
+          <form id="safe-login-form" class="f-grid" style="max-width: 480px; margin-top: 20px;">
+            <div class="f-group">
+              <label>Admin Email</label>
+              <input type="email" id="l-email" class="f-input" placeholder="admin@medihelp.live" required>
+            </div>
+            <div class="f-group">
+              <label>Management Key</label>
+              <input type="password" id="l-pass" class="f-input" placeholder="••••••••" required>
+            </div>
+            <div class="f-full" style="margin-top: 10px;">
+              <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">Authorize Content Session</button>
+            </div>
+          </form>
+        </div>
+        
+        <!-- Content Dashboard forms (initially hidden) -->
+        <div id="m-dashboard-content" class="hidden">
+          <!-- Active Auth status and Logout -->
+          <div class="admin-card" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
+            <span style="font-size: 13px; color: var(--success); font-weight: 600;">✓ Authorized Content Management Session</span>
+            <button type="button" id="m-logout-btn" class="act-btn danger">Log Out Session</button>
+          </div>
+          
+          <!-- MODULE 1: TOPICS -->
+          <div class="admin-card">
+            <h3 style="margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+              Initialize New Topic
+            </h3>
+            <form id="f-topic" class="f-grid">
+              <div class="f-group">
+                <label>Semester Assignment</label>
+                <select id="t-sem" class="f-select" required>
+                  <option value="">Choose Semester...</option>
+                  <option value="1">Semester 1</option><option value="2">Semester 2</option>
+                  <option value="3">Semester 3</option><option value="4">Semester 4</option>
+                  <option value="5">Semester 5</option><option value="6">Semester 6</option>
+                  <option value="7">Semester 7</option><option value="8">Semester 8</option>
+                </select>
+              </div>
+              <div class="f-group">
+                <label>Topic Title</label>
+                <input type="text" id="t-title" class="f-input" placeholder="e.g. Molecular Biology" required>
+              </div>
+              <div class="f-full">
+                <button type="submit" class="btn-submit">Deploy Topic to Cloud</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- MODULE 2: MCQS -->
+          <div class="admin-card">
+            <h3 style="margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Clinical MCQ Ingest
+            </h3>
+            <form id="f-mcq" class="f-grid">
+              <div class="f-group">
+                <label>Semester Filter</label>
+                <select id="m-sem" class="f-select" required onchange="AdminApp.loadTopics(this.value, 'm-topic')">
+                  <option value="">Select Semester...</option>
+                  <option value="1">Semester 1</option><option value="2">Semester 2</option><option value="3">Semester 3</option>
+                </select>
+              </div>
+              <div class="f-group">
+                <label>Target Topic</label>
+                <select id="m-topic" class="f-select" required disabled><option value="">Select Topic...</option></select>
+              </div>
+              <div class="f-full">
+                <label>Medical Question Stem</label>
+                <textarea id="m-q" class="f-textarea" style="min-height: 100px;" placeholder="Clinical stem..." required></textarea>
+              </div>
+              <div class="f-full" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <input type="text" id="m-opt-0" class="f-input" placeholder="Answer A" required>
+                <input type="text" id="m-opt-1" class="f-input" placeholder="Answer B" required>
+                <input type="text" id="m-opt-2" class="f-input" placeholder="Answer C" required>
+                <input type="text" id="m-opt-3" class="f-input" placeholder="Answer D" required>
+              </div>
+              <div class="f-group">
+                <label>Correct Index</label>
+                <select id="m-correct" class="f-select" required>
+                  <option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option>
+                </select>
+              </div>
+              <div class="f-group">
+                <label>Clinical Explanation</label>
+                <input type="text" id="m-exp" class="f-input" placeholder="Explanation...">
+              </div>
+              <div class="f-full">
+                <button type="submit" class="btn-submit">Publish MCQ</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- MODULE 3: CASE STUDIES -->
+          <div class="admin-card">
+            <h3 style="margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+              Case Study Systems
+            </h3>
+            
+            <div style="background: rgba(255,255,255,0.01); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px;">
+              <h4 style="font-size: 13px; color: var(--admin-primary); margin-top: 0; margin-bottom: 15px; font-weight: 800; text-transform: uppercase;">Step 1: Clinical Scenario</h4>
+              <form id="f-case" class="f-grid">
+                 <div class="f-group">
+                  <label>Semester</label>
+                  <select id="c-sem" class="f-select" required onchange="AdminApp.loadTopics(this.value, 'c-topic')">
+                    <option value="">Select...</option><option value="1">Sem 1</option><option value="2">Sem 2</option>
+                  </select>
+                </div>
+                <div class="f-group">
+                  <label>Topic</label>
+                  <select id="c-topic" class="f-select" required disabled><option value="">Select...</option></select>
+                </div>
+                <div class="f-full">
+                  <label>Case Title</label>
+                  <input type="text" id="c-title" class="f-input" placeholder="e.g. Case #1: Heart Failure Management" required>
+                </div>
+                <div class="f-full">
+                  <label>Scenario Detail</label>
+                  <textarea id="c-scene" class="f-textarea" style="min-height: 120px;" placeholder="Scenario details..." required></textarea>
+                </div>
+                <div class="f-full"><button type="submit" class="btn-submit" style="background:transparent; border:1px solid var(--admin-primary); color:var(--admin-primary);">Generate Case Profile</button></div>
+              </form>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.01); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+              <h4 style="font-size: 13px; color: var(--admin-primary); margin-top: 0; margin-bottom: 15px; font-weight: 800; text-transform: uppercase;">Step 2: Sub-Questions</h4>
+              <form id="f-case-question" class="f-grid">
+                <div class="f-full">
+                  <label>Parent Case</label>
+                  <select id="c-selector" class="f-select" required><option value="">Awaiting Sync...</option></select>
+                </div>
+                <div class="f-full">
+                  <label>Question</label>
+                  <input type="text" id="cq-q" class="f-input" placeholder="Question text..." required>
+                </div>
+                <div class="f-full" style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                  <input type="text" id="cq-0" class="f-input" placeholder="Answer A" required>
+                  <input type="text" id="cq-1" class="f-input" placeholder="Answer B" required>
+                  <input type="text" id="cq-2" class="f-input" placeholder="Answer C" required>
+                  <input type="text" id="cq-3" class="f-input" placeholder="Answer D" required>
+                </div>
+                <div class="f-group">
+                  <label>Correct Choice</label>
+                  <select id="cq-cor" class="f-select" required><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+                </div>
+                <div class="f-full"><button type="submit" class="btn-submit">Attach to Case</button></div>
+              </form>
+            </div>
+          </div>
+
+          <!-- LIVE LOGS -->
+          <div class="admin-card">
+            <h3 style="margin-top: 0; margin-bottom: 15px;">Live Repository (Recent)</h3>
+            <div id="repo-list">
+              <!-- Data here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Toast Notification -->
+    <div id="m-toast">
+      <span id="m-toast-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color:var(--success);">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </span> 
+      <span id="m-toast-msg">Database Synced</span>
     </div>
 
     <!-- Delete Feedback Confirmation Modal -->
@@ -372,11 +585,254 @@
       }
     };
 
+    // ── Management Education JS Core ─────────────────────────
+    const ADMIN_UID = '0fcd3894-4ca1-4538-9f45-b0334ee65407';
+
+    const AdminApp = {
+      init: async function() {
+        console.log('AdminApp: Initializing Safe Core...');
+        this.checkReady();
+      },
+
+      checkReady: async function() {
+        if (!window.dbClient) return setTimeout(() => this.checkReady(), 100);
+        
+        // Check Auth
+        const { data: { user } } = await window.dbClient.auth.getUser();
+        const authCard = document.getElementById('m-auth-card');
+        const contentDash = document.getElementById('m-dashboard-content');
+
+        if (!user || user.id !== ADMIN_UID) {
+          if (authCard) authCard.classList.remove('hidden');
+          if (contentDash) contentDash.classList.add('hidden');
+        } else {
+          if (authCard) authCard.classList.add('hidden');
+          if (contentDash) contentDash.classList.remove('hidden');
+          this.refreshAll();
+        }
+      },
+
+      toast: function(msg, isError = false) {
+        const t = document.getElementById('m-toast');
+        if (!t) return;
+        t.querySelector('#m-toast-msg').textContent = msg;
+        t.querySelector('#m-toast-icon').innerHTML = isError 
+          ? '❌' 
+          : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color:var(--success);"><polyline points="20 6 9 17 4 12"/></svg>`;
+        t.className = isError ? 'on error' : 'on';
+        setTimeout(() => t.classList.remove('on'), 4000);
+      },
+
+      logout: async function() {
+        if (!window.dbClient) return;
+        await window.dbClient.auth.signOut();
+        this.checkReady();
+      },
+
+      refreshAll: function() {
+        this.loadRecentRepo();
+        this.refreshCaseList();
+      },
+
+      loadTopics: async function(semId, targetId) {
+        if (!window.dbClient) return;
+        const sel = document.getElementById(targetId);
+        if (!sel) return;
+        sel.disabled = true;
+        sel.innerHTML = '<option>Loading...</option>';
+        
+        const { data } = await window.dbClient.from('topics').select('*').eq('semester_id', semId).order('title');
+        sel.innerHTML = '<option value="">Select Topic...</option>';
+        if (data) data.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t.id; opt.textContent = t.title; sel.appendChild(opt);
+        });
+        sel.disabled = false;
+      },
+
+      refreshCaseList: async function() {
+        if (!window.dbClient) return;
+        const { data } = await window.dbClient.from('case_studies').select('id, title').order('created_at', { ascending: false });
+        const sel = document.getElementById('c-selector');
+        if (!sel) return;
+        sel.innerHTML = '<option value="">Select Case Study...</option>';
+        if (data) data.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c.id; opt.textContent = c.title; sel.appendChild(opt);
+        });
+      },
+
+      loadRecentRepo: async function() {
+        if (!window.dbClient) return;
+        const container = document.getElementById('repo-list');
+        if (!container) return;
+        container.innerHTML = '<p style="color:var(--text-muted);">Syncing live data...</p>';
+
+        const { data, error } = await window.dbClient.from('mcqs').select('*, topics(title)').order('created_at', { ascending: false }).limit(10);
+        
+        if (error) return container.innerHTML = '<p style="color:var(--danger);">Error syncing repo.</p>';
+        container.innerHTML = '';
+        if (data) data.forEach(item => {
+           const div = document.createElement('div');
+           div.className = 'data-row';
+           div.innerHTML = `
+             <div class="data-info">
+               <h4>${escapeHtml(item.question.substring(0, 80))}...</h4>
+               <p>${escapeHtml(item.topics?.title || 'System')} • ${new Date(item.created_at).toLocaleDateString()}</p>
+             </div>
+             <button onclick="AdminApp.deleteItem('mcqs', '${item.id}')" style="background:none; border:none; color:#f87171; cursor:pointer; font-weight:700;">Delete</button>
+           `;
+           container.appendChild(div);
+        });
+      },
+
+      deleteItem: async function(table, id) {
+        if (!window.dbClient) return;
+        if (!confirm('Permanent deletion requested. Proceed?')) return;
+        const { error } = await window.dbClient.from(table).delete().eq('id', id);
+        if (error) this.toast(error.message, true);
+        else { this.toast('Security Purge Complete'); this.refreshAll(); }
+      }
+    };
+
+    // FORM HANDLERS
+    function setupForms() {
+      const loginForm = document.getElementById('safe-login-form');
+      if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!window.dbClient) return;
+          const btn = e.target.querySelector('button');
+          btn.disabled = true; btn.textContent = 'Verifying Credentials...';
+
+          const { data, error } = await window.dbClient.auth.signInWithPassword({
+            email: document.getElementById('l-email').value,
+            password: document.getElementById('l-pass').value
+          });
+
+          if (error) {
+            AdminApp.toast(error.message, true);
+            btn.disabled = false; btn.textContent = 'Authorize Content Session';
+          } else if (data.user.id !== ADMIN_UID) {
+            AdminApp.toast('Unauthorized Portal Request', true);
+            await window.dbClient.auth.signOut();
+            btn.disabled = false; btn.textContent = 'Authorize Content Session';
+          } else {
+            AdminApp.checkReady();
+          }
+        });
+      }
+
+      const logoutBtn = document.getElementById('m-logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          await AdminApp.logout();
+        });
+      }
+
+      const topicForm = document.getElementById('f-topic');
+      if (topicForm) {
+        topicForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!window.dbClient) return;
+          const btn = e.target.querySelector('button');
+          const semId = parseInt(document.getElementById('t-sem').value);
+          const title = document.getElementById('t-title').value.trim();
+          
+          if (!semId || !title) return AdminApp.toast('Invalid Inputs', true);
+          
+          btn.disabled = true;
+          const slug = title.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-');
+          
+          const { error } = await window.dbClient.from('topics').insert([{ semester_id: semId, title, slug }]);
+          if (error) AdminApp.toast(error.message, true);
+          else { AdminApp.toast('Topic Deployed'); e.target.reset(); }
+          btn.disabled = false;
+        });
+      }
+
+      const mcqForm = document.getElementById('f-mcq');
+      if (mcqForm) {
+        mcqForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!window.dbClient) return;
+          const btn = e.target.querySelector('button');
+          btn.disabled = true;
+
+          const data = {
+            topic_id: document.getElementById('m-topic').value,
+            question: document.getElementById('m-q').value,
+            options: [
+              document.getElementById('m-opt-0').value, document.getElementById('m-opt-1').value,
+              document.getElementById('m-opt-2').value, document.getElementById('m-opt-3').value
+            ],
+            correct_index: parseInt(document.getElementById('m-correct').value),
+            explanation: document.getElementById('m-exp').value
+          };
+
+          const { error } = await window.dbClient.from('mcqs').insert([data]);
+          if (error) AdminApp.toast(error.message, true);
+          else { AdminApp.toast('MCQ Ingested'); e.target.reset(); AdminApp.refreshAll(); }
+          btn.disabled = false;
+        });
+      }
+
+      const caseForm = document.getElementById('f-case');
+      if (caseForm) {
+        caseForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!window.dbClient) return;
+          const btn = e.target.querySelector('button');
+          btn.disabled = true;
+
+          const { error } = await window.dbClient.from('case_studies').insert([{
+             topic_id: document.getElementById('c-topic').value,
+             title: document.getElementById('c-title').value,
+             scenario: document.getElementById('c-scene').value
+          }]);
+
+          if (error) AdminApp.toast(error.message, true);
+          else { AdminApp.toast('Case Profile Generated'); e.target.reset(); AdminApp.refreshCaseList(); }
+          btn.disabled = false;
+        });
+      }
+
+      const caseQForm = document.getElementById('f-case-question');
+      if (caseQForm) {
+        caseQForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!window.dbClient) return;
+          const btn = e.target.querySelector('button');
+          btn.disabled = true;
+
+          const data = {
+            case_id: document.getElementById('c-selector').value,
+            question: document.getElementById('cq-q').value,
+            options: [
+              document.getElementById('cq-0').value, document.getElementById('cq-1').value,
+              document.getElementById('cq-2').value, document.getElementById('cq-3').value
+            ],
+            correct_index: parseInt(document.getElementById('cq-cor').value)
+          };
+
+          const { error } = await window.dbClient.from('case_questions').insert([data]);
+          if (error) AdminApp.toast(error.message, true);
+          else { AdminApp.toast('Data Linked to Case'); e.target.reset(); }
+          btn.disabled = false;
+        });
+      }
+    }
+
     (function init() {
       try {
         localStorage.removeItem('mh_trivia_admin_secret');
         sessionStorage.removeItem('mh_trivia_admin_unlocked');
       } catch (_) {}
+      
+      // Initialize content management
+      setupForms();
+      AdminApp.init();
     })();
   </script>
     <!-- Adsterra 468x60 Banner -->

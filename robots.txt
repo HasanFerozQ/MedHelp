@@ -8,6 +8,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /private/
 Disallow: /med-trivia-admin
+Disallow: /med-trivia-admin.html
 Disallow: /debug
 Disallow: /api/
 Disallow: /.git/

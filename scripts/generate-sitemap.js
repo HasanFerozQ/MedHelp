@@ -63,7 +63,6 @@ const mainPages = [
   { loc: '/flash-cards', priority: 0.9, changefreq: 'weekly' },
   { loc: '/medical-bill-audit', priority: 0.9, changefreq: 'weekly' },
   { loc: '/medical-calculator', priority: 0.9, changefreq: 'weekly' },
-  { loc: '/management-education', priority: 0.8, changefreq: 'weekly' },
   { loc: '/cpt-code-search', priority: 0.9, changefreq: 'weekly' },
   { loc: '/claim-denial-codes', priority: 0.9, changefreq: 'weekly' },
   { loc: '/rx-savings', priority: 0.8, changefreq: 'monthly' },
