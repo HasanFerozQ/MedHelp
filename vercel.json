@@ -4,7 +4,8 @@
   "rewrites": [
     { "source": "/es/medical-calculator", "destination": "/medical-calculator" },
     { "source": "/es/calculators/:path*", "destination": "/calculators/:path*" },
-    { "source": "/blog/:slug", "destination": "/blog-post?slug=:slug" }
+    { "source": "/blog/:slug", "destination": "/blog-post?slug=:slug" },
+    { "source": "/usmle-preparation", "destination": "/medical-exam-usmle" }
   ],
   "headers": [
     {
@@ -16,6 +17,11 @@
     {
       "source": "/audit",
       "destination": "/medical-bill-audit",
+      "permanent": true
+    },
+    {
+      "source": "/medical-exam-usmle",
+      "destination": "/usmle-preparation",
       "permanent": true
     }
   ],

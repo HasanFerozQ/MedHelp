@@ -1,31 +1,57 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
-  <title>USMLE Board Preparation Dashboard | MediHelp</title>
-  <meta name="description" content="High-yield USMLE Step 1 preparation. Master clinical concepts with our board-style MCQs and Mock Exams." />
-  <link rel="canonical" href="https://www.medihelp.live/medical-exam-usmle">
-  <meta property="og:title" content="USMLE Board Preparation | MediHelp" />
-  <meta property="og:description" content="High-yield USMLE Step 1 preparation with board-style MCQs." />
-  <meta property="og:url" content="https://www.medihelp.live/medical-exam-usmle" />
+  <title>USMLE Preparation – Free High-Yield Question Bank | MediHelp</title>
+  <meta name="description" content="Prepare for USMLE Step 1, Step 2 CK, and Step 3 with MediHelp's free board-style question bank, clinical vignettes, mock examinations, and detailed explanations covering all major medical disciplines." />
+  <meta name="keywords" content="USMLE preparation, USMLE Step 1, USMLE Step 2 CK, USMLE Step 3, board-style MCQs, medical licensing exam, free USMLE questions, clinical vignettes, medical question bank" />
+  <link rel="canonical" href="https://www.medihelp.live/usmle-preparation">
+  <meta property="og:title" content="USMLE Preparation – Free High-Yield Question Bank | MediHelp" />
+  <meta property="og:description" content="Free USMLE Step 1, Step 2 CK, and Step 3 board-style practice questions with detailed explanations and mock examinations." />
+  <meta property="og:url" content="https://www.medihelp.live/usmle-preparation" />
   <meta property="og:type" content="website" />
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="core.js"></script>
+
+  <!-- SEO Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "USMLE Preparation – Free Board-Style Question Bank",
+    "description": "Free USMLE Step 1, Step 2 CK, and Step 3 practice questions with detailed clinical explanations.",
+    "provider": {
+      "@type": "Organization",
+      "name": "MediHelp",
+      "url": "https://www.medihelp.live"
+    },
+    "educationalLevel": "Professional development",
+    "url": "https://www.medihelp.live/usmle-preparation",
+    "offers": [
+      { "@type": "Offer", "category": "Free", "price": "0" },
+      { "@type": "Offer", "category": "Premium", "price": "24.99", "priceCurrency": "USD" }
+    ]
+  }
+  </script>
+
   <style>
-    .usmle-hero { 
-      padding: 60px 0; 
-      background: linear-gradient(135deg, var(--bg-elevated) 0%, rgba(168,85,247,0.05) 100%); 
+    /* ── HERO ── */
+    .usmle-hero {
+      padding: 60px 0;
+      background: linear-gradient(135deg, var(--bg-elevated) 0%, rgba(168,85,247,0.05) 100%);
       border-bottom: 1px solid var(--border);
       margin-bottom: 40px;
       position: relative;
       overflow: hidden;
+      text-align: center;
     }
-    
+    .usmle-hero h1 { font-size: clamp(30px, 5vw, 54px); margin-bottom: 16px; }
+
     .mock-exam-cta {
       background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
       color: white;
@@ -36,12 +62,14 @@
       align-items: center;
       margin-top: 40px;
       box-shadow: 0 20px 40px rgba(168,85,247,0.2);
+      text-align: left;
     }
-    
-    .step-nav { 
-      display: flex; 
-      gap: 10px; 
-      margin-bottom: 30px; 
+
+    /* ── STEP TABS ── */
+    .step-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 10px;
     }
@@ -54,20 +82,21 @@
       transition: all 0.3s ease;
     }
     .step-tab:hover { color: var(--text-h); background: var(--bg-card); }
-    .step-tab.active { 
-      color: white; 
-      background: #a855f7; 
+    .step-tab.active {
+      color: white;
+      background: #a855f7;
       box-shadow: 0 4px 15px rgba(168,85,247,0.3);
     }
 
+    /* ── TOPIC GRID ── */
     .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-    .topic-card { 
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; 
+    .topic-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px;
       cursor: pointer; transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
     }
     .topic-card:hover { border-color: #a855f7; transform: translateY(-4px); box-shadow: 0 10px 20px rgba(168,85,247,0.1); }
     .topic-card h3 { font-size: 18px; font-weight: 800; color: var(--text-h); line-height: 1.3; }
-    
+
     .btn-mock {
       padding: 16px 32px;
       background: white;
@@ -79,10 +108,10 @@
     }
     .btn-mock:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
+    /* ── MOBILE ── */
     @media (max-width: 768px) {
       .mock-exam-cta { flex-direction: column; text-align: center; gap: 24px; padding: 30px 20px; }
       .usmle-hero { padding: 40px 0; }
-      
       .step-nav { display: none !important; }
       .mobile-step-select {
         display: block !important;
@@ -102,13 +131,14 @@
         background-size: 18px;
         outline: none;
       }
+      .edu-two-col { flex-direction: column !important; }
     }
     .mobile-step-select { display: none; }
 
-    /* SKELETON LOADER */
+    /* ── SKELETON LOADER ── */
     .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; width: 100%; }
-    .skeleton-card { 
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; 
+    .skeleton-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
       padding: 24px; height: 180px; display: flex; flex-direction: column; gap: 16px;
       position: relative; overflow: hidden;
     }
@@ -123,12 +153,242 @@
     .skeleton-title { height: 24px; width: 80%; }
     .skeleton-text { height: 14px; width: 60%; }
     .skeleton-stats { height: 30px; width: 100%; margin-top: auto; }
+
+    /* ── EDUCATIONAL CONTENT SECTIONS ── */
+    .edu-section { padding: 56px 0; border-top: 1px solid var(--border); }
+    .edu-h2 {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 900;
+      color: var(--text-h);
+      letter-spacing: -0.6px;
+      margin-bottom: 20px;
+    }
+    .edu-lead {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      max-width: 900px;
+      margin-bottom: 18px;
+    }
+
+    /* Subject list grid */
+    .subject-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin: 20px 0 28px;
+    }
+    .subject-list-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-h);
+      transition: all 0.2s;
+    }
+    .subject-list-item:hover { border-color: #a855f7; color: #a855f7; }
+    .subject-list-item svg { flex-shrink: 0; color: #a855f7; }
+
+    /* Expandable subject cards */
+    .subject-expand-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .subject-exp-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+    .subject-exp-card:hover { border-color: #a855f7; box-shadow: 0 8px 24px rgba(168,85,247,0.1); }
+    .subject-exp-card h3 { font-size: 17px; font-weight: 800; color: #a855f7; margin-bottom: 10px; }
+    .subject-exp-card p  { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+    /* Benefit bullets */
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-h);
+    }
+    .benefit-dot {
+      flex-shrink: 0;
+      width: 8px; height: 8px;
+      background: #a855f7;
+      border-radius: 50%;
+      margin-top: 5px;
+    }
+
+    /* Feature capsules */
+    .feature-capsule-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0;
+    }
+    .feat-capsule {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(168,85,247,0.1);
+      color: #a855f7;
+      border: 1px solid rgba(168,85,247,0.25);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* Study strategy steps */
+    .strategy-steps { display: grid; gap: 14px; margin: 20px 0; }
+    .strategy-step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      background: rgba(168,85,247,0.15);
+      border: 1px solid rgba(168,85,247,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 900; color: #a855f7;
+    }
+    .strategy-step h4 { font-size: 15px; font-weight: 800; color: var(--text-h); margin-bottom: 4px; }
+    .strategy-step p  { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+    /* FAQ */
+    .faq-list { display: grid; gap: 12px; margin-top: 24px; }
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .faq-item.open { border-color: rgba(168,85,247,0.4); }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 22px; cursor: pointer; user-select: none;
+      font-weight: 700; font-size: 15px; color: var(--text-h);
+      gap: 16px;
+    }
+    .faq-q:hover { color: #a855f7; }
+    .faq-chevron { flex-shrink: 0; transition: transform 0.3s ease; color: var(--text-muted); }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); color: #a855f7; }
+    .faq-a {
+      display: none;
+      padding: 0 22px 20px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Internal link cards */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .resource-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 18px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    .resource-card:hover { transform: translateY(-4px); border-color: #a855f7; box-shadow: 0 10px 24px rgba(168,85,247,0.1); }
+    .resource-card .rc-icon { font-size: 26px; }
+    .resource-card .rc-name { font-size: 14px; font-weight: 800; color: var(--text-h); }
+    .resource-card .rc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .resource-card:hover .rc-name { color: #a855f7; }
+
+    /* Premium CTA */
+    .premium-usmle-cta {
+      background: linear-gradient(145deg, var(--bg-card) 0%, rgba(168,85,247,0.06) 100%);
+      border: 1px solid #a855f7;
+      border-radius: 24px;
+      padding: 44px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      text-align: left;
+      transition: transform 0.3s ease;
+      margin-top: 32px;
+    }
+    .premium-usmle-cta:hover { transform: translateY(-4px); box-shadow: 0 30px 60px rgba(168,85,247,0.15); }
+    .premium-corner { position: absolute; top: 24px; right: -40px; background: #a855f7; color: #fff; padding: 6px 52px; font-size: 11px; font-weight: 900; transform: rotate(45deg); letter-spacing: 1px; }
+    .premium-cta-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+    .premium-usmle-cta h2 { font-size: 30px; font-weight: 900; color: var(--text-h); margin-bottom: 16px; letter-spacing: -0.8px; }
+    .premium-feat-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 0; }
+    .p-feat { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--text-h); }
+    .p-feat svg { flex-shrink: 0; }
+    .price-box {
+      text-align: center;
+      background: rgba(255,255,255,0.03);
+      padding: 32px 36px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      min-width: 260px;
+    }
+    .price-row { display: flex; justify-content: center; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+    .p-strike { text-decoration: line-through; color: var(--danger); font-size: 18px; font-weight: 700; opacity: 0.8; }
+    .p-main  { font-size: 46px; font-weight: 900; color: #a855f7; letter-spacing: -2px; }
+    .p-main span { font-size: 22px; }
+    .p-meta  { font-size: 13px; color: var(--text-muted); margin-bottom: 22px; font-weight: 600; }
+    .btn-premium-unlock {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: linear-gradient(135deg, #a855f7, #7e22ce);
+      color: #fff; text-decoration: none; padding: 15px 22px; border-radius: 12px;
+      font-weight: 900; font-size: 15px; transition: transform 0.2s;
+      box-shadow: 0 10px 20px rgba(168,85,247,0.3);
+    }
+    .btn-premium-unlock:hover { transform: scale(1.05); }
+
+    @media (max-width: 900px) {
+      .premium-cta-grid { grid-template-columns: 1fr !important; text-align: center; }
+      .premium-feat-list { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .subject-expand-grid { grid-template-columns: 1fr; }
+      .resource-grid { grid-template-columns: 1fr 1fr; }
+    }
   </style>
+
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3792974281439123"
      crossorigin="anonymous"></script>
 </head>
 <body>
-  <!-- NAVBAR SAME AS GATEWAY -->
+  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="container nav-content">
       <a href="/" class="nav-brand">
@@ -167,14 +427,13 @@
     </div>
   </nav>
 
+  <!-- HERO -->
   <header class="usmle-hero">
     <div class="container">
-      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-      </div>
-      <h1 class="hero-h1">USMLE <span style="color: #a855f7;">Board Prep</span></h1>
-      <p class="hero-sub" style="margin-bottom: 0;">High-yield clinical content organized by board steps. Master the boards with precision.</p>
+      <h1 class="hero-h1">USMLE <span style="color:#a855f7;">Preparation</span></h1>
+      <p class="hero-sub" style="margin-bottom:0;">High-yield clinical content organized by board steps. Master the boards with precision.</p>
 
-      <!-- ⚠️ Mobile Advisory Banner -->
+      <!-- Advisory -->
       <div id="mobile-advisory" style="
         display: flex;
         margin: 28px auto 0;
@@ -194,7 +453,7 @@
       ">
         💻&nbsp; <strong>Advisory:</strong> Use on desktop for better examination experience
       </div>
-      
+
       <!-- Mock Exam CTA -->
       <div class="mock-exam-cta">
         <div>
@@ -202,25 +461,29 @@
           <h2 style="font-size: 28px; font-weight: 900; margin-bottom: 8px;">Ready for the Big Day?</h2>
           <p style="opacity: 0.9; font-weight: 600;">Simulate the real exam with our 8-hour, 7-block Mock Exam engine.</p>
         </div>
-        <a href="medical-exam-mock.html" class="btn-mock" style="display: inline-flex; align-items: center; gap: 8px;">Take a Mock Exam <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="medical-exam-mock.html" class="btn-mock" style="display: inline-flex; align-items: center; gap: 8px; white-space:nowrap;">
+          Take a Mock Exam
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
   </header>
-    <!-- Adsterra 728x90 Banner -->
-    <div style="text-align:center; margin: 10px auto;">
-      <script>
-        atOptions = {
-          'key' : 'a7a04a547a8e6bdc2777d62f0cbd7656',
-          'format' : 'iframe',
-          'height' : 90,
-          'width' : 728,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highperformanceformat.com/a7a04a547a8e6bdc2777d62f0cbd7656/invoke.js"></script>
-    </div>
 
-  <main class="container" style="padding-bottom: 100px;">
+  <!-- Adsterra 728x90 Banner -->
+  <div style="text-align:center; margin: 10px auto;">
+    <script>
+      atOptions = {
+        'key' : 'a7a04a547a8e6bdc2777d62f0cbd7656',
+        'format' : 'iframe',
+        'height' : 90,
+        'width' : 728,
+        'params' : {}
+      };
+    </script>
+    <script src="https://www.highperformanceformat.com/a7a04a547a8e6bdc2777d62f0cbd7656/invoke.js"></script>
+  </div>
+
+  <main class="container" style="padding-bottom: 60px;">
     <select class="mobile-step-select" id="mobile-step-dropdown">
       <option value="1">USMLE Step 1</option>
     </select>
@@ -229,6 +492,7 @@
       <div class="step-tab active" data-step="1">USMLE Step 1</div>
     </div>
 
+    <!-- Skeleton loader -->
     <div id="topic-loading" class="hidden" style="padding: 0 0 40px;">
       <div class="skeleton-grid">
         <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
@@ -236,22 +500,449 @@
         <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-stats"></div></div>
       </div>
     </div>
+
+    <!-- Topic cards (injected by JS) -->
     <div class="topic-grid" id="topic-grid">
       <!-- Topics injected here -->
     </div>
+
+
+    <!-- ════════════════════════════════════════════
+         EDUCATIONAL CONTENT — shown when Step 1 is active
+    ════════════════════════════════════════════ -->
+    <div id="usmle-step1-content">
+
+      <!-- ── BLOCK 1: INTRODUCTION ── -->
+      <section class="edu-section">
+        <h2 class="edu-h2">USMLE Step 1 Board Preparation – Free High-Yield Question Bank</h2>
+        <p class="edu-lead">
+          Preparing for the United States Medical Licensing Examination (USMLE) Step 1 requires more than memorizing facts. The examination evaluates your ability to integrate foundational medical sciences with clinical reasoning. Every question is presented as a patient-centered clinical vignette, requiring you to interpret symptoms, laboratory findings, pathology, pharmacology, physiology, and anatomy together.
+        </p>
+        <p class="edu-lead">
+          MediHelp's USMLE Board Preparation platform is designed to help medical students master these concepts through structured subject-wise practice questions, comprehensive explanations, and realistic board-style assessments.
+        </p>
+        <p class="edu-lead">
+          Whether you're beginning your Step 1 journey or reviewing before the examination, our platform provides organized learning resources covering every major discipline tested on the USMLE.
+        </p>
+      </section>
+
+      <!-- ── BLOCK 2: WHAT DOES STEP 1 TEST ── -->
+      <section class="edu-section">
+        <h2 class="edu-h2">What Does USMLE Step 1 Test?</h2>
+        <p class="edu-lead">
+          USMLE Step 1 evaluates the scientific foundations of medicine and the ability to apply basic science principles to patient care. The examination focuses on integrated clinical reasoning rather than isolated memorization.
+        </p>
+        <p class="edu-lead">Subjects covered include:</p>
+
+        <div class="subject-list-grid">
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Anatomy
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Physiology
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Biochemistry
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Molecular Biology
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Genetics
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Histology
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Embryology
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Pathology
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Pharmacology
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Microbiology
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Immunology
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Behavioral Sciences
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Epidemiology
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Ethics
+          </div>
+          <div class="subject-list-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Nutrition
+          </div>
+        </div>
+
+        <p class="edu-lead">Our subject-wise practice questions mirror the integrated style used in official USMLE examinations.</p>
+      </section>
+
+      <!-- ── BLOCK 3: SUBJECTS ON MEDIHELP ── -->
+      <section class="edu-section">
+        <h2 class="edu-h2">Subjects Available on MediHelp</h2>
+        <p class="edu-lead">Each subject contains hundreds of carefully organized board-style practice questions.</p>
+
+        <div class="subject-expand-grid">
+          <div class="subject-exp-card">
+            <h3>Cardiovascular Physiology</h3>
+            <p>Master cardiac physiology, cardiac output, preload, afterload, heart sounds, pressure-volume loops, ECG interpretation, myocardial infarction, heart failure, congenital heart disease, arrhythmias, and cardiovascular pharmacology.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Respiratory Physiology</h3>
+            <p>Practice gas exchange, ventilation-perfusion mismatch, respiratory mechanics, pulmonary diseases, acid-base physiology, pulmonary pharmacology, and oxygen transport.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Renal Physiology</h3>
+            <p>Study nephron function, electrolyte regulation, acid-base balance, glomerular filtration, renal pathology, diuretics, and nephrology clinical scenarios.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Gastrointestinal Physiology</h3>
+            <p>Master digestion, absorption, liver physiology, pancreatic disorders, gastrointestinal hormones, nutrition, and GI pathology.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Endocrine Physiology</h3>
+            <p>Learn thyroid disorders, adrenal disease, diabetes mellitus, pituitary disorders, calcium metabolism, reproductive endocrinology, and endocrine pharmacology.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Anatomy</h3>
+            <p>Study gross anatomy, neuroanatomy, embryology, musculoskeletal anatomy, cranial nerves, thorax, abdomen, pelvis, and imaging correlations.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Pathology</h3>
+            <p>Master inflammation, neoplasia, cardiovascular pathology, pulmonary disease, renal pathology, gastrointestinal disorders, endocrine pathology, hematology, and systemic disease.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Pharmacology</h3>
+            <p>Review autonomic drugs, cardiovascular agents, antibiotics, antivirals, anticancer drugs, endocrine medications, toxicology, and mechanisms of action.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Microbiology</h3>
+            <p>Learn bacteriology, virology, mycology, parasitology, infectious diseases, antimicrobial resistance, and microbiological laboratory diagnosis.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Immunology</h3>
+            <p>Understand innate immunity, adaptive immunity, hypersensitivity reactions, autoimmune diseases, immunodeficiencies, vaccines, and transplantation.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Biochemistry</h3>
+            <p>Review metabolism, enzymes, molecular biology, vitamins, genetics, biochemical pathways, and inherited metabolic disorders.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Molecular Biology &amp; Genetics</h3>
+            <p>Master DNA replication, transcription, translation, genetic disorders, molecular diagnostics, recombinant DNA technology, and epigenetics.</p>
+          </div>
+          <div class="subject-exp-card">
+            <h3>Behavioral Sciences</h3>
+            <p>Study ethics, biostatistics, epidemiology, psychiatry, communication skills, healthcare systems, and evidence-based medicine.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── BLOCK 4: WHY QUESTIONS MATTER ── -->
+      <section class="edu-section">
+        <h2 class="edu-h2">Why Practice Questions Matter</h2>
+        <p class="edu-lead">
+          Research consistently shows that active recall through question-based learning produces significantly better long-term retention than passive reading. Board-style multiple-choice questions help students:
+        </p>
+        <div class="benefit-grid">
+          <div class="benefit-item"><div class="benefit-dot"></div>Improve diagnostic reasoning</div>
+          <div class="benefit-item"><div class="benefit-dot"></div>Recognize common disease presentations</div>
+          <div class="benefit-item"><div class="benefit-dot"></div>Develop differential diagnoses</div>
+          <div class="benefit-item"><div class="benefit-dot"></div>Interpret laboratory findings</div>
+          <div class="benefit-item"><div class="benefit-dot"></div>Understand disease mechanisms</div>
+          <div class="benefit-item"><div class="benefit-dot"></div>Build examination confidence</div>
+          <div class="benefit-item"><div class="benefit-dot"></div>Identify weak subject areas</div>
+          <div class="benefit-item"><div class="benefit-dot"></div>Prepare for timed examinations</div>
+        </div>
+        <p class="edu-lead">Our platform organizes questions into manageable subject blocks, allowing students to focus on one discipline at a time before attempting full-length mock examinations.</p>
+      </section>
+
+      <!-- ── BLOCK 5: PLATFORM FEATURES ── -->
+      <section class="edu-section">
+        <h2 class="edu-h2">Features of the MediHelp Question Bank</h2>
+        <p class="edu-lead">Our USMLE preparation platform includes:</p>
+        <div class="feature-capsule-row">
+          <span class="feat-capsule"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Thousands of high-yield MCQs</span>
+          <span class="feat-capsule"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Clinical vignette style questions</span>
+          <span class="feat-capsule"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Detailed answer explanations</span>
+          <span class="feat-capsule"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Subject-wise organization</span>
+          <span class="feat-capsule"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Timed practice sessions</span>
+          <span class="feat-capsule"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Mock examinations</span>
+          <span class="feat-capsule"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Progress tracking</span>
+          <span class="feat-capsule"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Mobile-friendly interface</span>
+          <span class="feat-capsule"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Performance analytics</span>
+          <span class="feat-capsule"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Continuous content updates</span>
+        </div>
+      </section>
+
+      <!-- ── BLOCK 6: STUDY STRATEGY ── -->
+      <section class="edu-section">
+        <h2 class="edu-h2">Study Strategy for USMLE Step 1</h2>
+        <p class="edu-lead">A structured, evidence-based approach to Step 1 preparation significantly improves your score outcome. Here is the sequence used by high-scoring students:</p>
+
+        <div class="strategy-steps">
+          <div class="strategy-step">
+            <div class="step-num">1</div>
+            <div>
+              <h4>Build a Foundation First</h4>
+              <p>Spend the first phase of your preparation completing a full read-through of a high-yield resource (First Aid, Pathoma, or equivalent) for each major subject. Do not attempt full-length questions until you have baseline knowledge in at least Physiology, Pharmacology, and Pathology.</p>
+            </div>
+          </div>
+          <div class="strategy-step">
+            <div class="step-num">2</div>
+            <div>
+              <h4>Integrate Subject-Wise Questions Daily</h4>
+              <p>After completing each subject chapter, immediately practice 20–40 questions from that topic on MediHelp. Correct the misconceptions while the content is fresh. Review every explanation — especially the ones you answered correctly — because understanding why the others are wrong is equally valuable.</p>
+            </div>
+          </div>
+          <div class="strategy-step">
+            <div class="step-num">3</div>
+            <div>
+              <h4>Use Spaced Repetition for High-Yield Facts</h4>
+              <p>Use MediHelp flash cards in combination with your question practice. Spaced repetition forces your brain to retrieve information at increasing intervals, which is the most effective method known for long-term retention of medical facts.</p>
+            </div>
+          </div>
+          <div class="strategy-step">
+            <div class="step-num">4</div>
+            <div>
+              <h4>Take Timed Mock Examinations</h4>
+              <p>Six to eight weeks before your exam date, begin taking full-length timed mock examinations. Analyze your performance report after each attempt. Focus subsequent study on your lowest-scoring subjects and question types, not on general content review.</p>
+            </div>
+          </div>
+          <div class="strategy-step">
+            <div class="step-num">5</div>
+            <div>
+              <h4>Final Two-Week Review</h4>
+              <p>In the two weeks before your examination, do not introduce new material. Focus on reviewing your notes, high-yield flash cards, and rapid-fire question blocks. Simulate exam conditions by practicing in 40-question timed blocks with 60-second breaks between blocks.</p>
+            </div>
+          </div>
+          <div class="strategy-step">
+            <div class="step-num">6</div>
+            <div>
+              <h4>Protect Sleep and Wellbeing</h4>
+              <p>Sleep consolidates memory. Students who sleep fewer than 7 hours in the weeks before a high-stakes examination demonstrate measurably lower recall accuracy. Build sleep, exercise, and mental recovery into your study schedule as mandatory — not optional — components.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── BLOCK 7: FAQ ── -->
+      <section class="edu-section">
+        <h2 class="edu-h2">Frequently Asked Questions – USMLE Preparation</h2>
+
+        <div class="faq-list">
+          <div class="faq-item" id="ufaq-1">
+            <div class="faq-q" onclick="toggleUFaq('ufaq-1')">
+              How many questions are on USMLE Step 1?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <div class="faq-a">
+              USMLE Step 1 consists of 280 questions organized into seven 40-question blocks, with a total testing time of 8 hours including breaks. All questions are presented as multiple-choice items with five answer options in a clinical vignette format. The examination is administered in a single sitting at a Prometric testing center.
+            </div>
+          </div>
+
+          <div class="faq-item" id="ufaq-2">
+            <div class="faq-q" onclick="toggleUFaq('ufaq-2')">
+              Is USMLE Step 1 now pass/fail?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <div class="faq-a">
+              Yes. As of January 26, 2022, USMLE Step 1 results are reported as pass/fail only — no numeric score is provided. This change was intended to reduce the weight placed on Step 1 scores during the residency application process. However, passing Step 1 remains an absolute requirement to advance through the licensing pathway and secure a residency position in the United States.
+            </div>
+          </div>
+
+          <div class="faq-item" id="ufaq-3">
+            <div class="faq-q" onclick="toggleUFaq('ufaq-3')">
+              How long should I study for USMLE Step 1?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <div class="faq-a">
+              Most medical students dedicate 6–12 weeks of dedicated study to USMLE Step 1 preparation, typically between their second and third years of medical school. Students with strong preclinical foundations may require less time. International medical graduates (IMGs) preparing for the examination from outside a US curriculum often spend 3–6 months in structured preparation. Quality of study hours matters more than total hours.
+            </div>
+          </div>
+
+          <div class="faq-item" id="ufaq-4">
+            <div class="faq-q" onclick="toggleUFaq('ufaq-4')">
+              What is the best question bank for USMLE Step 1?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <div class="faq-a">
+              UWorld is widely considered the most comprehensive paid question bank for Step 1. NBME practice examinations provide the most accurate score prediction. MediHelp offers a free high-yield question bank organized by subject that complements these resources — particularly valuable for subject-specific drilling during the foundation-building phase of preparation. At $24.99/year, our premium plan provides the most affordable supplementary Q-Bank available.
+            </div>
+          </div>
+
+          <div class="faq-item" id="ufaq-5">
+            <div class="faq-q" onclick="toggleUFaq('ufaq-5')">
+              Can I use MediHelp questions as my primary USMLE question bank?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <div class="faq-a">
+              Yes, especially for subject-wise drilling during early preparation phases. MediHelp is designed to complement a primary question bank with organized subject-wise content, explanations, flash cards, and mock examinations. Our platform is best used during the foundation-building phase (weeks 1–6), with a comprehensive dedicated Q-Bank used in the final 6–8 weeks before the examination.
+            </div>
+          </div>
+
+          <div class="faq-item" id="ufaq-6">
+            <div class="faq-q" onclick="toggleUFaq('ufaq-6')">
+              How are MediHelp's USMLE questions organized?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <div class="faq-a">
+              All questions are organized by subject and discipline, matching the USMLE Step 1 content outline. Each subject topic contains multiple-choice questions in clinical vignette format, followed by detailed answer explanations that explain both why the correct answer is correct and why each distractor is incorrect. Free demo topics are available without registration. Premium subscribers access the complete question bank.
+            </div>
+          </div>
+
+          <div class="faq-item" id="ufaq-7">
+            <div class="faq-q" onclick="toggleUFaq('ufaq-7')">
+              What happens if I fail USMLE Step 1?
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <div class="faq-a">
+              Students who do not pass Step 1 may retake the examination. The USMLE allows up to six total attempts at any single Step, with a minimum 60-day waiting period between attempts. Students must re-register and pay the examination fee for each attempt. It is important to identify the specific weak areas that contributed to a failing result and address them systematically before re-examination — using subject-wise question practice and performance analytics is essential for this process.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── BLOCK 8: INTERNAL LINKS / CONTINUE EDUCATION ── -->
+      <section class="edu-section">
+        <h2 class="edu-h2">Continue Your Medical Education</h2>
+        <p class="edu-lead">Explore additional free resources available on the MediHelp platform.</p>
+
+        <div class="resource-grid">
+          <a href="/medical-calculator" class="resource-card">
+            <div class="rc-icon">🧮</div>
+            <div class="rc-name">Medical Calculators</div>
+            <div class="rc-desc">500+ clinical calculators. BMI, GFR, drug dosing, APACHE, and more for students and clinicians.</div>
+          </a>
+          <a href="/cpt-code-search" class="resource-card">
+            <div class="rc-icon">🔍</div>
+            <div class="rc-name">CPT Code Lookup</div>
+            <div class="rc-desc">Search the full CPT procedure code database with descriptions, RVU values, and billing guidance.</div>
+          </a>
+          <a href="/medical-bill-audit#icd10" class="resource-card">
+            <div class="rc-icon">📘</div>
+            <div class="rc-name">ICD-10 Lookup</div>
+            <div class="rc-desc">Look up ICD-10-CM diagnosis codes used in medical billing and clinical documentation.</div>
+          </a>
+          <a href="/cpt-code-search#hcpcs" class="resource-card">
+            <div class="rc-icon">🏷️</div>
+            <div class="rc-name">HCPCS Lookup</div>
+            <div class="rc-desc">Search HCPCS Level II codes for durable medical equipment, supplies, and non-physician services.</div>
+          </a>
+          <a href="/providers" class="resource-card">
+            <div class="rc-icon">👨‍⚕️</div>
+            <div class="rc-name">NPI Search</div>
+            <div class="rc-desc">Search the National Provider Identifier registry to verify credentialed healthcare professionals.</div>
+          </a>
+          <a href="/medical-bill-audit" class="resource-card">
+            <div class="rc-icon">🏥</div>
+            <div class="rc-name">Medical Billing Audit Tools</div>
+            <div class="rc-desc">AI-powered audit tools to identify overbilling, duplicate charges, and errors in medical bills.</div>
+          </a>
+          <a href="/calculators/students" class="resource-card">
+            <div class="rc-icon">📐</div>
+            <div class="rc-name">Clinical Calculators</div>
+            <div class="rc-desc">Specialty-specific calculators organized for students — ideal for clinical rotations and board prep.</div>
+          </a>
+          <a href="/calculators/lab" class="resource-card">
+            <div class="rc-icon">🔬</div>
+            <div class="rc-name">Laboratory Reference Guides</div>
+            <div class="rc-desc">Normal reference ranges, lab interpretation guides, and diagnostic cut-offs for clinical use.</div>
+          </a>
+        </div>
+      </section>
+
+      <!-- ── PREMIUM CTA — LAST ── -->
+      <section class="edu-section" style="border-top: none; padding-top: 0;">
+        <div class="premium-usmle-cta">
+          <div class="premium-corner">BEST VALUE</div>
+          <div class="premium-cta-grid">
+            <div>
+              <h2>Unlock the Complete USMLE Question Bank</h2>
+              <p class="edu-lead" style="margin-bottom: 24px;">Get full access to our high-yield clinical library and achieve board mastery at the world's lowest price.</p>
+              <div class="premium-feat-list">
+                <div class="p-feat">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                  10,000+ Board-Style Questions
+                </div>
+                <div class="p-feat">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                  Full-Length Mock Exams
+                </div>
+                <div class="p-feat">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                  Detailed Performance Analytics
+                </div>
+                <div class="p-feat">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                  Unlimited Practice Sessions
+                </div>
+                <div class="p-feat">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                  Progress Tracking
+                </div>
+                <div class="p-feat">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                  Personalized Study Dashboard
+                </div>
+                <div class="p-feat">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                  New Questions Added Regularly
+                </div>
+              </div>
+            </div>
+            <div class="price-box">
+              <div class="price-row">
+                <div class="p-strike">$499</div>
+                <div class="p-main">$24<span>.99</span></div>
+              </div>
+              <div class="p-meta">per year · full clinical access</div>
+              <a href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank" class="btn-premium-unlock"
+                 onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                Unlock Instant Access
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <div style="margin-top:14px; font-size:11px; color:var(--text-muted); font-weight:600;">Cheapest in the market. Guaranteed.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- end #usmle-step1-content -->
+
   </main>
 
-  <!-- ══════════════════════════════════════════
-       FOOTER SEO TEXT
-  ══════════════════════════════════════════ -->
+  <!-- Footer SEO Text -->
   <section class="container" style="padding: 40px 28px 0; text-align: center; border-top: 1px solid var(--border);">
     <p style="color: var(--text-muted); font-size: 13px; max-width: 900px; margin: 0 auto; line-height: 1.8;">
-      MediHelp provides free medical billing tools to help patients audit hospital bills, verify CPT codes, understand CARC and RARC claim denial codes, compare prescription drug prices, and find credentialed healthcare providers. Whether you received an unexpected medical bill, want to understand your Explanation of Benefits (EOB), check for duplicate charges, or get professional human negotiation support — MediHelp helps you take control of your healthcare expenses.
+      MediHelp provides free USMLE preparation resources including board-style practice questions, clinical vignettes, flash cards, and mock examinations for USMLE Step 1, Step 2 CK, and Step 3. In addition to medical licensing exam resources, MediHelp offers free tools including medical billing audit, CPT code lookup, claim denial code lookup, prescription drug price comparison, and NPI provider search. Whether preparing for medical boards or navigating healthcare costs — MediHelp helps students and patients take control.
     </p>
   </section>
 
-  <!-- ── FOOTER ── -->
-      <!-- Adsterra 468x60 Banner -->
+  <!-- Adsterra 468x60 Banner -->
   <div style="text-align:center; margin: 20px auto;">
     <script>
       atOptions = {
@@ -271,6 +962,7 @@
     <div id="container-d7edbe92751a719ef572e7eb1788dc74"></div>
   </div>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
@@ -343,13 +1035,30 @@
       </div>
       <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
         <span>© 2026 MediHelp. All Rights Reserved.</span>
-        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms & Disclaimer</a></span>
+        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms &amp; Disclaimer</a></span>
         <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
       </div>
     </div>
-</footer>
+  </footer>
 
   <script>
+    /* ── FAQ toggle ── */
+    function toggleUFaq(id) {
+      const item = document.getElementById(id);
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    /* ── Show/hide educational content based on active step ── */
+    function updateEduContent(stepId) {
+      const eduBlock = document.getElementById('usmle-step1-content');
+      if (eduBlock) {
+        eduBlock.style.display = (stepId === 1) ? 'block' : 'none';
+      }
+    }
+
+    /* ── Step tab logic ── */
     const stepTabs = document.querySelectorAll('.step-tab');
     let currentStep = 1;
 
@@ -358,21 +1067,22 @@
         stepTabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         currentStep = parseInt(tab.dataset.step);
+        updateEduContent(currentStep);
         loadTopics(currentStep);
       });
     });
 
+    /* ── Topic loader ── */
     async function loadTopics(stepId) {
       const grid = document.getElementById('topic-grid');
       const loader = document.getElementById('topic-loading');
-      
-      // Phase 2.2: Local Caching
+
       const cacheKey = `mh_usmle_cache_step_${stepId}`;
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
         try {
           const { topics, timestamp } = JSON.parse(cached);
-          if (Date.now() - timestamp < 1000 * 60 * 60 * 24) { // 24h cache
+          if (Date.now() - timestamp < 1000 * 60 * 60 * 24) {
             renderUsmleTopics(topics);
             backgroundRefreshUsmle(stepId, cacheKey);
             return;
@@ -396,14 +1106,7 @@
 
       let topicFetch = window.dbClient
         .from('topics')
-        .select(`
-          *, 
-          mcqs(id),
-          case_studies(
-            id,
-            case_questions(id)
-          )
-        `)
+        .select(`*, mcqs(id), case_studies(id, case_questions(id))`)
         .eq('usmle_step', stepId)
         .neq('slug', 'usmle-1-mock-pool-hidden');
       if (stepId === 2) topicFetch = topicFetch.not('slug', 'like', 'usmle-2-mock-pool-%');
@@ -420,7 +1123,7 @@
       }
 
       if (error || !data || !data.length) {
-        if (!grid.innerHTML) { // Only show error if no cached content
+        if (!grid.innerHTML) {
           grid.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">
             No topics found for Step ${stepId} yet.
           </p>`;
@@ -435,20 +1138,16 @@
       grid.innerHTML = '';
       loader.classList.add('hidden');
 
-      data.forEach((topic, index) => {
+      data.forEach((topic) => {
         const isFreeDemo = topic.is_free_demo;
-        // Calculate total questions: Standalone MCQs + All questions inside Case Studies
         let caseQuestionCount = 0;
         if (topic.case_studies) {
           topic.case_studies.forEach(cs => {
-            if (cs.case_questions) {
-              caseQuestionCount += cs.case_questions.length;
-            }
+            if (cs.case_questions) caseQuestionCount += cs.case_questions.length;
           });
         }
-        
         const totalQuestions = (topic.mcqs ? topic.mcqs.length : 0) + caseQuestionCount;
-        
+
         const card = document.createElement('div');
         card.className = 'topic-card';
         card.innerHTML = `
@@ -460,28 +1159,26 @@
           <div style="font-size: 12px; font-weight: 800; color: #a855f7;">${totalQuestions} Questions Available</div>
         `;
         card.onclick = () => {
-           // Redirect to a specialized USMLE quiz page or use the existing one if adapted
-           window.location.href = `medical-exam-semester.html?topic_id=${topic.id}&usmle=true&free=${isFreeDemo}`;
+          window.location.href = `medical-exam-semester.html?topic_id=${topic.id}&usmle=true&free=${isFreeDemo}`;
         };
         grid.appendChild(card);
       });
     }
 
-    // Initial load
+    /* ── Init ── */
     if (window.dbClient) {
       loadTopics(1);
-      
       const dropdown = document.getElementById('mobile-step-dropdown');
       if (dropdown) {
         dropdown.onchange = (e) => {
           currentStep = parseInt(e.target.value);
           stepTabs.forEach(t => t.classList.toggle('active', parseInt(t.dataset.step) === currentStep));
+          updateEduContent(currentStep);
           loadTopics(currentStep);
         };
       }
     }
-    
-    // Theme toggle
+
     if (window.MediHelp) MediHelp.initTheme();
   </script>
 </body>
