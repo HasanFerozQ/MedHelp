@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
@@ -559,92 +559,345 @@
         <!-- Injected Topics -->
       </div>
 
-      <!-- SEO Educational Content Block -->
+            <!-- ════════════════════════════════════════════
+           MEDICAL SCHOOL EXAM PREPARATION GUIDE (YEARS 1–4)
+      ════════════════════════════════════════════ -->
       <section style="margin-top: 80px; padding-top: 60px; border-top: 1px solid var(--border);">
-        <h2 style="font-size: 32px; color: var(--text-h); margin-bottom: 24px;">How to Prepare for Medical Exams Step-by-Step</h2>
-        <div style="color: var(--text-muted); line-height: 1.8; font-size: 16px; margin-bottom: 40px; display: grid; gap: 24px;">
-          <p>Succeeding in medical licensing exams like the <strong>USMLE</strong>, <strong>PLAB</strong>, or <strong>AMC</strong> requires more than just memorizing facts; it requires a robust medical exam preparation strategy. Whether you are an international medical graduate (IMG) or a student at home, your study plan should be your roadmap to success.</p>
+        <style>
+          .guide-h2 { font-size: clamp(22px, 3.5vw, 34px); font-weight: 900; color: var(--text-h); letter-spacing: -0.6px; margin-bottom: 20px; }
+          .guide-h3 { font-size: clamp(18px, 2.5vw, 24px); font-weight: 800; color: var(--accent); margin: 36px 0 16px; }
+          .guide-p  { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 18px; }
 
-          <h2 style="font-size: 24px; color: var(--text-h); margin-top: 16px;">Best Study Plan for Medical Licensing Exams</h2>
-          <p>The most effective study plans are built on three pillars: active recall, spaced repetition, and pattern recognition. Start early, focus on high-yield organ systems, and integrate clinical case studies into your daily routine. Our <strong>medical licensing exam study plan</strong> is designed to help you navigate these pillars efficiently.</p>
+          .year-guide-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 28px;
+            transition: border-color 0.3s ease;
+          }
+          .year-guide-card:hover { border-color: var(--accent); }
+          .year-guide-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; flex-wrap: wrap; }
+          .year-badge-pill {
+            background: rgba(var(--accent-rgb),0.12);
+            color: var(--accent);
+            border: 1px solid rgba(var(--accent-rgb),0.3);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          .year-guide-card h3 { font-size: 22px; font-weight: 900; color: var(--text-h); margin: 0; }
 
-          <h2 style="font-size: 24px; color: var(--text-h); margin-top: 16px;">Common Medical Exams Explained (USMLE, MBBS, US MD)</h2>
-          <p>Different regions have different requirements. The **USMLE** is for the United States residency, **MBBS** for international medical graduates, and **US MD** for local medical students. While the administrative details vary, the underlying medical knowledge required to pass remains fundamentally similar—focusing on clinical excellence and patient safety.</p>
+          .subject-tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 22px; }
+          .subj-tag {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-body);
+          }
 
-          <h2 style="font-size: 24px; color: var(--text-h); margin-top: 16px;">Top Mistakes Medical Students Make During Preparation</h2>
-          <p>Many students fall into the trap of "passive review"—reading the same textbook over and over without testing themselves. Another common error is neglecting the "Why" behind a diagnosis. Our <strong>USMLE preparation guide</strong> emphasizes understanding pathophysiology rather than rote memorization.</p>
+          .strategy-box {
+            background: rgba(var(--accent-rgb),0.04);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-top: 18px;
+          }
+          .strategy-box h4 { font-size: 14px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+          .strategy-box ul { padding-left: 20px; margin: 0; display: grid; gap: 8px; }
+          .strategy-box ul li { font-size: 14px; color: var(--text-body); line-height: 1.6; }
 
-          <h2 style="font-size: 24px; color: var(--text-h); margin-top: 16px;">How to Pass Medical Exams on First Attempt</h2>
-          <p>Consistency is key. <strong>How to pass medical exams</strong> often boils down to your performance in timed practice sessions. We recommend simulating exam conditions daily using our database of 1000+ MCQs to build the mental stamina required for the real boards.</p>
+          .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0; }
+          @media (max-width: 768px) { .grid-2col { grid-template-columns: 1fr; } .year-guide-card { padding: 24px 18px; } }
+        </style>
 
-          <!-- High Value SEO Sections -->
-          <div style="background: var(--bg-elevated); padding: 40px; border-radius: var(--radius); margin-top: 40px;">
-            <h2 style="color: var(--accent); margin-bottom: 20px;">How to Prepare for USMLE Step 1 (Example)</h2>
-            <p>To master USMLE Step 1, focus on Biochemistry, Pathology, and Pharmacology in a clinical context. Use our interactive case scenarios to see how laboratory findings translate into clinical decision-making. A 12-week focused strategy is often the standard for high-achieving candidates.</p>
+        <h2 class="guide-h2">Medical School Exam Preparation Guide (MBBS &amp; US MD Years 1–4)</h2>
+        <p class="guide-p">
+          Medical school is one of the most demanding educational journeys, requiring students to master thousands of concepts across anatomy, physiology, pathology, pharmacology, microbiology, clinical medicine, surgery, pediatrics, obstetrics &amp; gynecology, psychiatry, and numerous medical specialties. Whether you are pursuing an MBBS degree or enrolled in a US Doctor of Medicine (MD) program, consistent revision and question-based learning are essential for academic success and future licensing examinations.
+        </p>
+        <p class="guide-p">
+          MediHelp provides a comprehensive learning platform designed specifically for medical students throughout every stage of their education. Our resources include subject-wise question banks, interactive flashcards, mock examinations, clinical calculators, study guides, and high-yield review materials that help students strengthen understanding while preparing for university examinations and licensing exams such as the USMLE, PLAB, AMC, and MRCP.
+        </p>
+
+        <!-- ── 1ST YEAR ── -->
+        <div class="year-guide-card">
+          <div class="year-guide-header">
+            <span class="year-badge-pill">Foundational Phase</span>
+            <h3>First Year Medical School (MBBS / US MD)</h3>
+          </div>
+          <p class="guide-p" style="margin-bottom: 14px;">
+            The first year builds the scientific foundation required for all future medical education. Students learn the normal structure and function of the human body while developing the vocabulary and principles used throughout clinical practice.
+          </p>
+
+          <strong style="color: var(--text-h); font-size: 14px;">Major Subjects:</strong>
+          <div class="subject-tag-cloud">
+            <span class="subj-tag">Gross Anatomy</span>
+            <span class="subj-tag">Histology</span>
+            <span class="subj-tag">Embryology</span>
+            <span class="subj-tag">Cell Biology</span>
+            <span class="subj-tag">Molecular Biology</span>
+            <span class="subj-tag">Biochemistry</span>
+            <span class="subj-tag">General Physiology</span>
+            <span class="subj-tag">Cardiovascular Physiology</span>
+            <span class="subj-tag">Respiratory Physiology</span>
+            <span class="subj-tag">Renal Physiology</span>
+            <span class="subj-tag">Gastrointestinal Physiology</span>
+            <span class="subj-tag">Endocrine Physiology</span>
+            <span class="subj-tag">Neurophysiology</span>
+            <span class="subj-tag">Reproductive Physiology</span>
           </div>
 
-          <div style="margin-top: 40px;">
-            <h2 style="font-size: 24px; color: var(--text-h);">How Many Hours Should You Study for Medical Exams?</h2>
-            <p>Quality often beats quantity. While most successful candidates study 6-8 hours a day, the *intensity* of those hours matters most. Using a structured system like MediHelp ensures that those hours are spent on high-yield concepts rather than decorative reading.</p>
+          <strong style="color: var(--text-h); font-size: 14px;">What You'll Learn:</strong>
+          <p class="guide-p" style="margin-top: 6px;">
+            Students develop a deep understanding of normal anatomy, organ systems, tissue structure, biochemical pathways, metabolism, homeostasis, embryonic development, and physiological regulation. These concepts form the backbone of future pathology and clinical medicine.
+          </p>
+
+          <div class="strategy-box">
+            <h4>Recommended Study Strategy</h4>
+            <ul>
+              <li>Study anatomy every day using diagrams and cadaveric images.</li>
+              <li>Practice physiology concepts with clinical examples.</li>
+              <li>Use flashcards for biochemical pathways and embryology.</li>
+              <li>Complete practice MCQs after each lecture.</li>
+              <li>Revise weekly instead of cramming before examinations.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ── 2ND YEAR ── -->
+        <div class="year-guide-card">
+          <div class="year-guide-header">
+            <span class="year-badge-pill" style="background: rgba(168,85,247,0.12); color: #a855f7; border-color: rgba(168,85,247,0.3);">Disease Mechanisms</span>
+            <h3>Second Year Medical School (MBBS / US MD)</h3>
+          </div>
+          <p class="guide-p" style="margin-bottom: 14px;">
+            The second year bridges basic sciences with disease mechanisms. Students begin learning how normal physiology changes during illness and how medications are used to treat disease.
+          </p>
+
+          <strong style="color: var(--text-h); font-size: 14px;">Major Subjects:</strong>
+          <div class="subject-tag-cloud">
+            <span class="subj-tag">General Pathology</span>
+            <span class="subj-tag">Systemic Pathology</span>
+            <span class="subj-tag">Pharmacology</span>
+            <span class="subj-tag">Microbiology</span>
+            <span class="subj-tag">Immunology</span>
+            <span class="subj-tag">Parasitology</span>
+            <span class="subj-tag">Virology</span>
+            <span class="subj-tag">Mycology</span>
+            <span class="subj-tag">Clinical Pathology</span>
+            <span class="subj-tag">Genetics</span>
           </div>
 
-          <div style="margin-top: 40px;">
-            <h2 style="font-size: 24px; color: var(--text-h);">Can You Pass Medical Exams Without Coaching?</h2>
-            <p>Yes. Many of the top-performing doctors today were self-taught. However, self-preparation requires a "gold standard" of study materials. We provide the tools—high-yield MCQs and detailed explanations—tasks usually associated with expensive coaching packages, for a fraction of the cost.</p>
+          <strong style="color: var(--text-h); font-size: 14px;">What You'll Learn:</strong>
+          <p class="guide-p" style="margin-top: 6px;">
+            Students explore inflammation, infection, neoplasia, immune disorders, bacterial diseases, viral infections, fungal pathogens, antimicrobial therapy, toxicology, pharmacodynamics, pharmacokinetics, and mechanisms of disease.
+          </p>
+
+          <div class="strategy-box">
+            <h4>Recommended Study Strategy</h4>
+            <ul>
+              <li>Understand disease mechanisms before memorizing facts.</li>
+              <li>Create comparison tables for antibiotics and drug classes.</li>
+              <li>Use flowcharts for inflammatory pathways.</li>
+              <li>Practice integrated pathology and pharmacology questions.</li>
+              <li>Revise microbiology organisms using flashcards.</li>
+            </ul>
           </div>
-          
-          <h2 style="font-size: 24px; color: var(--text-h); margin-top: 32px;">Final Tips for Medical Exam Success</h2>
-          <p>Don't ignore mental health. Take breaks, stay hydrated, and remember that medical exam preparation is a marathon, not a sprint. Trust your preparation, use focused <strong>study plans</strong>, and go into the exam hall with confidence.</p>
+        </div>
+
+        <!-- ── 3RD YEAR ── -->
+        <div class="year-guide-card">
+          <div class="year-guide-header">
+            <span class="year-badge-pill" style="background: rgba(56,189,248,0.12); color: #38bdf8; border-color: rgba(56,189,248,0.3);">Clinical Rotations</span>
+            <h3>Third Year Medical School (MBBS / US MD)</h3>
+          </div>
+          <p class="guide-p" style="margin-bottom: 14px;">
+            The third year introduces students to clinical medicine through hospital rotations and patient-centered learning. Knowledge from the first two years is applied to diagnosis, investigation, and management.
+          </p>
+
+          <strong style="color: var(--text-h); font-size: 14px;">Major Subjects:</strong>
+          <div class="subject-tag-cloud">
+            <span class="subj-tag">Internal Medicine</span>
+            <span class="subj-tag">General Surgery</span>
+            <span class="subj-tag">Pediatrics</span>
+            <span class="subj-tag">Obstetrics</span>
+            <span class="subj-tag">Gynecology</span>
+            <span class="subj-tag">Psychiatry</span>
+            <span class="subj-tag">Family Medicine</span>
+            <span class="subj-tag">Community Medicine</span>
+            <span class="subj-tag">Dermatology</span>
+            <span class="subj-tag">Radiology</span>
+            <span class="subj-tag">Ophthalmology</span>
+            <span class="subj-tag">ENT</span>
+            <span class="subj-tag">Emergency Medicine</span>
+          </div>
+
+          <strong style="color: var(--text-h); font-size: 14px;">What You'll Learn:</strong>
+          <p class="guide-p" style="margin-top: 6px;">
+            Students learn clinical history taking, physical examination, differential diagnosis, laboratory interpretation, imaging, treatment planning, patient communication, and evidence-based clinical decision-making.
+          </p>
+
+          <div class="strategy-box">
+            <h4>Recommended Study Strategy</h4>
+            <ul>
+              <li>Read before clinical rotations.</li>
+              <li>Practice clinical case questions daily.</li>
+              <li>Learn common diseases before rare conditions.</li>
+              <li>Develop differential diagnosis skills.</li>
+              <li>Review laboratory values regularly.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ── 4TH YEAR ── -->
+        <div class="year-guide-card">
+          <div class="year-guide-header">
+            <span class="year-badge-pill" style="background: rgba(251,146,60,0.12); color: #fb923c; border-color: rgba(251,146,60,0.3);">Advanced Practice</span>
+            <h3>Fourth Year / Final Year Medical School (MBBS / US MD)</h3>
+          </div>
+          <p class="guide-p" style="margin-bottom: 14px;">
+            The final year prepares students for independent clinical practice and licensing examinations. Students integrate knowledge from all previous years while managing increasingly complex patient cases.
+          </p>
+
+          <strong style="color: var(--text-h); font-size: 14px;">Major Subjects:</strong>
+          <div class="subject-tag-cloud">
+            <span class="subj-tag">Advanced Internal Medicine</span>
+            <span class="subj-tag">Advanced Surgery</span>
+            <span class="subj-tag">Critical Care Medicine</span>
+            <span class="subj-tag">Emergency Medicine</span>
+            <span class="subj-tag">Neurology</span>
+            <span class="subj-tag">Cardiology</span>
+            <span class="subj-tag">Gastroenterology</span>
+            <span class="subj-tag">Endocrinology</span>
+            <span class="subj-tag">Pulmonology</span>
+            <span class="subj-tag">Nephrology</span>
+            <span class="subj-tag">Infectious Diseases</span>
+            <span class="subj-tag">Rheumatology</span>
+            <span class="subj-tag">Oncology</span>
+            <span class="subj-tag">Orthopedics</span>
+            <span class="subj-tag">Anesthesiology</span>
+          </div>
+
+          <strong style="color: var(--text-h); font-size: 14px;">What You'll Learn:</strong>
+          <p class="guide-p" style="margin-top: 6px;">
+            Students refine clinical reasoning, diagnostic interpretation, evidence-based treatment planning, emergency management, multidisciplinary care, and professional decision-making.
+          </p>
+
+          <div class="strategy-box">
+            <h4>Recommended Study Strategy</h4>
+            <ul>
+              <li>Complete comprehensive mock examinations.</li>
+              <li>Focus on integrated clinical scenarios.</li>
+              <li>Review high-yield topics weekly.</li>
+              <li>Practice timed board-style MCQs.</li>
+              <li>Strengthen weak specialties before graduation.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ── HOW MEDIHELP SUPPORTS ── -->
+        <h3 class="guide-h3">How MediHelp Supports Every Year of Medical School</h3>
+        <p class="guide-p">
+          Unlike traditional question banks that focus only on licensing examinations, MediHelp organizes learning according to both academic years and clinical disciplines. Students can progress from foundational sciences in the first year through advanced clinical medicine in the final year while continuously reinforcing previous knowledge.
+        </p>
+        <p class="guide-p">Our platform includes:</p>
+        <div class="subject-tag-cloud" style="margin-bottom: 24px;">
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Subject-wise Question Banks</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Interactive Flashcards</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Clinical Case Discussions</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Board-Style Multiple Choice Questions</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Mock Examinations</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Medical Calculators</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">CPT, ICD-10 &amp; HCPCS Lookup Tools</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Progress Tracking</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Performance Analytics</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">High-Yield Revision Notes</span>
+        </div>
+
+        <!-- ── BEST RESOURCES & BOARD PREP ── -->
+        <div class="grid-2col">
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px;">
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--text-h); margin-bottom: 12px;">Best Study Resources for Medical Students</h3>
+            <p class="guide-p" style="font-size: 14px; margin-bottom: 12px;">
+              Successful medical students combine multiple learning methods rather than relying on textbooks alone. A balanced approach includes active recall, spaced repetition, clinical case discussions, practice questions, and regular self-assessment.
+            </p>
+            <p class="guide-p" style="font-size: 14px; margin-bottom: 0;">We recommend combining:</p>
+            <ul style="padding-left: 18px; color: var(--text-muted); font-size: 14px; margin-top: 8px; display: grid; gap: 4px;">
+              <li>Flashcards for rapid recall</li>
+              <li>MCQs for examination practice</li>
+              <li>Clinical cases for diagnostic reasoning</li>
+              <li>Medical calculators for bedside application</li>
+              <li>Mock exams for performance evaluation</li>
+              <li>Revision notes for high-yield review</li>
+            </ul>
+          </div>
+
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px;">
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--text-h); margin-bottom: 12px;">Preparing for USMLE, PLAB, AMC &amp; MRCP</h3>
+            <p class="guide-p" style="font-size: 14px; margin-bottom: 12px;">
+              Medical school examinations provide the foundation for international licensing exams. Students planning to pursue residency or postgraduate training abroad should begin integrating board-style question practice early in their education.
+            </p>
+            <p class="guide-p" style="font-size: 14px; margin-bottom: 0;">MediHelp supports preparation for:</p>
+            <ul style="padding-left: 18px; color: var(--text-muted); font-size: 14px; margin-top: 8px; display: grid; gap: 4px;">
+              <li>USMLE Step 1 &amp; Step 2 CK</li>
+              <li>PLAB Part 1</li>
+              <li>AMC CAT MCQ</li>
+              <li>MRCP Part 1</li>
+              <li>University Professional Examinations</li>
+              <li>Final MBBS Examinations</li>
+            </ul>
+          </div>
         </div>
       </section>
 
-      <!-- FAQ SECTION (SEO BOOST) -->
-        <!-- Adsterra 468x60 Banner -->
-  <div style="text-align:center; margin: 20px auto;">
-    <script>
-      atOptions = {
-        'key' : 'e8d44c92394feb5769b23337c154c786',
-        'format' : 'iframe',
-        'height' : 60,
-        'width' : 468,
-        'params' : {}
-      };
-    </script>
-    <script src="https://advancementpubertydied.com/e8d44c92394feb5769b23337c154c786/invoke.js"></script>
-  </div>
+      <!-- ── FREQUENTLY ASKED QUESTIONS ── -->
+      <!-- Adsterra 468x60 Banner -->
+      <div style="text-align:center; margin: 30px auto 20px;">
+        <script>
+          atOptions = {
+            'key' : 'e8d44c92394feb5769b23337c154c786',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : {}
+          };
+        </script>
+        <script src="https://advancementpubertydied.com/e8d44c92394feb5769b23337c154c786/invoke.js"></script>
+      </div>
 
-  <section class="faq-section">
-        <h2 class="faq-title">Medical Exam Preparation FAQs</h2>
+      <section class="faq-section">
+        <h2 class="faq-title">Frequently Asked Questions</h2>
         <div class="faq-grid">
           <div class="faq-item">
-            <h3>How do these USMLE preparation MCQs help in my studies?</h3>
-            <p>Our database consists of high-yield questions designed by medical experts. By practicing our <strong>anatomy MCQs with answers</strong>, you build the pattern recognition skills necessary for USMLE Step 1 and clinical rotations.</p>
+            <h3>Which medical school year is the hardest?</h3>
+            <p>Many students find the second and third years particularly demanding because they transition from foundational sciences to pathology, pharmacology, microbiology, and clinical medicine. Consistent revision and question-based learning can make this transition much smoother.</p>
           </div>
           <div class="faq-item">
-            <h3>How long does it take to prepare for USMLE?</h3>
-            <p>Most students spend 3 to 6 months of dedicated study for Step 1, while Step 2 CK usually requires 2 to 4 months. The exact time depends on your prior clinical knowledge and base-line diagnostic speed.</p>
+            <h3>Should first-year medical students use question banks?</h3>
+            <p>Yes. Early exposure to board-style multiple-choice questions helps reinforce concepts, improve recall, and develop clinical reasoning skills from the beginning of medical school.</p>
           </div>
           <div class="faq-item">
-            <h3>Which exam is hardest for doctors?</h3>
-            <p>The USMLE Step 1 is widely considered one of the most challenging due to the depth of basic science required. However, clinical exams and university professional exams are also notoriously difficult due to their strict curriculum and high stakes.</p>
+            <h3>Are flashcards useful throughout medical school?</h3>
+            <p>Absolutely. Flashcards are effective for learning anatomy, physiology, pharmacology, microbiology, pathology, laboratory values, and clinical facts through active recall and spaced repetition.</p>
           </div>
           <div class="faq-item">
-            <h3>Can I prepare for medical exams without coaching?</h3>
-            <p>Yes. With access to structured resources like MediHelp, self-driven candidates can follow a <strong>medical licensing exam study plan</strong> to achieve high scores without incurring the heavy costs of formal coaching programs.</p>
+            <h3>How many hours should medical students study each day?</h3>
+            <p>Study time varies by curriculum and personal pace, but most successful students focus on consistent, high-quality study sessions with regular practice questions, active recall, and scheduled review rather than simply counting hours.</p>
           </div>
           <div class="faq-item">
-            <h3>What is the best study strategy for medical boards?</h3>
-            <p>The best strategy combines a primary review source with a consistent Q-Bank (Question Bank) practice. Active testing through MCQs and clinical case scenarios is the most proven method for long-term retention.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Are the MBBS exam questions updated according to the latest syllabus?</h3>
-            <p>Yes, all <strong>MBBS exam questions</strong> are categorized by semester and topic, ensuring they align perfectly with university standard syllabuses and clinical professional exams.</p>
+            <h3>Can I use MediHelp throughout all four years of medical school?</h3>
+            <p>Yes. MediHelp is designed to support students from the first year through graduation, with resources that progress from foundational sciences to advanced clinical medicine and board examination preparation.</p>
           </div>
         </div>
       </section>
-    </div>
-
-    <!-- PREMIUM ACCESS MODAL -->
+      </div>
+      <!-- PREMIUM ACCESS MODAL -->
     <div id="premium-modal" class="modal-overlay">
       <div class="premium-card">
         <div class="premium-badge">MASTER CLASS EXCLUSIVE</div>
@@ -813,199 +1066,6 @@
             <li><a href="/terms">Terms of Service</a></li>
             <li><a href="/refund">Refund Policy</a></li>
             <li><a href="/pricing">Pricing</a></li>
-            <li><a href="/contact">Contact Us</a></li>
-            <li><a href="/sitemap.xml">Sitemap</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
-        <span>© 2026 MediHelp. All Rights Reserved.</span>
-        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms & Disclaimer</a></span>
-        <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
-      </div>
-    </div>
-</footer>
-
-  <script>
-    // --- STATE MANAGEMENT ---
-    let currentYear = parseInt(localStorage.getItem('mh_prep_current_year') || '1');
-    let currentTopicId = null;
-    let userProgress = JSON.parse(localStorage.getItem('mh_prep_progress') || '{}');
-    let allTopicsIndex = [];
-
-    // Separate scoring maps
-    let currentStandaloneIds = [];
-    let currentCaseQuestionIds = [];
-    let currentLoadedCases = [];
-
-    let lastLoadId = 0;
-    let yearTopicsCache = {};
-
-    function saveProgress() {
-      localStorage.setItem('mh_prep_progress', JSON.stringify(userProgress));
-    }
-
-    function topicHref(topic) {
-      if (!topic) return window.location.pathname;
-      if (typeof topic === 'string') return `${window.location.pathname}?topic_id=${encodeURIComponent(topic)}`;
-      return `${window.location.pathname}?topic_id=${encodeURIComponent(topic.id)}`;
-    }
-
-    function updateTopicUrl(topic) {
-      if (!topic) return;
-      const url = `${window.location.pathname}?topic_id=${encodeURIComponent(topic.id)}`;
-      history.replaceState({ topicId: topic.id }, '', url);
-      document.title = `${topic.title} | MediHelp Medical Exam Prep`;
-    }
-
-    // --- SEARCH LOGIC ---
-    async function initSearch() {
-      const { data, error } = await window.dbClient
-        .from('topics')
-        .select('id, title, year_id, slug')
-        .order('title', { ascending: true });
-
-      if (data) allTopicsIndex = data;
-
-      const input = document.getElementById('topic-search');
-      const resultsContainer = document.getElementById('search-results');
-
-      input.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        if (!query) {
-          resultsContainer.classList.remove('visible');
-          return;
-        }
-
-        const matches = allTopicsIndex.filter(t => t.title.toLowerCase().includes(query)).slice(0, 10);
-        
-        if (matches.length > 0) {
-          resultsContainer.innerHTML = matches.map(t => `
-            <a class="search-item" href="${topicHref(t)}" style="text-decoration:none;">
-              <span class="search-item-title">${escapeHtml(t.title)}</span>
-              <span class="search-item-sem">${t.year_id ? t.year_id + getYearSuffix(t.year_id) + ' Year' : 'General'}</span>
-            </a>
-          `).join('');
-          resultsContainer.classList.add('visible');
-        } else {
-          resultsContainer.innerHTML = '<div class="search-item"><span style="color:var(--text-muted)">No topics found</span></div>';
-          resultsContainer.classList.add('visible');
-        }
-      });
-
-      // Close results when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!input.contains(e.target) && !resultsContainer.contains(e.target)) {
-          resultsContainer.classList.remove('visible');
-        }
-      });
-    }
-
-    function escapeJs(str) {
-      return str.replace(/'/g, "\\'");
-    }
-
-    function escapeAttr(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    }
-
-    // --- DASHBOARD LOGIC ---
-    const YEAR_LABELS = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
-
-    function getYearSuffix(n) {
-      const s = ['th','st','nd','rd'];
-      const v = n % 100;
-      return s[(v - 20) % 10] || s[v] || s[0];
-    }
-
-    async function initYears() {
-      const bar = document.getElementById('year-bar');
-      const dropdown = document.getElementById('mobile-year-dropdown');
-      bar.innerHTML = '';
-      
-      YEAR_LABELS.forEach((label, idx) => {
-        const yearNum = idx + 1;
-        const tab = document.createElement('div');
-        tab.className = `year-tab ${yearNum === currentYear ? 'active' : ''}`;
-        tab.textContent = label;
-        tab.dataset.year = yearNum;
-        tab.onclick = () => switchYear(yearNum);
-        bar.appendChild(tab);
-      });
-
-      if (dropdown) {
-        dropdown.value = currentYear;
-        dropdown.onchange = (e) => switchYear(parseInt(e.target.value));
-      }
-
-      document.getElementById('topic-grid').addEventListener('click', async (e) => {
-        const card = e.target.closest('.topic-card');
-        if (!card) return;
-        e.preventDefault();
-        const topicId = card.dataset.topicId;
-        const title = card.dataset.topicTitle || card.querySelector('h3')?.textContent || '';
-        const isFreeDemo = card.dataset.freeDemo === 'true';
-
-        // Full page navigation = same reliability as a hard refresh (clean Supabase + auth state).
-        const goTopic = () => {
-          const u = `${window.location.pathname}?topic_id=${encodeURIComponent(topicId)}`;
-          window.location.assign(u);
-        };
-
-        if (isFreeDemo) {
-          goTopic();
-          return;
-        }
-
-        const premium = await MediHelp.isPremium();
-        if (premium) {
-          goTopic();
-          return;
-        }
-
-        currentTopicId = topicId;
-        const titleEl = document.getElementById('current-topic-title');
-        if (titleEl) titleEl.textContent = title;
-        const { data } = await window.dbClient.auth.getUser();
-        if (!data?.user) {
-          MediHelp.showAuthModal();
-        } else {
-          openPremiumModal();
-        }
-      });
-
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('showActivation') === 'true') {
-        openPremiumModal();
-      }
-
-      loadTopics(currentYear); 
-      initPrefetching();
-    }
-
-    function prefetchRemainingYears() {
-      [1, 2, 3, 4].forEach((yearId, index) => {
-        if (yearId === currentYear || yearTopicsCache[yearId]) return;
-        setTimeout(() => loadTopicsSilent(yearId), 400 * index);
-      });
-    }
-
-    const debouncedLoadTopics = debounce((id) => loadTopics(id), 300);
-
-    function switchYear(id) {
-      if (currentYear === id) return;
-      currentYear = id;
-      localStorage.setItem('mh_prep_current_year', id);
-      
-      // Update UI
-      document.querySelectorAll('.year-tab').forEach(t => {
-        t.classList.toggle('active', parseInt(t.dataset.year) === id);
-      });
-      const dropdown = document.getElementById('mobile-year-dropdown');
       if (dropdown) dropdown.value = id;
 
       document.getElementById('topic-grid').innerHTML = '';

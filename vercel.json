@@ -5,7 +5,11 @@
     { "source": "/es/medical-calculator", "destination": "/medical-calculator" },
     { "source": "/es/calculators/:path*", "destination": "/calculators/:path*" },
     { "source": "/blog/:slug", "destination": "/blog-post?slug=:slug" },
-    { "source": "/usmle-preparation", "destination": "/medical-exam-usmle" }
+    { "source": "/usmle-preparation", "destination": "/medical-exam-usmle" },
+    { "source": "/medical-exam-preparation/first-year-mbbs", "destination": "/medical-exam-semester?year=1" },
+    { "source": "/medical-exam-preparation/second-year-mbbs", "destination": "/medical-exam-semester?year=2" },
+    { "source": "/medical-exam-preparation/third-year-mbbs", "destination": "/medical-exam-semester?year=3" },
+    { "source": "/medical-exam-preparation/fourth-year-mbbs", "destination": "/medical-exam-semester?year=4" }
   ],
   "headers": [
     {

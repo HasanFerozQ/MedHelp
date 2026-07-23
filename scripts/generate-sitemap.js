@@ -54,6 +54,10 @@ function addEntry(loc, lastmod, changefreq, priority) {
 const mainPages = [
   { loc: '/', priority: 1.0, changefreq: 'weekly' },
   { loc: '/medical-exam-preparation', priority: 0.9, changefreq: 'weekly' },
+  { loc: '/medical-exam-preparation/first-year-mbbs', priority: 0.9, changefreq: 'weekly' },
+  { loc: '/medical-exam-preparation/second-year-mbbs', priority: 0.9, changefreq: 'weekly' },
+  { loc: '/medical-exam-preparation/third-year-mbbs', priority: 0.9, changefreq: 'weekly' },
+  { loc: '/medical-exam-preparation/fourth-year-mbbs', priority: 0.9, changefreq: 'weekly' },
   { loc: '/medical-exam-usmle', priority: 0.9, changefreq: 'weekly' },
   { loc: '/medical-exam-semester', priority: 0.9, changefreq: 'weekly' },
   { loc: '/medical-exam-mock', priority: 0.9, changefreq: 'weekly' },
