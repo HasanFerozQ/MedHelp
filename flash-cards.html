@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
@@ -385,6 +385,510 @@
         <h3>No Flash Cards Yet</h3>
         <p>We are currently populating this section with high-yield content. Check back soon!</p>
       </div>
+
+      <!-- ════════════════════════════════════════════
+           EDUCATIONAL CONTENT BLOCK
+      ════════════════════════════════════════════ -->
+      <div id="fc-edu-content" style="margin-top: 60px;">
+
+        <style>
+          .fc-edu-section { padding: 52px 0; border-top: 1px solid var(--border); }
+          .fc-edu-h2 {
+            font-size: clamp(20px, 3vw, 30px);
+            font-weight: 900;
+            color: var(--text-h);
+            letter-spacing: -0.5px;
+            margin-bottom: 18px;
+          }
+          .fc-edu-p {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 900px;
+            margin-bottom: 16px;
+          }
+
+          /* Benefit grid */
+          .fc-benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+            margin: 20px 0 24px;
+          }
+          .fc-benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-h);
+            transition: border-color 0.2s;
+          }
+          .fc-benefit-item:hover { border-color: var(--accent); }
+          .fc-dot { flex-shrink: 0; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin-top: 5px; }
+
+          /* Subject expand cards */
+          .fc-subj-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 14px;
+            margin: 24px 0;
+          }
+          .fc-subj-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            transition: all 0.3s ease;
+          }
+          .fc-subj-card:hover { border-color: var(--accent); box-shadow: 0 8px 24px rgba(var(--accent-rgb),0.1); }
+          .fc-subj-card h3 { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 8px; }
+          .fc-subj-card p  { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0; }
+
+          /* Who can use pills */
+          .fc-who-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+          }
+          .fc-who-pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(var(--accent-rgb),0.08);
+            color: var(--accent);
+            border: 1px solid rgba(var(--accent-rgb),0.2);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 700;
+          }
+          .fc-who-pill svg { flex-shrink: 0; }
+
+          /* Comparison table */
+          .fc-compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+            border-radius: 14px;
+            overflow: hidden;
+          }
+          .fc-compare-table th {
+            background: rgba(var(--accent-rgb),0.12);
+            color: var(--accent);
+            padding: 14px 20px;
+            text-align: left;
+            font-weight: 800;
+            font-size: 15px;
+          }
+          .fc-compare-table td {
+            padding: 13px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-body);
+            font-weight: 600;
+          }
+          .fc-compare-table tr:nth-child(even) td { background: var(--bg-elevated); }
+          .fc-check { color: var(--accent); font-weight: 800; }
+          .fc-neutral { color: var(--text-muted); }
+
+          /* Study tips */
+          .fc-tips-list {
+            display: grid;
+            gap: 12px;
+            margin: 20px 0;
+          }
+          .fc-tip {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+          }
+          .fc-tip-num {
+            flex-shrink: 0;
+            width: 30px; height: 30px;
+            background: rgba(var(--accent-rgb),0.12);
+            border: 1px solid rgba(var(--accent-rgb),0.25);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 900; color: var(--accent);
+          }
+          .fc-tip p { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0; }
+          .fc-tip strong { color: var(--text-h); }
+
+          /* Recommended study plan */
+          .fc-plan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+          }
+          .fc-plan-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+          }
+          .fc-plan-card h4 { font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+          .fc-plan-card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+          .fc-plan-card ul li { font-size: 13px; color: var(--text-body); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+          .fc-plan-card ul li::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+
+          /* Hot topics */
+          .fc-topics-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 20px 0;
+          }
+          .fc-topic-tag {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 7px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-body);
+            transition: all 0.2s;
+            cursor: default;
+          }
+          .fc-topic-tag:hover { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb),0.06); }
+
+          /* Resource cards */
+          .fc-resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+          }
+          .fc-resource-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 16px;
+            text-decoration: none;
+            display: flex; flex-direction: column; gap: 10px;
+            transition: all 0.3s ease;
+          }
+          .fc-resource-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 8px 22px rgba(var(--accent-rgb),0.1); }
+          .fc-resource-card .fc-rc-icon { font-size: 24px; }
+          .fc-resource-card .fc-rc-name { font-size: 14px; font-weight: 800; color: var(--text-h); }
+          .fc-resource-card .fc-rc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+          .fc-resource-card:hover .fc-rc-name { color: var(--accent); }
+
+          /* Start learning CTA box */
+          .fc-start-box {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(var(--accent-rgb),0.04) 100%);
+            border: 1px solid rgba(var(--accent-rgb),0.35);
+            border-radius: 20px;
+            padding: 36px 40px;
+            margin-top: 16px;
+          }
+          .fc-start-box p { font-size: 16px; color: var(--text-muted); line-height: 1.8; max-width: 860px; }
+
+          @media (max-width: 600px) {
+            .fc-subj-grid { grid-template-columns: 1fr; }
+            .fc-plan-grid { grid-template-columns: 1fr 1fr; }
+            .fc-resource-grid { grid-template-columns: 1fr 1fr; }
+          }
+        </style>
+
+        <!-- ── 1. INTRO ── -->
+        <section class="fc-edu-section" style="border-top: none; padding-top: 0;">
+          <h2 class="fc-edu-h2">Free Medical Flashcards for MBBS &amp; USMLE Students</h2>
+          <p class="fc-edu-p">
+            Learning medicine requires mastering thousands of facts, clinical concepts, anatomical structures, biochemical pathways, pharmacological mechanisms, and disease processes. Traditional passive reading often leads to rapid forgetting, making active recall one of the most effective study techniques for long-term retention.
+          </p>
+          <p class="fc-edu-p">
+            MediHelp's Medical Flashcards are designed using evidence-based learning principles to help medical students strengthen recall, improve examination performance, and build lasting clinical knowledge. Our flashcard decks are organized by subject and body system, making it easy to focus on one topic at a time while preparing for MBBS professional examinations, USMLE Step 1, USMLE Step 2 CK, PLAB, AMC, MRCP, and other healthcare licensing exams.
+          </p>
+          <p class="fc-edu-p">
+            Whether you're reviewing anatomy before practical examinations or revising physiology before board exams, our flashcards provide a structured, distraction-free learning experience.
+          </p>
+        </section>
+
+        <!-- ── 2. WHY FLASHCARDS WORK ── -->
+        <section class="fc-edu-section">
+          <h2 class="fc-edu-h2">Why Medical Flashcards Work</h2>
+          <p class="fc-edu-p">
+            Medical education involves memorizing a vast amount of information while understanding how concepts connect in real clinical practice. Flashcards transform passive reading into active recall by prompting students to retrieve information from memory rather than simply recognizing it.
+          </p>
+          <p class="fc-edu-p">Benefits of active recall include:</p>
+          <div class="fc-benefit-grid">
+            <div class="fc-benefit-item"><div class="fc-dot"></div>Improved long-term memory retention</div>
+            <div class="fc-benefit-item"><div class="fc-dot"></div>Faster recall during examinations</div>
+            <div class="fc-benefit-item"><div class="fc-dot"></div>Better understanding of complex concepts</div>
+            <div class="fc-benefit-item"><div class="fc-dot"></div>Identification of weak subject areas</div>
+            <div class="fc-benefit-item"><div class="fc-dot"></div>More efficient revision sessions</div>
+            <div class="fc-benefit-item"><div class="fc-dot"></div>Reduced forgetting over time</div>
+            <div class="fc-benefit-item"><div class="fc-dot"></div>Stronger clinical reasoning</div>
+          </div>
+          <p class="fc-edu-p">
+            Research consistently demonstrates that students who regularly practice retrieval-based learning outperform those who rely solely on repeated reading or highlighting.
+          </p>
+        </section>
+
+        <!-- ── 3. SUBJECTS COVERED ── -->
+        <section class="fc-edu-section">
+          <h2 class="fc-edu-h2">Subjects Covered in Our Medical Flashcard Library</h2>
+          <p class="fc-edu-p">Our flashcard collections cover the major disciplines taught throughout medical school and tested in licensing examinations.</p>
+
+          <div class="fc-subj-grid">
+            <div class="fc-subj-card">
+              <h3>Anatomy Flashcards</h3>
+              <p>Review gross anatomy, upper limb, lower limb, thorax, abdomen, pelvis, head and neck, neuroanatomy, embryology, and clinically relevant anatomical relationships.</p>
+            </div>
+            <div class="fc-subj-card">
+              <h3>Physiology Flashcards</h3>
+              <p>Master cardiovascular physiology, respiratory physiology, renal physiology, gastrointestinal physiology, endocrine physiology, neurophysiology, and reproductive physiology.</p>
+            </div>
+            <div class="fc-subj-card">
+              <h3>Histology Flashcards</h3>
+              <p>Identify normal tissues, microscopic structures, cellular organization, staining characteristics, and histopathological correlations.</p>
+            </div>
+            <div class="fc-subj-card">
+              <h3>Embryology Flashcards</h3>
+              <p>Study early human development, congenital anomalies, organogenesis, fetal circulation, and developmental milestones.</p>
+            </div>
+            <div class="fc-subj-card">
+              <h3>Biochemistry Flashcards</h3>
+              <p>Review metabolic pathways, enzymes, vitamins, molecular biology, genetics, cellular metabolism, and inherited metabolic disorders.</p>
+            </div>
+            <div class="fc-subj-card">
+              <h3>Microbiology Flashcards</h3>
+              <p>Learn bacteria, viruses, fungi, parasites, infectious diseases, antimicrobial therapy, and laboratory diagnosis.</p>
+            </div>
+            <div class="fc-subj-card">
+              <h3>Pathology Flashcards</h3>
+              <p>Understand inflammation, neoplasia, cardiovascular disease, pulmonary pathology, renal disease, gastrointestinal disorders, endocrine pathology, and systemic illnesses.</p>
+            </div>
+            <div class="fc-subj-card">
+              <h3>Pharmacology Flashcards</h3>
+              <p>Master drug classifications, mechanisms of action, adverse effects, contraindications, and clinical applications.</p>
+            </div>
+            <div class="fc-subj-card">
+              <h3>Genetics &amp; Molecular Biology</h3>
+              <p>Review DNA replication, transcription, translation, chromosomal disorders, inheritance patterns, molecular diagnostics, and genetic diseases.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── 4. WHO CAN USE ── -->
+        <section class="fc-edu-section">
+          <h2 class="fc-edu-h2">Who Can Use These Flashcards?</h2>
+          <p class="fc-edu-p">Our flashcards are suitable for a wide range of healthcare learners:</p>
+          <div class="fc-who-grid">
+            <span class="fc-who-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Medical students (MBBS &amp; MD)</span>
+            <span class="fc-who-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>USMLE Step 1 candidates</span>
+            <span class="fc-who-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>USMLE Step 2 CK candidates</span>
+            <span class="fc-who-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>PLAB candidates</span>
+            <span class="fc-who-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>AMC candidates</span>
+            <span class="fc-who-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>MRCP candidates</span>
+            <span class="fc-who-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Nursing students</span>
+            <span class="fc-who-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Physician Assistant students</span>
+            <span class="fc-who-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Allied health professionals</span>
+            <span class="fc-who-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Healthcare educators</span>
+          </div>
+        </section>
+
+        <!-- ── 5. FLASHCARDS VS NOTES ── -->
+        <section class="fc-edu-section">
+          <h2 class="fc-edu-h2">Flashcards vs Traditional Notes</h2>
+          <p class="fc-edu-p">
+            Traditional notes often become lengthy and difficult to review before examinations. Flashcards encourage rapid retrieval of high-yield facts while allowing students to revise hundreds of concepts in a single study session.
+          </p>
+          <table class="fc-compare-table">
+            <thead>
+              <tr>
+                <th>Flashcards</th>
+                <th>Traditional Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="fc-check">✓</span> Active recall</td>
+                <td><span class="fc-neutral">Passive reading</span></td>
+              </tr>
+              <tr>
+                <td><span class="fc-check">✓</span> Faster revision</td>
+                <td><span class="fc-neutral">Time-consuming review</span></td>
+              </tr>
+              <tr>
+                <td><span class="fc-check">✓</span> Better memory retention</td>
+                <td><span class="fc-neutral">Easier to forget</span></td>
+              </tr>
+              <tr>
+                <td><span class="fc-check">✓</span> Ideal for spaced repetition</td>
+                <td><span class="fc-neutral">Difficult to organize</span></td>
+              </tr>
+              <tr>
+                <td><span class="fc-check">✓</span> Excellent for exam preparation</td>
+                <td><span class="fc-neutral">Better for initial learning</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ── 6. HOW TO STUDY ── -->
+        <section class="fc-edu-section">
+          <h2 class="fc-edu-h2">How to Study Using Flashcards</h2>
+          <p class="fc-edu-p">For the best results:</p>
+          <div class="fc-tips-list">
+            <div class="fc-tip"><div class="fc-tip-num">1</div><p><strong>Study one body system at a time.</strong> Focused, systematic revision produces better retention than jumping between unrelated topics.</p></div>
+            <div class="fc-tip"><div class="fc-tip-num">2</div><p><strong>Complete a flashcard deck daily.</strong> Short, consistent sessions outperform marathon cramming sessions for long-term memory formation.</p></div>
+            <div class="fc-tip"><div class="fc-tip-num">3</div><p><strong>Repeat difficult cards more frequently.</strong> Spaced repetition — reviewing harder cards at shorter intervals — is scientifically proven to maximize recall efficiency.</p></div>
+            <div class="fc-tip"><div class="fc-tip-num">4</div><p><strong>Combine flashcards with question banks.</strong> Use MediHelp's board-style MCQs alongside flashcards to reinforce conceptual understanding with applied clinical reasoning.</p></div>
+            <div class="fc-tip"><div class="fc-tip-num">5</div><p><strong>Use spaced repetition instead of cramming.</strong> Review subjects at increasing intervals over days and weeks — not in a single prolonged session before an exam.</p></div>
+            <div class="fc-tip"><div class="fc-tip-num">6</div><p><strong>Review incorrect answers immediately.</strong> When you answer a card incorrectly, re-read and understand why before moving to the next card — do not simply move on.</p></div>
+            <div class="fc-tip"><div class="fc-tip-num">7</div><p><strong>Take weekly self-assessments.</strong> After completing a subject's flashcard deck, attempt a subject-specific MCQ block to validate your retention under examination conditions.</p></div>
+          </div>
+          <p class="fc-edu-p">
+            Consistency is more important than long study sessions. Even 20–30 minutes of daily active recall can significantly improve retention over a semester or examination preparation period.
+          </p>
+        </section>
+
+        <!-- ── 7. RECOMMENDED STUDY PLAN ── -->
+        <section class="fc-edu-section">
+          <h2 class="fc-edu-h2">Recommended Study Plan</h2>
+          <div class="fc-plan-grid">
+            <div class="fc-plan-card">
+              <h4>First-Year MBBS</h4>
+              <ul>
+                <li>Anatomy</li>
+                <li>Histology</li>
+                <li>Embryology</li>
+                <li>Physiology</li>
+                <li>Biochemistry</li>
+              </ul>
+            </div>
+            <div class="fc-plan-card">
+              <h4>Second-Year MBBS</h4>
+              <ul>
+                <li>Pathology</li>
+                <li>Pharmacology</li>
+                <li>Microbiology</li>
+              </ul>
+            </div>
+            <div class="fc-plan-card">
+              <h4>Clinical Years</h4>
+              <ul>
+                <li>Internal Medicine</li>
+                <li>Surgery</li>
+                <li>Pediatrics</li>
+                <li>Obstetrics &amp; Gynecology</li>
+                <li>Psychiatry</li>
+                <li>Emergency Medicine</li>
+              </ul>
+            </div>
+            <div class="fc-plan-card">
+              <h4>USMLE Step 1</h4>
+              <ul>
+                <li>Anatomy</li>
+                <li>Physiology</li>
+                <li>Pathology</li>
+                <li>Pharmacology</li>
+                <li>Biochemistry</li>
+                <li>Microbiology</li>
+                <li>Immunology</li>
+                <li>Behavioral Sciences</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── 8. FREQUENTLY STUDIED TOPICS ── -->
+        <section class="fc-edu-section">
+          <h2 class="fc-edu-h2">Frequently Studied Flashcard Topics</h2>
+          <p class="fc-edu-p">Students commonly review these high-yield topics using our flashcard library:</p>
+          <div class="fc-topics-wrap">
+            <span class="fc-topic-tag">Cranial nerves</span>
+            <span class="fc-topic-tag">Cardiac cycle</span>
+            <span class="fc-topic-tag">Acid-base disorders</span>
+            <span class="fc-topic-tag">Renal physiology</span>
+            <span class="fc-topic-tag">ECG interpretation</span>
+            <span class="fc-topic-tag">Histological slides</span>
+            <span class="fc-topic-tag">Pharmacology mechanisms</span>
+            <span class="fc-topic-tag">Antibiotics</span>
+            <span class="fc-topic-tag">Genetic disorders</span>
+            <span class="fc-topic-tag">Metabolic pathways</span>
+            <span class="fc-topic-tag">Congenital anomalies</span>
+            <span class="fc-topic-tag">Endocrine hormones</span>
+            <span class="fc-topic-tag">Gastrointestinal hormones</span>
+            <span class="fc-topic-tag">Embryology</span>
+            <span class="fc-topic-tag">Musculoskeletal anatomy</span>
+          </div>
+        </section>
+
+        <!-- ── 9. RELATED FREE RESOURCES ── -->
+        <section class="fc-edu-section">
+          <h2 class="fc-edu-h2">Related Free Medical Resources</h2>
+          <p class="fc-edu-p">Continue your preparation using other free MediHelp tools:</p>
+          <div class="fc-resource-grid">
+            <a href="/medical-calculator" class="fc-resource-card">
+              <div class="fc-rc-icon">🧮</div>
+              <div class="fc-rc-name">Medical Calculators</div>
+              <div class="fc-rc-desc">500+ clinical calculators for students and clinicians.</div>
+            </a>
+            <a href="/cpt-code-search" class="fc-resource-card">
+              <div class="fc-rc-icon">🔍</div>
+              <div class="fc-rc-name">CPT Code Lookup</div>
+              <div class="fc-rc-desc">Search full CPT procedure code database.</div>
+            </a>
+            <a href="/medical-bill-audit#icd10" class="fc-resource-card">
+              <div class="fc-rc-icon">📘</div>
+              <div class="fc-rc-name">ICD-10 Lookup</div>
+              <div class="fc-rc-desc">ICD-10-CM diagnosis codes used in clinical billing.</div>
+            </a>
+            <a href="/cpt-code-search#hcpcs" class="fc-resource-card">
+              <div class="fc-rc-icon">🏷️</div>
+              <div class="fc-rc-name">HCPCS Lookup</div>
+              <div class="fc-rc-desc">HCPCS Level II codes for DME and non-physician services.</div>
+            </a>
+            <a href="/providers" class="fc-resource-card">
+              <div class="fc-rc-icon">👨‍⚕️</div>
+              <div class="fc-rc-name">NPI Search</div>
+              <div class="fc-rc-desc">Verify credentialed healthcare professionals by NPI number.</div>
+            </a>
+            <a href="/medical-bill-audit" class="fc-resource-card">
+              <div class="fc-rc-icon">🏥</div>
+              <div class="fc-rc-name">Medical Coding Guides</div>
+              <div class="fc-rc-desc">AI-powered tools to audit medical bills and understand billing codes.</div>
+            </a>
+            <a href="/calculators/students" class="fc-resource-card">
+              <div class="fc-rc-icon">📐</div>
+              <div class="fc-rc-name">Clinical Calculators</div>
+              <div class="fc-rc-desc">Calculators organized for medical students on clinical rotations.</div>
+            </a>
+            <a href="/medical-exam-usmle" class="fc-resource-card">
+              <div class="fc-rc-icon">📝</div>
+              <div class="fc-rc-name">USMLE Question Bank</div>
+              <div class="fc-rc-desc">Free board-style MCQs organized by USMLE Step 1 disciplines.</div>
+            </a>
+            <a href="/medical-exam-mock" class="fc-resource-card">
+              <div class="fc-rc-icon">⏱️</div>
+              <div class="fc-rc-name">Medical Mock Exams</div>
+              <div class="fc-rc-desc">Full-length timed mock examinations simulating board conditions.</div>
+            </a>
+          </div>
+        </section>
+
+        <!-- ── 10. START LEARNING TODAY ── -->
+        <section class="fc-edu-section" style="padding-bottom: 0;">
+          <h2 class="fc-edu-h2">Start Learning Today</h2>
+          <div class="fc-start-box">
+            <p>
+              Our free medical flashcards help students strengthen memory, improve examination confidence, and revise efficiently through active recall. Explore subject-specific flashcard decks covering anatomy, physiology, pathology, pharmacology, microbiology, genetics, histology, embryology, and many more disciplines — all designed to support success in MBBS, USMLE, PLAB, AMC, and MRCP examinations. Begin with a single subject deck today, build a daily review habit, and watch your recall improve week after week.
+            </p>
+          </div>
+        </section>
+
+      </div><!-- end #fc-edu-content -->
 
       <!-- FAQ & SEO Section -->
         <!-- Adsterra 468x60 Banner -->
