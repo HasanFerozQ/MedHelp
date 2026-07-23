@@ -1,0 +1,1864 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <title>Medical Exam Preparation Guide for Doctors (USMLE, MBBS, & US MD) | MediHelp</title>
+  <meta name="description" content="Prepare for USMLE, MBBS, and US MD exams with MediHelpΓÇÖs comprehensive medical exam preparation guide. High-yield MCQs, case scenarios, and licensing exam study plans." />
+  <meta name="keywords" content="medical exam preparation, USMLE preparation guide, MBBS exam questions, US MD boards preparation, medical licensing exam study plan" />
+  <link rel="canonical" href="https://www.medihelp.live/medical-exam-semester">
+  <meta property="og:title" content="Medical Exam Semester Preparation | MediHelp" />
+  <meta property="og:description" content="Comprehensive medical exam preparation for doctors and students." />
+  <meta property="og:url" content="https://www.medihelp.live/medical-exam-semester" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="core.js"></script>
+  <script src="https://gumroad.com/js/gumroad.js"></script>
+
+  <!-- SEO SCHEMA MARKUP -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Medical Exam Preparation (USMLE & MBBS)",
+    "description": "Comprehensive USMLE preparation MCQs and MBBS exam questions with high-yield anatomy MCQs with answers and clinical case scenarios USMLE style.",
+    "provider": {
+      "@type": "Organization",
+      "name": "MediHelp",
+      "url": "https://www.medihelp.live"
+    },
+    "educationalLevel": "Professional development",
+    "offers": {
+      "@type": "Offer",
+      "category": "Free",
+      "price": "0"
+    }
+  }
+  </script>
+  <style>
+    .prep-hero { padding: 40px 20px; border-bottom: 1px solid var(--border); background: var(--bg-elevated); margin-bottom: 40px; }
+    @media (max-width: 600px) {
+      .prep-hero { padding: 40px 20px; }
+      .semester-nav { padding: 10px 20px; }
+    }
+    .year-nav { display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 10px 0; margin-bottom: 30px; scrollbar-width: none; border-bottom: 1px solid var(--border); }
+    .year-tab { 
+      padding: 12px 28px; color: var(--text-muted); font-weight: 800; font-size: 14px; 
+      cursor: pointer; border-radius: var(--radius-sm); white-space: nowrap; transition: var(--transition);
+      border: 1px solid transparent; letter-spacing: 0.5px;
+    }
+    .year-tab:hover { color: var(--text-h); background: var(--bg-card); }
+    .year-tab.active { color: var(--accent); background: var(--accent-glow); border-color: var(--border-accent); }
+
+    .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .topic-card { 
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; 
+      cursor: pointer; transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+    }
+    .topic-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-accent); text-decoration: none !important; }
+    .topic-card h3 { font-size: 18px; font-weight: 800; color: var(--text-h); line-height: 1.3; }
+    .topic-progress { font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; flex-direction: column; gap: 8px; }
+    .topic-stats-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .progress-bar-bg { height: 6px; background: var(--bg-elevated); border-radius: 3px; margin-top: 5px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; }
+    
+    .section-header { 
+      grid-column: 1 / -1; 
+      margin: 40px 0 10px; 
+      padding: 10px 0;
+      color: var(--accent); 
+      font-size: 20px; 
+      font-weight: 900; 
+      text-transform: uppercase; 
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .section-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* MCQ AREA */
+    #mcq-container { display: none; }    .quiz-header { 
+      position: sticky; top: 71px; z-index: 100; background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      padding: 12px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin: 0 0 30px;
+      display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-lg);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      gap: 16px;
+    }
+    .quiz-header.stuck {
+      top: 0;
+      padding: 10px 20px;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      margin: 0 -20px 30px;
+      border-left: none;
+      border-right: none;
+      background: rgba(7, 18, 34, 0.95);
+      border-bottom: 2px solid var(--accent);
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .header-title-group h2 { margin:0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-h); }
+    .header-title-group div { font-size: 11px; color: var(--text-muted); font-weight: 700; }
+    .reset-btn { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.2); font-size: 11px; padding: 6px 12px; }
+    .reset-btn:hover { background: rgba(239, 68, 68, 0.2); }
+
+    .mcq-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 24px; transition: var(--transition); }
+    .mcq-image { width: 100%; max-height: 400px; object-fit: contain; border-radius: var(--radius-sm); margin-bottom: 24px; background: #000; border: 1px solid var(--border); }
+    .mcq-question { font-size: 19px; font-weight: 700; color: var(--text-h); margin-bottom: 24px; line-height: 1.5; }
+    .mcq-options { display: grid; gap: 12px; }
+    .option-btn { 
+      background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); 
+      padding: 16px 20px; text-align: left; color: var(--text-body); font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 12px;
+    }
+    .option-btn:hover:not(.locked) { border-color: var(--accent); background: var(--bg-card-hover); }
+    .option-btn.correct { background: rgba(34, 197, 94, 0.15) !important; border-color: var(--success) !important; color: var(--success); }
+    .option-btn.incorrect { background: rgba(239, 68, 68, 0.15) !important; border-color: var(--danger) !important; color: var(--danger); }
+    .option-btn.locked { cursor: default; }
+
+    .explanation-box { 
+      margin-top: 24px; padding: 20px; background: rgba(34, 197, 94, 0.05); border-left: 4px solid var(--accent); 
+      border-radius: 4px; display: none; 
+    }
+    .explanation-box h4 { font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
+    .explanation-box p { font-size: 14px; color: var(--text-body); line-height: 1.6; }
+
+    .score-badge { 
+      background: var(--bg-card); color: var(--text-h); padding: 8px 16px; border-radius: 12px; 
+      font-weight: 800; font-size: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); 
+      display: flex; align-items: center; gap: 8px; white-space: nowrap;
+    }
+    .score-badge.mcq { border-left: 4px solid var(--success); }
+    .score-badge.case { border-left: 4px solid #a855f7; }
+    
+    .hidden { display: none; }
+    
+    /* PREMIUM PULSE LOADER */
+    .premium-loader {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 60px 20px; text-align: center;
+    }
+    .pulse-icon {
+      width: 60px; height: 60px; background: var(--accent);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 24px; margin-bottom: 20px;
+      animation: pulse-ring 2s infinite ease-in-out;
+      box-shadow: 0 0 20px rgba(var(--accent-rgb),0.4);
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(var(--accent-rgb),0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(var(--accent-rgb),0); }
+      100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(var(--accent-rgb),0); }
+    }
+    .loading-text {
+      font-weight: 800; font-size: 18px; color: var(--text-h);
+      letter-spacing: 1px; text-transform: uppercase;
+      animation: fade-in-out 2s infinite;
+    }
+    @keyframes fade-in-out {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .topic-loading-message {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* SEARCH BAR STYLES - UI FIX */
+    .search-container { position: relative; max-width: 600px; margin-top: 24px; }
+    .search-input-wrapper { 
+      display: flex; align-items: center; background: var(--bg-card); 
+      border: 1px solid var(--border); border-radius: 100px; padding: 2px 20px; 
+      transition: var(--transition); box-shadow: var(--shadow);
+    }
+    .search-input-wrapper:focus-within { 
+      border-color: var(--accent); 
+      box-shadow: 0 0 0 4px var(--accent-glow);
+      background: var(--bg-elevated);
+    }
+    .search-input { 
+      background: transparent !important; border: none !important; 
+      color: var(--text-h); padding: 12px 10px; width: 100%; 
+      font-size: 16px; font-weight: 600; outline: none !important; 
+      box-shadow: none !important;
+    }
+    .search-input::placeholder { color: var(--text-muted); opacity: 0.7; }
+    
+    .search-results { 
+      position: absolute; top: calc(100% + 10px); left: 0; right: 0; background: var(--bg-glass); 
+      backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: var(--radius); 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4); max-height: 400px; overflow-y: auto; z-index: 2000;
+      visibility: hidden; opacity: 0; transform: translateY(10px); transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .search-results.visible { visibility: visible; opacity: 1; transform: translateY(0); }
+    .search-item { padding: 14px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+    .search-item:last-child { border-bottom: none; }
+    .search-item:hover { background: rgba(255,255,255,0.05); }
+    .search-item-title { font-weight: 700; color: var(--text-h); font-size: 14px; }
+    .search-item-sem { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px; background: var(--accent-glow); color: var(--accent); white-space: nowrap; }
+
+    /* Custom Confirmation Modal */
+    #confirm-modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
+      z-index: 10000; display: flex; align-items: center; justify-content: center;
+      visibility: hidden; opacity: 0; transition: var(--transition);
+    }
+    #confirm-modal.visible { visibility: visible; opacity: 1; }
+    .confirm-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 32px; max-width: 400px; width: 90%; text-align: center; box-shadow: var(--shadow);
+      transform: scale(0.9); transition: var(--transition);
+    }
+    #confirm-modal.visible .confirm-card { transform: scale(1); }
+    .confirm-title { font-size: 18px; font-weight: 800; color: var(--text-h); margin-bottom: 12px; }
+    .confirm-text { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+    .confirm-btns { display: flex; gap: 12px; justify-content: center; }
+    
+    /* CASE STUDY STYLES */
+    .case-box { 
+      background: var(--bg-card); border: 2px solid var(--accent); border-radius: var(--radius); 
+      padding: 32px; margin-bottom: 32px; position: relative; overflow: hidden;
+    }
+    .case-box::before {
+      content: 'CLINICAL CASE SCENARIO'; position: absolute; top: 0; left: 0; 
+      background: var(--accent); color: #000; font-size: 10px; font-weight: 900; 
+      padding: 4px 12px; border-bottom-right-radius: 8px; letter-spacing: 1px;
+    }
+    .case-title { font-size: 20px; font-weight: 900; color: var(--accent); margin-bottom: 16px; margin-top: 10px; }
+    .case-scenario { font-size: 16px; line-height: 1.7; color: var(--text-h); font-style: italic; border-left: 3px solid var(--accent-glow); padding-left: 20px; }
+    
+    .section-divider { 
+      display: flex; align-items: center; gap: 20px; margin: 60px 0 30px; 
+      color: var(--text-muted); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+    }
+    .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    
+    /* MOBILE RESPONSIVENESS */
+    @media (max-width: 768px) {
+      .prep-hero { padding: 30px 0; margin-bottom: 20px; }
+      .prep-hero h1 { font-size: 26px !important; }
+      .prep-hero p { font-size: 14px !important; }
+      
+      .year-nav { display: none !important; }
+      .mobile-year-select {
+        display: block !important;
+        width: 100%;
+        padding: 14px 18px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-accent);
+        border-radius: 12px;
+        color: var(--text-h);
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2322c55e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        background-size: 18px;
+        outline: none;
+      }
+      
+      .topic-grid { grid-template-columns: 1fr; gap: 16px; }
+      .topic-card { padding: 20px; }
+      
+      .quiz-header { 
+        position: sticky; top: 0px; left: 0; right: 0; 
+        border-radius: 0; border-left: none; border-right: none; margin: 0 -20px 20px;
+        padding: 8px 12px; flex-direction: row; justify-content: space-between; align-items: center; gap: 8px;
+        background: var(--bg-elevated); border-bottom: 1px solid var(--border-accent);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000;
+        width: calc(100% + 40px);
+      }
+      .header-left { gap: 8px; }
+      .header-right { gap: 6px; }
+      .header-title-group h2 { font-size: 14px; letter-spacing: 0.5px; }
+      .header-title-group div { font-size: 9px; }
+      .score-badge { padding: 4px 8px; font-size: 10px; border-radius: 6px; }
+      .reset-btn { padding: 4px 8px; font-size: 9px; }
+      .quiz-header .btn-secondary { padding: 8px 10px; font-size: 11px; }
+      .quiz-header .btn-secondary span { display: none; } /* Show only icon on small mobile */
+      
+      #mcq-list { margin-top: 0; }
+      
+      .mcq-card { padding: 20px 16px; border-radius: var(--radius-sm); }
+      .mcq-question { font-size: 16px; }
+      .option-btn { padding: 12px 14px; font-size: 13px; gap: 10px; }
+      
+      .score-badge { padding: 6px 10px; font-size: 11px; border-radius: 8px; }
+      
+      .case-box { padding: 20px; }
+      .case-title { font-size: 17px; }
+      .case-scenario { font-size: 13px; line-height: 1.6; }
+    }
+
+    /* FAQ SECTION STYLES */
+    .faq-section { margin-top: 80px; padding: 60px 0; border-top: 1px solid var(--border); }
+    .faq-title { font-size: 28px; font-weight: 900; color: var(--text-h); margin-bottom: 40px; text-align: center; }
+    .faq-grid { display: grid; gap: 16px; max-width: 800px; margin: 0 auto; }
+    .faq-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px; }
+    .faq-item h3 { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 12px; }
+    .faq-item p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* PREMIUM MODAL STYLES */
+    .modal-overlay { 
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
+    }
+    .modal-overlay.visible { display: flex; }
+    .premium-card { 
+      background: var(--bg-card); border: 1px solid var(--border-accent); border-radius: 20px;
+      max-width: 500px; width: 100%; padding: 40px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      position: relative; overflow: hidden;
+    }
+    .premium-card::before {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .premium-badge { background: var(--accent-glow); color: var(--accent-light); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 20px; }
+    .premium-card h2 { font-size: 28px; font-weight: 900; color: var(--text-h); margin-bottom: 16px; }
+    .premium-card p { color: var(--text-muted); line-height: 1.6; margin-bottom: 30px; }
+    .premium-features { text-align: left; background: rgba(255,255,255,0.03); border-radius: 12px; padding: 20px; margin-bottom: 30px; }
+    .feature-item { display: flex; align-items: center; gap: 10px; font-size: 14px; margin-bottom: 10px; color: var(--text-main); }
+    .feature-item svg { color: var(--accent); }
+    .premium-btn { 
+      width: 100%; padding: 16px; border-radius: 12px; background: var(--accent); color: white; 
+      font-weight: 800; text-decoration: none; display: block; margin-bottom: 20px; transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4); border: none; cursor: pointer;
+    }
+    .premium-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(168, 85, 247, 0.6); }
+    .unlock-section { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px; }
+    .unlock-input { 
+      background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; 
+      padding: 10px 16px; width: 100%; color: var(--text-h); text-align: center; margin-bottom: 10px;
+    }
+    .secondary-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; padding: 8px 16px; border-radius: 8px; font-size: 12px; }
+    .secondary-btn:hover { color: var(--text-h); border-color: var(--accent); }
+
+    /* MOBILE RESPONSIVENESS FOR PREMIUM MODAL */
+    @media (max-width: 600px) {
+      .premium-card { padding: 30px 20px; border-radius: 16px; }
+      .premium-card h2 { font-size: 22px; }
+      .premium-card p { font-size: 14px; margin-bottom: 20px; }
+      .premium-features { padding: 15px; margin-bottom: 20px; }
+      .feature-item { font-size: 13px; }
+      .premium-btn { padding: 14px; font-size: 15px; }
+    }
+
+    /* TOAST NOTIFICATIONS */
+    .toast-msg {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: var(--bg-card); border: 1px solid var(--border-accent);
+      color: var(--text-h); padding: 12px 24px; border-radius: 12px;
+      font-weight: 600; font-size: 14px; z-index: 2000; opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .toast-msg.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast-msg.success { border-color: var(--success); }
+    .toast-msg.error { border-color: var(--danger); }
+    .mobile-year-select { display: none; }
+
+    /* TOP LOADING BAR */
+    #top-progress-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999;
+      background: transparent; pointer-events: none;
+    }
+    #top-progress-bar {
+      height: 100%; width: 0%; background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      transition: width 0.4s cubic-bezier(0.1, 0.5, 0.5, 1);
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3792974281439123"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div id="top-progress-container">
+    <div id="top-progress-bar"></div>
+  </div>
+
+  <!-- Custom Confirm Modal -->
+  <div id="confirm-modal">
+    <div class="confirm-card">
+      <div class="confirm-title">Are you sure?</div>
+      <div class="confirm-text" id="confirm-msg">This action cannot be undone.</div>
+      <div class="confirm-btns">
+        <button id="confirm-cancel" class="btn btn-ghost">Cancel</button>
+        <button id="confirm-yes" class="btn btn-primary" style="background: var(--danger); box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);">Yes, Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ΓöÇΓöÇ NAV ΓöÇΓöÇ -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="/" class="nav-brand">
+        <img src="icons/logo.png?v=1.1" alt="MediHelp ΓÇö Medical Bill Audit">
+        MediHelp
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/medical-exam-preparation" class="active">Medical Exams</a>
+        <a href="/medical-bill-audit">Medical Bill Audit</a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">Codes Γû╝</div>
+          <div class="nav-dropdown-menu">
+            <a href="/cpt-code-search">CPT Codes</a>
+            <a href="/claim-denial-codes">Denial Codes</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-btn">More Γû╝</div>
+          <div class="nav-dropdown-menu">
+            <a href="/rx-savings">Rx Savings</a>
+            <a href="/providers">Provider Search</a>
+            <a href="/blog">Blog</a>
+            <div style="border-top: 1px solid var(--border); margin: 8px 0;"></div>
+            <a href="/medical-calculator" style="color: gold; font-weight: 700;">Medical Calculator</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="/pricing" class="btn btn-ghost" style="padding:8px 18px; font-size:14px; border-radius:10px;">Expert Help</a>
+        <button id="theme-toggle" title="Toggle Dark/Light Mode" class="theme-btn">≡ƒîÖ</button>
+        <div class="nav-toggle" onclick="MediHelp.toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="prep-hero">
+    <div class="container">
+      <div class="hero-eyebrow">Interactive Learning</div>
+      <h1 style="font-size: 36px; font-weight: 900; color: var(--text-h); letter-spacing: -1.5px; margin-bottom: 12px; line-height: 1.1;">
+        Medical Exam Preparation Guide for Doctors (USMLE, PLAB, AMC, MRCP)
+      </h1>
+      <p style="color: var(--text-muted); font-size: 18px; max-width: 800px; line-height: 1.6;">
+        Master your boards with our high-yield <strong>USMLE preparation MCQs</strong>, <strong>MBBS exam questions</strong>, and interactive <strong>medical case study questions</strong>. We provide detailed <strong>anatomy MCQs with answers</strong> and realistic <strong>clinical case scenarios USMLE</strong> style to ensure you are ready for any exam.
+      </p>
+      
+      <!-- Smart Search -->
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="topic-search" class="search-input" placeholder="Search topics across all years..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results">
+          <!-- Results injected here -->
+        </div>
+      </div>
+
+      <!-- Why Choose Section -->
+      <div style="margin-top: 40px; padding: 32px; background: var(--bg-card); border: 1px solid var(--border-accent); border-radius: var(--radius); text-align: left; max-width: 800px;">
+        <h2 style="font-size: 24px; color: var(--accent); margin-bottom: 20px;">Why Choose MediHelp Exam Prep?</h2>
+        <ul style="list-style: none; padding: 0; display: grid; gap: 12px;">
+          <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--text-h);">
+            <span style="color: var(--success); font-weight: 900;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Structured study system</strong> ΓÇô Move beyond random content with an organized curriculum.</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--text-h);">
+            <span style="color: var(--success); font-weight: 900;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Real-world clinical + billing knowledge</strong> ΓÇô Bridge the gap between theory and actual practice.</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--text-h);">
+            <span style="color: var(--success); font-weight: 900;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Faster preparation</strong> ΓÇô Save time with a focused strategy targeting high-yield topics.</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--text-h);">
+            <span style="color: var(--success); font-weight: 900;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Global coverage</strong> ΓÇô Targeted prep for multiple exams including USMLE, US MD, and MBBS.</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--text-h);">
+            <span style="color: var(--success); font-weight: 900;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Affordable Excellence</strong> ΓÇô High-quality board prep for only $24.99/year.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+    <!-- Adsterra 728x90 Banner -->
+    <div style="text-align:center; margin: 10px auto;">
+      <script>
+        atOptions = {
+          'key' : 'a7a04a547a8e6bdc2777d62f0cbd7656',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/a7a04a547a8e6bdc2777d62f0cbd7656/invoke.js"></script>
+    </div>
+
+  <main class="container" style="padding-bottom: 100px;">
+    
+    <!-- ΓÜá∩╕Å Mobile Advisory Banner -->
+    <div id="mobile-advisory" style="
+      display: flex;
+      margin: -20px auto 30px;
+      max-width: 800px;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, rgba(var(--amber-rgb),0.14), rgba(var(--amber-rgb),0.06));
+      border: 1px solid rgba(var(--amber-rgb),0.45);
+      border-radius: 12px;
+      color: var(--amber-tint);
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      backdrop-filter: blur(8px);
+    ">
+      ≡ƒÆ╗&nbsp; <strong>Advisory:</strong> Use on desktop for better examination experience
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <div id="dashboard-view" class="container" style="max-width: 1300px; margin-top: 40px;">
+      
+      <select class="mobile-year-select" id="mobile-year-dropdown">
+        <option value="1">1st Year</option>
+        <option value="2">2nd Year</option>
+        <option value="3">3rd Year</option>
+        <option value="4">4th Year</option>
+      </select>
+
+      <div class="year-nav" id="year-bar">
+        <!-- Injected Years -->
+      </div>
+
+      <div id="topic-loading" class="hidden">
+        <div class="premium-loader">
+          <div class="pulse-icon">ΓÜò∩╕Å</div>
+          <div class="loading-text">Preparing Curriculum</div>
+        </div>
+        <div id="topic-loading-message" class="topic-loading-message hidden"></div>
+      </div>
+      <div class="topic-grid" id="topic-grid">
+        <!-- Injected Topics -->
+      </div>
+
+            <!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+           MEDICAL SCHOOL EXAM PREPARATION GUIDE (YEARS 1ΓÇô4)
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+      <section style="margin-top: 80px; padding-top: 60px; border-top: 1px solid var(--border);">
+        <style>
+          .guide-h2 { font-size: clamp(22px, 3.5vw, 34px); font-weight: 900; color: var(--text-h); letter-spacing: -0.6px; margin-bottom: 20px; }
+          .guide-h3 { font-size: clamp(18px, 2.5vw, 24px); font-weight: 800; color: var(--accent); margin: 36px 0 16px; }
+          .guide-p  { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 18px; }
+
+          .year-guide-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 28px;
+            transition: border-color 0.3s ease;
+          }
+          .year-guide-card:hover { border-color: var(--accent); }
+          .year-guide-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; flex-wrap: wrap; }
+          .year-badge-pill {
+            background: rgba(var(--accent-rgb),0.12);
+            color: var(--accent);
+            border: 1px solid rgba(var(--accent-rgb),0.3);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          .year-guide-card h3 { font-size: 22px; font-weight: 900; color: var(--text-h); margin: 0; }
+
+          .subject-tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 22px; }
+          .subj-tag {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-body);
+          }
+
+          .strategy-box {
+            background: rgba(var(--accent-rgb),0.04);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-top: 18px;
+          }
+          .strategy-box h4 { font-size: 14px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+          .strategy-box ul { padding-left: 20px; margin: 0; display: grid; gap: 8px; }
+          .strategy-box ul li { font-size: 14px; color: var(--text-body); line-height: 1.6; }
+
+          .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0; }
+          @media (max-width: 768px) { .grid-2col { grid-template-columns: 1fr; } .year-guide-card { padding: 24px 18px; } }
+        </style>
+
+        <h2 class="guide-h2">Medical School Exam Preparation Guide (MBBS &amp; US MD Years 1ΓÇô4)</h2>
+        <p class="guide-p">
+          Medical school is one of the most demanding educational journeys, requiring students to master thousands of concepts across anatomy, physiology, pathology, pharmacology, microbiology, clinical medicine, surgery, pediatrics, obstetrics &amp; gynecology, psychiatry, and numerous medical specialties. Whether you are pursuing an MBBS degree or enrolled in a US Doctor of Medicine (MD) program, consistent revision and question-based learning are essential for academic success and future licensing examinations.
+        </p>
+        <p class="guide-p">
+          MediHelp provides a comprehensive learning platform designed specifically for medical students throughout every stage of their education. Our resources include subject-wise question banks, interactive flashcards, mock examinations, clinical calculators, study guides, and high-yield review materials that help students strengthen understanding while preparing for university examinations and licensing exams such as the USMLE, PLAB, AMC, and MRCP.
+        </p>
+
+        <!-- ΓöÇΓöÇ 1ST YEAR ΓöÇΓöÇ -->
+        <div class="year-guide-card">
+          <div class="year-guide-header">
+            <span class="year-badge-pill">Foundational Phase</span>
+            <h3>First Year Medical School (MBBS / US MD)</h3>
+          </div>
+          <p class="guide-p" style="margin-bottom: 14px;">
+            The first year builds the scientific foundation required for all future medical education. Students learn the normal structure and function of the human body while developing the vocabulary and principles used throughout clinical practice.
+          </p>
+
+          <strong style="color: var(--text-h); font-size: 14px;">Major Subjects:</strong>
+          <div class="subject-tag-cloud">
+            <span class="subj-tag">Gross Anatomy</span>
+            <span class="subj-tag">Histology</span>
+            <span class="subj-tag">Embryology</span>
+            <span class="subj-tag">Cell Biology</span>
+            <span class="subj-tag">Molecular Biology</span>
+            <span class="subj-tag">Biochemistry</span>
+            <span class="subj-tag">General Physiology</span>
+            <span class="subj-tag">Cardiovascular Physiology</span>
+            <span class="subj-tag">Respiratory Physiology</span>
+            <span class="subj-tag">Renal Physiology</span>
+            <span class="subj-tag">Gastrointestinal Physiology</span>
+            <span class="subj-tag">Endocrine Physiology</span>
+            <span class="subj-tag">Neurophysiology</span>
+            <span class="subj-tag">Reproductive Physiology</span>
+          </div>
+
+          <strong style="color: var(--text-h); font-size: 14px;">What You'll Learn:</strong>
+          <p class="guide-p" style="margin-top: 6px;">
+            Students develop a deep understanding of normal anatomy, organ systems, tissue structure, biochemical pathways, metabolism, homeostasis, embryonic development, and physiological regulation. These concepts form the backbone of future pathology and clinical medicine.
+          </p>
+
+          <div class="strategy-box">
+            <h4>Recommended Study Strategy</h4>
+            <ul>
+              <li>Study anatomy every day using diagrams and cadaveric images.</li>
+              <li>Practice physiology concepts with clinical examples.</li>
+              <li>Use flashcards for biochemical pathways and embryology.</li>
+              <li>Complete practice MCQs after each lecture.</li>
+              <li>Revise weekly instead of cramming before examinations.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ΓöÇΓöÇ 2ND YEAR ΓöÇΓöÇ -->
+        <div class="year-guide-card">
+          <div class="year-guide-header">
+            <span class="year-badge-pill" style="background: rgba(168,85,247,0.12); color: #a855f7; border-color: rgba(168,85,247,0.3);">Disease Mechanisms</span>
+            <h3>Second Year Medical School (MBBS / US MD)</h3>
+          </div>
+          <p class="guide-p" style="margin-bottom: 14px;">
+            The second year bridges basic sciences with disease mechanisms. Students begin learning how normal physiology changes during illness and how medications are used to treat disease.
+          </p>
+
+          <strong style="color: var(--text-h); font-size: 14px;">Major Subjects:</strong>
+          <div class="subject-tag-cloud">
+            <span class="subj-tag">General Pathology</span>
+            <span class="subj-tag">Systemic Pathology</span>
+            <span class="subj-tag">Pharmacology</span>
+            <span class="subj-tag">Microbiology</span>
+            <span class="subj-tag">Immunology</span>
+            <span class="subj-tag">Parasitology</span>
+            <span class="subj-tag">Virology</span>
+            <span class="subj-tag">Mycology</span>
+            <span class="subj-tag">Clinical Pathology</span>
+            <span class="subj-tag">Genetics</span>
+          </div>
+
+          <strong style="color: var(--text-h); font-size: 14px;">What You'll Learn:</strong>
+          <p class="guide-p" style="margin-top: 6px;">
+            Students explore inflammation, infection, neoplasia, immune disorders, bacterial diseases, viral infections, fungal pathogens, antimicrobial therapy, toxicology, pharmacodynamics, pharmacokinetics, and mechanisms of disease.
+          </p>
+
+          <div class="strategy-box">
+            <h4>Recommended Study Strategy</h4>
+            <ul>
+              <li>Understand disease mechanisms before memorizing facts.</li>
+              <li>Create comparison tables for antibiotics and drug classes.</li>
+              <li>Use flowcharts for inflammatory pathways.</li>
+              <li>Practice integrated pathology and pharmacology questions.</li>
+              <li>Revise microbiology organisms using flashcards.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ΓöÇΓöÇ 3RD YEAR ΓöÇΓöÇ -->
+        <div class="year-guide-card">
+          <div class="year-guide-header">
+            <span class="year-badge-pill" style="background: rgba(56,189,248,0.12); color: #38bdf8; border-color: rgba(56,189,248,0.3);">Clinical Rotations</span>
+            <h3>Third Year Medical School (MBBS / US MD)</h3>
+          </div>
+          <p class="guide-p" style="margin-bottom: 14px;">
+            The third year introduces students to clinical medicine through hospital rotations and patient-centered learning. Knowledge from the first two years is applied to diagnosis, investigation, and management.
+          </p>
+
+          <strong style="color: var(--text-h); font-size: 14px;">Major Subjects:</strong>
+          <div class="subject-tag-cloud">
+            <span class="subj-tag">Internal Medicine</span>
+            <span class="subj-tag">General Surgery</span>
+            <span class="subj-tag">Pediatrics</span>
+            <span class="subj-tag">Obstetrics</span>
+            <span class="subj-tag">Gynecology</span>
+            <span class="subj-tag">Psychiatry</span>
+            <span class="subj-tag">Family Medicine</span>
+            <span class="subj-tag">Community Medicine</span>
+            <span class="subj-tag">Dermatology</span>
+            <span class="subj-tag">Radiology</span>
+            <span class="subj-tag">Ophthalmology</span>
+            <span class="subj-tag">ENT</span>
+            <span class="subj-tag">Emergency Medicine</span>
+          </div>
+
+          <strong style="color: var(--text-h); font-size: 14px;">What You'll Learn:</strong>
+          <p class="guide-p" style="margin-top: 6px;">
+            Students learn clinical history taking, physical examination, differential diagnosis, laboratory interpretation, imaging, treatment planning, patient communication, and evidence-based clinical decision-making.
+          </p>
+
+          <div class="strategy-box">
+            <h4>Recommended Study Strategy</h4>
+            <ul>
+              <li>Read before clinical rotations.</li>
+              <li>Practice clinical case questions daily.</li>
+              <li>Learn common diseases before rare conditions.</li>
+              <li>Develop differential diagnosis skills.</li>
+              <li>Review laboratory values regularly.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ΓöÇΓöÇ 4TH YEAR ΓöÇΓöÇ -->
+        <div class="year-guide-card">
+          <div class="year-guide-header">
+            <span class="year-badge-pill" style="background: rgba(251,146,60,0.12); color: #fb923c; border-color: rgba(251,146,60,0.3);">Advanced Practice</span>
+            <h3>Fourth Year / Final Year Medical School (MBBS / US MD)</h3>
+          </div>
+          <p class="guide-p" style="margin-bottom: 14px;">
+            The final year prepares students for independent clinical practice and licensing examinations. Students integrate knowledge from all previous years while managing increasingly complex patient cases.
+          </p>
+
+          <strong style="color: var(--text-h); font-size: 14px;">Major Subjects:</strong>
+          <div class="subject-tag-cloud">
+            <span class="subj-tag">Advanced Internal Medicine</span>
+            <span class="subj-tag">Advanced Surgery</span>
+            <span class="subj-tag">Critical Care Medicine</span>
+            <span class="subj-tag">Emergency Medicine</span>
+            <span class="subj-tag">Neurology</span>
+            <span class="subj-tag">Cardiology</span>
+            <span class="subj-tag">Gastroenterology</span>
+            <span class="subj-tag">Endocrinology</span>
+            <span class="subj-tag">Pulmonology</span>
+            <span class="subj-tag">Nephrology</span>
+            <span class="subj-tag">Infectious Diseases</span>
+            <span class="subj-tag">Rheumatology</span>
+            <span class="subj-tag">Oncology</span>
+            <span class="subj-tag">Orthopedics</span>
+            <span class="subj-tag">Anesthesiology</span>
+          </div>
+
+          <strong style="color: var(--text-h); font-size: 14px;">What You'll Learn:</strong>
+          <p class="guide-p" style="margin-top: 6px;">
+            Students refine clinical reasoning, diagnostic interpretation, evidence-based treatment planning, emergency management, multidisciplinary care, and professional decision-making.
+          </p>
+
+          <div class="strategy-box">
+            <h4>Recommended Study Strategy</h4>
+            <ul>
+              <li>Complete comprehensive mock examinations.</li>
+              <li>Focus on integrated clinical scenarios.</li>
+              <li>Review high-yield topics weekly.</li>
+              <li>Practice timed board-style MCQs.</li>
+              <li>Strengthen weak specialties before graduation.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ΓöÇΓöÇ HOW MEDIHELP SUPPORTS ΓöÇΓöÇ -->
+        <h3 class="guide-h3">How MediHelp Supports Every Year of Medical School</h3>
+        <p class="guide-p">
+          Unlike traditional question banks that focus only on licensing examinations, MediHelp organizes learning according to both academic years and clinical disciplines. Students can progress from foundational sciences in the first year through advanced clinical medicine in the final year while continuously reinforcing previous knowledge.
+        </p>
+        <p class="guide-p">Our platform includes:</p>
+        <div class="subject-tag-cloud" style="margin-bottom: 24px;">
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Subject-wise Question Banks</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Interactive Flashcards</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Clinical Case Discussions</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Board-Style Multiple Choice Questions</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Mock Examinations</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Medical Calculators</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">CPT, ICD-10 &amp; HCPCS Lookup Tools</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Progress Tracking</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">Performance Analytics</span>
+          <span class="subj-tag" style="background: rgba(var(--accent-rgb),0.1); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); font-weight: 700;">High-Yield Revision Notes</span>
+        </div>
+
+        <!-- ΓöÇΓöÇ BEST RESOURCES & BOARD PREP ΓöÇΓöÇ -->
+        <div class="grid-2col">
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px;">
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--text-h); margin-bottom: 12px;">Best Study Resources for Medical Students</h3>
+            <p class="guide-p" style="font-size: 14px; margin-bottom: 12px;">
+              Successful medical students combine multiple learning methods rather than relying on textbooks alone. A balanced approach includes active recall, spaced repetition, clinical case discussions, practice questions, and regular self-assessment.
+            </p>
+            <p class="guide-p" style="font-size: 14px; margin-bottom: 0;">We recommend combining:</p>
+            <ul style="padding-left: 18px; color: var(--text-muted); font-size: 14px; margin-top: 8px; display: grid; gap: 4px;">
+              <li>Flashcards for rapid recall</li>
+              <li>MCQs for examination practice</li>
+              <li>Clinical cases for diagnostic reasoning</li>
+              <li>Medical calculators for bedside application</li>
+              <li>Mock exams for performance evaluation</li>
+              <li>Revision notes for high-yield review</li>
+            </ul>
+          </div>
+
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px;">
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--text-h); margin-bottom: 12px;">Preparing for USMLE, PLAB, AMC &amp; MRCP</h3>
+            <p class="guide-p" style="font-size: 14px; margin-bottom: 12px;">
+              Medical school examinations provide the foundation for international licensing exams. Students planning to pursue residency or postgraduate training abroad should begin integrating board-style question practice early in their education.
+            </p>
+            <p class="guide-p" style="font-size: 14px; margin-bottom: 0;">MediHelp supports preparation for:</p>
+            <ul style="padding-left: 18px; color: var(--text-muted); font-size: 14px; margin-top: 8px; display: grid; gap: 4px;">
+              <li>USMLE Step 1 &amp; Step 2 CK</li>
+              <li>PLAB Part 1</li>
+              <li>AMC CAT MCQ</li>
+              <li>MRCP Part 1</li>
+              <li>University Professional Examinations</li>
+              <li>Final MBBS Examinations</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ΓöÇΓöÇ FREQUENTLY ASKED QUESTIONS ΓöÇΓöÇ -->
+      <!-- Adsterra 468x60 Banner -->
+      <div style="text-align:center; margin: 30px auto 20px;">
+        <script>
+          atOptions = {
+            'key' : 'e8d44c92394feb5769b23337c154c786',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : {}
+          };
+        </script>
+        <script src="https://advancementpubertydied.com/e8d44c92394feb5769b23337c154c786/invoke.js"></script>
+      </div>
+
+      <section class="faq-section">
+        <h2 class="faq-title">Frequently Asked Questions</h2>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>Which medical school year is the hardest?</h3>
+            <p>Many students find the second and third years particularly demanding because they transition from foundational sciences to pathology, pharmacology, microbiology, and clinical medicine. Consistent revision and question-based learning can make this transition much smoother.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Should first-year medical students use question banks?</h3>
+            <p>Yes. Early exposure to board-style multiple-choice questions helps reinforce concepts, improve recall, and develop clinical reasoning skills from the beginning of medical school.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Are flashcards useful throughout medical school?</h3>
+            <p>Absolutely. Flashcards are effective for learning anatomy, physiology, pharmacology, microbiology, pathology, laboratory values, and clinical facts through active recall and spaced repetition.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How many hours should medical students study each day?</h3>
+            <p>Study time varies by curriculum and personal pace, but most successful students focus on consistent, high-quality study sessions with regular practice questions, active recall, and scheduled review rather than simply counting hours.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I use MediHelp throughout all four years of medical school?</h3>
+            <p>Yes. MediHelp is designed to support students from the first year through graduation, with resources that progress from foundational sciences to advanced clinical medicine and board examination preparation.</p>
+          </div>
+        </div>
+      </section>
+      </div>
+      <!-- PREMIUM ACCESS MODAL -->
+    <div id="premium-modal" class="modal-overlay">
+      <div class="premium-card">
+        <div class="premium-badge">MASTER CLASS EXCLUSIVE</div>
+        <h2>Unlock Full Access</h2>
+        <p>Gain instant access to 1000+ High-Yield MCQs, Clinical Case Scenarios, and detailed USMLE-style explanations.</p>
+        
+        <div class="premium-features">
+          <div class="feature-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            1000+ Standalone Anatomy MCQs
+          </div>
+          <div class="feature-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            100+ Clinical Case Study Scenarios
+          </div>
+          <div class="feature-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Detailed Embryology & Anatomy Explanations
+          </div>
+          <div class="feature-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Full 4-Year Curriculum Coverage (USMLE Standard)
+          </div>
+        </div>
+
+        <a class="premium-btn" href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank">Purchase Yearly Access</a>
+        
+        <div class="unlock-section" style="border-top: 1px solid var(--border); padding-top: 24px; margin-top: 24px;">
+          <p style="font-size: 13px; font-weight: 700; color: var(--text-h); margin-bottom: 10px; text-align: left;">Already purchased? Activate access:</p>
+
+          <!-- Email key reminder -->
+          <div style="display:flex; align-items:flex-start; gap:10px; background:rgba(var(--accent-rgb),0.07); border:1px solid rgba(var(--accent-rgb),0.25); border-radius:10px; padding:12px 14px; margin-bottom:14px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0; margin-top:1px; color: var(--accent);"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <div style="font-size:12px; color:var(--text-muted); line-height:1.55;">
+              <strong style="color:var(--accent); display:block; margin-bottom:2px;">Use the key from your confirmation email</strong>
+              After purchasing on Gumroad, check your inbox for an email from <em>noreply@customers.gumroad.com</em>. 
+              Copy the <strong>License key</strong> shown in that email ΓÇö <em>not</em> the one on the Gumroad receipt page.
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <input type="text" id="access-key-input" class="unlock-input" placeholder="Paste License Key from email (e.g. 1B31A3AD-FF364AFF-...)" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; color: var(--text-h); font-size: 14px;">
+            <input type="email" id="access-email-input" class="unlock-input" placeholder="Your Gumroad purchase email" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; color: var(--text-h); font-size: 14px;">
+            <button id="verify-btn" class="premium-btn" style="margin-top: 6px; margin-bottom: 0; background: linear-gradient(135deg, var(--accent), var(--accent-warm)); box-shadow: 0 4px 15px rgba(var(--accent-rgb),0.3);" onclick="verifyAccessKey()">Unlock Now</button>
+            <button id="restore-btn" class="secondary-btn" style="padding: 12px; font-size: 12px; opacity: 0.8;" onclick="restorePurchase()">Restore Purchase on this Device</button>
+          </div>
+        </div>
+
+        <button class="secondary-btn" style="border:none; margin-top:20px;" onclick="closePremiumModal()">Maybe Later</button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast-msg"></div>
+
+    <!-- QUIZ VIEW -->
+    <div id="mcq-view" class="hidden">
+      <!-- Sticky Header -->
+      <div class="quiz-header">
+        <div class="header-left">
+          <button class="btn btn-secondary" onclick="backToTopics()" style="padding: 10px 16px; min-width: auto;">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            <span>Back</span>
+          </button>
+          <div class="header-title-group">
+            <h2 id="current-topic-title">Topic</h2>
+            <div id="stats-total">0 / 0 Questions Completed</div>
+          </div>
+        </div>
+        
+        <div class="header-right">
+          <div id="mcq-live-score" class="score-badge mcq">MCQ: 0/0</div>
+          <div id="case-live-score" class="score-badge case">Case: 0/0</div>
+          <button class="btn reset-btn" onclick="resetTopic()">
+            Reset Progress
+          </button>
+        </div>
+      </div>
+
+      <div id="mcq-list" style="max-width: 800px; margin: 0 auto;">
+        <!-- Injected Question Cards -->
+      </div>
+
+      <div id="quiz-loading" style="text-align:center; padding: 40px; color: var(--text-muted);">Loading MCQs...</div>
+    </div>
+  </main>
+
+  <!-- ΓöÇΓöÇ FOOTER ΓöÇΓöÇ -->
+  <!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+       FOOTER SEO TEXT
+  ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+  <section class="container" style="padding: 40px 28px 0; text-align: center; border-top: 1px solid var(--border);">
+    <p style="color: var(--text-muted); font-size: 13px; max-width: 900px; margin: 0 auto; line-height: 1.8;">
+      MediHelp provides free medical billing tools to help patients audit hospital bills, verify CPT codes, understand CARC and RARC claim denial codes, compare prescription drug prices, and find credentialed healthcare providers. Whether you received an unexpected medical bill, want to understand your Explanation of Benefits (EOB), check for duplicate charges, or get professional human negotiation support ΓÇö MediHelp helps you take control of your healthcare expenses.
+    </p>
+  </section>
+
+  <!-- ΓöÇΓöÇ FOOTER ΓöÇΓöÇ -->
+    <!-- Adsterra Native Banner -->
+  <div style="margin: 20px auto; max-width: 1200px; text-align: center; padding: 0 15px;">
+    <script async="async" data-cfasync="false" src="https://pl30404503.effectivecpmnetwork.com/d7edbe92751a719ef572e7eb1788dc74/invoke.js"></script>
+    <div id="container-d7edbe92751a719ef572e7eb1788dc74"></div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Free tools and professional advocates helping patients fight medical billing errors and reduce hospital costs.</p>
+          <div style="margin-top:16px; display:flex; gap:12px; margin-bottom: 16px;">
+            <a href="https://www.linkedin.com/company/medihelplive/" target="_blank" rel="noopener" style="color:var(--text-muted); transition:0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'" title="Follow MediHelp on LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+          </div>
+          <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; background:rgba(var(--accent-rgb),0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--accent-rgb),0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
+            <span style="font-size:11px; background:rgba(var(--amber-rgb),0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--amber-rgb),0.2);">No Signup</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Free Tools</h4>
+          <ul>
+            <li><a href="/medical-bill-audit">Bill Audit Tool</a></li>
+            <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings Search</a></li>
+            <li><a href="/providers">Provider Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Calculators</h4>
+          <ul>
+            <li><a href="/calculators/bmi-calculator">BMI</a></li>
+            <li><a href="/calculators/creatinine-clearance-calculator">Creatinine Clearance</a></li>
+            <li><a href="/calculators/bsa-calculator">BSA</a></li>
+            <li><a href="/calculators/bicarbonate-deficit-calculator">Bicarbonate Deficit</a></li>
+            <li><a href="/calculators/doctors">For Doctors</a></li>
+            <li><a href="/calculators/nurses">For Nurses</a></li>
+            <li><a href="/calculators/pharmacists">For Pharmacists</a></li>
+            <li><a href="/calculators/students">For Students</a></li>
+            <li><a href="/calculators/er">ER / Emergency</a></li>
+            <li><a href="/calculators/icu">ICU / Critical</a></li>
+            <li><a href="/calculators/pediatrics">Pediatrics</a></li>
+            <li><a href="/calculators/obgyn">OB/GYN</a></li>
+            <li><a href="/calculators/surgeons">Surgeons</a></li>
+            <li><a href="/calculators/anesthesia">Anesthesia</a></li>
+            <li><a href="/calculators/lab">Lab / Pathology</a></li>
+            <li><a href="/calculators/dietitians">Dietitians</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/pricing" style="color:var(--expert-amber); display: inline-flex; align-items: center; gap: 6px;">Human Bill Negotiation <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m12 3 1.91 5.82L21 12l-7.09 3.18L12 21l-1.91-5.82L3 12l7.09-3.18L12 3z"/></svg></a></li>
+            <li><a href="/medical-exam-preparation" style="color:var(--accent); font-weight:700;">Medical Exam Mastery</a></li>
+            <li><a href="/blog">Patient Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/editorial-policy">Editorial Policy</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+      if (dropdown) dropdown.value = id;
+
+      document.getElementById('topic-grid').innerHTML = '';
+      document.getElementById('topic-loading').classList.remove('hidden');
+
+      debouncedLoadTopics(id);
+    }
+
+    function initPrefetching() {
+      document.querySelectorAll('.year-tab').forEach(tab => {
+        tab.addEventListener('mouseenter', () => {
+          const id = parseInt(tab.dataset.year);
+          if (id !== currentYear && !yearTopicsCache[id]) {
+            console.log(`MediHelp: Pre-fetching year ${id}...`);
+            loadTopicsSilent(id);
+          }
+        });
+      });
+    }
+
+    const loadingYears = new Set();
+    async function loadTopicsSilent(yearId) {
+      if (yearTopicsCache[yearId] || loadingYears.has(yearId)) return;
+      try {
+        loadingYears.add(yearId);
+        const { data } = await window.dbClient.from('topics')
+          .select('id, title, section, slug, is_free_demo, "order", year_id, mcq_count, case_count')
+          .eq('year_id', yearId)
+          .is('usmle_step', null)
+          .order('order', { ascending: true });
+        if (data) {
+          yearTopicsCache[yearId] = data;
+          localStorage.setItem(`mh_topics_cache_year_${yearId}`, JSON.stringify({ topics: data, timestamp: Date.now() }));
+        }
+      } catch (e) {
+        console.warn('MediHelp: Silent prefetch failed for year', yearId, e);
+      } finally {
+        loadingYears.delete(yearId);
+      }
+    }
+
+    async function loadTopics(yearId) {
+      // If a load is already running for this year, wait for it then render from cache
+      if (loadingYears.has(yearId)) {
+        console.warn(`MediHelp: Load already in progress for Year ${yearId}. Retrying in 800ms.`);
+        setTimeout(() => loadTopics(yearId), 800);
+        return;
+      }
+      
+      const startTime = performance.now();
+      if (!window.dbClient) {
+        console.warn('MediHelp: dbClient not ready, retrying in 200ms...');
+        setTimeout(() => loadTopics(yearId), 200);
+        return;
+      }
+      
+      loadingYears.add(yearId);
+      const grid = document.getElementById('topic-grid');
+      const loader = document.getElementById('topic-loading');
+      const progressBar = document.getElementById('top-progress-bar');
+      const loaderMessage = document.getElementById('topic-loading-message');
+
+      // 1. Initial State
+      if (loader) loader.classList.remove('hidden');
+      if (loaderMessage) {
+        loaderMessage.classList.add('hidden');
+        loaderMessage.textContent = '';
+      }
+
+      const cached = localStorage.getItem(`mh_topics_v3_${yearId}`);
+      if (cached) {
+        try {
+          const { topics } = JSON.parse(cached);
+          console.log(`MediHelp Perf: Hydrating Year ${yearId} from local cache`);
+          yearTopicsCache[yearId] = topics;
+          renderTopics(yearId, topics);
+          // If we have cache, we can hide loader early if we want, 
+          // but we usually wait for fresh data sync.
+        } catch (e) { console.error("Cache Error", e); }
+      }
+
+      if (!cached) grid.innerHTML = '';
+      if (progressBar) {
+        progressBar.style.width = '30%';
+        progressBar.style.opacity = '1';
+      }
+
+      // 2. Fetch with Timeout
+      const controller = new AbortController();
+      const fetchTimeout = setTimeout(() => {
+        controller.abort();
+        console.error("MediHelp: Topic fetch timed out after 20s");
+      }, 20000);
+
+      try {
+        console.log(`MediHelp: Fetching fresh topics for Year ${yearId}...`);
+        const { data: topics, error } = await window.dbClient
+          .from('topics')
+          .select('id, title, section, slug, is_free_demo, "order", year_id, mcq_count, case_count')
+          .eq('year_id', yearId)
+          .is('usmle_step', null)
+          .order('order', { ascending: true })
+          .abortSignal(controller.signal);
+
+        clearTimeout(fetchTimeout);
+
+        if (error) throw error;
+
+        console.log(`MediHelp: Received ${topics?.length} topics for Year ${yearId}`);
+        localStorage.setItem(`mh_topics_v3_${yearId}`, JSON.stringify({ topics, ts: Date.now() }));
+        yearTopicsCache[yearId] = topics;
+        renderTopics(yearId, topics);
+
+        const endTime = performance.now();
+        console.log(`MediHelp Perf: Year ${yearId} fully synced and rendered in ${Math.round(endTime - startTime)}ms`);
+
+        if (progressBar) {
+          progressBar.style.width = '100%';
+          setTimeout(() => { 
+            progressBar.style.opacity = '0';
+            setTimeout(() => { progressBar.style.width = '0%'; }, 400);
+          }, 500);
+        }
+
+      } catch (err) {
+        console.error('MediHelp Load Error:', err.message || err);
+        if (!cached) {
+          grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">Connection issue. Please check your internet and refresh.</p>';
+        }
+      } finally {
+        loadingYears.delete(yearId);
+        if (loader) loader.classList.add('hidden');
+        if (loaderMessage) loaderMessage.classList.add('hidden');
+        clearTimeout(fetchTimeout);
+      }
+    }
+
+    async function loadProgressAsync(yearId, topics) {
+      if (!topics || topics.length === 0) return;
+      
+      try {
+        const { data: mcqMapping } = await window.dbClient
+          .from('mcqs')
+          .select('id, topic_id')
+          .in('topic_id', topics.map(t => t.id));
+
+        const { data: caseMapping } = await window.dbClient
+          .from('case_studies')
+          .select('id, topic_id, case_questions(id)')
+          .in('topic_id', topics.map(t => t.id));
+
+        const mcqMap = {};
+        (mcqMapping || []).forEach(m => {
+          if (!mcqMap[m.topic_id]) mcqMap[m.topic_id] = [];
+          mcqMap[m.topic_id].push({ id: m.id });
+        });
+
+        const caseMap = {};
+        (caseMapping || []).forEach(cs => {
+          if (!caseMap[cs.topic_id]) caseMap[cs.topic_id] = [];
+          caseMap[cs.topic_id].push({ 
+            id: cs.id, 
+            case_questions: cs.case_questions || [] 
+          });
+        });
+
+        topics.forEach(t => {
+          t.mcqs = mcqMap[t.id] || [];
+          t.case_studies = caseMap[t.id] || [];
+        });
+
+        // Re-render only the progress parts or the whole grid (cached)
+        renderTopics(yearId, topics);
+      } catch (e) {
+        console.warn("Lazy Progress Load failed:", e);
+      }
+    }
+
+    function renderTopics(yearId, data) {
+      const grid = document.getElementById('topic-grid');
+      const loader = document.getElementById('topic-loading');
+      const loaderMessage = document.getElementById('topic-loading-message');
+      
+      try {
+        loader.classList.add('hidden');
+        if (loaderMessage) {
+          loaderMessage.classList.add('hidden');
+          loaderMessage.textContent = '';
+        }
+
+        if (!data || !data.length) {
+          grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-muted);">No topics added for this year yet.</p>';
+          return;
+        }
+
+        // --- THORAX FIRST SORTING ---
+        data.sort((a, b) => {
+          if (a.title.toLowerCase().includes('thorax')) return -1;
+          if (b.title.toLowerCase().includes('thorax')) return 1;
+          return (a.order || 0) - (b.order || 0);
+        });
+
+        const sectionsMap = {};
+        data.forEach(t => {
+          const s = t.section || 'General';
+          if (!sectionsMap[s]) sectionsMap[s] = [];
+          sectionsMap[s].push(t);
+        });
+
+      let globalIndex = 0;
+      let html = '';
+
+      for (const [sectionName, topics] of Object.entries(sectionsMap)) {
+        if (sectionName !== 'General' || Object.keys(sectionsMap).length > 1) {
+          html += `<div class="section-header">${escapeHtml(sectionName)}</div>`;
+        }
+
+        topics.forEach((topic) => {
+          const isFreeDemo = topic.is_free_demo;
+          globalIndex++;
+
+          const mcqCount = topic.mcq_count || 0;
+          const caseCount = topic.case_count || 0;
+          const allMcqs = topic.mcqs || [];
+          
+          const topicProg = userProgress[topic.id] || {};
+          // Only count progress if we have the real IDs from lazy load
+          const progMcqCount = allMcqs.filter(m => m && m.id && topicProg[m.id]).length;
+
+          let attemptedCases = 0;
+          const caseStudies = topic.case_studies || [];
+          caseStudies.forEach(cs => {
+            const qIds = (cs.case_questions || []).map(q => q.id);
+            const answered = qIds.filter(id => topicProg[id]).length;
+            if (qIds.length > 0 && answered > 0) attemptedCases++;
+          });
+
+          const totalQ = mcqCount + caseCount;
+          const totalCorrect = Object.values(topicProg).filter(v => v.correct).length;
+          const percent = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
+
+          html += `
+            <a class="topic-card" href="${topicHref(topic)}" data-topic-id="${escapeAttr(topic.id)}" data-topic-slug="${escapeAttr(topic.slug || '')}" data-topic-title="${escapeAttr(topic.title)}" data-free-demo="${isFreeDemo}">
+              <div>
+                ${isFreeDemo ? '<span style="display:inline-block; background:var(--accent); color:#fff; font-size:10px; font-weight:800; padding:3px 10px; border-radius:6px; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; box-shadow:0 4px 12px rgba(var(--accent-rgb),0.3);">Free Demo</span>' : ''}
+                <h3 style="margin-bottom: 8px;">${escapeHtml(topic.title)}</h3>
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px;">
+                  Practice high-yield <strong>${escapeHtml(topic.title)}</strong> questions with clinical relevance for your medical boards.
+                </p>
+              </div>
+              <div class="topic-progress">
+                <div class="topic-stats-row">
+                  <span style="color:var(--success)">ΓÇó ${progMcqCount} / ${mcqCount} MCQs</span>
+                  <span>${percent}%</span>
+                </div>
+                ${caseCount > 0 ? `
+                <div class="topic-stats-row">
+                  <span style="color:#a855f7">ΓÇó ${attemptedCases} / ${caseCount} Cases</span>
+                </div>
+                ` : ''}
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill" style="width: ${percent}%;"></div>
+                </div>
+              </div>
+            </a>
+          `;
+        });
+      }
+
+      grid.innerHTML = html;
+      } catch (err) {
+        console.error("MediHelp Render Error:", err);
+        loader.classList.add('hidden');
+        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding: 40px; color: var(--text-danger);">An error occurred while displaying topics. Please refresh the page.</p>';
+      }
+    }
+
+    // Prefetching removed to optimize initial load performance
+
+    // --- QUIZ LOGIC ---
+    async function startQuiz(topicId, title, isFreeDemo = false) {
+      currentTopicId = topicId;
+      const titleEl = document.getElementById('current-topic-title');
+      if (titleEl) titleEl.textContent = title;
+      updateTopicUrl({ id: topicId, title });
+
+      if (!isFreeDemo) {
+        const premium = await MediHelp.isPremium();
+        if (!premium) {
+          const { data, error } = await window.dbClient.auth.getUser();
+          const user = data?.user;
+          if (!user) {
+            MediHelp.showAuthModal();
+          } else {
+            openPremiumModal();
+          }
+          return;
+        }
+      }
+      document.getElementById('dashboard-view').classList.add('hidden');
+      document.getElementById('mcq-view').classList.remove('hidden');
+      
+      loadMcqs(topicId);
+    }
+
+    async function isPremium() {
+      return await MediHelp.isPremium();
+    }
+
+    function openPremiumModal() {
+      document.getElementById('premium-modal').classList.add('visible');
+    }
+
+    function closePremiumModal() {
+      document.getElementById('premium-modal').classList.remove('visible');
+    }
+
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = `toast-msg visible ${type}`;
+      setTimeout(() => t.classList.remove('visible'), 3000);
+    }
+
+    async function verifyAccessKey() {
+      const key = document.getElementById('access-key-input').value.trim();
+      const email = document.getElementById('access-email-input').value.trim();
+      const btn = document.getElementById('verify-btn');
+
+      if (!key || !email) {
+        showToast('Please enter both license key and email.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Verifying...';
+
+      // Do NOT use a short UI timeout here: MediHelp.License.verify can take up to ~90s (Edge Function + Gumroad).
+      // A 10s timeout was resetting the button while verify was still running, causing "stuck verifying" / races.
+
+      let navigated = false;
+      try {
+        await MediHelp.License.verify(key, email);
+        showToast('Premium Access Activated!', 'success');
+        closePremiumModal();
+        const tid = currentTopicId ? encodeURIComponent(currentTopicId) : '';
+        navigated = true;
+        window.location.href = window.location.pathname + (tid ? (`?topic_id=${tid}`) : '');
+      } catch (e) {
+        console.error("License Verification Error:", e.message);
+        if (e.message === "LICENSE_LIMIT_REACHED") {
+          showToast('License limit reached (5 devices max).', 'error');
+        } else if (e.message === "INVALID_KEY") {
+          showToast('Invalid license key or email.', 'error');
+        } else if (e.message === "TIMEOUT") {
+          showToast('Verification timed out. If you see a row in Supabase, wait a few seconds and use Refresh ΓÇö or try again.', 'error');
+        } else {
+          showToast(e.message || 'Connection error. Please try again.', 'error');
+        }
+      } finally {
+        if (!navigated) {
+          btn.disabled = false;
+          btn.textContent = 'Unlock Now';
+        }
+      }
+    }
+
+    async function restorePurchase() {
+      const btn = document.getElementById('restore-btn');
+      btn.disabled = true;
+      btn.textContent = 'Restoring...';
+      try {
+        await MediHelp.License.restore();
+        showToast('Access Restored Successfully!', 'success');
+        closePremiumModal();
+        window.location.href = window.location.pathname + (currentTopicId ? (`?topic_id=${encodeURIComponent(currentTopicId)}`) : '');
+      } catch (e) {
+        showToast(e.message || 'No saved license found.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Restore Purchase on this Device';
+      }
+    }
+
+    function backToTopics() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const isUsmle = urlParams.get('usmle') === 'true';
+      if (isUsmle) {
+        window.location.href = 'medical-exam-usmle.html';
+      } else {
+        window.location.href = window.location.pathname;
+      }
+    }
+
+    async function loadMcqs(topicId) {
+      const list = document.getElementById('mcq-list');
+      const loader = document.getElementById('quiz-loading');
+      list.innerHTML = '';
+      loader.classList.remove('hidden');
+
+      try {
+        const fetchCtrl = new AbortController();
+        const fetchLimit = setTimeout(() => fetchCtrl.abort(), 60000);
+
+        let mcqRes, caseRes;
+        try {
+        // Parallel fetch; avoid .order('order') on case_studies ΓÇö "order" is reserved and can break PostgREST.
+        [mcqRes, caseRes] = await Promise.all([
+          window.dbClient.from('mcqs').select('*').eq('topic_id', topicId).order('created_at', { ascending: true }).abortSignal(fetchCtrl.signal),
+          window.dbClient.from('case_studies').select('*, case_questions(*)').eq('topic_id', topicId).order('created_at', { ascending: true }).abortSignal(fetchCtrl.signal)
+        ]);
+        } finally {
+          clearTimeout(fetchLimit);
+        }
+
+        const mcqs = mcqRes.data || [];
+        let cases = caseRes.data || [];
+
+        if (caseRes.error) {
+          console.warn('MediHelp: case_studies primary query failed, retrying without order:', caseRes.error.message);
+          const full = await window.dbClient.from('case_studies').select('*, case_questions(*)').eq('topic_id', topicId);
+          cases = full.data || [];
+          if (full.error) console.error('MediHelp: case_studies retry failed:', full.error);
+        }
+
+        cases.forEach((cs) => {
+          if (cs.case_questions && Array.isArray(cs.case_questions)) {
+            cs.case_questions.sort((a, b) => {
+              const ao = typeof a.order === 'number' ? a.order : parseInt(a.order, 10) || 0;
+              const bo = typeof b.order === 'number' ? b.order : parseInt(b.order, 10) || 0;
+              if (ao !== bo) return ao - bo;
+              return String(a.created_at || '').localeCompare(String(b.created_at || ''));
+            });
+          }
+        });
+
+        let mcqsArr = mcqs;
+        if (!mcqsArr.length && !cases.length && !mcqRes.error && !caseRes.error) {
+          console.warn('MediHelp: Empty MCQ/case payload on first try ΓÇö retrying once (cold start).');
+          await new Promise((r) => setTimeout(r, 500));
+          const [rMcq, rCase] = await Promise.all([
+            window.dbClient.from('mcqs').select('*').eq('topic_id', topicId).order('created_at', { ascending: true }),
+            window.dbClient.from('case_studies').select('*, case_questions(*)').eq('topic_id', topicId).order('created_at', { ascending: true })
+          ]);
+          mcqRes = rMcq;
+          caseRes = rCase;
+          mcqsArr = rMcq.data || [];
+          cases = rCase.data || [];
+          cases.forEach((cs) => {
+            if (cs.case_questions && Array.isArray(cs.case_questions)) {
+              cs.case_questions.sort((a, b) => {
+                const ao = typeof a.order === 'number' ? a.order : parseInt(a.order, 10) || 0;
+                const bo = typeof b.order === 'number' ? b.order : parseInt(b.order, 10) || 0;
+                if (ao !== bo) return ao - bo;
+                return String(a.created_at || '').localeCompare(String(b.created_at || ''));
+              });
+            }
+          });
+        }
+
+        if (mcqsArr.length > 0) {
+          mcqsArr.sort((a, b) => {
+            const numA = parseInt(a.question.match(/^\d+/)?.[0] || 0, 10);
+            const numB = parseInt(b.question.match(/^\d+/)?.[0] || 0, 10);
+            if (numA && numB) return numA - numB;
+            return 0;
+          });
+        }
+
+      loader.classList.add('hidden');
+
+      // Reset ID tracking
+      currentStandaloneIds = [];
+      currentCaseQuestionIds = [];
+      currentLoadedCases = [];
+
+      if ((mcqRes.error || !mcqsArr.length) && !cases.length) {
+        if (mcqRes.error) console.error('MediHelp mcqs error:', mcqRes.error);
+        if (caseRes.error) console.error('MediHelp case_studies error:', caseRes.error);
+        list.innerHTML = '<p style="text-align:center; padding: 40px;">No questions found for this topic.</p>';
+        return;
+      }
+
+      // Render Standalone MCQs
+      if (mcqsArr && mcqsArr.length > 0) {
+        currentStandaloneIds = mcqsArr.map(m => m.id);
+        const header = document.createElement('div');
+        header.className = 'section-divider';
+        header.textContent = 'High-Yield MCQs';
+        list.appendChild(header);
+        
+        mcqsArr.forEach((mcq, idx) => {
+          list.appendChild(renderMcqCard(mcq, idx, 'mcq'));
+        });
+      }
+
+      // Render Clinical Cases
+      if (cases && cases.length > 0) {
+        const header = document.createElement('div');
+        header.className = 'section-divider';
+        header.textContent = 'Clinical Case Studies';
+        list.appendChild(header);
+
+        currentLoadedCases = cases;
+        cases.forEach((cs, cIdx) => {
+          const subQs = Array.isArray(cs.case_questions) ? cs.case_questions : [];
+          currentCaseQuestionIds.push(...subQs.map(q => q.id));
+          list.appendChild(renderCaseBlock({ ...cs, case_questions: subQs }, cIdx));
+        });
+      }
+      
+      // NEXT TOPIC LINK GENERATION
+      try {
+        const { data: currTop } = await window.dbClient.from('topics').select('semester_id, created_at').eq('id', topicId).single();
+        if (currTop) {
+          const { data: nextTop, error: nextErr } = await window.dbClient.from('topics')
+            .select('id, title, slug')
+            .eq('semester_id', currTop.semester_id)
+            .gt('created_at', currTop.created_at)
+            .order('created_at', { ascending: true })
+            .limit(1)
+            .single();
+            
+          const endDiv = document.createElement('div');
+          endDiv.style.marginTop = '40px';
+          endDiv.style.textAlign = 'center';
+          endDiv.style.borderTop = '1px dashed var(--border)';
+          endDiv.style.paddingTop = '30px';
+          
+          if (nextTop && !nextErr) {
+            endDiv.innerHTML = `
+              <a href="${topicHref(nextTop)}" class="btn btn-primary" style="display:inline-block; padding:16px 32px; font-size:16px; font-weight:800; text-decoration:none;">
+                Proceed to Next Topic: ${escapeHtml(nextTop.title)}
+              </a>
+            `;
+          } else {
+             endDiv.innerHTML = `<p style="color:var(--text-muted); font-weight:600;">You have completed all topics in this semester.</p>`;
+          }
+          list.appendChild(endDiv);
+        }
+      } catch (err) {
+        console.error('Error loading next topic:', err);
+      }
+
+      updateQuizHeader();
+      } catch (err) {
+        console.error('MediHelp Quiz Load Error:', err);
+        loader.classList.add('hidden');
+        const msg = err && err.name === 'AbortError'
+          ? 'Loading timed out. Check your connection and try again, or use a smaller topic.'
+          : 'Failed to load questions. Please try again.';
+        list.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-danger);">' + msg + '</p>';
+      }
+    }
+
+    function renderCaseBlock(cs, index) {
+      const container = document.createElement('div');
+      container.style.marginBottom = '60px';
+
+      const caseBox = document.createElement('div');
+      caseBox.className = 'case-box';
+      caseBox.innerHTML = `
+        <div class="case-title">${escapeHtml(cs.title)}</div>
+        <div class="case-scenario">${formatMcqHtml(cs.scenario).replace(/\n/g, '<br>')}</div>
+      `;
+      container.appendChild(caseBox);
+
+      // Render sub-questions
+      cs.case_questions.forEach((q, qIdx) => {
+        container.appendChild(renderMcqCard(q, qIdx, 'case'));
+      });
+
+      return container;
+    }
+
+    function renderMcqCard(mcq, index, type) {
+      const card = document.createElement('div');
+      card.className = 'mcq-card';
+      card.id = `mcq-${mcq.id}`;
+      
+      const answered = userProgress[currentTopicId] && userProgress[currentTopicId][mcq.id];
+      const qPrefix = type === 'case' ? `Case Question ${index + 1}` : `Question ${index + 1}`;
+      
+      // Strip any baked-in number prefix from the DB (e.g., "1. What is..." -> "What is...")
+      const cleanQuestion = mcq.question.replace(/^\d+\.\s*/, '');
+      
+      card.innerHTML = `
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:12px; font-weight:700;">${qPrefix}</div>
+        ${mcq.image_url ? `<img src="${mcq.image_url}" class="mcq-image" loading="lazy">` : ''}
+        <div class="mcq-question">${formatMcqHtml(cleanQuestion)}</div>
+        <div class="mcq-options">
+          ${mcq.options.map((opt, i) => `
+            <button class="option-btn ${answered ? 'locked' : ''} ${answered && answered.choice === i ? (i === mcq.correct_index ? 'correct' : 'incorrect') : ''} ${answered && i === mcq.correct_index ? 'correct' : ''}" 
+                    onclick="handleAnswer('${mcq.id}', ${i}, ${mcq.correct_index})">
+              <span style="opacity:0.6; width:20px; font-weight:800;">${String.fromCharCode(65 + i)}</span>
+              ${formatMcqHtml(opt)}
+            </button>
+          `).join('')}
+        </div>
+        <div class="explanation-box" id="explanation-${mcq.id}" style="${answered ? 'display:block;' : ''}">
+          <h4>Learning Note</h4>
+          <p id="correct-answer-text-${mcq.id}" style="margin-bottom:8px; display: ${answered ? 'block' : 'none'};">
+            <strong>Correct Answer:</strong> <span class="answer-label" style="color:var(--success); font-weight:800;"></span>
+          </p>
+          <p class="explanation-text">${formatMcqHtml(mcq.explanation || 'No explanation provided.')}</p>
+        </div>
+      `;
+      
+      // If already answered, set the label text
+      if (answered) {
+        setTimeout(() => {
+          const label = card.querySelector(`#correct-answer-text-${mcq.id} .answer-label`);
+          if (label) label.textContent = mcq.options[mcq.correct_index];
+        }, 0);
+      }
+
+      return card;
+    }
+
+    function handleAnswer(mcqId, choice, correctIndex) {
+      if (userProgress[currentTopicId] && userProgress[currentTopicId][mcqId]) return;
+
+      if (!userProgress[currentTopicId]) userProgress[currentTopicId] = {};
+      userProgress[currentTopicId][mcqId] = {
+        choice: choice,
+        correct: choice === correctIndex
+      };
+      
+      saveProgress();
+
+      // Update UI
+      const card = document.getElementById(`mcq-${mcqId}`);
+      const btns = card.querySelectorAll('.option-btn');
+      
+      btns.forEach((btn, i) => {
+        btn.classList.add('locked');
+        if (i === correctIndex) btn.classList.add('correct');
+        if (i === choice && i !== correctIndex) btn.classList.add('incorrect');
+      });
+
+      // Show correct answer text and explanation
+      const expBox = document.getElementById(`explanation-${mcqId}`);
+      const correctText = document.getElementById(`correct-answer-text-${mcqId}`);
+      const label = correctText.querySelector('.answer-label');
+      
+      // Get the correct option text from the button
+      label.textContent = btns[correctIndex].textContent.trim().substring(2); // Remove the 'A ', 'B ' prefix
+      
+      correctText.style.display = 'block';
+      expBox.style.display = 'block';
+      
+      updateQuizHeader();
+    }
+
+    function updateQuizHeader() {
+      const topicProgress = userProgress[currentTopicId] || {};
+      
+      const mcqAnswered = currentStandaloneIds.filter(id => topicProgress[id]);
+      const mcqCorrect = mcqAnswered.filter(id => topicProgress[id].correct).length;
+      
+      const caseAnswered = currentCaseQuestionIds.filter(id => topicProgress[id]);
+      
+      // Calculate attempted scenarios (where at least one question for that scenario is answered)
+      let casesAttemptedCount = 0;
+      currentLoadedCases.forEach(cs => {
+        const scenarioQuestions = cs.case_questions.map(q => q.id);
+        const answeredInScenario = scenarioQuestions.filter(id => topicProgress[id]).length;
+        if (scenarioQuestions.length > 0 && answeredInScenario > 0) {
+          casesAttemptedCount++;
+        }
+      });
+      
+      const totalAnswered = mcqAnswered.length + caseAnswered.length;
+      const totalPossible = currentStandaloneIds.length + currentCaseQuestionIds.length;
+
+      const statsEl = document.getElementById('stats-total') || document.getElementById('topic-stats');
+      if (statsEl) statsEl.textContent = `${totalAnswered} / ${totalPossible} Questions Completed`;
+      
+      document.getElementById('mcq-live-score').textContent = `MCQ: ${mcqAnswered.length} / ${currentStandaloneIds.length}`;
+      document.getElementById('case-live-score').textContent = `Case: ${casesAttemptedCount} / ${currentLoadedCases.length}`;
+      
+      // Hide case score if no cases exist
+      document.getElementById('case-live-score').style.display = currentCaseQuestionIds.length ? 'block' : 'none';
+    }
+
+    function resetTopic() {
+      showConfirm('Are you sure you want to reset all progress for this topic?', () => {
+        delete userProgress[currentTopicId];
+        saveProgress();
+        loadMcqs(currentTopicId);
+      });
+    }
+
+    // --- CUSTOM CONFIRM LOGIC ---
+    let confirmCallback = null;
+    function showConfirm(msg, callback) {
+      document.getElementById('confirm-msg').textContent = msg;
+      confirmCallback = callback;
+      document.getElementById('confirm-modal').classList.add('visible');
+    }
+
+    document.getElementById('confirm-cancel').addEventListener('click', () => {
+      document.getElementById('confirm-modal').classList.remove('visible');
+    });
+
+    document.getElementById('confirm-yes').addEventListener('click', () => {
+      if (confirmCallback) confirmCallback();
+      document.getElementById('confirm-modal').classList.remove('visible');
+    });
+
+    // Init
+    const pageStartTime = performance.now();
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('MediHelp: Initializing curriculum dashboard...');
+      // Wait for dbClient
+      const waitForDb = async () => {
+        if (window.dbClient) return true;
+        return new Promise(resolve => {
+          const interval = setInterval(() => {
+            if (window.dbClient) {
+              clearInterval(interval);
+              resolve(true);
+            }
+          }, 50);
+        });
+      };
+      await waitForDb();
+      // Kick off session check in the background ΓÇö do NOT block topic loading on it
+      window.dbClient.auth.getSession().catch(() => {});
+
+      console.log(`MediHelp Perf: System initialized in ${Math.round(performance.now() - pageStartTime)}ms`);
+
+      const urlParamsEarly = new URLSearchParams(window.location.search);
+      const deepTopic = !!(urlParamsEarly.get('topic_id') || urlParamsEarly.get('slug') ||
+        (() => {
+          const p = window.location.pathname.split('/').filter(Boolean);
+          return (p.length >= 2 && p[0] === 'medical-exam-preparation' && p[1]) ||
+            (p.length >= 2 && p[0] === 'medical-exam-semester' && p[1]);
+        })());
+
+      // Heavy all-topics query competes with MCQ/case fetches ΓÇö defer when opening a topic from URL.
+      if (deepTopic) {
+        setTimeout(() => { initSearch().catch(err => console.warn('MediHelp: initSearch deferred', err)); }, 2200);
+      } else {
+        initSearch();
+      }
+
+      // Detect if Quiz Header is stuck
+      window.addEventListener('scroll', () => {
+        const header = document.querySelector('.quiz-header');
+        if (!header) return;
+        
+        // Sticky trigger: If top of header reaches sticky threshold (72px)
+        const isStuck = header.getBoundingClientRect().top <= 72;
+        header.classList.toggle('stuck', isStuck && window.scrollY > 100);
+      }, { passive: true });
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialTopicId = urlParams.get('topic_id');
+      
+      if (urlParams.get('showActivation') === 'true') {
+        openPremiumModal();
+      }
+
+      if (initialTopicId) {
+        let query = window.dbClient.from('topics').select('id, title, slug, year_id, usmle_step, is_free_demo').eq('id', initialTopicId);
+        
+        const { data, error } = await query.single();
+        if (data) {
+           const urlParams2 = new URLSearchParams(window.location.search);
+           let isFreeDemo = urlParams2.get('free') === 'true';
+
+           if (data.is_free_demo) isFreeDemo = true;
+
+           if (!isFreeDemo && (data.year_id != null || data.usmle_step != null)) {
+             let firstQ = window.dbClient.from('topics').select('id').order('order', { ascending: true }).order('created_at', { ascending: true }).limit(1);
+             if (data.year_id != null) {
+               firstQ = firstQ.eq('year_id', data.year_id).is('usmle_step', null);
+             } else {
+               firstQ = firstQ.eq('usmle_step', data.usmle_step);
+             }
+             const { data: firstRow } = await firstQ.maybeSingle();
+             if (firstRow && firstRow.id === data.id) isFreeDemo = true;
+           }
+
+           startQuiz(data.id, data.title, isFreeDemo);
+        } else {
+           initYears();
+        }
+      } else {
+        initYears();
+      }
+    });
+  </script>
+</body>
+</html>
