@@ -1,0 +1,202 @@
+[
+  {
+    "q": "A patient with suspected acute coronary syndrome (ACS) receives aspirin, nitroglycerin, and O<sub>2</sub>. What is the most critical next step in determining the revascularization pathway?",
+    "a": "Obtaining an immediate 12-lead ECG to differentiate STEMI from NSTEMI/Unstable Angina."
+  },
+  {
+    "q": "What is the next best step in management for a patient with a STEMI presenting to a non-PCI capable hospital if transfer to a PCI center will take > 120 minutes?",
+    "a": "Administer fibrinolytic therapy (e.g., Alteplase, Tenecteplase) immediately if there are no contraindications, within 30 minutes of arrival."
+  },
+  {
+    "q": "Which specific beta-blockers are proven to reduce mortality in patients with Heart Failure with reduced Ejection Fraction (HFrEF)?",
+    "a": "Bisoprolol, Carvedilol, and sustained-release Metoprolol succinate."
+  },
+  {
+    "q": "A patient with HFrEF and an ejection fraction of 25% continues to have symptomatic heart failure despite optimal medical therapy with an ACE inhibitor, beta-blocker, and mineralocorticoid receptor antagonist. What new medication should replace the ACE inhibitor?",
+    "a": "An ARNI (Angiotensin Receptor-Neprilysin Inhibitor) such as Sacubitril/Valsartan."
+  },
+  {
+    "q": "What is the primary indication for adding Ivabradine to the regimen of a patient with HFrEF?",
+    "a": "Symptomatic HFrEF (LVEF &le; 35%) with a resting sinus heart rate &ge; 70 bpm despite maximum tolerated doses of beta-blockers."
+  },
+  {
+    "q": "A patient with an inferior wall STEMI develops profound hypotension after receiving sublingual nitroglycerin. What is the most likely diagnosis and next best step?",
+    "a": "Right Ventricular (RV) infarction; administer intravenous fluids to maintain adequate right ventricular preload and avoid further nitrates/diuretics."
+  },
+  {
+    "q": "What is the classic ECG finding associated with Digoxin toxicity?",
+    "a": "Downsloping ST segment depression (the 'scooped' ST segment), though true toxicity often presents with premature ventricular contractions (PVCs) or atrial tachycardia with variable AV block."
+  },
+  {
+    "q": "A patient is diagnosed with Wolff-Parkinson-White (WPW) syndrome and develops atrial fibrillation with rapid ventricular response. What medications are strongly contraindicated?",
+    "a": "AV nodal blocking agents (Beta-blockers, Calcium channel blockers, Digoxin, Adenosine) as they can promote conduction down the accessory pathway leading to ventricular fibrillation."
+  },
+  {
+    "q": "What is the preferred initial treatment for a hemodynamically stable patient with WPW syndrome who develops atrial fibrillation with rapid ventricular response?",
+    "a": "Intravenous Procainamide or Ibutilide (or synchronized cardioversion if they become unstable)."
+  },
+  {
+    "q": "What is the initial management for a patient presenting with acute decompensated heart failure, pulmonary edema, and a blood pressure of 90/60 mmHg?",
+    "a": "Intravenous loop diuretics (e.g., Furosemide). Vasodilators (nitrates) should be avoided due to borderline hypotension."
+  },
+  {
+    "q": "What murmur is characterized by an early decrescendo diastolic murmur best heard along the left sternal border, often associated with a widened pulse pressure and bounding pulses?",
+    "a": "Aortic Regurgitation (Insufficiency)."
+  },
+  {
+    "q": "What physical exam maneuver distinguishes the systolic murmur of Hypertrophic Cardiomyopathy (HCM) from that of Aortic Stenosis (AS)?",
+    "a": "Valsalva maneuver or standing decreases venous return (preload). This <i>increases</i> the intensity of the HCM murmur but <i>decreases</i> the intensity of the AS murmur."
+  },
+  {
+    "q": "What is the definitive, potentially curative therapy for symptomatic Hypertrophic Obstructive Cardiomyopathy (HOCM) refractory to medical management (beta-blockers, non-DHP CCBs)?",
+    "a": "Surgical myomectomy or alcohol septal ablation."
+  },
+  {
+    "q": "A patient is found to have a bicuspid aortic valve on echocardiography. What other vascular abnormality should the patient be screened for?",
+    "a": "Aortic aneurysm (ascending aorta) and aortic coarctation."
+  },
+  {
+    "q": "A patient presents with sharp, pleuritic chest pain that improves with leaning forward. ECG shows diffuse concave ST elevation and PR depression. What is the first-line treatment?",
+    "a": "NSAIDs (e.g., Ibuprofen) combined with Colchicine for acute viral or idiopathic pericarditis."
+  },
+  {
+    "q": "A patient develops a harsh holosystolic murmur at the left lower sternal border and a step-up in oxygen saturation from the right atrium to the right ventricle 3-5 days post-MI. What is the diagnosis?",
+    "a": "Ventricular Septal Defect (VSD) secondary to myocardial rupture (typically LAD or RCA occlusion)."
+  },
+  {
+    "q": "A patient presents with sudden-onset hypotension, elevated JVP, and clear lungs 3-5 days post-MI. What is the likely diagnosis?",
+    "a": "Free wall rupture leading to cardiac tamponade (typically LAD occlusion)."
+  },
+  {
+    "q": "A patient develops acute, severe pulmonary edema and a new holosystolic murmur at the apex radiating to the axilla 3-5 days post-MI. What is the diagnosis?",
+    "a": "Papillary muscle rupture leading to acute severe mitral regurgitation (typically RCA occlusion affecting the posteromedial papillary muscle)."
+  },
+  {
+    "q": "What is the most accurate diagnostic test for peripheral artery disease (PAD) in a patient with an Ankle-Brachial Index (ABI) of 1.35?",
+    "a": "Toe-Brachial Index (TBI). An ABI > 1.30 indicates calcified/incompressible vessels, rendering ABI falsely elevated, so TBI is needed."
+  },
+  {
+    "q": "A 65-year-old male with a history of smoking undergoes an abdominal ultrasound which reveals a 4.5 cm abdominal aortic aneurysm (AAA). What is the appropriate follow-up?",
+    "a": "Repeat ultrasound in 6 months (AAAs between 4.0 - 4.9 cm require ultrasound every 6-12 months). Repair is indicated if &ge; 5.5 cm or growing > 0.5 cm in 6 months."
+  },
+  {
+    "q": "A patient presents with severe, tearing chest pain radiating to the back. A chest X-ray shows a widened mediastinum. What is the best initial diagnostic test if the patient has renal failure (Cr = 2.8)?",
+    "a": "Transesophageal echocardiography (TEE) or non-contrast MRI (though TEE is preferred for definitive rapid diagnosis without contrast). CT Angiography requires IV contrast which is contraindicated in severe acute renal failure."
+  },
+  {
+    "q": "What is the targeted blood pressure and heart rate for a patient with an acute aortic dissection?",
+    "a": "Systolic BP 100-120 mmHg and heart rate 60 bpm. Use IV beta-blockers (e.g., Labetalol, Esmolol) first to avoid reflex tachycardia, then Nitroprusside if needed."
+  },
+  {
+    "q": "What is the characteristic change in the pulmonary capillary wedge pressure (PCWP) in a patient with cardiogenic shock vs. hypovolemic shock?",
+    "a": "PCWP is <i>elevated</i> in cardiogenic shock (due to left-sided heart failure backing up) and <i>decreased</i> in hypovolemic shock."
+  },
+  {
+    "q": "Which physical exam finding is the most specific for diagnosing left-sided heart failure in a patient presenting with dyspnea?",
+    "a": "An S<sub>3</sub> gallop (ventricular gallop)."
+  },
+  {
+    "q": "What class of antihypertensive medications is most strongly associated with peripheral edema as a side effect?",
+    "a": "Dihydropyridine calcium channel blockers (e.g., Amlodipine, Nifedipine)."
+  },
+  {
+    "q": "A patient with a history of asthma and hypertension presents with new-onset fatigue and heart rate of 52 bpm. He recently started a new antihypertensive medication. Which drug is most likely responsible?",
+    "a": "A non-selective beta-blocker (e.g., Propranolol) or a cardioselective one at high doses (e.g., Metoprolol, Atenolol) causing bradycardia."
+  },
+  {
+    "q": "What is the recommended initial management for a patient in Monomorphic Ventricular Tachycardia who is hemodynamically stable?",
+    "a": "Intravenous Amiodarone (preferred) or Procainamide."
+  },
+  {
+    "q": "What is the recommended therapy for Torsades de Pointes in a hemodynamically stable patient?",
+    "a": "Intravenous Magnesium Sulfate. If unstable, perform immediate defibrillation."
+  },
+  {
+    "q": "A patient with new-onset Atrial Fibrillation of 3 days duration is hemodynamically stable and requires cardioversion. What must be done prior to cardioversion?",
+    "a": "A transesophageal echocardiogram (TEE) to rule out a left atrial appendage thrombus, OR 3 weeks of therapeutic anticoagulation."
+  },
+  {
+    "q": "What is the CHA<sub>2</sub>DS<sub>2</sub>-VASc score threshold at which chronic oral anticoagulation is strongly recommended for a patient with non-valvular Atrial Fibrillation?",
+    "a": "A score of &ge; 2 in men or &ge; 3 in women."
+  },
+  {
+    "q": "A patient presenting with acute peripheral arterial occlusion (acute limb ischemia) has a pulseless, cold, and pale leg but intact motor and sensory function. What is the immediate next step in management?",
+    "a": "Start intravenous Heparin immediately, followed by emergent surgical evaluation for revascularization."
+  },
+  {
+    "q": "What is the definitive diagnosis method for cardiac amyloidosis presenting as restrictive cardiomyopathy?",
+    "a": "Endomyocardial biopsy showing apple-green birefringence with Congo red stain under polarized light (though bone scintigraphy (Tc-PYP) is often used first for ATTR amyloidosis)."
+  },
+  {
+    "q": "A patient with a history of breast cancer treated with radiation presents with elevated JVP, Kussmaul's sign, and a pericardial knock on auscultation. What is the diagnosis?",
+    "a": "Constrictive Pericarditis."
+  },
+  {
+    "q": "What is Kussmaul's sign and what does it indicate?",
+    "a": "A paradoxical rise (or lack of fall) in the jugular venous pressure (JVP) with inspiration. It indicates impaired right ventricular filling (e.g., constrictive pericarditis, restrictive cardiomyopathy, RV infarction)."
+  },
+  {
+    "q": "What is the typical presentation and ECG finding for a patient with an Atrial Septal Defect (ASD)?",
+    "a": "Fixed splitting of the S<sub>2</sub> sound and an incomplete right bundle branch block (RBBB) pattern on ECG."
+  },
+  {
+    "q": "A patient with a mechanical aortic valve requires anticoagulation. What is the anticoagulant of choice and the target INR?",
+    "a": "Warfarin. Target INR is 2.0 - 3.0 for a mechanical aortic valve without risk factors (2.5 - 3.5 for a mechanical mitral valve or aortic valve with additional risk factors)."
+  },
+  {
+    "q": "In a patient presenting with hypertensive emergency and acute pulmonary edema, what is the best initial antihypertensive medication?",
+    "a": "Intravenous Nitroglycerin or Nitroprusside (with loop diuretics). Avoid beta-blockers as they decrease contractility."
+  },
+  {
+    "q": "In a patient presenting with hypertensive emergency and acute ischemic stroke, what is the blood pressure threshold to treat if they are NOT receiving thrombolytics?",
+    "a": "Treat only if BP is > 220/120 mmHg. If they ARE receiving thrombolytics (tPA), keep BP < 185/110 mmHg prior to tPA and < 180/105 mmHg after."
+  },
+  {
+    "q": "A young patient with hypertension, hypokalemia, and metabolic alkalosis most likely has what condition?",
+    "a": "Primary hyperaldosteronism (Conn syndrome). Check plasma aldosterone-to-renin ratio (ARR > 20 is suggestive)."
+  },
+  {
+    "q": "A patient develops a dry, hacking cough after starting a new medication for hypertension. What is the mechanism of this side effect?",
+    "a": "Accumulation of bradykinin due to Angiotensin-Converting Enzyme (ACE) inhibition."
+  },
+  {
+    "q": "What is the most common cause of sudden cardiac death in a patient with a prior history of a massive myocardial infarction and a low ejection fraction?",
+    "a": "Ventricular Tachycardia (VT) or Ventricular Fibrillation (VF) degenerating from an arrhythmogenic scar."
+  },
+  {
+    "q": "Which antiarrhythmic drug class is contraindicated in patients with structural heart disease (e.g., prior MI, heart failure) due to an increased risk of proarrhythmia?",
+    "a": "Class IC antiarrhythmics (e.g., Flecainide, Propafenone)."
+  },
+  {
+    "q": "A patient presents with syncope and an ECG shows a PR interval of 0.28 seconds and grouped beating with a progressively lengthening PR interval before a dropped QRS complex. What is the diagnosis?",
+    "a": "Second-degree AV Block, Mobitz Type I (Wenckebach)."
+  },
+  {
+    "q": "A patient with syncope has an ECG showing constant PR intervals followed by intermittent dropped QRS complexes. What is the diagnosis and best management?",
+    "a": "Second-degree AV Block, Mobitz Type II. Management is permanent pacemaker insertion as it often progresses to complete heart block."
+  },
+  {
+    "q": "What lipid-lowering medication is indicated for patients with clinical ASCVD (e.g., prior MI, stroke) regardless of baseline LDL levels?",
+    "a": "A high-intensity statin (e.g., Atorvastatin 40-80 mg or Rosuvastatin 20-40 mg)."
+  },
+  {
+    "q": "A patient on a statin develops muscle pain and dark urine. Creatine kinase is markedly elevated. What is the diagnosis and next best step?",
+    "a": "Statin-induced rhabdomyolysis. Discontinue the statin immediately and start aggressive intravenous fluid hydration to prevent acute tubular necrosis."
+  },
+  {
+    "q": "What is the triad of Leriche syndrome (aortoiliac occlusive disease)?",
+    "a": "1) Bilateral hip, thigh, and buttock claudication, 2) Absent or diminished femoral pulses, and 3) Erectile dysfunction."
+  },
+  {
+    "q": "A patient post-cardiac catheterization develops a pulsatile mass with a systolic bruit at the femoral puncture site. What is the diagnosis?",
+    "a": "Femoral artery pseudoaneurysm. Diagnose with duplex ultrasound."
+  },
+  {
+    "q": "A patient with Marfan syndrome presents with a high-pitched blowing early diastolic murmur heard best at the right upper sternal border. What is the underlying pathology?",
+    "a": "Aortic root dilation leading to Aortic Regurgitation."
+  },
+  {
+    "q": "A patient taking Amiodarone chronically should have what routine screening tests performed to monitor for toxicities?",
+    "a": "Thyroid function tests (TSH, free T4), Liver function tests (LFTs), and Pulmonary function tests (PFTs) / Chest X-ray."
+  }
+]

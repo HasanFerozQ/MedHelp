@@ -1,0 +1,202 @@
+[
+  {
+    "q": "What is the most important prognostic factor for melanoma survival?",
+    "a": "Breslow depth (tumor thickness)."
+  },
+  {
+    "q": "A patient presents with a pearly, slow-growing papule with telangiectasias on the upper lip. Diagnosis?",
+    "a": "Basal cell carcinoma (BCC)."
+  },
+  {
+    "q": "A patient with a history of organ transplant presents with a non-healing, ulcerated nodule with a keratin plug on the lower lip. Biopsy shows keratin pearls. Diagnosis?",
+    "a": "Squamous cell carcinoma (SCC)."
+  },
+  {
+    "q": "What is the first-line treatment for multiple actinic keratoses (AK)?",
+    "a": "Topical 5-fluorouracil (5-FU) or imiquimod. (Note: cryotherapy for isolated lesions)."
+  },
+  {
+    "q": "The sudden appearance of multiple seborrheic keratoses (Leser-Tr\u00e9lat sign) is associated with what underlying condition?",
+    "a": "Gastrointestinal adenocarcinoma."
+  },
+  {
+    "q": "A patient has sharply demarcated, erythematous plaques with silvery scales on extensor surfaces. What is the phenomenon where minor trauma causes new lesions?",
+    "a": "Koebner phenomenon (associated with Psoriasis)."
+  },
+  {
+    "q": "A healthy 20-year-old presents with a \"herald patch\" followed by a diffuse \"Christmas tree\" pattern scaling rash on the trunk. Diagnosis?",
+    "a": "Pityriasis rosea."
+  },
+  {
+    "q": "A patient with Hepatitis C presents with pruritic, purple, polygonal, planar papules with fine white lines (Wickham striae) on the wrists. Diagnosis?",
+    "a": "Lichen planus."
+  },
+  {
+    "q": "Targetoid lesions appearing abruptly on the extremities, often following a Herpes Simplex Virus (HSV) or <i>Mycoplasma pneumoniae</i> infection. Diagnosis?",
+    "a": "Erythema multiforme."
+  },
+  {
+    "q": "A severe mucocutaneous reaction characterized by epidermal sloughing involving &lt;10% of total body surface area (TBSA), often triggered by medications like allopurinol or antiepileptics. Diagnosis?",
+    "a": "Stevens-Johnson Syndrome (SJS)."
+  },
+  {
+    "q": "A life-threatening mucocutaneous disease with extensive epidermal necrosis and sloughing involving &gt;30% TBSA, with a positive Nikolsky sign. Diagnosis?",
+    "a": "Toxic Epidermal Necrolysis (TEN)."
+  },
+  {
+    "q": "An elderly patient presents with intensely pruritic, tense subepidermal bullae. Immunofluorescence shows linear IgG and C3 at the basement membrane. Diagnosis?",
+    "a": "Bullous pemphigoid (antibodies against hemidesmosomes)."
+  },
+  {
+    "q": "A middle-aged patient presents with painful oral erosions and flaccid cutaneous bullae that easily rupture (positive Nikolsky sign). Immunofluorescence shows a net-like intraepidermal IgG pattern. Diagnosis?",
+    "a": "Pemphigus vulgaris (antibodies against desmoglein 1 and 3)."
+  },
+  {
+    "q": "A patient with Celiac disease presents with intensely pruritic papules and vesicles on the elbows and knees. Immunofluorescence shows granular IgA in the dermal papillae. Diagnosis?",
+    "a": "Dermatitis herpetiformis (Tx: Dapsone and gluten-free diet)."
+  },
+  {
+    "q": "A patient with Hepatitis C or hemochromatosis presents with painless blisters and skin fragility on the dorsum of the hands after sun exposure. Diagnosis?",
+    "a": "Porphyria cutanea tarda (deficiency of uroporphyrinogen decarboxylase)."
+  },
+  {
+    "q": "What is the mechanism of action of isotretinoin (a derivative of vitamin A, C<sub>20</sub>H<sub>28</sub>O<sub>2</sub>) used for severe, nodulocystic acne vulgaris?",
+    "a": "Decreases sebum production and normalizes epidermal desquamation. (Note: Highly teratogenic, requires two forms of contraception)."
+  },
+  {
+    "q": "A patient presents with facial flushing, erythema, telangiectasias, and papulopustules on the nose and cheeks, worsened by alcohol and spicy foods. First-line topical treatment?",
+    "a": "Topical metronidazole or ivermectin (Diagnosis: Rosacea)."
+  },
+  {
+    "q": "A chronic inflammatory skin condition characterized by painful nodules, abscesses, and sinus tracts in the axillae and groin. Diagnosis?",
+    "a": "Hidradenitis suppurativa."
+  },
+  {
+    "q": "A child presents with perioral honey-colored crusted lesions. What is the most common causative organism and first-line topical treatment?",
+    "a": "<i>Staphylococcus aureus</i> or Group A Strep; Topical mupirocin."
+  },
+  {
+    "q": "A superficial bacterial skin infection causing a well-demarcated, raised, intensely erythematous plaque on the face or legs, most commonly caused by Group A Streptococcus. Diagnosis?",
+    "a": "Erysipelas."
+  },
+  {
+    "q": "A deep dermis and subcutaneous tissue infection presenting with ill-defined borders, erythema, swelling, and tenderness. Most common organisms?",
+    "a": "<i>Staphylococcus aureus</i> and <i>Streptococcus pyogenes</i>."
+  },
+  {
+    "q": "A newborn presents with fever, generalized erythema, and large flaccid bullae that slough off with gentle pressure. Diagnosis?",
+    "a": "Staphylococcal scalded skin syndrome (SSSS, caused by exfoliative toxins)."
+  },
+  {
+    "q": "A patient with rapidly spreading erythema, extreme pain out of proportion to exam findings, and crepitus on palpation. Next best step in management?",
+    "a": "Urgent surgical exploration and debridement (Diagnosis: Necrotizing fasciitis)."
+  },
+  {
+    "q": "Annular, erythematous plaques with a central clearing and a scaly, active border. Potassium hydroxide (KOH) preparation shows branching septate hyphae. Diagnosis?",
+    "a": "Tinea corporis."
+  },
+  {
+    "q": "A teenager presents with hypopigmented macules on the upper back and chest that do not tan in the sun. KOH prep shows \"spaghetti and meatballs\" appearance. Diagnosis?",
+    "a": "Tinea versicolor (caused by <i>Malassezia furfur</i>)."
+  },
+  {
+    "q": "A child with a scaly patch of alopecia and broken hairs on the scalp. What is the treatment of choice?",
+    "a": "Oral griseofulvin or terbinafine (Topical antifungals are ineffective for Tinea capitis)."
+  },
+  {
+    "q": "An obese patient with diabetes presents with an erythematous, highly pruritic rash with satellite lesions in the inframammary folds. Diagnosis?",
+    "a": "<i>Candida</i> intertrigo."
+  },
+  {
+    "q": "Intensely pruritic, thread-like burrows in the interdigital web spaces and flexor surfaces of wrists, with itching worse at night. Treatment of choice?",
+    "a": "Topical 5% permethrin cream applied from neck down, or oral ivermectin."
+  },
+  {
+    "q": "A school-aged child with intense scalp pruritus. Exam shows tiny, white, oval structures firmly attached to hair shafts. First-line treatment?",
+    "a": "Topical 1% permethrin lotion (Diagnosis: Pediculosis capitis)."
+  },
+  {
+    "q": "Firm, dome-shaped, flesh-colored, umbilicated papules. What is the causative agent and the condition to screen for in adults with extensive disease?",
+    "a": "Poxvirus (Molluscum contagiosum); Screen for HIV."
+  },
+  {
+    "q": "A pregnant woman presents with solitary or multiple cauliflower-like lesions on the vulva. Diagnosis and causative agent?",
+    "a": "Condylomata acuminata; HPV types 6 and 11."
+  },
+  {
+    "q": "A sexually active patient presents with a diffuse, non-pruritic maculopapular rash that involves the palms and soles, accompanied by generalized lymphadenopathy. Diagnosis?",
+    "a": "Secondary syphilis."
+  },
+  {
+    "q": "A patient hiking in the Northeast US develops an expanding, erythematous, target-like rash (Erythema migrans). What is the treatment of choice for pregnant women or children &lt;8 years old?",
+    "a": "Amoxicillin (Standard tx: Doxycycline)."
+  },
+  {
+    "q": "A patient develops fever, headache, and a petechial rash that started on the wrists and ankles and spread centrally, after a tick bite in North Carolina. Treatment?",
+    "a": "Doxycycline (always first-line, even in children) for Rocky Mountain Spotted Fever."
+  },
+  {
+    "q": "An autoimmune condition characterized by the destruction of melanocytes, resulting in well-demarcated depigmented macules/patches, often associated with other autoimmune diseases. Diagnosis?",
+    "a": "Vitiligo."
+  },
+  {
+    "q": "An infant presents with diffuse hypopigmentation of skin, hair, and eyes. What enzyme is deficient?",
+    "a": "Tyrosinase (Oculocutaneous albinism, inability to synthesize melanin from tyrosine)."
+  },
+  {
+    "q": "Acquired hyperpigmentation of sun-exposed areas on the face, commonly seen in pregnancy or with oral contraceptive use. Diagnosis?",
+    "a": "Melasma (chloasma)."
+  },
+  {
+    "q": "Hyperpigmented, velvety plaques found in intertriginous areas (e.g., neck, axillae). Most commonly associated with what metabolic condition?",
+    "a": "Insulin resistance (Type 2 Diabetes Mellitus) or gastric adenocarcinoma if sudden onset."
+  },
+  {
+    "q": "Painful, erythematous, subcutaneous nodules on the anterior shins. Most common associated condition in a young African American female?",
+    "a": "Sarcoidosis (Diagnosis: Erythema nodosum)."
+  },
+  {
+    "q": "A firm, hyperpigmented nodule on the lower extremity that dimples centrally when pinched (dimple sign). Diagnosis?",
+    "a": "Dermatofibroma (benign fibroblast proliferation)."
+  },
+  {
+    "q": "Hypertrophic scar tissue that extends beyond the boundaries of the original wound, characterized by excessive deposition of Type I and Type III collagen. Diagnosis?",
+    "a": "Keloid."
+  },
+  {
+    "q": "A rapidly growing, friable, red papule that bleeds easily with minor trauma, often appearing during pregnancy or after an injury. Diagnosis?",
+    "a": "Pyogenic granuloma (lobular capillary hemangioma)."
+  },
+  {
+    "q": "The most common benign vascular tumor in adults, presenting as small, bright red, dome-shaped papules that increase in number with age. Diagnosis?",
+    "a": "Cherry angioma."
+  },
+  {
+    "q": "A vascular tumor in an infant that grows rapidly during the first few weeks of life and spontaneously regresses by age 5-8 years. Diagnosis?",
+    "a": "Strawberry (infantile) hemangioma."
+  },
+  {
+    "q": "An HIV patient with a CD4 count &lt;100 cells/mm<sup>3</sup> presents with friable red/purple cutaneous nodules. Biopsy shows neutrophilic infiltrate and bacterial bacilli. Diagnosis and treatment?",
+    "a": "Bacillary angiomatosis (<i>Bartonella</i>); Tx with Erythromycin."
+  },
+  {
+    "q": "An HIV patient presents with violaceous plaques on the skin and hard palate. Biopsy shows a lymphocytic infiltrate and slit-like vascular spaces. Causative agent?",
+    "a": "Human Herpesvirus 8 (HHV-8) causing Kaposi sarcoma."
+  },
+  {
+    "q": "Sudden onset of localized, non-scarring hair loss with \"exclamation point\" hairs at the periphery of the bald patch. Diagnosis?",
+    "a": "Alopecia areata (Autoimmune)."
+  },
+  {
+    "q": "What medication used for male pattern baldness (androgenetic alopecia) acts as a 5&alpha;-reductase inhibitor, preventing conversion of testosterone to DHT?",
+    "a": "Finasteride."
+  },
+  {
+    "q": "A patient who frequently uses public pools presents with macerated, scaling, and fissured skin between the toes. Treatment?",
+    "a": "Topical antifungals (e.g., terbinafine, clotrimazole) for Tinea pedis."
+  },
+  {
+    "q": "A patient taking allopurinol develops fever, facial edema, diffuse morbilliform rash, generalized lymphadenopathy, eosinophilia, and elevated AST/ALT. Diagnosis?",
+    "a": "DRESS syndrome (Drug Reaction with Eosinophilia and Systemic Symptoms)."
+  }
+]

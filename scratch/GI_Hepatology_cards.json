@@ -1,0 +1,202 @@
+[
+  {
+    "q": "What is the best initial step in management for a patient presenting with high clinical suspicion of achalasia?",
+    "a": "Barium esophagram, followed by upper endoscopy to rule out pseudoachalasia (malignancy), and definitively confirmed by esophageal manometry."
+  },
+  {
+    "q": "What is the medical treatment for esophageal spasm when nitrates or calcium channel blockers fail?",
+    "a": "Tricyclic antidepressants (e.g., imipramine) or botulinum toxin injection."
+  },
+  {
+    "q": "How does the presentation of eosinophilic esophagitis (EoE) classically differ from GERD in adults?",
+    "a": "EoE often presents with solid food dysphagia and food impaction in young men with atopic history, often unresponsive to PPI trial."
+  },
+  {
+    "q": "What are the endoscopic findings pathognomonic for Eosinophilic Esophagitis (EoE)?",
+    "a": "Multiple corrugated rings (trachealization), longitudinal furrows, and white exudates. Biopsy shows >15 eosinophils/hpf."
+  },
+  {
+    "q": "What is the next best step for an incidentally found Zenker's diverticulum that is asymptomatic?",
+    "a": "Observation. Surgery (cricopharyngeal myotomy) is reserved for symptomatic patients."
+  },
+  {
+    "q": "What is the primary pathophysiology behind the formation of a Zenker's diverticulum?",
+    "a": "Motor dysfunction and impaired relaxation of the cricopharyngeus muscle during swallowing, leading to high intraluminal pressure above the upper esophageal sphincter."
+  },
+  {
+    "q": "What diagnostic finding distinguishes Mallory-Weiss tear from Boerhaave syndrome on imaging?",
+    "a": "Boerhaave syndrome shows pneumomediastinum or contrast extravasation on gastrografin swallow due to transmural rupture, whereas Mallory-Weiss is mucosal and lacks extravasation."
+  },
+  {
+    "q": "What is the screening recommendation for a patient with Barrett's esophagus and NO dysplasia?",
+    "a": "Endoscopy with biopsy every 3 to 5 years."
+  },
+  {
+    "q": "What is the management of Barrett's esophagus with HIGH-grade dysplasia?",
+    "a": "Endoscopic eradication therapy (e.g., radiofrequency ablation or endoscopic mucosal resection)."
+  },
+  {
+    "q": "In a patient with suspected upper GI bleed and ongoing hematemesis, what is the initial medical therapy before endoscopy?",
+    "a": "IV fluid resuscitation, IV PPI, IV octreotide (if varices suspected), and prophylactic antibiotics (e.g., ceftriaxone) in cirrhotics."
+  },
+  {
+    "q": "What is the optimal prophylactic antibiotic regimen for a patient with cirrhosis and an acute variceal bleed?",
+    "a": "IV ceftriaxone for up to 7 days."
+  },
+  {
+    "q": "What is the most accurate diagnostic test for Zollinger-Ellison Syndrome (ZES)?",
+    "a": "Secretin stimulation test. In ZES, secretin paradoxically stimulates the release of gastrin (normal response is suppression)."
+  },
+  {
+    "q": "When is surgery indicated for a patient with a perforated peptic ulcer?",
+    "a": "Immediate surgical exploration with omental patch closure is indicated for a perforated peptic ulcer presenting with acute peritonitis and pneumoperitoneum."
+  },
+  {
+    "q": "What is the preferred non-invasive test to confirm H. pylori eradication after treatment?",
+    "a": "Urea breath test or stool antigen test (performed at least 4 weeks after completion of therapy). Serology cannot distinguish active from past infection."
+  },
+  {
+    "q": "A patient with diarrhea, flatulence, and weight loss has PAS-positive macrophages in the lamina propria on small bowel biopsy. What is the diagnosis?",
+    "a": "Whipple's disease (caused by <i>Tropheryma whipplei</i>)."
+  },
+  {
+    "q": "What is the standard treatment for Whipple's disease?",
+    "a": "IV ceftriaxone or penicillin for 2 weeks, followed by oral TMP-SMX for 1-2 years."
+  },
+  {
+    "q": "What antibody is highly specific for Celiac disease and used for screening?",
+    "a": "IgA anti-tissue transglutaminase (anti-tTG) antibody. Total IgA must be measured to rule out selective IgA deficiency."
+  },
+  {
+    "q": "What is the classic presentation of Tropical Sprue and how is it treated?",
+    "a": "Chronic diarrhea, weight loss, and megaloblastic anemia (B<sub>12</sub>/folate deficiency) after residing in the tropics. Treated with tetracycline and folic acid for 3-6 months."
+  },
+  {
+    "q": "What is the diagnostic test of choice for small intestinal bacterial overgrowth (SIBO)?",
+    "a": "Carbohydrate breath test (lactulose or glucose) showing an early rise in breath hydrogen."
+  },
+  {
+    "q": "What is the medical treatment for Small Intestinal Bacterial Overgrowth (SIBO)?",
+    "a": "Oral broad-spectrum antibiotics, commonly Rifaximin."
+  },
+  {
+    "q": "What unique extraintestinal manifestation of Crohn's disease parallels bowel activity?",
+    "a": "Erythema nodosum (along with peripheral arthritis and episcleritis)."
+  },
+  {
+    "q": "What dermatologic manifestation of inflammatory bowel disease progresses independently of bowel disease activity?",
+    "a": "Pyoderma gangrenosum (along with primary sclerosing cholangitis and ankylosing spondylitis)."
+  },
+  {
+    "q": "What is the most accurate test for evaluating an acute exacerbation of Crohn's disease to check for complications?",
+    "a": "CT enterography or MR enterography (to evaluate for fistulas, abscesses, or strictures)."
+  },
+  {
+    "q": "What is the maintenance therapy of choice for moderate-to-severe Crohn's disease?",
+    "a": "Anti-TNF agents (e.g., Infliximab, Adalimumab), often combined with an immunomodulator (azathioprine)."
+  },
+  {
+    "q": "What is the initial diagnostic modality of choice for a patient suspected of having acute diverticulitis?",
+    "a": "CT scan of the abdomen and pelvis with IV and oral contrast. Colonoscopy is contraindicated during acute infection due to perforation risk."
+  },
+  {
+    "q": "What are the criteria for diagnosing toxic megacolon?",
+    "a": "Radiographic evidence of colonic dilation (>6 cm) plus systemic toxicity (fever, tachycardia, leukocytosis, anemia)."
+  },
+  {
+    "q": "A patient with chronic liver disease has a SAAG (Serum-Ascites Albumin Gradient) of > 1.1 g/dL. What does this indicate?",
+    "a": "Portal hypertension (e.g., cirrhosis, right heart failure, Budd-Chiari syndrome). SAAG < 1.1 indicates non-portal hypertension causes (e.g., nephrotic syndrome, TB, malignancy)."
+  },
+  {
+    "q": "What is the diagnostic criteria for Spontaneous Bacterial Peritonitis (SBP)?",
+    "a": "Ascitic fluid absolute neutrophil count (ANC) &ge; 250 cells/mm<sup>3</sup>."
+  },
+  {
+    "q": "What is the empirical treatment of Spontaneous Bacterial Peritonitis (SBP)?",
+    "a": "Third-generation cephalosporin (e.g., IV Cefotaxime or Ceftriaxone). IV Albumin is also given to prevent hepatorenal syndrome."
+  },
+  {
+    "q": "What is the next best step for a patient with cirrhosis and new-onset, unexplained fever, encephalopathy, or worsening renal function?",
+    "a": "Diagnostic paracentesis to rule out Spontaneous Bacterial Peritonitis (SBP)."
+  },
+  {
+    "q": "What is the preferred initial treatment for hepatic encephalopathy?",
+    "a": "Lactulose (to lower colonic pH and convert NH<sub>3</sub> to non-absorbable NH<sub>4</sub><sup>+</sup>). Rifaximin is added for refractory cases."
+  },
+  {
+    "q": "What is the classic pentad of Primary Biliary Cholangitis (PBC) presentation?",
+    "a": "Middle-aged woman, pruritus (often worse at night), fatigue, jaundice, and xanthelasmas. Positive for Anti-Mitochondrial Antibodies (AMA)."
+  },
+  {
+    "q": "What is the medical treatment of choice to slow disease progression in Primary Biliary Cholangitis (PBC)?",
+    "a": "Ursodeoxycholic acid (UDCA). Liver transplantation is the only curative treatment."
+  },
+  {
+    "q": "Primary Sclerosing Cholangitis (PSC) is strongly associated with which other condition?",
+    "a": "Ulcerative Colitis (UC). Most patients with PSC have UC, though the reverse is less common."
+  },
+  {
+    "q": "What classic imaging finding on MRCP/ERCP is pathognomonic for Primary Sclerosing Cholangitis (PSC)?",
+    "a": "Multifocal stricturing and dilation of intrahepatic and extrahepatic bile ducts (described as a 'beaded' appearance)."
+  },
+  {
+    "q": "A patient presents with markedly elevated AST and ALT (>10,000 U/L). What is the most likely etiology?",
+    "a": "Acetaminophen toxicity, shock liver (ischemic hepatopathy), or severe acute viral hepatitis."
+  },
+  {
+    "q": "What is the initial treatment for acetaminophen overdose within 4 hours of ingestion?",
+    "a": "Activated charcoal to decrease GI absorption, followed by N-acetylcysteine (NAC) administration based on the Rumack-Matthew nomogram."
+  },
+  {
+    "q": "Which hepatitis B serological marker is present during the 'window period' of acute infection?",
+    "a": "IgM anti-HBc (Hepatitis B core antibody). HBsAg and anti-HBs are both negative during this time."
+  },
+  {
+    "q": "What constitutes the criteria for acute liver failure?",
+    "a": "Severe acute liver injury (elevated transaminases), hepatic encephalopathy, and synthetic liver dysfunction (INR &ge; 1.5) in a patient without pre-existing cirrhosis."
+  },
+  {
+    "q": "What is the triad of Hemochromatosis?",
+    "a": "Liver cirrhosis, diabetes mellitus (bronze diabetes), and skin hyperpigmentation. Due to autosomal recessive mutation in the HFE gene."
+  },
+  {
+    "q": "Which joints are classically affected by the arthropathy seen in hemochromatosis?",
+    "a": "2nd and 3rd metacarpophalangeal (MCP) joints, characterized by calcium pyrophosphate dihydrate (CPPD) crystal deposition."
+  },
+  {
+    "q": "What is the most accurate test for diagnosing Wilson disease?",
+    "a": "Hepatic copper concentration on liver biopsy. Non-invasive screening involves low serum ceruloplasmin and high 24-hour urinary copper excretion."
+  },
+  {
+    "q": "What is the initial medical therapy for Wilson disease?",
+    "a": "Copper chelators like D-penicillamine or Trientine. Oral zinc can be used for maintenance as it prevents enterocyte copper absorption."
+  },
+  {
+    "q": "What is the classic triad of Budd-Chiari syndrome?",
+    "a": "Abdominal pain, massive ascites, and hepatomegaly due to hepatic vein thrombosis."
+  },
+  {
+    "q": "What is the first-line screening modality for hepatocellular carcinoma (HCC) in cirrhotic patients?",
+    "a": "Ultrasound of the liver every 6 months, with or without alpha-fetoprotein (AFP) testing."
+  },
+  {
+    "q": "What is the treatment for a symptomatic patient with a benign hepatic adenoma?",
+    "a": "Discontinue oral contraceptives (OCPs) if < 5 cm. Surgical resection is indicated if > 5 cm or symptomatic due to risk of rupture/hemorrhage and malignant transformation."
+  },
+  {
+    "q": "A young female presents with a central stellate scar on liver imaging. What is the diagnosis and management?",
+    "a": "Focal Nodular Hyperplasia (FNH). It is a benign condition and managed conservatively with observation."
+  },
+  {
+    "q": "What is the diagnostic criteria for Hepatorenal Syndrome (HRS)?",
+    "a": "Progressive renal failure in a patient with cirrhosis and ascites, lacking other causes of AKI, that is unresponsive to a fluid challenge (albumin and diuretic withdrawal)."
+  },
+  {
+    "q": "What is the pharmacologic bridge to liver transplantation for Hepatorenal Syndrome (HRS)?",
+    "a": "Splanchnic vasoconstrictors (e.g., Midodrine + Octreotide, or Terlipressin) along with IV Albumin."
+  },
+  {
+    "q": "What vitamin deficiency is characterized by the 3 D's (Dermatitis, Diarrhea, Dementia) and can be seen in Carcinoid Syndrome?",
+    "a": "Niacin (Vitamin B<sub>3</sub>) deficiency (Pellagra). Carcinoid tumors consume tryptophan to make serotonin, thereby depleting niacin synthesis."
+  }
+]

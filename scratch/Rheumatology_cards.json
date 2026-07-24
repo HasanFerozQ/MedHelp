@@ -1,0 +1,202 @@
+[
+  {
+    "q": "What is the most specific autoantibody for Rheumatoid Arthritis?",
+    "a": "Anti-cyclic citrullinated peptide (anti-CCP) antibodies."
+  },
+  {
+    "q": "What joint of the hand is classically <b>spared</b> in Rheumatoid Arthritis?",
+    "a": "Distal interphalangeal (DIP) joints."
+  },
+  {
+    "q": "What is the initial disease-modifying antirheumatic drug (DMARD) of choice for Rheumatoid Arthritis?",
+    "a": "Methotrexate (often given with folic acid to reduce side effects)."
+  },
+  {
+    "q": "A patient with RA presents with neutropenia and splenomegaly. What is the diagnosis?",
+    "a": "Felty syndrome."
+  },
+  {
+    "q": "Before starting a patient on biologic DMARDs (e.g., TNF-&alpha; inhibitors) for RA, what screening must be performed?",
+    "a": "Screening for latent tuberculosis (e.g., PPD or IFN-&gamma; release assay) and Hepatitis B and C."
+  },
+  {
+    "q": "What is the classic radiographic finding in Osteoarthritis?",
+    "a": "Joint space narrowing, subchondral sclerosis, subchondral cysts, and osteophytes."
+  },
+  {
+    "q": "What is the characteristic hand joint involvement in Osteoarthritis?",
+    "a": "DIP joints (Heberden nodes), PIP joints (Bouchard nodes), and the first carpometacarpal (CMC) joint."
+  },
+  {
+    "q": "Which autoantibodies are most specific for Systemic Lupus Erythematosus (SLE)?",
+    "a": "Anti-dsDNA and Anti-Smith (anti-Sm) antibodies."
+  },
+  {
+    "q": "What is the most common cardiac manifestation in SLE?",
+    "a": "Pericarditis."
+  },
+  {
+    "q": "What specific complement levels are characteristically low during an active SLE flare?",
+    "a": "C<sub>3</sub> and C<sub>4</sub>."
+  },
+  {
+    "q": "Which autoantibody is associated with drug-induced lupus?",
+    "a": "Anti-histone antibodies."
+  },
+  {
+    "q": "Which medication is recommended for all patients with SLE to reduce flares and improve survival?",
+    "a": "Hydroxychloroquine."
+  },
+  {
+    "q": "Which antibodies are commonly associated with Sjogren's syndrome?",
+    "a": "Anti-Ro/SSA and Anti-La/SSB antibodies."
+  },
+  {
+    "q": "Patients with Sjogren's syndrome have a significantly increased risk of developing which malignancy?",
+    "a": "B-cell lymphoma (especially MALT lymphoma)."
+  },
+  {
+    "q": "What is the specific autoantibody for diffuse cutaneous Systemic Sclerosis (Scleroderma)?",
+    "a": "Anti-Scl-70 (anti-DNA topoisomerase I) antibody."
+  },
+  {
+    "q": "What is the specific autoantibody for limited cutaneous Systemic Sclerosis (CREST syndrome)?",
+    "a": "Anti-centromere antibody."
+  },
+  {
+    "q": "What medication is used to treat scleroderma renal crisis?",
+    "a": "ACE inhibitors (e.g., captopril), even if the creatinine is elevated."
+  },
+  {
+    "q": "A patient presents with proximal muscle weakness and a heliotrope rash. What specific autoantibody is associated with interstitial lung disease in this condition?",
+    "a": "Anti-Jo-1 (anti-histidyl-tRNA synthetase) antibodies in Dermatomyositis/Polymyositis."
+  },
+  {
+    "q": "Patients with Dermatomyositis have an increased risk of what underlying condition?",
+    "a": "Underlying malignancy (e.g., ovarian, lung, colorectal, non-Hodgkin lymphoma)."
+  },
+  {
+    "q": "What autoantibody is the hallmark of Mixed Connective Tissue Disease (MCTD)?",
+    "a": "Anti-U1 RNP (ribonucleoprotein) antibodies."
+  },
+  {
+    "q": "What is the best initial imaging test for Ankylosing Spondylitis if plain X-rays of the pelvis are normal but clinical suspicion is high?",
+    "a": "MRI of the sacroiliac (SI) joints (detects early sacroiliitis)."
+  },
+  {
+    "q": "Which genetic marker is strongly associated with the seronegative spondyloarthropathies (e.g., Ankylosing Spondylitis)?",
+    "a": "HLA-B27."
+  },
+  {
+    "q": "What is the classic triad of Reactive Arthritis?",
+    "a": "Urethritis, conjunctivitis, and oligoarthritis (\"can't see, can't pee, can't climb a tree\")."
+  },
+  {
+    "q": "What common infections precipitate Reactive Arthritis?",
+    "a": "Gastrointestinal infections (<i>Salmonella</i>, <i>Shigella</i>, <i>Campylobacter</i>) or genitourinary infections (<i>Chlamydia trachomatis</i>)."
+  },
+  {
+    "q": "What is the classic radiographic finding in Psoriatic Arthritis involving the DIP joints?",
+    "a": "\"Pencil-in-cup\" deformity."
+  },
+  {
+    "q": "What type of crystals are seen in Gout upon synovial fluid analysis?",
+    "a": "Monosodium urate crystals, which are needle-shaped and strongly negatively birefringent (yellow when parallel to the compensator axis)."
+  },
+  {
+    "q": "What is the mechanism of action of allopurinol used in chronic gout management?",
+    "a": "Xanthine oxidase inhibitor, which decreases uric acid production."
+  },
+  {
+    "q": "In a patient with an acute gout flare who has chronic kidney disease, what is the best treatment option?",
+    "a": "Intra-articular or systemic glucocorticoids (NSAIDs and colchicine are contraindicated or require caution in severe CKD)."
+  },
+  {
+    "q": "What type of crystals are seen in Pseudogout (CPPD) upon synovial fluid analysis?",
+    "a": "Calcium pyrophosphate dihydrate (Ca<sub>2</sub>P<sub>2</sub>O<sub>7</sub>) crystals, which are rhomboid-shaped and weakly positively birefringent (blue when parallel to the compensator axis)."
+  },
+  {
+    "q": "What radiographic finding in the knee is highly suggestive of Pseudogout?",
+    "a": "Chondrocalcinosis (calcification of the articular cartilage or meniscus)."
+  },
+  {
+    "q": "Pseudogout is often associated with which underlying metabolic conditions?",
+    "a": "Hemochromatosis, hyperparathyroidism, and hypothyroidism."
+  },
+  {
+    "q": "A 65-year-old woman presents with bilateral shoulder and hip stiffness worse in the morning, and an elevated ESR. What is the diagnosis?",
+    "a": "Polymyalgia Rheumatica (PMR)."
+  },
+  {
+    "q": "What is the most serious complication of Giant Cell Arteritis (Temporal Arteritis) if left untreated?",
+    "a": "Irreversible vision loss (anterior ischemic optic neuropathy)."
+  },
+  {
+    "q": "What is the immediate next step in management for a patient strongly suspected of having Giant Cell Arteritis with visual symptoms?",
+    "a": "Start high-dose IV glucocorticoids immediately (do not wait for temporal artery biopsy results)."
+  },
+  {
+    "q": "A young Asian woman presents with unequal arm pulses, claudication in the upper extremities, and constitutional symptoms. What is the diagnosis?",
+    "a": "Takayasu Arteritis."
+  },
+  {
+    "q": "Polyarteritis Nodosa (PAN) is characterized by necrotizing inflammation of medium-sized arteries. Which viral infection is it strongly associated with?",
+    "a": "Hepatitis B virus (HBV)."
+  },
+  {
+    "q": "Which organs are classically <b>spared</b> in Polyarteritis Nodosa (PAN)?",
+    "a": "The lungs."
+  },
+  {
+    "q": "What triad of clinical manifestations characterizes Granulomatosis with Polyangiitis (GPA / Wegener's)?",
+    "a": "Upper respiratory tract involvement (e.g., sinusitis, saddle nose), lower respiratory tract involvement (e.g., cavitary lung nodules), and glomerulonephritis."
+  },
+  {
+    "q": "Which autoantibody is highly specific for Granulomatosis with Polyangiitis (GPA)?",
+    "a": "c-ANCA (anti-Proteinase 3 / anti-PR3 antibodies)."
+  },
+  {
+    "q": "What features distinguish Eosinophilic Granulomatosis with Polyangiitis (EGPA / Churg-Strauss) from other vasculitides?",
+    "a": "Asthma, allergic rhinitis, peripheral blood eosinophilia, and p-ANCA (anti-Myeloperoxidase / anti-MPO) positivity."
+  },
+  {
+    "q": "Which vasculitis presents with palpable purpura, arthritis or arthralgia, abdominal pain, and renal disease, most commonly in children?",
+    "a": "IgA Vasculitis (Henoch-Schonlein Purpura)."
+  },
+  {
+    "q": "Cryoglobulinemic vasculitis is most commonly associated with which viral infection?",
+    "a": "Hepatitis C virus (HCV)."
+  },
+  {
+    "q": "A patient presents with recurrent painful oral aphthous ulcers, genital ulcers, and uveitis. What is the most likely diagnosis?",
+    "a": "Behcet's syndrome."
+  },
+  {
+    "q": "What are the classic laboratory criteria for Antiphospholipid Syndrome (APS)?",
+    "a": "Lupus anticoagulant, anticardiolipin antibodies, and anti-&beta;<sub>2</sub>-glycoprotein I antibodies."
+  },
+  {
+    "q": "A patient with suspected Antiphospholipid Syndrome (APS) may have what paradoxical laboratory finding?",
+    "a": "Prolonged PTT that does not correct with a mixing study (due to lupus anticoagulant), despite being a pro-thrombotic state."
+  },
+  {
+    "q": "What is the classic presentation of Adult-Onset Still's Disease?",
+    "a": "Quotidian (daily spiking) fevers, evanescent salmon-colored maculopapular rash, inflammatory arthritis, and markedly elevated ferritin."
+  },
+  {
+    "q": "What synovial fluid WBC count is generally considered diagnostic for septic arthritis?",
+    "a": "WBC > 50,000 cells/mm<sup>3</sup> (often > 90% PMNs)."
+  },
+  {
+    "q": "A sexually active young adult presents with tenosynovitis, polyarthralgia, and painless vesiculopustular skin lesions. What is the diagnosis?",
+    "a": "Disseminated Gonococcal Infection (DGI)."
+  },
+  {
+    "q": "What is the treatment for severe Lupus Nephritis?",
+    "a": "High-dose glucocorticoids combined with an immunosuppressant such as Mycophenolate Mofetil or Cyclophosphamide."
+  },
+  {
+    "q": "Which HLA subtype is associated with an increased risk of severe allopurinol hypersensitivity (e.g., SJS/TEN), particularly in patients of Han Chinese, Thai, or Korean descent?",
+    "a": "HLA-B*5801."
+  }
+]

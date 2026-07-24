@@ -1,0 +1,202 @@
+[
+  {
+    "q": "What is the most common cause of microcytic anemia, and what are the classic iron study findings (Ferritin, TIBC, Serum Iron)?",
+    "a": "Iron deficiency anemia; Low Ferritin, High TIBC, Low Serum Iron."
+  },
+  {
+    "q": "How does thalassemia minor present differently from iron deficiency anemia on CBC and Mentzer index?",
+    "a": "Thalassemia minor has a normal or elevated RBC count and a Mentzer index (MCV/RBC) &lt; 13, whereas iron deficiency has low RBC and Mentzer index &gt; 13."
+  },
+  {
+    "q": "What peripheral smear finding is pathognomonic for lead poisoning?",
+    "a": "Basophilic stippling (due to inhibition of rRNA degradation)."
+  },
+  {
+    "q": "A patient with microcytic anemia, elevated ferritin, and ringed sideroblasts in the bone marrow likely has what condition, and what is the treatment?",
+    "a": "Sideroblastic anemia; treatment is Pyridoxine (Vitamin B<sub>6</sub>)."
+  },
+  {
+    "q": "What is the key neurologic difference between Vitamin B<sub>12</sub> and Folate deficiency?",
+    "a": "B<sub>12</sub> deficiency presents with subacute combined degeneration of the spinal cord (neurologic symptoms), while folate deficiency does not."
+  },
+  {
+    "q": "A patient with sickle cell disease presents with acute drop in hemoglobin and a low reticulocyte count. What is the diagnosis and most common infectious cause?",
+    "a": "Aplastic crisis; caused by Parvovirus B19."
+  },
+  {
+    "q": "What is the most common organism responsible for osteomyelitis in a sickle cell patient?",
+    "a": "<i>Salmonella</i> (though <i>S. aureus</i> is still very common)."
+  },
+  {
+    "q": "A patient taking TMP-SMX develops acute hemolytic anemia with bite cells and Heinz bodies. What is the diagnosis and underlying mechanism?",
+    "a": "G6PD deficiency; decreased NADP<sup>+</sup> to NADPH conversion leads to oxidative damage to RBCs."
+  },
+  {
+    "q": "What is the classic triad of Hereditary Spherocytosis, and what is the definitive diagnostic test?",
+    "a": "Hemolytic anemia, Jaundice, Splenomegaly; Eosin-5-maleimide (EMA) binding test or Osmotic fragility test."
+  },
+  {
+    "q": "How do you differentiate Warm vs. Cold Autoimmune Hemolytic Anemia based on antibody type and treatment?",
+    "a": "Warm is IgG-mediated (treat with steroids/splenectomy); Cold is IgM-mediated (treat with cold avoidance/Rituximab)."
+  },
+  {
+    "q": "A patient presents with dark morning urine, venous thrombosis (e.g., Budd-Chiari), and pancytopenia. What is the diagnosis and missing surface proteins?",
+    "a": "Paroxysmal Nocturnal Hemoglobinuria (PNH); CD55 (DAF) and CD59 (MIRL) deficiency."
+  },
+  {
+    "q": "What is the pentad of Thrombotic Thrombocytopenic Purpura (TTP)?",
+    "a": "FAT RN: Fever, Microangiopathic Hemolytic Anemia, Thrombocytopenia, Renal failure, Neurologic symptoms."
+  },
+  {
+    "q": "What is the primary defect and treatment of choice for TTP?",
+    "a": "ADAMTS13 deficiency (cleaves vWF); treatment is Plasma exchange (plasmapheresis). NEVER give platelets."
+  },
+  {
+    "q": "A child develops bloody diarrhea followed by acute renal failure, thrombocytopenia, and hemolytic anemia. What is the diagnosis and typical pathogen?",
+    "a": "Hemolytic Uremic Syndrome (HUS); Shiga toxin-producing <i>E. coli</i> (O157:H7)."
+  },
+  {
+    "q": "What is the most common inherited bleeding disorder, and what is the first-line treatment for mild bleeding?",
+    "a": "von Willebrand Disease; Desmopressin (DDAVP)."
+  },
+  {
+    "q": "How do PT, aPTT, bleeding time, and platelet count present in DIC?",
+    "a": "High PT, High aPTT, High bleeding time, Low platelets (with high D-dimer and low fibrinogen)."
+  },
+  {
+    "q": "An isolated prolonged aPTT that corrects with a mixing study suggests what type of disorder?",
+    "a": "Factor deficiency (e.g., Hemophilia A or B). If it does NOT correct, suspect a factor inhibitor (e.g., Lupus anticoagulant)."
+  },
+  {
+    "q": "What is the most common inherited hypercoagulable state, and what is its mechanism?",
+    "a": "Factor V Leiden; mutated Factor V is resistant to degradation by activated Protein C."
+  },
+  {
+    "q": "A patient started on warfarin develops skin necrosis. What underlying deficiency did they likely have?",
+    "a": "Protein C deficiency (warfarin transiently drops Protein C levels, leading to a hypercoagulable state before factors II, IX, and X are depleted)."
+  },
+  {
+    "q": "What antibodies are diagnostic for Antiphospholipid Syndrome (APS)?",
+    "a": "Anticardiolipin, Anti-&beta;<sub>2</sub>-glycoprotein I, and Lupus anticoagulant."
+  },
+  {
+    "q": "A child with bone pain, hepatosplenomegaly, and &gt; 20% lymphoblasts (TdT+) in the marrow has what diagnosis?",
+    "a": "Acute Lymphoblastic Leukemia (ALL)."
+  },
+  {
+    "q": "A 60-year-old with pancytopenia and circulating myeloblasts containing Auer rods. What is the diagnosis?",
+    "a": "Acute Myeloid Leukemia (AML)."
+  },
+  {
+    "q": "Which AML subtype is associated with t(15;17), DIC, and treated with ATRA?",
+    "a": "Acute Promyelocytic Leukemia (APL or M3 AML)."
+  },
+  {
+    "q": "An asymptomatic elderly patient has a severely elevated WBC count with smudge cells on a smear. What is the diagnosis?",
+    "a": "Chronic Lymphocytic Leukemia (CLL)."
+  },
+  {
+    "q": "What translocation and gene product are characteristic of Chronic Myeloid Leukemia (CML), and what is the targeted therapy?",
+    "a": "t(9;22) Philadelphia chromosome; BCR-ABL tyrosine kinase; treated with Imatinib."
+  },
+  {
+    "q": "How do you differentiate CML from a leukemoid reaction using the Leukocyte Alkaline Phosphatase (LAP) score?",
+    "a": "LAP score is LOW in CML and HIGH in a leukemoid reaction."
+  },
+  {
+    "q": "A young adult presents with painless cervical lymphadenopathy and systemic B symptoms (fever, night sweats, weight loss). Biopsy shows Reed-Sternberg cells. Diagnosis?",
+    "a": "Hodgkin Lymphoma."
+  },
+  {
+    "q": "What is the characteristic translocation of Burkitt Lymphoma, and what classic histologic pattern is seen?",
+    "a": "t(8;14) c-myc activation; \"Starry sky\" appearance."
+  },
+  {
+    "q": "An older patient presents with CRAB symptoms (Calcium elevation, Renal failure, Anemia, Bone lesions). What is the diagnosis and marrow finding?",
+    "a": "Multiple Myeloma; &gt; 10% monoclonal plasma cells in the bone marrow."
+  },
+  {
+    "q": "How does Waldenstr&ouml;m Macroglobulinemia differ from Multiple Myeloma?",
+    "a": "Hyperviscosity syndrome (visual/neuro deficits), IgM spike, hepatosplenomegaly/lymphadenopathy, and NO lytic bone lesions."
+  },
+  {
+    "q": "A patient with pruritus after hot showers, ruddy cyanosis, and a JAK2 V617F mutation has what condition, and what is the first-line treatment?",
+    "a": "Polycythemia Vera; Phlebotomy (and Hydroxyurea if high risk)."
+  },
+  {
+    "q": "Essential thrombocythemia involves a massive proliferation of which cell lineage?",
+    "a": "Megakaryocytes (leading to dramatically elevated platelets &gt; 450,000/&mu;L)."
+  },
+  {
+    "q": "Teardrop RBCs (dacrocytes) and a \"dry tap\" on bone marrow aspiration are highly suggestive of what myeloproliferative disorder?",
+    "a": "Primary Myelofibrosis."
+  },
+  {
+    "q": "What is the management of a patient presenting with Superior Vena Cava (SVC) syndrome?",
+    "a": "Head elevation, O<sub>2</sub>, steroids (if airway compromised or lymphoma), and urgent radiation/chemotherapy of the underlying tumor."
+  },
+  {
+    "q": "A cancer patient presents with back pain worse at night, motor weakness, and bowel/bladder dysfunction. What is the most urgent next step?",
+    "a": "High-dose IV Dexamethasone followed immediately by MRI of the spine to evaluate for Epidural Spinal Cord Compression."
+  },
+  {
+    "q": "What electrolyte abnormalities characterize Tumor Lysis Syndrome?",
+    "a": "Hyperkalemia, Hyperphosphatemia, Hyperuricemia, and Hypocalcemia (due to PO<sub>4</sub><sup>3-</sup> binding Ca<sup>2+</sup>)."
+  },
+  {
+    "q": "How is Tumor Lysis Syndrome prevented before initiating chemotherapy?",
+    "a": "Vigorous IV hydration and Allopurinol or Rasburicase."
+  },
+  {
+    "q": "What paraneoplastic syndrome is most commonly associated with Squamous cell lung carcinoma?",
+    "a": "Hypercalcemia (due to PTHrP secretion)."
+  },
+  {
+    "q": "Which lung cancer is most strongly associated with SIADH, ectopic ACTH, and Lambert-Eaton myasthenic syndrome?",
+    "a": "Small Cell Lung Cancer (SCLC)."
+  },
+  {
+    "q": "A 50-year-old female presents with a newly palpated hard, immobile, irregular breast mass. What is the best initial diagnostic step?",
+    "a": "Mammogram (since she is &ge; 30 years old), followed by core needle biopsy."
+  },
+  {
+    "q": "What is the most common type of invasive breast cancer?",
+    "a": "Invasive Ductal Carcinoma."
+  },
+  {
+    "q": "At what age and frequency is routine screening mammography recommended for average-risk women?",
+    "a": "Age 50 to 74, every 2 years (per USPSTF guidelines)."
+  },
+  {
+    "q": "What tumor marker is used to track colon cancer recurrence (but NOT for screening)?",
+    "a": "CEA (Carcinoembryonic Antigen)."
+  },
+  {
+    "q": "A patient with iron deficiency anemia and a history of changing bowel habits must undergo what procedure to rule out malignancy?",
+    "a": "Colonoscopy (to rule out right-sided colon cancer)."
+  },
+  {
+    "q": "What is the classic initial presentation and characteristic PSA level of prostate cancer?",
+    "a": "Often asymptomatic with an elevated PSA (&gt; 4 ng/mL) or an asymmetric, nodular prostate on DRE."
+  },
+  {
+    "q": "A patient has elevated unconjugated bilirubin, normal LFTs, and no anemia after a period of fasting or stress. Diagnosis?",
+    "a": "Gilbert Syndrome (decreased UDP-glucuronosyltransferase activity)."
+  },
+  {
+    "q": "Heparin-Induced Thrombocytopenia (HIT) involves antibodies against what complex, and what is the treatment?",
+    "a": "Heparin-PF4 (Platelet Factor 4) complex; STOP all heparin and start a direct thrombin inhibitor (e.g., Argatroban, Bivalirudin)."
+  },
+  {
+    "q": "How do you urgently reverse the anticoagulation effect of Warfarin versus Heparin?",
+    "a": "Warfarin: Prothrombin Complex Concentrate (PCC) + IV Vitamin K. Heparin: Protamine sulfate."
+  },
+  {
+    "q": "What is the target INR for a patient with a mechanical aortic valve vs. a mechanical mitral valve?",
+    "a": "Aortic valve: INR 2.0-3.0; Mitral valve: INR 2.5-3.5 (due to higher shear stress/stasis)."
+  },
+  {
+    "q": "What is the primary difference in the indication for direct oral anticoagulants (DOACs, e.g., Apixaban) vs. Warfarin in atrial fibrillation?",
+    "a": "DOACs are preferred for Non-valvular AF, whereas Warfarin is REQUIRED for Valvular AF (e.g., moderate-to-severe mitral stenosis or mechanical heart valves)."
+  }
+]

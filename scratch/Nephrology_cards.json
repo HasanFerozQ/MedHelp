@@ -1,0 +1,202 @@
+[
+  {
+    "q": "What is the most likely diagnosis in a patient with acute kidney injury whose urinalysis reveals <b>muddy brown granular casts</b>?",
+    "a": "<b>Acute Tubular Necrosis (ATN)</b>"
+  },
+  {
+    "q": "A patient presents with acute kidney injury after taking amoxicillin. Urinalysis shows WBC casts and eosinophiluria. Diagnosis?",
+    "a": "<b>Acute Interstitial Nephritis (AIN)</b>"
+  },
+  {
+    "q": "What do <b>RBC casts</b> on urinalysis strongly suggest?",
+    "a": "<b>Glomerulonephritis</b>"
+  },
+  {
+    "q": "What do <b>fatty casts</b> (oval fat bodies, Maltese crosses under polarized light) indicate?",
+    "a": "<b>Nephrotic syndrome</b>"
+  },
+  {
+    "q": "What do <b>broad waxy casts</b> indicate?",
+    "a": "<b>Chronic renal failure</b> (they form in dilated, hypertrophied tubules)"
+  },
+  {
+    "q": "What is the very first diagnostic step in a patient with unexplained <b>new-onset Acute Kidney Injury (AKI)</b>?",
+    "a": "<b>Renal ultrasound</b> to rule out post-renal etiology (e.g., hydronephrosis/obstruction)."
+  },
+  {
+    "q": "What BUN/Cr ratio and FENa<sup>+</sup> are indicative of <b>pre-renal azotemia</b>?",
+    "a": "BUN/Cr <b>> 20:1</b> and FENa <b>< 1%</b> (kidneys are actively reabsorbing Na<sup>+</sup> and water)."
+  },
+  {
+    "q": "What are the absolute indications for <b>urgent hemodialysis</b> (AEIOU)?",
+    "a": "<b>A</b>cidosis (severe, refractory), <b>E</b>lectrolyte imbalance (severe hyperkalemia), <b>I</b>ntoxication (Li, toxic alcohols, salicylates), <b>O</b>verload (refractory volume overload), <b>U</b>remia (pericarditis, encephalopathy)."
+  },
+  {
+    "q": "What is the first-line medication for a patient with severe <b>hyperkalemia</b> showing EKG changes (e.g., peaked T waves)?",
+    "a": "<b>IV Calcium Gluconate</b> (or Calcium Chloride) to stabilize the cardiac myocyte membrane."
+  },
+  {
+    "q": "What is the most common cause of <b>nephrotic syndrome in African American adults</b> and is associated with HIV, heroin use, and sickle cell disease?",
+    "a": "<b>Focal Segmental Glomerulosclerosis (FSGS)</b>"
+  },
+  {
+    "q": "What is the most common cause of <b>nephrotic syndrome in Caucasian adults</b>, often associated with solid tumors (e.g., lung, colon, breast)?",
+    "a": "<b>Membranous Nephropathy</b>"
+  },
+  {
+    "q": "What is the most common cause of <b>nephrotic syndrome in children</b>, typically treated with empiric corticosteroids?",
+    "a": "<b>Minimal Change Disease (MCD)</b>"
+  },
+  {
+    "q": "Which nephrotic syndrome is highly associated with <b>Hepatitis B and Hepatitis C</b>, and shows a \"tram-track\" appearance on electron microscopy?",
+    "a": "<b>Membranoproliferative Glomerulonephritis (MPGN)</b>"
+  },
+  {
+    "q": "What pathognomonic renal biopsy finding (nodular glomerulosclerosis) is seen in <b>Diabetic Nephropathy</b>?",
+    "a": "<b>Kimmelstiel-Wilson nodules</b>"
+  },
+  {
+    "q": "A patient develops hematuria, edema, and hypertension <b>1-2 weeks after a skin infection (impetigo) or pharyngitis</b>. Serum complement C3 is low. Diagnosis?",
+    "a": "<b>Poststreptococcal Glomerulonephritis (PSGN)</b>"
+  },
+  {
+    "q": "A young man develops gross hematuria <b>concurrently (within days) of an upper respiratory infection</b>. Serum complement levels are normal. Diagnosis?",
+    "a": "<b>IgA Nephropathy (Berger disease)</b>"
+  },
+  {
+    "q": "A patient presents with hemoptysis and rapidly progressive glomerulonephritis (RPGN). Renal biopsy shows <b>linear IgG deposition</b> on the glomerular basement membrane. Diagnosis?",
+    "a": "<b>Goodpasture Syndrome</b> (Anti-GBM antibodies)"
+  },
+  {
+    "q": "A patient presents with asthma, eosinophilia, purpura, and renal disease. Blood tests are positive for <b>p-ANCA (anti-MPO)</b>. Diagnosis?",
+    "a": "<b>Eosinophilic Granulomatosis with Polyangiitis (Churg-Strauss)</b>"
+  },
+  {
+    "q": "A patient presents with sinusitis, hemoptysis (cavitary lung lesions), and renal failure. Blood tests are positive for <b>c-ANCA (anti-PR3)</b>. Diagnosis?",
+    "a": "<b>Granulomatosis with Polyangiitis (Wegener)</b>"
+  },
+  {
+    "q": "What is the classic tetrad of <b>Henoch-Sch\u00f6nlein Purpura (IgA Vasculitis)</b>?",
+    "a": "Palpable purpura (lower extremities/buttocks), arthralgias, abdominal pain/intussusception, and renal disease (similar to IgA nephropathy)."
+  },
+  {
+    "q": "A 15-year-old boy presents with sensorineural hearing loss, anterior lenticonus (eye problems), and painless hematuria. Diagnosis?",
+    "a": "<b>Alport Syndrome</b> (Mutation in Type IV collagen)"
+  },
+  {
+    "q": "What is the most common composition of <b>kidney stones</b>?",
+    "a": "<b>Calcium oxalate</b>"
+  },
+  {
+    "q": "Which kidney stones are <b>radiolucent</b> (invisible on standard X-ray) and form in acidic urine?",
+    "a": "<b>Uric acid stones</b>"
+  },
+  {
+    "q": "Which kidney stones form large \"staghorn\" calculi, have a \"coffin-lid\" appearance, and are caused by urease-producing bugs (e.g., <i>Proteus mirabilis</i>)?",
+    "a": "<b>Struvite stones</b> (Magnesium ammonium phosphate)"
+  },
+  {
+    "q": "Which kidney stones are uniquely associated with a positive <b>cyanide-nitroprusside test</b> and have a hexagonal shape?",
+    "a": "<b>Cystine stones</b> (due to a defect in COLA amino acid transporter)"
+  },
+  {
+    "q": "What is the best initial pharmacological prevention for recurrent <b>calcium oxalate stones</b>?",
+    "a": "<b>Thiazide diuretics</b> (they increase renal calcium reabsorption, lowering urine calcium) and hydration. (Do NOT restrict dietary calcium)."
+  },
+  {
+    "q": "What is the pharmacological treatment to prevent <b>uric acid stones</b>?",
+    "a": "<b>Potassium citrate</b> (to alkalinize the urine) and <b>Allopurinol</b>."
+  },
+  {
+    "q": "What are the 4 classic triggers for <b>Renal Papillary Necrosis</b> (SAAD pneumonic)?",
+    "a": "<b>S</b>ickle cell disease/trait, <b>A</b>nalgesics (NSAIDs), <b>A</b>cute pyelonephritis, <b>D</b>iabetes mellitus."
+  },
+  {
+    "q": "Which type of Renal Tubular Acidosis (RTA) is characterized by a defect in H<sup>+</sup> secretion in the collecting tubule, leading to urine pH > 5.5 and calcium stones?",
+    "a": "<b>Type 1 (Distal) RTA</b>"
+  },
+  {
+    "q": "Which type of Renal Tubular Acidosis (RTA) is characterized by a defect in HCO<sub>3</sub><sup>-</sup> reabsorption in the proximal tubule and is associated with Fanconi syndrome?",
+    "a": "<b>Type 2 (Proximal) RTA</b>"
+  },
+  {
+    "q": "Which type of Renal Tubular Acidosis (RTA) is characterized by hypoaldosteronism or aldosterone resistance, leading to <b>hyperkalemia</b> and an acidic urine (pH < 5.5)?",
+    "a": "<b>Type 4 RTA</b>"
+  },
+  {
+    "q": "What is the treatment for <b>Central Diabetes Insipidus</b>?",
+    "a": "<b>Desmopressin (dDAVP)</b>"
+  },
+  {
+    "q": "What are the primary treatments for <b>Nephrogenic Diabetes Insipidus</b>?",
+    "a": "Hydration, dietary salt restriction, <b>Thiazide diuretics</b> (and Amiloride if Lithium-induced)."
+  },
+  {
+    "q": "What is the formula for calculating the <b>Anion Gap</b>?",
+    "a": "<b>Na<sup>+</sup> - (Cl<sup>-</sup> + HCO<sub>3</sub><sup>-</sup>)</b>. Normal is 8-12 mEq/L."
+  },
+  {
+    "q": "What are the common causes of a <b>High Anion Gap Metabolic Acidosis (MUDPILES)</b>?",
+    "a": "<b>M</b>ethanol, <b>U</b>remia, <b>D</b>iabetic ketoacidosis, <b>P</b>ropylene glycol, <b>I</b>ron/Isoniazid, <b>L</b>actic acidosis, <b>E</b>thylene glycol, <b>S</b>alicylates."
+  },
+  {
+    "q": "What are the common causes of a <b>Normal Anion Gap Metabolic Acidosis (HARDASS)</b>?",
+    "a": "<b>H</b>yperalimentation, <b>A</b>ddison disease, <b>R</b>TA, <b>D</b>iarrhea, <b>A</b>cetazolamide, <b>S</b>pironolactone, <b>S</b>aline infusion."
+  },
+  {
+    "q": "What is the initial treatment for acute, severe <b>hypercalcemia</b> (> 14 mg/dL)?",
+    "a": "Aggressive <b>Normal Saline</b> hydration, plus Calcitonin. (Bisphosphonates are given for long-term control)."
+  },
+  {
+    "q": "What severe neurological complication occurs due to the <b>rapid correction of hyponatremia</b>?",
+    "a": "<b>Osmotic Demyelination Syndrome</b> (Central Pontine Myelinolysis). \"From low to high, your pons will die.\""
+  },
+  {
+    "q": "What severe complication occurs due to the <b>rapid correction of hypernatremia</b>?",
+    "a": "<b>Cerebral edema</b> (Brain herniation). \"From high to low, your brains will blow.\""
+  },
+  {
+    "q": "How do you differentiate between psychogenic polydipsia and central diabetes insipidus using a <b>water deprivation test</b>?",
+    "a": "In psychogenic polydipsia, urine osmolality increases (concentrates) with water deprivation. In central DI, urine osmolality remains low (dilute) but increases significantly after administration of exogenous ADH (Desmopressin)."
+  },
+  {
+    "q": "What is the diagnostic hallmark of <b>Fibromuscular Dysplasia</b> on renal angiography, typically seen in young women with resistant hypertension?",
+    "a": "<b>\"String of beads\"</b> appearance of the renal arteries."
+  },
+  {
+    "q": "What is the preferred antihypertensive class for a patient with <b>Scleroderma Renal Crisis</b>?",
+    "a": "<b>ACE inhibitors</b> (e.g., Captopril), even in the setting of acute kidney injury."
+  },
+  {
+    "q": "What ultrasound finding is highly characteristic of <b>Autosomal Dominant Polycystic Kidney Disease (ADPKD)</b> in adults?",
+    "a": "Bilateral, massively enlarged kidneys with <b>numerous cysts</b>. (Associated with berry aneurysms and hepatic cysts)."
+  },
+  {
+    "q": "What is the classic pentad of <b>Thrombotic Thrombocytopenic Purpura (TTP)</b>?",
+    "a": "<b>FAT RN</b>: <b>F</b>ever, <b>A</b>nemia (microangiopathic hemolytic), <b>T</b>hrombocytopenia, <b>R</b>enal failure, <b>N</b>eurologic symptoms. (Due to ADAMTS13 deficiency)."
+  },
+  {
+    "q": "A child develops acute renal failure, microangiopathic hemolytic anemia, and thrombocytopenia shortly after an episode of bloody diarrhea (e.g., <i>E. coli O157:H7</i>). Diagnosis?",
+    "a": "<b>Hemolytic Uremic Syndrome (HUS)</b>"
+  },
+  {
+    "q": "In the treatment of severe hypercalcemia, why are loop diuretics (like furosemide) no longer routinely recommended as first-line unless the patient is volume overloaded?",
+    "a": "They can worsen volume depletion, which exacerbates hypercalcemia. <b>Aggressive IV hydration with normal saline</b> is the priority."
+  },
+  {
+    "q": "A patient with long-standing Rheumatoid Arthritis develops nephrotic syndrome. Renal biopsy with Congo red stain shows \"apple-green birefringence\" under polarized light. Diagnosis?",
+    "a": "<b>Secondary (AA) Amyloidosis</b>"
+  },
+  {
+    "q": "What is the Winters formula used to calculate expected PCO<sub>2</sub> in <b>metabolic acidosis</b> (to check for mixed acid-base disorder)?",
+    "a": "Expected PCO<sub>2</sub> = <b>(1.5 &times; [HCO<sub>3</sub><sup>-</sup>]) + 8 &plusmn; 2</b>."
+  },
+  {
+    "q": "What typical EKG changes are associated with <b>hypokalemia</b>?",
+    "a": "<b>U waves</b>, flattened/inverted T waves, and ST-segment depression."
+  },
+  {
+    "q": "In a patient with hypernatremia and hypovolemia, what is the best initial IV fluid to administer?",
+    "a": "<b>Isotonic Normal Saline (0.9% NaCl)</b> to correct the volume deficit first, before switching to hypotonic fluids (like 5% Dextrose) to correct the free water deficit."
+  }
+]

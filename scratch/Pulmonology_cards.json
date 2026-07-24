@@ -1,0 +1,202 @@
+[
+  {
+    "q": "What are the two interventions proven to reduce mortality in COPD?",
+    "a": "Smoking cessation and long-term supplemental O<sub>2</sub> therapy (if PaO<sub>2</sub> &le; 55 mmHg or SaO<sub>2</sub> &le; 88%, or PaO<sub>2</sub> &le; 59 with cor pulmonale/polycythemia)."
+  },
+  {
+    "q": "What is the classic spirometry finding in obstructive lung diseases (Asthma/COPD)?",
+    "a": "Decreased FEV<sub>1</sub>, decreased FVC, and an FEV<sub>1</sub>/FVC ratio &lt; 0.70."
+  },
+  {
+    "q": "How do you differentiate asthma from COPD on pulmonary function testing?",
+    "a": "Asthma shows reversibility: an increase in FEV<sub>1</sub> by &ge; 12% and &ge; 200 mL after bronchodilator administration."
+  },
+  {
+    "q": "What is the initial medical management for an acute COPD exacerbation?",
+    "a": "Short-acting bronchodilators (albuterol + ipratropium), systemic corticosteroids (e.g., oral prednisone for 5 days), and antibiotics (if &ge; 2 cardinal symptoms: increased dyspnea, increased sputum volume, increased sputum purulence)."
+  },
+  {
+    "q": "Which non-invasive ventilation method is indicated for a severe COPD exacerbation with respiratory acidosis (pH &lt; 7.35 and PaCO<sub>2</sub> &gt; 45 mmHg)?",
+    "a": "Noninvasive positive-pressure ventilation (NPPV), such as BiPAP."
+  },
+  {
+    "q": "What are the components of Light's criteria used to identify an exudative pleural effusion?",
+    "a": "Pleural fluid protein/serum protein &gt; 0.5, Pleural fluid LDH/serum LDH &gt; 0.6, or Pleural fluid LDH &gt; 2/3 the upper limit of normal for serum LDH (any one = exudative)."
+  },
+  {
+    "q": "What type of pleural effusion is classically caused by congestive heart failure, cirrhosis, or nephrotic syndrome?",
+    "a": "Transudative effusion (driven by altered hydrostatic or oncotic pressure)."
+  },
+  {
+    "q": "A patient presents with sudden-onset pleuritic chest pain, dyspnea, tachycardia, and hypoxia. What is the most likely diagnosis?",
+    "a": "Pulmonary Embolism (PE)."
+  },
+  {
+    "q": "In a patient with high clinical suspicion for PE (high Wells score), what is the first step in management before diagnostic imaging?",
+    "a": "Start empiric anticoagulation (e.g., LMWH or unfractionated heparin) if there are no contraindications."
+  },
+  {
+    "q": "What is the diagnostic imaging test of choice for a suspected PE in a patient with a normal baseline chest X-ray and normal renal function?",
+    "a": "CT pulmonary angiography (CTA)."
+  },
+  {
+    "q": "Which imaging modality is preferred to diagnose a PE in a patient with chronic kidney disease (GFR &lt; 30) or severe contrast allergy?",
+    "a": "Ventilation/Perfusion (V/Q) scan."
+  },
+  {
+    "q": "What is the classic, though rare, ECG finding in pulmonary embolism?",
+    "a": "S<sub>1</sub>Q<sub>3</sub>T<sub>3</sub> pattern (deep S in lead I, Q wave and inverted T in lead III). The most common finding is sinus tachycardia."
+  },
+  {
+    "q": "What acid-base disturbance is typically seen initially in acute asthma exacerbation or pulmonary embolism?",
+    "a": "Primary respiratory alkalosis (due to hyperventilation causing decreased PaCO<sub>2</sub>)."
+  },
+  {
+    "q": "In a patient with a severe asthma exacerbation, what does a normal or rising PaCO<sub>2</sub> indicate?",
+    "a": "Impending respiratory failure (muscle fatigue), requiring immediate ICU evaluation and possible intubation."
+  },
+  {
+    "q": "What is the criteria for diagnosing Acute Respiratory Distress Syndrome (ARDS) (Berlin definition)?",
+    "a": "Acute onset (within 1 week of insult), bilateral opacities on chest imaging, not fully explained by heart failure/fluid overload, and a PaO<sub>2</sub>/FiO<sub>2</sub> ratio &le; 300 mmHg."
+  },
+  {
+    "q": "What is the preferred ventilator management strategy in ARDS to prevent ventilator-induced lung injury?",
+    "a": "Low tidal volume ventilation (6 mL/kg ideal body weight) and adequate PEEP (to prevent alveolar collapse and improve oxygenation)."
+  },
+  {
+    "q": "A 30-year-old African American female presents with dry cough, erythema nodosum, bilateral hilar lymphadenopathy, and hypercalcemia. Diagnosis?",
+    "a": "Sarcoidosis."
+  },
+  {
+    "q": "What is the most definitive diagnostic test for sarcoidosis, and what is the classic histologic finding?",
+    "a": "Transbronchial or excisional biopsy; shows noncaseating granulomas."
+  },
+  {
+    "q": "What is the first-line treatment for symptomatic sarcoidosis?",
+    "a": "Systemic corticosteroids."
+  },
+  {
+    "q": "What occupational lung disease is seen in sandblasters, miners, and glassmakers, typically involving the <b>upper lobes</b> and demonstrating \"eggshell calcifications\" of hilar lymph nodes?",
+    "a": "Silicosis."
+  },
+  {
+    "q": "Silicosis is associated with an increased risk of which infectious disease?",
+    "a": "Tuberculosis (due to impaired macrophage function)."
+  },
+  {
+    "q": "What occupational lung disease is seen in shipyard workers, plumbers, and roofers, typically involving the <b>lower lobes</b> and pleural plaques?",
+    "a": "Asbestosis."
+  },
+  {
+    "q": "What is the most common malignancy associated with asbestos exposure?",
+    "a": "Bronchogenic carcinoma (more common than mesothelioma)."
+  },
+  {
+    "q": "A 45-year-old non-smoker presents with progressive dyspnea, fine bibasilar end-inspiratory crackles (Velcro-like), and clubbing. High-resolution CT shows honeycombing. Diagnosis?",
+    "a": "Idiopathic Pulmonary Fibrosis (IPF)."
+  },
+  {
+    "q": "What are the primary treatments for Idiopathic Pulmonary Fibrosis (IPF) to slow disease progression?",
+    "a": "Antifibrotic agents (pirfenidone, nintedanib)."
+  },
+  {
+    "q": "What is the CURB-65 criteria used for, and what are its components?",
+    "a": "Used to determine hospitalization for Community-Acquired Pneumonia (CAP). <b>C</b>onfusion, <b>U</b>remia (BUN &gt; 19 mg/dL), <b>R</b>espiratory rate &ge; 30, <b>B</b>lood pressure (SBP &lt; 90 or DBP &le; 60), Age &ge; <b>65</b>. Score 0-1: Outpatient, 2-3: Inpatient ward, 4-5: ICU."
+  },
+  {
+    "q": "What is the empiric outpatient treatment for Community-Acquired Pneumonia (CAP) in a healthy patient with no comorbidities and no recent antibiotic use?",
+    "a": "Amoxicillin OR a macrolide (azithromycin) OR doxycycline."
+  },
+  {
+    "q": "What is the empiric inpatient treatment for Community-Acquired Pneumonia (CAP) (non-ICU)?",
+    "a": "Respiratory fluoroquinolone (moxifloxacin or levofloxacin) OR a beta-lactam (ceftriaxone) + a macrolide (azithromycin)."
+  },
+  {
+    "q": "What is the empiric antibiotic coverage for Hospital-Acquired Pneumonia (HAP) or Ventilator-Associated Pneumonia (VAP)?",
+    "a": "Coverage for MRSA (vancomycin or linezolid) and antipseudomonal beta-lactam (e.g., cefepime, piperacillin-tazobactam, or meropenem)."
+  },
+  {
+    "q": "Which pneumonia-causing pathogen is associated with hyponatremia, diarrhea, confusion, and elevated transaminases, often linked to contaminated water sources?",
+    "a": "<i>Legionella pneumophila</i>."
+  },
+  {
+    "q": "Which pathogen typically causes a \"lobar\" pneumonia with \"rusty\" colored sputum?",
+    "a": "<i>Streptococcus pneumoniae</i>."
+  },
+  {
+    "q": "Which pneumonia-causing pathogen is commonly seen in alcoholics and causes \"currant jelly\" sputum?",
+    "a": "<i>Klebsiella pneumoniae</i>."
+  },
+  {
+    "q": "A patient from the Ohio/Mississippi River Valley presents with pneumonia after exploring caves (bat/bird droppings). Diagnosis?",
+    "a": "Histoplasmosis (<i>Histoplasma capsulatum</i>)."
+  },
+  {
+    "q": "A patient from the Southwestern US presents with pneumonia, erythema nodosum, and arthralgias. Diagnosis?",
+    "a": "Coccidioidomycosis (<i>Coccidioides immitis</i>)."
+  },
+  {
+    "q": "What is the classic chest X-ray finding in reactivation Tuberculosis?",
+    "a": "Apical cavitary lesion."
+  },
+  {
+    "q": "What are the common adverse effects of Isoniazid (INH)?",
+    "a": "Hepatotoxicity and peripheral neuropathy (prevented by administering Vitamin B<sub>6</sub>/pyridoxine)."
+  },
+  {
+    "q": "Which TB medication causes red-orange discoloration of body fluids (urine, tears, sweat)?",
+    "a": "Rifampin."
+  },
+  {
+    "q": "Which TB medication is associated with optic neuritis (decreased visual acuity, red-green color blindness)?",
+    "a": "Ethambutol."
+  },
+  {
+    "q": "What is the most common cause of a solitary pulmonary nodule?",
+    "a": "Infectious granuloma (e.g., histoplasmosis, TB)."
+  },
+  {
+    "q": "What are the criteria for a benign-appearing solitary pulmonary nodule on CT?",
+    "a": "Smooth borders, size &lt; 8 mm, and dense central, \"popcorn,\" or concentric (\"bullseye\") calcifications."
+  },
+  {
+    "q": "What is the recommended lung cancer screening guideline by the USPSTF?",
+    "a": "Annual low-dose chest CT for adults aged 50-80 with a &ge; 20 pack-year smoking history who currently smoke or have quit within the past 15 years."
+  },
+  {
+    "q": "Which type of lung cancer is typically centrally located, associated with smoking, and causes hypercalcemia (via PTHrP)?",
+    "a": "Squamous cell carcinoma."
+  },
+  {
+    "q": "Which type of lung cancer is the most common overall, typically peripherally located, and often seen in non-smokers?",
+    "a": "Adenocarcinoma."
+  },
+  {
+    "q": "Which type of lung cancer is centrally located, highly aggressive, and associated with paraneoplastic syndromes like SIADH, ectopic ACTH (Cushing's), and Lambert-Eaton syndrome?",
+    "a": "Small Cell Lung Cancer (SCLC)."
+  },
+  {
+    "q": "A patient presents with ptosis, miosis, and anhidrosis on one side of the face, along with right shoulder pain. What is the diagnosis?",
+    "a": "Pancoast tumor (superior sulcus tumor) causing Horner syndrome."
+  },
+  {
+    "q": "What is the gold standard diagnostic test for Obstructive Sleep Apnea (OSA)?",
+    "a": "Nocturnal polysomnography (sleep study) showing &ge; 15 obstructive respiratory events/hour, or &ge; 5/hour with symptoms."
+  },
+  {
+    "q": "A patient with recurrent sinopulmonary infections, steatorrhea, and failure to thrive presents for evaluation. A sweat chloride test is &gt; 60 mmol/L. What is the diagnosis?",
+    "a": "Cystic Fibrosis."
+  },
+  {
+    "q": "A young, non-smoking patient presents with COPD (emphysema) and liver cirrhosis. What is the underlying genetic defect?",
+    "a": "Alpha-1 Antitrypsin Deficiency."
+  },
+  {
+    "q": "A patient presents with copious, foul-smelling purulent sputum, recurrent respiratory infections, and hemoptysis. High-resolution CT shows dilated bronchi with \"tram-track\" markings. Diagnosis?",
+    "a": "Bronchiectasis."
+  },
+  {
+    "q": "What is the initial test of choice for diagnosing Pulmonary Hypertension?",
+    "a": "Transthoracic echocardiogram (estimates pulmonary artery systolic pressure); however, right heart catheterization is required for definitive diagnosis (mPAP &ge; 20 mmHg)."
+  }
+]

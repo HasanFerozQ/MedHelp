@@ -1,0 +1,202 @@
+[
+  {
+    "q": "What is the immediate first-line treatment for acute anaphylaxis, including route, anatomical site, and physiological mechanism of action?",
+    "a": "<b>Intramuscular (IM) epinephrine 1:1,000</b> (0.3–0.5 mg in adults) injected into the <b>anterolateral thigh</b> (vastus lateralis). Mechanism: <b>&alpha;<sub>1</sub></b> vasoconstriction (reverses hypotension and airway edema) and <b>&beta;<sub>2</sub></b> bronchodilation (relieves bronchospasm and inhibits mast cell mediator release)."
+  },
+  {
+    "q": "How does Hereditary Angioedema (HAE) typically present, and what is the single best initial screening laboratory test?",
+    "a": "Presentation: Recurrent episodes of non-pruritic, non-pitting subcutaneous or submucosal swelling (laryngeal edema, intestinal wall colic) <b>without urticaria or pruritus</b>. Initial screening test: <b>Low serum C4 level</b> (consistently depressed even during asymptomatic remission)."
+  },
+  {
+    "q": "What is the underlying molecular defect in Hereditary Angioedema Types 1 and 2, and what key vasoactive plasma mediator drives clinical attacks?",
+    "a": "Defect: Deficiency (Type 1, ~85%) or dysfunction (Type 2, ~15%) of <b>C1 esterase inhibitor (C1-INH)</b>, causing uncontrolled activation of the kallikrein-kinin system. Pathogenic mediator: <b>Bradykinin</b>."
+  },
+  {
+    "q": "How can Acquired C1 Inhibitor Deficiency be laboratory differentiated from Hereditary Angioedema (HAE)?",
+    "a": "Acquired C1-INH deficiency (seen in older adults with lymphoproliferative disorders or autoantibodies) presents with <b>low C1q levels</b> alongside low C4. Hereditary Angioedema has <b>normal C1q levels</b>."
+  },
+  {
+    "q": "What acute targeted therapies are approved for severe attacks of Hereditary Angioedema, and which class of antihypertensive medications is strictly contraindicated?",
+    "a": "Acute targeted therapy: <b>C1-INH concentrate</b>, <b>ecallantide</b> (kallikrein inhibitor), or <b>icatibant</b> (bradykinin B<sub>2</sub> receptor antagonist). Strictly contraindicated: <b>ACE inhibitors</b> (prevent bradykinin degradation and trigger severe angioedema attacks)."
+  },
+  {
+    "q": "What clinical and laboratory findings define Common Variable Immunodeficiency (CVID) in young adults?",
+    "a": "Recurrent sinopulmonary infections (encapsulated bacteria), chronic diarrhea (<i>Giardia lamblia</i>), and autoimmune cytopenias in patients with <b>markedly decreased serum IgG</b> plus low IgA and/or IgM, accompanied by <b>impaired vaccine antibody response</b>."
+  },
+  {
+    "q": "What are the key non-infectious complications of Common Variable Immunodeficiency (CVID), and what is the mainstay of long-term therapy?",
+    "a": "Complications: Autoimmune diseases (ITP, AIHA), non-caseating granulomatous organ disease, and a significantly increased risk of <b>Non-Hodgkin Lymphoma</b>. Mainstay treatment: Regular infusions of <b>Intravenous Immunoglobulin (IVIG)</b> or Subcutaneous Immunoglobulin (SCIG)."
+  },
+  {
+    "q": "What is the clinical significance of Selective IgA Deficiency during blood product transfusions?",
+    "a": "Patients with total IgA absence (<7 mg/dL) can form anti-IgA antibodies. Transfusion of standard IgA-containing blood products can trigger a severe or fatal <b>anaphylactic transfusion reaction</b>."
+  },
+  {
+    "q": "How must blood components be prepared before administration to a patient with known Selective IgA Deficiency?",
+    "a": "Provide <b>washed red blood cells</b> or washed platelets (removes residual IgA-containing donor plasma), or use blood products obtained exclusively from IgA-deficient donors."
+  },
+  {
+    "q": "What is the genetic mutation in X-linked Agammaglobulinemia (Bruton's), and what key physical examination finding distinguishes it from CVID?",
+    "a": "Mutation: <i><b>BTK</b></i> gene defect (Bruton tyrosine kinase), blocking pre-B cell maturation. Physical exam finding: <b>Absence of tonsils and peripheral lymph nodes</b> (due to failure of germinal center formation)."
+  },
+  {
+    "q": "At what age do male infants with X-linked Agammaglobulinemia typically present with recurrent bacterial infections, and why?",
+    "a": "At approximately <b>6 months of age</b>, coinciding with the decay of transplacentally acquired <b>maternal IgG antibodies</b>."
+  },
+  {
+    "q": "What specific immunophenotypic finding on flow cytometry confirms X-linked Agammaglobulinemia (Bruton's)?",
+    "a": "Markedly reduced or <b>absent peripheral CD19<sup>+</sup> and CD20<sup>+</sup> B lymphocytes</b>, along with pan-hypogammaglobulinemia (profound depression of IgG, IgA, IgM, and IgE)."
+  },
+  {
+    "q": "What classic clinical triad defines Severe Combined Immunodeficiency (SCID), and what is its most frequent genetic cause?",
+    "a": "Triad: Severe failure to thrive, persistent opportunistic infections (fungal, viral, bacterial, <i>Pneumocystis jirovecii</i>), and chronic diarrhea. Most common cause: <b>X-linked recessive <i>IL-2RG</i> gene mutation</b> (common gamma chain deficiency)."
+  },
+  {
+    "q": "What metabolic enzyme defect accounts for ~15% of autosomal recessive SCID cases, and what toxicity occurs?",
+    "a": "<b>Adenosine Deaminase (ADA) deficiency</b>. Accumulation of toxic deoxyadenosine (dATP) induces lymphotoxicity, causing depletion of both <b>T and B lymphocytes</b>."
+  },
+  {
+    "q": "What classic radiographic abnormality is present in infants with SCID, and what is the definitive curative treatment?",
+    "a": "Radiograph: <b>Absence of a thymic shadow</b> (thymic hypoplasia/aplasia). Curative treatment: <b>Allogeneic hematopoietic stem cell transplantation (HSCT)</b>."
+  },
+  {
+    "q": "What molecular screening test on dried blood spots enables universal newborn detection of Severe Combined Immunodeficiency (SCID)?",
+    "a": "Quantitative PCR detection of <b>T-cell receptor excision circles (TRECs)</b>; absent or low TREC counts signal severe T-cell lymphopenia."
+  },
+  {
+    "q": "What clinical triad and genetic mutation characterize Hyper-IgE Syndrome (Job Syndrome)?",
+    "a": "Triad: Severe <b>eczema</b>, recurrent <b>\"cold\" (non-inflammatory) staphylococcal skin abscesses</b>, and recurrent <b>sinopulmonary infections</b> with pneumatocele formation. Genetic mutation: Autosomal dominant <b><i>STAT3</i> mutation</b>, impairing Th17 differentiation."
+  },
+  {
+    "q": "What facial, skeletal, and dental features are seen in patients with Hyper-IgE Syndrome (Job Syndrome)?",
+    "a": "Coarse facial features, deep-set eyes, broad nasal bridge, <b>retained primary teeth (double rows of teeth)</b>, joint hyperextensibility, and osteopenia with recurrent minimal-trauma fractures."
+  },
+  {
+    "q": "What genetic defect causes Hyper-IgM Syndrome, and what is the cellular mechanism behind the immunoglobulin pattern?",
+    "a": "Defect: X-linked mutation in <b>CD40 ligand (CD40L / CD154)</b> on helper T cells. Cellular mechanism: Failure of T-cell CD40L to engage B-cell CD40 prevents B-cell <b>class-switch recombination</b>, resulting in elevated/normal IgM with near-absent IgG, IgA, and IgE."
+  },
+  {
+    "q": "Patients with Hyper-IgM Syndrome are uniquely vulnerable to opportunistic infections from which protozoan and fungal pathogens?",
+    "a": "Protozoan: <i><b>Cryptosporidium parvum</b></i> (causing chronic severe watery diarrhea and sclerosing cholangitis). Fungal: <i><b>Pneumocystis jirovecii</b></i> (pneumonia)."
+  },
+  {
+    "q": "What classic clinical triad defines Wiskott-Aldrich Syndrome, and what characteristic platelet abnormality is seen on peripheral blood smear?",
+    "a": "Triad: Severe <b>eczema</b>, <b>microthrombocytopenia</b>, and <b>recurrent infections</b> (bacterial, viral, fungal). Platelet feature: <b>Microthrombocytes</b> (significantly decreased platelet volume/size)."
+  },
+  {
+    "q": "What gene is mutated in Wiskott-Aldrich Syndrome, and what is the typical serum immunoglobulin profile?",
+    "a": "Gene: X-linked <i><b>WAS</b></i> gene defect (disrupting actin cytoskeleton organization in hematopoietic cells). Serum immunoglobulins: <b>Low to normal IgM</b>, elevated <b>IgA and IgE</b>, with variable IgG."
+  },
+  {
+    "q": "What clinical triad defines Ataxia-Telangiectasia, and what lab biomarker is characteristically elevated?",
+    "a": "Triad: Progressive <b>cerebellar ataxia</b> (gait instability), <b>oculocutaneous telangiectasias</b>, and <b>immunodeficiency</b> (recurrent sinopulmonary infections). Lab biomarker: Elevated serum <b>&alpha;-fetoprotein (AFP)</b>."
+  },
+  {
+    "q": "What metabolic/cellular defect causes Ataxia-Telangiectasia, and what major long-term malignancy risk do affected individuals face?",
+    "a": "Defect: Autosomal recessive mutation in the <i><b>ATM</b></i> gene, leading to defective repair of <b>DNA double-strand breaks</b>. Malignancy risk: High incidence of <b>lymphomas and leukemias</b>."
+  },
+  {
+    "q": "What enzymatic defect causes Chronic Granulomatous Disease (CGD), and what modern flow cytometry test confirms the diagnosis?",
+    "a": "Defect: Mutation in sub-units of <b>NADPH oxidase</b> (most common: X-linked <i>gp91phox</i>), impairing generation of superoxide radicals (O<sub>2</sub><sup>&minus;</sup>). Diagnostic test: <b>Dihydrorhodamine (DHR) 123 flow cytometry</b> (demonstrates loss of fluorescence upon oxidation)."
+  },
+  {
+    "q": "List 5 major catalase-positive organisms that cause recurrent tissue infections and abscesses in Chronic Granulomatous Disease (CGD).",
+    "a": "1. <i>Staphylococcus aureus</i><br>2. <i>Aspergillus</i> species<br>3. <i>Serratia marcescens</i><br>4. <i>Burkholderia cepacia</i><br>5. <i>Nocardia</i> species."
+  },
+  {
+    "q": "What pathognomonic clinical feature occurs at birth in Leukocyte Adhesion Deficiency (LAD) Type 1, and what leukocyte abnormality is present?",
+    "a": "Clinical feature: <b>Delayed umbilical cord separation (>30 days)</b> followed by recurrent necrotic infections <b>without pus formation</b>. Leukocyte abnormality: Marked <b>neutrophilia / leukocytosis</b> during active infection (neutrophils trapped in vasculature)."
+  },
+  {
+    "q": "What specific membrane protein is deficient in Leukocyte Adhesion Deficiency (LAD) Type 1?",
+    "a": "<b>CD18</b> (the &beta;<sub>2</sub> integrin subunit), which pairs with CD11 to form LFA-1, preventing firm adhesion and extravasation of leukocytes into inflamed tissues."
+  },
+  {
+    "q": "What physical exam triad and microscopic blood smear finding characterize Ch&eacute;diak-Higashi Syndrome?",
+    "a": "Exam triad: Partial <b>oculocutaneous albinism</b>, recurrent pyogenic skin/respiratory infections, and progressive peripheral neuropathy. Blood smear: <b>Giant azurophilic granules</b> within neutrophils and lymphocytes (due to <i>LYST</i> lysosomal trafficking gene defect)."
+  },
+  {
+    "q": "Patients with inherited deficiencies of terminal complement components (C5–C9) are predisposed to recurrent infections with which specific organism?",
+    "a": "Recurrent invasive infections with <b><i>Neisseria</i> species</b> (<i>Neisseria meningitidis</i> and <i>Neisseria gonorrhoeae</i>) due to inability to form the Membrane Attack Complex (MAC)."
+  },
+  {
+    "q": "Deficiencies in early classical complement components (C1q, C2, C4) strongly predispose patients to developing which autoimmune disorder?",
+    "a": "<b>Systemic Lupus Erythematosus (SLE)</b> and lupus-like glomerulonephritis, secondary to defective clearance of circulating immune complexes and apoptotic debris."
+  },
+  {
+    "q": "What is Oral Allergy Syndrome (Pollen-Food Allergy Syndrome), and what classic plant-food cross-reactivity is seen with birch tree pollen?",
+    "a": "IgE-mediated contact urticaria of the lips, tongue, and throat after eating raw fruits/vegetables due to cross-reacting pollen antibodies. Birch pollen cross-reacts with <b>apples, pears, peaches, plums, hazelnuts, and celery</b>."
+  },
+  {
+    "q": "How does Serum Sickness differ pathologically from Serum Sickness-Like Reactions (SSLR), and what antibiotic is the classic cause of SSLR in children?",
+    "a": "Serum Sickness is a true Type III immune-complex hypersensitivity with complement consumption (low C3/C4). SSLR does not involve immune-complex deposition or complement activation. Classic SSLR trigger: <b>Cefaclor</b> (also amoxicillin and trimethoprim-sulfamethoxazole)."
+  },
+  {
+    "q": "What is the classic clinical triad of Serum Sickness, and what is the typical timeframe between antigen exposure and symptom onset?",
+    "a": "Triad: <b>Fever</b>, <b>urticarial or morbilliform rash</b>, and <b>polyarthralgias/polyarthritis</b>. Onset timeframe: <b>1 to 2 weeks (7–14 days)</b> after primary drug or foreign antigen exposure."
+  },
+  {
+    "q": "What is the typical incubation period and clinical presentation of DRESS (Drug Reaction with Eosinophilia and Systemic Symptoms) syndrome?",
+    "a": "Incubation: <b>2 to 8 weeks</b> post-drug exposure. Presentation: High fever, diffuse morbilliform rash progressing to facial edema, lymphadenopathy, <b>eosinophilia</b> (with atypical lymphocytes), and internal organ damage (most commonly <b>hepatitis</b>)."
+  },
+  {
+    "q": "Which high-yield drug classes are most frequently implicated in triggering DRESS syndrome?",
+    "a": "<b>Allopurinol</b>, aromatic antiepileptics (<b>carbamazepine, phenytoin, lamotrigine</b>), <b>sulfonamides</b> (Bactrim), and vancomycin."
+  },
+  {
+    "q": "How are Stevens-Johnson Syndrome (SJS) and Toxic Epidermal Necrolysis (TEN) categorized based on percentage of Body Surface Area (BSA) epidermal detachment?",
+    "a": "SJS: <b><10% BSA</b> detachment.<br>SJS/TEN overlap: <b>10%–30% BSA</b> detachment.<br>TEN: <b>>30% BSA</b> detachment."
+  },
+  {
+    "q": "What pathognomonic physical exam sign is elicited in SJS/TEN, and what is the primary cause of mortality in these patients?",
+    "a": "Physical exam sign: <b>Positive Nikolsky sign</b> (epidermal sloughing induced by gentle mechanical pressure). Primary cause of mortality: <b>Sepsis / systemic bacteremia</b> (due to total loss of cutaneous skin barrier) and acute hypovolemic shock."
+  },
+  {
+    "q": "What is the recommended treatment step for Chronic Spontaneous Urticaria that fails standard-dose H1 antihistamines?",
+    "a": "First step: Increase the dosage of <b>second-generation H1 antihistamines up to 4-fold</b>. If refractory after 4 weeks: Add <b>Omalizumab</b> (anti-IgE monoclonal antibody)."
+  },
+  {
+    "q": "Which foods are classic components of Latex-Fruit Syndrome due to cross-reactive IgE epitopes?",
+    "a": "<b>Avocado, banana, chestnut, and kiwi</b> (the \"ABC-K\" latex cross-reactive foods)."
+  },
+  {
+    "q": "What is the pathophysiologic mechanism of radiocontrast media anaphylactoid reactions, and how are high-risk patients pretreated?",
+    "a": "Mechanism: Direct, non-IgE-mediated mast cell and basophil degranulation driven by hyperosmolality. Prevention: Pretreatment with <b>oral corticosteroids (e.g., prednisone) and H1 antihistamines</b>, plus using low-osmolality contrast agents."
+  },
+  {
+    "q": "What classic clinical triad defines Aspirin-Exacerbated Respiratory Disease (AERD / Samter's Triad)?",
+    "a": "1. <b>Asthma</b><br>2. <b>Chronic rhinosinusitis with nasal polyposis</b><br>3. <b>Acute broncho-nasal reactions</b> following COX-1 inhibiting NSAIDs or aspirin."
+  },
+  {
+    "q": "What biochemical alteration drives Aspirin-Exacerbated Respiratory Disease (AERD), and what pharmacotherapy targets this pathomechanism?",
+    "a": "COX-1 inhibition blocks prostaglandin synthesis, shunting arachidonic acid into the 5-lipoxygenase pathway and causing massive overproduction of <b>cysteinyl leukotrienes (LTC<sub>4</sub>, LTD<sub>4</sub>, LTE<sub>4</sub>)</b>. Treatment target: <b>Leukotriene receptor antagonists (Montelukast)</b> or 5-lipoxygenase inhibitor (Zileuton)."
+  },
+  {
+    "q": "In which two clinical scenarios is rapid Penicillin desensitization mandatory despite a history of documented IgE-mediated penicillin allergy?",
+    "a": "1. <b>Neurosyphilis</b> (or congenital/tertiary syphilis).<br>2. <b>Syphilis in a pregnant patient</b>.<br><i>(Scenarios where penicillin is the only proven bactericidal therapy without acceptable alternatives).</i>"
+  },
+  {
+    "q": "What endoscopic and histopathologic findings confirm the diagnosis of Eosinophilic Esophagitis (EoE)?",
+    "a": "Endoscopy: <b>Stacked circular rings (trachealization), linear furrows, or microabscesses</b>. Histopathology: <b>&ge;15 eosinophils per high-power field (hpf)</b> on distal/proximal esophageal mucosal biopsy after a PPI trial."
+  },
+  {
+    "q": "What pathognomonic somatic gene mutation is present in >90% of cases of Systemic Mastocytosis, and what lab test serves as the principal serum biomarker?",
+    "a": "Gene mutation: <b><i>c-KIT</i> D816V mutation</b> (constitutive tyrosine kinase activation). Principal serum biomarker: Elevated baseline <b>serum tryptase (>20 ng/mL)</b>."
+  },
+  {
+    "q": "What is Alpha-Gal Syndrome, what vector transmits it, and why is the allergic reaction uniquely delayed?",
+    "a": "Definition: IgE-mediated allergy against <b>galactose-&alpha;-1,3-galactose</b> (carbohydrate on mammalian red meat). Vector: <b>Lone Star tick (<i>Amblyomma americanum</i>) bite</b>. Delay: IgE reaction occurs <b>3 to 6 hours</b> post-ingestion due to the slow digestion and delayed release of lipid-bound alpha-gal antigens into systemic circulation."
+  },
+  {
+    "q": "What type of hypersensitivity causes Acute Hemolytic Transfusion Reaction, and what diagnostic blood test confirms donor red cell hemolysis?",
+    "a": "Hypersensitivity: <b>Type II cytotoxic hypersensitivity</b> (pre-existing anti-ABO IgM antibody-mediated intravascular complement lysis). Diagnostic test: <b>Positive Direct Antiglobulin Test (DAT / Direct Coombs test)</b> showing antibody coating of recipient red cells."
+  },
+  {
+    "q": "How can Transfusion-Related Acute Lung Injury (TRALI) be clinically differentiated from Transfusion-Associated Circulatory Overload (TACO)?",
+    "a": "<b>TRALI</b>: Non-cardiogenic pulmonary edema from donor anti-HLA antibodies; features normal PCWP, normal BNP, and transient leukopenia, often with hypotension.<br><b>TACO</b>: Cardiogenic pulmonary edema from hypervolemia; features <b>elevated BNP (>1.5x baseline)</b>, hypertension, neck vein distension, and prompt response to IV loop diuretics."
+  },
+  {
+    "q": "What immunologic mechanisms undergo shift during successful Allergen-Specific Immunotherapy (SCIT/SLIT) to generate persistent clinical tolerance?",
+    "a": "Shift from Th2 to Th1 immune profile, expansion of regulatory T cells (<b>T<sub>reg</sub></b>) secreting <b>IL-10 and TGF-&beta;</b>, and generation of allergen-specific <b>IgG<sub>4</sub> blocking antibodies</b> that neutralize allergen before it cross-links IgE on mast cells."
+  }
+]

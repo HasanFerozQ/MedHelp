@@ -1,0 +1,202 @@
+[
+  {
+    "q": "What is the initial screening test of choice for suspected <b>acromegaly</b>?",
+    "a": "Serum <b>insulin-like growth factor 1 (IGF-1)</b> level. If elevated, confirm with an oral glucose suppression test (failure to suppress growth hormone)."
+  },
+  {
+    "q": "A patient presents with thyrotoxicosis, a tender goiter, and a markedly decreased radioactive iodine uptake (RAIU). What is the most likely diagnosis?",
+    "a": "<b>Subacute (de Quervain) thyroiditis</b>. (Often post-viral, associated with high ESR/CRP)."
+  },
+  {
+    "q": "What is the preferred medical treatment for hyperthyroidism during the <b>first trimester</b> of pregnancy?",
+    "a": "<b>Propylthiouracil (PTU)</b>. Methimazole is teratogenic in the 1st trimester (aplasia cutis) but is preferred in the 2nd and 3rd trimesters due to PTU hepatotoxicity."
+  },
+  {
+    "q": "Patients with <b>carcinoid syndrome</b> are at risk of developing a deficiency of which vitamin?",
+    "a": "<b>Niacin (Vitamin B<sub>3</sub>)</b>, leading to <b>Pellagra</b> (dermatitis, diarrhea, dementia). This occurs because tryptophan is diverted to synthesize serotonin."
+  },
+  {
+    "q": "A patient with a history of bilateral adrenalectomy for Cushing disease presents with hyperpigmentation and bitemporal hemianopsia. What is the diagnosis?",
+    "a": "<b>Nelson syndrome</b>. Rapid enlargement of a pre-existing pituitary corticotroph microadenoma due to the loss of negative feedback from cortisol."
+  },
+  {
+    "q": "What is the correct sequence of preoperative pharmacological blockade for a patient with a <b>pheochromocytoma</b>?",
+    "a": "<b>Alpha-blockade</b> (e.g., phenoxybenzamine) must be initiated FIRST for 10-14 days, followed by <b>Beta-blockade</b> (e.g., propranolol) to prevent unopposed alpha-adrenergic stimulation and hypertensive crisis."
+  },
+  {
+    "q": "What is the first-line treatment for a large <b>prolactinoma</b> (macroprolactinoma) causing visual field deficits?",
+    "a": "<b>Dopamine agonists</b> (e.g., cabergoline or bromocriptine). Transsphenoidal surgery is reserved for patients who fail or do not tolerate medical therapy."
+  },
+  {
+    "q": "What is the most common cause of primary adrenal insufficiency (Addison's disease) in developed countries?",
+    "a": "<b>Autoimmune adrenalitis</b> (often associated with anti-21-hydroxylase antibodies)."
+  },
+  {
+    "q": "What is the initial management for severe, symptomatic hypercalcemia (Ca<sup>2+</sup> > 14 mg/dL)?",
+    "a": "<b>Aggressive IV isotonic saline hydration</b> and <b>calcitonin</b> (for rapid reduction). Bisphosphonates (e.g., zoledronic acid) are given simultaneously but take 2-4 days to work."
+  },
+  {
+    "q": "In a patient being treated for <b>Diabetic Ketoacidosis (DKA)</b>, when should 5% dextrose be added to the intravenous fluids?",
+    "a": "When the serum glucose drops below <b>200 mg/dL</b>, to prevent hypoglycemia while continuing insulin infusion to close the anion gap."
+  },
+  {
+    "q": "What is the key pathophysiological difference distinguishing <b>Hyperosmolar Hyperglycemic State (HHS)</b> from DKA?",
+    "a": "In HHS, there is <b>sufficient endogenous insulin</b> to prevent ketogenesis and significant lipolysis, but not enough to prevent severe hyperglycemia and osmotic diuresis."
+  },
+  {
+    "q": "What is the best initial screening test for <b>primary hyperaldosteronism</b> (Conn syndrome)?",
+    "a": "The <b>plasma aldosterone concentration to plasma renin activity (PAC/PRA) ratio</b>. A ratio > 20 with a PAC > 15 ng/dL is suggestive."
+  },
+  {
+    "q": "A patient in the intensive care unit for severe sepsis is found to have low T<sub>3</sub>, normal T<sub>4</sub>, and normal TSH levels. What is the diagnosis?",
+    "a": "<b>Euthyroid sick syndrome</b> (Low T<sub>3</sub> syndrome). It requires no thyroid replacement therapy; observe and treat the underlying illness."
+  },
+  {
+    "q": "What are the indications for parathyroidectomy in an <b>asymptomatic</b> patient with primary hyperparathyroidism?",
+    "a": "Serum Ca<sup>2+</sup> > 1.0 mg/dL above normal limit, CrCl < 60 mL/min, bone mineral density T-score < -2.5, or age < 50 years."
+  },
+  {
+    "q": "What are the three classic neoplasms associated with <b>Multiple Endocrine Neoplasia type 1 (MEN 1)</b>?",
+    "a": "<b>P</b>ituitary adenomas, <b>P</b>arathyroid hyperplasia/adenomas, and <b>P</b>ancreatic neuroendocrine tumors (the 3 P's)."
+  },
+  {
+    "q": "What features distinguish <b>MEN 2A</b> from MEN 2B?",
+    "a": "MEN 2A includes <b>parathyroid hyperplasia</b>, whereas MEN 2B includes <b>mucosal neuromas</b> and a <b>marfanoid habitus</b>. Both share medullary thyroid carcinoma and pheochromocytoma."
+  },
+  {
+    "q": "What is the most characteristic histological finding of <b>papillary thyroid carcinoma</b>?",
+    "a": "Optically clear, overlapping nuclei with finely dispersed chromatin (<b>Orphan Annie eye nuclei</b>) and calcified spheres (<b>psammoma bodies</b>)."
+  },
+  {
+    "q": "<b>Medullary thyroid carcinoma</b> arises from which type of cells, and what tumor marker does it secrete?",
+    "a": "It arises from parafollicular <b>C cells</b> and secretes <b>calcitonin</b>."
+  },
+  {
+    "q": "What is the Chvostek sign, and what electrolyte abnormality does it indicate?",
+    "a": "Twitching of the facial muscles in response to tapping over the facial nerve in the preauricular area; it indicates <b>hypocalcemia</b>."
+  },
+  {
+    "q": "What is the classic pattern of electrolyte abnormalities seen in <b>primary adrenal insufficiency</b> (Addison's disease)?",
+    "a": "<b>Hyponatremia</b>, <b>hyperkalemia</b>, hyperchloremic non-anion gap metabolic acidosis, and mild hypoglycemia (due to loss of aldosterone and cortisol)."
+  },
+  {
+    "q": "What is the standard confirmatory test for suspected primary adrenal insufficiency?",
+    "a": "The <b>Cosyntropin (synthetic ACTH) stimulation test</b>. A failure of serum cortisol to rise > 18 &mu;g/dL confirms the diagnosis."
+  },
+  {
+    "q": "What is <b>Whipple's triad</b>, used to suggest the presence of an insulinoma?",
+    "a": "1) Symptoms of hypoglycemia, 2) documented low blood glucose during symptoms, and 3) resolution of symptoms with glucose administration."
+  },
+  {
+    "q": "How can you chemically differentiate <b>factitious hypoglycemia</b> (surreptitious insulin administration) from an <b>insulinoma</b>?",
+    "a": "In factitious hypoglycemia, insulin is high but <b>C-peptide is low</b>. In an insulinoma, both insulin and C-peptide are elevated."
+  },
+  {
+    "q": "How can you differentiate a sulfonylurea overdose from an insulinoma?",
+    "a": "Both present with elevated insulin and C-peptide. A <b>plasma or urine sulfonylurea screen</b> will be positive in an overdose."
+  },
+  {
+    "q": "What effect does <b>hypothyroidism</b> have on the lipid profile?",
+    "a": "It frequently causes <b>hypercholesterolemia</b> due to decreased surface expression of LDL receptors and decreased lipid clearance."
+  },
+  {
+    "q": "Why does primary hypothyroidism often lead to <b>hyperprolactinemia</b>?",
+    "a": "Low T<sub>3</sub>/T<sub>4</sub> leads to an increase in <b>Thyrotropin-Releasing Hormone (TRH)</b> from the hypothalamus, which directly stimulates lactotrophs in the anterior pituitary to secrete prolactin."
+  },
+  {
+    "q": "What are the characteristic serum laboratory findings (Ca<sup>2+</sup>, PO<sub>4</sub><sup>3-</sup>, PTH, ALP) in <b>osteomalacia</b>?",
+    "a": "Low or low-normal Ca<sup>2+</sup>, low PO<sub>4</sub><sup>3-</sup>, <b>elevated PTH</b> (secondary hyperparathyroidism), and <b>elevated ALP</b>."
+  },
+  {
+    "q": "What are the characteristic serum laboratory findings (Ca<sup>2+</sup>, PO<sub>4</sub><sup>3-</sup>, PTH, ALP) in <b>Paget disease of bone</b>?",
+    "a": "Normal Ca<sup>2+</sup>, normal PO<sub>4</sub><sup>3-</sup>, normal PTH, and <b>highly elevated alkaline phosphatase (ALP)</b>."
+  },
+  {
+    "q": "What antiarrhythmic drug can cause both hypothyroidism (Wolff-Chaikoff effect) and hyperthyroidism (Jod-Basedow phenomenon)?",
+    "a": "<b>Amiodarone</b>, due to its very high iodine content and structural similarity to thyroid hormone."
+  },
+  {
+    "q": "What are the three most acceptable screening tests for <b>Cushing syndrome</b>?",
+    "a": "24-hour urine free cortisol, late-night salivary cortisol, and the overnight low-dose (1 mg) dexamethasone suppression test."
+  },
+  {
+    "q": "In the evaluation of Cushing syndrome, how does the <b>high-dose dexamethasone suppression test</b> differentiate between Cushing disease (pituitary adenoma) and ectopic ACTH production?",
+    "a": "High-dose dexamethasone will <b>suppress cortisol levels</b> in Cushing disease, but <b>fails to suppress</b> cortisol in ectopic ACTH production (e.g., small cell lung cancer)."
+  },
+  {
+    "q": "What is the classic presentation of a female newborn with classical <b>21-hydroxylase deficiency</b>?",
+    "a": "<b>Ambiguous genitalia</b> (virilization) and salt-wasting (hypotension, hyponatremia, hyperkalemia) in the first 1-2 weeks of life. Lab shows elevated 17-hydroxyprogesterone."
+  },
+  {
+    "q": "What is the most serious potential adverse effect of <b>Metformin</b>, and in what conditions is it contraindicated?",
+    "a": "<b>Lactic acidosis</b>. It is contraindicated in severe renal impairment (eGFR < 30 mL/min/1.73 m<sup>2</sup>), acute decompensated heart failure, and severe hepatic impairment."
+  },
+  {
+    "q": "Which two classes of anti-diabetic medications are specifically recommended for patients with Type 2 Diabetes and established <b>cardiovascular disease</b>?",
+    "a": "<b>GLP-1 receptor agonists</b> (e.g., liraglutide, semaglutide) and <b>SGLT2 inhibitors</b> (e.g., empagliflozin, dapagliflozin)."
+  },
+  {
+    "q": "What is the recommendation for <b>statin therapy</b> in patients with Type 2 Diabetes mellitus?",
+    "a": "A moderate-intensity statin is recommended for <b>all diabetic patients aged 40 to 75 years</b>, regardless of baseline lipid levels."
+  },
+  {
+    "q": "How does the baseline <b>serum osmolality</b> differ between primary polydipsia and Diabetes Insipidus (DI)?",
+    "a": "Primary polydipsia presents with <b>low</b> serum osmolality (< 270 mOsm/kg), whereas DI typically presents with <b>high-normal or high</b> serum osmolality (> 290 mOsm/kg)."
+  },
+  {
+    "q": "During a water deprivation test, a patient's urine osmolality increases by more than 50% following the administration of exogenous desmopressin. What is the diagnosis?",
+    "a": "<b>Central Diabetes Insipidus</b>."
+  },
+  {
+    "q": "What is the most feared neurological complication of correcting severe hyponatremia too rapidly?",
+    "a": "<b>Osmotic demyelination syndrome</b> (Central pontine myelinolysis), presenting as locked-in syndrome (quadriplegia and pseudobulbar palsy)."
+  },
+  {
+    "q": "What are the classic serum and urine laboratory findings in <b>Syndrome of Inappropriate Antidiuretic Hormone (SIADH)</b>?",
+    "a": "Euvolemic <b>hypotonic hyponatremia</b> (serum Osm < 275 mOsm/kg), inappropriately concentrated urine (urine Osm > 100 mOsm/kg), and high urine Na<sup>+</sup> (> 40 mEq/L)."
+  },
+  {
+    "q": "A patient has asymptomatic hypercalcemia, high-normal PTH, and a urine calcium-to-creatinine clearance ratio (UCCR) of < 0.01. What is the underlying pathophysiology?",
+    "a": "A mutation in the <b>calcium-sensing receptor (CaSR)</b>, leading to <b>Familial Hypocalciuric Hypercalcemia (FHH)</b>."
+  },
+  {
+    "q": "What is the classic clinical presentation of <b>Sheehan syndrome</b>?",
+    "a": "A postpartum woman who presents with <b>failure to lactate</b>, amenorrhea, and signs of secondary hypothyroidism/adrenal insufficiency following severe postpartum hemorrhage."
+  },
+  {
+    "q": "A patient with a known pituitary adenoma suddenly develops a severe headache, visual field defects, and profound hypotension. What is the diagnosis?",
+    "a": "<b>Pituitary apoplexy</b> (acute hemorrhage or infarction of a pituitary adenoma), which can lead to acute secondary adrenal insufficiency and cardiovascular collapse."
+  },
+  {
+    "q": "What is the pathophysiology of a <b>toxic multinodular goiter</b>?",
+    "a": "Focal patches of hyperfunctioning follicular cells that have mutated (often a <b>TSH receptor mutation</b>) and produce thyroid hormone autonomously, independent of TSH stimulation."
+  },
+  {
+    "q": "How does <b>bone metastasis</b> typically affect serum alkaline phosphatase (ALP) levels compared to <b>multiple myeloma</b>?",
+    "a": "Osteoblastic or mixed bone metastases (e.g., prostate, breast) typically cause <b>markedly elevated ALP</b>. Multiple myeloma typically has a <b>normal ALP</b> due to purely osteolytic lesions without osteoblastic response."
+  },
+  {
+    "q": "What is the most appropriate initial diagnostic test for a newly discovered <b>thyroid nodule</b> with normal or elevated TSH?",
+    "a": "<b>Thyroid ultrasound</b> followed by <b>Fine Needle Aspiration (FNA)</b> biopsy if suspicious features or size criteria are met."
+  },
+  {
+    "q": "What is the best management for a pregnant patient currently taking <b>levothyroxine</b> for hypothyroidism?",
+    "a": "<b>Increase the levothyroxine dose by approximately 30%</b> as soon as pregnancy is confirmed, due to increased TBG (Thyroxine-Binding Globulin) and fetal demands."
+  },
+  {
+    "q": "What ECG findings are classically associated with severe <b>hypocalcemia</b>?",
+    "a": "<b>Prolongation of the QT interval</b>."
+  },
+  {
+    "q": "What is the initial medical therapy for a patient presenting with <b>thyroid storm</b>?",
+    "a": "<b>Beta-blockers</b> (e.g., propranolol), followed by <b>PTU</b> or methimazole, then <b>iodine</b> (given 1 hour AFTER antithyroid drugs to prevent the Jod-Basedow effect), and <b>glucocorticoids</b>."
+  },
+  {
+    "q": "In a patient with hyperthyroidism, what finding on a radioactive iodine uptake (RAIU) scan distinguishes <b>Graves' disease</b> from a toxic adenoma?",
+    "a": "Graves' disease shows <b>diffuse, homogeneous</b> increased uptake. A toxic adenoma shows a <b>focal area</b> of intense uptake with suppression of the surrounding gland."
+  },
+  {
+    "q": "What rare but life-threatening hematologic complication can occur with the use of antithyroid medications (PTU and Methimazole)?",
+    "a": "<b>Agranulocytosis</b>. Patients should be instructed to immediately stop the drug and seek medical attention if they develop a sudden fever or sore throat."
+  }
+]
