@@ -1,0 +1,181 @@
+/**
+ * Global Health Statistics — Data Source Research & Integration Guide
+ * Documents API availability, licensing, and recommended integration approach.
+ */
+window.HealthStatsSources = {
+  lastResearched: '2026-07-24',
+  sources: [
+    {
+      id: 'who-gho',
+      name: 'WHO Global Health Observatory (GHO)',
+      url: 'https://www.who.int/data/gho',
+      apiUrl: 'https://ghoapi.azureedge.net/api',
+      freeApi: true,
+      authRequired: false,
+      commercialUse: 'WHO data may be used with attribution; review WHO terms for commercial redistribution',
+      cachingAllowed: true,
+      downloadAllowed: true,
+      updateFrequency: 'Annual to multi-year lag by indicator',
+      formats: ['JSON (OData v4)', 'CSV (portal download)', 'XML'],
+      integration: 'Primary live API — use /api/who-gho proxy with curated fallback JSON',
+      notes: '2,000+ indicators, 194 countries. No API key. Rate limit ~1-2 req/sec recommended.'
+    },
+    {
+      id: 'idf-atlas',
+      name: 'International Diabetes Federation (IDF) Diabetes Atlas',
+      url: 'https://diabetesatlas.org',
+      freeApi: false,
+      authRequired: false,
+      commercialUse: 'Reference and cite; bulk redistribution requires IDF permission',
+      cachingAllowed: 'Curated summaries with attribution recommended',
+      downloadAllowed: 'Factsheets and reports available; full dataset via atlas portal',
+      updateFrequency: 'Biennial (11th edition: 2024 data, published 2025)',
+      formats: ['PDF', 'Web dashboard', 'Factsheets'],
+      integration: 'Static curated JSON from published Atlas figures; link to source'
+    },
+    {
+      id: 'iarc-gco',
+      name: 'IARC Global Cancer Observatory (GLOBOCAN)',
+      url: 'https://gco.iarc.who.int',
+      freeApi: false,
+      authRequired: false,
+      commercialUse: 'Cite GLOBOCAN/IARC; no public bulk API — reference published estimates',
+      cachingAllowed: 'Summary statistics with attribution',
+      downloadAllowed: 'Web export of charts/tables; no official REST API',
+      updateFrequency: 'Every 2-3 years (2024 estimates published 2024-2025)',
+      formats: ['Web visualizations', 'Infographic export', 'Published papers'],
+      integration: 'Static curated JSON from GLOBOCAN 2024 published estimates'
+    },
+    {
+      id: 'ihme-gbd',
+      name: 'IHME Global Burden of Disease (GBD)',
+      url: 'https://www.healthdata.org/gbd',
+      freeApi: false,
+      authRequired: true,
+      commercialUse: 'Commercial license required — contact IHME Client Services',
+      cachingAllowed: 'Non-commercial use only under NC license; MediHelp should use cited summaries',
+      downloadAllowed: 'CSV via GBD Results Tool (registration required, 100k row limit)',
+      updateFrequency: 'Annual GBD releases',
+      formats: ['CSV', 'Interactive dashboards (vizhub)', 'PDF methods'],
+      integration: 'Reference only with attribution; do not bulk cache GBD data commercially'
+    },
+    {
+      id: 'cdc-diabetes',
+      name: 'CDC Diabetes Data & Statistics',
+      url: 'https://www.cdc.gov/diabetes/data-statistics',
+      freeApi: false,
+      authRequired: false,
+      commercialUse: 'Public domain (US government); attribution recommended',
+      cachingAllowed: true,
+      downloadAllowed: true,
+      updateFrequency: 'Annual (National Diabetes Statistics Report)',
+      formats: ['CSV', 'PDF', 'Web tables'],
+      integration: 'US-specific supplement data; static JSON for key US figures'
+    },
+    {
+      id: 'acs-cancer',
+      name: 'American Cancer Society — Global Cancer Facts',
+      url: 'https://www.cancer.org/research/cancer-facts-statistics/global.html',
+      freeApi: false,
+      authRequired: false,
+      commercialUse: 'Cite ACS; data derived from GLOBOCAN',
+      cachingAllowed: 'Summary stats with attribution',
+      downloadAllowed: 'PDF facts & figures',
+      updateFrequency: 'Aligned with GLOBOCAN releases',
+      formats: ['PDF', 'Web'],
+      integration: 'Cross-reference for US/global cancer summaries'
+    },
+    {
+      id: 'who-cvd',
+      name: 'WHO Cardiovascular Diseases',
+      url: 'https://www.who.int/health-topics/cardiovascular-diseases',
+      freeApi: 'Via GHO OData API',
+      authRequired: false,
+      commercialUse: 'WHO terms with attribution',
+      cachingAllowed: true,
+      downloadAllowed: true,
+      updateFrequency: 'Annual',
+      formats: ['JSON via GHO', 'Fact sheets', 'PDF'],
+      integration: 'GHO API for live indicators; static fallback'
+    },
+    {
+      id: 'world-heart',
+      name: 'World Heart Federation',
+      url: 'https://world-heart-federation.org',
+      freeApi: false,
+      authRequired: false,
+      commercialUse: 'Cite WHF reports; reference published statistics',
+      cachingAllowed: 'Summary with attribution',
+      downloadAllowed: 'PDF reports (World Heart Report)',
+      updateFrequency: 'Periodic reports',
+      formats: ['PDF', 'Web'],
+      integration: 'Static curated figures from World Heart Report 2025'
+    },
+    {
+      id: 'who-obesity',
+      name: 'WHO Obesity & Overweight Facts',
+      url: 'https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight',
+      freeApi: 'Via GHO OData API',
+      authRequired: false,
+      commercialUse: 'WHO terms with attribution',
+      cachingAllowed: true,
+      downloadAllowed: true,
+      updateFrequency: 'Annual',
+      formats: ['JSON via GHO', 'Fact sheets'],
+      integration: 'GHO API + NCD-RisC published estimates'
+    },
+    {
+      id: 'world-obesity',
+      name: 'World Obesity Federation',
+      url: 'https://www.worldobesity.org',
+      freeApi: false,
+      authRequired: false,
+      commercialUse: 'Membership/data licensing for commercial use',
+      cachingAllowed: 'Public reports with attribution',
+      downloadAllowed: 'Atlas reports (membership may apply)',
+      updateFrequency: 'Periodic',
+      formats: ['PDF', 'Web atlas'],
+      integration: 'Reference published atlas figures'
+    },
+    {
+      id: 'our-world-in-data',
+      name: 'Our World in Data',
+      url: 'https://ourworldindata.org',
+      freeApi: true,
+      apiUrl: 'https://api.ourworldindata.org/v1/indicators',
+      authRequired: false,
+      commercialUse: 'CC BY license — attribution required',
+      cachingAllowed: true,
+      downloadAllowed: true,
+      updateFrequency: 'Varies by dataset',
+      formats: ['CSV', 'JSON API', 'Web charts'],
+      integration: 'Secondary source for trend validation; CC BY compliant caching'
+    },
+    {
+      id: 'cdc-data',
+      name: 'CDC Data & Statistics',
+      url: 'https://www.cdc.gov/nchs/data_access/index.htm',
+      freeApi: 'Partial (WONDER, Data.CDC.gov)',
+      authRequired: false,
+      commercialUse: 'Public domain (US government)',
+      cachingAllowed: true,
+      downloadAllowed: true,
+      updateFrequency: 'Varies',
+      formats: ['CSV', 'JSON', 'API'],
+      integration: 'US-specific disease statistics supplement'
+    },
+    {
+      id: 'nhs-digital',
+      name: 'NHS Digital / NHS England Statistics',
+      url: 'https://digital.nhs.uk/data-and-information',
+      freeApi: false,
+      authRequired: false,
+      commercialUse: 'Open Government Licence v3.0 (UK)',
+      cachingAllowed: true,
+      downloadAllowed: true,
+      updateFrequency: 'Quarterly to annual',
+      formats: ['CSV', 'Excel', 'API (limited)'],
+      integration: 'UK-specific reference data where relevant'
+    }
+  ]
+};
