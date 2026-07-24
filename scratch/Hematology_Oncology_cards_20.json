@@ -1,0 +1,82 @@
+[
+  {
+    "q": "What is the immediate next step in management when Heparin-Induced Thrombocytopenia (HIT) is suspected?",
+    "a": "Stop all heparin products immediately and start a non-heparin anticoagulant (e.g., argatroban, bivalirudin, or fondaparinux). Do <b>NOT</b> start warfarin until platelet count recovers (>150,000/&mu;L)."
+  },
+  {
+    "q": "What is the initial treatment for Acute Promyelocytic Leukemia (APL, t(15;17)), and what major complication does it prevent?",
+    "a": "Start <b>all-trans retinoic acid (ATRA)</b> immediately to induce myeloid differentiation and prevent life-threatening <b>disseminated intravascular coagulation (DIC)</b>."
+  },
+  {
+    "q": "What are the primary diagnostic features represented by the <b>CRAB</b> mnemonic in Multiple Myeloma?",
+    "a": "<b>C</b>alcium elevated (>11 mg/dL), <b>R</b>enal insufficiency (Cr >2 mg/dL), <b>A</b>nemia (Hb <10 g/dL), <b>B</b>one lytic lesions / bone pain."
+  },
+  {
+    "q": "What is the pathognomonic enzymatic deficiency in Thrombotic Thrombocytopenic Purpura (TTP), and what is the primary treatment?",
+    "a": "Deficiency of <b>ADAMTS13</b> (vWF-cleaving protease) leading to uncleaved ultra-large vWF multimers. Primary treatment is emergent <b>plasma exchange (plasmapheresis)</b>. Platelet transfusions are contraindicated."
+  },
+  {
+    "q": "What specific gene mutation is present in >95% of patients with Polycythemia Vera (PV), and what is the expected erythropoietin (EPO) level?",
+    "a": "<b>JAK2 V617F</b> mutation; EPO levels are <b>low / suppressed</b>. Treatment includes therapeutic phlebotomy and low-dose aspirin."
+  },
+  {
+    "q": "What laboratory abnormalities define Tumor Lysis Syndrome (TLS), and what agent is indicated for severe hyperuricemia?",
+    "a": "Elevated K<sup>+</sup>, elevated PO<sub>4</sub><sup>3-</sup>, elevated Uric Acid, and decreased Ca<sup>2+</sup> leading to acute kidney injury. Treat/prevent with IV hydration and <b>rasburicase</b> (or allopurinol for low risk)."
+  },
+  {
+    "q": "Contrast the immunoglobulin type, site of hemolysis, and first-line management for Warm vs. Cold Autoimmune Hemolytic Anemia (AIHA).",
+    "a": "<b>Warm AIHA:</b> IgG, extravascular (spleen), treat with <b>corticosteroids</b>.<br><b>Cold AIHA:</b> IgM, intravascular/C3b-mediated, treat with <b>avoidance of cold exposure</b> and rituximab (steroids are ineffective)."
+  },
+  {
+    "q": "What genetic defect causes Paroxysmal Nocturnal Hemoglobinuria (PNH), what is the clinical triad, and what targeted agent is used?",
+    "a": "Mutation in the <b>PIGA</b> gene leading to deficiency of CD55 & CD59 (GPI-anchor proteins). Triad: Coombs-negative hemolytic anemia, pancytopenia, and <b>venous thrombosis</b> (e.g., Budd-Chiari syndrome). Treat with <b>eculizumab</b> (C5 inhibitor)."
+  },
+  {
+    "q": "What laboratory pattern (PT, PTT, bleeding time, platelet count) is expected in Von Willebrand Disease (vWD), and what is the treatment for mild acute bleeding in Type 1 vWD?",
+    "a": "Normal PT, prolonged PTT (due to Factor VIII instability), prolonged bleeding time, normal platelets. Treat acute mild bleeding with <b>desmopressin (DDAVP)</b>, which triggers endothelial release of stored vWF and Factor VIII."
+  },
+  {
+    "q": "In adults with newly diagnosed Immune Thrombocytopenia (ITP) presenting with active bleeding or platelets <30,000/&mu;L, what is first-line therapy?",
+    "a": "First-line therapy is <b>corticosteroids</b> (e.g., prednisone). If corticosteroids are contraindicated or rapid platelet recovery is required, give <b>IVIG</b> or <b>anti-D immunoglobulin</b>."
+  },
+  {
+    "q": "What classic peripheral blood smear findings are seen during an acute hemolytic episode in G6PD deficiency, and what are key triggers to avoid?",
+    "a": "<b>Heinz bodies</b> (denatured hemoglobin fragments) and <b>Bite cells</b> (degmacytes). Triggers to avoid: Fava beans, infections, sulfa drugs, primaquine, nitrofurantoin, and dapsone."
+  },
+  {
+    "q": "How do you clinically differentiate Febrile Non-Hemolytic Transfusion Reaction (FNHTR) from Acute Hemolytic Transfusion Reaction (AHTR)?",
+    "a": "<b>FNHTR:</b> Fever/chills within 1-6 hours due to donor leukocyte cytokines; <i>no hemolysis</i>, negative Coombs.<br><b>AHTR:</b> Fever, flank pain, DIC, hemoglobinuria within 1 hour due to ABO incompatibility; <i>positive direct Coombs test</i>."
+  },
+  {
+    "q": "How do you differentiate Polycythemia Vera (primary) from Secondary Polycythemia (e.g., chronic hypoxia, renal cell carcinoma) using serum EPO levels?",
+    "a": "Polycythemia Vera has <b>low / suppressed EPO</b>; Secondary Polycythemia has <b>elevated or inappropriately normal EPO</b>."
+  },
+  {
+    "q": "What gene mutation causes Hereditary Hemochromatosis, what is the best screening test, and what is the definitive long-term management?",
+    "a": "<b>HFE gene (C282Y)</b> mutation. Best screening test: Serum <b>transferrin saturation (>45%)</b> and elevated ferritin. Definitive management: Therapeutic <b>phlebotomy</b>."
+  },
+  {
+    "q": "What is the initial best next step in management for a patient with known cancer presenting with acute back pain and lower extremity weakness suspected of epidural spinal cord compression?",
+    "a": "Administer high-dose <b>IV corticosteroids (dexamethasone)</b> immediately, followed by urgent <b>MRI of the spine</b>."
+  },
+  {
+    "q": "What pathognomonic cell is seen on lymph node biopsy in Hodgkin Lymphoma, and what cell surface markers characterize it?",
+    "a": "<b>Reed-Sternberg cell</b> ('owl's eye' appearance), which is characteristically positive for <b>CD15<sup>+</sup></b> and <b>CD30<sup>+</sup></b>."
+  },
+  {
+    "q": "What chromosomal translocation, fusion gene, and targeted therapy define Chronic Myelogenous Leukemia (CML)?",
+    "a": "<b>t(9;22)</b> Philadelphia chromosome forming the <b>BCR-ABL1</b> fusion gene (constitutive tyrosine kinase). Targeted therapy: <b>Imatinib</b> (tyrosine kinase inhibitor)."
+  },
+  {
+    "q": "What monoclonal immunoglobulin elevation is characteristic of Waldenstr&ouml;m Macroglobulinemia, and what classic symptom triad indicates hyperviscosity syndrome?",
+    "a": "Monoclonal <b>IgM</b> elevation. Hyperviscosity triad: <b>visual changes</b> (sausage-like retinal veins), <b>neurologic deficits</b> (headache, dizziness), and <b>mucosal bleeding</b>. Treat hyperviscosity with emergent <b>plasmapheresis</b>."
+  },
+  {
+    "q": "What is the diagnostic threshold for Neutropenic Fever (Absolute Neutrophil Count threshold), and what is the immediate empiric antibiotic therapy?",
+    "a": "Absolute Neutrophil Count (ANC) <500/&mu;L (or expected to fall <500/&mu;L) with temp &ge;38.3&deg;C (101.0&deg;F). Immediate empiric antipseudomonal monotherapy: <b>cefepime</b>, <b>piperacillin-tazobactam</b>, or <b>meropenem</b>."
+  },
+  {
+    "q": "What are the hallmark clinical manifestations of Superior Vena Cava (SVC) Syndrome, and what is the best initial diagnostic step?",
+    "a": "Facial edema, neck vein distension, dyspnea, and upper extremity swelling. Best initial diagnostic step: <b>Chest CT scan with IV contrast</b> to evaluate the site and cause of obstruction (most commonly lung cancer)."
+  }
+]

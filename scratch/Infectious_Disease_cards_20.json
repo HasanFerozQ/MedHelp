@@ -1,0 +1,82 @@
+[
+  {
+    "q": "What is the initial empirical antibiotic regimen for suspected acute bacterial meningitis in an immunocompetent adult aged &lt;50?",
+    "a": "<b>Vancomycin</b> plus <b>ceftriaxone</b> (or cefotaxime). Add <b>ampicillin</b> if age &ge;50, immunocompromised, or alcohol use disorder (to cover <i>Listeria monocytogenes</i>)."
+  },
+  {
+    "q": "What is the recommended post-exposure prophylaxis (PEP) for an unvaccinated patient exposed to a wild bat with unknown rabies status without visible bite marks?",
+    "a": "<b>Rabies immune globulin (RIG)</b> plus a <b>4-dose rabies vaccine series</b> (administered on days 0, 3, 7, and 14)."
+  },
+  {
+    "q": "What CD4 count threshold triggers primary prophylaxis for <i>Pneumocystis jirovecii</i> pneumonia (PJP) in HIV-infected patients, and what is the 1<sup>st</sup>-line agent?",
+    "a": "CD4 count <b>&lt;200/mm<sup>3</sup></b>; 1<sup>st</sup>-line agent is <b>trimethoprim-sulfamethoxazole (TMP-SMX)</b>."
+  },
+  {
+    "q": "What CD4 count threshold triggers primary prophylaxis for <i>Toxoplasma gondii</i> encephalitis in HIV-infected patients with positive IgG, and what is the preferred agent?",
+    "a": "CD4 count <b>&lt;100/mm<sup>3</sup></b>; 1<sup>st</sup>-line agent is <b>trimethoprim-sulfamethoxazole (TMP-SMX)</b>."
+  },
+  {
+    "q": "How is an initial episode of non-severe or severe acute <i>Clostridioides difficile</i> infection managed according to current clinical guidelines?",
+    "a": "Oral <b>fidaxomicin</b> (200 mg BID for 10 days) or oral <b>vancomycin</b> (125 mg QID for 10 days). Oral metronidazole is no longer preferred 1<sup>st</sup>-line."
+  },
+  {
+    "q": "What is the diagnostic workflow and treatment of choice for primary or secondary syphilis in a non-pregnant adult without penicillin allergy?",
+    "a": "Diagnosis: Serologic testing with a nontreponemal test (<b>VDRL</b> or <b>RPR</b>) confirmed by a treponemal test (<b>FTA-ABS</b> or <b>TP-PA</b>). Treatment: Single intramuscular dose of <b>benzathine penicillin G</b> (2.4 million units)."
+  },
+  {
+    "q": "What is the essential initial diagnostic step for suspected infective endocarditis prior to starting antibiotics, and when is transesophageal echocardiography (TEE) indicated over transthoracic (TTE)?",
+    "a": "Obtain <b>3 sets of blood cultures</b> from separate venipuncture sites. <b>TEE</b> is indicated if TTE is negative/inconclusive with high clinical suspicion, or in patients with prosthetic valves, intracardiac devices, or suspected complications (e.g., perivalvular abscess)."
+  },
+  {
+    "q": "What is the mandatory initial empiric antibiotic monotherapy for neutropenic fever (absolute neutrophil count &lt;500/mm<sup>3</sup> with temperature &ge;38.3&deg;C)?",
+    "a": "An anti-pseudomonal &beta;-lactam agent such as <b>cefepime</b>, <b>piperacillin-tazobactam</b>, or <b>meropenem</b>."
+  },
+  {
+    "q": "A patient presents with expanding erythema migrans after a tick bite in the northeastern US. What is the most appropriate management step?",
+    "a": "Immediately initiate oral <b>doxycycline</b>. Clinical diagnosis is sufficient; serologic testing is <b>not recommended</b> during early localized Lyme disease due to low sensitivity."
+  },
+  {
+    "q": "What are the most common causative organisms of acute hematogenous osteomyelitis in patients with sickle cell disease vs the general adult population?",
+    "a": "Sickle cell disease: <i><b>Salmonella</b></i> species and <i><b>Staphylococcus aureus</b></i>. General adult population: <i><b>Staphylococcus aureus</b></i>."
+  },
+  {
+    "q": "What lumbar puncture finding confirms Cryptococcal meningitis in an immunocompromised patient, and what is the standard induction regimen?",
+    "a": "LP finding: Opening pressure &gt;200 mm H<sub>2</sub>O and positive <b>Cryptococcal antigen assay</b> (or India ink staining). Induction therapy: <b>Liposomal amphotericin B</b> plus <b>flucytosine</b> for &ge;2 weeks."
+  },
+  {
+    "q": "What is the diagnosis and preferred 1<sup>st</sup>-line treatment for uncomplicated chloroquine-resistant <i>Plasmodium falciparum</i> malaria?",
+    "a": "Diagnosis: <b>Malaria</b> (confirmed via thick/thin peripheral blood smears). Treatment: <b>Artemether-lumefantrine</b> or <b>atovaquone-proguanil</b>."
+  },
+  {
+    "q": "An HIV patient with CD4 &lt;50/mm<sup>3</sup> presents with severe odynophagia. EGD shows deep linear esophageal ulcers and biopsy demonstrates intranuclear inclusions ('owl's eye'). What is the diagnosis and treatment?",
+    "a": "Diagnosis: <b>Cytomegalovirus (CMV) esophagitis</b>. Treatment: IV <b>ganciclovir</b> or oral <b>valganciclovir</b>."
+  },
+  {
+    "q": "What clinical triad and chest CT finding characterize invasive pulmonary aspergillosis in an immunocompromised host, and what is the preferred drug of choice?",
+    "a": "Triad: <b>Fever</b>, <b>pleuritic chest pain</b>, and <b>hemoptysis</b>. Chest CT: <b>Halo sign</b> (nodule with surrounding ground-glass opacity). Treatment: <b>Voriconazole</b>."
+  },
+  {
+    "q": "What is the recommended antibiotic prophylaxis for clean-contaminated elective surgical procedures (e.g., cardiac, vascular, orthopedic procedures)?",
+    "a": "<b>Cefazolin</b> IV administered within 60 minutes prior to surgical incision (or <b>vancomycin</b> / <b>clindamycin</b> if severe penicillin allergy or high local MRSA rate)."
+  },
+  {
+    "q": "How is Latent Tuberculosis Infection (LTBI) confirmed, and what is a preferred short-course treatment regimen?",
+    "a": "Confirmation: Positive <b>TST</b> or <b>IGRA</b> with negative chest X-ray and absence of TB symptoms. Treatment: <b>4 months of daily rifampin</b> OR <b>3 months of weekly isoniazid + rifapentine</b>."
+  },
+  {
+    "q": "What cardinal physical exam feature distinguishes necrotizing fasciitis from simple cellulitis, and what is the definitive management step?",
+    "a": "Feature: Severe pain <b>out of proportion</b> to skin findings, skin anesthesia, crepitus, or rapid tissue necrosis. Management: <b>Emergent surgical debridement</b> alongside broad-spectrum IV antibiotics."
+  },
+  {
+    "q": "A patient presenting with fever, headache, leukopenia, thrombocytopenia, elevated transaminases, and intracytoplasmic morulae inside neutrophils/monocytes following a tick exposure has what disease, and how is it treated?",
+    "a": "Disease: <b>Ehrlichiosis</b> (monocytes) or <b>Anaplasmosis</b> (neutrophils). Treatment: <b>Doxycycline</b>."
+  },
+  {
+    "q": "What is the preferred oral antibiotic regimen for acute uncomplicated pyelonephritis in a non-pregnant female when local fluoroquinolone resistance is &lt;10%?",
+    "a": "Oral <b>ciprofloxacin</b> (500 mg BID for 7 days) or oral <b>levofloxacin</b> (750 mg daily for 5 days)."
+  },
+  {
+    "q": "What endemic dimorphic fungus is transmitted via bat or bird droppings in the Ohio and Mississippi River Valleys and appears on tissue biopsy as small intracellular yeasts within macrophages?",
+    "a": "<b>Histoplasmosis</b> (<i>Histoplasma capsulatum</i>). Moderate-to-severe disease is treated with <b>liposomal amphotericin B</b> followed by oral <b>itraconazole</b>."
+  }
+]

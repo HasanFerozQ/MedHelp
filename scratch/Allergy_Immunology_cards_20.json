@@ -1,0 +1,82 @@
+[
+  {
+    "q": "What is the <b>first-line emergency treatment</b> for acute <b>anaphylaxis</b>, and what serum marker confirms the diagnosis retroactively?",
+    "a": "<b>Intramuscular (IM) epinephrine</b> (1:1,000 dilution, 0.3–0.5 mg in adults) injected into the anterolateral thigh. Serum <b>tryptase</b> (elevated within 1–2 hours of symptom onset) confirms mast cell degranulation."
+  },
+  {
+    "q": "A patient presenting with recurrent episodes of non-pruritic, non-pitting <b>angioedema without urticaria</b> and recurrent abdominal pain has low <b>C4</b>. What is the underlying pathophysiology and diagnostic confirmation?",
+    "a": "<b>Hereditary Angioedema</b> caused by <b>C1 esterase inhibitor deficiency or dysfunction</b>, leading to unchecked kallikrein activity and excessive <b>bradykinin</b> accumulation. Confirmed by low <b>C4</b> levels and decreased functional <b>C1 inhibitor activity</b>."
+  },
+  {
+    "q": "How do you differentiate <b>Acquired C1 inhibitor deficiency</b> from <b>Hereditary Angioedema</b> in an older adult presenting with angioedema?",
+    "a": "<b>Acquired C1 inhibitor deficiency</b> is associated with underlying <b>lymphoproliferative disorders</b> (e.g., NHL) or autoimmunity and presents with <b>low C1q</b> levels, whereas Hereditary Angioedema has <b>normal C1q</b> levels."
+  },
+  {
+    "q": "An individual with an asymptomatic immunodeficiency experiences severe hypotension, bronchospasm, and hives during a <b>packed red blood cell transfusion</b>. What is the diagnosis and prevention strategy?",
+    "a": "<b>Selective IgA deficiency</b> with pre-existing <b>anti-IgA antibodies</b> reacting to donor IgA. Prevent future reactions by administering <b>washed red blood cells</b> or products from IgA-deficient donors."
+  },
+  {
+    "q": "A 25-year-old patient with recurrent sinus infections and bronchiectasis has <b>normal total B cell counts</b> but severely low serum <b>IgG</b>, <b>IgA</b>, and <b>IgM</b>. What is the diagnosis and primary long-term management?",
+    "a": "<b>Common Variable Immunodeficiency (CVID)</b>, characterized by defective B-cell differentiation into plasma cells. Managed with lifelong <b>Intravenous Immunoglobulin (IVIG)</b> replacement."
+  },
+  {
+    "q": "A 9-month-old male infant presents with recurrent <i>Streptococcus pneumoniae</i> otitis media and pneumonia. Physical exam reveals <b>absent tonsils</b>. Lab work shows <b>markedly decreased CD19<sup>+</sup>/CD20<sup>+</sup> B cells</b> and low immunoglobulins. What is the genetic defect?",
+    "a": "Mutation in the <b>Bruton tyrosine kinase (BTK)</b> gene on the X chromosome (<b>X-linked Agammaglobulinemia</b>), leading to failure of pre-B cell maturation."
+  },
+  {
+    "q": "A 3-month-old infant with chronic diarrhea, failure to thrive, persistent oral candidiasis, and an absent <b>thymic shadow</b> on chest X-ray is diagnosed with <b>Severe Combined Immunodeficiency (SCID)</b>. What are the two most common genetic causes?",
+    "a": "X-linked recessive <b>IL-2R&gamma; chain subunit defect</b> (most common) and autosomal recessive <b>Adenosine Deaminase (ADA) deficiency</b>, leading to toxic accumulation of dATP in lymphocytes."
+  },
+  {
+    "q": "A child presents with severe eczema, retained primary teeth, high serum <b>IgE</b>, eosinophilia, and recurrent <b>'cold' (non-inflammatory) staphylococcal abscesses</b>. What is the mutated gene and altered immunologic helper cell pathway?",
+    "a": "Mutation in <b><i>STAT3</i></b> (<b>Hyper-IgE Syndrome / Job Syndrome</b>), leading to impaired <b>Th17 differentiation</b> and deficient IL-17 production, disrupting neutrophil recruitment."
+  },
+  {
+    "q": "What classic clinical triad characterizes <b>Wiskott-Aldrich Syndrome</b>, and what cellular mechanism is defective?",
+    "a": "Triad of <b>eczema</b>, <b>thrombocytopenia</b> (with <i>microthrombocytes</i>/small platelets), and <b>recurrent sinopulmonary infections</b>. Caused by <b><i>WAS</i> gene mutations</b> disrupting actin cytoskeleton reorganization in leukocytes and platelets."
+  },
+  {
+    "q": "A patient with recurrent granulomatous abscesses caused by <i>Staphylococcus aureus</i> and <i>Aspergillus</i> is suspected of having <b>Chronic Granulomatous Disease (CGD)</b>. What is the enzyme defect and diagnostic test of choice?",
+    "a": "Defect in <b>NADPH oxidase</b> (impaired production of reactive oxygen species like <b>H<sub>2</sub>O<sub>2</sub></b> and <b>O<sub>2</sub><sup>&bull;&ndash;</sup></b>). Confirmed by abnormal <b>dihydrorhodamine (DHR) flow cytometry</b> (decreased fluorescence) or negative nitroblue tetrazolium (NBT) test."
+  },
+  {
+    "q": "An infant presents with delayed umbilical cord separation (>30 days after birth), marked leukocytosis (neutrophils > 50,000/&mu;L), and skin infections <b>devoid of pus formation</b>. What is the underlying surface receptor deficiency?",
+    "a": "<b>Leukocyte Adhesion Deficiency type 1 (LAD-1)</b>, caused by an autosomal recessive defect in the <b>CD18 integrin</b> (<b>&beta;<sub>2</sub> integrin</b> / LFA-1), preventing leukocyte adhesion and extravasation."
+  },
+  {
+    "q": "A patient with recurrent <i>Pneumocystis jirovecii</i> pneumonia has elevated serum <b>IgM</b> but absent serum <b>IgG</b>, <b>IgA</b>, and <b>IgE</b>. What cell surface ligand interaction is defective?",
+    "a": "Defect in <b>CD40 Ligand (CD40L / CD154)</b> expressed on <b>activated CD4<sup>+</sup> T cells</b> (Hyper-IgM Syndrome), which prevents interaction with CD40 on B cells, blocking class-switch recombination."
+  },
+  {
+    "q": "Ten days after starting penicillin, a patient develops fever, urticarial rash, joint pain, and cervical lymphadenopathy. Lab tests show low serum <b>C3</b> and <b>C4</b> levels. What hypersensitivity type is responsible?",
+    "a": "<b>Type III hypersensitivity</b> (<b>Serum Sickness</b>), mediated by systemic <b>immune complex (IgG-antigen) deposition</b> that activates the classical complement cascade, lowering serum C3/C4."
+  },
+  {
+    "q": "A patient on allopurinol develops fever, diffuse morbilliform eruption, facial swelling, peripheral <b>eosinophilia (>1,500/&mu;L)</b>, and elevated serum transaminases 4 weeks after drug initiation. What is the diagnosis?",
+    "a": "<b>DRESS Syndrome</b> (Drug Reaction with Eosinophilia and Systemic Symptoms), a severe T-cell mediated drug reaction with multi-organ involvement (most commonly liver and kidney)."
+  },
+  {
+    "q": "What is the most effective single pharmacotherapy for long-term control of moderate-to-severe <b>Allergic Rhinitis</b>?",
+    "a": "<b>Intranasal corticosteroid spray</b> (e.g., fluticasone, mometasone), which inhibits local inflammatory cytokine release and inflammatory cell influx."
+  },
+  {
+    "q": "A patient with birch pollen allergy experiences localized itching and tingling of the lips and soft palate after eating raw apples and peaches. What is the mechanism of this condition?",
+    "a": "<b>Oral Allergy Syndrome (Pollen-Food Allergy Syndrome)</b>, caused by IgE <b>cross-reactivity</b> between airborne pollen proteins (e.g., Bet v 1 in birch) and homologous heat-labile proteins in raw fruits/vegetables."
+  },
+  {
+    "q": "A young adult presents with recurrent, severe <i>Neisseria meningitidis</i> infections. Screening tests show decreased <b>CH50</b> activity. Which complement components are most likely deficient?",
+    "a": "Deficient <b>Terminal Complement Components (C5, C6, C7, C8, or C9)</b>, impairing the formation of the <b>Membrane Attack Complex (MAC / C5b-9)</b>."
+  },
+  {
+    "q": "A newborn with tetralogy of Fallot develops tetany. Labs show serum <b>Ca<sup>2+</sup> 6.2 mg/dL</b> and elevated serum phosphate. What is the microdeletion and embryological structure failed in development?",
+    "a": "<b>22q11.2 microdeletion</b> (<b>DiGeorge Syndrome</b>), due to failure of third and fourth <b>pharyngeal pouches</b> to develop, resulting in thymic and parathyroid hypoplasia."
+  },
+  {
+    "q": "A runner experiences generalized pruritus, hives, and wheezing specifically when jogging within 2 hours after eating a meal containing wheat. What is the diagnosis and acute management strategy?",
+    "a": "<b>Food-Dependent Exercise-Induced Anaphylaxis (FDEIA)</b>. Managed acutely with <b>IM epinephrine</b>, and prevented by refraining from exercise for 4 hours after consuming trigger foods (e.g., gliadin/wheat)."
+  },
+  {
+    "q": "A 42-year-old patient with severe asthma and chronic rhinosinusitis presents with peripheral neuropathy (mononeuritis multiplex), skin nodules, and <b>eosinophilia > 15%</b>. Serology is positive for <b>MPO-ANCA (p-ANCA)</b>. What vasculitis is this?",
+    "a": "<b>Eosinophilic Granulomatosis with Polyangiitis (EGPA / Churg-Strauss syndrome)</b>, a small-to-medium vessel necrotizing vasculitis. Eosinophilic myocarditis is the primary cause of mortality."
+  }
+]

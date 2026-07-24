@@ -1,0 +1,82 @@
+[
+  {
+    "q": "What is the formula for Cardiac Output (CO) using Stroke Volume (SV) and Heart Rate (HR), and how is Mean Arterial Pressure (MAP) calculated from SBP and DBP?",
+    "a": "<b>CO</b> = SV × HR<br><b>MAP</b> = DBP + ⅓(SBP - DBP) = (2 × DBP + SBP) / 3"
+  },
+  {
+    "q": "What is the single most effective intervention to decrease mortality in a patient presenting with acute <b>ST-elevation myocardial infarction (STEMI)</b> within 12 hours of symptom onset?",
+    "a": "Immediate <b>percutaneous coronary intervention (PCI)</b> within 90 minutes of door-to-balloon time (or fibrinolytic therapy within 120 minutes if PCI is unavailable)."
+  },
+  {
+    "q": "What is the classic triad of symptoms for severe <b>aortic stenosis</b>, and what is the definitive management once symptomatic?",
+    "a": "Triad: <i>SAD</i> (<b>S</b>yncope, <b>A</b>ngina, <b>D</b>yspnea).<br>Definitive treatment: <b>Surgical Aortic Valve Replacement (SAVR)</b> or <b>TAVR</b>."
+  },
+  {
+    "q": "Which classes of medications are proven to improve <b>long-term mortality</b> in patients with Heart Failure with Reduced Ejection Fraction (HFrEF, EF ≤ 40%)?",
+    "a": "<b>ACEi/ARB/ARNI</b> (sacubitril-valsartan), <b>Beta-blockers</b> (carvedilol, metoprolol succinate, bisoprolol), <b>MRAs</b> (spironolactone/eplerenone), and <b>SGLT2 inhibitors</b> (dapagliflozin/empagliflozin)."
+  },
+  {
+    "q": "In a patient with acute decompensated heart failure and pulmonary edema without hypotension, what is the initial medical management?",
+    "a": "<b>IV loop diuretics</b> (e.g., Furosemide) + <b>IV vasodilators</b> (e.g., Nitroglycerin) to rapidly decrease cardiac preload and capillary wedge pressure, alongside supplemental O<sub>2</sub>."
+  },
+  {
+    "q": "What is the initial empiric antibiotic therapy for acute <b>native valve infective endocarditis</b> in an IV drug user or critically ill patient?",
+    "a": "IV <b>Vancomycin</b> (covering MRSA) plus IV <b>Cefepime</b> or <b>Gentamicin</b> (covering Gram-negative bacilli and Enterococcus)."
+  },
+  {
+    "q": "What is <b>Beck's triad</b> for cardiac tamponade, and what are the characteristic ECG findings and pulsus paradoxus definition?",
+    "a": "Beck's triad: <b>Hypotension</b>, <b>JVD</b>, <b>Muffled heart sounds</b>.<br>ECG: <b>Electrical alternans</b>.<br>Pulsus paradoxus: > 10 mmHg drop in SBP during inspiration."
+  },
+  {
+    "q": "What is the immediate first-line pharmacological agent used to lower blood pressure and dP/dt in acute <b>aortic dissection</b>?",
+    "a": "IV <b>Esmolol</b> or <b>Labetalol</b> (IV beta-blockers) to target HR < 60/min and SBP 100–120 mmHg before initiating vasodilators."
+  },
+  {
+    "q": "How is the decision to start long-term anticoagulation made in a patient with non-valvular <b>Atrial Fibrillation</b>?",
+    "a": "Calculate the <b>CHA<sub>2</sub>DS<sub>2</sub>-VASc</b> score. A score ≥ 2 in men or ≥ 3 in women warrants oral anticoagulation (DOACs like apixaban or rivaroxaban preferred over warfarin)."
+  },
+  {
+    "q": "How do physical examination maneuvers affect the systolic murmur of <b>Hypertrophic Cardiomyopathy (HCM)</b>?",
+    "a": "Murmur <b>increases</b> with decreased LV volume (e.g., <i>Valsalva strain</i>, <i>standing</i>). Murmur <b>decreases</b> with increased LV volume/afterload (e.g., <i>squatting</i>, <i>handgrip</i>, <i>passive leg raise</i>)."
+  },
+  {
+    "q": "What is the step-by-step emergency management for severe <b>hyperkalemia</b> ([K<sup>+</sup>] > 6.5 mEq/L) with ECG changes?",
+    "a": "1. <b>Calcium gluconate</b> (membrane stabilization)<br>2. <b>Insulin + IV Dextrose</b> and/or <b>Albuterol</b> (intracellular shift)<br>3. <b>Loop diuretics / Sodium zirconium cyclosilicate / Hemodialysis</b> (elimination)."
+  },
+  {
+    "q": "What defines a <b>hypertensive emergency</b> versus hypertensive urgency, and what is the target blood pressure reduction rate?",
+    "a": "Emergency = SBP > 180 mmHg or DBP > 120 mmHg WITH acute end-organ damage.<br>Target: Reduce Mean Arterial Pressure (MAP) by <b>10–20%</b> in the 1<sup>st</sup> hour, then another 5–15% over 23 hours."
+  },
+  {
+    "q": "What are the typical pulmonary artery catheter hemodynamic findings in <b>cardiogenic shock</b> (CO/CI, PCWP, SVR)?",
+    "a": "<b>Cardiac Output (CO)</b>: ↓<br><b>Pulmonary Capillary Wedge Pressure (PCWP)</b>: ↑<br><b>Systemic Vascular Resistance (SVR)</b>: ↑"
+  },
+  {
+    "q": "What is the initial dual antiplatelet therapy (DAPT) regimen for a patient presenting with <b>Unstable Angina / NSTEMI</b>?",
+    "a": "<b>Aspirin</b> (162–325 mg initial loading dose) plus a <b>P2Y<sub>12</sub> inhibitor</b> (e.g., Ticagrelor, Prasugrel, or Clopidogrel) for at least 12 months."
+  },
+  {
+    "q": "What is the pathognomonic ECG finding for <b>3<sup>rd</sup>-degree (complete) AV block</b>, and what is the definitive treatment?",
+    "a": "Finding: Complete dissociation between P waves and QRS complexes (regular P-P and R-R intervals with variable PR intervals).<br>Definitive treatment: <b>Permanent pacemaker placement</b>."
+  },
+  {
+    "q": "What is the immediate first-line intravenous treatment for polymorphic ventricular tachycardia known as <b>Torsades de Pointes</b>?",
+    "a": "<b>IV Magnesium Sulfate</b> (2 g IV bolus)."
+  },
+  {
+    "q": "What is the initial diagnostic test for suspected <b>Peripheral Artery Disease (PAD)</b>, and what value indicates ischemia?",
+    "a": "Diagnostic test: <b>Ankle-Brachial Index (ABI)</b>.<br>Value: ABI ≤ <b>0.90</b> is diagnostic of PAD; ABI < <b>0.40</b> indicates severe limb-threatening ischemia."
+  },
+  {
+    "q": "What physical exam murmur is characteristic of acute or chronic severe <b>mitral regurgitation</b>, and where does it radiate?",
+    "a": "<b>Holosystolic (pansystolic) murmur</b> best heard at the cardiac apex (5<sup>th</sup> intercostal space, midclavicular line) radiating to the <b>axilla</b>."
+  },
+  {
+    "q": "What is the most appropriate initial diagnostic test for a patient with suspected <b>stable angina</b> who has a normal baseline ECG and can exercise?",
+    "a": "<b>Exercise ECG stress testing</b> (treadmill stress test)."
+  },
+  {
+    "q": "What is the most common primary cardiac tumor in adults, where is it typically located, and what classic physical exam finding is associated with it?",
+    "a": "<b>Atrial Myxoma</b> (80% in the left atrium). Classic finding: Mid-diastolic <b>'tumor plop'</b> murmur simulating mitral stenosis, accompanied by positional syncopal episodes."
+  }
+]

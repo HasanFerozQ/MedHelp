@@ -1,0 +1,82 @@
+[
+  {
+    "q": "What is the formula for the Alveolar-arterial oxygen gradient (A-a gradient) and what does an elevated gradient (>15 mmHg) indicate?",
+    "a": "P<sub>A</sub>O<sub>2</sub> - P<sub>a</sub>O<sub>2</sub>, where P<sub>A</sub>O<sub>2</sub> = (F<sub>i</sub>O<sub>2</sub> &times; (760 - 47)) - (P<sub>a</sub>CO<sub>2</sub> / 0.8). An elevated gradient indicates hypoxemia due to <b>V/Q mismatch</b>, <b>diffusion defect</b>, or <b>right-to-left shunt</b> (vs. hypoventilation/low F<sub>i</sub>O<sub>2</sub> where A-a gradient is normal)."
+  },
+  {
+    "q": "What are <b>Light's criteria</b> for distinguishing an exudative pleural effusion from a transudative pleural effusion?",
+    "a": "An effusion is exudative if &ge;1 of the following is present:<br>1. Pleural fluid protein / Serum protein > <b>0.5</b><br>2. Pleural fluid LDH / Serum LDH > <b>0.6</b><br>3. Pleural fluid LDH > <b><sup>2</sup>&frasl;<sub>3</sub> upper limit of normal</b> for serum LDH."
+  },
+  {
+    "q": "What are the key HRCT findings and microscopic pattern diagnostic of <b>idiopathic pulmonary fibrosis (IPF)</b>?",
+    "a": "High-resolution CT shows <b>subpleural honeycombing</b>, <b>reticular opacities</b>, and <b>traction bronchiectasis</b>, corresponding to a <b>usual interstitial pneumonia (UIP)</b> pattern."
+  },
+  {
+    "q": "What is the classic thoracic imaging finding and key histological feature of <b>sarcoidosis</b>?",
+    "a": "Bilateral <b>hilar lymphadenopathy</b> with parenchymal reticular infiltrates on CXR, and <b>non-caseating granulomas</b> on biopsy (associated with elevated ACE and hypercalcemia secondary to 1-&alpha;-hydroxylase activity)."
+  },
+  {
+    "q": "What is the first-line non-invasive ventilatory support for acute COPD exacerbation with persistent hypercapnic respiratory acidosis (pH < 7.35, P<sub>a</sub>CO<sub>2</sub> > 45 mmHg)?",
+    "a": "<b>Non-invasive positive-pressure ventilation (NIPPV/BiPAP)</b>. Intubation is indicated if NIPPV fails after 1-2 hours or if the patient has severe encephalopathy or hemodynamic instability."
+  },
+  {
+    "q": "What is the preferred reliever and controller therapy for mild persistent asthma according to modern GINA guidelines?",
+    "a": "As-needed <b>low-dose inhaled corticosteroid (ICS)-formoterol</b> (combination ICS + long-acting &beta;<sub>2</sub>-agonist) serves as both controller and quick reliever therapy."
+  },
+  {
+    "q": "In a patient with suspected Pulmonary Embolism (PE), how does the <b>Wells Score</b> dictate initial diagnostic testing?",
+    "a": "If Wells score is <b>&le; 4 (PE unlikely)</b> &rarr; order high-sensitivity <b>D-dimer</b> test.<br>If Wells score is <b>> 4 (PE likely)</b> &rarr; order <b>CT Pulmonary Angiography (CTPA)</b> directly."
+  },
+  {
+    "q": "What is the management step for a high-risk solitary pulmonary nodule (>2 cm, spiculated borders, smoking history)?",
+    "a": "<b>Surgical resection</b> (or biopsy if intermediate risk or high surgical risk). If low risk (<0.8 cm, smooth, young non-smoker) &rarr; serial CT monitoring."
+  },
+  {
+    "q": "What are the diagnostic criteria for <b>ARDS</b> and the target ventilation parameters to reduce mortality?",
+    "a": "Criteria: Acute onset (&le;1 wk), P<sub>a</sub>O<sub>2</sub>/F<sub>i</sub>O<sub>2</sub> ratio <b>&le; 300 mmHg</b> with PEEP &ge; 5 cm H<sub>2</sub>O, bilateral opacities not fully explained by heart failure.<br>Management: <b>Low tidal volume</b> (4-8 mL/kg ideal body weight) and high PEEP."
+  },
+  {
+    "q": "How does <b>Obesity Hypoventilation Syndrome (OHS)</b> differ from isolated Obstructive Sleep Apnea (OSA) on daytime arterial blood gas (ABG)?",
+    "a": "OHS presents with awake daytime <b>hypercapnia (P<sub>a</sub>CO<sub>2</sub> > 45 mmHg)</b> and hypoxemia (P<sub>a</sub>O<sub>2</sub> < 70 mmHg) with compensatory elevated serum HCO<sub>3</sub><sup>-</sup>, whereas isolated OSA has normal daytime ABG values."
+  },
+  {
+    "q": "Which underlying mechanism of arterial hypoxemia does <b>NOT</b> correct with 100% supplemental O<sub>2</sub>?",
+    "a": "<b>Right-to-left shunt</b> (e.g., intracardiac right-to-left shunts, pulmonary arteriovenous malformations, or complete alveolar filling/atelectasis)."
+  },
+  {
+    "q": "What radiologic features distinguish <b>Silicosis</b> from <b>Asbestosis</b>?",
+    "a": "<b>Silicosis</b>: Nodular opacities in <b>upper lobes</b> with <b>\"eggshell\" calcification</b> of hilar lymph nodes.<br><b>Asbestosis</b>: Interstitial fibrosis in <b>lower lobes</b> with <b>pleural plaques</b> (diaphragmatic calcifications)."
+  },
+  {
+    "q": "What are the primary differential diagnoses for a pleural effusion with a <b>glucose level < 60 mg/dL</b>?",
+    "a": "<b>Complicated parapneumonic effusion / empyema</b>, <b>rheumatoid arthritis</b> effusion (often < 30 mg/dL), <b>tuberculosis</b>, <b>lupus pleuritis</b>, and <b>malignancy</b>."
+  },
+  {
+    "q": "What pleural fluid analysis parameters indicate a <b>complicated parapneumonic effusion</b> requiring chest tube thoracostomy drainage?",
+    "a": "pH <b>< 7.20</b>, glucose <b>< 60 mg/dL</b>, LDH <b>> 1000 U/L</b>, or presence of frank pus / positive Gram stain / positive culture."
+  },
+  {
+    "q": "In a young non-smoker (<45 years) presenting with emphysema and abnormal liver function tests, what is the underlying diagnosis and pulmonary disease distribution?",
+    "a": "<b>&alpha;<sub>1</sub>-antitrypsin deficiency</b> (PiZZ genotype), causing <b>panacinar emphysema</b> predominantly affecting the <b>lower lobes</b>, along with liver cirrhosis."
+  },
+  {
+    "q": "What pattern of pulmonary function testing (PFT) parameters is diagnostic of <b>Restrictive Lung Disease</b>?",
+    "a": "Decreased Total Lung Capacity (<b>TLC < 80%</b> predicted), decreased FVC, normal or elevated <b>FEV<sub>1</sub>/FVC ratio (&ge; 70%)</b>."
+  },
+  {
+    "q": "On a mechanical ventilator, if <b>Peak Inspiratory Pressure (PIP)</b> is elevated but <b>Plateau Pressure (P<sub>plat</sub>)</b> is normal, what is the underlying physiological issue?",
+    "a": "Increased <b>airway resistance</b> (e.g., bronchospasm, airway secretions, kinked endotracheal tube). If both PIP and P<sub>plat</sub> are elevated, lung <b>compliance</b> is decreased (e.g., ARDS, pulmonary edema)."
+  },
+  {
+    "q": "What are the 5 components of the <b>CURB-65</b> score for Community-Acquired Pneumonia (CAP) risk stratification?",
+    "a": "<b>C</b>onfusion, <b>U</b>rea > 19 mg/dL (7 mmol/L), <b>R</b>espiratory rate &ge; 30/min, <b>B</b>lood pressure (SBP < 90 or DBP &le; 60 mmHg), Age &ge; <b>65</b>.<br>(Score 0-1: Outpatient; Score 2: Inpatient ward; Score &ge; 3: Inpatient / ICU)."
+  },
+  {
+    "q": "How is Pulmonary Arterial Hypertension (PAH) defined hemodynamically via Right Heart Catheterization?",
+    "a": "Mean pulmonary artery pressure (mPAP) <b>> 20 mmHg</b> at rest, with normal pulmonary capillary wedge pressure (PCWP <b>&le; 15 mmHg</b>) and pulmonary vascular resistance (PVR <b>> 2 Wood units</b>)."
+  },
+  {
+    "q": "How do <b>Carbon Monoxide (CO) poisoning</b> and <b>Methemoglobinemia</b> differ in terms of arterial blood gas (ABG) P<sub>a</sub>O<sub>2</sub> and pulse oximetry (SpO<sub>2</sub>)?",
+    "a": "Both have <b>normal P<sub>a</sub>O<sub>2</sub></b> on ABG.<br>CO poisoning shows falsely <b>normal SpO<sub>2</sub></b> (requires co-oximetry for HbCO).<br>Methemoglobinemia shows <b>SpO<sub>2</sub> fixed ~85%</b> unresponsive to 100% O<sub>2</sub>."
+  }
+]

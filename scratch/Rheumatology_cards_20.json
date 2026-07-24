@@ -1,0 +1,82 @@
+[
+  {
+    "q": "What is the single most specific initial lab test for <b>Rheumatoid Arthritis</b>, and what DMARD should be started immediately upon diagnosis?",
+    "a": "<b>Anti-CCP</b> (Anti-cyclic citrullinated peptide, > 95% specificity) antibody; <b>Methotrexate</b> is first-line DMARD (monitor CBC, LFTs, and chest X-ray for pulmonary toxicity)."
+  },
+  {
+    "q": "In a patient with <b>Systemic Lupus Erythematosus (SLE)</b>, which laboratory parameters best correlate with active <b>lupus nephritis</b> and overall disease flares?",
+    "a": "<b>High anti-dsDNA antibody titers</b> combined with <b>decreased serum complement levels (C<sub>3</sub> and C<sub>4</sub>)</b>."
+  },
+  {
+    "q": "What is the definitive treatment for <b>Scleroderma Renal Crisis</b> (SRC), and which class of medications is strictly contraindicated due to triggering SRC?",
+    "a": "Treatment: Immediate high-dose <b>ACE inhibitors</b> (e.g., captopril); Contraindication: High-dose <b>systemic corticosteroids</b> (precipitates/worsens SRC)."
+  },
+  {
+    "q": "Patients with primary <b>Sjögren Syndrome</b> have a > 40-fold increased risk of developing which specific long-term systemic complication?",
+    "a": "<b>B-cell Non-Hodgkin Lymphoma</b> (most commonly MALT lymphoma; suspect if persistent painless parotid gland enlargement or lymphadenopathy develops)."
+  },
+  {
+    "q": "How do you clinically and diagnostically distinguish <b>Dermatomyositis</b> from Polymyositis?",
+    "a": "Dermatomyositis presents with skin manifestations (<b>Gottron papules</b>, <b>heliotrope rash</b>, shawl sign) and has a strong association with <b>underlying occult malignancy</b> (requires age-appropriate cancer screening). Both feature elevated CK/aldolase and proximal muscle weakness."
+  },
+  {
+    "q": "What is the immediate initial management for a patient suspected of having <b>Giant Cell (Temporal) Arteritis</b> with visual symptoms?",
+    "a": "Immediate high-dose <b>systemic corticosteroids</b> (e.g., IV methylprednisolone or oral prednisone 60 mg/day) <b>BEFORE</b> obtaining a temporal artery biopsy to prevent irreversible blindness."
+  },
+  {
+    "q": "What is the most common extra-articular manifestation of <b>Ankylosing Spondylitis</b>, and what is the first-line pharmacotherapy?",
+    "a": "Extra-articular: Acute <b>anterior uveitis</b> (unilateral painful red eye and photophobia); First-line tx: <b>NSAIDs</b> (e.g., indomethacin, naproxen) combined with continuous physical therapy/exercise."
+  },
+  {
+    "q": "What clinical triad defines <b>Reactive Arthritis</b>, and what HLA association is present in > 80% of affected patients?",
+    "a": "Triad: <b>Urethritis</b>, <b>Conjunctivitis</b>, and asymmetric <b>Oligoarthritis</b> (\"can't see, can't pee, can't climb a tree\"); Associated with <b>HLA-B27</b> following GI (<i>Salmonella, Shigella, Yersinia, Campylobacter</i>) or GU (<i>Chlamydia trachomatis</i>) infection."
+  },
+  {
+    "q": "Which characteristic radiographic feature and physical exam findings are pathognomonic for <b>Psoriatic Arthritis</b>?",
+    "a": "Radiography: <b>\"Pencil-in-cup\" deformity</b> of the DIP joints; Exam: <b>Dactylitis</b> (\"sausage digits\"), nail pitting, and distal interphalangeal (DIP) joint arthritis."
+  },
+  {
+    "q": "Describe the synovial fluid crystal findings in acute <b>Gout</b> vs. <b>Pseudogout</b> (CPPD) under polarized light microscopy.",
+    "a": "Gout: <b>Needle-shaped, strongly negatively birefringent</b> monosodium urate crystals (yellow when parallel to axis); Pseudogout: <b>Rhomboid-shaped, weakly positively birefringent</b> calcium pyrophosphate dihydrate (Ca<sub>2</sub>P<sub>2</sub>O<sub>7</sub>) crystals (blue when parallel)."
+  },
+  {
+    "q": "What is the first-line pharmacotherapy for <b>Fibromyalgia</b>, and what baseline lab abnormalities are expected?",
+    "a": "First-line tx: <b>Non-pharmacologic therapy</b> (aerobic exercise, sleep hygiene); FDA-approved meds include <b>Duloxetine</b>, <b>Pregabalin</b>, or <b>Milnacipran</b>; Labs: All baseline inflammatory markers (ESR, CRP, CK) and labs are <b>completely normal</b>."
+  },
+  {
+    "q": "A patient presents with chronic recurrent sinusitis, cavitary lung nodules with hemoptysis, and rapidly progressive glomerulonephritis. What is the diagnosis and target autoantibody?",
+    "a": "<b>Granulomatosis with Polyangiitis</b> (GPA / Wegener's); Associated with <b>PR3-ANCA / c-ANCA</b> (anti-proteinase 3)."
+  },
+  {
+    "q": "What clinical features and lab finding differentiate <b>Eosinophilic Granulomatosis with Polyangiitis (EGPA)</b> from Microscopic Polyangiitis (MPA)?",
+    "a": "EGPA presents with <b>severe refractory asthma</b>, <b>allergic rhinitis/nasal polyps</b>, and peripheral <b>eosinophilia</b> (> 10%); Associated with <b>MPO-ANCA / p-ANCA</b>."
+  },
+  {
+    "q": "<b>Polyarteritis Nodosa (PAN)</b> characteristically affects medium-sized arteries. Which organ system is classically <b>spared</b>, and which viral infection is strongly associated?",
+    "a": "Lungs are classically <b>spared</b> (no pulmonary involvement); Strongly associated with chronic <b>Hepatitis B Virus (HBV)</b> (and Hepatitis C) infection."
+  },
+  {
+    "q": "What is the classic clinical tetrad of <b>IgA Vasculitis</b> (Henoch-Schönlein Purpura)?",
+    "a": "Tetrad: <b>Palpable purpura</b> (buttocks/lower extremities without thrombocytopenia), <b>Arthralgias</b>, <b>Abdominal pain</b> (risk of intussusception), and <b>Renal disease</b> (IgA mesangial deposition)."
+  },
+  {
+    "q": "What is the diagnostic hallmark autoantibody for <b>Mixed Connective Tissue Disease (MCTD)</b>, and what three diseases overlap in MCTD?",
+    "a": "Antibody: <b>Anti-U1 RNP</b> (ribonucleoprotein); Overlap features of: <b>Systemic Lupus Erythematosus (SLE)</b>, <b>Systemic Sclerosis</b>, and <b>Polymyositis</b>."
+  },
+  {
+    "q": "What autoantibodies and coagulation lab finding are characteristic of <b>Antiphospholipid Syndrome (APLS)</b>?",
+    "a": "Autoantibodies: <b>Anti-&beta;<sub>2</sub>-glycoprotein I</b>, <b>Anti-cardiolipin</b>, and <b>Lupus Anticoagulant</b>; Lab finding: Paradoxically <b>prolonged aPTT</b> that fails to correct on a 1:1 mixing study."
+  },
+  {
+    "q": "What synovial fluid white blood cell (WBC) count threshold confirms <b>Septic Arthritis</b>, and what is the empiric antibiotic coverage for a native joint?",
+    "a": "Synovial fluid WBC: <b>> 50,000/mm<sup>3</sup></b> with <b>> 75-90% PMNs</b>; Empiric tx: <b>IV Vancomycin</b> (covers MRSA) plus <b>3rd generation cephalosporin</b> (e.g., Ceftriaxone, covers Gram-negative rods/<i>Neisseria</i>)."
+  },
+  {
+    "q": "What is the classic symptom triad of <b>Beh&ccedil;et Disease</b>, and what office test supports the diagnosis?",
+    "a": "Triad: Recurrent painful <b>oral aphthous ulcers</b>, <b>genital ulcers</b>, and <b>uveitis</b>; Positive <b>Pathergy test</b> (sterile pustule forms 24-48 hours after needle prick)."
+  },
+  {
+    "q": "How do you clinically differentiate <b>Polymyalgia Rheumatica (PMR)</b> from Polymyositis regarding muscle strength and muscle enzymes?",
+    "a": "PMR presents with proximal muscle stiffness/pain with <b>NORMAL muscle strength</b> and <b>NORMAL muscle enzymes (CK, aldolase)</b> but markedly elevated ESR/CRP; Polymyositis presents with <b>TRUE proximal muscle weakness</b> and <b>ELEVATED muscle enzymes (CK/aldolase)</b>."
+  }
+]

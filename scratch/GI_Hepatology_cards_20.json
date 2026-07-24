@@ -1,0 +1,82 @@
+[
+  {
+    "q": "What is the formula for <b>Serum-Ascites Albumin Gradient (SAAG)</b>, and how do SAAG values &#8805; 1.1 g/dL vs. &lt; 1.1 g/dL differentiate ascites etiologies?",
+    "a": "<b>SAAG = Serum Albumin &minus; Ascitic Fluid Albumin</b>.<br>&bull; <b>SAAG &#8805; 1.1 g/dL</b>: Indicates <i>portal hypertension</i> (e.g., Cirrhosis, Budd-Chiari syndrome, Congestive Heart Failure).<br>&bull; <b>SAAG &lt; 1.1 g/dL</b>: Indicates <i>non-portal hypertension</i> causes (e.g., Peritoneal carcinomatosis, TB peritonitis, Nephrotic syndrome, Pancreatic ascites)."
+  },
+  {
+    "q": "How is <b>Spontaneous Bacterial Peritonitis (SBP)</b> diagnosed, and what are the initial treatment and prophylaxis guidelines?",
+    "a": "<b>Diagnosis</b>: Ascitic fluid absolute PMN count <b>&#8805; 250/mm<sup>3</sup></b>.<br><b>Treatment</b>: Empiric 3<sup>rd</sup> generation cephalosporin (e.g., <i>Cefotaxime</i> or <i>Ceftriaxone</i>) plus IV <b>Albumin</b> (to prevent hepatorenal syndrome).<br><b>Prophylaxis</b>: Daily <i>Fluoroquinolone</i> (e.g., Ciprofloxacin) or <i>TMP-SMX</i>."
+  },
+  {
+    "q": "What is the pathophysiology, diagnostic criteria, and management of <b>Hepatorenal Syndrome (HRS)</b>?",
+    "a": "<b>Pathophysiology</b>: Severe splanchnic vasodilation leading to renal hypoperfusion and RAAS activation.<br><b>Diagnosis</b>: Acute kidney injury in liver failure unresponsive to volume expansion (saline trial) with low urine Na<sup>+</sup> (&lt; 10 mEq/L) and normal renal ultrasound.<br><b>Management</b>: Splanchnic vasoconstrictors (<i>Terlipressin</i> or <i>Octreotide</i> + <i>Midodrine</i>) + IV <b>Albumin</b>; definitive treatment is <i>Liver Transplantation</i>."
+  },
+  {
+    "q": "What lab parameters and initial fluid management strategies are critical in <b>Acute Pancreatitis</b>?",
+    "a": "<b>Diagnosis</b>: Serum <b>Lipase</b> &#8805; 3&times; upper limit of normal (more specific than Amylase).<br><b>Severity/Hydration indicator</b>: Rising BUN or Hct indicates intravascular depletion/hemoconcentration.<br><b>Initial Management</b>: Aggressive fluid resuscitation with <b>Lactated Ringer's (LR)</b> solution and enteral nutrition (if tolerated)."
+  },
+  {
+    "q": "What genetic mutation, diagnostic findings, and treatment options characterize <b>Wilson Disease</b>?",
+    "a": "<b>Mutation</b>: AR mutation in <i>ATP7B</i> gene leading to impaired biliary copper secretion.<br><b>Clinical Presentation</b>: Cirrhosis, neuropsychiatric symptoms, and <i>Kayser-Fleischer rings</i>.<br><b>Labs</b>: Low serum <b>ceruloplasmin</b>, increased 24-hr urinary Cu<sup>2+</sup>, increased hepatic copper content.<br><b>Treatment</b>: Copper chelators (<i>Penicillamine</i> or <i>Trientine</i>) and oral <b>Zinc</b>."
+  },
+  {
+    "q": "What is the key diagnostic serologic marker and first-line therapy for <b>Primary Biliary Cholangitis (PBC)</b>?",
+    "a": "<b>Serology</b>: Positive <b>Anti-mitochondrial antibodies (AMA)</b>.<br><b>Pathology</b>: Autoimmune destruction of intrahepatic interlobular bile ducts (middle-aged women).<br><b>First-line therapy</b>: <b>Ursodeoxycholic acid (UDCA)</b>; liver transplantation for end-stage disease."
+  },
+  {
+    "q": "What imaging finding, strong disease association, and major long-term risk are associated with <b>Primary Sclerosing Cholangitis (PSC)</b>?",
+    "a": "<b>Imaging (MRCP/ERCP)</b>: <i>'Bead-on-a-string'</i> appearance (multifocal strictures and segmentally dilated intra/extrahepatic bile ducts).<br><b>Association</b>: Strongly associated with <b>Ulcerative Colitis</b> (approx. 70-80%).<br><b>Complication</b>: High risk of <b>Cholangiocarcinoma</b>."
+  },
+  {
+    "q": "What is the diagnostic gold standard for <b>Achalasia</b>, and what findings are expected on barium swallow and manometry?",
+    "a": "<b>Barium swallow</b>: Smooth taper of lower esophagus (<i>'Bird's-beak'</i> sign) with proximal dilation.<br><b>Esophageal Manometry (Gold standard)</b>: Absence of esophageal peristalsis and incomplete/absent relaxation of the Lower Esophageal Sphincter (LES) with elevated resting LES pressure."
+  },
+  {
+    "q": "What is the anatomic defect in <b>Zenker Diverticulum</b>, how does it present, and what is the diagnostic test of choice?",
+    "a": "<b>Anatomic location</b>: Herniation through <b>Killian triangle</b> (between thyropharyngeus and cricopharyngeus muscles).<br><b>Presentation</b>: Oropharyngeal dysphagia, regurgitation of undigested food, halitosis, and a neck mass.<br><b>Diagnostic test</b>: <b>Barium esophagram</b> (Upper endoscopy is <i>contraindicated</i> due to risk of perforation)."
+  },
+  {
+    "q": "What is <b>Boerhaave Syndrome</b>, how is it diagnosed, and which contrast agent MUST be used?",
+    "a": "<b>Definition</b>: Transmural esophageal perforation following severe/repetitive vomiting.<br><b>Presentation</b>: Retrosternal chest pain, subcutaneous emphysema, and <i>Hamman sign</i> (mediastinal crunch).<br><b>Diagnosis</b>: Esophagram using <b>water-soluble contrast (Gastrografin)</b>. <i>Barium contrast must be avoided</i> due to risk of mediastinitis."
+  },
+  {
+    "q": "What is the management of early-stage gastric <b>MALT Lymphoma</b> associated with <i>Helicobacter pylori</i>?",
+    "a": "<b>Management</b>: <b><i>H. pylori</i> eradication therapy</b> (e.g., PPI + Amoxicillin + Clarithromycin or Quadruple therapy).<br><b>Outcome</b>: Complete regression of early low-grade MALT lymphoma occurs in up to 75-80% of cases following bacterial eradication alone."
+  },
+  {
+    "q": "What are the key serologic markers, small intestine biopsy findings, and malignancy risk associated with <b>Celiac Disease</b>?",
+    "a": "<b>Serology</b>: IgA <b>anti-tissue transglutaminase (anti-tTG)</b> and IgA anti-endomysial antibodies.<br><b>Duodenal biopsy</b>: <b>Villous atrophy</b>, crypt hyperplasia, and intraepithelial lymphocytosis.<br><b>Malignancy complication</b>: Increased risk of <b>Enteropathy-Associated T-Cell Lymphoma (EATL)</b>."
+  },
+  {
+    "q": "How do <b>Crohn Disease</b> and <b>Ulcerative Colitis (UC)</b> differ regarding gross/histologic distribution and transmural involvement?",
+    "a": "<b>Crohn Disease</b>: Transmural inflammation, <i>skip lesions</i>, non-caseating granulomas, cobblestoning, fistulas/perianal disease, ASCA positive.<br><b>Ulcerative Colitis</b>: Mucosal/submucosal inflammation only, <i>continuous extension</i> starting from rectum, crypt abscesses, pseudopolyps, p-ANCA positive."
+  },
+  {
+    "q": "What genetic defect causes <b>Hereditary Hemochromatosis</b>, what is the classic clinical triad, and what is the primary treatment?",
+    "a": "<b>Genetics</b>: AR mutation in <i>HFE</i> gene (e.g., C282Y mutation) leading to excessive iron absorption.<br><b>Classic triad</b>: <i>Cirrhosis</i>, <i>Diabetes mellitus</i> ('bronze diabetes'), and <i>Skin hyperpigmentation</i>.<br><b>Treatment</b>: Therapeutic <b>phlebotomy</b> (target serum ferritin &lt; 50-100 ng/mL)."
+  },
+  {
+    "q": "How does <b>Non-Alcoholic Fatty Liver Disease (NAFLD)</b> differ from Alcoholic Liver Disease (ALD) in terms of AST/ALT ratios?",
+    "a": "<b>NAFLD/NASH</b>: AST/ALT ratio is typically <b>&lt; 1</b> (ALT &gt; AST). Associated with metabolic syndrome and insulin resistance.<br><b>Alcoholic Liver Disease</b>: AST/ALT ratio is typically <b>&#8805; 2:1</b> (AST &gt; ALT, with AST rarely &gt; 500 U/L)."
+  },
+  {
+    "q": "What are the first-line treatment regimens for initial episodes of <b><i>Clostridioides difficile</i> infection</b>?",
+    "a": "<b>First-line oral therapy</b>: Oral <b>Fidaxomicin</b> (200 mg BID for 10 days) or Oral <b>Vancomycin</b> (125 mg QID for 10 days).<br><i>Note</i>: IV Vancomycin is ineffective because it is not excreted into the intestinal lumen."
+  },
+  {
+    "q": "What is the classic presentation, initial best diagnostic test, and pathophysiology of <b>Acute Mesenteric Ischemia</b>?",
+    "a": "<b>Pathophysiology</b>: Sudden occlusion of the Superior Mesenteric Artery (SMA), commonly from cardiac emboli (e.g., AFib).<br><b>Presentation</b>: Severe abdominal pain <b>out of proportion</b> to physical examination findings.<br><b>Initial best test</b>: <b>CT Angiography</b> of the abdomen."
+  },
+  {
+    "q": "What is <b>Angiodysplasia</b>, what cardiac valvular disorder is it associated with, and how does it present?",
+    "a": "<b>Definition</b>: Vascular ectasia / tortuous submucosal veins commonly located in the cecum/right colon.<br><b>Association</b>: <b>Aortic Stenosis</b> (<i>Heyde syndrome</i>, due to acquired von Willebrand factor cleavage) and renal disease.<br><b>Presentation</b>: Episodic, painless lower GI bleeding (hematochezia) in elderly patients."
+  },
+  {
+    "q": "What is the mechanism of action of <b>Lactulose</b> and <b>Rifaximin</b> in treating <b>Hepatic Encephalopathy</b>?",
+    "a": "<b>Lactulose</b>: Colonic bacteria degrade lactulose into lactic acid and acetic acid &rarr; acidifies gut lumen &rarr; converts NH<sub>3</sub> to non-absorbable <b>NH<sub>4</sub><sup>+</sup></b> (ion trapping) + osmotic laxative effect.<br><b>Rifaximin</b>: Non-absorbable antibiotic that reduces ammonia-producing gut bacteria."
+  },
+  {
+    "q": "What is <b>Ogilvie Syndrome (Acute Colonic Pseudo-obstruction)</b>, how is it diagnosed, and what pharmacological agent is used when conservative therapy fails?",
+    "a": "<b>Definition</b>: Massive dilation of the colon in the absence of mechanical obstruction, usually in severely ill/surgical patients.<br><b>Diagnosis</b>: Abdominal CT showing marked colonic/cecal dilation without distal transition zone.<br><b>Pharmacotherapy</b>: IV <b>Neostigmine</b> (acetylcholinesterase inhibitor) if cecal diameter &gt; 10-12 cm or failing conservative tx."
+  }
+]

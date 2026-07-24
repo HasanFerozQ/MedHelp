@@ -1,0 +1,82 @@
+[
+  {
+    "q": "What is the most important prognostic factor for cutaneous <b>melanoma</b> without distant metastasis?",
+    "a": "<b>Breslow depth</b> (vertical thickness of the lesion measured in millimeters from the granular layer of the epidermis)."
+  },
+  {
+    "q": "Differentiate <b>Pemphigus Vulgaris</b> from <b>Bullous Pemphigoid</b> regarding autoantibodies, Nikolsky sign, and mucous membrane involvement.",
+    "a": "• <b>Pemphigus Vulgaris</b>: IgG against <i>desmoglein-1/3</i>; <b>Nikolsky (+)</b>; oral mucosal involvement common; flaccid blisters.<br>• <b>Bullous Pemphigoid</b>: IgG against <i>hemidesmosomes</i> (BP180/BP230); <b>Nikolsky (-)</b>; mucosal involvement rare; tense blisters."
+  },
+  {
+    "q": "What body surface area (BSA) cutoff differentiates <b>Stevens-Johnson Syndrome (SJS)</b> from <b>Toxic Epidermal Necrolysis (TEN)</b>?",
+    "a": "• <b>SJS</b>: &lt;10% BSA detachment.<br>• <b>SJS/TEN overlap</b>: 10%–30% BSA detachment.<br>• <b>TEN</b>: &gt;30% BSA detachment."
+  },
+  {
+    "q": "What premalignant lesion presents as rough, scaly, sandpaper-like macules/papules on sun-exposed skin, and what is the first-line topical treatment for widespread disease?",
+    "a": "<b>Actinic Keratosis</b> (precursor to Squamous Cell Carcinoma). First-line topical treatment for widespread field cancerization is <b>5-fluorouracil (5-FU)</b> cream or <b>imiquimod</b>."
+  },
+  {
+    "q": "What is the characteristic clinical presentation and histologic finding of <b>Basal Cell Carcinoma (BCC)</b>?",
+    "a": "Clinical: Pearly, translucent papule/nodule with <b>telangiectasias</b> and rolled borders ± central ulceration.<br>Histology: Nests of basaloid epithelial cells with peripheral <b>palisading nuclei</b>."
+  },
+  {
+    "q": "What is the stepwise escalating pharmacotherapy for <b>Acne Vulgaris</b> from mild to severe refractory nodulocystic disease?",
+    "a": "1. <b>Mild</b>: Topical retinoids ± benzoyl peroxide.<br>2. <b>Moderate</b>: Add topical antibiotics (clindamycin/erythromycin) or oral tetracyclines (doxycycline/minocycline).<br>3. <b>Severe/Nodulocystic</b>: Oral <b>isotretinoin</b> (requires negative pregnancy tests and enrollment in iPLEDGE due to severe teratogenicity)."
+  },
+  {
+    "q": "What chronic inflammatory dermatosis presents with recurrent, painful nodules, abscesses, and sinus tracts in intertriginous areas (axillae, groin)? What biological agent is approved for moderate-to-severe disease?",
+    "a": "<b>Hidradenitis Suppurativa</b> (follicular occlusion disease). First-line biologic is an <b>anti-TNF-&alpha;</b> monoclonal antibody (e.g., <b>adalimumab</b>)."
+  },
+  {
+    "q": "What is the diagnosis for silvery-white plaques on extensor surfaces displaying the <b>Auspitz sign</b>, and which cytokine pathways are key targets for modern systemic therapy?",
+    "a": "<b>Psoriasis Vulgaris</b> (Auspitz sign: pinpoint bleeding upon scale removal). Targeted biologics include <b>anti-IL-17</b> (e.g., secukinumab), <b>anti-IL-12/23</b> (e.g., ustekinumab), or <b>anti-TNF-&alpha;</b> inhibitors."
+  },
+  {
+    "q": "What key genetic mutation (epidermal barrier protein) is strongly associated with <b>Atopic Dermatitis</b>, and what non-steroidal topical class is used for facial lesions?",
+    "a": "Inactivating mutations in the <b>Filaggrin (<i>FLG</i>)</b> gene. Facial/intertriginous flare-ups are treated with <b>topical calcineurin inhibitors</b> (e.g., tacrolimus, pimecrolimus) to avoid steroid-induced skin atrophy."
+  },
+  {
+    "q": "What greasy, erythematous rash with yellow scales affecting the scalp and nasolabial folds is associated with <i>Malassezia</i> fungi, and which underlying neurological condition is classic for severe recalcitrant presentations?",
+    "a": "<b>Seborrheic Dermatitis</b>. Strongly associated with <b>Parkinson disease</b> (and HIV infection)."
+  },
+  {
+    "q": "A patient with chronic Hepatitis C presents with painless blisters, skin fragility, and hyperpigmentation on sun-exposed hands. What enzyme deficiency causes this condition, and what accumulates in the urine?",
+    "a": "<b>Porphyria Cutanea Tarda (PCT)</b> due to deficiency of <b>uroporphyrinogen decarboxylase (UROD)</b>. Urinalysis demonstrates elevated <b>uroporphyrins</b> (turns tea-colored or fluoresces coral red under Wood lamp)."
+  },
+  {
+    "q": "What chronic facial dermatosis presents with central facial erythema, telangiectasias, and pustules triggered by alcohol, heat, or spicy foods, and what topical antimicrobial is first-line?",
+    "a": "<b>Rosacea</b> (papulopustular variant). First-line topical treatments include <b>metronidazole</b>, azelaic acid, or ivermectin. (Note: lack of comedones distinguishes it from acne vulgaris)."
+  },
+  {
+    "q": "What auto-inflammatory skin disease presents with pruritic, purple, polygonal, planar papules and plaques with fine white lines (Wickham striae), and which chronic viral infection should be screened for?",
+    "a": "<b>Lichen Planus</b> (the 5 Ps: Pruritic, Purple, Polygonal, Planar Papules/Plaques). Strong association with <b>Hepatitis C virus (HCV)</b> infection."
+  },
+  {
+    "q": "An adult with chronic diarrhea presents with intensely pruritic, grouped papulovesicles on the elbows, knees, and buttocks. What is the diagnosis, autoantibody target, and acute medical treatment?",
+    "a": "<b>Dermatitis Herpetiformis</b> associated with <b>Celiac Disease</b> (IgA anti-epidermal transglutaminase deposits at dermal papillae tips). Acute treatment is <b>dapsone</b>; long-term management requires a strict <b>gluten-free diet</b>."
+  },
+  {
+    "q": "What condition presents as painful, erythematous, non-ulcerative nodular lesions on the anterior lower legs (shins), and what are 3 major high-yield underlying etiologies?",
+    "a": "<b>Erythema Nodosum</b> (panniculitis). High-yield causes include: <b>Streptococcal pharyngitis</b>, <b>Sarcoidosis</b>, <b>Inflammatory Bowel Disease (IBD)</b>, <b>Histoplasmosis</b>, and <b>Tuberculosis</b>."
+  },
+  {
+    "q": "A patient with Ulcerative Colitis develops a rapidly expanding, extremely painful skin ulcer with violaceous, undermined borders after minor skin trauma. What is the diagnosis and primary management?",
+    "a": "<b>Pyoderma Gangrenosum</b> (demonstrates <i>pathergy</i>). Management involves <b>systemic corticosteroids</b> or immunosuppressants (e.g., cyclosporine, infliximab). <i>Do NOT perform surgical debridement as it worsens the ulcer.</i>"
+  },
+  {
+    "q": "What skin manifestation presents as hyperpigmented, velvety plaques in intertriginous zones (neck, axillae), and what are the two main clinical associations (benign vs malignant)?",
+    "a": "<b>Acanthosis Nigricans</b>.<br>• <b>Benign</b>: Insulin resistance (Type 2 Diabetes Mellitus, PCOS, obesity).<br>• <b>Malignant</b>: Gastrointestinal adenocarcinoma (especially <b>gastric adenocarcinoma</b>)."
+  },
+  {
+    "q": "What is the <b>Leser-Trélat sign</b> and what underlying pathology does it indicate?",
+    "a": "The sudden eruption of multiple <b>seborrheic keratoses</b> within a short period. It serves as a paraneoplastic marker for underlying internal malignancy, most commonly <b>gastrointestinal adenocarcinoma</b>."
+  },
+  {
+    "q": "A patient started on allopurinol 4 weeks ago presents with fever, widespread maculopapular rash, facial edema, diffuse lymphadenopathy, and eosinophilia (absolute eosinophil count &gt;1,500/&mu;L). What is the diagnosis?",
+    "a": "<b>DRESS Syndrome</b> (Drug Reaction with Eosinophilia and Systemic Symptoms). Caused by drugs like antiepileptics (phenytoin, carbamazepine), allopurinol, or antibiotics (vancomycin). Visceral organ involvement (e.g., hepatitis, interstitial nephritis) is common."
+  },
+  {
+    "q": "What skin infection presents with small, firm, umbilicated dome-shaped papules with a central curd-like core, and when seen extensively in an adult, warrants testing for which underlying condition?",
+    "a": "<b>Molluscum Contagiosum</b> (caused by <i>Poxvirus</i>). In adults with widespread or facial lesions, screening for <b>HIV infection</b> (immunocompromised state) is mandatory."
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "q": "What are the typical urinary diagnostic markers (FENa, FEUrea, Urine Na<sup>+</sup>, Urine Osmolality, BUN/Cr ratio) that differentiate prerenal azotemia from acute tubular necrosis (ATN)?",
+    "a": "<b>Prerenal Azotemia:</b> FENa &lt; 1% (or FEUrea &lt; 35% if on diuretics), Urine Na<sup>+</sup> &lt; 20 mEq/L, Urine Osmolality &gt; 500 mOsm/kg, BUN/Cr ratio &gt; 20:1.<br><b>ATN:</b> FENa &gt; 2% (FEUrea &gt; 50%), Urine Na<sup>+</sup> &gt; 40 mEq/L, Urine Osmolality &lt; 350 mOsm/kg, BUN/Cr ratio &lt; 15:1."
+  },
+  {
+    "q": "A patient presenting with fever, maculopapular rash, and renal failure 1–2 weeks after starting trimethoprim-sulfamethoxazole or an NSAID most likely has what condition, and what is seen on urinalysis?",
+    "a": "<b>Acute Interstitial Nephritis (AIN)</b>.<br>Urinalysis demonstrates WBC casts, sterile pyuria, and urine eosinophils (eosinophiluria)."
+  },
+  {
+    "q": "An end-stage renal disease (ESRD) patient on hemodialysis presents with painful, violaceous subcutaneous plaques and ischemic skin necrosis on the thighs. Laboratory evaluation reveals hyperphosphatemia and an elevated Ca<sup>2+</sup> &times; PO<sub>4</sub><sup>3-</sup> product. What is the diagnosis?",
+    "a": "<b>Calciphylaxis</b> (calcific uremic arteriolopathy), caused by arteriolar vascular calcification and thrombosis leading to severe tissue ischemia and cutaneous necrosis."
+  },
+  {
+    "q": "What are the diagnostic laboratory findings for Syndrome of Inappropriate Antidiuretic Hormone (SIADH) secretion (Serum Na<sup>+</sup>, Serum Osmolality, Urine Osmolality, Urine Na<sup>+</sup>)?",
+    "a": "Euvolemic hyponatremia characterized by: <b>Serum Na<sup>+</sup> &lt; 135 mEq/L</b>, <b>Serum Osmolality &lt; 275 mOsm/kg</b>, <b>Urine Osmolality &gt; 100 mOsm/kg</b> (inappropriately concentrated), and <b>Urine Na<sup>+</sup> &gt; 40 mEq/L</b>."
+  },
+  {
+    "q": "In a patient with severe hyperkalemia (K<sup>+</sup> &gt; 6.5 mEq/L) presenting with ECG changes (peaked T waves, widened QRS), what is the immediate first-line medication to administer and its mechanism of action?",
+    "a": "<b>Intravenous Calcium Gluconate</b> (or Calcium Chloride).<br>Mechanism: Stabilizes the cardiac myocyte membrane potential to prevent fatal arrhythmias. <i>(Note: It does not lower serum K<sup>+</sup> levels.)</i>"
+  },
+  {
+    "q": "What is the most common cause of primary nephrotic syndrome in adults, strongly associated with anti-phospholipase A2 receptor (anti-PLA2R) antibodies, solid organ malignancies, and Hepatitis B?",
+    "a": "<b>Membranous Nephropathy</b>.<br>Renal biopsy demonstrates subepithelial immune complex deposition causing a <b>'spike and dome'</b> appearance on electron microscopy."
+  },
+  {
+    "q": "A 5-year-old child presents with sudden-onset periorbital edema, heavy proteinuria (&gt; 3.5 g/day), and hypoalbuminemia. What is the diagnosis, light microscopy finding, and first-line treatment?",
+    "a": "<b>Minimal Change Disease</b>.<br>Light microscopy is normal; electron microscopy shows <b>effacement of podocyte foot processes</b>. First-line treatment: oral <b>corticosteroids</b> (e.g., prednisone)."
+  },
+  {
+    "q": "Which nephrotic syndrome variant is most common in Black patients and strongly associated with HIV infection, heroin use, morbid obesity, and APOL1 gene mutations?",
+    "a": "<b>Focal Segmental Glomerulosclerosis (FSGS)</b>.<br>Renal biopsy demonstrates sclerosis affecting segments of &lt; 50% of glomeruli."
+  },
+  {
+    "q": "How does the timing of gross hematuria following an upper respiratory infection distinguish IgA Nephropathy from Post-Streptococcal Glomerulonephritis (PSGN)?",
+    "a": "<b>IgA Nephropathy:</b> Presents <b>within 5 days</b> (synpharyngitic) of URI; serum C3/C4 complement levels are <b>normal</b>.<br><b>PSGN:</b> Presents <b>1–4 weeks</b> post-pharyngitis/impetigo; serum C3 level is <b>low</b>, with positive anti-streptolysin O (ASO) or anti-DNase B titers."
+  },
+  {
+    "q": "What serologic marker (c-ANCA vs. p-ANCA) and systemic clinical features distinguish Granulomatosis with Polyangiitis (GPA) from Microscopic Polyangiitis (MPA)?",
+    "a": "<b>GPA:</b> <b>c-ANCA positive (anti-PR3)</b>; features upper respiratory involvement (nasal ulcers, sinusitis), lower respiratory (cavitary pulmonary nodules), and glomerulonephritis.<br><b>MPA:</b> <b>p-ANCA positive (anti-MPO)</b>; causes glomerulonephritis and pulmonary capillaritis but <b>lacks</b> upper airway and granulomatous lesions."
+  },
+  {
+    "q": "How is the serum Anion Gap calculated, what is its normal reference range, and what is the standard mnemonic for high anion gap metabolic acidosis (HAGMA)?",
+    "a": "Serum Anion Gap = [Na<sup>+</sup>] - ([Cl<sup>-</sup>] + [HCO<sub>3</sub><sup>-</sup>]). Normal range: <b>8–12 mEq/L</b>.<br>Mnemonic: <b>MUDPILES</b> (Methanol, Uremia, Diabetic Ketoacidosis, Propylene glycol, Isoniazid/Iron, Lactic acidosis, Ethylene glycol, Salicylates)."
+  },
+  {
+    "q": "What are the key distinguishing features (Urine pH, Serum K<sup>+</sup> level) among Renal Tubular Acidosis (RTA) Type 1 (Distal), RTA Type 2 (Proximal), and RTA Type 4 (Hypoaldosteronism)?",
+    "a": "<b>Type 1 (Distal):</b> Urine pH &gt; 5.5, <b>Hypokalemia</b> (impaired H<sup>+</sup> excretion).<br><b>Type 2 (Proximal):</b> Urine pH &lt; 5.5 (eventually), <b>Hypokalemia</b> (impaired HCO<sub>3</sub><sup>-</sup> reabsorption).<br><b>Type 4:</b> Urine pH &lt; 5.5, <b>Hyperkalemia</b> (aldosterone deficiency or resistance)."
+  },
+  {
+    "q": "An adult patient presents with bilateral flank pain, hypertension, palpable abdominal masses, and hematuria. What extrarenal manifestations are strongly associated with Autosomal Dominant Polycystic Kidney Disease (ADPKD)?",
+    "a": "<b>Intracranial berry aneurysms</b> (risk of subarachnoid hemorrhage), <b>hepatic cysts</b>, mitral valve prolapse (MVP), and colonic diverticulosis."
+  },
+  {
+    "q": "What is the primary pathophysiologic mechanism of Hepatorenal Syndrome (HRS) in patients with decompensated cirrhosis and ascites, and what is the definitive treatment?",
+    "a": "<b>Splanchnic vasodilation</b> causing severe renal vasoconstriction and hypoperfusion.<br>Urinalysis is bland with FENa &lt; 1%. Definitive treatment: <b>liver transplantation</b> (bridged with vasoconstrictors like octreotide + midodrine or terlipressin plus IV albumin)."
+  },
+  {
+    "q": "A patient with severe chronic kidney disease presents with position-dependent chest pain, a pericardial friction rub, and blood urea nitrogen (BUN) &gt; 60 mg/dL. ECG shows low voltage without diffuse ST-segment elevations. What is the immediate treatment of choice?",
+    "a": "<b>Urgent Hemodialysis</b>.<br>Uremic pericarditis is an absolute indication for dialysis. <i>(Avoid NSAIDs or anticoagulants due to increased risk of hemorrhagic pericarditis.)</i>"
+  },
+  {
+    "q": "A 62-year-old smoker with generalized atherosclerosis presents with resistant hypertension and an acute rise in serum creatinine &gt; 30% after starting an ACE inhibitor. What is the diagnostic imaging modality of choice?",
+    "a": "<b>Renal Artery Duplex Ultrasonography</b> (or CT/MR angiography).<br>Caused by renovascular atherosclerosis impairing angiotensin II-dependent efferent arteriolar vasoconstriction."
+  },
+  {
+    "q": "What is the most common chemical composition of kidney stones, their appearance on abdominal X-ray, urinary crystal shape, and key dietary prevention strategies?",
+    "a": "<b>Calcium Oxalate</b> stones.<br><b>Radiopaque</b> on X-ray, showing <b>envelope- or dumbbell-shaped</b> crystals. Prevention: Increased fluid intake, <b>low-sodium & normal-calcium diet</b>, and <b>Thiazide diuretics</b>."
+  },
+  {
+    "q": "A patient on long-term Lithium therapy presents with hypernatremia, polyuria, and polydipsia. Water deprivation testing shows urine osmolality &lt; 300 mOsm/kg that does not rise after exogenous desmopressin (dDAVP). What is the diagnosis and preferred medication to manage it?",
+    "a": "<b>Lithium-induced Nephrogenic Diabetes Insipidus</b>.<br>Treatment: Discontinue lithium if feasible; administer <b>Amiloride</b> to block lithium entry via ENaC channels in the collecting duct."
+  },
+  {
+    "q": "A 14-year-old boy presents with microhematuria, progressive sensorineural hearing loss, and anterior lenticonus. Biopsy shows irregular thinning and splitting of the glomerular basement membrane. What gene defect causes this condition?",
+    "a": "X-linked mutation in the <b>COL4A5</b> gene encoding the <b>type IV collagen &alpha;-5 chain</b> (Alport Syndrome)."
+  },
+  {
+    "q": "Following a cardiac catheterization, a patient develops acute kidney injury, livedo reticularis, blue toes, and eosinophilia. What classic histologic finding is seen on renal biopsy?",
+    "a": "<b>Biconvex, needle-shaped cholesterol clefts</b> occluding small renal arteries and arterioles (Atheroembolic / Cholesterol Embolization Syndrome)."
+  }
+]
