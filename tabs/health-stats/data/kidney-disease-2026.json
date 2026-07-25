@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "Kidney Disease Statistics 2026",
+    "year": 2026,
+    "lastUpdated": "2026-01-15",
+    "primarySources": ["ISN Global Kidney Health Atlas 2024", "WHO Global Health Estimates", "USRDS & CDC Chronic Kidney Disease Surveillance"]
+  },
+  "hero": {
+    "eyebrow": "International Society of Nephrology · WHO · USRDS",
+    "description": "Global Chronic Kidney Disease (CKD) prevalence, End-Stage Renal Disease (ESRD), dialysis rates, leading causes, and country rankings."
+  },
+  "kpis": [
+    { "label": "People with CKD", "value": 850000000, "unit": "", "format": "compact", "suffix": " worldwide", "trend": "1 in 10 adults", "icon": "🫘" },
+    { "label": "Global Prevalence", "value": 10.4, "unit": "%", "format": "decimal", "suffix": " of population", "trend": "High global burden", "icon": "📊" },
+    { "label": "Undiagnosed Early CKD", "value": 90, "unit": "%", "format": "integer", "suffix": " unaware in early stages", "trend": "Silent progression", "icon": "🔍" },
+    { "label": "Annual CKD Deaths", "value": 3100000, "unit": "", "format": "compact", "suffix": " deaths/yr", "trend": "Direct + CVD deaths", "icon": "💔" },
+    { "label": "Dialysis & Transplant", "value": 3900000, "unit": "", "format": "compact", "suffix": " on RRT therapy", "trend": "High cost burden", "icon": "🏥" },
+    { "label": "Projected Rank 2040", "value": 5, "unit": "th", "format": "integer", "suffix": " leading cause of death", "trend": "Rising up from 13th", "icon": "📈" }
+  ],
+  "leadingCauses": {
+    "labels": ["Diabetic Nephropathy", "Hypertensive Nephrosclerosis", "Glomerulonephritis", "Polycystic / Other"],
+    "values": [38, 30, 15, 17],
+    "unit": "% of CKD cases"
+  },
+  "byStage": {
+    "labels": ["Stage 1 (Mild)", "Stage 2 (Mild-Mod)", "Stage 3 (Moderate)", "Stage 4 (Severe)", "Stage 5 (ESRD)"],
+    "values": [3.5, 3.9, 4.8, 0.4, 0.1],
+    "unit": "% of global adult population"
+  },
+  "byRegion": {
+    "labels": ["Latin America", "Middle East & N. Africa", "North America", "Central & E. Europe", "South Asia", "East Asia"],
+    "values": [13.2, 12.8, 12.4, 11.5, 10.8, 9.6],
+    "unit": "% adult prevalence"
+  },
+  "countryRankings": {
+    "title": "Highest Chronic Kidney Disease (CKD) Prevalence (%)",
+    "countries": [
+      { "country": "Mexico", "code": "MEX", "value": 16.2, "rank": 1 },
+      { "country": "Saudi Arabia", "code": "SAU", "value": 15.8, "rank": 2 },
+      { "country": "United States", "code": "USA", "value": 14.2, "rank": 3 },
+      { "country": "Egypt", "code": "EGY", "value": 13.9, "rank": 4 },
+      { "country": "Brazil", "code": "BRA", "value": 12.5, "rank": 5 },
+      { "country": "Germany", "code": "DEU", "value": 11.8, "rank": 6 },
+      { "country": "China", "code": "CHN", "value": 10.6, "rank": 7 },
+      { "country": "India", "code": "IND", "value": 10.2, "rank": 8 },
+      { "country": "United Kingdom", "code": "GBR", "value": 9.8, "rank": 9 },
+      { "country": "Japan", "code": "JPN", "value": 9.5, "rank": 10 }
+    ],
+    "unit": "%"
+  },
+  "trends": {
+    "labels": ["1990", "2000", "2010", "2020", "2024", "2040"],
+    "deaths": [1.1, 1.6, 2.2, 2.8, 3.1, 4.5],
+    "unit": "millions of deaths"
+  },
+  "riskFactors": [
+    { "title": "Diabetes Mellitus", "description": "High blood glucose damages renal microvasculopathy (diabetic nephropathy).", "impact": "Critical" },
+    { "title": "Hypertension", "description": "High blood pressure causes nephrosclerosis and glomerular damage.", "impact": "Critical" },
+    { "title": "Glomerulonephritis", "description": "Autoimmune and post-infectious glomerular inflammation.", "impact": "High" },
+    { "title": "NSAID Overuse", "description": "Chronic heavy use of NSAID pain relievers induces interstitial nephritis.", "impact": "High" },
+    { "title": "Obesity", "description": "Forces hyperfiltration burden on kidneys, accelerating eGFR decline.", "impact": "High" }
+  ],
+  "didYouKnow": [
+    "850 million people worldwide have kidney disease — double the number of people with diabetes.",
+    "Up to 90% of people with early chronic kidney disease (Stages 1-3) don't know they have it.",
+    "CKD is projected to become the 5th leading cause of death worldwide by 2040.",
+    "Over 2 million people worldwide currently receive dialysis or kidney transplants to stay alive."
+  ],
+  "faq": [
+    { "q": "How many people have chronic kidney disease globally?", "a": "An estimated 850 million people worldwide live with chronic kidney disease (CKD), representing over 10% of the global population." },
+    { "q": "What are the two leading causes of kidney failure?", "a": "Diabetes (38%) and High Blood Pressure (30%) account for over two-thirds of all kidney failure cases." }
+  ],
+  "compareCountries": ["USA", "MEX", "SAU", "BRA", "DEU", "CHN", "IND", "GBR"]
+}

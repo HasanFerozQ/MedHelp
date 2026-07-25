@@ -1,0 +1,96 @@
+{
+  "meta": {
+    "title": "Cancer Statistics 2026",
+    "year": 2026,
+    "lastUpdated": "2026-01-15",
+    "primarySources": ["IARC GLOBOCAN 2024", "American Cancer Society Global Cancer Facts 2024", "WHO"]
+  },
+  "hero": {
+    "eyebrow": "IARC GLOBOCAN 2024 · American Cancer Society · WHO",
+    "description": "Global cancer incidence, mortality, most common cancer types, survival context, regional comparisons, and projections through 2050."
+  },
+  "kpis": [
+    { "label": "New Cancer Cases", "value": 20600000, "unit": "", "format": "compact", "suffix": " in 2024", "trend": "+3% vs 2022", "icon": "📋" },
+    { "label": "Cancer Deaths", "value": 9800000, "unit": "", "format": "compact", "suffix": " annually", "trend": "1 in 9 deaths", "icon": "💔" },
+    { "label": "Lifetime Risk", "value": 20, "unit": "%", "format": "integer", "suffix": " develop cancer", "trend": "1 in 5 people", "icon": "⚠️" },
+    { "label": "Countries Covered", "value": 186, "unit": "", "format": "integer", "suffix": " countries", "trend": "34 cancer types", "icon": "🌍" },
+    { "label": "Projected Cases 2050", "value": 34400000, "unit": "", "format": "compact", "suffix": " new cases", "trend": "+67% from 2024", "icon": "📈" },
+    { "label": "Preventable Cases", "value": 40, "unit": "%", "format": "integer", "suffix": " potentially preventable", "trend": "via risk reduction", "icon": "🛡️" }
+  ],
+  "mostCommon": {
+    "labels": ["Lung", "Breast", "Colorectal", "Prostate", "Stomach", "Liver", "Other"],
+    "incidence": [12.8, 11.8, 9.9, 7.5, 4.7, 4.5, 48.8],
+    "mortality": [19.1, 7.1, 9.4, 4.0, 6.6, 7.5, 46.3],
+    "unit": "% of all cases"
+  },
+  "byGender": {
+    "incidenceMale": 10306500,
+    "incidenceFemale": 10293500,
+    "mortalityMale": 5427000,
+    "mortalityFemale": 4309700,
+    "topMale": ["Lung", "Prostate", "Colorectal"],
+    "topFemale": ["Breast", "Lung", "Colorectal"]
+  },
+  "byAge": {
+    "labels": ["0-14", "15-39", "40-54", "55-69", "70+"],
+    "values": [1.2, 8.5, 22.3, 35.8, 32.2],
+    "unit": "% of new cases"
+  },
+  "byRegion": {
+    "labels": ["Asia", "Europe", "Americas", "Africa", "Oceania"],
+    "incidence": [49.2, 22.4, 18.5, 6.1, 3.8],
+    "mortality": [56.1, 20.4, 15.2, 6.8, 1.5],
+    "unit": "% of global total"
+  },
+  "countryRankings": {
+    "title": "Highest Cancer Incidence Rates (Age-Standardized, per 100k)",
+    "countries": [
+      { "country": "Australia", "code": "AUS", "value": 477, "rank": 1 },
+      { "country": "New Zealand", "code": "NZL", "value": 460, "rank": 2 },
+      { "country": "Ireland", "code": "IRL", "value": 445, "rank": 3 },
+      { "country": "Denmark", "code": "DNK", "value": 438, "rank": 4 },
+      { "country": "Netherlands", "code": "NLD", "value": 435, "rank": 5 },
+      { "country": "Belgium", "code": "BEL", "value": 428, "rank": 6 },
+      { "country": "France", "code": "FRA", "value": 415, "rank": 7 },
+      { "country": "United States", "code": "USA", "value": 398, "rank": 8 },
+      { "country": "Canada", "code": "CAN", "value": 390, "rank": 9 },
+      { "country": "United Kingdom", "code": "GBR", "value": 385, "rank": 10 }
+    ],
+    "unit": "per 100k"
+  },
+  "trends": {
+    "labels": ["2000", "2005", "2010", "2015", "2020", "2022", "2024", "2050"],
+    "cases": [10.1, 11.5, 13.1, 15.2, 17.5, 20.0, 20.6, 34.4],
+    "deaths": [6.2, 6.8, 7.6, 8.5, 9.2, 9.7, 9.8, 16.5],
+    "unit": "millions"
+  },
+  "survivalContext": [
+    { "cancer": "Breast", "fiveYearSurvival": "90%+ in HIC", "note": "Early detection dramatically improves outcomes" },
+    { "cancer": "Prostate", "fiveYearSurvival": "95%+ in HIC", "note": "Often slow-growing; screening effective" },
+    { "cancer": "Lung", "fiveYearSurvival": "15-20% globally", "note": "Leading cause of cancer death worldwide" },
+    { "cancer": "Pancreatic", "fiveYearSurvival": "<10% globally", "note": "Often diagnosed at late stage" },
+    { "cancer": "Colorectal", "fiveYearSurvival": "60-65% globally", "note": "Screening programs reduce mortality" }
+  ],
+  "riskFactors": [
+    { "title": "Tobacco Use", "description": "Responsible for ~25% of cancer deaths; leading preventable cause.", "impact": "Critical" },
+    { "title": "Obesity", "description": "Linked to 13+ cancer types including breast, colorectal, and liver.", "impact": "High" },
+    { "title": "Infections", "description": "HPV, HBV, HCV, H. pylori cause ~13% of cancers globally.", "impact": "High" },
+    { "title": "Alcohol", "description": "Increases risk for oral, liver, breast, and colorectal cancers.", "impact": "Medium" },
+    { "title": "Physical Inactivity", "description": "Associated with colorectal, breast, and endometrial cancers.", "impact": "Medium" },
+    { "title": "Air Pollution", "description": "Outdoor air pollution linked to lung cancer incidence.", "impact": "Medium" }
+  ],
+  "didYouKnow": [
+    "Lung cancer remains the most diagnosed cancer globally with 2.6 million new cases in 2024.",
+    "Asia accounts for 49.2% of global cancer cases but 56.1% of cancer deaths.",
+    "Female breast cancer is the most diagnosed cancer in women with 2.3 million new cases.",
+    "By 2050, cancer cases are projected to reach 34.4 million — a 67% increase from 2024."
+  ],
+  "faq": [
+    { "q": "How many new cancer cases occur worldwide each year?", "a": "GLOBOCAN 2024 estimates approximately 20.6 million new cancer cases worldwide in 2024, equivalent to roughly 1 in 5 people developing cancer during their lifetime." },
+    { "q": "What is the most common cancer globally?", "a": "Lung cancer is the most frequently diagnosed cancer (12.8% of all cases), followed by female breast cancer (11.8%) and colorectal cancer (9.9%)." },
+    { "q": "How many people die from cancer each year?", "a": "An estimated 9.8 million people died from cancer in 2024 — approximately 26,800 deaths per day." },
+    { "q": "Which region has the highest cancer burden?", "a": "Asia bears the largest share with 49.2% of global cases and 56.1% of deaths, reflecting both population size and late-stage diagnosis patterns." },
+    { "q": "Are cancer rates increasing?", "a": "Yes. Global cancer incidence has risen steadily due to population growth, ageing, and increased exposure to risk factors. Cases are projected to reach 34.4 million by 2050." }
+  ],
+  "compareCountries": ["USA", "CHN", "IND", "JPN", "DEU", "BRA", "GBR", "AUS"]
+}

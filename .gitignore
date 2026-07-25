@@ -4,7 +4,7 @@ dist/
 .env
 
 # Raw Datasets
-data/
+/data/
 scripts/*.zip
 scripts/*.txt
 
