@@ -462,6 +462,154 @@
   <!-- ── MAIN CONTENT (injected by JS) ── -->
   <div id="page-content" style="display:none;"></div>
 
+  <!-- ── FREE TOOLS CTA SECTION (static) ── -->
+  <section class="page-section" id="free-tools-cta" style="background: var(--bg); border-top: 1px solid var(--border); display:none;">
+    <div class="container">
+      <div class="section-header" style="text-align: center; margin-bottom: 36px;">
+        <span class="section-eyebrow" style="background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.25); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Patient &amp; Provider Suite</span>
+        <h2 class="section-h" style="font-size: clamp(24px, 4vw, 36px); font-weight: 900; color: var(--text-h); margin-top: 10px; margin-bottom: 12px;">Explore MediHelp Free Healthcare Tools</h2>
+        <p style="color: var(--text-muted); font-size: 15px; max-width: 640px; margin: 0 auto; line-height: 1.6;">From auditing medical bills and checking CPT codes to calculating clinical dosing and finding prescription savings — all 100% free with no account required.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px;">
+        <a href="/medical-calculator" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='gold';" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)';">
+          <div>
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255,215,0,0.12); border: 1px solid rgba(255,215,0,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">🔬</div>
+            <h3 style="font-size: 17px; font-weight: 800; color: var(--text-h); margin-bottom: 8px;">Clinical Calculators</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">150+ free medical calculators for BMI, BSA, Creatinine Clearance, SOFA, APACHE-II, &amp; dosing.</p>
+          </div>
+          <span style="font-size: 13px; font-weight: 800; color: gold; display: flex; align-items: center; gap: 6px;">Open Calculators →</span>
+        </a>
+        <a href="/claim-denial-codes" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='#ef4444';" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)';">
+          <div>
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">🚫</div>
+            <h3 style="font-size: 17px; font-weight: 800; color: var(--text-h); margin-bottom: 8px;">Claim Denial Codes</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">Lookup CARC &amp; RARC insurance denial codes to appeal denied hospital and doctor claims fast.</p>
+          </div>
+          <span style="font-size: 13px; font-weight: 800; color: #ef4444; display: flex; align-items: center; gap: 6px;">Lookup Denial Codes →</span>
+        </a>
+        <a href="/cpt-code-search" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='var(--accent)';" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)';">
+          <div>
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">🏷️</div>
+            <h3 style="font-size: 17px; font-weight: 800; color: var(--text-h); margin-bottom: 8px;">CPT Code Search</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">Search 10,000+ medical CPT billing codes, average costs, and verify charges on your hospital bill.</p>
+          </div>
+          <span style="font-size: 13px; font-weight: 800; color: var(--accent); display: flex; align-items: center; gap: 6px;">Search CPT Codes →</span>
+        </a>
+        <a href="/rx-savings" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='#10b981';" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)';">
+          <div>
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">💊</div>
+            <h3 style="font-size: 17px; font-weight: 800; color: var(--text-h); margin-bottom: 8px;">Rx Savings Search</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">Compare prescription medication prices across pharmacies and unlock discount coupons up to 80% off.</p>
+          </div>
+          <span style="font-size: 13px; font-weight: 800; color: #10b981; display: flex; align-items: center; gap: 6px;">Find Rx Coupons →</span>
+        </a>
+        <a href="/providers" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='#8b5cf6';" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)';">
+          <div>
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">🏥</div>
+            <h3 style="font-size: 17px; font-weight: 800; color: var(--text-h); margin-bottom: 8px;">Provider Search</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">Search NPI-registered healthcare providers, specialties, hospital affiliations, and credentials nationwide.</p>
+          </div>
+          <span style="font-size: 13px; font-weight: 800; color: #8b5cf6; display: flex; align-items: center; gap: 6px;">Find Doctors →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MEDICAL EXAM MASTERY CARD (static) ── -->
+  <section class="page-section" id="exam-mastery-cta" style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 50px 0; display:none;">
+    <div class="container">
+      <div style="background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15) 0%, rgba(139, 92, 246, 0.15) 50%, rgba(236, 72, 153, 0.1) 100%); border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 24px; padding: 40px 32px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -50px; right: -50px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(var(--accent-rgb),0.3), transparent 70%); pointer-events: none;"></div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; position: relative; z-index: 1;">
+          <div style="max-width: 680px;">
+            <span style="background: rgba(var(--accent-rgb),0.2); border: 1px solid rgba(var(--accent-rgb),0.4); color: var(--accent); padding: 5px 14px; border-radius: 100px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; display: inline-block; margin-bottom: 14px;">🎓 Premium Student &amp; Residency Suite</span>
+            <h2 style="font-size: clamp(26px, 4vw, 38px); font-weight: 900; color: var(--text-h); line-height: 1.15; margin-bottom: 14px;">Medical Exam Mastery</h2>
+            <p style="font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">Master USMLE Step 1, Step 2 CK, Step 3, First Year MBBS, and NCLEX with 3,000+ interactive high-yield flashcards, clinical recall drills, and high-yield question banks.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+              <span style="font-size: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--text-h); padding: 5px 14px; border-radius: 8px; font-weight: 600;">🩺 USMLE Step 1, 2 CK &amp; 3</span>
+              <span style="font-size: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--text-h); padding: 5px 14px; border-radius: 8px; font-weight: 600;">📚 First Year MBBS</span>
+              <span style="font-size: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--text-h); padding: 5px 14px; border-radius: 8px; font-weight: 600;">⚡ 3,000+ Interactive Flashcards</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px; min-width: 220px;">
+            <a href="/medical-exam-preparation" class="btn" style="background: var(--accent); color: #fff; padding: 16px 28px; border-radius: 14px; font-size: 15px; font-weight: 800; text-align: center; text-decoration: none; box-shadow: 0 10px 30px rgba(var(--accent-rgb),0.3);">Start Practicing Free →</a>
+            <a href="/flash-cards" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: var(--text-h); padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none;">Browse Flashcard Decks</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRE-FOOTER AD BANNER (static) ── -->
+  <div id="prefooter-ad" style="text-align:center; margin: 30px auto 10px; max-width: 1200px; padding: 0 15px; display:none;">
+    <script>
+      atOptions = {
+        'key' : 'a7a04a547a8e6bdc2777d62f0cbd7656',
+        'format' : 'iframe',
+        'height' : 90,
+        'width' : 728,
+        'params' : {}
+      };
+    </script>
+    <script src="https://www.highperformanceformat.com/a7a04a547a8e6bdc2777d62f0cbd7656/invoke.js"></script>
+  </div>
+
+  <!-- ── FOOTER (static) ── -->
+  <footer class="site-footer" id="page-footer" style="display:none;">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MediHelp</h3>
+          <p>Free tools and professional advocates helping patients fight medical billing errors and reduce hospital costs.</p>
+          <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; background:rgba(var(--accent-rgb),0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--accent-rgb),0.2);">HIPAA-Safe</span>
+            <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
+            <span style="font-size:11px; background:rgba(var(--amber-rgb),0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--amber-rgb),0.2);">No Signup</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Free Tools</h4>
+          <ul>
+            <li><a href="/medical-bill-audit">Bill Audit Tool</a></li>
+            <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
+            <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
+            <li><a href="/rx-savings">Rx Savings Search</a></li>
+            <li><a href="/providers">Provider Search</a></li>
+            <li><a href="/medical-calculator" style="color: gold; font-weight:700;">Clinical Calculators</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services &amp; Exams</h4>
+          <ul>
+            <li><a href="/pricing" style="color:var(--expert-amber); display:inline-flex; align-items:center; gap:6px;">Human Bill Negotiation</a></li>
+            <li><a href="/medical-exam-preparation" style="color:var(--accent); font-weight:700;">Medical Exam Mastery</a></li>
+            <li><a href="/flash-cards">USMLE &amp; MBBS Flashcards</a></li>
+            <li><a href="/global-health-statistics">Global Health Data</a></li>
+            <li><a href="/blog">Patient Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal &amp; Company</h4>
+          <ul>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/editorial-policy">Editorial Policy</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/refund">Refund Policy</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
+        <span>© 2026 MediHelp. All Rights Reserved.</span>
+        <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms &amp; Disclaimer</a></span>
+        <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
+      </div>
+    </div>
+  </footer>
+
   <script>
     const CHART_COLORS = ['#3b82f6','#ef4444','#10b981','#f59e0b','#8b5cf6','#ec4899','#06b6d4','#f97316','#84cc16','#a78bfa'];
 
@@ -833,174 +981,13 @@
           </div>
         </section>`;
 
-      // ── FREE TOOLS CTA SECTION ──
-      html += `
-        <section class="page-section" style="background: var(--bg); border-top: 1px solid var(--border);">
-          <div class="container">
-            <div class="section-header" style="text-align: center; margin-bottom: 36px;">
-              <span class="section-eyebrow" style="background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.25); color: var(--accent); padding: 4px 14px; border-radius: 100px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Patient & Provider Suite</span>
-              <h2 class="section-h" style="font-size: clamp(24px, 4vw, 36px); font-weight: 900; color: var(--text-h); margin-top: 10px; margin-bottom: 12px;">Explore MediHelp Free Healthcare Tools</h2>
-              <p style="color: var(--text-muted); font-size: 15px; max-width: 640px; margin: 0 auto; line-height: 1.6;">From auditing medical bills and checking CPT codes to calculating clinical dosing and finding prescription savings — all 100% free with no account required.</p>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px;">
-              
-              <!-- Calculators -->
-              <a href="/medical-calculator" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='gold';" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)';">
-                <div>
-                  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255,215,0,0.12); border: 1px solid rgba(255,215,0,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">🔬</div>
-                  <h3 style="font-size: 17px; font-weight: 800; color: var(--text-h); margin-bottom: 8px;">Clinical Calculators</h3>
-                  <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">150+ free medical calculators for BMI, BSA, Creatinine Clearance, SOFA, APACHE-II, & dosing.</p>
-                </div>
-                <span style="font-size: 13px; font-weight: 800; color: gold; display: flex; align-items: center; gap: 6px;">Open Calculators →</span>
-              </a>
-
-              <!-- Claim Denial Codes -->
-              <a href="/claim-denial-codes" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='#ef4444';" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)';">
-                <div>
-                  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">🚫</div>
-                  <h3 style="font-size: 17px; font-weight: 800; color: var(--text-h); margin-bottom: 8px;">Claim Denial Codes</h3>
-                  <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">Lookup CARC & RARC insurance denial codes to appeal denied hospital and doctor claims fast.</p>
-                </div>
-                <span style="font-size: 13px; font-weight: 800; color: #ef4444; display: flex; align-items: center; gap: 6px;">Lookup Denial Codes →</span>
-              </a>
-
-              <!-- CPT Code Search -->
-              <a href="/cpt-code-search" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='var(--accent)';" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)';">
-                <div>
-                  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">🏷️</div>
-                  <h3 style="font-size: 17px; font-weight: 800; color: var(--text-h); margin-bottom: 8px;">CPT Code Search</h3>
-                  <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">Search 10,000+ medical CPT billing codes, average costs, and verify charges on your hospital bill.</p>
-                </div>
-                <span style="font-size: 13px; font-weight: 800; color: var(--accent); display: flex; align-items: center; gap: 6px;">Search CPT Codes →</span>
-              </a>
-
-              <!-- Rx Savings -->
-              <a href="/rx-savings" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='#10b981';" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)';">
-                <div>
-                  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">💊</div>
-                  <h3 style="font-size: 17px; font-weight: 800; color: var(--text-h); margin-bottom: 8px;">Rx Savings Search</h3>
-                  <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">Compare prescription medication prices across pharmacies and unlock discount coupons up to 80% off.</p>
-                </div>
-                <span style="font-size: 13px; font-weight: 800; color: #10b981; display: flex; align-items: center; gap: 6px;">Find Rx Coupons →</span>
-              </a>
-
-              <!-- Provider Search -->
-              <a href="/providers" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='#8b5cf6';" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)';">
-                <div>
-                  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px;">🏥</div>
-                  <h3 style="font-size: 17px; font-weight: 800; color: var(--text-h); margin-bottom: 8px;">Provider Search</h3>
-                  <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">Search NPI-registered healthcare providers, specialties, hospital affiliations, and credentials nationwide.</p>
-                </div>
-                <span style="font-size: 13px; font-weight: 800; color: #8b5cf6; display: flex; align-items: center; gap: 6px;">Find Doctors →</span>
-              </a>
-
-            </div>
-          </div>
-        </section>`;
-
-      // ── MEDICAL EXAM MASTERY PREMIUM CARD ──
-      html += `
-        <section class="page-section" style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 50px 0;">
-          <div class="container">
-            <div style="background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15) 0%, rgba(139, 92, 246, 0.15) 50%, rgba(236, 72, 153, 0.1) 100%); border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 24px; padding: 40px 32px; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 24px;">
-              <div style="position: absolute; top: -50px; right: -50px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(var(--accent-rgb),0.3), transparent 70%); pointer-events: none;"></div>
-              
-              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; position: relative; z-index: 1;">
-                <div style="max-width: 680px;">
-                  <span style="background: rgba(var(--accent-rgb),0.2); border: 1px solid rgba(var(--accent-rgb),0.4); color: var(--accent); padding: 5px 14px; border-radius: 100px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; display: inline-block; margin-bottom: 14px;">🎓 Premium Student & Residency Suite</span>
-                  <h2 style="font-size: clamp(26px, 4vw, 38px); font-weight: 900; color: var(--text-h); line-height: 1.15; margin-bottom: 14px;">Medical Exam Mastery</h2>
-                  <p style="font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">Master USMLE Step 1, Step 2 CK, Step 3, First Year MBBS, and NCLEX with 3,000+ interactive high-yield flashcards, clinical recall drills, and high-yield question banks.</p>
-                  
-                  <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                    <span style="font-size: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--text-h); padding: 5px 14px; border-radius: 8px; font-weight: 600;">🩺 USMLE Step 1, 2 CK & 3</span>
-                    <span style="font-size: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--text-h); padding: 5px 14px; border-radius: 8px; font-weight: 600;">📚 First Year MBBS</span>
-                    <span style="font-size: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--text-h); padding: 5px 14px; border-radius: 8px; font-weight: 600;">⚡ 3,000+ Interactive Flashcards</span>
-                  </div>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 12px; min-width: 220px; position: relative; z-index: 1;">
-                  <a href="/medical-exam-preparation" class="btn" style="background: var(--accent); color: #fff; padding: 16px 28px; border-radius: 14px; font-size: 15px; font-weight: 800; text-align: center; text-decoration: none; box-shadow: 0 10px 30px rgba(var(--accent-rgb),0.3); transition: all 0.2s;" onmouseover="this.style.transform='scale(1.03)';" onmouseout="this.style.transform='none';">Start Practicing Free →</a>
-                  <a href="/flash-cards" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: var(--text-h); padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.12)';" onmouseout="this.style.background='rgba(255,255,255,0.06)';">Browse Flashcard Decks</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>`;
-
-      // Pre-Footer Adsterra Banner
-      html += `
-        <div style="text-align:center; margin: 30px auto 10px; max-width: 1200px; padding: 0 15px;">
-          <script>
-            atOptions = {
-              'key' : 'a7a04a547a8e6bdc2777d62f0cbd7656',
-              'format' : 'iframe',
-              'height' : 90,
-              'width' : 728,
-              'params' : {}
-            };
-          </script>
-          <script src="https://www.highperformanceformat.com/a7a04a547a8e6bdc2777d62f0cbd7656/invoke.js"></script>
-        </div>`;
-
-      // Footer
-      html += `
-        <footer class="site-footer">
-          <div class="container">
-            <div class="footer-grid">
-              <div class="footer-brand">
-                <h3>MediHelp</h3>
-                <p>Free tools and professional advocates helping patients fight medical billing errors and reduce hospital costs.</p>
-                <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
-                  <span style="font-size:11px; background:rgba(var(--accent-rgb),0.1); color:var(--accent); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--accent-rgb),0.2);">HIPAA-Safe</span>
-                  <span style="font-size:11px; background:rgba(56,189,248,0.1); color:var(--trust-blue); padding:4px 10px; border-radius:6px; border:1px solid rgba(56,189,248,0.2);">CMS Data</span>
-                  <span style="font-size:11px; background:rgba(var(--amber-rgb),0.1); color:var(--expert-amber); padding:4px 10px; border-radius:6px; border:1px solid rgba(var(--amber-rgb),0.2);">No Signup</span>
-                </div>
-              </div>
-              <div class="footer-col">
-                <h4>Free Tools</h4>
-                <ul>
-                  <li><a href="/medical-bill-audit">Bill Audit Tool</a></li>
-                  <li><a href="/cpt-code-search">CPT Code Lookup</a></li>
-                  <li><a href="/claim-denial-codes">Claim Denial Codes</a></li>
-                  <li><a href="/rx-savings">Rx Savings Search</a></li>
-                  <li><a href="/providers">Provider Search</a></li>
-                  <li><a href="/medical-calculator" style="color: gold; font-weight:700;">Clinical Calculators</a></li>
-                </ul>
-              </div>
-              <div class="footer-col">
-                <h4>Services &amp; Exams</h4>
-                <ul>
-                  <li><a href="/pricing" style="color:var(--expert-amber); display:inline-flex; align-items:center; gap:6px;">Human Bill Negotiation</a></li>
-                  <li><a href="/medical-exam-preparation" style="color:var(--accent); font-weight:700;">Medical Exam Mastery</a></li>
-                  <li><a href="/flash-cards">USMLE &amp; MBBS Flashcards</a></li>
-                  <li><a href="/global-health-statistics">Global Health Data</a></li>
-                  <li><a href="/blog">Patient Blog</a></li>
-                </ul>
-              </div>
-              <div class="footer-col">
-                <h4>Legal &amp; Company</h4>
-                <ul>
-                  <li><a href="/about">About Us</a></li>
-                  <li><a href="/editorial-policy">Editorial Policy</a></li>
-                  <li><a href="/privacy">Privacy Policy</a></li>
-                  <li><a href="/terms">Terms of Service</a></li>
-                  <li><a href="/refund">Refund Policy</a></li>
-                  <li><a href="/pricing">Pricing</a></li>
-                  <li><a href="/contact">Contact Us</a></li>
-                  <li><a href="/sitemap.xml">Sitemap</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="footer-bottom" style="justify-content:center; border-top:1px solid var(--border); padding-top:40px; flex-direction:column; gap:10px; align-items:center;">
-              <span>© 2026 MediHelp. All Rights Reserved.</span>
-              <span style="font-size:11px; opacity:0.7;">Informational only. Not medical or legal advice. <a href="/terms" style="color:var(--accent); text-decoration:none; font-weight:700;">Terms &amp; Disclaimer</a></span>
-              <span style="display:block; font-size:10px; opacity:0.5;">Support: supportdesk@medihelp.live</span>
-            </div>
-          </div>
-        </footer>`;
-
       content.innerHTML = html;
+
+      // Reveal static sections now that content has loaded
+      ['free-tools-cta','exam-mastery-cta','prefooter-ad','page-footer'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.display = '';
+      });
 
       // Animate KPI counters
       const kpiObs = new IntersectionObserver((entries) => {
