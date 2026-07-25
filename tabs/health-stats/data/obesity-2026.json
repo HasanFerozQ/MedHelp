@@ -2,13 +2,18 @@
   "meta": {
     "title": "Obesity Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-01-15",
+    "lastUpdated": "2026-07-25",
     "primarySources": [
       "WHO GHO",
       "NCD-RisC Collaboration",
       "World Obesity Federation",
       "Our World in Data"
-    ]
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Verified against WHO & World Bank Open Data APIs"
+    }
   },
   "hero": {
     "eyebrow": "WHO · NCD-RisC · World Obesity Federation",

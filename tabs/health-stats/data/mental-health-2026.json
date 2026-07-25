@@ -2,12 +2,17 @@
   "meta": {
     "title": "Mental Health Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-01-15",
+    "lastUpdated": "2026-07-25",
     "primarySources": [
       "WHO World Mental Health Report",
       "IHME Global Burden of Disease",
       "Lancet Commission on Mental Health"
-    ]
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Verified against WHO & World Bank Open Data APIs"
+    }
   },
   "hero": {
     "eyebrow": "WHO World Mental Health Report · IHME GBD · Lancet",

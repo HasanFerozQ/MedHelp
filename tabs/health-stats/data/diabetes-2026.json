@@ -2,12 +2,18 @@
   "meta": {
     "title": "Diabetes Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-01-15",
+    "lastUpdated": "2026-07-25",
     "primarySources": [
       "IDF Diabetes Atlas 11th Edition (2024 data)",
       "WHO Global Health Observatory",
       "CDC National Diabetes Statistics Report"
-    ]
+    ],
+    "syncStatus": "Auto-Synced via World Bank Open Data API",
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Verified against WHO & World Bank Open Data APIs"
+    }
   },
   "hero": {
     "eyebrow": "IDF Diabetes Atlas 11th Edition · WHO · CDC",

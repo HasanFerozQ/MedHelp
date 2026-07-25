@@ -2,12 +2,17 @@
   "meta": {
     "title": "Hypertension Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-01-15",
+    "lastUpdated": "2026-07-25",
     "primarySources": [
       "WHO Global Report on Hypertension 2023-2025",
       "NCD-RisC Global Blood Pressure Data",
       "CDC Heart Disease & Stroke Statistics"
-    ]
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Verified against WHO & World Bank Open Data APIs"
+    }
   },
   "hero": {
     "eyebrow": "WHO Global Report on Hypertension · NCD-RisC · CDC",

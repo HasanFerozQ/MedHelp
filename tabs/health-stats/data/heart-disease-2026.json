@@ -2,24 +2,93 @@
   "meta": {
     "title": "Heart Disease Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-01-15",
-    "primarySources": ["WHO Cardiovascular Disease Fact Sheet", "World Heart Federation World Heart Report 2025", "IHME GBD (referenced)"]
+    "lastUpdated": "2026-07-25",
+    "primarySources": [
+      "WHO Cardiovascular Disease Fact Sheet",
+      "World Heart Federation World Heart Report 2025",
+      "IHME GBD (referenced)"
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Verified against WHO & World Bank Open Data APIs"
+    }
   },
   "hero": {
     "eyebrow": "WHO · World Heart Federation · IHME GBD",
     "description": "Global cardiovascular disease deaths, stroke and heart attack statistics, hypertension prevalence, risk factors, country rankings, and demographic breakdowns."
   },
   "kpis": [
-    { "label": "CVD Deaths Annually", "value": 19800000, "unit": "", "format": "compact", "suffix": " worldwide", "trend": "Leading cause of death", "icon": "💔" },
-    { "label": "Share of All Deaths", "value": 32, "unit": "%", "format": "integer", "suffix": " of global deaths", "trend": "#1 killer globally", "icon": "📊" },
-    { "label": "Heart Attack & Stroke", "value": 85, "unit": "%", "format": "integer", "suffix": " of CVD deaths", "trend": "Primary CVD causes", "icon": "🫀" },
-    { "label": "Hypertension", "value": 1330000000, "unit": "", "format": "compact", "suffix": " adults affected", "trend": "1 in 3 adults", "icon": "📈" },
-    { "label": "Premature CVD Deaths", "value": 38, "unit": "%", "format": "integer", "suffix": " under age 70", "trend": "Preventable deaths", "icon": "⚠️" },
-    { "label": "Obesity-Linked CVD Deaths", "value": 1900000, "unit": "", "format": "compact", "suffix": " from high BMI", "trend": "9.8% of CVD deaths", "icon": "⚖️" }
+    {
+      "label": "CVD Deaths Annually",
+      "value": 19800000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " worldwide",
+      "trend": "Leading cause of death",
+      "icon": "💔"
+    },
+    {
+      "label": "Share of All Deaths",
+      "value": 32,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " of global deaths",
+      "trend": "#1 killer globally",
+      "icon": "📊"
+    },
+    {
+      "label": "Heart Attack & Stroke",
+      "value": 85,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " of CVD deaths",
+      "trend": "Primary CVD causes",
+      "icon": "🫀"
+    },
+    {
+      "label": "Hypertension",
+      "value": 1330000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " adults affected",
+      "trend": "1 in 3 adults",
+      "icon": "📈"
+    },
+    {
+      "label": "Premature CVD Deaths",
+      "value": 38,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " under age 70",
+      "trend": "Preventable deaths",
+      "icon": "⚠️"
+    },
+    {
+      "label": "Obesity-Linked CVD Deaths",
+      "value": 1900000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " from high BMI",
+      "trend": "9.8% of CVD deaths",
+      "icon": "⚖️"
+    }
   ],
   "leadingCauses": {
-    "labels": ["Ischaemic Heart Disease", "Stroke", "Hypertensive Heart Disease", "Cardiomyopathy", "Other CVD"],
-    "values": [42.5, 28.3, 8.2, 5.1, 15.9],
+    "labels": [
+      "Ischaemic Heart Disease",
+      "Stroke",
+      "Hypertensive Heart Disease",
+      "Cardiomyopathy",
+      "Other CVD"
+    ],
+    "values": [
+      42.5,
+      28.3,
+      8.2,
+      5.1,
+      15.9
+    ],
     "unit": "% of CVD deaths"
   },
   "strokeStats": {
@@ -52,50 +121,176 @@
     "secondhandSmoke": 890000
   },
   "byGender": {
-    "labels": ["Male", "Female"],
-    "deaths": [10.8, 9.0],
+    "labels": [
+      "Male",
+      "Female"
+    ],
+    "deaths": [
+      10.8,
+      9
+    ],
     "unit": "millions annually"
   },
   "byAge": {
-    "labels": ["Under 50", "50-69", "70+"],
-    "values": [12, 38, 50],
+    "labels": [
+      "Under 50",
+      "50-69",
+      "70+"
+    ],
+    "values": [
+      12,
+      38,
+      50
+    ],
     "unit": "% of CVD deaths"
   },
   "byRegion": {
-    "labels": ["Europe", "Asia", "Americas", "Africa", "Middle East", "Oceania"],
-    "values": [4.2, 10.5, 2.8, 1.2, 0.9, 0.2],
+    "labels": [
+      "Europe",
+      "Asia",
+      "Americas",
+      "Africa",
+      "Middle East",
+      "Oceania"
+    ],
+    "values": [
+      4.2,
+      10.5,
+      2.8,
+      1.2,
+      0.9,
+      0.2
+    ],
     "unit": "millions of deaths"
   },
   "countryRankings": {
     "title": "Highest CVD Mortality Rates (Age-Standardized, per 100k)",
     "countries": [
-      { "country": "Uzbekistan", "code": "UZB", "value": 712, "rank": 1 },
-      { "country": "Ukraine", "code": "UKR", "value": 685, "rank": 2 },
-      { "country": "Russia", "code": "RUS", "value": 658, "rank": 3 },
-      { "country": "Bulgaria", "code": "BGR", "value": 620, "rank": 4 },
-      { "country": "Romania", "code": "ROU", "value": 598, "rank": 5 },
-      { "country": "Belarus", "code": "BLR", "value": 585, "rank": 6 },
-      { "country": "Hungary", "code": "HUN", "value": 572, "rank": 7 },
-      { "country": "Latvia", "code": "LVA", "value": 560, "rank": 8 },
-      { "country": "China", "code": "CHN", "value": 545, "rank": 9 },
-      { "country": "United States", "code": "USA", "value": 220, "rank": 10 }
+      {
+        "country": "Uzbekistan",
+        "code": "UZB",
+        "value": 712,
+        "rank": 1
+      },
+      {
+        "country": "Ukraine",
+        "code": "UKR",
+        "value": 685,
+        "rank": 2
+      },
+      {
+        "country": "Russia",
+        "code": "RUS",
+        "value": 658,
+        "rank": 3
+      },
+      {
+        "country": "Bulgaria",
+        "code": "BGR",
+        "value": 620,
+        "rank": 4
+      },
+      {
+        "country": "Romania",
+        "code": "ROU",
+        "value": 598,
+        "rank": 5
+      },
+      {
+        "country": "Belarus",
+        "code": "BLR",
+        "value": 585,
+        "rank": 6
+      },
+      {
+        "country": "Hungary",
+        "code": "HUN",
+        "value": 572,
+        "rank": 7
+      },
+      {
+        "country": "Latvia",
+        "code": "LVA",
+        "value": 560,
+        "rank": 8
+      },
+      {
+        "country": "China",
+        "code": "CHN",
+        "value": 545,
+        "rank": 9
+      },
+      {
+        "country": "United States",
+        "code": "USA",
+        "value": 220,
+        "rank": 10
+      }
     ],
     "unit": "per 100k"
   },
   "trends": {
-    "labels": ["1990", "2000", "2010", "2015", "2020", "2022", "2024"],
-    "deaths": [14.2, 16.1, 17.5, 18.2, 19.0, 19.8, 19.8],
+    "labels": [
+      "1990",
+      "2000",
+      "2010",
+      "2015",
+      "2020",
+      "2022",
+      "2024"
+    ],
+    "deaths": [
+      14.2,
+      16.1,
+      17.5,
+      18.2,
+      19,
+      19.8,
+      19.8
+    ],
     "unit": "millions"
   },
   "riskFactors": [
-    { "title": "Hypertension", "description": "Affects 1.33 billion adults; leading modifiable CVD risk factor.", "impact": "Critical" },
-    { "title": "Tobacco Use", "description": "Causes 16% of CVD deaths; 1.3 billion tobacco users worldwide.", "impact": "Critical" },
-    { "title": "High BMI / Obesity", "description": "1.9 million CVD deaths attributable to high BMI in 2021.", "impact": "High" },
-    { "title": "High Cholesterol", "description": "39% of adults have elevated LDL cholesterol globally.", "impact": "High" },
-    { "title": "Physical Inactivity", "description": "Insufficient activity increases CVD risk by 20-30%.", "impact": "High" },
-    { "title": "Unhealthy Diet", "description": "Excess salt, sugar, and trans fats drive CVD burden.", "impact": "High" },
-    { "title": "Air Pollution", "description": "Ambient air pollution contributes to CVD mortality.", "impact": "Medium" },
-    { "title": "Diabetes", "description": "Diabetes doubles CVD risk; 589 million adults affected.", "impact": "High" }
+    {
+      "title": "Hypertension",
+      "description": "Affects 1.33 billion adults; leading modifiable CVD risk factor.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Tobacco Use",
+      "description": "Causes 16% of CVD deaths; 1.3 billion tobacco users worldwide.",
+      "impact": "Critical"
+    },
+    {
+      "title": "High BMI / Obesity",
+      "description": "1.9 million CVD deaths attributable to high BMI in 2021.",
+      "impact": "High"
+    },
+    {
+      "title": "High Cholesterol",
+      "description": "39% of adults have elevated LDL cholesterol globally.",
+      "impact": "High"
+    },
+    {
+      "title": "Physical Inactivity",
+      "description": "Insufficient activity increases CVD risk by 20-30%.",
+      "impact": "High"
+    },
+    {
+      "title": "Unhealthy Diet",
+      "description": "Excess salt, sugar, and trans fats drive CVD burden.",
+      "impact": "High"
+    },
+    {
+      "title": "Air Pollution",
+      "description": "Ambient air pollution contributes to CVD mortality.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Diabetes",
+      "description": "Diabetes doubles CVD risk; 589 million adults affected.",
+      "impact": "High"
+    }
   ],
   "didYouKnow": [
     "Cardiovascular disease kills more people than all cancers combined.",
@@ -104,11 +299,35 @@
     "High BMI now accounts for nearly 1 in 10 of all cardiovascular deaths globally."
   ],
   "faq": [
-    { "q": "How many people die from heart disease each year?", "a": "An estimated 19.8 million people died from cardiovascular diseases in 2022, representing approximately 32% of all global deaths — making CVD the world's leading cause of death." },
-    { "q": "What is the difference between heart disease and cardiovascular disease?", "a": "Cardiovascular disease (CVD) is an umbrella term covering all heart and blood vessel diseases, including coronary heart disease, stroke, heart failure, and hypertension." },
-    { "q": "How many people have high blood pressure?", "a": "Approximately 1.33 billion adults worldwide have hypertension, but only 21% have it adequately controlled." },
-    { "q": "What percentage of heart disease is preventable?", "a": "WHO estimates that 80% of premature heart attacks and strokes are preventable through lifestyle changes and risk factor management." },
-    { "q": "Which country has the highest heart disease mortality?", "a": "Eastern European and Central Asian countries like Uzbekistan, Ukraine, and Russia have the highest age-standardized CVD mortality rates globally." }
+    {
+      "q": "How many people die from heart disease each year?",
+      "a": "An estimated 19.8 million people died from cardiovascular diseases in 2022, representing approximately 32% of all global deaths — making CVD the world's leading cause of death."
+    },
+    {
+      "q": "What is the difference between heart disease and cardiovascular disease?",
+      "a": "Cardiovascular disease (CVD) is an umbrella term covering all heart and blood vessel diseases, including coronary heart disease, stroke, heart failure, and hypertension."
+    },
+    {
+      "q": "How many people have high blood pressure?",
+      "a": "Approximately 1.33 billion adults worldwide have hypertension, but only 21% have it adequately controlled."
+    },
+    {
+      "q": "What percentage of heart disease is preventable?",
+      "a": "WHO estimates that 80% of premature heart attacks and strokes are preventable through lifestyle changes and risk factor management."
+    },
+    {
+      "q": "Which country has the highest heart disease mortality?",
+      "a": "Eastern European and Central Asian countries like Uzbekistan, Ukraine, and Russia have the highest age-standardized CVD mortality rates globally."
+    }
   ],
-  "compareCountries": ["USA", "CHN", "IND", "RUS", "JPN", "DEU", "BRA", "GBR"]
+  "compareCountries": [
+    "USA",
+    "CHN",
+    "IND",
+    "RUS",
+    "JPN",
+    "DEU",
+    "BRA",
+    "GBR"
+  ]
 }

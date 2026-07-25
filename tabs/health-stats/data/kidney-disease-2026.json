@@ -2,12 +2,17 @@
   "meta": {
     "title": "Kidney Disease Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-01-15",
+    "lastUpdated": "2026-07-25",
     "primarySources": [
       "ISN Global Kidney Health Atlas 2024",
       "WHO Global Health Estimates",
       "USRDS & CDC Chronic Kidney Disease Surveillance"
-    ]
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Verified against WHO & World Bank Open Data APIs"
+    }
   },
   "hero": {
     "eyebrow": "International Society of Nephrology · WHO · USRDS",

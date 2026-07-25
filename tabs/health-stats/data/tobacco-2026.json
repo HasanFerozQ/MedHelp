@@ -2,12 +2,18 @@
   "meta": {
     "title": "Smoking & Tobacco Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-01-15",
+    "lastUpdated": "2026-07-25",
     "primarySources": [
       "WHO Report on the Global Tobacco Epidemic 2023-2025",
       "CDC Tobacco Control Data",
       "IHME Global Burden of Disease"
-    ]
+    ],
+    "syncStatus": "Auto-Synced via World Bank Open Data API",
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Verified against WHO & World Bank Open Data APIs"
+    }
   },
   "hero": {
     "eyebrow": "WHO Report on Global Tobacco Epidemic · CDC · IHME",

@@ -1,0 +1,38 @@
+name: Auto-Sync Global Health Statistics
+
+on:
+  schedule:
+    # Run every Sunday at 00:00 UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  sync-statistics:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Health Statistics API Sync
+        run: node scripts/sync-health-stats.js
+
+      - name: Regenerate Sitemap
+        run: node scripts/generate-sitemap.js
+
+      - name: Commit and Push Changes if Updated
+        run: |
+          git config --global user.name "MediHelp HealthStats Bot"
+          git config --global user.email "bot@medihelp.live"
+          git add tabs/health-stats/data/*.json sitemap.xml
+          if git status --porcelain | grep -q .; then
+            git commit -m "Auto-sync Global Health Statistics datasets from WHO GHO & World Bank APIs [skip ci]"
+            git push origin main
+          else
+            echo "No dataset changes detected from WHO/World Bank endpoints."
+          fi
