@@ -566,20 +566,6 @@
     </div>
   </nav>
 
-  <!-- Adsterra 728x90 Banner (Top) -->
-  <div style="text-align:center; margin: 15px auto; max-width: 1200px; padding: 0 15px;">
-    <script>
-      atOptions = {
-        'key' : 'a7a04a547a8e6bdc2777d62f0cbd7656',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script src="https://www.highperformanceformat.com/a7a04a547a8e6bdc2777d62f0cbd7656/invoke.js"></script>
-  </div>
-
   <!-- ── LOADING STATE ── -->
   <div id="loading-state">
     <div id="loading-spinner"></div>
@@ -673,20 +659,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ── PRE-FOOTER AD BANNER (static) ── -->
-  <div id="prefooter-ad" style="text-align:center; margin: 30px auto 10px; max-width: 1200px; padding: 0 15px; display:none;">
-    <script>
-      atOptions = {
-        'key' : 'a7a04a547a8e6bdc2777d62f0cbd7656',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script src="https://www.highperformanceformat.com/a7a04a547a8e6bdc2777d62f0cbd7656/invoke.js"></script>
-  </div>
 
   <!-- ── FOOTER (static) ── -->
   <footer class="site-footer" id="page-footer" style="display:none;">
@@ -1162,7 +1134,7 @@
       content.innerHTML = html;
 
       // Reveal static sections now that content has loaded
-      ['free-tools-cta','exam-mastery-cta','prefooter-ad','page-footer'].forEach(function(id) {
+      ['free-tools-cta','exam-mastery-cta','page-footer'].forEach(function(id) {
         var el = document.getElementById(id);
         if (el) el.style.display = '';
       });
