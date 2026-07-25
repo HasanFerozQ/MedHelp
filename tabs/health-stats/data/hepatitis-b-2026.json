@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "title": "Hepatitis B Statistics 2026",
+    "year": 2026,
+    "lastUpdated": "2026-07-25",
+    "primarySources": [
+      "WHO Hepatitis B Fact Sheet 2024",
+      "World Hepatitis Alliance",
+      "IHME Global Burden of Disease"
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Verified — WHO HBV Fact Sheet 2024"
+    }
+  },
+  "hero": {
+    "eyebrow": "WHO Hepatitis B Fact Sheet 2024 · World Hepatitis Alliance · IHME GBD",
+    "description": "Global hepatitis B prevalence, chronic infection rates, cirrhosis and liver cancer deaths, birth-dose vaccination coverage, and elimination targets toward 2030."
+  },
+  "kpis": [
+    {
+      "label": "Chronic HBV Infections",
+      "value": 254000000,
+      "format": "compact",
+      "suffix": " people",
+      "trend": "Chronic hepatitis B infection",
+      "icon": "🟡"
+    },
+    {
+      "label": "Annual HBV Deaths",
+      "value": 1100000,
+      "format": "compact",
+      "suffix": " deaths/yr",
+      "trend": "Cirrhosis & liver cancer",
+      "icon": "💀"
+    },
+    {
+      "label": "New Infections per Year",
+      "value": 2000000,
+      "format": "compact",
+      "suffix": " new infections/yr",
+      "trend": "Largely preventable with vaccine",
+      "icon": "📈"
+    },
+    {
+      "label": "3-Dose Vaccine Coverage",
+      "value": 84,
+      "format": "integer",
+      "suffix": "% global infant coverage",
+      "trend": "Among infants born",
+      "icon": "💉"
+    },
+    {
+      "label": "Aware of Their Infection",
+      "value": 13,
+      "format": "integer",
+      "suffix": "% are diagnosed",
+      "trend": "Massive diagnosis gap",
+      "icon": "🔬"
+    },
+    {
+      "label": "On Treatment",
+      "value": 3,
+      "format": "integer",
+      "suffix": "% receive treatment",
+      "trend": "Of those who need it",
+      "icon": "💊"
+    }
+  ],
+  "byContinent": {
+    "labels": [
+      "Western Pacific",
+      "Africa",
+      "South-East Asia",
+      "Europe",
+      "Americas",
+      "Eastern Mediterranean"
+    ],
+    "values": [
+      116000000,
+      81000000,
+      37000000,
+      13000000,
+      5000000,
+      8000000
+    ],
+    "unit": "chronic HBV infections"
+  },
+  "trends": {
+    "labels": [
+      "1990",
+      "1995",
+      "2000",
+      "2005",
+      "2010",
+      "2015",
+      "2020",
+      "2025"
+    ],
+    "values": [
+      4200000,
+      3500000,
+      2900000,
+      2500000,
+      2300000,
+      2100000,
+      2000000,
+      1900000
+    ],
+    "unit": "new infections/yr",
+    "note": "Vaccine introduction has driven a sustained decline in new infections since the 1990s, particularly among children."
+  },
+  "countryRankings": {
+    "label": "Countries by Chronic HBV Prevalence",
+    "unit": "people",
+    "countries": [
+      {
+        "rank": 1,
+        "name": "China",
+        "value": 70000000
+      },
+      {
+        "rank": 2,
+        "name": "India",
+        "value": 37000000
+      },
+      {
+        "rank": 3,
+        "name": "Nigeria",
+        "value": 20000000
+      },
+      {
+        "rank": 4,
+        "name": "Indonesia",
+        "value": 18000000
+      },
+      {
+        "rank": 5,
+        "name": "Ethiopia",
+        "value": 11000000
+      },
+      {
+        "rank": 6,
+        "name": "Bangladesh",
+        "value": 9000000
+      },
+      {
+        "rank": 7,
+        "name": "Philippines",
+        "value": 8000000
+      },
+      {
+        "rank": 8,
+        "name": "Vietnam",
+        "value": 8000000
+      },
+      {
+        "rank": 9,
+        "name": "Pakistan",
+        "value": 7000000
+      },
+      {
+        "rank": 10,
+        "name": "DR Congo",
+        "value": 7000000
+      }
+    ]
+  },
+  "riskFactors": [
+    {
+      "title": "Mother-to-Child Transmission",
+      "description": "Perinatal transmission from HBV-infected mothers is the most common route in high-prevalence regions. Without intervention, up to 90% of infected newborns develop chronic infection.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Unsafe Injections & Blood Exposure",
+      "description": "Reuse of needles in healthcare settings and unscreened blood transfusions remain major transmission routes in low-income countries.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Unscreened Blood & Organs",
+      "description": "In regions without universal blood screening, transfusions and organ transplants carry significant HBV transmission risk.",
+      "impact": "High"
+    },
+    {
+      "title": "Sexual Transmission",
+      "description": "HBV is 50–100 times more infectious than HIV through sexual contact. Unprotected sex with infected partners is a significant route in low-prevalence regions.",
+      "impact": "High"
+    },
+    {
+      "title": "Low Diagnosis & Treatment Awareness",
+      "description": "Only 13% of the 254 million people with chronic HBV know their status. Hepatitis B is largely asymptomatic, enabling silent progression to cirrhosis and liver cancer.",
+      "impact": "Medium"
+    }
+  ],
+  "didYouKnow": [
+    "Hepatitis B is 50–100 times more infectious than HIV and can survive outside the body for up to 7 days.",
+    "The hepatitis B vaccine is one of medicine's greatest success stories — it has prevented an estimated 1 billion infections since introduction.",
+    "Chronic HBV is the leading cause of liver cancer globally, responsible for approximately 50% of all hepatocellular carcinoma cases.",
+    "Only 3% of the 254 million people who need hepatitis B treatment are actually receiving it worldwide."
+  ],
+  "faq": [
+    {
+      "q": "Is hepatitis B curable?",
+      "a": "Chronic hepatitis B is not curable with current treatments, but it is manageable. Antiviral medications (tenofovir, entecavir) can suppress viral replication to very low levels, preventing liver damage, cirrhosis, and liver cancer. Acute hepatitis B resolves on its own in about 95% of adults."
+    },
+    {
+      "q": "Is there a vaccine for hepatitis B?",
+      "a": "Yes. A safe, effective 3-dose vaccine has been available since 1982. WHO recommends universal infant vaccination with a birth dose within 24 hours. The vaccine is 95% effective at preventing infection and its chronic consequences."
+    },
+    {
+      "q": "What is the WHO 2030 elimination target for hepatitis B?",
+      "a": "WHO's global health sector strategy targets a 90% reduction in new chronic HBV infections and a 65% reduction in hepatitis B mortality by 2030. Achieving this requires 90% birth-dose vaccination coverage, 90% childhood vaccination, and 80% treatment coverage."
+    }
+  ],
+  "sources": [
+    "WHO Hepatitis B Fact Sheet 2024",
+    "World Hepatitis Alliance Global Report 2023",
+    "IHME Global Burden of Disease 2021",
+    "Lancet Gastroenterology & Hepatology"
+  ]
+}

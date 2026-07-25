@@ -12,7 +12,7 @@
     "autoSync": {
       "enabled": true,
       "lastCheck": "2026-07-25",
-      "status": "Verified against WHO & World Bank Open Data APIs"
+      "status": "Auto-Synced: Smoking prevalence 20.3% (World Bank 2024)"
     }
   },
   "hero": {

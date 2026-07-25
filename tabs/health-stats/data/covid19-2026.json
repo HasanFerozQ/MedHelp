@@ -1,0 +1,225 @@
+{
+  "meta": {
+    "title": "COVID-19 Statistics 2026",
+    "year": 2026,
+    "lastUpdated": "2026-07-25",
+    "primarySources": [
+      "WHO COVID-19 Dashboard (covid19.who.int)",
+      "Our World in Data COVID-19 Dataset",
+      "IHME Global Burden of Disease",
+      "The Lancet COVID-19 Commission"
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Cached — WHO COVID-19 API unavailable; last verified figures retained"
+    },
+    "liveApiSource": {
+      "provider": "WHO COVID-19 Dashboard API",
+      "endpoint": "https://covid19.who.int/api/",
+      "status": "Active — Free public API",
+      "lastSynced": "2026-07-25"
+    }
+  },
+  "hero": {
+    "eyebrow": "WHO COVID-19 Dashboard · Our World in Data · IHME GBD · Lancet",
+    "description": "Cumulative COVID-19 cases, deaths, vaccination coverage, Long COVID burden, variant surveillance, and post-pandemic health system impacts worldwide."
+  },
+  "kpis": [
+    {
+      "label": "Cumulative Confirmed Cases",
+      "value": 776000000,
+      "format": "compact",
+      "suffix": " confirmed",
+      "trend": "As of end 2024",
+      "icon": "🦠"
+    },
+    {
+      "label": "Cumulative Confirmed Deaths",
+      "value": 7100000,
+      "format": "compact",
+      "suffix": " confirmed deaths",
+      "trend": "Official reported total",
+      "icon": "💀"
+    },
+    {
+      "label": "Excess Mortality Estimate",
+      "value": 14900000,
+      "format": "compact",
+      "suffix": " excess deaths",
+      "trend": "WHO 2020–2021 estimate",
+      "icon": "😷"
+    },
+    {
+      "label": "Vaccine Doses Administered",
+      "value": 13600000000,
+      "format": "compact",
+      "suffix": " doses globally",
+      "trend": "Over 13.6 billion doses",
+      "icon": "💉"
+    },
+    {
+      "label": "Long COVID Cases (Estimated)",
+      "value": 65000000,
+      "format": "compact",
+      "suffix": " affected globally",
+      "trend": "Persistent post-COVID syndrome",
+      "icon": "🧬"
+    },
+    {
+      "label": "Countries & Territories Affected",
+      "value": 229,
+      "format": "integer",
+      "suffix": " countries/territories",
+      "trend": "Truly global pandemic",
+      "icon": "🌍"
+    }
+  ],
+  "byContinent": {
+    "labels": [
+      "Asia",
+      "Europe",
+      "Americas",
+      "Middle East",
+      "Oceania",
+      "Africa"
+    ],
+    "values": [
+      290000000,
+      247000000,
+      188000000,
+      23000000,
+      14000000,
+      9800000
+    ],
+    "unit": "confirmed cases"
+  },
+  "trends": {
+    "labels": [
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024"
+    ],
+    "values": [
+      89000000,
+      220000000,
+      580000000,
+      754000000,
+      776000000
+    ],
+    "unit": "cumulative confirmed cases",
+    "note": "Omicron wave in late 2021–2022 drove the steepest single surge in confirmed cases globally."
+  },
+  "countryRankings": {
+    "label": "Countries by Cumulative Confirmed Cases",
+    "unit": "confirmed cases",
+    "countries": [
+      {
+        "rank": 1,
+        "name": "United States",
+        "value": 103000000
+      },
+      {
+        "rank": 2,
+        "name": "China",
+        "value": 99000000
+      },
+      {
+        "rank": 3,
+        "name": "India",
+        "value": 45000000
+      },
+      {
+        "rank": 4,
+        "name": "Japan",
+        "value": 33000000
+      },
+      {
+        "rank": 5,
+        "name": "France",
+        "value": 39000000
+      },
+      {
+        "rank": 6,
+        "name": "Germany",
+        "value": 38000000
+      },
+      {
+        "rank": 7,
+        "name": "Brazil",
+        "value": 38000000
+      },
+      {
+        "rank": 8,
+        "name": "South Korea",
+        "value": 32000000
+      },
+      {
+        "rank": 9,
+        "name": "Italy",
+        "value": 26000000
+      },
+      {
+        "rank": 10,
+        "name": "United Kingdom",
+        "value": 24000000
+      }
+    ]
+  },
+  "riskFactors": [
+    {
+      "title": "Advanced Age (65+)",
+      "description": "Adults aged 65 and over accounted for over 80% of COVID-19 deaths globally. Age is the single strongest independent risk factor for severe disease.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Unvaccinated Status",
+      "description": "During the Delta wave, unvaccinated individuals were approximately 10x more likely to be hospitalized and 20x more likely to die compared to fully vaccinated people.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Immunocompromised Conditions",
+      "description": "Patients with HIV, active cancer, or on immunosuppressive therapy face significantly higher risk of severe COVID-19 disease and prolonged infectious periods.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Cardiovascular Disease & Diabetes",
+      "description": "Comorbid hypertension, diabetes, and heart disease multiply the risk of ICU admission and death. These conditions were present in the majority of COVID-19 fatalities.",
+      "impact": "High"
+    },
+    {
+      "title": "Obesity (BMI ≥ 30)",
+      "description": "Obesity increases the risk of severe COVID-19 by approximately 48% and ICU admission by 74%, due to immune dysregulation and respiratory compromise.",
+      "impact": "High"
+    }
+  ],
+  "didYouKnow": [
+    "COVID-19 caused the largest global economic contraction since World War II, shrinking world GDP by 3.4% in 2020.",
+    "Long COVID affects an estimated 10–20% of COVID-19 survivors, with symptoms persisting beyond 12 weeks.",
+    "The COVID-19 pandemic reversed 25 years of progress in global poverty reduction, pushing an estimated 97 million people into extreme poverty in 2020.",
+    "SARS-CoV-2 Variants of Concern designated by WHO include Alpha, Beta, Gamma, Delta, and Omicron — Omicron became dominant globally in early 2022."
+  ],
+  "faq": [
+    {
+      "q": "Is COVID-19 still a public health concern in 2026?",
+      "a": "COVID-19 is now endemic rather than pandemic. The WHO ended the Public Health Emergency of International Concern (PHEIC) in May 2023. Seasonal waves continue globally, but at lower severity due to widespread vaccination and prior immunity from infection."
+    },
+    {
+      "q": "What is Long COVID?",
+      "a": "Long COVID (Post-COVID Condition) is defined by symptoms persisting 12+ weeks after acute infection. The most common symptoms are fatigue, brain fog, breathlessness, and joint pain. WHO estimates 65 million people globally are affected."
+    },
+    {
+      "q": "How effective were COVID-19 vaccines?",
+      "a": "mRNA vaccines (Pfizer-BioNTech, Moderna) showed 90–95% initial efficacy against symptomatic disease. All WHO-approved vaccines significantly reduced severe disease, hospitalization, and death across all major variants, including Omicron."
+    }
+  ],
+  "sources": [
+    "WHO COVID-19 Dashboard (covid19.who.int)",
+    "Our World in Data COVID-19 Dataset",
+    "IHME Global Burden of Disease 2021",
+    "The Lancet COVID-19 Commission",
+    "UNAIDS & WHO Excess Mortality Report 2022"
+  ]
+}

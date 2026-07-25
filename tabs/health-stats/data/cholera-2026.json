@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "title": "Cholera Statistics 2026",
+    "year": 2026,
+    "lastUpdated": "2026-07-25",
+    "primarySources": [
+      "WHO Global Task Force on Cholera Control (GTFCC)",
+      "WHO Disease Outbreak News",
+      "Lancet Infectious Diseases"
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Verified — WHO GTFCC & Outbreak News"
+    }
+  },
+  "hero": {
+    "eyebrow": "WHO GTFCC · WHO Disease Outbreak News · Lancet",
+    "description": "Global cholera cases, outbreak hotspots, mortality, at-risk populations, WASH access gaps, and the global roadmap to eliminate cholera by 2030."
+  },
+  "kpis": [
+    {
+      "label": "Estimated Annual Cases",
+      "value": 4000000,
+      "format": "compact",
+      "suffix": " cases/yr",
+      "trend": "WHO GTFCC estimate range 1.3M–4M",
+      "icon": "💧"
+    },
+    {
+      "label": "Annual Deaths",
+      "value": 143000,
+      "format": "compact",
+      "suffix": " deaths/yr",
+      "trend": "WHO GTFCC global estimate",
+      "icon": "💀"
+    },
+    {
+      "label": "Countries with Active Outbreaks",
+      "value": 49,
+      "format": "integer",
+      "suffix": " affected countries",
+      "trend": "In 2023 — global resurgence",
+      "icon": "🌍"
+    },
+    {
+      "label": "People Without Safe Water",
+      "value": 2200000000,
+      "format": "compact",
+      "suffix": " lack safely managed water",
+      "trend": "Root driver of cholera",
+      "icon": "🚱"
+    },
+    {
+      "label": "Case Fatality Rate (with treatment)",
+      "value": 1,
+      "format": "decimal",
+      "suffix": "% with treatment",
+      "trend": "Up to 50% without treatment",
+      "icon": "🏥"
+    },
+    {
+      "label": "OCV Doses Deployed in 2023",
+      "value": 36000000,
+      "format": "compact",
+      "suffix": " oral vaccine doses",
+      "trend": "Record deployment year",
+      "icon": "💉"
+    }
+  ],
+  "byContinent": {
+    "labels": [
+      "Africa",
+      "Asia",
+      "Americas",
+      "Middle East",
+      "Europe",
+      "Oceania"
+    ],
+    "values": [
+      300000,
+      120000,
+      60000,
+      100000,
+      1000,
+      500
+    ],
+    "unit": "confirmed reported cases/yr"
+  },
+  "trends": {
+    "labels": [
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023"
+    ],
+    "values": [
+      132121,
+      1227391,
+      499447,
+      923037,
+      323369,
+      472697,
+      473000,
+      667000
+    ],
+    "unit": "reported cases/yr",
+    "note": "Reported cases represent only a fraction of estimated cases. Major resurgence observed from 2021 onward, driven by conflicts, climate shocks and COVID-19 health system disruption."
+  },
+  "countryRankings": {
+    "label": "Countries with Highest Cholera Burden",
+    "unit": "reported cases (2023)",
+    "countries": [
+      {
+        "rank": 1,
+        "name": "Ethiopia",
+        "value": 185000
+      },
+      {
+        "rank": 2,
+        "name": "DR Congo",
+        "value": 102000
+      },
+      {
+        "rank": 3,
+        "name": "Haiti",
+        "value": 87000
+      },
+      {
+        "rank": 4,
+        "name": "Cameroon",
+        "value": 45000
+      },
+      {
+        "rank": 5,
+        "name": "Somalia",
+        "value": 41000
+      },
+      {
+        "rank": 6,
+        "name": "Nigeria",
+        "value": 38000
+      },
+      {
+        "rank": 7,
+        "name": "Syria",
+        "value": 36000
+      },
+      {
+        "rank": 8,
+        "name": "Afghanistan",
+        "value": 34000
+      },
+      {
+        "rank": 9,
+        "name": "Sudan",
+        "value": 30000
+      },
+      {
+        "rank": 10,
+        "name": "Pakistan",
+        "value": 28000
+      }
+    ]
+  },
+  "riskFactors": [
+    {
+      "title": "Unsafe Water & Inadequate Sanitation",
+      "description": "Cholera spreads through contaminated water and food. 2.2 billion people globally lack access to safely managed drinking water, creating conditions for endemic transmission.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Conflict & Displacement",
+      "description": "Conflict zones destroy water infrastructure and displace populations into crowded settings with no sanitation. Yemen, Syria, Haiti and Sudan are among the most severely affected.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Flooding & Climate Events",
+      "description": "Floods contaminate water supplies and overwhelm sanitation systems, triggering outbreaks. Climate change is increasing the frequency and severity of flooding globally.",
+      "impact": "High"
+    },
+    {
+      "title": "Malnutrition",
+      "description": "Malnourished individuals — especially children — are at significantly higher risk of severe cholera and death due to impaired immune function.",
+      "impact": "High"
+    },
+    {
+      "title": "Weak Health Systems",
+      "description": "Countries with limited health infrastructure cannot rapidly detect, report, or respond to cholera outbreaks, allowing them to spread before control measures are implemented.",
+      "impact": "Medium"
+    }
+  ],
+  "didYouKnow": [
+    "Cholera kills within hours if left untreated — but oral rehydration salts (ORS) cost less than $0.50 and are over 90% effective at preventing death.",
+    "The current seventh pandemic of cholera has been ongoing since 1961, caused by the O1 El Tor biotype.",
+    "Haiti's 2010 cholera outbreak — triggered after the earthquake — killed over 10,000 people and infected nearly 1 million.",
+    "Cholera is entirely preventable through access to safe water and sanitation — it is fundamentally a disease of poverty."
+  ],
+  "faq": [
+    {
+      "q": "How is cholera treated?",
+      "a": "The primary treatment is rapid oral rehydration with ORS (oral rehydration salts) to replace fluids and electrolytes lost through diarrhoea. Severe cases require intravenous fluids and antibiotics (doxycycline or azithromycin). With proper treatment, the case fatality rate drops to below 1%."
+    },
+    {
+      "q": "Is there a cholera vaccine?",
+      "a": "Yes. WHO prequalifies two oral cholera vaccines (OCVs): Shanchol and Euvichol-Plus. Both are two-dose vaccines providing 65–85% protection for 2–3 years. In 2023, a record 36 million doses were deployed globally in outbreak response."
+    },
+    {
+      "q": "Why is cholera resurging globally in 2026?",
+      "a": "The resurgence is driven by a convergence of factors: ongoing conflicts destroying water infrastructure, climate change increasing flooding, COVID-19 disruption of routine health services, and a global shortage of oral cholera vaccine doses relative to demand."
+    }
+  ],
+  "sources": [
+    "WHO Global Task Force on Cholera Control (GTFCC) 2023",
+    "WHO Disease Outbreak News",
+    "IHME Global Burden of Disease 2021",
+    "Lancet Infectious Diseases"
+  ]
+}

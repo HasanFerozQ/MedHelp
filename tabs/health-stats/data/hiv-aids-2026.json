@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "title": "HIV/AIDS Statistics 2026",
+    "year": 2026,
+    "lastUpdated": "2026-07-25",
+    "primarySources": [
+      "UNAIDS Global AIDS Update 2024",
+      "WHO HIV/AIDS Programme",
+      "IHME Global Burden of Disease"
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Auto-Synced: HIV incidence 1100000/1K (World Bank 2024)"
+    }
+  },
+  "hero": {
+    "eyebrow": "UNAIDS 2024 · WHO HIV Programme · IHME GBD",
+    "description": "Global HIV prevalence, new infections, AIDS-related deaths, antiretroviral treatment coverage, regional burden, and progress toward the 95-95-95 targets."
+  },
+  "kpis": [
+    {
+      "label": "People Living with HIV",
+      "value": 39900000,
+      "format": "compact",
+      "suffix": " worldwide",
+      "trend": "39.9 million in 2023",
+      "icon": "🔴"
+    },
+    {
+      "label": "New HIV Infections/yr",
+      "value": 1300000,
+      "format": "compact",
+      "suffix": " new cases",
+      "trend": "Down 39% since 2010 peak",
+      "icon": "📈"
+    },
+    {
+      "label": "AIDS-Related Deaths/yr",
+      "value": 630000,
+      "format": "compact",
+      "suffix": " deaths/yr",
+      "trend": "Down 51% since 2010",
+      "icon": "💀"
+    },
+    {
+      "label": "On Antiretroviral Therapy",
+      "value": 30700000,
+      "format": "compact",
+      "suffix": " on ART",
+      "trend": "77% of all PLHIV",
+      "icon": "💊"
+    },
+    {
+      "label": "Know Their Status",
+      "value": 86,
+      "format": "integer",
+      "suffix": "% of PLHIV diagnosed",
+      "trend": "First 95 target progress",
+      "icon": "🧪"
+    },
+    {
+      "label": "Sub-Saharan Africa Burden",
+      "value": 25300000,
+      "format": "compact",
+      "suffix": " in Sub-Saharan Africa",
+      "trend": "63% of global burden",
+      "icon": "🌍"
+    }
+  ],
+  "byContinent": {
+    "labels": [
+      "Sub-Saharan Africa",
+      "Asia-Pacific",
+      "Latin America",
+      "Eastern Europe & Central Asia",
+      "Western Europe & North America",
+      "Middle East & North Africa",
+      "Caribbean"
+    ],
+    "values": [
+      25300000,
+      6900000,
+      2200000,
+      1800000,
+      2100000,
+      180000,
+      310000
+    ],
+    "unit": "people living with HIV"
+  },
+  "trends": {
+    "labels": [
+      "2010",
+      "2013",
+      "2016",
+      "2019",
+      "2021",
+      "2023"
+    ],
+    "values": [
+      2100000,
+      1900000,
+      1700000,
+      1500000,
+      1500000,
+      1300000
+    ],
+    "unit": "new HIV infections/yr",
+    "note": "Sustained decline in new infections due to expanded HIV prevention and treatment programs globally."
+  },
+  "countryRankings": {
+    "label": "Countries by People Living with HIV",
+    "unit": "people",
+    "countries": [
+      {
+        "rank": 1,
+        "name": "South Africa",
+        "value": 7500000
+      },
+      {
+        "rank": 2,
+        "name": "Mozambique",
+        "value": 2500000
+      },
+      {
+        "rank": 3,
+        "name": "Tanzania",
+        "value": 1700000
+      },
+      {
+        "rank": 4,
+        "name": "Nigeria",
+        "value": 1700000
+      },
+      {
+        "rank": 5,
+        "name": "Zimbabwe",
+        "value": 1400000
+      },
+      {
+        "rank": 6,
+        "name": "Uganda",
+        "value": 1400000
+      },
+      {
+        "rank": 7,
+        "name": "Kenya",
+        "value": 1400000
+      },
+      {
+        "rank": 8,
+        "name": "Zambia",
+        "value": 920000
+      },
+      {
+        "rank": 9,
+        "name": "Malawi",
+        "value": 920000
+      },
+      {
+        "rank": 10,
+        "name": "Ethiopia",
+        "value": 790000
+      }
+    ]
+  },
+  "riskFactors": [
+    {
+      "title": "Unprotected Sexual Contact",
+      "description": "Unprotected sex remains the primary transmission route globally, accounting for over 70% of all new HIV infections.",
+      "impact": "Critical"
+    },
+    {
+      "title": "People Who Inject Drugs",
+      "description": "Sharing needles or syringes is responsible for approximately 8% of new HIV infections globally but much higher in Eastern Europe and Central Asia.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Stigma & Late Diagnosis",
+      "description": "HIV-related stigma prevents testing and treatment access. 14% of people with HIV still don't know their status globally.",
+      "impact": "High"
+    },
+    {
+      "title": "Mother-to-Child Transmission",
+      "description": "Without treatment, an HIV-positive mother has a 15–45% chance of transmitting HIV during pregnancy, birth, or breastfeeding. ART reduces this to under 5%.",
+      "impact": "High"
+    },
+    {
+      "title": "Treatment Access Gaps",
+      "description": "Only 77% of people living with HIV globally are on antiretroviral therapy. Gaps remain largest in West and Central Africa.",
+      "impact": "Medium"
+    }
+  ],
+  "didYouKnow": [
+    "U=U (Undetectable = Untransmittable): People on effective ART with an undetectable viral load cannot sexually transmit HIV.",
+    "The UNAIDS 95-95-95 targets aim for 95% of PLHIV diagnosed, 95% of diagnosed on treatment, and 95% of those virally suppressed by 2025.",
+    "PrEP (pre-exposure prophylaxis) reduces HIV risk by over 99% when taken consistently.",
+    "Sub-Saharan Africa accounts for 63% of all people living with HIV despite representing only 14% of the global population."
+  ],
+  "faq": [
+    {
+      "q": "Is HIV still a death sentence in 2026?",
+      "a": "No. With modern antiretroviral therapy (ART), people living with HIV can have a near-normal life expectancy. ART suppresses the virus to undetectable levels, protecting both health and preventing transmission."
+    },
+    {
+      "q": "What does U=U mean?",
+      "a": "U=U stands for Undetectable = Untransmittable. People living with HIV who are on effective ART and maintain an undetectable viral load cannot sexually transmit HIV to their partners. This is now supported by extensive clinical evidence."
+    },
+    {
+      "q": "What is the UNAIDS 95-95-95 target?",
+      "a": "By 2025, UNAIDS aims for 95% of all people living with HIV to know their status, 95% of those diagnosed to be on ART, and 95% of those on ART to achieve viral suppression. Meeting this target would effectively end AIDS as a public health threat."
+    }
+  ],
+  "sources": [
+    "UNAIDS Global AIDS Update 2024",
+    "WHO HIV/AIDS Programme 2024",
+    "IHME Global Burden of Disease 2021",
+    "The Lancet HIV"
+  ]
+}

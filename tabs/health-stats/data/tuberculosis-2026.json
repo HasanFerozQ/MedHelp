@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "title": "Tuberculosis (TB) Statistics 2026",
+    "year": 2026,
+    "lastUpdated": "2026-07-25",
+    "primarySources": [
+      "WHO Global Tuberculosis Report 2024",
+      "IHME Global Burden of Disease",
+      "Stop TB Partnership"
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Auto-Synced: TB incidence 131.0/100K (World Bank 2024)"
+    }
+  },
+  "hero": {
+    "eyebrow": "WHO Global TB Report 2024 · IHME GBD · Stop TB Partnership",
+    "description": "Global tuberculosis incidence, drug-resistant TB, mortality rates, treatment success, high-burden country rankings, and progress toward 2030 End TB targets."
+  },
+  "kpis": [
+    {
+      "label": "New TB Cases Annually",
+      "value": 8200000,
+      "format": "compact",
+      "suffix": " cases/yr",
+      "trend": "Highest since tracking began",
+      "icon": "🫁"
+    },
+    {
+      "label": "Annual TB Deaths",
+      "value": 1250000,
+      "format": "compact",
+      "suffix": " deaths/yr",
+      "trend": "Leading infectious disease killer",
+      "icon": "💀"
+    },
+    {
+      "label": "Drug-Resistant TB Cases",
+      "value": 410000,
+      "format": "compact",
+      "suffix": " MDR/RR-TB cases",
+      "trend": "Global health emergency",
+      "icon": "🧫"
+    },
+    {
+      "label": "High-Burden Countries",
+      "value": 30,
+      "format": "integer",
+      "suffix": " countries",
+      "trend": "Account for 87% of all cases",
+      "icon": "🌍"
+    },
+    {
+      "label": "Treatment Success Rate",
+      "value": 88,
+      "format": "integer",
+      "suffix": "% globally",
+      "trend": "Improving steadily",
+      "icon": "💉"
+    },
+    {
+      "label": "Incidence Reduction Since 2015",
+      "value": 13,
+      "format": "integer",
+      "suffix": "% since 2015",
+      "trend": "Toward 2030 End TB goal",
+      "icon": "📉"
+    }
+  ],
+  "byContinent": {
+    "labels": [
+      "Asia",
+      "Africa",
+      "Americas",
+      "Eastern Mediterranean",
+      "Western Pacific",
+      "Europe"
+    ],
+    "values": [
+      4400000,
+      2500000,
+      290000,
+      740000,
+      1900000,
+      230000
+    ],
+    "unit": "cases/yr"
+  },
+  "trends": {
+    "labels": [
+      "2015",
+      "2017",
+      "2019",
+      "2021",
+      "2023",
+      "2025"
+    ],
+    "values": [
+      9600000,
+      9200000,
+      8700000,
+      7500000,
+      8200000,
+      8000000
+    ],
+    "unit": "cases/yr",
+    "note": "2021 dip reflects COVID-19 reporting gaps; 2023 shows pandemic rebound."
+  },
+  "countryRankings": {
+    "label": "High-Burden Countries by Annual Cases",
+    "unit": "cases/yr",
+    "countries": [
+      {
+        "rank": 1,
+        "name": "India",
+        "value": 2800000
+      },
+      {
+        "rank": 2,
+        "name": "Indonesia",
+        "value": 1060000
+      },
+      {
+        "rank": 3,
+        "name": "China",
+        "value": 748000
+      },
+      {
+        "rank": 4,
+        "name": "Philippines",
+        "value": 638000
+      },
+      {
+        "rank": 5,
+        "name": "Pakistan",
+        "value": 565000
+      },
+      {
+        "rank": 6,
+        "name": "Nigeria",
+        "value": 467000
+      },
+      {
+        "rank": 7,
+        "name": "Bangladesh",
+        "value": 361000
+      },
+      {
+        "rank": 8,
+        "name": "DR Congo",
+        "value": 331000
+      },
+      {
+        "rank": 9,
+        "name": "Ethiopia",
+        "value": 298000
+      },
+      {
+        "rank": 10,
+        "name": "Myanmar",
+        "value": 175000
+      }
+    ]
+  },
+  "riskFactors": [
+    {
+      "title": "HIV Co-Infection",
+      "description": "People living with HIV are 18x more likely to develop active TB disease. HIV/TB co-infection accounted for 167,000 deaths in 2023.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Drug-Resistant TB (MDR-TB)",
+      "description": "MDR-TB requires 18–24 months of treatment with toxic drugs. Treatment success rate is only 57% vs 88% for drug-susceptible TB.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Poverty & Malnutrition",
+      "description": "Malnutrition accounts for 19% of global TB incidence. Overcrowding and poor ventilation significantly accelerate transmission.",
+      "impact": "High"
+    },
+    {
+      "title": "Tobacco Smoking",
+      "description": "Smokers are 2.5x more likely to develop active TB and experience worse treatment outcomes.",
+      "impact": "High"
+    },
+    {
+      "title": "Diabetes Mellitus",
+      "description": "Diabetics are 3x more likely to develop active TB. Diabetes accounts for approximately 15% of TB cases in high-burden countries.",
+      "impact": "Medium"
+    }
+  ],
+  "didYouKnow": [
+    "One quarter of the world's population has latent TB infection — the bacteria is present but not yet causing disease.",
+    "TB kills more people than any other single infectious agent globally, except COVID-19.",
+    "India alone accounts for 27% of all new TB cases worldwide.",
+    "Drug-resistant TB costs up to 100x more to treat than drug-susceptible TB."
+  ],
+  "faq": [
+    {
+      "q": "Is tuberculosis still a global threat in 2026?",
+      "a": "Yes. TB remains the world's deadliest infectious disease (excluding COVID-19), killing 1.25 million people annually. The COVID-19 pandemic reversed years of hard-won progress by disrupting health services."
+    },
+    {
+      "q": "What is drug-resistant TB?",
+      "a": "MDR-TB is caused by bacteria resistant to isoniazid and rifampicin — the two most powerful first-line anti-TB drugs. It requires longer, more expensive treatment regimens with significantly lower success rates."
+    },
+    {
+      "q": "Can tuberculosis be cured?",
+      "a": "Yes. Drug-susceptible TB is curable in 6 months with a standard 4-drug regimen. Global treatment success stands at 88%. MDR-TB is also treatable but requires 18-24 months of therapy."
+    }
+  ],
+  "sources": [
+    "WHO Global Tuberculosis Report 2024",
+    "IHME Global Burden of Disease 2021",
+    "Stop TB Partnership",
+    "Lancet Infectious Diseases"
+  ]
+}

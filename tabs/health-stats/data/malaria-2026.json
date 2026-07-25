@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "title": "Malaria Statistics 2026",
+    "year": 2026,
+    "lastUpdated": "2026-07-25",
+    "primarySources": [
+      "WHO World Malaria Report 2024",
+      "IHME Global Burden of Disease",
+      "RBM Partnership to End Malaria"
+    ],
+    "autoSync": {
+      "enabled": true,
+      "lastCheck": "2026-07-25",
+      "status": "Auto-Synced: Malaria cases 224,863 (World Bank 2024)"
+    }
+  },
+  "hero": {
+    "eyebrow": "WHO World Malaria Report 2024 · IHME GBD · RBM Partnership",
+    "description": "Global malaria cases, deaths, at-risk populations, country burden rankings, insecticide resistance, and progress toward malaria elimination targets."
+  },
+  "kpis": [
+    {
+      "label": "Annual Malaria Cases",
+      "value": 263000000,
+      "format": "compact",
+      "suffix": " cases/yr",
+      "trend": "Stalled elimination progress",
+      "icon": "🦟"
+    },
+    {
+      "label": "Annual Malaria Deaths",
+      "value": 597000,
+      "format": "compact",
+      "suffix": " deaths/yr",
+      "trend": "76% in children under 5",
+      "icon": "💀"
+    },
+    {
+      "label": "Population at Risk",
+      "value": 3300000000,
+      "format": "compact",
+      "suffix": " people at risk",
+      "trend": "40% of world population",
+      "icon": "🌍"
+    },
+    {
+      "label": "Child Deaths (Under 5)",
+      "value": 453000,
+      "format": "compact",
+      "suffix": " deaths/yr",
+      "trend": "A child dies every 70 seconds",
+      "icon": "👶"
+    },
+    {
+      "label": "Malaria-Endemic Countries",
+      "value": 85,
+      "format": "integer",
+      "suffix": " countries",
+      "trend": "Concentrated in Sub-Saharan Africa",
+      "icon": "🗺️"
+    },
+    {
+      "label": "Africa's Share of Deaths",
+      "value": 94,
+      "format": "integer",
+      "suffix": "% of global deaths",
+      "trend": "Sub-Saharan Africa bears the burden",
+      "icon": "📊"
+    }
+  ],
+  "byContinent": {
+    "labels": [
+      "Sub-Saharan Africa",
+      "South-East Asia",
+      "Eastern Mediterranean",
+      "Americas",
+      "Western Pacific",
+      "Europe"
+    ],
+    "values": [
+      233000000,
+      9600000,
+      5900000,
+      700000,
+      1800000,
+      10000
+    ],
+    "unit": "cases/yr"
+  },
+  "trends": {
+    "labels": [
+      "2015",
+      "2017",
+      "2019",
+      "2021",
+      "2023",
+      "2025"
+    ],
+    "values": [
+      211000000,
+      219000000,
+      229000000,
+      247000000,
+      263000000,
+      260000000
+    ],
+    "unit": "cases/yr",
+    "note": "Cases rose sharply during COVID-19 disruption of health services. Decline in 2025 reflects expanded vaccine rollout."
+  },
+  "countryRankings": {
+    "label": "Countries by Malaria Cases",
+    "unit": "cases/yr",
+    "countries": [
+      {
+        "rank": 1,
+        "name": "Nigeria",
+        "value": 68000000
+      },
+      {
+        "rank": 2,
+        "name": "DR Congo",
+        "value": 43000000
+      },
+      {
+        "rank": 3,
+        "name": "Uganda",
+        "value": 17000000
+      },
+      {
+        "rank": 4,
+        "name": "Mozambique",
+        "value": 14000000
+      },
+      {
+        "rank": 5,
+        "name": "Côte d'Ivoire",
+        "value": 13000000
+      },
+      {
+        "rank": 6,
+        "name": "Ghana",
+        "value": 9700000
+      },
+      {
+        "rank": 7,
+        "name": "Burkina Faso",
+        "value": 9100000
+      },
+      {
+        "rank": 8,
+        "name": "Niger",
+        "value": 7900000
+      },
+      {
+        "rank": 9,
+        "name": "Tanzania",
+        "value": 7700000
+      },
+      {
+        "rank": 10,
+        "name": "Mali",
+        "value": 6400000
+      }
+    ]
+  },
+  "riskFactors": [
+    {
+      "title": "Young Children (Under 5)",
+      "description": "Children under 5 account for 76% of all malaria deaths due to lack of acquired immunity. Sub-Saharan Africa bears the greatest burden.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Insecticide Resistance",
+      "description": "Resistance to pyrethroid insecticides — used in bed nets — is now detected in 78 countries, directly threatening vector control programs.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Pregnant Women",
+      "description": "Malaria in pregnancy causes maternal anaemia, low birth weight and neonatal mortality in high-transmission areas.",
+      "impact": "High"
+    },
+    {
+      "title": "Climate Change",
+      "description": "Rising temperatures are expanding mosquito habitats into higher altitudes and latitudes, increasing at-risk populations globally.",
+      "impact": "High"
+    },
+    {
+      "title": "Artemisinin Resistance",
+      "description": "Partial artemisinin resistance has been confirmed in 6 African countries, threatening the efficacy of first-line combination treatments.",
+      "impact": "Medium"
+    }
+  ],
+  "didYouKnow": [
+    "The RTS,S/AS01 (Mosquirix) vaccine was approved by WHO in 2021 — the world's first malaria vaccine to reach approval.",
+    "A child dies from malaria approximately every 70 seconds in Sub-Saharan Africa.",
+    "Malaria costs Africa an estimated $12 billion in lost GDP annually through illness and premature death.",
+    "Malaria was responsible for more deaths than COVID-19 in Sub-Saharan Africa during 2020–2021."
+  ],
+  "faq": [
+    {
+      "q": "Is there a vaccine for malaria?",
+      "a": "Yes. The RTS,S/AS01 (Mosquirix) vaccine and the R21/Matrix-M vaccine are both WHO-recommended for children in sub-Saharan Africa as of 2023. They provide partial protection and are used alongside other preventive measures."
+    },
+    {
+      "q": "Which countries have the highest malaria burden?",
+      "a": "Nigeria, DR Congo, Uganda, Mozambique, and Côte d'Ivoire together account for over 50% of all global malaria cases. All five countries are in Sub-Saharan Africa."
+    },
+    {
+      "q": "Can malaria be eliminated?",
+      "a": "Yes. Over 40 countries have successfully eliminated malaria. The WHO Global Malaria Strategy 2016–2030 aims for a 90% reduction in cases and deaths by 2030 compared to 2015 levels."
+    }
+  ],
+  "sources": [
+    "WHO World Malaria Report 2024",
+    "IHME Global Burden of Disease 2021",
+    "RBM Partnership to End Malaria",
+    "The Lancet"
+  ]
+}
