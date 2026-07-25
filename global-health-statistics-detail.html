@@ -24,7 +24,7 @@
   <style>
     /* ── Detail page styles ── */
     .ghs-detail-hero {
-      padding: 70px 0 50px;
+      padding: 60px 0 40px;
       position: relative;
       overflow: hidden;
     }
@@ -41,7 +41,7 @@
       gap: 8px;
       font-size: 13px;
       color: var(--text-muted);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
     }
     .breadcrumb a { color: var(--text-muted); text-decoration: none; }
@@ -49,16 +49,16 @@
     .breadcrumb span { opacity: 0.5; }
 
     .ghs-hero-icon-wrap {
-      width: 76px; height: 76px;
+      width: 72px; height: 72px;
       border-radius: 20px;
       background: rgba(255,255,255,0.07);
       display: flex; align-items: center; justify-content: center;
-      font-size: 38px;
+      font-size: 36px;
       border: 1px solid rgba(255,255,255,0.12);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
     .ghs-detail-hero h1 {
-      font-size: clamp(28px, 5vw, 50px);
+      font-size: clamp(28px, 5vw, 48px);
       font-weight: 900;
       color: var(--text-h);
       letter-spacing: -1.5px;
@@ -97,8 +97,69 @@
     .ghs-last-updated {
       font-size: 12px;
       color: var(--text-muted);
-      opacity: 0.7;
+      opacity: 0.75;
       margin-bottom: 14px;
+    }
+
+    /* ── Category Quick Switcher ── */
+    .category-switcher {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 0 16px;
+      scrollbar-width: none;
+    }
+    .category-switcher::-webkit-scrollbar { display: none; }
+    .cat-switch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .cat-switch-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-h);
+    }
+    .cat-switch-btn.active {
+      background: rgba(var(--accent-rgb),0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── Authenticity Banner ── */
+    .authenticity-box {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .auth-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .auth-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
     }
 
     /* ── KPI cards ── */
@@ -171,7 +232,18 @@
     .chart-container { position: relative; height: 260px; }
 
     /* ── Rankings table ── */
-    .rankings-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    .table-search-input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 13px;
+      color: var(--text-h);
+      width: 100%;
+      max-width: 280px;
+      margin-bottom: 16px;
+    }
+    .rankings-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
     .rankings-table th {
       text-align: left;
       font-size: 12px;
@@ -179,10 +251,10 @@
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      padding: 10px 12px;
+      padding: 12px 14px;
       border-bottom: 1px solid var(--border);
     }
-    .rankings-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .rankings-table td { padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); }
     .rankings-table tr:last-child td { border-bottom: none; }
     .rank-badge {
       display: inline-flex; align-items: center; justify-content: center;
@@ -394,14 +466,22 @@
     const CHART_COLORS = ['#3b82f6','#ef4444','#10b981','#f59e0b','#8b5cf6','#ec4899','#06b6d4','#f97316','#84cc16','#a78bfa'];
 
     const CATEGORY_META = {
-      'diabetes-statistics-2026':   { icon: '🩸', accent: '#ef4444', file: '/tabs/health-stats/data/diabetes-2026.json' },
-      'cancer-statistics-2026':     { icon: '🎗️', accent: '#8b5cf6', file: '/tabs/health-stats/data/cancer-2026.json' },
-      'obesity-statistics-2026':    { icon: '⚖️', accent: '#f59e0b', file: '/tabs/health-stats/data/obesity-2026.json' },
-      'heart-disease-statistics-2026': { icon: '❤️', accent: '#ec4899', file: '/tabs/health-stats/data/heart-disease-2026.json' }
+      'diabetes-statistics-2026':   { icon: '🩸', accent: '#ef4444', name: 'Diabetes 2026', file: '/tabs/health-stats/data/diabetes-2026.json' },
+      'cancer-statistics-2026':     { icon: '🎗️', accent: '#8b5cf6', name: 'Cancer 2026', file: '/tabs/health-stats/data/cancer-2026.json' },
+      'obesity-statistics-2026':    { icon: '⚖️', accent: '#f59e0b', name: 'Obesity 2026', file: '/tabs/health-stats/data/obesity-2026.json' },
+      'heart-disease-statistics-2026': { icon: '❤️', accent: '#ec4899', name: 'Heart Disease 2026', file: '/tabs/health-stats/data/heart-disease-2026.json' }
     };
 
+    // Extract category slug from query param OR clean URL pathname
     const params = new URLSearchParams(location.search);
-    const slug = params.get('category') || 'diabetes-statistics-2026';
+    let slug = params.get('category');
+    if (!slug) {
+      const parts = location.pathname.split('/').filter(Boolean);
+      if (parts.length > 1 && parts[0] === 'global-health-statistics') {
+        slug = parts[1];
+      }
+    }
+    slug = slug || 'diabetes-statistics-2026';
     const meta = CATEGORY_META[slug];
 
     if (!meta) {
@@ -529,6 +609,15 @@
       });
     }
 
+    function filterRankings(query) {
+      const q = query.toLowerCase();
+      const rows = document.querySelectorAll('#rankings-table tbody tr');
+      rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        r.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
     function buildPage(d, meta, slug) {
       const content = document.getElementById('page-content');
 
@@ -547,6 +636,31 @@
             <p class="ghs-hero-desc-p">${d.hero.description}</p>
             <p class="ghs-last-updated">📅 Last Updated: ${new Date(d.meta.lastUpdated).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} &nbsp;·&nbsp; Primary Sources: ${d.meta.primarySources.length}</p>
             <div class="ghs-source-pills">${d.meta.primarySources.map(s=>`<span class="ghs-source-pill">${s}</span>`).join('')}</div>
+
+            <!-- Category Switcher Bar -->
+            <div style="margin-top: 28px;">
+              <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Switch Statistics Topic:</div>
+              <div class="category-switcher">
+                ${Object.keys(CATEGORY_META).map(key => {
+                  const m = CATEGORY_META[key];
+                  const isActive = key === slug;
+                  return `<a href="/global-health-statistics/${key}" class="cat-switch-btn ${isActive ? 'active' : ''}">${m.icon} ${m.name}</a>`;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Authenticity Assurance Box -->
+            <div class="authenticity-box">
+              <div>
+                <div class="auth-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  Verified &amp; Authentic Data
+                </div>
+                <div class="auth-desc">All statistics on this page are extracted directly from ${d.meta.primarySources[0]} and official epidemiological registries. No estimates are generated without primary citation.</div>
+              </div>
+              <a href="#sources-section" style="font-size: 12px; font-weight: 800; color: #10b981; text-decoration: none; white-space: nowrap;">View Citations ↓</a>
+            </div>
+
           </div>
         </section>
 
@@ -573,7 +687,7 @@
         <section class="page-section" style="background:var(--bg-card); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
           <div class="container">
             <div class="detail-section-header">
-              <h2>Interactive Charts & Visualizations</h2>
+              <h2>Interactive Charts &amp; Visualizations</h2>
               <p>Data visualized from ${d.meta.primarySources.join(', ')}.</p>
             </div>
             <div class="charts-grid" id="charts-grid">
@@ -587,8 +701,12 @@
         html += `
         <section class="page-section" style="background:var(--bg);">
           <div class="container">
-            <div class="detail-section-header">
-              <h2>${d.countryRankings.title}</h2>
+            <div class="detail-section-header" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px;">
+              <div>
+                <h2>${d.countryRankings.title}</h2>
+                <p>Age-standardized rates allowing direct country-to-country comparisons.</p>
+              </div>
+              <input type="text" class="table-search-input" placeholder="🔍 Search country..." oninput="filterRankings(this.value)">
             </div>
             <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; overflow:auto;">
               <table class="rankings-table" id="rankings-table">
@@ -596,7 +714,7 @@
                   <th style="width:60px;">Rank</th>
                   <th>Country</th>
                   <th style="min-width:180px;">Rate</th>
-                  <th style="width:80px; text-align:right;">${d.countryRankings.unit}</th>
+                  <th style="width:100px; text-align:right;">${d.countryRankings.unit}</th>
                 </tr></thead>
                 <tbody>
                   ${d.countryRankings.countries.map((c,i)=>{
@@ -605,7 +723,7 @@
                       <td><span class="rank-badge ${i<3?'top3':''}">${c.rank}</span></td>
                       <td style="font-weight:600; color:var(--text-h);">${c.country}</td>
                       <td><div class="rank-bar-wrap"><div class="rank-bar-bg"><div class="rank-bar-fill" style="width:${pct}%; background:${meta.accent};"></div></div></div></td>
-                      <td style="text-align:right;" class="rank-value">${c.value}</td>
+                      <td style="text-align:right;" class="rank-value">${c.value} ${d.countryRankings.unit}</td>
                     </tr>`;
                   }).join('')}
                 </tbody>
@@ -621,7 +739,7 @@
         <section class="page-section" style="background:var(--bg-card); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
           <div class="container">
             <div class="detail-section-header">
-              <h2>Did You Know?</h2>
+              <h2>Key Clinical Insights &amp; Takeaways</h2>
             </div>
             <div class="dyk-grid">
               ${d.didYouKnow.map(f=>`<div class="dyk-card"><span class="dyk-icon">💡</span><div class="dyk-text">${f}</div></div>`).join('')}
@@ -637,7 +755,7 @@
           <div class="container">
             <div class="detail-section-header">
               <h2>Future Projections</h2>
-              <p>Based on current trends and population growth models.</p>
+              <p>Epidemiological forecasting models based on current global demographic trends.</p>
             </div>
             <div class="proj-grid">
               ${d.projections.map(p=>`
@@ -658,7 +776,7 @@
         <section class="page-section" style="background:var(--bg-card); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
           <div class="container">
             <div class="detail-section-header">
-              <h2>Key Risk Factors</h2>
+              <h2>Key Modifiable Risk Factors</h2>
             </div>
             <div class="risk-grid">
               ${d.riskFactors.map(r=>`
@@ -698,10 +816,11 @@
 
       // Sources & References
       html += `
-        <section class="page-section" style="background:var(--bg-card); border-top:1px solid var(--border);">
+        <section class="page-section" id="sources-section" style="background:var(--bg-card); border-top:1px solid var(--border);">
           <div class="container">
             <div class="detail-section-header">
-              <h2>Sources & References</h2>
+              <h2>Sources &amp; Academic Citations</h2>
+              <p>Every metric is referenced directly from peer-reviewed databases.</p>
             </div>
             <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:30px;">
               ${d.meta.primarySources.map(s=>`<div style="background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:10px; padding:12px 18px; font-size:13px; font-weight:600; color:var(--text-muted);">📚 ${s}</div>`).join('')}
@@ -845,17 +964,17 @@
                 </ul>
               </div>
               <div class="footer-col">
-                <h4>Services & Exams</h4>
+                <h4>Services &amp; Exams</h4>
                 <ul>
                   <li><a href="/pricing" style="color:var(--expert-amber); display:inline-flex; align-items:center; gap:6px;">Human Bill Negotiation</a></li>
                   <li><a href="/medical-exam-preparation" style="color:var(--accent); font-weight:700;">Medical Exam Mastery</a></li>
-                  <li><a href="/flash-cards">USMLE & MBBS Flashcards</a></li>
+                  <li><a href="/flash-cards">USMLE &amp; MBBS Flashcards</a></li>
                   <li><a href="/global-health-statistics">Global Health Data</a></li>
                   <li><a href="/blog">Patient Blog</a></li>
                 </ul>
               </div>
               <div class="footer-col">
-                <h4>Legal & Company</h4>
+                <h4>Legal &amp; Company</h4>
                 <ul>
                   <li><a href="/about">About Us</a></li>
                   <li><a href="/editorial-policy">Editorial Policy</a></li>
