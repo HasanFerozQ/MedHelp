@@ -44,6 +44,88 @@ window.initDbClient();
   });
 })();
 
+// 2.5 Animated page loader — non-blocking overlay and top progress bar
+(function initPageLoader() {
+  const ID = 'mh-page-loader';
+  if (document.getElementById(ID)) return;
+
+  const css = `
+  #${ID} { position: fixed; inset:0; pointer-events: none; z-index:99999; opacity:0; transition:opacity 260ms ease; }
+  #${ID}.active { opacity: 1; pointer-events: auto; }
+  #${ID} .track { position: fixed; top:0; left:0; right:0; height:4px; background: rgba(255,255,255,0.04); }
+  #${ID} .bar { height:100%; width:0%; background: linear-gradient(90deg,#22c55e,#06b6d4,#8b5cf6,#ec4899); background-size:200% 100%; box-shadow:0 0 12px rgba(0,0,0,0.2); transition:width 320ms cubic-bezier(.2,.8,.2,1); }
+  #${ID} .overlay { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; gap:12px; flex-direction:column; background: rgba(6,8,15,0.5); backdrop-filter: blur(6px); opacity:0; transform: translateY(6px); transition: all 260ms ease; }
+  #${ID}.overlay .overlay-inner { color: #e6eef8; font-weight:800; display:flex; gap:12px; align-items:center; }
+  #${ID}.overlay .dots span { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--accent, #22c55e); margin:0 3px; animation:mh-bounce 1.2s infinite; }
+  @keyframes mh-bounce { 0%,80%,100% { transform:translateY(0); opacity:0.45 } 40% { transform:translateY(-6px); opacity:1 } }
+  `;
+
+  const style = document.createElement('style');
+  style.id = 'mh-page-loader-style';
+  style.textContent = css;
+  (document.head || document.documentElement).appendChild(style);
+
+  const wrap = document.createElement('div');
+  wrap.id = ID;
+  wrap.innerHTML = `
+    <div class="track"><div class="bar" id="mh-bar"></div></div>
+    <div class="overlay" id="mh-overlay"><div class="overlay-inner"><div style="width:44px;height:44px;border-radius:10px;background:rgba(34,197,94,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">🏥</div><div style="text-align:left"><div id="mh-title">Loading MediHelp</div><div class="dots" style="margin-top:6px"><span></span><span></span><span></span></div></div></div></div>
+  `;
+
+  function mount() { if (!document.body) return requestAnimationFrame(mount); document.body.prepend(wrap); }
+  mount();
+
+  let progress = 0;
+  let trickle = null;
+  const bar = () => document.getElementById('mh-bar');
+  const overlay = () => document.getElementById(ID);
+
+  function setProgress(p) {
+    progress = Math.min(100, Math.max(progress, p));
+    const el = bar(); if (el) el.style.width = progress + '%';
+  }
+
+  function start(opts = {}) {
+    const useOverlay = !!opts.overlay || document.documentElement.dataset.pageLoader === 'overlay';
+    const el = overlay();
+    if (!el) return;
+    el.classList.add('active');
+    if (useOverlay) el.classList.add('overlay'); else el.classList.remove('overlay');
+    setProgress(6);
+    clearInterval(trickle);
+    trickle = setInterval(() => { if (progress < 90) setProgress(progress + Math.max(0.4, (90 - progress) * 0.07)); }, 350);
+  }
+
+  function done() {
+    clearInterval(trickle);
+    setProgress(100);
+    setTimeout(() => { const el = overlay(); if (!el) return; el.classList.remove('active','overlay'); setProgress(0); }, 420);
+  }
+
+  // Start on navigation clicks for same-origin navigations
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    if (a.target === '_blank' || a.hasAttribute('download')) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    try {
+      const url = new URL(a.href, location.href);
+      if (url.origin === location.origin && url.pathname !== location.pathname) {
+        start({ overlay: false });
+      }
+    } catch (_) {}
+  }, true);
+
+  // Expose controls
+  window.MediHelpPageLoader = { start, done, setProgress };
+
+  // Finish when page load event fires
+  window.addEventListener('load', () => { try { done(); } catch (e) {} });
+
+  // Small safety: if DOMContentLoaded already fired, nudge to visible then hide quickly
+  if (document.readyState === 'complete') { done(); }
+})();
+
 // 3. Shared Utils: Debounce
 function debounce(fn, wait) {
   let timeout;
