@@ -79,59 +79,76 @@
 
 /* --- Light Mode — Properly readable, no white-on-white --- */
 [data-theme="light"] {
-  --bg: #f3fdff;
-  --bg-elevated: #ecfbfd;
-  --bg-card: #ffffff;
-  --bg-card-hover: #f4fcfe;
-  --bg-glass: rgba(236, 251, 253, 0.9);
-  --bg-secondary: #f3fdff;
-  --bg-main: #f3fdff;
+  /* === BACKGROUNDS — clear elevation steps === */
+  --bg: #FFFFFF;                    /* base page — clean white, not tinted */
+  --bg-secondary: #F7FAFC;          /* very subtle cool gray, for section bands */
+  --bg-elevated: #EEF3F7;           /* visibly deeper — hero/divider sections */
+  --bg-card: #FFFFFF;               /* cards pop against secondary/elevated */
+  --bg-card-hover: #F2F7FA;
+  --bg-main: #FFFFFF;
 
-  /* Light Palette */
-  --accent: #33658a;        /* Baltic Blue */
-  --accent-rgb: 51, 101, 138;
-  --accent-glow: rgba(var(--accent-rgb), 0.12);
-  --accent-light: #55dde0;  /* Strong Cyan */
-  --accent-dim: #2f4858;    /* Charcoal Blue */
+  --bg-glass: rgba(247, 250, 252, 0.92);
+  --glass-bg: rgba(247, 250, 252, 0.92);
+  --input-bg: rgba(255, 255, 255, 0.98);
+
+  /* === TEXT — bumped for real AAA contrast === */
+  --text-h: #1E2E3A;                /* darker charcoal, ~13:1 on white */
+  --text-main: #1E2E3A;
+  --text-body: #33475A;             /* ~8.9:1 on white */
+  --text-muted: #4A6178;            /* ~6.1:1 on white — safely AAA-adjacent */
+  --font-mono: #1E2E3A;
+
+  /* === ACCENTS === */
+  --accent: #2C5A82;                /* deepened Baltic Blue for better pop on white */
+  --accent-rgb: 44, 90, 130;
+  --accent-glow: rgba(44, 90, 130, 0.14);
+  --accent-light: #12A594;          /* Darker teal-green for high contrast */
+  --accent-dim: #1E2E3A;
   --accent-hover: var(--accent-light);
-  --accent-tint: #c9f6f7;
-  --accent-warm: #f6ae2d;   /* Honey Bronze */
+  --accent-tint: #D6F0F2;
 
-  --expert-amber: #f6ae2d;  /* Honey Bronze */
-  --expert-amber-dim: #f26419; /* Blaze Orange */
-  --amber-rgb: 246, 174, 45;
-  --expert-amber-glow: rgba(var(--amber-rgb), 0.18);
-  --amber-tint: #fbd27a;
-
-  --trust-blue: #33658a;
+  --expert-amber: #E89A1C;          /* Deepened amber */
+  --expert-amber-dim: #D6491A;      /* Deepened orange */
+  --amber-rgb: 232, 154, 28;
+  --expert-amber-glow: rgba(232, 154, 28, 0.18);
+  --amber-tint: #FBD27A;
+  --trust-blue: #2C5A82;
 
   /* Semantic */
-  --success: #55dde0;
-  --warning: #f6ae2d;
-  --danger: #f26419;
+  --success: #12A594;               /* Darker teal-green for AA text/icon contrast */
+  --warning: #E89A1C;               /* Deepened amber for icon/border use */
+  --warning-glow: rgba(232, 154, 28, 0.18);
+  --warning-tint: #FBD27A;
+  --danger: #D6491A;                /* Deepened from #F26419 for AA icon contrast */
 
-  --text-h: #2f4858;
-  --text-body: #2f4858;
-  --text-muted: #5c788a;
-  --text-main: #2f4858;
+  /* === BORDERS & SHADOWS — clear visibility === */
+  --border: rgba(30, 46, 58, 0.12);
+  --border-accent: rgba(44, 90, 130, 0.28);
+  --border-amber: rgba(232, 154, 28, 0.3);
+  --border-warning: rgba(232, 154, 28, 0.3);
+  --card-depth: 0 8px 28px rgba(30, 46, 58, 0.10);
+  --shadow: 0 4px 20px rgba(30, 46, 58, 0.08);
+  --shadow-accent: 0 0 30px rgba(44, 90, 130, 0.12);
+  --shadow-amber: 0 0 30px rgba(232, 154, 28, 0.12);
 
-  --border: rgba(0,0,0,0.08);
-  --border-accent: rgba(var(--accent-rgb), 0.22);
-  --border-amber: rgba(var(--amber-rgb), 0.25);
+  /* === RISK BADGES — re-tuned for AA text contrast on tinted bg === */
+  --badge-critical-text: #D6491A;
+  --badge-critical-bg: rgba(214, 73, 26, 0.10);
+  --badge-critical-border: rgba(214, 73, 26, 0.28);
 
-  --shadow: 0 4px 24px rgba(0,0,0,0.07);
-  --shadow-accent: 0 0 30px rgba(var(--accent-rgb), 0.12);
-  --shadow-amber: 0 0 30px rgba(var(--amber-rgb), 0.12);
+  --badge-high-text: #B5740A;
+  --badge-high-bg: rgba(232, 154, 28, 0.12);
+  --badge-high-border: rgba(232, 154, 28, 0.3);
 
-  --glass-bg: rgba(236, 251, 253, 0.85);
-  --card-depth: 0 8px 32px rgba(0,0,0,0.08);
-  --input-bg: rgba(255, 255, 255, 0.9);
+  --badge-medium-text: #2C5A82;
+  --badge-medium-bg: rgba(44, 90, 130, 0.10);
+  --badge-medium-border: rgba(44, 90, 130, 0.28);
 
-  /* Legacy convenience tokens used in inline styles */
-  --green: #55dde0;
-  --blue: #33658a;
-  --orange: #f6ae2d;
-  --red: #f26419;
+  /* Legacy convenience tokens */
+  --green: #12A594;
+  --blue: #2C5A82;
+  --orange: #E89A1C;
+  --red: #D6491A;
 }
 
 /* --- Theme-safe native form controls --- */
