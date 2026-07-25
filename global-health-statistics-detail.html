@@ -965,10 +965,24 @@
                   <div class="kpi-value" data-target="${k.value}" data-format="${k.format}" data-prefix="${k.prefix||''}" data-suffix="${k.suffix||''}" data-decimal="${k.format==='decimal'?1:0}">0</div>
                   <div class="kpi-label">${k.label}</div>
                   <span class="kpi-trend">${k.trend}</span>
+                  ${k.note ? `<div style="margin-top: 10px; font-size: 11px; font-weight: 700; color: #10b981; background: rgba(16, 185, 129, 0.14); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 6px; padding: 4px 8px; line-height: 1.4;">💚 ${k.note}</div>` : ''}
                 </div>`).join('')}
             </div>
+
+            ${slug === 'mental-health-statistics-2026' ? `
+            <!-- 24/7 CRISIS SUPPORT & HELPLINE BANNER -->
+            <div class="crisis-support-box" style="margin-top: 24px; background: #0b1e19; border: 1.5px solid #10b981; border-radius: 16px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);">
+              <div style="display: flex; align-items: center; gap: 14px; max-width: 720px;">
+                <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(16, 185, 129, 0.18); border: 1px solid rgba(16, 185, 129, 0.35); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">💚</div>
+                <div>
+                  <div style="font-size: 15px; font-weight: 800; color: #f8fafc; margin-bottom: 4px;">In Need of Immediate Support? Free, 24/7 Crisis Helplines</div>
+                  <div style="font-size: 13px; color: #cbd5e1; line-height: 1.5;">If you or someone you know is struggling, distressed, or in crisis, compassionate confidential help is available 24/7. Call or text <strong style="color:#10b981;">988</strong> in the US &amp; Canada, dial <strong style="color:#10b981;">111</strong> or <strong style="color:#10b981;">999</strong> in the UK, or contact your local emergency service.</div>
+                </div>
+              </div>
+              <a href="https://findahelpline.com/" target="_blank" rel="noopener noreferrer" style="background: #10b981; color: #04120e; padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 800; text-decoration: none; white-space: nowrap; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#34d399'" onmouseout="this.style.background='#10b981'">Find Global Helplines 🌐</a>
+            </div>` : ''}
           </div>
-        </section>
+        </section>`,StartLine:961,TargetContent:
 
         <!-- CHARTS -->
         <section class="page-section" style="background:#0c131f; border-top:1px solid #1e2d42; border-bottom:1px solid #1e2d42;">
