@@ -1009,7 +1009,7 @@
           <div class="container">
             <div class="detail-section-header" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px;">
               <div>
-                <h2>${d.countryRankings.title}</h2>
+                <h2>${d.countryRankings.title || d.countryRankings.label}</h2>
                 <p>Age-standardized rates allowing direct country-to-country comparisons.</p>
               </div>
               <div class="table-search-wrapper">
@@ -1030,7 +1030,7 @@
                     const pct = Math.round((c.value / d.countryRankings.countries[0].value) * 100);
                     return `<tr>
                       <td><span class="rank-badge ${i<3?'top3':''}">${c.rank}</span></td>
-                      <td style="font-weight:600; color:var(--text-h);">${c.country}</td>
+                      <td style="font-weight:600; color:var(--text-h);">${c.country || c.name}</td>
                       <td><div class="rank-bar-wrap"><div class="rank-bar-bg"><div class="rank-bar-fill" style="width:${pct}%; background:${meta.accent};"></div></div></div></td>
                       <td style="text-align:right;" class="rank-value">${c.value} ${d.countryRankings.unit}</td>
                     </tr>`;
@@ -1381,6 +1381,78 @@
         if (d.trends) {
           addChart('Global Adult Smoking Prevalence Trend (%)', 'ch-tb-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
             label: 'Adult Prevalence %', data: d.trends.prevalence, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
+          }], meta.accent));
+        }
+      }
+
+      // ── Tuberculosis ──
+      if (slug === 'tuberculosis-statistics-2026') {
+        if (d.byContinent) {
+          addChart('New TB Cases by Region', 'ch-tb-cont', false, ctx => makeBar(ctx, d.byContinent.labels, [{ label: 'Cases/yr', data: d.byContinent.values, backgroundColor: CHART_COLORS, borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.trends) {
+          addChart('Global TB Cases Trend (2015-2025)', 'ch-tb-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
+            label: 'Cases/yr', data: d.trends.values, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
+          }], meta.accent));
+        }
+      }
+
+      // ── Malaria ──
+      if (slug === 'malaria-statistics-2026') {
+        if (d.byContinent) {
+          addChart('Annual Malaria Cases by Region', 'ch-mal-cont', false, ctx => makeBar(ctx, d.byContinent.labels, [{ label: 'Cases/yr', data: d.byContinent.values, backgroundColor: CHART_COLORS, borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.trends) {
+          addChart('Global Malaria Cases Trend (2015-2025)', 'ch-mal-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
+            label: 'Cases/yr', data: d.trends.values, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
+          }], meta.accent));
+        }
+      }
+
+      // ── HIV/AIDS ──
+      if (slug === 'hiv-aids-statistics-2026') {
+        if (d.byContinent) {
+          addChart('People Living with HIV by Region', 'ch-hiv-reg', false, ctx => makeDoughnut(ctx, d.byContinent.labels, d.byContinent.values, CHART_COLORS, meta.accent));
+        }
+        if (d.trends) {
+          addChart('New HIV Infections Trend (2010-2023)', 'ch-hiv-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
+            label: 'New Infections/yr', data: d.trends.values, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
+          }], meta.accent));
+        }
+      }
+
+      // ── Hepatitis B ──
+      if (slug === 'hepatitis-b-statistics-2026') {
+        if (d.byContinent) {
+          addChart('Chronic HBV Infections by Region', 'ch-hbv-reg', false, ctx => makeBar(ctx, d.byContinent.labels, [{ label: 'Infections', data: d.byContinent.values, backgroundColor: CHART_COLORS, borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.trends) {
+          addChart('New HBV Infections Trend (1990-2025)', 'ch-hbv-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
+            label: 'New Infections/yr', data: d.trends.values, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
+          }], meta.accent));
+        }
+      }
+
+      // ── Cholera ──
+      if (slug === 'cholera-statistics-2026') {
+        if (d.byContinent) {
+          addChart('Reported Cholera Cases by Region', 'ch-chol-reg', false, ctx => makeBar(ctx, d.byContinent.labels, [{ label: 'Reported Cases/yr', data: d.byContinent.values, backgroundColor: CHART_COLORS, borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.trends) {
+          addChart('Global Reported Cholera Cases Trend (2016-2023)', 'ch-chol-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
+            label: 'Reported Cases/yr', data: d.trends.values, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
+          }], meta.accent));
+        }
+      }
+
+      // ── COVID-19 ──
+      if (slug === 'covid19-statistics-2026') {
+        if (d.byContinent) {
+          addChart('Cumulative COVID-19 Cases by Region', 'ch-cov-reg', false, ctx => makeDoughnut(ctx, d.byContinent.labels, d.byContinent.values, CHART_COLORS, meta.accent));
+        }
+        if (d.trends) {
+          addChart('Cumulative Confirmed COVID-19 Cases (2020-2024)', 'ch-cov-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
+            label: 'Cumulative Cases', data: d.trends.values, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
           }], meta.accent));
         }
       }
