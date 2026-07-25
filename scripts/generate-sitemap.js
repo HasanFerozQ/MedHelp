@@ -71,7 +71,13 @@ const mainPages = [
   { loc: '/claim-denial-codes', priority: 0.9, changefreq: 'weekly' },
   { loc: '/rx-savings', priority: 0.8, changefreq: 'monthly' },
   { loc: '/providers', priority: 0.8, changefreq: 'monthly' },
-  { loc: '/blog', priority: 0.7, changefreq: 'daily' }
+  { loc: '/blog', priority: 0.7, changefreq: 'daily' },
+  // Global Health Statistics Hub
+  { loc: '/global-health-statistics', priority: 0.9, changefreq: 'monthly' },
+  { loc: '/global-health-statistics/diabetes-statistics-2026', priority: 0.9, changefreq: 'monthly' },
+  { loc: '/global-health-statistics/cancer-statistics-2026', priority: 0.9, changefreq: 'monthly' },
+  { loc: '/global-health-statistics/obesity-statistics-2026', priority: 0.9, changefreq: 'monthly' },
+  { loc: '/global-health-statistics/heart-disease-statistics-2026', priority: 0.9, changefreq: 'monthly' }
 ];
 
 mainPages.forEach(p => addEntry(p.loc, TODAY, p.changefreq, p.priority));
