@@ -72,12 +72,17 @@ const mainPages = [
   { loc: '/rx-savings', priority: 0.8, changefreq: 'monthly' },
   { loc: '/providers', priority: 0.8, changefreq: 'monthly' },
   { loc: '/blog', priority: 0.7, changefreq: 'daily' },
-  // Global Health Statistics Hub
+  // Global Health Statistics Hub & Detail Pages
   { loc: '/global-health-statistics', priority: 0.9, changefreq: 'monthly' },
   { loc: '/global-health-statistics/diabetes-statistics-2026', priority: 0.9, changefreq: 'monthly' },
   { loc: '/global-health-statistics/cancer-statistics-2026', priority: 0.9, changefreq: 'monthly' },
   { loc: '/global-health-statistics/obesity-statistics-2026', priority: 0.9, changefreq: 'monthly' },
-  { loc: '/global-health-statistics/heart-disease-statistics-2026', priority: 0.9, changefreq: 'monthly' }
+  { loc: '/global-health-statistics/heart-disease-statistics-2026', priority: 0.9, changefreq: 'monthly' },
+  { loc: '/global-health-statistics/stroke-statistics-2026', priority: 0.9, changefreq: 'monthly' },
+  { loc: '/global-health-statistics/hypertension-statistics-2026', priority: 0.9, changefreq: 'monthly' },
+  { loc: '/global-health-statistics/kidney-disease-statistics-2026', priority: 0.9, changefreq: 'monthly' },
+  { loc: '/global-health-statistics/mental-health-statistics-2026', priority: 0.9, changefreq: 'monthly' },
+  { loc: '/global-health-statistics/tobacco-statistics-2026', priority: 0.9, changefreq: 'monthly' }
 ];
 
 mainPages.forEach(p => addEntry(p.loc, TODAY, p.changefreq, p.priority));

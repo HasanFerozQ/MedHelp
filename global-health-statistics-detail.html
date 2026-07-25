@@ -466,10 +466,15 @@
     const CHART_COLORS = ['#3b82f6','#ef4444','#10b981','#f59e0b','#8b5cf6','#ec4899','#06b6d4','#f97316','#84cc16','#a78bfa'];
 
     const CATEGORY_META = {
-      'diabetes-statistics-2026':   { icon: '🩸', accent: '#ef4444', name: 'Diabetes 2026', file: '/tabs/health-stats/data/diabetes-2026.json' },
-      'cancer-statistics-2026':     { icon: '🎗️', accent: '#8b5cf6', name: 'Cancer 2026', file: '/tabs/health-stats/data/cancer-2026.json' },
-      'obesity-statistics-2026':    { icon: '⚖️', accent: '#f59e0b', name: 'Obesity 2026', file: '/tabs/health-stats/data/obesity-2026.json' },
-      'heart-disease-statistics-2026': { icon: '❤️', accent: '#ec4899', name: 'Heart Disease 2026', file: '/tabs/health-stats/data/heart-disease-2026.json' }
+      'diabetes-statistics-2026':     { icon: '🩸', accent: '#ef4444', name: 'Diabetes 2026', file: '/tabs/health-stats/data/diabetes-2026.json' },
+      'cancer-statistics-2026':       { icon: '🎗️', accent: '#8b5cf6', name: 'Cancer 2026', file: '/tabs/health-stats/data/cancer-2026.json' },
+      'obesity-statistics-2026':      { icon: '⚖️', accent: '#f59e0b', name: 'Obesity 2026', file: '/tabs/health-stats/data/obesity-2026.json' },
+      'heart-disease-statistics-2026':{ icon: '❤️', accent: '#ec4899', name: 'Heart Disease 2026', file: '/tabs/health-stats/data/heart-disease-2026.json' },
+      'stroke-statistics-2026':       { icon: '⚡', accent: '#3b82f6', name: 'Stroke 2026', file: '/tabs/health-stats/data/stroke-2026.json' },
+      'hypertension-statistics-2026': { icon: '🩺', accent: '#06b6d4', name: 'Hypertension 2026', file: '/tabs/health-stats/data/hypertension-2026.json' },
+      'kidney-disease-statistics-2026': { icon: '🫘', accent: '#10b981', name: 'Kidney Disease 2026', file: '/tabs/health-stats/data/kidney-disease-2026.json' },
+      'mental-health-statistics-2026':{ icon: '🧠', accent: '#a78bfa', name: 'Mental Health 2026', file: '/tabs/health-stats/data/mental-health-2026.json' },
+      'tobacco-statistics-2026':      { icon: '🚭', accent: '#f97316', name: 'Smoking & Tobacco 2026', file: '/tabs/health-stats/data/tobacco-2026.json' }
     };
 
     // Extract category slug from query param OR clean URL pathname
@@ -1118,6 +1123,94 @@
         if (d.trends) {
           addChart('CVD Deaths Trend (millions)', 'ch-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
             label: 'CVD Deaths (M)', data: d.trends.deaths, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
+          }], meta.accent));
+        }
+      }
+
+      // ── Stroke ──
+      if (slug === 'stroke-statistics-2026') {
+        if (d.typeBreakdown) {
+          addChart('Stroke Subtypes Breakdown (%)', 'ch-st-type', false, ctx => makeDoughnut(ctx, d.typeBreakdown.labels, d.typeBreakdown.values, CHART_COLORS, meta.accent));
+        }
+        if (d.byAge) {
+          addChart('Stroke Deaths by Age Group (%)', 'ch-st-age', false, ctx => makeBar(ctx, d.byAge.labels, [{ label: '% of stroke deaths', data: d.byAge.values, backgroundColor: meta.accent+'cc', borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.byRegion) {
+          addChart('Stroke Deaths by Region (millions)', 'ch-st-reg', false, ctx => makeBar(ctx, d.byRegion.labels, [{ label: 'Millions of deaths', data: d.byRegion.values, backgroundColor: CHART_COLORS, borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.trends) {
+          addChart('Global Incident Stroke Cases Trend (millions)', 'ch-st-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
+            label: 'Incident Cases (M)', data: d.trends.deaths, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
+          }], meta.accent));
+        }
+      }
+
+      // ── Hypertension ──
+      if (slug === 'hypertension-statistics-2026') {
+        if (d.cascadeCare) {
+          addChart('Hypertension Cascade of Care (millions of adults)', 'ch-ht-casc', false, ctx => makeBar(ctx, d.cascadeCare.labels, [{ label: 'Millions of adults', data: d.cascadeCare.values, backgroundColor: CHART_COLORS, borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.byAge) {
+          addChart('Hypertension Prevalence by Age Group (%)', 'ch-ht-age', false, ctx => makeBar(ctx, d.byAge.labels, [{ label: 'Prevalence %', data: d.byAge.values, backgroundColor: meta.accent+'cc', borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.byRegion) {
+          addChart('Hypertension Prevalence by Region (%)', 'ch-ht-reg', false, ctx => makeBar(ctx, d.byRegion.labels, [{ label: 'Prevalence %', data: d.byRegion.values, backgroundColor: CHART_COLORS, borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.trends) {
+          addChart('Adults with Hypertension Trend (1990-2030)', 'ch-ht-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
+            label: 'Adults (M)', data: d.trends.count, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
+          }], meta.accent));
+        }
+      }
+
+      // ── Kidney Disease ──
+      if (slug === 'kidney-disease-statistics-2026') {
+        if (d.leadingCauses) {
+          addChart('Leading Causes of Chronic Kidney Disease (%)', 'ch-kd-causes', false, ctx => makeDoughnut(ctx, d.leadingCauses.labels, d.leadingCauses.values, CHART_COLORS, meta.accent));
+        }
+        if (d.byStage) {
+          addChart('CKD Prevalence by Stage (% of adults)', 'ch-kd-stage', false, ctx => makeBar(ctx, d.byStage.labels, [{ label: '% of population', data: d.byStage.values, backgroundColor: meta.accent+'cc', borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.byRegion) {
+          addChart('CKD Adult Prevalence by Region (%)', 'ch-kd-reg', false, ctx => makeBar(ctx, d.byRegion.labels, [{ label: 'Prevalence %', data: d.byRegion.values, backgroundColor: CHART_COLORS, borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.trends) {
+          addChart('Global CKD Deaths Growth (1990-2040)', 'ch-kd-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
+            label: 'Annual Deaths (M)', data: d.trends.deaths, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
+          }], meta.accent));
+        }
+      }
+
+      // ── Mental Health ──
+      if (slug === 'mental-health-statistics-2026') {
+        if (d.disorderBreakdown) {
+          addChart('Mental Health Disorders Breakdown (%)', 'ch-mh-dis', false, ctx => makeDoughnut(ctx, d.disorderBreakdown.labels, d.disorderBreakdown.values, CHART_COLORS, meta.accent));
+        }
+        if (d.byAge) {
+          addChart('Mental Disorder Prevalence by Age Group (%)', 'ch-mh-age', false, ctx => makeBar(ctx, d.byAge.labels, [{ label: 'Prevalence %', data: d.byAge.values, backgroundColor: meta.accent+'cc', borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.trends) {
+          addChart('Global Anxiety & Depression Trend (millions)', 'ch-mh-trend', true, ctx => makeLine(ctx, d.trends.labels, [
+            { label: 'Anxiety (M)', data: d.trends.anxiety, borderColor: '#a78bfa', backgroundColor: 'rgba(167,139,250,0.12)', fill: true, tension: 0.4 },
+            { label: 'Depression (M)', data: d.trends.depression, borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.08)', fill: true, tension: 0.4 }
+          ], meta.accent));
+        }
+      }
+
+      // ── Smoking & Tobacco ──
+      if (slug === 'tobacco-statistics-2026') {
+        if (d.mortalityBreakdown) {
+          addChart('Causes of Tobacco Attributable Deaths (%)', 'ch-tb-mort', false, ctx => makeDoughnut(ctx, d.mortalityBreakdown.labels, d.mortalityBreakdown.values, CHART_COLORS, meta.accent));
+        }
+        if (d.byRegion) {
+          addChart('Smoking Prevalence by Region (%)', 'ch-tb-reg', false, ctx => makeBar(ctx, d.byRegion.labels, [{ label: 'Prevalence %', data: d.byRegion.values, backgroundColor: CHART_COLORS, borderRadius: 6 }], false, meta.accent));
+        }
+        if (d.byGender) {
+          addChart('Tobacco Users by Gender (millions)', 'ch-tb-gender', false, ctx => makeBar(ctx, d.byGender.labels, [{ label: 'Millions', data: d.byGender.values, backgroundColor: ['#3b82f6cc','#ec4899cc'], borderRadius: 8 }], false, meta.accent));
+        }
+        if (d.trends) {
+          addChart('Global Adult Smoking Prevalence Trend (%)', 'ch-tb-trend', true, ctx => makeLine(ctx, d.trends.labels, [{
+            label: 'Adult Prevalence %', data: d.trends.prevalence, borderColor: meta.accent, backgroundColor: hexToRgba(meta.accent,0.12), fill: true, tension: 0.4
           }], meta.accent));
         }
       }

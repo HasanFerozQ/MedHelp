@@ -4,11 +4,11 @@
   "rewrites": [
     {
       "source": "/global-health-statistics",
-      "destination": "/global-health-statistics.html"
+      "destination": "/global-health-statistics"
     },
     {
       "source": "/global-health-statistics/:category",
-      "destination": "/global-health-statistics-detail.html?category=:category"
+      "destination": "/global-health-statistics-detail?category=:category"
     },
     {
       "source": "/es/medical-calculator",
