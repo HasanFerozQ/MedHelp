@@ -3,68 +3,254 @@
     "title": "Stroke Statistics 2026",
     "year": 2026,
     "lastUpdated": "2026-01-15",
-    "primarySources": ["World Stroke Organization (WSO) Global Stroke Fact Sheet 2024", "WHO Global Health Observatory", "IHME Global Burden of Disease"]
+    "primarySources": [
+      "World Stroke Organization (WSO) Global Stroke Fact Sheet 2024",
+      "WHO Global Health Observatory",
+      "IHME Global Burden of Disease"
+    ]
   },
   "hero": {
     "eyebrow": "World Stroke Organization · WHO · IHME GBD",
     "description": "Global stroke incidence, mortality rates, ischaemic vs. hemorrhagic subtypes, lifetime risk, risk factors, and projections through 2030."
   },
   "kpis": [
-    { "label": "Annual Stroke Deaths", "value": 6700000, "unit": "", "format": "compact", "suffix": " deaths/yr", "trend": "2nd leading cause of death", "icon": "💔" },
-    { "label": "New Stroke Cases", "value": 12200000, "unit": "", "format": "compact", "suffix": " per year", "trend": "1 every 3 seconds", "icon": "📋" },
-    { "label": "Stroke Survivors", "value": 101000000, "unit": "", "format": "compact", "suffix": " living worldwide", "trend": "Chronic disability", "icon": "👥" },
-    { "label": "Lifetime Risk", "value": 25, "unit": "%", "format": "integer", "suffix": " of adults >25 yrs", "trend": "1 in 4 adults", "icon": "⚠️" },
-    { "label": "Preventable Strokes", "value": 90, "unit": "%", "format": "integer", "suffix": " preventable", "trend": "10 modifiable risks", "icon": "🛡️" },
-    { "label": "DALYs Lost", "value": 143000000, "unit": "", "format": "compact", "suffix": " disability-years", "trend": "Major economic cost", "icon": "📈" }
+    {
+      "label": "Annual Stroke Deaths",
+      "value": 6700000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " deaths/yr",
+      "trend": "2nd leading cause of death",
+      "icon": "💔"
+    },
+    {
+      "label": "New Stroke Cases",
+      "value": 12200000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " per year",
+      "trend": "1 every 3 seconds",
+      "icon": "📋"
+    },
+    {
+      "label": "Stroke Survivors",
+      "value": 101000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " living worldwide",
+      "trend": "Chronic disability",
+      "icon": "👥"
+    },
+    {
+      "label": "Lifetime Risk",
+      "value": 25,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " of adults >25 yrs",
+      "trend": "1 in 4 adults",
+      "icon": "⚠️"
+    },
+    {
+      "label": "Preventable Strokes",
+      "value": 90,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " preventable",
+      "trend": "10 modifiable risks",
+      "icon": "🛡️"
+    },
+    {
+      "label": "DALYs Lost",
+      "value": 143000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " disability-years",
+      "trend": "Major economic cost",
+      "icon": "📈"
+    }
   ],
   "typeBreakdown": {
-    "labels": ["Ischaemic Stroke", "Intracerebral Hemorrhage", "Subarachnoid Hemorrhage"],
-    "values": [62, 28, 10],
+    "labels": [
+      "Ischaemic Stroke",
+      "Intracerebral Hemorrhage",
+      "Subarachnoid Hemorrhage"
+    ],
+    "values": [
+      62,
+      28,
+      10
+    ],
     "notes": "Ischaemic stroke accounts for 62% of all incident strokes, while hemorrhagic strokes drive disproportionate early mortality."
   },
   "byGender": {
-    "labels": ["Male", "Female"],
-    "deaths": [3.6, 3.1],
+    "labels": [
+      "Male",
+      "Female"
+    ],
+    "deaths": [
+      3.6,
+      3.1
+    ],
     "unit": "millions annually"
   },
   "byAge": {
-    "labels": ["Under 50", "50-69", "70+"],
-    "values": [11, 36, 53],
+    "labels": [
+      "Under 50",
+      "50-69",
+      "70+"
+    ],
+    "values": [
+      11,
+      36,
+      53
+    ],
     "unit": "% of stroke deaths"
   },
   "byRegion": {
-    "labels": ["East Asia & Pacific", "South Asia", "Europe & C. Asia", "Sub-Saharan Africa", "Americas", "Middle East"],
-    "values": [2.8, 1.4, 1.3, 0.5, 0.4, 0.3],
+    "labels": [
+      "East Asia & Pacific",
+      "South Asia",
+      "Europe & C. Asia",
+      "Sub-Saharan Africa",
+      "Americas",
+      "Middle East"
+    ],
+    "values": [
+      2.8,
+      1.4,
+      1.3,
+      0.5,
+      0.4,
+      0.3
+    ],
     "unit": "millions of deaths"
   },
   "countryRankings": {
     "title": "Highest Stroke Mortality Rates (Age-Standardized, per 100k)",
     "countries": [
-      { "country": "North Macedonia", "code": "MKD", "value": 242, "rank": 1 },
-      { "country": "Bulgaria", "code": "BGR", "value": 228, "rank": 2 },
-      { "country": "Georgia", "code": "GEO", "value": 215, "rank": 3 },
-      { "country": "Russia", "code": "RUS", "value": 198, "rank": 4 },
-      { "country": "Latvia", "code": "LVA", "value": 185, "rank": 5 },
-      { "country": "China", "code": "CHN", "value": 145, "rank": 6 },
-      { "country": "India", "code": "IND", "value": 112, "rank": 7 },
-      { "country": "United States", "code": "USA", "value": 38, "rank": 8 },
-      { "country": "United Kingdom", "code": "GBR", "value": 36, "rank": 9 },
-      { "country": "Japan", "code": "JPN", "value": 35, "rank": 10 }
+      {
+        "country": "North Macedonia",
+        "code": "MKD",
+        "value": 242,
+        "rank": 1
+      },
+      {
+        "country": "Bulgaria",
+        "code": "BGR",
+        "value": 228,
+        "rank": 2
+      },
+      {
+        "country": "Georgia",
+        "code": "GEO",
+        "value": 215,
+        "rank": 3
+      },
+      {
+        "country": "Russia",
+        "code": "RUS",
+        "value": 198,
+        "rank": 4
+      },
+      {
+        "country": "Latvia",
+        "code": "LVA",
+        "value": 185,
+        "rank": 5
+      },
+      {
+        "country": "China",
+        "code": "CHN",
+        "value": 145,
+        "rank": 6
+      },
+      {
+        "country": "India",
+        "code": "IND",
+        "value": 112,
+        "rank": 7
+      },
+      {
+        "country": "United States",
+        "code": "USA",
+        "value": 38,
+        "rank": 8
+      },
+      {
+        "country": "United Kingdom",
+        "code": "GBR",
+        "value": 36,
+        "rank": 9
+      },
+      {
+        "country": "Japan",
+        "code": "JPN",
+        "value": 35,
+        "rank": 10
+      }
     ],
     "unit": "per 100k"
   },
   "trends": {
-    "labels": ["1990", "2000", "2010", "2020", "2024", "2030"],
-    "deaths": [8.6, 9.8, 10.9, 11.8, 12.2, 13.5],
+    "labels": [
+      "1990",
+      "2000",
+      "2010",
+      "2020",
+      "2024",
+      "2030"
+    ],
+    "deaths": [
+      8.6,
+      9.8,
+      10.9,
+      11.8,
+      12.2,
+      13.5
+    ],
     "unit": "millions of new cases"
   },
   "riskFactors": [
-    { "title": "High Blood Pressure", "description": "Hypertension contributes to over 50% of all ischaemic and hemorrhagic strokes.", "impact": "Critical" },
-    { "title": "Smoking & Tobacco", "description": "Doubles the risk of ischaemic stroke and increases hemorrhagic risk.", "impact": "Critical" },
-    { "title": "Atrial Fibrillation", "description": "Increases stroke risk 5-fold; causes cardiogenic emboli.", "impact": "High" },
-    { "title": "High LDL Cholesterol", "description": "Drives carotid artery atherosclerosis and plaque rupture.", "impact": "High" },
-    { "title": "Diabetes Mellitus", "description": "Increases stroke risk 2-fold and worsens acute post-stroke outcomes.", "impact": "High" },
-    { "title": "Obesity & Inactivity", "description": "Elevates blood pressure, blood glucose, and systemic vascular inflammation.", "impact": "High" }
+    {
+      "title": "High Blood Pressure",
+      "description": "Hypertension contributes to over 50% of all ischaemic and hemorrhagic strokes.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Smoking & Tobacco",
+      "description": "Doubles the risk of ischaemic stroke and increases hemorrhagic risk.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Atrial Fibrillation",
+      "description": "Increases stroke risk 5-fold; causes cardiogenic emboli.",
+      "impact": "High"
+    },
+    {
+      "title": "High LDL Cholesterol",
+      "description": "Drives carotid artery atherosclerosis and plaque rupture.",
+      "impact": "High"
+    },
+    {
+      "title": "Diabetes Mellitus",
+      "description": "Increases stroke risk 2-fold and worsens acute post-stroke outcomes.",
+      "impact": "High"
+    },
+    {
+      "title": "Obesity & Inactivity",
+      "description": "Elevates blood pressure, blood glucose, and systemic vascular inflammation.",
+      "impact": "High"
+    },
+    {
+      "title": "Carotid Artery Stenosis",
+      "description": "Atherosclerotic plaque accumulation in carotid arteries increases ischemic stroke risk.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Oral Contraceptive Use",
+      "description": "Estrogen-containing contraceptives combined with smoking elevate thrombotic risk.",
+      "impact": "Medium"
+    }
   ],
   "didYouKnow": [
     "1 in 4 adults over age 25 will experience a stroke in their lifetime.",
@@ -73,9 +259,27 @@
     "Over 85% of all stroke deaths occur in low- and middle-income countries."
   ],
   "faq": [
-    { "q": "How many stroke deaths occur worldwide every year?", "a": "According to the World Stroke Organization, stroke claims approximately 6.7 million lives annually, making it the second leading single cause of death worldwide." },
-    { "q": "What is the difference between ischaemic and hemorrhagic stroke?", "a": "An ischaemic stroke (~62% of cases) occurs when a blood clot blocks an artery to the brain. A hemorrhagic stroke (~38% of cases) occurs when a brain blood vessel ruptures." },
-    { "q": "Can a stroke be prevented?", "a": "Yes. Up to 90% of strokes are linked to 10 modifiable risk factors, primarily high blood pressure, smoking, diabetes, high cholesterol, and physical inactivity." }
+    {
+      "q": "How many stroke deaths occur worldwide every year?",
+      "a": "According to the World Stroke Organization, stroke claims approximately 6.7 million lives annually, making it the second leading single cause of death worldwide."
+    },
+    {
+      "q": "What is the difference between ischaemic and hemorrhagic stroke?",
+      "a": "An ischaemic stroke (~62% of cases) occurs when a blood clot blocks an artery to the brain. A hemorrhagic stroke (~38% of cases) occurs when a brain blood vessel ruptures."
+    },
+    {
+      "q": "Can a stroke be prevented?",
+      "a": "Yes. Up to 90% of strokes are linked to 10 modifiable risk factors, primarily high blood pressure, smoking, diabetes, high cholesterol, and physical inactivity."
+    }
   ],
-  "compareCountries": ["USA", "CHN", "IND", "RUS", "MKD", "BGR", "JPN", "GBR"]
+  "compareCountries": [
+    "USA",
+    "CHN",
+    "IND",
+    "RUS",
+    "MKD",
+    "BGR",
+    "JPN",
+    "GBR"
+  ]
 }

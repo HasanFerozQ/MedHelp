@@ -3,73 +3,278 @@
     "title": "Diabetes Statistics 2026",
     "year": 2026,
     "lastUpdated": "2026-01-15",
-    "primarySources": ["IDF Diabetes Atlas 11th Edition (2024 data)", "WHO Global Health Observatory", "CDC National Diabetes Statistics Report"]
+    "primarySources": [
+      "IDF Diabetes Atlas 11th Edition (2024 data)",
+      "WHO Global Health Observatory",
+      "CDC National Diabetes Statistics Report"
+    ]
   },
   "hero": {
     "eyebrow": "IDF Diabetes Atlas 11th Edition · WHO · CDC",
     "description": "Comprehensive global diabetes statistics including prevalence, undiagnosed cases, type breakdowns, mortality, and projections through 2050."
   },
   "kpis": [
-    { "label": "Adults with Diabetes", "value": 589000000, "unit": "", "format": "compact", "suffix": " worldwide", "trend": "+11.1% prevalence", "icon": "👥" },
-    { "label": "Global Prevalence", "value": 11.1, "unit": "%", "format": "decimal", "suffix": " of adults 20-79", "trend": "1 in 9 adults", "icon": "📊" },
-    { "label": "Undiagnosed", "value": 44.7, "unit": "%", "format": "decimal", "suffix": " of all cases", "trend": "~263 million adults", "icon": "🔍" },
-    { "label": "Diabetes Deaths (2024)", "value": 3400000, "unit": "", "format": "compact", "suffix": " annually", "trend": "1 every 9 seconds", "icon": "💔" },
-    { "label": "Healthcare Spend", "value": 1, "unit": "T", "format": "currency-trillion", "prefix": "$", "suffix": " USD", "trend": "+338% since 2007", "icon": "💰" },
-    { "label": "Projected by 2050", "value": 853000000, "unit": "", "format": "compact", "suffix": " adults", "trend": "1 in 8 adults", "icon": "📈" }
+    {
+      "label": "Adults with Diabetes",
+      "value": 589000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " worldwide",
+      "trend": "+11.1% prevalence",
+      "icon": "👥"
+    },
+    {
+      "label": "Global Prevalence",
+      "value": 11.1,
+      "unit": "%",
+      "format": "decimal",
+      "suffix": " of adults 20-79",
+      "trend": "1 in 9 adults",
+      "icon": "📊"
+    },
+    {
+      "label": "Undiagnosed",
+      "value": 44.7,
+      "unit": "%",
+      "format": "decimal",
+      "suffix": " of all cases",
+      "trend": "~263 million adults",
+      "icon": "🔍"
+    },
+    {
+      "label": "Diabetes Deaths (2024)",
+      "value": 3400000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " annually",
+      "trend": "1 every 9 seconds",
+      "icon": "💔"
+    },
+    {
+      "label": "Healthcare Spend",
+      "value": 1,
+      "unit": "T",
+      "format": "currency-trillion",
+      "prefix": "$",
+      "suffix": " USD",
+      "trend": "+338% since 2007",
+      "icon": "💰"
+    },
+    {
+      "label": "Projected by 2050",
+      "value": 853000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " adults",
+      "trend": "1 in 8 adults",
+      "icon": "📈"
+    }
   ],
   "typeBreakdown": {
-    "labels": ["Type 2 Diabetes", "Type 1 Diabetes", "Other Types"],
-    "values": [90, 9.5, 0.5],
+    "labels": [
+      "Type 2 Diabetes",
+      "Type 1 Diabetes",
+      "Other Types"
+    ],
+    "values": [
+      90,
+      9.5,
+      0.5
+    ],
     "notes": "Type 2 accounts for ~90% of all diabetes cases globally. Type 1 affects 9.5+ million people including 1.9 million under age 20."
   },
   "byGender": {
-    "labels": ["Male", "Female"],
-    "values": [11.55, 10.68],
+    "labels": [
+      "Male",
+      "Female"
+    ],
+    "values": [
+      11.55,
+      10.68
+    ],
     "unit": "% prevalence"
   },
   "byAge": {
-    "labels": ["20-44", "45-64", "65-74", "75-79"],
-    "values": [4.2, 14.8, 22.1, 24.8],
+    "labels": [
+      "20-44",
+      "45-64",
+      "65-74",
+      "75-79"
+    ],
+    "values": [
+      4.2,
+      14.8,
+      22.1,
+      24.8
+    ],
     "unit": "% prevalence"
   },
   "byContinent": {
-    "labels": ["Western Pacific", "South-East Asia", "Middle East & N. Africa", "Europe", "North America", "Africa", "S. & Central America"],
-    "values": [205.4, 96.8, 86.2, 62.1, 51.3, 24.1, 61.9],
+    "labels": [
+      "Western Pacific",
+      "South-East Asia",
+      "Middle East & N. Africa",
+      "Europe",
+      "North America",
+      "Africa",
+      "S. & Central America"
+    ],
+    "values": [
+      205.4,
+      96.8,
+      86.2,
+      62.1,
+      51.3,
+      24.1,
+      61.9
+    ],
     "unit": "millions"
   },
   "countryRankings": {
     "title": "Top Countries by Diabetes Prevalence (Age-Standardized)",
     "countries": [
-      { "country": "Pakistan", "code": "PAK", "value": 30.8, "rank": 1 },
-      { "country": "French Polynesia", "code": "PYF", "value": 28.6, "rank": 2 },
-      { "country": "Kuwait", "code": "KWT", "value": 27.4, "rank": 3 },
-      { "country": "Qatar", "code": "QAT", "value": 26.5, "rank": 4 },
-      { "country": "New Caledonia", "code": "NCL", "value": 26.0, "rank": 5 },
-      { "country": "United States", "code": "USA", "value": 14.7, "rank": 6 },
-      { "country": "China", "code": "CHN", "value": 12.4, "rank": 7 },
-      { "country": "India", "code": "IND", "value": 11.4, "rank": 8 },
-      { "country": "Brazil", "code": "BRA", "value": 10.5, "rank": 9 },
-      { "country": "Germany", "code": "DEU", "value": 9.8, "rank": 10 }
+      {
+        "country": "Pakistan",
+        "code": "PAK",
+        "value": 30.8,
+        "rank": 1
+      },
+      {
+        "country": "French Polynesia",
+        "code": "PYF",
+        "value": 28.6,
+        "rank": 2
+      },
+      {
+        "country": "Kuwait",
+        "code": "KWT",
+        "value": 27.4,
+        "rank": 3
+      },
+      {
+        "country": "Qatar",
+        "code": "QAT",
+        "value": 26.5,
+        "rank": 4
+      },
+      {
+        "country": "New Caledonia",
+        "code": "NCL",
+        "value": 26,
+        "rank": 5
+      },
+      {
+        "country": "United States",
+        "code": "USA",
+        "value": 14.7,
+        "rank": 6
+      },
+      {
+        "country": "China",
+        "code": "CHN",
+        "value": 12.4,
+        "rank": 7
+      },
+      {
+        "country": "India",
+        "code": "IND",
+        "value": 11.4,
+        "rank": 8
+      },
+      {
+        "country": "Brazil",
+        "code": "BRA",
+        "value": 10.5,
+        "rank": 9
+      },
+      {
+        "country": "Germany",
+        "code": "DEU",
+        "value": 9.8,
+        "rank": 10
+      }
     ],
     "unit": "%"
   },
   "trends": {
-    "labels": ["2000", "2010", "2020", "2024", "2030", "2045", "2050"],
-    "prevalence": [151, 366, 537, 589, 643, 783, 853],
+    "labels": [
+      "2000",
+      "2010",
+      "2020",
+      "2024",
+      "2030",
+      "2045",
+      "2050"
+    ],
+    "prevalence": [
+      151,
+      366,
+      537,
+      589,
+      643,
+      783,
+      853
+    ],
     "unit": "millions of adults"
   },
   "projections": [
-    { "year": 2030, "value": 643000000, "prevalence": 12.2 },
-    { "year": 2045, "value": 783000000, "prevalence": 12.6 },
-    { "year": 2050, "value": 853000000, "prevalence": 13.0 }
+    {
+      "year": 2030,
+      "value": 643000000,
+      "prevalence": 12.2
+    },
+    {
+      "year": 2045,
+      "value": 783000000,
+      "prevalence": 12.6
+    },
+    {
+      "year": 2050,
+      "value": 853000000,
+      "prevalence": 13
+    }
   ],
   "riskFactors": [
-    { "title": "Obesity & Overweight", "description": "Leading modifiable risk factor; excess body weight drives insulin resistance.", "impact": "High" },
-    { "title": "Physical Inactivity", "description": "Sedentary lifestyles increase type 2 diabetes risk by 20-30%.", "impact": "High" },
-    { "title": "Unhealthy Diet", "description": "High sugar, refined carbs, and ultra-processed food consumption.", "impact": "High" },
-    { "title": "Urbanization", "description": "Urban prevalence (12.3%) exceeds rural (9.2%) globally.", "impact": "Medium" },
-    { "title": "Family History", "description": "Genetic predisposition increases type 2 risk 2-6 fold.", "impact": "Medium" },
-    { "title": "Ageing Population", "description": "65+ prevalence reaches 23.7%; ageing drives 2050 projections.", "impact": "High" }
+    {
+      "title": "Obesity & Overweight",
+      "description": "Leading modifiable risk factor; excess body weight drives insulin resistance.",
+      "impact": "High"
+    },
+    {
+      "title": "Physical Inactivity",
+      "description": "Sedentary lifestyles increase type 2 diabetes risk by 20-30%.",
+      "impact": "High"
+    },
+    {
+      "title": "Unhealthy Diet",
+      "description": "High sugar, refined carbs, and ultra-processed food consumption.",
+      "impact": "High"
+    },
+    {
+      "title": "Urbanization",
+      "description": "Urban prevalence (12.3%) exceeds rural (9.2%) globally.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Family History",
+      "description": "Genetic predisposition increases type 2 risk 2-6 fold.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Ageing Population",
+      "description": "65+ prevalence reaches 23.7%; ageing drives 2050 projections.",
+      "impact": "High"
+    },
+    {
+      "title": "Gestational Diabetes",
+      "description": "Prior history of gestational diabetes increases lifetime type 2 risk by 50%.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Metabolic Syndrome",
+      "description": "Combination of hypertension, dyslipidemia, and high waist circumference.",
+      "impact": "High"
+    }
   ],
   "didYouKnow": [
     "1 in 2 adults with diabetes remain undiagnosed — over 263 million people worldwide.",
@@ -78,11 +283,35 @@
     "Type 1 diabetes affects 1.9 million children and adolescents under age 20 globally."
   ],
   "faq": [
-    { "q": "How many people have diabetes worldwide in 2026?", "a": "Based on the IDF Diabetes Atlas 11th Edition, an estimated 589 million adults aged 20-79 were living with diabetes in 2024, representing 11.1% of the global adult population. This figure is projected to reach 853 million by 2050." },
-    { "q": "What percentage of diabetes cases are undiagnosed?", "a": "Approximately 44.7% of all diabetes cases globally are undiagnosed, meaning over 263 million adults are living with diabetes without knowing it." },
-    { "q": "Which country has the highest diabetes prevalence?", "a": "Pakistan currently has the highest age-standardized diabetes prevalence at approximately 30.8%, followed by French Polynesia and Kuwait." },
-    { "q": "What is the difference between Type 1 and Type 2 diabetes?", "a": "Type 1 is an autoimmune condition (~10% of cases) requiring insulin. Type 2 (~90%) involves insulin resistance and is largely preventable through lifestyle changes." },
-    { "q": "How many people die from diabetes each year?", "a": "Diabetes was responsible for approximately 3.4 million deaths in 2024 — equivalent to one death every 9 seconds." }
+    {
+      "q": "How many people have diabetes worldwide in 2026?",
+      "a": "Based on the IDF Diabetes Atlas 11th Edition, an estimated 589 million adults aged 20-79 were living with diabetes in 2024, representing 11.1% of the global adult population. This figure is projected to reach 853 million by 2050."
+    },
+    {
+      "q": "What percentage of diabetes cases are undiagnosed?",
+      "a": "Approximately 44.7% of all diabetes cases globally are undiagnosed, meaning over 263 million adults are living with diabetes without knowing it."
+    },
+    {
+      "q": "Which country has the highest diabetes prevalence?",
+      "a": "Pakistan currently has the highest age-standardized diabetes prevalence at approximately 30.8%, followed by French Polynesia and Kuwait."
+    },
+    {
+      "q": "What is the difference between Type 1 and Type 2 diabetes?",
+      "a": "Type 1 is an autoimmune condition (~10% of cases) requiring insulin. Type 2 (~90%) involves insulin resistance and is largely preventable through lifestyle changes."
+    },
+    {
+      "q": "How many people die from diabetes each year?",
+      "a": "Diabetes was responsible for approximately 3.4 million deaths in 2024 — equivalent to one death every 9 seconds."
+    }
   ],
-  "compareCountries": ["USA", "CHN", "IND", "BRA", "DEU", "PAK", "MEX", "JPN"]
+  "compareCountries": [
+    "USA",
+    "CHN",
+    "IND",
+    "BRA",
+    "DEU",
+    "PAK",
+    "MEX",
+    "JPN"
+  ]
 }

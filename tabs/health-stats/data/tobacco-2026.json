@@ -3,61 +3,246 @@
     "title": "Smoking & Tobacco Statistics 2026",
     "year": 2026,
     "lastUpdated": "2026-01-15",
-    "primarySources": ["WHO Report on the Global Tobacco Epidemic 2023-2025", "CDC Tobacco Control Data", "IHME Global Burden of Disease"]
+    "primarySources": [
+      "WHO Report on the Global Tobacco Epidemic 2023-2025",
+      "CDC Tobacco Control Data",
+      "IHME Global Burden of Disease"
+    ]
   },
   "hero": {
     "eyebrow": "WHO Report on Global Tobacco Epidemic · CDC · IHME",
     "description": "Global smoking prevalence, annual mortality, secondhand smoke impact, country-by-country smoking rates, and economic burden."
   },
   "kpis": [
-    { "label": "Tobacco Users", "value": 1300000000, "unit": "", "format": "compact", "suffix": " users worldwide", "trend": "1 in 5 adults globally", "icon": "🚭" },
-    { "label": "Annual Direct Deaths", "value": 7400000, "unit": "", "format": "compact", "suffix": " smokers per year", "trend": "Leading preventable death", "icon": "💔" },
-    { "label": "Secondhand Deaths", "value": 1300000, "unit": "", "format": "compact", "suffix": " non-smokers/yr", "trend": "Involuntary exposure", "icon": "💨" },
-    { "label": "Male Smoking Rate", "value": 32.7, "unit": "%", "format": "decimal", "suffix": " of all adult men", "trend": "1 in 3 men smoke", "icon": "👨" },
-    { "label": "Female Smoking Rate", "value": 6.6, "unit": "%", "format": "decimal", "suffix": " of all adult women", "trend": "1 in 15 women smoke", "icon": "👩" },
-    { "label": "Economic Cost/yr", "value": 1.8, "unit": "T", "format": "currency-trillion", "prefix": "$", "suffix": " USD in healthcare", "trend": "Healthcare + lost productivity", "icon": "💰" }
+    {
+      "label": "Tobacco Users",
+      "value": 1300000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " users worldwide",
+      "trend": "1 in 5 adults globally",
+      "icon": "🚭"
+    },
+    {
+      "label": "Annual Direct Deaths",
+      "value": 7400000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " smokers per year",
+      "trend": "Leading preventable death",
+      "icon": "💔"
+    },
+    {
+      "label": "Secondhand Deaths",
+      "value": 1300000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " non-smokers/yr",
+      "trend": "Involuntary exposure",
+      "icon": "💨"
+    },
+    {
+      "label": "Male Smoking Rate",
+      "value": 32.7,
+      "unit": "%",
+      "format": "decimal",
+      "suffix": " of all adult men",
+      "trend": "1 in 3 men smoke",
+      "icon": "👨"
+    },
+    {
+      "label": "Female Smoking Rate",
+      "value": 6.6,
+      "unit": "%",
+      "format": "decimal",
+      "suffix": " of all adult women",
+      "trend": "1 in 15 women smoke",
+      "icon": "👩"
+    },
+    {
+      "label": "Economic Cost/yr",
+      "value": 1.8,
+      "unit": "T",
+      "format": "currency-trillion",
+      "prefix": "$",
+      "suffix": " USD in healthcare",
+      "trend": "Healthcare + lost productivity",
+      "icon": "💰"
+    }
   ],
   "byGender": {
-    "labels": ["Male Smokers", "Female Smokers"],
-    "values": [1050, 250],
+    "labels": [
+      "Male Smokers",
+      "Female Smokers"
+    ],
+    "values": [
+      1050,
+      250
+    ],
     "unit": "millions of tobacco users"
   },
   "mortalityBreakdown": {
-    "labels": ["Cardiovascular Disease", "Lung Cancer", "COPD & Respiratory", "Other Cancers / Causes", "Secondhand Smoke"],
-    "values": [36.8, 24.1, 21.3, 3.0, 14.8],
+    "labels": [
+      "Cardiovascular Disease",
+      "Lung Cancer",
+      "COPD & Respiratory",
+      "Other Cancers / Causes",
+      "Secondhand Smoke"
+    ],
+    "values": [
+      36.8,
+      24.1,
+      21.3,
+      3,
+      14.8
+    ],
     "unit": "% of tobacco deaths"
   },
   "byRegion": {
-    "labels": ["European Region", "Western Pacific Region", "South-East Asia", "Americas", "Eastern Mediterranean", "African Region"],
-    "values": [25.3, 24.6, 20.1, 16.3, 18.2, 9.8],
+    "labels": [
+      "European Region",
+      "Western Pacific Region",
+      "South-East Asia",
+      "Americas",
+      "Eastern Mediterranean",
+      "African Region"
+    ],
+    "values": [
+      25.3,
+      24.6,
+      20.1,
+      16.3,
+      18.2,
+      9.8
+    ],
     "unit": "% overall smoking prevalence"
   },
   "countryRankings": {
     "title": "Highest Adult Smoking Prevalence Rates (%)",
     "countries": [
-      { "country": "Nauru", "code": "NRU", "value": 48.5, "rank": 1 },
-      { "country": "Kiribati", "code": "KIR", "value": 46.0, "rank": 2 },
-      { "country": "Tuvalu", "code": "TUV", "value": 42.2, "rank": 3 },
-      { "country": "Myanmar", "code": "MMR", "value": 38.8, "rank": 4 },
-      { "country": "Indonesia", "code": "IDN", "value": 37.6, "rank": 5 },
-      { "country": "Russia", "code": "RUS", "value": 26.8, "rank": 6 },
-      { "country": "China", "code": "CHN", "value": 25.6, "rank": 7 },
-      { "country": "France", "code": "FRA", "value": 25.3, "rank": 8 },
-      { "country": "Germany", "code": "DEU", "value": 22.1, "rank": 9 },
-      { "country": "United States", "code": "USA", "value": 11.5, "rank": 10 }
+      {
+        "country": "Nauru",
+        "code": "NRU",
+        "value": 48.5,
+        "rank": 1
+      },
+      {
+        "country": "Kiribati",
+        "code": "KIR",
+        "value": 46,
+        "rank": 2
+      },
+      {
+        "country": "Tuvalu",
+        "code": "TUV",
+        "value": 42.2,
+        "rank": 3
+      },
+      {
+        "country": "Myanmar",
+        "code": "MMR",
+        "value": 38.8,
+        "rank": 4
+      },
+      {
+        "country": "Indonesia",
+        "code": "IDN",
+        "value": 37.6,
+        "rank": 5
+      },
+      {
+        "country": "Russia",
+        "code": "RUS",
+        "value": 26.8,
+        "rank": 6
+      },
+      {
+        "country": "China",
+        "code": "CHN",
+        "value": 25.6,
+        "rank": 7
+      },
+      {
+        "country": "France",
+        "code": "FRA",
+        "value": 25.3,
+        "rank": 8
+      },
+      {
+        "country": "Germany",
+        "code": "DEU",
+        "value": 22.1,
+        "rank": 9
+      },
+      {
+        "country": "United States",
+        "code": "USA",
+        "value": 11.5,
+        "rank": 10
+      }
     ],
     "unit": "%"
   },
   "trends": {
-    "labels": ["2000", "2005", "2010", "2015", "2020", "2024"],
-    "prevalence": [32.7, 30.1, 27.2, 24.5, 22.3, 20.9],
+    "labels": [
+      "2000",
+      "2005",
+      "2010",
+      "2015",
+      "2020",
+      "2024"
+    ],
+    "prevalence": [
+      32.7,
+      30.1,
+      27.2,
+      24.5,
+      22.3,
+      20.9
+    ],
     "unit": "% global adult prevalence"
   },
   "riskFactors": [
-    { "title": "Cigarette Smoking", "description": "Causes 85% of lung cancers and 16% of all cardiovascular deaths.", "impact": "Critical" },
-    { "title": "Secondhand Smoke", "description": "Causes 1.3 million deaths in non-smokers annually, including 65,000 children.", "impact": "Critical" },
-    { "title": "Smokeless Tobacco", "description": "Causes oral, esophageal, and pancreatic cancers in over 300 million users.", "impact": "High" },
-    { "title": "E-Cigarettes & Vaping", "description": "Nicotine addiction and pulmonary inflammation risks in youth.", "impact": "High" }
+    {
+      "title": "Cigarette Smoking",
+      "description": "Causes 85% of lung cancers and 16% of all cardiovascular deaths.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Secondhand Smoke",
+      "description": "Causes 1.3 million deaths in non-smokers annually, including 65,000 children.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Smokeless Tobacco",
+      "description": "Causes oral, esophageal, and pancreatic cancers in over 300 million users.",
+      "impact": "High"
+    },
+    {
+      "title": "E-Cigarettes & Vaping",
+      "description": "Nicotine addiction and pulmonary inflammation risks in youth.",
+      "impact": "High"
+    },
+    {
+      "title": "Peer Pressure & Culture",
+      "description": "Social normalization and peer influence drive initiation among adolescents.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Targeted Marketing",
+      "description": "Aggressive tobacco industry advertising targeting youth and low-income demographics.",
+      "impact": "High"
+    },
+    {
+      "title": "Lack of Cessation Access",
+      "description": "Inadequate access to nicotine replacement therapy and smoking cessation counseling.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Secondhand Smoke Exposure",
+      "description": "Involuntary passive smoking elevates cardiovascular and respiratory disease risk for non-smokers.",
+      "impact": "High"
+    }
   ],
   "didYouKnow": [
     "Tobacco kills up to half of its long-term users — over 8.7 million people every year.",
@@ -66,8 +251,23 @@
     "Global tobacco smoking prevalence has dropped from 32.7% in 2000 to 20.9% today due to WHO MPOWER policies."
   ],
   "faq": [
-    { "q": "How many people die from tobacco use each year?", "a": "Tobacco kills more than 8.7 million people per year worldwide, including 7.4 million direct smokers and 1.3 million non-smokers exposed to secondhand smoke." },
-    { "q": "How many smokers are there in the world?", "a": "There are approximately 1.3 billion tobacco users globally, with roughly 1.05 billion males and 250 million females." }
+    {
+      "q": "How many people die from tobacco use each year?",
+      "a": "Tobacco kills more than 8.7 million people per year worldwide, including 7.4 million direct smokers and 1.3 million non-smokers exposed to secondhand smoke."
+    },
+    {
+      "q": "How many smokers are there in the world?",
+      "a": "There are approximately 1.3 billion tobacco users globally, with roughly 1.05 billion males and 250 million females."
+    }
   ],
-  "compareCountries": ["USA", "NRU", "IDN", "RUS", "CHN", "FRA", "DEU", "JPN"]
+  "compareCountries": [
+    "USA",
+    "NRU",
+    "IDN",
+    "RUS",
+    "CHN",
+    "FRA",
+    "DEU",
+    "JPN"
+  ]
 }

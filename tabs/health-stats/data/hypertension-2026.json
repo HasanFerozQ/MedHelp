@@ -3,67 +3,260 @@
     "title": "Hypertension Statistics 2026",
     "year": 2026,
     "lastUpdated": "2026-01-15",
-    "primarySources": ["WHO Global Report on Hypertension 2023-2025", "NCD-RisC Global Blood Pressure Data", "CDC Heart Disease & Stroke Statistics"]
+    "primarySources": [
+      "WHO Global Report on Hypertension 2023-2025",
+      "NCD-RisC Global Blood Pressure Data",
+      "CDC Heart Disease & Stroke Statistics"
+    ]
   },
   "hero": {
     "eyebrow": "WHO Global Report on Hypertension · NCD-RisC · CDC",
     "description": "Global hypertension prevalence, awareness rates, treatment cascade, attributable cardiovascular mortality, and country-by-country rankings."
   },
   "kpis": [
-    { "label": "Adults Affected", "value": 1330000000, "unit": "", "format": "compact", "suffix": " adults (30-79)", "trend": "1 in 3 adults globally", "icon": "🩺" },
-    { "label": "Diagnosed & Aware", "value": 54, "unit": "%", "format": "integer", "suffix": " of cases", "trend": "46% remain unaware", "icon": "🔍" },
-    { "label": "Receiving Treatment", "value": 42, "unit": "%", "format": "integer", "suffix": " of cases", "trend": "Treatment gap", "icon": "💊" },
-    { "label": "Controlled BP (<140/90)", "value": 21, "unit": "%", "format": "integer", "suffix": " controlled", "trend": "Only 1 in 5 controlled", "icon": "🛡️" },
-    { "label": "Attributable Deaths", "value": 10800000, "unit": "", "format": "compact", "suffix": " deaths/yr", "trend": "#1 risk factor for death", "icon": "💔" },
-    { "label": "Growth Since 1990", "value": 100, "unit": "%", "format": "integer", "suffix": " increase", "trend": "From 650M to 1.33B", "icon": "📈" }
+    {
+      "label": "Adults Affected",
+      "value": 1330000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " adults (30-79)",
+      "trend": "1 in 3 adults globally",
+      "icon": "🩺"
+    },
+    {
+      "label": "Diagnosed & Aware",
+      "value": 54,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " of cases",
+      "trend": "46% remain unaware",
+      "icon": "🔍"
+    },
+    {
+      "label": "Receiving Treatment",
+      "value": 42,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " of cases",
+      "trend": "Treatment gap",
+      "icon": "💊"
+    },
+    {
+      "label": "Controlled BP (<140/90)",
+      "value": 21,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " controlled",
+      "trend": "Only 1 in 5 controlled",
+      "icon": "🛡️"
+    },
+    {
+      "label": "Attributable Deaths",
+      "value": 10800000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " deaths/yr",
+      "trend": "#1 risk factor for death",
+      "icon": "💔"
+    },
+    {
+      "label": "Growth Since 1990",
+      "value": 100,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " increase",
+      "trend": "From 650M to 1.33B",
+      "icon": "📈"
+    }
   ],
   "cascadeCare": {
-    "labels": ["Total Affected", "Aware of Diagnosis", "Receiving Treatment", "BP Controlled"],
-    "values": [1330, 718, 558, 279],
+    "labels": [
+      "Total Affected",
+      "Aware of Diagnosis",
+      "Receiving Treatment",
+      "BP Controlled"
+    ],
+    "values": [
+      1330,
+      718,
+      558,
+      279
+    ],
     "unit": "millions of adults"
   },
   "byGender": {
-    "labels": ["Male", "Female"],
-    "prevalence": [34, 32],
+    "labels": [
+      "Male",
+      "Female"
+    ],
+    "prevalence": [
+      34,
+      32
+    ],
     "unit": "% prevalence in adults 30-79"
   },
   "byAge": {
-    "labels": ["30-39", "40-49", "50-59", "60-69", "70-79"],
-    "values": [14, 28, 46, 62, 74],
+    "labels": [
+      "30-39",
+      "40-49",
+      "50-59",
+      "60-69",
+      "70-79"
+    ],
+    "values": [
+      14,
+      28,
+      46,
+      62,
+      74
+    ],
     "unit": "% prevalence"
   },
   "byRegion": {
-    "labels": ["Central & Eastern Europe", "Sub-Saharan Africa", "Latin America", "East Asia", "North America", "Western Europe"],
-    "values": [48, 41, 38, 35, 32, 28],
+    "labels": [
+      "Central & Eastern Europe",
+      "Sub-Saharan Africa",
+      "Latin America",
+      "East Asia",
+      "North America",
+      "Western Europe"
+    ],
+    "values": [
+      48,
+      41,
+      38,
+      35,
+      32,
+      28
+    ],
     "unit": "% adult prevalence"
   },
   "countryRankings": {
     "title": "Highest Hypertension Prevalence in Adults 30-79 (%)",
     "countries": [
-      { "country": "Paraguay", "code": "PRY", "value": 51.2, "rank": 1 },
-      { "country": "Romania", "code": "ROU", "value": 50.4, "rank": 2 },
-      { "country": "Poland", "code": "POL", "value": 49.1, "rank": 3 },
-      { "country": "Hungary", "code": "HUN", "value": 48.5, "rank": 4 },
-      { "country": "Argentina", "code": "ARG", "value": 47.3, "rank": 5 },
-      { "country": "China", "code": "CHN", "value": 37.5, "rank": 6 },
-      { "country": "India", "code": "IND", "value": 31.2, "rank": 7 },
-      { "country": "United States", "code": "USA", "value": 32.4, "rank": 8 },
-      { "country": "United Kingdom", "code": "GBR", "value": 28.1, "rank": 9 },
-      { "country": "South Korea", "code": "KOR", "value": 24.8, "rank": 10 }
+      {
+        "country": "Paraguay",
+        "code": "PRY",
+        "value": 51.2,
+        "rank": 1
+      },
+      {
+        "country": "Romania",
+        "code": "ROU",
+        "value": 50.4,
+        "rank": 2
+      },
+      {
+        "country": "Poland",
+        "code": "POL",
+        "value": 49.1,
+        "rank": 3
+      },
+      {
+        "country": "Hungary",
+        "code": "HUN",
+        "value": 48.5,
+        "rank": 4
+      },
+      {
+        "country": "Argentina",
+        "code": "ARG",
+        "value": 47.3,
+        "rank": 5
+      },
+      {
+        "country": "China",
+        "code": "CHN",
+        "value": 37.5,
+        "rank": 6
+      },
+      {
+        "country": "India",
+        "code": "IND",
+        "value": 31.2,
+        "rank": 7
+      },
+      {
+        "country": "United States",
+        "code": "USA",
+        "value": 32.4,
+        "rank": 8
+      },
+      {
+        "country": "United Kingdom",
+        "code": "GBR",
+        "value": 28.1,
+        "rank": 9
+      },
+      {
+        "country": "South Korea",
+        "code": "KOR",
+        "value": 24.8,
+        "rank": 10
+      }
     ],
     "unit": "%"
   },
   "trends": {
-    "labels": ["1990", "2000", "2010", "2020", "2024", "2030"],
-    "count": [650, 840, 1050, 1280, 1330, 1500],
+    "labels": [
+      "1990",
+      "2000",
+      "2010",
+      "2020",
+      "2024",
+      "2030"
+    ],
+    "count": [
+      650,
+      840,
+      1050,
+      1280,
+      1330,
+      1500
+    ],
     "unit": "millions of adults"
   },
   "riskFactors": [
-    { "title": "High Sodium Diet", "description": "Global average salt intake (10.8g/day) is double the WHO recommended limit of 5g/day.", "impact": "Critical" },
-    { "title": "Obesity & Overweight", "description": "Excess body weight increases vascular resistance and renal sodium retention.", "impact": "Critical" },
-    { "title": "Physical Inactivity", "description": "Sedentary lifestyle increases vascular stiffness and Resting Heart Rate.", "impact": "High" },
-    { "title": "High Alcohol Intake", "description": "Chronic excessive alcohol consumption directly elevates blood pressure.", "impact": "High" },
-    { "title": "Ageing Population", "description": "Arterial stiffness increases sharply after age 50.", "impact": "High" }
+    {
+      "title": "High Sodium Diet",
+      "description": "Global average salt intake (10.8g/day) is double the WHO recommended limit of 5g/day.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Obesity & Overweight",
+      "description": "Excess body weight increases vascular resistance and renal sodium retention.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Physical Inactivity",
+      "description": "Sedentary lifestyle increases vascular stiffness and Resting Heart Rate.",
+      "impact": "High"
+    },
+    {
+      "title": "High Alcohol Intake",
+      "description": "Chronic excessive alcohol consumption directly elevates blood pressure.",
+      "impact": "High"
+    },
+    {
+      "title": "Ageing Population",
+      "description": "Arterial stiffness increases sharply after age 50.",
+      "impact": "High"
+    },
+    {
+      "title": "Chronic Stress",
+      "description": "Sustained elevation of cortisol and sympathetic drive increases resting blood pressure.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Sleep Apnea (OSA)",
+      "description": "Obstructive sleep apnea triggers nocturnal hypertension and resistant blood pressure.",
+      "impact": "High"
+    },
+    {
+      "title": "Excess Salt & Sodium",
+      "description": "High dietary sodium intake drives fluid retention and vascular stiffness.",
+      "impact": "Critical"
+    }
   ],
   "didYouKnow": [
     "Hypertension is known as the 'Silent Killer' because 46% of adults with high BP don't know they have it.",
@@ -72,8 +265,23 @@
     "Reducing global salt intake by 30% could save an estimated 7 million lives by 2030."
   ],
   "faq": [
-    { "q": "What blood pressure reading is considered hypertension?", "a": "According to WHO guidelines, hypertension is diagnosed when systolic blood pressure is ≥ 140 mmHg or diastolic blood pressure is ≥ 90 mmHg on two separate days." },
-    { "q": "How many people have high blood pressure worldwide?", "a": "An estimated 1.33 billion adults aged 30–79 have hypertension worldwide, doubling from 650 million in 1990." }
+    {
+      "q": "What blood pressure reading is considered hypertension?",
+      "a": "According to WHO guidelines, hypertension is diagnosed when systolic blood pressure is ≥ 140 mmHg or diastolic blood pressure is ≥ 90 mmHg on two separate days."
+    },
+    {
+      "q": "How many people have high blood pressure worldwide?",
+      "a": "An estimated 1.33 billion adults aged 30–79 have hypertension worldwide, doubling from 650 million in 1990."
+    }
   ],
-  "compareCountries": ["USA", "CHN", "IND", "PRY", "ROU", "POL", "GBR", "KOR"]
+  "compareCountries": [
+    "USA",
+    "CHN",
+    "IND",
+    "PRY",
+    "ROU",
+    "POL",
+    "GBR",
+    "KOR"
+  ]
 }

@@ -3,63 +3,254 @@
     "title": "Mental Health Statistics 2026",
     "year": 2026,
     "lastUpdated": "2026-01-15",
-    "primarySources": ["WHO World Mental Health Report", "IHME Global Burden of Disease", "Lancet Commission on Mental Health"]
+    "primarySources": [
+      "WHO World Mental Health Report",
+      "IHME Global Burden of Disease",
+      "Lancet Commission on Mental Health"
+    ]
   },
   "hero": {
     "eyebrow": "WHO World Mental Health Report · IHME GBD · Lancet",
     "description": "Global prevalence of mental health disorders, depression, anxiety, suicide statistics, treatment gaps, and economic productivity impact."
   },
   "kpis": [
-    { "label": "People with Mental Disorders", "value": 970000000, "unit": "", "format": "compact", "suffix": " people worldwide", "trend": "1 in 8 people globally", "icon": "🧠" },
-    { "label": "Anxiety Disorders", "value": 301000000, "unit": "", "format": "compact", "suffix": " affected", "trend": "#1 mental disorder", "icon": "💭" },
-    { "label": "Depressive Disorders", "value": 280000000, "unit": "", "format": "compact", "suffix": " affected", "trend": "5% of global adults", "icon": "🌧️" },
-    { "label": "Annual Suicide Deaths", "value": 720000, "unit": "", "format": "compact", "suffix": " deaths/yr", "trend": "1 every 40 seconds", "icon": "💔" },
-    { "label": "Treatment Gap (LMICs)", "value": 75, "unit": "%", "format": "integer", "suffix": " receive no treatment", "trend": "Severe care deficit", "icon": "⚠️" },
-    { "label": "Economic Loss/yr", "value": 1, "unit": "T", "format": "currency-trillion", "prefix": "$", "suffix": " USD in productivity", "trend": "Depression & Anxiety", "icon": "💰" }
+    {
+      "label": "People with Mental Disorders",
+      "value": 970000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " people worldwide",
+      "trend": "1 in 8 people globally",
+      "icon": "🧠"
+    },
+    {
+      "label": "Anxiety Disorders",
+      "value": 301000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " affected",
+      "trend": "#1 mental disorder",
+      "icon": "💭"
+    },
+    {
+      "label": "Depressive Disorders",
+      "value": 280000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " affected",
+      "trend": "5% of global adults",
+      "icon": "🌧️"
+    },
+    {
+      "label": "Annual Suicide Deaths",
+      "value": 720000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " deaths/yr",
+      "trend": "1 every 40 seconds",
+      "icon": "💔"
+    },
+    {
+      "label": "Treatment Gap (LMICs)",
+      "value": 75,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " receive no treatment",
+      "trend": "Severe care deficit",
+      "icon": "⚠️"
+    },
+    {
+      "label": "Economic Loss/yr",
+      "value": 1,
+      "unit": "T",
+      "format": "currency-trillion",
+      "prefix": "$",
+      "suffix": " USD in productivity",
+      "trend": "Depression & Anxiety",
+      "icon": "💰"
+    }
   ],
   "disorderBreakdown": {
-    "labels": ["Anxiety Disorders", "Depressive Disorders", "Bipolar Disorder", "Schizophrenia", "Other Disorders"],
-    "values": [31.0, 28.9, 5.2, 2.5, 32.4],
+    "labels": [
+      "Anxiety Disorders",
+      "Depressive Disorders",
+      "Bipolar Disorder",
+      "Schizophrenia",
+      "Other Disorders"
+    ],
+    "values": [
+      31,
+      28.9,
+      5.2,
+      2.5,
+      32.4
+    ],
     "unit": "% of all mental disorders"
   },
   "byGender": {
-    "labels": ["Female", "Male"],
-    "depressionPrevalence": [6.0, 4.0],
-    "anxietyPrevalence": [5.2, 3.1],
+    "labels": [
+      "Female",
+      "Male"
+    ],
+    "depressionPrevalence": [
+      6,
+      4
+    ],
+    "anxietyPrevalence": [
+      5.2,
+      3.1
+    ],
     "unit": "% prevalence"
   },
   "byAge": {
-    "labels": ["Adolescents (10-19)", "Young Adults (20-39)", "Adults (40-59)", "Older Adults (60+)"],
-    "values": [14.0, 16.5, 13.8, 11.2],
+    "labels": [
+      "Adolescents (10-19)",
+      "Young Adults (20-39)",
+      "Adults (40-59)",
+      "Older Adults (60+)"
+    ],
+    "values": [
+      14,
+      16.5,
+      13.8,
+      11.2
+    ],
     "unit": "% prevalence"
   },
   "countryRankings": {
     "title": "Highest Depression & Anxiety Prevalence (%)",
     "countries": [
-      { "country": "Ukraine", "code": "UKR", "value": 6.3, "rank": 1 },
-      { "country": "United States", "code": "USA", "value": 5.9, "rank": 2 },
-      { "country": "Australia", "code": "AUS", "value": 5.7, "rank": 3 },
-      { "country": "Estonia", "code": "EST", "value": 5.6, "rank": 4 },
-      { "country": "Brazil", "code": "BRA", "value": 5.5, "rank": 5 },
-      { "country": "Portugal", "code": "PRT", "value": 5.3, "rank": 6 },
-      { "country": "United Kingdom", "code": "GBR", "value": 4.8, "rank": 7 },
-      { "country": "Germany", "code": "DEU", "value": 4.5, "rank": 8 },
-      { "country": "China", "code": "CHN", "value": 4.2, "rank": 9 },
-      { "country": "Japan", "code": "JPN", "value": 3.2, "rank": 10 }
+      {
+        "country": "Ukraine",
+        "code": "UKR",
+        "value": 6.3,
+        "rank": 1
+      },
+      {
+        "country": "United States",
+        "code": "USA",
+        "value": 5.9,
+        "rank": 2
+      },
+      {
+        "country": "Australia",
+        "code": "AUS",
+        "value": 5.7,
+        "rank": 3
+      },
+      {
+        "country": "Estonia",
+        "code": "EST",
+        "value": 5.6,
+        "rank": 4
+      },
+      {
+        "country": "Brazil",
+        "code": "BRA",
+        "value": 5.5,
+        "rank": 5
+      },
+      {
+        "country": "Portugal",
+        "code": "PRT",
+        "value": 5.3,
+        "rank": 6
+      },
+      {
+        "country": "United Kingdom",
+        "code": "GBR",
+        "value": 4.8,
+        "rank": 7
+      },
+      {
+        "country": "Germany",
+        "code": "DEU",
+        "value": 4.5,
+        "rank": 8
+      },
+      {
+        "country": "China",
+        "code": "CHN",
+        "value": 4.2,
+        "rank": 9
+      },
+      {
+        "country": "Japan",
+        "code": "JPN",
+        "value": 3.2,
+        "rank": 10
+      }
     ],
     "unit": "%"
   },
   "trends": {
-    "labels": ["1990", "2000", "2010", "2019", "2020", "2024"],
-    "anxiety": [220, 245, 270, 284, 301, 301],
-    "depression": [200, 225, 250, 260, 280, 280],
+    "labels": [
+      "1990",
+      "2000",
+      "2010",
+      "2019",
+      "2020",
+      "2024"
+    ],
+    "anxiety": [
+      220,
+      245,
+      270,
+      284,
+      301,
+      301
+    ],
+    "depression": [
+      200,
+      225,
+      250,
+      260,
+      280,
+      280
+    ],
     "unit": "millions affected"
   },
   "riskFactors": [
-    { "title": "Social Isolation & Loneliness", "description": "Increases depression risk by 50% and dementia risk by 26%.", "impact": "Critical" },
-    { "title": "Socioeconomic Hardship", "description": "Poverty, unemployment, and financial instability elevate chronic stress.", "impact": "Critical" },
-    { "title": "Chronic Physical Illness", "description": "Co-morbidity with diabetes, cancer, or heart disease doubles depression risk.", "impact": "High" },
-    { "title": "Trauma & Abuse", "description": "Early childhood adverse experiences (ACEs) strongly correlate with adult disorders.", "impact": "High" }
+    {
+      "title": "Social Isolation & Loneliness",
+      "description": "Increases depression risk by 50% and dementia risk by 26%.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Socioeconomic Hardship",
+      "description": "Poverty, unemployment, and financial instability elevate chronic stress.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Chronic Physical Illness",
+      "description": "Co-morbidity with diabetes, cancer, or heart disease doubles depression risk.",
+      "impact": "High"
+    },
+    {
+      "title": "Trauma & Abuse",
+      "description": "Early childhood adverse experiences (ACEs) strongly correlate with adult disorders.",
+      "impact": "High"
+    },
+    {
+      "title": "Substance Abuse",
+      "description": "Alcohol and illicit substance use disorders exacerbate psychiatric conditions.",
+      "impact": "High"
+    },
+    {
+      "title": "Socioeconomic Inequality",
+      "description": "Poverty, unemployment, and financial instability double depression risk.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Chronic Illness",
+      "description": "Comorbid physical illnesses like cancer, diabetes, and heart disease elevate risk.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Genetic Predisposition",
+      "description": "Family history of mood disorders increases vulnerability to clinical depression.",
+      "impact": "High"
+    }
   ],
   "didYouKnow": [
     "1 in 8 people globally (970 million) live with a mental health disorder.",
@@ -68,8 +259,23 @@
     "Countries spend less than 2% of their national healthcare budgets on mental health on average."
   ],
   "faq": [
-    { "q": "How many people live with a mental health disorder globally?", "a": "According to the WHO, approximately 970 million people — or 1 in every 8 people on Earth — live with a diagnosed mental health disorder." },
-    { "q": "What is the most common mental health disorder?", "a": "Anxiety disorders are the most common, affecting 301 million people globally, closely followed by depressive disorders affecting 280 million people." }
+    {
+      "q": "How many people live with a mental health disorder globally?",
+      "a": "According to the WHO, approximately 970 million people — or 1 in every 8 people on Earth — live with a diagnosed mental health disorder."
+    },
+    {
+      "q": "What is the most common mental health disorder?",
+      "a": "Anxiety disorders are the most common, affecting 301 million people globally, closely followed by depressive disorders affecting 280 million people."
+    }
   ],
-  "compareCountries": ["USA", "UKR", "AUS", "BRA", "GBR", "DEU", "CHN", "JPN"]
+  "compareCountries": [
+    "USA",
+    "UKR",
+    "AUS",
+    "BRA",
+    "GBR",
+    "DEU",
+    "CHN",
+    "JPN"
+  ]
 }

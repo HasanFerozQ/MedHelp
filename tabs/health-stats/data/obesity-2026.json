@@ -3,91 +3,339 @@
     "title": "Obesity Statistics 2026",
     "year": 2026,
     "lastUpdated": "2026-01-15",
-    "primarySources": ["WHO GHO", "NCD-RisC Collaboration", "World Obesity Federation", "Our World in Data"]
+    "primarySources": [
+      "WHO GHO",
+      "NCD-RisC Collaboration",
+      "World Obesity Federation",
+      "Our World in Data"
+    ]
   },
   "hero": {
     "eyebrow": "WHO · NCD-RisC · World Obesity Federation",
     "description": "Global obesity prevalence, childhood obesity trends, BMI patterns, country rankings, economic impact, and projections from authoritative health organizations."
   },
   "kpis": [
-    { "label": "Adults with Obesity", "value": 878000000, "unit": "", "format": "compact", "suffix": " worldwide", "trend": "BMI ≥ 30", "icon": "👥" },
-    { "label": "Total Overweight + Obese", "value": 2500000000, "unit": "", "format": "compact", "suffix": " adults", "trend": "BMI ≥ 25", "icon": "📊" },
-    { "label": "Childhood Obesity", "value": 159000000, "unit": "", "format": "compact", "suffix": " children & teens", "trend": "Under age 18", "icon": "👶" },
-    { "label": "Adult Obesity Rate", "value": 16, "unit": "%", "format": "integer", "suffix": " age-standardized", "trend": "1 in 7 adults (2024)", "icon": "⚖️" },
-    { "label": "Since 1990", "value": 4, "unit": "x", "format": "integer", "suffix": " increase", "trend": "More than quadrupled", "icon": "📈" },
-    { "label": "Economic Cost by 2060", "value": 4.3, "unit": "T", "format": "currency-trillion", "prefix": "$", "suffix": " USD if unchecked", "trend": "World Obesity Federation", "icon": "💰" }
+    {
+      "label": "Adults with Obesity",
+      "value": 878000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " worldwide",
+      "trend": "BMI ≥ 30",
+      "icon": "👥"
+    },
+    {
+      "label": "Total Overweight + Obese",
+      "value": 2500000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " adults",
+      "trend": "BMI ≥ 25",
+      "icon": "📊"
+    },
+    {
+      "label": "Childhood Obesity",
+      "value": 159000000,
+      "unit": "",
+      "format": "compact",
+      "suffix": " children & teens",
+      "trend": "Under age 18",
+      "icon": "👶"
+    },
+    {
+      "label": "Adult Obesity Rate",
+      "value": 16,
+      "unit": "%",
+      "format": "integer",
+      "suffix": " age-standardized",
+      "trend": "1 in 7 adults (2024)",
+      "icon": "⚖️"
+    },
+    {
+      "label": "Since 1990",
+      "value": 4,
+      "unit": "x",
+      "format": "integer",
+      "suffix": " increase",
+      "trend": "More than quadrupled",
+      "icon": "📈"
+    },
+    {
+      "label": "Economic Cost by 2060",
+      "value": 4.3,
+      "unit": "T",
+      "format": "currency-trillion",
+      "prefix": "$",
+      "suffix": " USD if unchecked",
+      "trend": "World Obesity Federation",
+      "icon": "💰"
+    }
   ],
   "bmiTrends": {
-    "labels": ["1990", "2000", "2010", "2020", "2024"],
-    "maleObesity": [4.8, 6.9, 10.2, 13.1, 14.0],
-    "femaleObesity": [8.8, 11.5, 14.9, 17.2, 18.5],
+    "labels": [
+      "1990",
+      "2000",
+      "2010",
+      "2020",
+      "2024"
+    ],
+    "maleObesity": [
+      4.8,
+      6.9,
+      10.2,
+      13.1,
+      14
+    ],
+    "femaleObesity": [
+      8.8,
+      11.5,
+      14.9,
+      17.2,
+      18.5
+    ],
     "unit": "% age-standardized obesity prevalence"
   },
   "byGender": {
-    "labels": ["Male", "Female"],
-    "obesity": [14.0, 18.5],
-    "overweight": [38.2, 39.8],
+    "labels": [
+      "Male",
+      "Female"
+    ],
+    "obesity": [
+      14,
+      18.5
+    ],
+    "overweight": [
+      38.2,
+      39.8
+    ],
     "unit": "% prevalence"
   },
   "byAge": {
-    "labels": ["5-9", "10-14", "15-19", "20-39", "40-59", "60+"],
-    "values": [4.2, 6.8, 8.1, 15.2, 22.4, 24.1],
+    "labels": [
+      "5-9",
+      "10-14",
+      "15-19",
+      "20-39",
+      "40-59",
+      "60+"
+    ],
+    "values": [
+      4.2,
+      6.8,
+      8.1,
+      15.2,
+      22.4,
+      24.1
+    ],
     "unit": "% obesity prevalence"
   },
   "byRegion": {
-    "labels": ["Americas", "Europe", "Western Pacific", "Middle East", "Africa", "South-East Asia"],
-    "values": [31.2, 23.8, 18.5, 26.4, 8.9, 5.2],
+    "labels": [
+      "Americas",
+      "Europe",
+      "Western Pacific",
+      "Middle East",
+      "Africa",
+      "South-East Asia"
+    ],
+    "values": [
+      31.2,
+      23.8,
+      18.5,
+      26.4,
+      8.9,
+      5.2
+    ],
     "unit": "% adult obesity"
   },
   "countryRankings": {
     "title": "Highest Adult Obesity Rates (Age-Standardized)",
     "countries": [
-      { "country": "Nauru", "code": "NRU", "value": 61.0, "rank": 1 },
-      { "country": "American Samoa", "code": "ASM", "value": 58.4, "rank": 2 },
-      { "country": "Cook Islands", "code": "COK", "value": 55.9, "rank": 3 },
-      { "country": "Palau", "code": "PLW", "value": 55.3, "rank": 4 },
-      { "country": "Marshall Islands", "code": "MHL", "value": 52.9, "rank": 5 },
-      { "country": "United States", "code": "USA", "value": 42.4, "rank": 6 },
-      { "country": "Kuwait", "code": "KWT", "value": 40.0, "rank": 7 },
-      { "country": "Qatar", "code": "QAT", "value": 39.7, "rank": 8 },
-      { "country": "Egypt", "code": "EGY", "value": 39.0, "rank": 9 },
-      { "country": "Jordan", "code": "JOR", "value": 38.8, "rank": 10 }
+      {
+        "country": "Nauru",
+        "code": "NRU",
+        "value": 61,
+        "rank": 1
+      },
+      {
+        "country": "American Samoa",
+        "code": "ASM",
+        "value": 58.4,
+        "rank": 2
+      },
+      {
+        "country": "Cook Islands",
+        "code": "COK",
+        "value": 55.9,
+        "rank": 3
+      },
+      {
+        "country": "Palau",
+        "code": "PLW",
+        "value": 55.3,
+        "rank": 4
+      },
+      {
+        "country": "Marshall Islands",
+        "code": "MHL",
+        "value": 52.9,
+        "rank": 5
+      },
+      {
+        "country": "United States",
+        "code": "USA",
+        "value": 42.4,
+        "rank": 6
+      },
+      {
+        "country": "Kuwait",
+        "code": "KWT",
+        "value": 40,
+        "rank": 7
+      },
+      {
+        "country": "Qatar",
+        "code": "QAT",
+        "value": 39.7,
+        "rank": 8
+      },
+      {
+        "country": "Egypt",
+        "code": "EGY",
+        "value": 39,
+        "rank": 9
+      },
+      {
+        "country": "Jordan",
+        "code": "JOR",
+        "value": 38.8,
+        "rank": 10
+      }
     ],
     "unit": "%"
   },
   "childhoodRankings": {
     "title": "Highest Childhood Obesity Rates",
     "countries": [
-      { "country": "Cook Islands", "value": 33.5 },
-      { "country": "Nauru", "value": 32.1 },
-      { "country": "United States", "value": 21.4 },
-      { "country": "Chile", "value": 19.8 },
-      { "country": "Greece", "value": 18.6 }
+      {
+        "country": "Cook Islands",
+        "value": 33.5
+      },
+      {
+        "country": "Nauru",
+        "value": 32.1
+      },
+      {
+        "country": "United States",
+        "value": 21.4
+      },
+      {
+        "country": "Chile",
+        "value": 19.8
+      },
+      {
+        "country": "Greece",
+        "value": 18.6
+      }
     ],
     "unit": "% ages 5-19"
   },
   "trends": {
-    "labels": ["1975", "1990", "2000", "2010", "2020", "2024", "2035"],
-    "obese": [112, 231, 390, 620, 820, 878, 1200],
+    "labels": [
+      "1975",
+      "1990",
+      "2000",
+      "2010",
+      "2020",
+      "2024",
+      "2035"
+    ],
+    "obese": [
+      112,
+      231,
+      390,
+      620,
+      820,
+      878,
+      1200
+    ],
     "unit": "millions of adults"
   },
   "projections": [
-    { "year": 2030, "adultObesity": 950000000, "rate": 17.5 },
-    { "year": 2035, "adultObesity": 1200000000, "rate": 19.2 },
-    { "year": 2050, "adultObesity": 1500000000, "rate": 22.0 }
+    {
+      "year": 2030,
+      "adultObesity": 950000000,
+      "rate": 17.5
+    },
+    {
+      "year": 2035,
+      "adultObesity": 1200000000,
+      "rate": 19.2
+    },
+    {
+      "year": 2050,
+      "adultObesity": 1500000000,
+      "rate": 22
+    }
   ],
   "economicImpact": [
-    { "label": "Direct Healthcare Costs", "value": "$1.96T", "description": "Annual medical costs attributable to obesity globally" },
-    { "label": "Productivity Loss", "value": "$1.2T", "description": "Reduced workforce productivity and absenteeism" },
-    { "label": "Projected 2060 Cost", "value": "$4.3T", "description": "Total economic impact if trends continue unchecked" }
+    {
+      "label": "Direct Healthcare Costs",
+      "value": "$1.96T",
+      "description": "Annual medical costs attributable to obesity globally"
+    },
+    {
+      "label": "Productivity Loss",
+      "value": "$1.2T",
+      "description": "Reduced workforce productivity and absenteeism"
+    },
+    {
+      "label": "Projected 2060 Cost",
+      "value": "$4.3T",
+      "description": "Total economic impact if trends continue unchecked"
+    }
   ],
   "riskFactors": [
-    { "title": "Ultra-Processed Foods", "description": "High consumption of energy-dense, nutrient-poor foods drives weight gain.", "impact": "Critical" },
-    { "title": "Physical Inactivity", "description": "27.5% of adults globally are insufficiently active.", "impact": "High" },
-    { "title": "Urbanization", "description": "Urban environments promote sedentary lifestyles and fast food access.", "impact": "High" },
-    { "title": "Marketing to Children", "description": "Aggressive marketing of unhealthy foods to children and adolescents.", "impact": "Medium" },
-    { "title": "Genetics", "description": "Genetic factors interact with environment; not deterministic alone.", "impact": "Medium" },
-    { "title": "Sleep Deprivation", "description": "Poor sleep linked to hormonal changes promoting weight gain.", "impact": "Medium" }
+    {
+      "title": "Ultra-Processed Foods",
+      "description": "High consumption of energy-dense, nutrient-poor foods drives weight gain.",
+      "impact": "Critical"
+    },
+    {
+      "title": "Physical Inactivity",
+      "description": "27.5% of adults globally are insufficiently active.",
+      "impact": "High"
+    },
+    {
+      "title": "Urbanization",
+      "description": "Urban environments promote sedentary lifestyles and fast food access.",
+      "impact": "High"
+    },
+    {
+      "title": "Marketing to Children",
+      "description": "Aggressive marketing of unhealthy foods to children and adolescents.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Genetics",
+      "description": "Genetic factors interact with environment; not deterministic alone.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Sleep Deprivation",
+      "description": "Poor sleep linked to hormonal changes promoting weight gain.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Endocrine Disruptors",
+      "description": "Environmental chemicals interfere with metabolic hormone regulation.",
+      "impact": "Medium"
+    },
+    {
+      "title": "Sugary Beverages",
+      "description": "Frequent consumption of liquid sugars drives abdominal adiposity.",
+      "impact": "Critical"
+    }
   ],
   "didYouKnow": [
     "Obesity prevalence has more than quadrupled since 1990 — from ~231 million to 878 million adults.",
@@ -96,11 +344,35 @@
     "Childhood obesity rates are rising fastest in low- and middle-income countries."
   ],
   "faq": [
-    { "q": "How many people are obese worldwide?", "a": "As of 2022-2024, approximately 878 million adults and 159 million children and adolescents were living with obesity globally (BMI ≥ 30 for adults)." },
-    { "q": "Which country has the highest obesity rate?", "a": "Pacific island nations like Nauru and American Samoa have the highest rates (>55%). Among larger nations, the United States has one of the highest rates at ~42.4%." },
-    { "q": "Is obesity increasing or decreasing?", "a": "Obesity continues to increase globally. Adult obesity prevalence has more than quadrupled since 1990, with no country achieving population-level reversal." },
-    { "q": "What is the economic cost of obesity?", "a": "Obesity-related healthcare and productivity costs exceed $2 trillion annually. The World Obesity Federation projects $4.3 trillion by 2060 if current trends continue." },
-    { "q": "How does childhood obesity compare to adults?", "a": "159 million children and adolescents (5-19 years) were living with obesity in 2022, with rates rising fastest in Africa and Asia." }
+    {
+      "q": "How many people are obese worldwide?",
+      "a": "As of 2022-2024, approximately 878 million adults and 159 million children and adolescents were living with obesity globally (BMI ≥ 30 for adults)."
+    },
+    {
+      "q": "Which country has the highest obesity rate?",
+      "a": "Pacific island nations like Nauru and American Samoa have the highest rates (>55%). Among larger nations, the United States has one of the highest rates at ~42.4%."
+    },
+    {
+      "q": "Is obesity increasing or decreasing?",
+      "a": "Obesity continues to increase globally. Adult obesity prevalence has more than quadrupled since 1990, with no country achieving population-level reversal."
+    },
+    {
+      "q": "What is the economic cost of obesity?",
+      "a": "Obesity-related healthcare and productivity costs exceed $2 trillion annually. The World Obesity Federation projects $4.3 trillion by 2060 if current trends continue."
+    },
+    {
+      "q": "How does childhood obesity compare to adults?",
+      "a": "159 million children and adolescents (5-19 years) were living with obesity in 2022, with rates rising fastest in Africa and Asia."
+    }
   ],
-  "compareCountries": ["USA", "CHN", "IND", "MEX", "BRA", "GBR", "SAU", "AUS"]
+  "compareCountries": [
+    "USA",
+    "CHN",
+    "IND",
+    "MEX",
+    "BRA",
+    "GBR",
+    "SAU",
+    "AUS"
+  ]
 }
