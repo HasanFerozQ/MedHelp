@@ -120,16 +120,16 @@ window.initDbClient();
     setProgress(10);
     clearInterval(trickle);
     clearTimeout(finishTimer);
-    const interval = Math.max(180, Math.min(360, duration / 10));
+    const interval = Math.max(140, Math.min(300, duration / 12));
     trickle = setInterval(() => {
-      const next = progress < 35 ? progress + 8 : progress < 70 ? progress + 4 : progress + 2;
-      setProgress(Math.min(90, next));
+      const next = progress < 40 ? progress + 10 : progress < 75 ? progress + 5 : progress + 1.5;
+      setProgress(Math.min(92, next));
     }, interval);
 
-    const early = Math.max(220, Math.min(800, duration * 0.35));
-    const mid = Math.max(650, Math.min(1800, duration * 0.7));
-    setTimeout(() => setProgress(Math.min(72, 45 + Math.round(duration / 1000 * 10))), early);
-    setTimeout(() => setProgress(Math.min(94, 70 + Math.round(duration / 1000 * 8))), mid);
+    const early = Math.max(180, Math.min(700, duration * 0.3));
+    const mid = Math.max(550, Math.min(1600, duration * 0.65));
+    setTimeout(() => setProgress(Math.min(70, 50 + Math.round(duration / 1000 * 12))), early);
+    setTimeout(() => setProgress(Math.min(88, 72 + Math.round(duration / 1000 * 10))), mid);
   }
 
   function done() {
@@ -144,7 +144,20 @@ window.initDbClient();
       el.classList.remove('active');
       setProgress(0);
       started = false;
-    }, remain + 220);
+    }, remain + 80);
+  }
+
+  function safeHide() {
+    const el = overlay();
+    if (!el) return;
+    if (el.classList.contains('active')) {
+      clearInterval(trickle);
+      clearTimeout(finishTimer);
+      setProgress(100);
+      el.classList.remove('active');
+      setProgress(0);
+      started = false;
+    }
   }
 
   document.addEventListener('click', (e) => {
@@ -166,7 +179,7 @@ window.initDbClient();
     } catch (_) {}
   }, true);
 
-  window.MediHelpPageLoader = { start, done, setProgress };
+  window.MediHelpPageLoader = { start, done, setProgress, safeHide };
 
   document.addEventListener('DOMContentLoaded', () => {
     try {
@@ -178,9 +191,24 @@ window.initDbClient();
   window.addEventListener('load', () => {
     try {
       setProgress(100);
-      setTimeout(done, 120);
+      setTimeout(done, 80);
     } catch (e) {}
   });
+
+  // Safety net: if loader is still visible after 8s, force-hide it
+  let safetyTimer = null;
+  const resetSafetyNet = () => {
+    clearTimeout(safetyTimer);
+    safetyTimer = setTimeout(() => {
+      safeHide();
+    }, 8000);
+  };
+
+  const origStart = start;
+  window.MediHelpPageLoader.start = function(opts) {
+    resetSafetyNet();
+    return origStart.call(this, opts);
+  };
 
   if (document.readyState === 'loading') {
     setTimeout(() => start({ estimatedMs: getEstimatedDuration() }), 80);
