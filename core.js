@@ -44,20 +44,30 @@ window.initDbClient();
   });
 })();
 
-// 2.5 Animated page loader — non-blocking overlay and top progress bar
+// 2.5 Adaptive page loader — animated, page-aware, and smooth
 (function initPageLoader() {
   const ID = 'mh-page-loader';
   if (document.getElementById(ID)) return;
 
   const css = `
-  #${ID} { position: fixed; inset:0; pointer-events: none; z-index:99999; opacity:0; transition:opacity 260ms ease; }
-  #${ID}.active { opacity: 1; pointer-events: auto; }
-  #${ID} .track { position: fixed; top:0; left:0; right:0; height:4px; background: rgba(255,255,255,0.04); }
-  #${ID} .bar { height:100%; width:0%; background: linear-gradient(90deg,#22c55e,#06b6d4,#8b5cf6,#ec4899); background-size:200% 100%; box-shadow:0 0 12px rgba(0,0,0,0.2); transition:width 320ms cubic-bezier(.2,.8,.2,1); }
-  #${ID} .overlay { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; gap:12px; flex-direction:column; background: rgba(6,8,15,0.5); backdrop-filter: blur(6px); opacity:0; transform: translateY(6px); transition: all 260ms ease; }
-  #${ID}.overlay .overlay-inner { color: #e6eef8; font-weight:800; display:flex; gap:12px; align-items:center; }
-  #${ID}.overlay .dots span { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--accent, #22c55e); margin:0 3px; animation:mh-bounce 1.2s infinite; }
-  @keyframes mh-bounce { 0%,80%,100% { transform:translateY(0); opacity:0.45 } 40% { transform:translateY(-6px); opacity:1 } }
+  #${ID} { position: fixed; inset:0; pointer-events:none; z-index:99999; opacity:0; transition:opacity 280ms ease; background:rgba(6,8,15,0.78); backdrop-filter: blur(14px); }
+  #${ID}.active { opacity:1; pointer-events:auto; }
+  #${ID} .track { position: fixed; top:0; left:0; right:0; height:4px; background: rgba(255,255,255,0.06); }
+  #${ID} .bar { height:100%; width:0%; background: linear-gradient(90deg,#22c55e,#06b6d4,#8b5cf6,#ec4899); background-size:200% 100%; box-shadow:0 0 16px rgba(34,197,94,0.25); transition:width 320ms cubic-bezier(.2,.85,.2,1); }
+  #${ID} .shell { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; padding:24px; }
+  #${ID} .card { width:min(420px, 92vw); background: rgba(10,16,26,0.86); border:1px solid rgba(255,255,255,0.12); border-radius:24px; box-shadow:0 24px 80px rgba(0,0,0,0.35); padding:24px 24px 20px; color:#eef6ff; transform: translateY(14px); transition: transform 260ms ease, opacity 260ms ease; }
+  #${ID}.active .card { transform: translateY(0); }
+  #${ID} .brand { width:56px; height:56px; border-radius:16px; display:grid; place-items:center; font-size:26px; background: linear-gradient(135deg, rgba(34,197,94,0.18), rgba(6,182,212,0.18)); border:1px solid rgba(255,255,255,0.12); margin-bottom:14px; animation:mh-bob 1.2s ease-in-out infinite; }
+  #${ID} .title { font-size:18px; font-weight:800; margin-bottom:6px; letter-spacing:-0.02em; }
+  #${ID} .subtitle { font-size:13px; color:#94a3b8; line-height:1.5; margin-bottom:16px; }
+  #${ID} .dots { display:flex; gap:6px; margin-bottom:14px; }
+  #${ID} .dots span { width:8px; height:8px; border-radius:50%; background:linear-gradient(90deg,#22c55e,#06b6d4); animation:mh-bounce 1.15s infinite ease-in-out; }
+  #${ID} .dots span:nth-child(2){ animation-delay: .15s; }
+  #${ID} .dots span:nth-child(3){ animation-delay: .3s; }
+  #${ID} .progress { height:8px; border-radius:999px; overflow:hidden; background: rgba(255,255,255,0.08); }
+  #${ID} .progress > div { height:100%; width:0%; border-radius:inherit; background: linear-gradient(90deg,#22c55e,#06b6d4,#8b5cf6); transition: width 320ms cubic-bezier(.2,.85,.2,1); }
+  @keyframes mh-bounce { 0%,80%,100% { transform:translateY(0); opacity:.45 } 40% { transform:translateY(-6px); opacity:1 } }
+  @keyframes mh-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
   `;
 
   const style = document.createElement('style');
@@ -69,7 +79,15 @@ window.initDbClient();
   wrap.id = ID;
   wrap.innerHTML = `
     <div class="track"><div class="bar" id="mh-bar"></div></div>
-    <div class="overlay" id="mh-overlay"><div class="overlay-inner"><div style="width:44px;height:44px;border-radius:10px;background:rgba(34,197,94,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">🏥</div><div style="text-align:left"><div id="mh-title">Loading MediHelp</div><div class="dots" style="margin-top:6px"><span></span><span></span><span></span></div></div></div></div>
+    <div class="shell">
+      <div class="card">
+        <div class="brand">🏥</div>
+        <div class="title" id="mh-title">Loading MediHelp</div>
+        <div class="subtitle" id="mh-subtitle">Preparing your experience…</div>
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="progress"><div id="mh-progress-bar"></div></div>
+      </div>
+    </div>
   `;
 
   function mount() { if (!document.body) return requestAnimationFrame(mount); document.body.prepend(wrap); }
@@ -77,32 +95,85 @@ window.initDbClient();
 
   let progress = 0;
   let trickle = null;
-  const bar = () => document.getElementById('mh-bar');
+  let finishTimer = null;
+  let started = false;
+  const bar = () => document.getElementById('mh-progress-bar');
   const overlay = () => document.getElementById(ID);
+
+  function setPageText() {
+    const path = (location.pathname || '').toLowerCase();
+    const title = document.getElementById('mh-title');
+    const sub = document.getElementById('mh-subtitle');
+    if (!title || !sub) return;
+    if (path.includes('global-health-statistics')) {
+      title.textContent = 'Loading Global Health Data';
+      sub.textContent = 'Gathering charts, references, and insights for you…';
+    } else if (path.includes('medical-calculator') || path.includes('calculator')) {
+      title.textContent = 'Loading Medical Calculators';
+      sub.textContent = 'Preparing clinical tools and quick calculations…';
+    } else if (path.includes('medical-exam')) {
+      title.textContent = 'Loading Exam Prep';
+      sub.textContent = 'Opening study resources and practice content…';
+    } else if (path.includes('medical-bill-audit')) {
+      title.textContent = 'Loading Bill Audit';
+      sub.textContent = 'Preparing your billing tools…';
+    } else {
+      title.textContent = 'Loading MediHelp';
+      sub.textContent = 'Preparing your experience…';
+    }
+  }
 
   function setProgress(p) {
     progress = Math.min(100, Math.max(progress, p));
     const el = bar(); if (el) el.style.width = progress + '%';
   }
 
+  function getEstimatedDuration() {
+    const path = (location.pathname || '').toLowerCase();
+    if (path.includes('global-health-statistics')) return 2800;
+    if (path.includes('medical-calculator') || path.includes('calculator')) return 2200;
+    if (path.includes('medical-exam')) return 1800;
+    if (path.includes('medical-bill-audit')) return 1600;
+    return 1200;
+  }
+
   function start(opts = {}) {
-    const useOverlay = !!opts.overlay || document.documentElement.dataset.pageLoader === 'overlay';
+    if (started) return;
+    started = true;
     const el = overlay();
     if (!el) return;
+    const duration = opts.estimatedMs || getEstimatedDuration();
+    setPageText();
     el.classList.add('active');
-    if (useOverlay) el.classList.add('overlay'); else el.classList.remove('overlay');
-    setProgress(6);
+    setProgress(10);
     clearInterval(trickle);
-    trickle = setInterval(() => { if (progress < 90) setProgress(progress + Math.max(0.4, (90 - progress) * 0.07)); }, 350);
+    clearTimeout(finishTimer);
+    const interval = Math.max(180, Math.min(420, duration / 12));
+    trickle = setInterval(() => {
+      const next = progress < 35 ? progress + 8 : progress < 70 ? progress + 4 : progress + 2;
+      setProgress(Math.min(90, next));
+    }, interval);
+
+    const early = Math.max(250, Math.min(900, duration * 0.3));
+    const mid = Math.max(700, Math.min(2200, duration * 0.65));
+    setTimeout(() => setProgress(Math.min(70, 48 + Math.round(duration / 1000 * 8))), early);
+    setTimeout(() => setProgress(Math.min(92, 70 + Math.round(duration / 1200 * 8))), mid);
   }
 
   function done() {
     clearInterval(trickle);
+    clearTimeout(finishTimer);
     setProgress(100);
-    setTimeout(() => { const el = overlay(); if (!el) return; el.classList.remove('active','overlay'); setProgress(0); }, 420);
+    finishTimer = setTimeout(() => {
+      const el = overlay();
+      if (!el) return;
+      el.classList.remove('active');
+      setProgress(0);
+      started = false;
+    }, 260);
   }
 
-  // Start on navigation clicks for same-origin navigations
+  // Start on same-origin navigation clicks
   document.addEventListener('click', (e) => {
     const a = e.target.closest && e.target.closest('a[href]');
     if (!a) return;
@@ -111,7 +182,7 @@ window.initDbClient();
     try {
       const url = new URL(a.href, location.href);
       if (url.origin === location.origin && url.pathname !== location.pathname) {
-        start({ overlay: false });
+        start({ estimatedMs: getEstimatedDuration(url.pathname) });
       }
     } catch (_) {}
   }, true);
@@ -119,11 +190,23 @@ window.initDbClient();
   // Expose controls
   window.MediHelpPageLoader = { start, done, setProgress };
 
-  // Finish when page load event fires
+  // Finish when the page is fully ready
   window.addEventListener('load', () => { try { done(); } catch (e) {} });
+  document.addEventListener('readystatechange', () => {
+    if (document.readyState === 'interactive') {
+      try { setProgress(70); } catch (e) {}
+    }
+    if (document.readyState === 'complete') {
+      try { done(); } catch (e) {}
+    }
+  });
 
-  // Small safety: if DOMContentLoaded already fired, nudge to visible then hide quickly
-  if (document.readyState === 'complete') { done(); }
+  // Show a polished loader on initial page load
+  if (document.readyState === 'loading') {
+    setTimeout(() => start({ estimatedMs: getEstimatedDuration() }), 120);
+  } else {
+    done();
+  }
 })();
 
 // 3. Shared Utils: Debounce
