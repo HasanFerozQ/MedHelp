@@ -9,6 +9,8 @@ on:
 jobs:
   sync-statistics:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required so GITHUB_TOKEN can push the synced datasets back to main
 
     steps:
       - name: Checkout Code
@@ -30,9 +32,9 @@ jobs:
           git config --global user.name "MediHelp HealthStats Bot"
           git config --global user.email "bot@medihelp.live"
           git add tabs/health-stats/data/*.json sitemap.xml
-          if git status --porcelain | grep -q .; then
+          if git diff --cached --quiet; then
+            echo "No dataset changes detected from WHO/World Bank endpoints."
+          else
             git commit -m "Auto-sync Global Health Statistics datasets from WHO GHO & World Bank APIs [skip ci]"
             git push origin main
-          else
-            echo "No dataset changes detected from WHO/World Bank endpoints."
           fi

@@ -2,7 +2,7 @@
   "meta": {
     "title": "Obesity Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-07-25",
+    "lastUpdated": "2026-07-27",
     "primarySources": [
       "WHO GHO",
       "NCD-RisC Collaboration",
@@ -11,7 +11,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-07-25",
+      "lastCheck": "2026-07-27",
       "status": "Verified — WHO GHO NCD_BMI_30A"
     }
   },
