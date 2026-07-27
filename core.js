@@ -91,7 +91,7 @@ window.initDbClient();
   let finishTimer = null;
   let started = false;
   let startTime = 0;
-  const MIN_VISIBLE_MS = 900;
+  const MIN_VISIBLE_MS = 350;
   const bar = () => document.getElementById('mh-progress-bar');
   const overlay = () => document.getElementById(ID);
 
@@ -168,19 +168,24 @@ window.initDbClient();
 
   window.MediHelpPageLoader = { start, done, setProgress };
 
-  window.addEventListener('load', () => { try { done(); } catch (e) {} });
-  document.addEventListener('readystatechange', () => {
-    if (document.readyState === 'interactive') {
-      try { setProgress(70); } catch (e) {}
-    }
-    if (document.readyState === 'complete') {
-      try { done(); } catch (e) {}
-    }
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      setProgress(95);
+      done();
+    } catch (e) {}
+  }, { once: true });
+
+  window.addEventListener('load', () => {
+    try {
+      setProgress(100);
+      setTimeout(done, 120);
+    } catch (e) {}
   });
 
   if (document.readyState === 'loading') {
-    setTimeout(() => start({ estimatedMs: getEstimatedDuration() }), 110);
+    setTimeout(() => start({ estimatedMs: getEstimatedDuration() }), 80);
   } else {
+    setProgress(95);
     done();
   }
 })();

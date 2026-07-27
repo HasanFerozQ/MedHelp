@@ -63,6 +63,7 @@
       (document.head || document.documentElement).appendChild(style);
       const wrap = document.createElement('div');
       wrap.id = 'mh-page-loader';
+      wrap.setAttribute('class', 'active');
       wrap.innerHTML = '<div class="shell"><div class="row"><div class="gear" aria-hidden="true"></div><div class="label">Loading</div></div><div class="progress"><div></div></div></div>';
       if (document.body) document.body.prepend(wrap); else document.addEventListener('DOMContentLoaded', () => document.body && document.body.prepend(wrap), { once: true });
     })();
