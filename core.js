@@ -44,33 +44,23 @@ window.initDbClient();
   });
 })();
 
-// 2.5 Adaptive page loader — animated, page-aware, and smooth
+// 2.5 Minimal loading overlay — gear spinner, simple label, and progress bar
 (function initPageLoader() {
   const ID = 'mh-page-loader';
   const existing = document.getElementById(ID);
-  if (existing) {
-    // Bootstrap already inserted the overlay; we just enhance it in place.
-  }
 
   const css = `
-  #${ID} { position: fixed; inset:0; pointer-events:none; z-index:99999; opacity:0; transition:opacity 280ms ease; background:rgba(6,8,15,0.78); backdrop-filter: blur(14px); }
+  #${ID} { position: fixed; inset:0; pointer-events:none; z-index:99999; opacity:0; transition:opacity 220ms ease; background:rgba(7,10,16,0.84); backdrop-filter: blur(10px); }
   #${ID}.active { opacity:1; pointer-events:auto; }
-  #${ID} .track { position: fixed; top:0; left:0; right:0; height:4px; background: rgba(255,255,255,0.06); }
-  #${ID} .bar { height:100%; width:0%; background: linear-gradient(90deg,#22c55e,#06b6d4,#8b5cf6,#ec4899); background-size:200% 100%; box-shadow:0 0 16px rgba(34,197,94,0.25); transition:width 320ms cubic-bezier(.2,.85,.2,1); }
-  #${ID} .shell { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; padding:24px; }
-  #${ID} .card { width:min(420px, 92vw); background: rgba(10,16,26,0.86); border:1px solid rgba(255,255,255,0.12); border-radius:24px; box-shadow:0 24px 80px rgba(0,0,0,0.35); padding:24px 24px 20px; color:#eef6ff; transform: translateY(14px); transition: transform 260ms ease, opacity 260ms ease; }
-  #${ID}.active .card { transform: translateY(0); }
-  #${ID} .brand { width:56px; height:56px; border-radius:16px; display:grid; place-items:center; font-size:26px; background: linear-gradient(135deg, rgba(34,197,94,0.18), rgba(6,182,212,0.18)); border:1px solid rgba(255,255,255,0.12); margin-bottom:14px; animation:mh-bob 1.2s ease-in-out infinite; }
-  #${ID} .title { font-size:18px; font-weight:800; margin-bottom:6px; letter-spacing:-0.02em; }
-  #${ID} .subtitle { font-size:13px; color:#94a3b8; line-height:1.5; margin-bottom:16px; }
-  #${ID} .dots { display:flex; gap:6px; margin-bottom:14px; }
-  #${ID} .dots span { width:8px; height:8px; border-radius:50%; background:linear-gradient(90deg,#22c55e,#06b6d4); animation:mh-bounce 1.15s infinite ease-in-out; }
-  #${ID} .dots span:nth-child(2){ animation-delay: .15s; }
-  #${ID} .dots span:nth-child(3){ animation-delay: .3s; }
-  #${ID} .progress { height:8px; border-radius:999px; overflow:hidden; background: rgba(255,255,255,0.08); }
-  #${ID} .progress > div { height:100%; width:0%; border-radius:inherit; background: linear-gradient(90deg,#22c55e,#06b6d4,#8b5cf6); transition: width 320ms cubic-bezier(.2,.85,.2,1); }
-  @keyframes mh-bounce { 0%,80%,100% { transform:translateY(0); opacity:.45 } 40% { transform:translateY(-6px); opacity:1 } }
-  @keyframes mh-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  #${ID} .shell { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; padding:24px; }
+  #${ID} .row { display:flex; align-items:center; gap:12px; }
+  #${ID} .gear { width:34px; height:34px; border-radius:50%; border:3px solid rgba(255,255,255,0.9); border-top-color:rgba(34,197,94,0.85); border-right-color:rgba(6,182,212,0.85); animation:mh-spin 900ms linear infinite; position:relative; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.08); }
+  #${ID} .gear::before { content:''; position:absolute; inset:7px; border-radius:50%; border:2px solid rgba(255,255,255,0.62); }
+  #${ID} .gear::after { content:''; position:absolute; inset:0; transform:rotate(45deg); border-radius:50%; border:3px solid transparent; border-top-color:rgba(255,255,255,0.55); }
+  #${ID} .label { color:#f8fafc; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; font-size:13px; line-height:1; }
+  #${ID} .progress { width:min(260px, 72vw); height:7px; border-radius:999px; overflow:hidden; background:rgba(255,255,255,0.1); }
+  #${ID} .progress > div { height:100%; width:0%; border-radius:inherit; background:linear-gradient(90deg,#22c55e,#06b6d4,#8b5cf6); transition:width 260ms ease; }
+  @keyframes mh-spin { to { transform: rotate(360deg); } }
   `;
 
   const style = document.createElement('style');
@@ -83,15 +73,12 @@ window.initDbClient();
     wrap = document.createElement('div');
     wrap.id = ID;
     wrap.innerHTML = `
-      <div class="track"><div class="bar" id="mh-bar"></div></div>
       <div class="shell">
-        <div class="card">
-          <div class="brand">🏥</div>
-          <div class="title" id="mh-title">Loading MediHelp</div>
-          <div class="subtitle" id="mh-subtitle">Preparing your experience…</div>
-          <div class="dots"><span></span><span></span><span></span></div>
-          <div class="progress"><div id="mh-progress-bar"></div></div>
+        <div class="row">
+          <div class="gear" aria-hidden="true"></div>
+          <div class="label">Loading</div>
         </div>
+        <div class="progress"><div id="mh-progress-bar"></div></div>
       </div>
     `;
 
@@ -108,29 +95,6 @@ window.initDbClient();
   const bar = () => document.getElementById('mh-progress-bar');
   const overlay = () => document.getElementById(ID);
 
-  function setPageText() {
-    const path = (location.pathname || '').toLowerCase();
-    const title = document.getElementById('mh-title');
-    const sub = document.getElementById('mh-subtitle');
-    if (!title || !sub) return;
-    if (path.includes('global-health-statistics')) {
-      title.textContent = 'Loading Global Health Data';
-      sub.textContent = 'Gathering charts, references, and insights for you…';
-    } else if (path.includes('medical-calculator') || path.includes('calculator')) {
-      title.textContent = 'Loading Medical Calculators';
-      sub.textContent = 'Preparing clinical tools and quick calculations…';
-    } else if (path.includes('medical-exam')) {
-      title.textContent = 'Loading Exam Prep';
-      sub.textContent = 'Opening study resources and practice content…';
-    } else if (path.includes('medical-bill-audit')) {
-      title.textContent = 'Loading Bill Audit';
-      sub.textContent = 'Preparing your billing tools…';
-    } else {
-      title.textContent = 'Loading MediHelp';
-      sub.textContent = 'Preparing your experience…';
-    }
-  }
-
   function setProgress(p) {
     progress = Math.min(100, Math.max(progress, p));
     const el = bar(); if (el) el.style.width = progress + '%';
@@ -138,10 +102,10 @@ window.initDbClient();
 
   function getEstimatedDuration() {
     const path = (location.pathname || '').toLowerCase();
-    if (path.includes('global-health-statistics')) return 2800;
-    if (path.includes('medical-calculator') || path.includes('calculator')) return 2200;
-    if (path.includes('medical-exam')) return 1800;
-    if (path.includes('medical-bill-audit')) return 1600;
+    if (path.includes('global-health-statistics')) return 2200;
+    if (path.includes('medical-calculator') || path.includes('calculator')) return 1800;
+    if (path.includes('medical-exam')) return 1600;
+    if (path.includes('medical-bill-audit')) return 1400;
     return 1200;
   }
 
@@ -152,21 +116,20 @@ window.initDbClient();
     const el = overlay();
     if (!el) return;
     const duration = Math.max(MIN_VISIBLE_MS, opts.estimatedMs || getEstimatedDuration());
-    setPageText();
     el.classList.add('active');
     setProgress(10);
     clearInterval(trickle);
     clearTimeout(finishTimer);
-    const interval = Math.max(180, Math.min(420, duration / 12));
+    const interval = Math.max(180, Math.min(360, duration / 10));
     trickle = setInterval(() => {
       const next = progress < 35 ? progress + 8 : progress < 70 ? progress + 4 : progress + 2;
       setProgress(Math.min(90, next));
     }, interval);
 
-    const early = Math.max(250, Math.min(900, duration * 0.3));
-    const mid = Math.max(700, Math.min(2200, duration * 0.65));
-    setTimeout(() => setProgress(Math.min(70, 48 + Math.round(duration / 1000 * 8))), early);
-    setTimeout(() => setProgress(Math.min(92, 70 + Math.round(duration / 1200 * 8))), mid);
+    const early = Math.max(220, Math.min(800, duration * 0.35));
+    const mid = Math.max(650, Math.min(1800, duration * 0.7));
+    setTimeout(() => setProgress(Math.min(72, 45 + Math.round(duration / 1000 * 10))), early);
+    setTimeout(() => setProgress(Math.min(94, 70 + Math.round(duration / 1000 * 8))), mid);
   }
 
   function done() {
@@ -181,10 +144,9 @@ window.initDbClient();
       el.classList.remove('active');
       setProgress(0);
       started = false;
-    }, remain + 260);
+    }, remain + 220);
   }
 
-  // Start on same-origin navigation clicks
   document.addEventListener('click', (e) => {
     const a = e.target.closest && e.target.closest('a[href]');
     if (!a) return;
@@ -204,10 +166,8 @@ window.initDbClient();
     } catch (_) {}
   }, true);
 
-  // Expose controls
   window.MediHelpPageLoader = { start, done, setProgress };
 
-  // Finish when the page is fully ready
   window.addEventListener('load', () => { try { done(); } catch (e) {} });
   document.addEventListener('readystatechange', () => {
     if (document.readyState === 'interactive') {
@@ -218,9 +178,8 @@ window.initDbClient();
     }
   });
 
-  // Show a polished loader on initial page load
   if (document.readyState === 'loading') {
-    setTimeout(() => start({ estimatedMs: getEstimatedDuration() }), 120);
+    setTimeout(() => start({ estimatedMs: getEstimatedDuration() }), 110);
   } else {
     done();
   }
