@@ -1205,12 +1205,19 @@
         div.className = 'chart-card' + (fullWidth ? ' full-width' : '');
         div.innerHTML = `<div class="chart-title">${title}</div><div class="chart-container"><canvas id="${id}"></canvas></div>`;
         grid.appendChild(div);
-        // Lazy render via IntersectionObserver
+
+        const canvas = div.querySelector('canvas');
         const obs = new IntersectionObserver((entries) => {
-          entries.forEach(e => {
-            if (e.isIntersecting) {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
               obs.disconnect();
-              renderFn(document.getElementById(id).getContext('2d'));
+              requestAnimationFrame(() => {
+                try {
+                  renderFn(canvas.getContext('2d'));
+                } catch (err) {
+                  console.warn('Chart render skipped:', err);
+                }
+              });
             }
           });
         }, { threshold: 0.1 });
