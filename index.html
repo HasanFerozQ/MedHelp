@@ -1,26 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <!-- Ezoic Privacy & Header Scripts -->
-  <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js"></script>
-  <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js"></script>
-  <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
+  <!-- Ezoic and analytics scripts are loaded later so the page can render first -->
   <script>
-    window.ezstandalone = window.ezstandalone || {};
-    ezstandalone.cmd = ezstandalone.cmd || [];
+    (function() {
+      window.ezstandalone = window.ezstandalone || {};
+      window.ezstandalone.cmd = window.ezstandalone.cmd || [];
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function() {
+        window.dataLayer.push(arguments);
+      };
+      window.gtag('js', new Date());
+      window.gtag('config', 'G-QRXGS9WBY8');
+
+      function loadRemoteScript(src, attrs) {
+        if (document.querySelector('script[src="' + src + '"]')) return;
+        const s = document.createElement('script');
+        s.src = src;
+        s.async = true;
+        Object.keys(attrs || {}).forEach(function(key) {
+          s.setAttribute(key, attrs[key]);
+        });
+        document.head.appendChild(s);
+      }
+
+      function loadNonCriticalScripts() {
+        loadRemoteScript('https://cmp.gatekeeperconsent.com/min.js', { 'data-cfasync': 'false' });
+        loadRemoteScript('https://the.gatekeeperconsent.com/cmp.min.js', { 'data-cfasync': 'false' });
+        loadRemoteScript('https://www.ezojs.com/ezoic/sa.min.js', { 'data-cfasync': 'false' });
+        loadRemoteScript('https://ezoanalytics.com/analytics.js', {});
+        loadRemoteScript('https://www.googletagmanager.com/gtag/js?id=G-QRXGS9WBY8', {});
+      }
+
+      function start() {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadNonCriticalScripts, { timeout: 4000 });
+        } else {
+          setTimeout(loadNonCriticalScripts, 2200);
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start, { once: true });
+      } else {
+        start();
+      }
+    })();
   </script>
-  <script src="//ezoanalytics.com/analytics.js"></script>
   <meta name="google-adsense-account" content="ca-pub-8367130148973046">
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QRXGS9WBY8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QRXGS9WBY8');
-</script>
 
   <meta name="google-site-verification" content="5qSgIce5-N4XK8YJHpfBOtlbj-VfyJCvTbiZEsDy7VM" />
   <meta name="msvalidate.01" content="DB9AF0C759E119F7CD933D466E54FA3B" />
