@@ -47,7 +47,10 @@ window.initDbClient();
 // 2.5 Adaptive page loader — animated, page-aware, and smooth
 (function initPageLoader() {
   const ID = 'mh-page-loader';
-  if (document.getElementById(ID)) return;
+  const existing = document.getElementById(ID);
+  if (existing) {
+    // Bootstrap already inserted the overlay; we just enhance it in place.
+  }
 
   const css = `
   #${ID} { position: fixed; inset:0; pointer-events:none; z-index:99999; opacity:0; transition:opacity 280ms ease; background:rgba(6,8,15,0.78); backdrop-filter: blur(14px); }
@@ -75,28 +78,33 @@ window.initDbClient();
   style.textContent = css;
   (document.head || document.documentElement).appendChild(style);
 
-  const wrap = document.createElement('div');
-  wrap.id = ID;
-  wrap.innerHTML = `
-    <div class="track"><div class="bar" id="mh-bar"></div></div>
-    <div class="shell">
-      <div class="card">
-        <div class="brand">🏥</div>
-        <div class="title" id="mh-title">Loading MediHelp</div>
-        <div class="subtitle" id="mh-subtitle">Preparing your experience…</div>
-        <div class="dots"><span></span><span></span><span></span></div>
-        <div class="progress"><div id="mh-progress-bar"></div></div>
+  let wrap = existing;
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.id = ID;
+    wrap.innerHTML = `
+      <div class="track"><div class="bar" id="mh-bar"></div></div>
+      <div class="shell">
+        <div class="card">
+          <div class="brand">🏥</div>
+          <div class="title" id="mh-title">Loading MediHelp</div>
+          <div class="subtitle" id="mh-subtitle">Preparing your experience…</div>
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="progress"><div id="mh-progress-bar"></div></div>
+        </div>
       </div>
-    </div>
-  `;
+    `;
 
-  function mount() { if (!document.body) return requestAnimationFrame(mount); document.body.prepend(wrap); }
-  mount();
+    function mount() { if (!document.body) return requestAnimationFrame(mount); document.body.prepend(wrap); }
+    mount();
+  }
 
   let progress = 0;
   let trickle = null;
   let finishTimer = null;
   let started = false;
+  let startTime = 0;
+  const MIN_VISIBLE_MS = 900;
   const bar = () => document.getElementById('mh-progress-bar');
   const overlay = () => document.getElementById(ID);
 
@@ -140,9 +148,10 @@ window.initDbClient();
   function start(opts = {}) {
     if (started) return;
     started = true;
+    startTime = performance.now();
     const el = overlay();
     if (!el) return;
-    const duration = opts.estimatedMs || getEstimatedDuration();
+    const duration = Math.max(MIN_VISIBLE_MS, opts.estimatedMs || getEstimatedDuration());
     setPageText();
     el.classList.add('active');
     setProgress(10);
@@ -164,13 +173,15 @@ window.initDbClient();
     clearInterval(trickle);
     clearTimeout(finishTimer);
     setProgress(100);
+    const elapsed = performance.now() - startTime;
+    const remain = Math.max(0, MIN_VISIBLE_MS - elapsed);
     finishTimer = setTimeout(() => {
       const el = overlay();
       if (!el) return;
       el.classList.remove('active');
       setProgress(0);
       started = false;
-    }, 260);
+    }, remain + 260);
   }
 
   // Start on same-origin navigation clicks
@@ -181,8 +192,14 @@ window.initDbClient();
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     try {
       const url = new URL(a.href, location.href);
-      if (url.origin === location.origin && url.pathname !== location.pathname) {
+      const sameOrigin = url.origin === location.origin;
+      const samePath = url.pathname === location.pathname && url.search === location.search;
+      if (sameOrigin && !samePath) {
+        e.preventDefault();
         start({ estimatedMs: getEstimatedDuration(url.pathname) });
+        setTimeout(() => {
+          window.location.assign(url.href);
+        }, 260);
       }
     } catch (_) {}
   }, true);
