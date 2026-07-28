@@ -6,7 +6,15 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil((async () => {
+    const cacheNames = await caches.keys();
+    await Promise.all(cacheNames.map(name => {
+      if (name !== CACHE_NAME) {
+        return caches.delete(name);
+      }
+    }));
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener('fetch', event => {
@@ -15,17 +23,21 @@ self.addEventListener('fetch', event => {
     if (url.pathname.startsWith(DATA_PATH_PREFIX)) {
       event.respondWith((async () => {
         const cache = await caches.open(CACHE_NAME);
-        const cached = await cache.match(event.request);
-        const networkFetch = fetch(event.request).then(async (res) => {
-          try { if (res && res.ok) await cache.put(event.request, res.clone()); } catch (e) {}
+        const cacheKey = new Request(url.toString(), { method: 'GET', credentials: 'same-origin' });
+        const cached = await cache.match(cacheKey);
+
+        const networkFetch = fetch(cacheKey).then(async (res) => {
+          if (res && res.ok) {
+            await cache.put(cacheKey, res.clone());
+          }
           return res;
         }).catch(() => null);
-        // Return cached immediately if available, else network. Still update cache in background.
+
         return cached || networkFetch;
       })());
     }
   } catch (e) {
-    // ignore
+    // ignore fetch errors from non-HTTP URLs or unsupported cases
   }
 });
 

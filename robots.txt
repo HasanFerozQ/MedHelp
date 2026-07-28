@@ -26,6 +26,12 @@ Disallow: /docs/
 Disallow: /*.sql$
 Disallow: /*.py$
 Disallow: /*.md$
+# Allow health stats JSON so search engines can render pages that depend on these datasets
+Allow: /tabs/health-stats/data/
+Allow: /tabs/health-stats/data/*.json
+
+# NOTE: previously we disallowed all .json files; that blocked dataset JSON needed for indexing.
+# If you intentionally want to block other JSON endpoints, add specific Disallow rules instead of a blanket rule.
 Disallow: /*.json$
 Disallow: /tmp_script.js
 Disallow: /sw-calculator.js
