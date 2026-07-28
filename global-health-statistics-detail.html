@@ -758,6 +758,13 @@
     slug = slug || 'diabetes-statistics-2026';
     const meta = CATEGORY_META[slug];
 
+    // Register Service Worker to enable cache-first behavior for dataset JSON
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        console.log('MediHelp: Service Worker registered for scope', reg.scope);
+      }).catch(() => {});
+    }
+
     if (!meta) {
       document.getElementById('loading-state').style.display = 'none';
       document.getElementById('error-state').style.display = 'block';
@@ -770,46 +777,66 @@
         }
       }, 12000);
 
-      fetch(meta.file)
-        .then(r => {
-          if (!r.ok) throw new Error('HTTP ' + r.status + ' fetching ' + meta.file);
-          return r.json();
-        })
-        .then(data => {
+      (async function loadAndRender() {
+        const CACHE_NAME = 'ghs-data-v1';
+        let usedCached = false;
+        try {
+          // Try cache first (fast path)
+          if ('caches' in window) {
+            try {
+              const cachedResp = await caches.match(meta.file);
+              if (cachedResp) {
+                const cachedData = await cachedResp.json();
+                clearTimeout(loadTimeout);
+                buildPage(cachedData, meta, slug);
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('page-content').style.display = 'block';
+                if (window.MediHelpPageLoader && MediHelpPageLoader.done) MediHelpPageLoader.done();
+                usedCached = true;
+              }
+            } catch (e) { console.warn('Cache read failed', e); }
+          }
+
+          // Always attempt network fetch to update cache and page if newer
           try {
+            const netResp = await fetch(meta.file);
+            if (!netResp.ok) throw new Error('HTTP ' + netResp.status + ' fetching ' + meta.file);
+            const netData = await netResp.json();
+
+            // Update cache copy for SW or future visits
+            if ('caches' in window) {
+              try {
+                const cache = await caches.open(CACHE_NAME);
+                await cache.put(meta.file, new Response(JSON.stringify(netData)));
+              } catch (e) { /* ignore cache write errors */ }
+            }
+
+            // If we didn't render from cache or the meta changed, rebuild the page
+            const previousMeta = window.__ghs_last_meta || {};
+            if (!usedCached || JSON.stringify(previousMeta) !== JSON.stringify(netData.meta || {})) {
+              clearTimeout(loadTimeout);
+              buildPage(netData, meta, slug);
+              document.getElementById('loading-state').style.display = 'none';
+              document.getElementById('page-content').style.display = 'block';
+            }
+            window.__ghs_last_meta = netData.meta || {};
+          } catch (netErr) {
+            console.warn('Network fetch failed', netErr);
+            if (!usedCached) {
+              clearTimeout(loadTimeout);
+              document.getElementById('loading-state').style.display = 'none';
+              document.getElementById('error-state').style.display = 'block';
+            }
+          }
+        } catch (err) {
+          console.error('Load error:', err);
+          if (!usedCached) {
             clearTimeout(loadTimeout);
-            buildPage(data, meta, slug);
-            document.getElementById('loading-state').style.display = 'none';
-            document.getElementById('page-content').style.display = 'block';
-            // Update meta
-            document.getElementById('page-title').textContent = data.meta.title + ' | MediHelp';
-            document.getElementById('page-desc').setAttribute('content', data.hero.description);
-            // Canonical
-            const can = document.createElement('link');
-            can.rel = 'canonical';
-            can.href = 'https://www.medihelp.live/global-health-statistics/' + slug;
-            document.head.appendChild(can);
-            // Hero glow
-            const hero = document.querySelector('.ghs-detail-hero');
-            if (hero) hero.style.setProperty('--hero-glow', hexToRgba(meta.accent, 0.18));
-            // Reveal static sections
-            ['free-tools-cta','exam-mastery-cta','page-footer'].forEach(function(id) {
-              var el = document.getElementById(id);
-              if (el) el.style.display = '';
-            });
-          } catch(buildErr) {
-            clearTimeout(loadTimeout);
-            console.error('buildPage error:', buildErr);
             document.getElementById('loading-state').style.display = 'none';
             document.getElementById('error-state').style.display = 'block';
           }
-        })
-        .catch(err => {
-          clearTimeout(loadTimeout);
-          console.error('Fetch error:', err);
-          document.getElementById('loading-state').style.display = 'none';
-          document.getElementById('error-state').style.display = 'block';
-        });
+        }
+      })();
     }
 
     function hexToRgba(hex, alpha) {
