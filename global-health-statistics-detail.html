@@ -152,7 +152,29 @@
       .category-switcher { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 640px) {
-      .category-switcher { grid-template-columns: repeat(2, 1fr); }
+      .category-switcher {
+        grid-template-columns: 1fr;
+        overflow-x: hidden;
+        min-width: 0;
+      }
+      .cat-switch-btn {
+        white-space: normal;
+        word-break: break-word;
+        min-width: 0;
+      }
+      .container {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .ghs-hero-desc-p,
+      .auth-desc,
+      .kpi-card,
+      .crisis-support-box,
+      .table-search-wrapper,
+      .chart-card,
+      .risk-card {
+        min-width: 0;
+      }
     }
 
     /* ── Authenticity Banner (Solid rich dark background) ── */
