@@ -2,7 +2,7 @@
   "meta": {
     "title": "Heart Disease Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-07-27",
+    "lastUpdated": "2026-08-02",
     "primarySources": [
       "WHO Cardiovascular Disease Fact Sheet",
       "World Heart Federation World Heart Report 2025",
@@ -10,7 +10,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-07-27",
+      "lastCheck": "2026-08-02",
       "status": "Verified — WHO Global Health Observatory"
     }
   },

@@ -2,7 +2,7 @@
   "meta": {
     "title": "Diabetes Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-07-27",
+    "lastUpdated": "2026-08-02",
     "primarySources": [
       "IDF Diabetes Atlas 11th Edition (2024 data)",
       "WHO Global Health Observatory",
@@ -11,8 +11,8 @@
     "syncStatus": "Auto-Synced via World Bank Open Data API",
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-07-27",
-      "status": "Auto-Synced: Diabetes prevalence 10.8% (World Bank 2024)"
+      "lastCheck": "2026-08-02",
+      "status": "Cached — World Bank API unavailable; last verified figures retained"
     }
   },
   "hero": {
