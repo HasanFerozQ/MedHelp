@@ -30,7 +30,7 @@
   <link rel="dns-prefetch" href="https://gumroad.com">
   <link rel="shortcut icon" href="/icons/favicon.ico?v=1.1" type="image/x-icon">
   <!-- Preload LCP hero background image (WebP, 126 KB vs 2.2 MB PNG) -->
-  <link rel="preload" as="image" href="images/hero-bg.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="/images/hero-bg.webp" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="/styles.css">
   <!-- defer prevents these scripts from blocking first paint -->
   <style>
@@ -316,12 +316,14 @@
   </script>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
   <!-- ── NAVBAR ── -->
+  <header class="site-header">
   <nav class="navbar">
     <div class="container nav-content">
       <a href="/" class="nav-brand">
-        <img src="icons/logo.png?v=1.1" alt="MediHelp — Medical Bill Audit">
+        <img src="/icons/logo.png?v=1.1" alt="MediHelp — Medical Bill Audit">
         MediHelp
       </a>
       <div class="nav-links">
@@ -355,6 +357,8 @@
       </div>
     </div>
   </nav>
+  </header>
+  <main id="main-content">
     <!-- Adsterra 728x90 Banner -->
     <div id="hp-ad-banner" style="text-align:center; margin: 10px auto;">
       <script>
@@ -412,9 +416,7 @@
       </div>
 
       <h1 class="hero-h1">
-        Medical Bill Audit —<br>
-        You Probably <span class="grad-text">Overpaid.</span><br>
-        Let's Prove It.
+        Medical Bill Audit — <span class="grad-text">Find &amp; Fix</span> Billing Errors
       </h1>
 
       <p class="hero-sub">
@@ -1483,5 +1485,6 @@
       });
     }
   </script>
+  </main>
 </body>
 </html>
