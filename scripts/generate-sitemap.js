@@ -129,7 +129,7 @@ examPrepTopics.forEach(loc => addEntry(loc, TODAY, 'monthly', 0.6));
 if (blogPosts.length > 0) {
   sitemapEntries.push(`\n  <!-- Blog Posts (all ${blogPosts.length} from manifest.json) -->`);
   blogPosts.forEach(slug => {
-    addEntry(`/blog-post?slug=${slug}`, TODAY, 'monthly', 0.6);
+    addEntry(`/blog/${slug}`, TODAY, 'monthly', 0.6);
   });
 }
 

@@ -1,8 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<script>(function(s){s.dataset.zone='11475286',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
   <title>Medical Exam Preparation Guide for Doctors (USMLE, MBBS, & US MD) | MediHelp</title>
@@ -16,30 +15,7 @@
   <link rel="icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="core.js"></script>
-  <script src="https://gumroad.com/js/gumroad.js"></script>
-
   <!-- SEO SCHEMA MARKUP -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Course",
-    "name": "Medical Exam Preparation (USMLE & MBBS)",
-    "description": "Comprehensive USMLE preparation MCQs and MBBS exam questions with high-yield anatomy MCQs with answers and clinical case scenarios USMLE style.",
-    "provider": {
-      "@type": "Organization",
-      "name": "MediHelp",
-      "url": "https://www.medihelp.live"
-    },
-    "educationalLevel": "Professional development",
-    "offers": {
-      "@type": "Offer",
-      "category": "Free",
-      "price": "0"
-    }
-  }
-  </script>
   <style>
     .prep-hero { padding: 40px 20px; border-bottom: 1px solid var(--border); background: var(--bg-elevated); margin-bottom: 40px; }
     @media (max-width: 600px) {
@@ -54,7 +30,6 @@
     }
     .year-tab:hover { color: var(--text-h); background: var(--bg-card); }
     .year-tab.active { color: var(--accent); background: var(--accent-glow); border-color: var(--border-accent); }
-
     .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
     .topic-card { 
       background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; 
@@ -66,7 +41,6 @@
     .topic-stats-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .progress-bar-bg { height: 6px; background: var(--bg-elevated); border-radius: 3px; margin-top: 5px; overflow: hidden; }
     .progress-bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; }
-    
     .section-header { 
       grid-column: 1 / -1; 
       margin: 40px 0 10px; 
@@ -86,7 +60,6 @@
       height: 1px;
       background: var(--border);
     }
-
     /* MCQ AREA */
     #mcq-container { display: none; }    .quiz-header { 
       position: sticky; top: 71px; z-index: 100; background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -112,7 +85,6 @@
     .header-title-group div { font-size: 11px; color: var(--text-muted); font-weight: 700; }
     .reset-btn { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.2); font-size: 11px; padding: 6px 12px; }
     .reset-btn:hover { background: rgba(239, 68, 68, 0.2); }
-
     .mcq-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 24px; transition: var(--transition); }
     .mcq-image { width: 100%; max-height: 400px; object-fit: contain; border-radius: var(--radius-sm); margin-bottom: 24px; background: #000; border: 1px solid var(--border); }
     .mcq-question { font-size: 19px; font-weight: 700; color: var(--text-h); margin-bottom: 24px; line-height: 1.5; }
@@ -126,14 +98,12 @@
     .option-btn.correct { background: rgba(34, 197, 94, 0.15) !important; border-color: var(--success) !important; color: var(--success); }
     .option-btn.incorrect { background: rgba(239, 68, 68, 0.15) !important; border-color: var(--danger) !important; color: var(--danger); }
     .option-btn.locked { cursor: default; }
-
     .explanation-box { 
       margin-top: 24px; padding: 20px; background: rgba(34, 197, 94, 0.05); border-left: 4px solid var(--accent); 
       border-radius: 4px; display: none; 
     }
     .explanation-box h4 { font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
     .explanation-box p { font-size: 14px; color: var(--text-body); line-height: 1.6; }
-
     .score-badge { 
       background: var(--bg-card); color: var(--text-h); padding: 8px 16px; border-radius: 12px; 
       font-weight: 800; font-size: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); 
@@ -141,9 +111,7 @@
     }
     .score-badge.mcq { border-left: 4px solid var(--success); }
     .score-badge.case { border-left: 4px solid #a855f7; }
-    
     .hidden { display: none; }
-    
     /* PREMIUM PULSE LOADER */
     .premium-loader {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -180,7 +148,6 @@
       text-align: center;
       font-size: 14px;
     }
-
     /* SEARCH BAR STYLES - UI FIX */
     .search-container { position: relative; max-width: 600px; margin-top: 24px; }
     .search-input-wrapper { 
@@ -200,7 +167,6 @@
       box-shadow: none !important;
     }
     .search-input::placeholder { color: var(--text-muted); opacity: 0.7; }
-    
     .search-results { 
       position: absolute; top: calc(100% + 10px); left: 0; right: 0; background: var(--bg-glass); 
       backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: var(--radius); 
@@ -213,7 +179,6 @@
     .search-item:hover { background: rgba(255,255,255,0.05); }
     .search-item-title { font-weight: 700; color: var(--text-h); font-size: 14px; }
     .search-item-sem { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px; background: var(--accent-glow); color: var(--accent); white-space: nowrap; }
-
     /* Custom Confirmation Modal */
     #confirm-modal {
       position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
@@ -230,7 +195,6 @@
     .confirm-title { font-size: 18px; font-weight: 800; color: var(--text-h); margin-bottom: 12px; }
     .confirm-text { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
     .confirm-btns { display: flex; gap: 12px; justify-content: center; }
-    
     /* CASE STUDY STYLES */
     .case-box { 
       background: var(--bg-card); border: 2px solid var(--accent); border-radius: var(--radius); 
@@ -243,19 +207,16 @@
     }
     .case-title { font-size: 20px; font-weight: 900; color: var(--accent); margin-bottom: 16px; margin-top: 10px; }
     .case-scenario { font-size: 16px; line-height: 1.7; color: var(--text-h); font-style: italic; border-left: 3px solid var(--accent-glow); padding-left: 20px; }
-    
     .section-divider { 
       display: flex; align-items: center; gap: 20px; margin: 60px 0 30px; 
       color: var(--text-muted); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
     }
     .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-    
     /* MOBILE RESPONSIVENESS */
     @media (max-width: 768px) {
       .prep-hero { padding: 30px 0; margin-bottom: 20px; }
       .prep-hero h1 { font-size: 26px !important; }
       .prep-hero p { font-size: 14px !important; }
-      
       .year-nav { display: none !important; }
       .mobile-year-select {
         display: block !important;
@@ -275,10 +236,8 @@
         background-size: 18px;
         outline: none;
       }
-      
       .topic-grid { grid-template-columns: 1fr; gap: 16px; }
       .topic-card { padding: 20px; }
-      
       .quiz-header { 
         position: sticky; top: 0px; left: 0; right: 0; 
         border-radius: 0; border-left: none; border-right: none; margin: 0 -20px 20px;
@@ -295,20 +254,15 @@
       .reset-btn { padding: 4px 8px; font-size: 9px; }
       .quiz-header .btn-secondary { padding: 8px 10px; font-size: 11px; }
       .quiz-header .btn-secondary span { display: none; } /* Show only icon on small mobile */
-      
       #mcq-list { margin-top: 0; }
-      
       .mcq-card { padding: 20px 16px; border-radius: var(--radius-sm); }
       .mcq-question { font-size: 16px; }
       .option-btn { padding: 12px 14px; font-size: 13px; gap: 10px; }
-      
       .score-badge { padding: 6px 10px; font-size: 11px; border-radius: 8px; }
-      
       .case-box { padding: 20px; }
       .case-title { font-size: 17px; }
       .case-scenario { font-size: 13px; line-height: 1.6; }
     }
-
     /* FAQ SECTION STYLES */
     .faq-section { margin-top: 80px; padding: 60px 0; border-top: 1px solid var(--border); }
     .faq-title { font-size: 28px; font-weight: 900; color: var(--text-h); margin-bottom: 40px; text-align: center; }
@@ -316,7 +270,6 @@
     .faq-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px; }
     .faq-item h3 { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 12px; }
     .faq-item p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-
     /* PREMIUM MODAL STYLES */
     .modal-overlay { 
       position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
@@ -352,7 +305,6 @@
     }
     .secondary-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; padding: 8px 16px; border-radius: 8px; font-size: 12px; }
     .secondary-btn:hover { color: var(--text-h); border-color: var(--accent); }
-
     /* MOBILE RESPONSIVENESS FOR PREMIUM MODAL */
     @media (max-width: 600px) {
       .premium-card { padding: 30px 20px; border-radius: 16px; }
@@ -362,7 +314,6 @@
       .feature-item { font-size: 13px; }
       .premium-btn { padding: 14px; font-size: 15px; }
     }
-
     /* TOAST NOTIFICATIONS */
     .toast-msg {
       position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
@@ -376,7 +327,6 @@
     .toast-msg.success { border-color: var(--success); }
     .toast-msg.error { border-color: var(--danger); }
     .mobile-year-select { display: none; }
-
     /* TOP LOADING BAR */
     #top-progress-container {
       position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999;
@@ -388,7 +338,30 @@
       transition: width 0.4s cubic-bezier(0.1, 0.5, 0.5, 1);
     }
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3792974281439123"
+  <script>(function(s){s.dataset.zone='11475286',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="core.js"></script>
+<script src="https://gumroad.com/js/gumroad.js"></script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Medical Exam Preparation (USMLE & MBBS)",
+    "description": "Comprehensive USMLE preparation MCQs and MBBS exam questions with high-yield anatomy MCQs with answers and clinical case scenarios USMLE style.",
+    "provider": {
+      "@type": "Organization",
+      "name": "MediHelp",
+      "url": "https://www.medihelp.live"
+    },
+    "educationalLevel": "Professional development",
+    "offers": {
+      "@type": "Offer",
+      "category": "Free",
+      "price": "0"
+    }
+  }
+  </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3792974281439123"
      crossorigin="anonymous"></script>
 </head>
 <body>

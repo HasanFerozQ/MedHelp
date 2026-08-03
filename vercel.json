@@ -8,15 +8,27 @@
     },
     {
       "source": "/global-health-statistics/:category",
-      "destination": "/global-health-statistics-detail?category=:category"
+      "destination": "/api/health-stats?category=:category"
+    },
+    {
+      "source": "/es/tabs/:path*",
+      "destination": "/tabs/:path*"
+    },
+    {
+      "source": "/es/styles.css",
+      "destination": "/styles.css"
     },
     {
       "source": "/es/medical-calculator",
-      "destination": "/medical-calculator"
+      "destination": "/api/es-calculator"
     },
     {
       "source": "/es/calculators/:path*",
-      "destination": "/calculators/:path*"
+      "destination": "/api/es-calculator"
+    },
+    {
+      "source": "/blog-post",
+      "destination": "/api/blog"
     },
     {
       "source": "/blog/:slug",
