@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <script>(function(s){s.dataset.zone='11475286',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
@@ -25,7 +25,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Read detailed MediHelp blog articles on billing integrity, denials, coding patterns, and patient advocacy.">
+  <meta name="description" content="Read authoritative MediHelp medical blog articles covering clinical research, health updates, medical bill auditing, CPT coding, and patient advocacy.">>>
   <title>MediHelp Blog | Article</title>
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="article">
@@ -528,7 +528,7 @@
 
       // Update page title and social metadata
       document.title = `${post.title} | MediHelp Blog`;
-      const canonicalUrl = `${window.location.origin}/blog-post?slug=${encodeURIComponent(post.slug)}`;
+      const canonicalUrl = `${window.location.origin}/blog/${encodeURIComponent(post.slug)}`;
       const metaDescription = (post.excerpt || post.summary || cleanText(post.raw || '')).slice(0, 155);
       const ogImage = post.thumbnail || 'https://www.medihelp.live/icons/logo.png?v=1.1';
       setMeta('link[rel="canonical"]', 'href', canonicalUrl);
@@ -577,7 +577,7 @@
       const suggested = posts.filter(p => p.slug !== post.slug).slice(0, 3);
       document.getElementById('sidebar-suggested').innerHTML = suggested.length > 0
         ? suggested.map(s => `
-          <a href="/blog-post?slug=${encodeURIComponent(s.slug)}" class="sidebar-post-link">
+          <a href="/blog/${encodeURIComponent(s.slug)}" class="sidebar-post-link">
             <img src="${s.thumbnail || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&q=60'}" alt="${escapeHtml(s.title)}" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&q=60'">
             <div>
               <div class="sp-title">${escapeHtml(s.title)}</div>

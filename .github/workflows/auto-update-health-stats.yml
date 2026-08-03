@@ -31,8 +31,8 @@ jobs:
 
       - name: Commit and Push Changes if Updated
         run: |
-          git config --global user.name "MediHelp HealthStats Bot"
-          git config --global user.email "bot@medihelp.live"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add tabs/health-stats/data/*.json sitemap.xml
           if git diff --cached --quiet; then
             echo "No dataset changes detected from WHO/World Bank endpoints."

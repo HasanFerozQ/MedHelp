@@ -20,7 +20,7 @@
     },
     {
       "source": "/blog/:slug",
-      "destination": "/blog-post?slug=:slug"
+      "destination": "/api/blog?slug=:slug"
     },
     {
       "source": "/usmle-preparation",

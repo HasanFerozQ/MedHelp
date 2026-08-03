@@ -33,17 +33,26 @@ const API_ENDPOINTS = {
 };
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
-async function fetchJSON(url, label) {
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function fetchJSON(url, label, retries = 2, timeoutMs = 45000) {
   try {
     const res = await fetch(url, {
       headers: { 'User-Agent': 'MediHelp-HealthStats-Bot/1.0 (medihelp.live)' },
-      signal: AbortSignal.timeout(20000)   // 20-second timeout per request
+      signal: AbortSignal.timeout(timeoutMs)
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
     console.log(`  ✅ Fetched ${label}`);
     return json;
   } catch (err) {
+    if (retries > 0) {
+      console.warn(`  ⚠️  Retry ${label}: ${err.message}. Retrying... (${retries} left)`);
+      await delay(3000);
+      return fetchJSON(url, label, retries - 1, timeoutMs);
+    }
     console.warn(`  ⚠️  Could not fetch ${label}: ${err.message} — using cached data`);
     return null;
   }
