@@ -27,12 +27,28 @@
       "destination": "/api/es-calculator"
     },
     {
+      "source": "/blog",
+      "destination": "/blog.html"
+    },
+    {
+      "source": "/blog/",
+      "destination": "/blog.html"
+    },
+    {
       "source": "/blog-post",
       "destination": "/api/blog"
     },
     {
       "source": "/blog/:slug",
       "destination": "/api/blog?slug=:slug"
+    },
+    {
+      "source": "/flash-cards",
+      "destination": "/flash-cards.html"
+    },
+    {
+      "source": "/flash-cards/",
+      "destination": "/flash-cards.html"
     },
     {
       "source": "/flash-cards/:path*",
