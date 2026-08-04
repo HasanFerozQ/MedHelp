@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -62,10 +62,10 @@
     /* ── STUDY PATH OPTIONS ── */
     .path-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 24px;
       margin: 0 auto 70px;
-      max-width: 1000px;
+      max-width: 1400px;
     }
     .path-card {
       background: var(--bg-card);
@@ -403,6 +403,9 @@
       .premium-features { justify-content: center; }
       .premium-update-pill { margin: 0 auto 16px; }
     }
+    @media (max-width: 1100px) {
+      .path-grid { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 768px) {
       .path-grid { grid-template-columns: 1fr; }
       .practice-grid { grid-template-columns: 1fr; }
@@ -611,6 +614,22 @@
           <h2 class="path-h2">USMLE Prep</h2>
           <p class="path-p">Optimized for board performance. Focused on Step 1 foundations and high-yield clinical reasoning for Steps 2 CK and 3.</p>
           <a href="medical-exam-usmle.html" class="btn btn-primary btn-path" style="background:#a855f7; box-shadow:0 8px 32px rgba(168,85,247,0.3);">Start Board Prep</a>
+        </div>
+
+        <!-- USMLE Mock Exam -->
+        <div class="path-card" style="background: linear-gradient(135deg, rgba(20,184,166,0.10) 0%, var(--bg-card) 70%); border: 1.5px solid rgba(20,184,166,0.30); position: relative; overflow: hidden;">
+          <div style="position:absolute; top:-40px; right:-40px; width:160px; height:160px; background:radial-gradient(circle, rgba(20,184,166,0.15) 0%, transparent 70%); pointer-events:none;"></div>
+          <div class="path-icon" style="color:#14b8a6; background:rgba(20,184,166,0.12); border-radius:50%; padding:12px;">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="3"/>
+              <path d="M9 9h6M9 12h6M9 15h4"/>
+              <circle cx="18" cy="18" r="4" fill="rgba(20,184,166,0.2)" stroke="#14b8a6" stroke-width="1.5"/>
+              <path d="m16.5 18 1 1 2-2" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2 class="path-h2" style="color:#14b8a6;">USMLE Mock Exam</h2>
+          <p class="path-p">Simulate real exam conditions with timed, full-length USMLE-style mock exams. Track your score, review explanations, and identify weak areas.</p>
+          <a href="https://www.medihelp.live/medical-exam-mock" class="btn btn-primary btn-path" style="background: linear-gradient(135deg, #14b8a6, #0d9488); box-shadow:0 8px 32px rgba(20,184,166,0.35);">Take Mock Exam</a>
         </div>
       </div>
     </section>
