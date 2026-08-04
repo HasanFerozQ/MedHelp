@@ -1079,21 +1079,33 @@
     const FLASH_DATA = {};
     let FLASH_MANIFEST = null;
 
-    async function loadManifest() {
-      if (FLASH_MANIFEST) return FLASH_MANIFEST;
+    async function fetchJsonFallback(url) {
       try {
-        const res = await fetch('/tabs/flashcards/data/manifest.json');
-        if (res.ok) {
-          FLASH_MANIFEST = await res.json();
+        let res = await fetch(url);
+        if (res.ok) return await res.json();
+        if (url.startsWith('/')) {
+          res = await fetch(url.slice(1));
+          if (res.ok) return await res.json();
         }
       } catch (e) {
-        console.error("Failed to load flashcards manifest:", e);
+        if (url.startsWith('/')) {
+          try {
+            const res = await fetch(url.slice(1));
+            if (res.ok) return await res.json();
+          } catch (e2) {}
+        }
       }
+      return null;
+    }
+
+    async function loadManifest() {
+      if (FLASH_MANIFEST) return FLASH_MANIFEST;
+      FLASH_MANIFEST = await fetchJsonFallback('/tabs/flashcards/data/manifest.json');
       return FLASH_MANIFEST || {};
     }
 
     async function loadTabData(tab) {
-      if (FLASH_DATA[tab]) return FLASH_DATA[tab];
+      if (FLASH_DATA[tab] && FLASH_DATA[tab].length > 0) return FLASH_DATA[tab];
       try {
         if (typeof topicGrid !== 'undefined' && topicGrid && (!FLASH_DATA[tab] || FLASH_DATA[tab].length === 0)) {
           topicGrid.innerHTML = `
@@ -1105,12 +1117,8 @@
           topicGrid.classList.remove('hidden');
           if (typeof emptyState !== 'undefined' && emptyState) emptyState.classList.add('hidden');
         }
-        const res = await fetch(`/tabs/flashcards/data/${tab}.json`);
-        if (res.ok) {
-          FLASH_DATA[tab] = await res.json();
-        } else {
-          FLASH_DATA[tab] = [];
-        }
+        const data = await fetchJsonFallback(`/tabs/flashcards/data/${tab}.json`);
+        FLASH_DATA[tab] = data || [];
       } catch (e) {
         console.error(`Failed to load ${tab} data:`, e);
         FLASH_DATA[tab] = [];
@@ -1177,18 +1185,19 @@
       document.title = `${topic.topic} Flashcards | MediHelp`;
     }
 
-    function init() {
+    async function init() {
       const mainTabs = document.getElementById('main-tabs');
       const mobileDropdown = document.getElementById('mobile-tab-dropdown');
 
       // Desktop Tab Listeners
       if (mainTabs) {
         mainTabs.querySelectorAll('.tab-item').forEach(tab => {
-          tab.onclick = () => {
+          tab.onclick = async () => {
             mainTabs.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             currentTab = tab.dataset.tab;
             if (mobileDropdown) mobileDropdown.value = currentTab;
+            await loadTabData(currentTab);
             renderTopics();
           };
         });
@@ -1196,14 +1205,14 @@
 
       // Mobile Dropdown Listener
       if (mobileDropdown) {
-        mobileDropdown.onchange = (e) => {
+        mobileDropdown.onchange = async (e) => {
           currentTab = e.target.value;
-          // Sync desktop tabs
           if (mainTabs) {
             mainTabs.querySelectorAll('.tab-item').forEach(t => {
               t.classList.toggle('active', t.dataset.tab === currentTab);
             });
           }
+          await loadTabData(currentTab);
           renderTopics();
         };
       }
@@ -1224,15 +1233,12 @@
 
       nextBtn.onclick = (e) => {
         e.stopPropagation();
-        const cards = FLASH_DATA[currentTab][currentTopicIndex].cards;
-        if (currentCardIndex < cards.length - 1) {
+        const cards = FLASH_DATA[currentTab]?.[currentTopicIndex]?.cards;
+        if (cards && currentCardIndex < cards.length - 1) {
           currentCardIndex++;
           updateCard();
         }
       };
-
-      renderTopics();
-      lucide.createIcons();
 
       const flashFaqs = [
         { q: 'How do medical flashcards help in active recall?', a: 'Active recall involves actively testing your memory instead of passively reviewing notes. When you look at the question side of a medical card and force your brain to retrieve the concept, you strengthen neural pathways, enhancing long-term memory retention for exams like MBBS, USMLE, and NBME.' },
@@ -1242,24 +1248,40 @@
       ];
       if (window.renderFAQ) renderFAQ('faq-flashcards', flashFaqs);
 
+      const manifest = await loadManifest();
       const pathParts = window.location.pathname.split('/').filter(Boolean);
+      
       if (pathParts[0] === 'flash-cards' && pathParts[1]) {
-        const match = findFlashTopic(pathParts[1]);
+        const slug = decodeURIComponent(pathParts[1]);
+        const match = manifest[slug] || findFlashTopic(slug);
         if (match) {
           currentTab = match.tab;
           syncFlashTabUI(currentTab);
+          await loadTabData(currentTab);
           renderTopics();
           startStudyMode(match.index, match.index === 0, 'replace');
+        } else {
+          await loadTabData(currentTab);
+          renderTopics();
         }
+      } else {
+        await loadTabData(currentTab);
+        renderTopics();
       }
 
-      window.addEventListener('popstate', () => {
+      if (window.lucide) lucide.createIcons();
+
+      window.addEventListener('popstate', async () => {
         const parts = window.location.pathname.split('/').filter(Boolean);
         if (parts[0] === 'flash-cards' && parts[1]) {
-          const match = findFlashTopic(parts[1]);
+          const slug = decodeURIComponent(parts[1]);
+          const m = await loadManifest();
+          const match = m[slug] || findFlashTopic(slug);
           if (match) {
             currentTab = match.tab;
             syncFlashTabUI(currentTab);
+            await loadTabData(currentTab);
+            renderTopics();
             startStudyMode(match.index, match.index === 0, 'none');
           }
         } else {
