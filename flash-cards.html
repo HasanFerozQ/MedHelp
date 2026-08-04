@@ -1410,7 +1410,15 @@
       }
     }
 
-    function startStudyMode(index, urlMode = 'push') {
+    async function startStudyMode(index, urlMode = 'push') {
+      // Flashcards are FREE — only a free signup/account is required, no payment
+      if (window.dbClient) {
+        const { data: { user } } = await window.dbClient.auth.getUser();
+        if (!user) {
+          MediHelp.showAuthModal();
+          return;
+        }
+      }
       currentTopicIndex = index;
       currentCardIndex = 0;
       activeTopicName.textContent = FLASH_DATA[currentTab][index].topic;
@@ -1429,7 +1437,7 @@
       document.title = 'Free Medical Flashcards for MBBS & USMLE | MediHelp';
     }
 
-    function cleanLaTeX(text) {
+        function cleanLaTeX(text) {
       if (!text) return '';
       // Replace any run of backslashes (like \ or \\) with a single backslash for LaTeX
       return text.replace(/\\+/g, '\\');
