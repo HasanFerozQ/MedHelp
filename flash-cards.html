@@ -25,7 +25,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Medical Flashcards & Free Demo Decks for MBBS & USMLE | MediHelp</title>
+  <title>Free Medical Flashcards for MBBS & USMLE | MediHelp</title>
   <meta name="description" content="Master medical sciences with 1,000+ interactive medical flashcards. Try free demo decks or unlock full clinical access ($24.99/yr) for MBBS, USMLE, and board exams.">
   <link rel="canonical" href="https://www.medihelp.live/flash-cards">
   <meta name="robots" content="index, follow">
@@ -633,7 +633,7 @@
             Learning medicine requires mastering thousands of facts, clinical concepts, anatomical structures, biochemical pathways, pharmacological mechanisms, and disease processes. Traditional passive reading often leads to rapid forgetting, making active recall one of the most effective study techniques for long-term retention.
           </p>
           <p class="fc-edu-p">
-            MediHelp's Medical Flashcards are designed using evidence-based learning principles to help medical students strengthen recall, improve examination performance, and build lasting clinical knowledge. The first flashcard topic for each academic year is accessible as a <strong>Free Demo</strong> so you can experience our active-recall engine immediately. Full unlimited access to all 1,000+ flashcard decks across all professional years and board levels is included in our <strong>Medical Exam Mastery</strong> plan for just <strong>$24.99/year</strong>.
+            MediHelp's Medical Flashcards are designed using evidence-based learning principles to help medical students strengthen recall, improve examination performance, and build lasting clinical knowledge. All 170+ flashcard decks across all professional years and board levels are 100% free to access for all students.
           </p>
           <p class="fc-edu-p">
             Whether you're reviewing anatomy before practical examinations or revising physiology before board exams, our flashcards provide a structured, distraction-free learning experience.
@@ -1244,7 +1244,7 @@
         { q: 'How do medical flashcards help in active recall?', a: 'Active recall involves actively testing your memory instead of passively reviewing notes. When you look at the question side of a medical card and force your brain to retrieve the concept, you strengthen neural pathways, enhancing long-term memory retention for exams like MBBS, USMLE, and NBME.' },
         { q: 'Are these decks aligned with the USMLE syllabus?', a: 'Yes. The decks are divided by study years and exam targets (USMLE Step 1, Step 2 CK, and Step 3). They cover high-yield subjects such as Gross Anatomy, Histology, Embryology, Physiology, Pathology, Microbiology, Pharmacology, and clinical specialties like Cardiology, Pediatrics, Surgery, and OB/GYN.' },
         { q: 'Can I study these flashcards on mobile devices?', a: 'Absolutely. Our flashcard interface is fully responsive. You can study anatomy, physiology, and pathology decks on the go using your smartphone or tablet, although we recommend desktop usage for complete exam-simulator sessions.' },
-        { q: 'Is there a cost to access these decks?', a: 'The first topic in each deck is a free demo. Full curriculum access requires a MediHelp Medical Exam Mastery license — the same license unlocks MCQs, case studies, and all flashcard decks.' }
+        { q: 'Is there a cost to access these decks?', a: 'No, all medical flashcard decks across MBBS and USMLE levels are 100% free to access on MediHelp.' }
       ];
       if (window.renderFAQ) renderFAQ('faq-flashcards', flashFaqs);
 
@@ -1263,7 +1263,7 @@
           syncFlashTabUI(currentTab);
           await loadTabData(currentTab);
           renderTopics();
-          startStudyMode(match.index, match.index === 0, 'replace');
+          startStudyMode(match.index, 'replace');
         } else {
           await loadTabData(currentTab);
           renderTopics();
@@ -1291,7 +1291,7 @@
             syncFlashTabUI(currentTab);
             await loadTabData(currentTab);
             renderTopics();
-            startStudyMode(match.index, match.index === 0, 'none');
+            startStudyMode(match.index, 'none');
           }
         } else {
           exitStudyMode();
@@ -1326,13 +1326,11 @@
             
             secTopics.forEach((t) => {
               const idx = topics.indexOf(t);
-              const isFreeDemo = (idx === 0);
               const slug = flashTopicSlug(t.topic || 'Untitled Topic');
               const card = document.createElement('a');
               card.className = 'topic-card-item';
               card.href = `/flash-cards?deck=${encodeURIComponent(slug)}`;
               card.innerHTML = `
-                ${isFreeDemo ? '<div style="position:absolute; top:12px; right:12px; background:var(--accent); color:white; font-size:10px; font-weight:800; padding:3px 10px; border-radius:6px; text-transform:uppercase; letter-spacing:1px; z-index:1; box-shadow:0 4px 12px rgba(var(--accent-rgb),0.3);">Free Demo</div>' : ''}
                 <div class="topic-card-icon">
                   <i data-lucide="${t.icon || 'book'}"></i>
                 </div>
@@ -1341,7 +1339,7 @@
               `;
               card.onclick = (e) => {
                 e.preventDefault();
-                startStudyMode(idx, isFreeDemo);
+                startStudyMode(idx);
               };
               topicGrid.appendChild(card);
             });
@@ -1412,19 +1410,7 @@
       }
     }
 
-    async function startStudyMode(index, isFreeDemo = false, urlMode = 'push') {
-      if (!isFreeDemo) {
-        const premium = await isPremium();
-        if (!premium) {
-          const { data: { user } } = await window.dbClient.auth.getUser();
-          if (!user) {
-            MediHelp.showAuthModal();
-          } else {
-            openPremiumModal();
-          }
-          return;
-        }
-      }
+    function startStudyMode(index, urlMode = 'push') {
       currentTopicIndex = index;
       currentCardIndex = 0;
       activeTopicName.textContent = FLASH_DATA[currentTab][index].topic;
@@ -1440,7 +1426,7 @@
       studyView.classList.add('hidden');
       selectionView.classList.remove('hidden');
       history.pushState({}, '', '/flash-cards');
-      document.title = 'Medical Flashcards & Free Demo Decks for MBBS & USMLE | MediHelp';
+      document.title = 'Free Medical Flashcards for MBBS & USMLE | MediHelp';
     }
 
     function cleanLaTeX(text) {
