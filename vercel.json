@@ -35,6 +35,10 @@
       "destination": "/api/blog?slug=:slug"
     },
     {
+      "source": "/flash-cards/:path*",
+      "destination": "/flash-cards.html"
+    },
+    {
       "source": "/usmle-preparation",
       "destination": "/medical-exam-usmle"
     },
