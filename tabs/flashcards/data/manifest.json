@@ -1,0 +1,852 @@
+{
+  "ThoraxFlashCards": {
+    "tab": "year1",
+    "index": 0,
+    "title": "Thorax"
+  },
+  "PelvisPerineumFlashCards": {
+    "tab": "year1",
+    "index": 1,
+    "title": "Pelvis & Perineum"
+  },
+  "AbdomenFlashCards": {
+    "tab": "year1",
+    "index": 2,
+    "title": "Abdomen"
+  },
+  "NeuroanatomyFlashCards": {
+    "tab": "usmle1",
+    "index": 22,
+    "title": "Neuroanatomy"
+  },
+  "NeurophysiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 23,
+    "title": "Neurophysiology"
+  },
+  "SystemicEmbryologyFlashCards": {
+    "tab": "year1",
+    "index": 5,
+    "title": "Systemic Embryology"
+  },
+  "HEADNECKFlashCards": {
+    "tab": "year1",
+    "index": 6,
+    "title": "HEAD & NECK"
+  },
+  "HistologyFlashCards": {
+    "tab": "year1",
+    "index": 7,
+    "title": "Histology"
+  },
+  "CellBiologyFlashCards": {
+    "tab": "year1",
+    "index": 8,
+    "title": "Cell Biology"
+  },
+  "UpperLimbFlashCards": {
+    "tab": "year1",
+    "index": 9,
+    "title": "Upper Limb"
+  },
+  "GeneralPhysiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 9,
+    "title": "General Physiology"
+  },
+  "LowerLimbFlashCards": {
+    "tab": "year1",
+    "index": 11,
+    "title": "Lower Limb"
+  },
+  "BiochemBasicsFlashCards": {
+    "tab": "year1",
+    "index": 12,
+    "title": "Biochem Basics"
+  },
+  "GeneralEmbryologyFlashCards": {
+    "tab": "year1",
+    "index": 13,
+    "title": "General Embryology"
+  },
+  "ReproductiveSystemFlashCards": {
+    "tab": "year1",
+    "index": 14,
+    "title": "Reproductive System"
+  },
+  "RenalSystemFlashCards": {
+    "tab": "year1",
+    "index": 15,
+    "title": "Renal System"
+  },
+  "RespiratorySystemFlashCards": {
+    "tab": "year2",
+    "index": 13,
+    "title": "Respiratory System"
+  },
+  "GISystemFlashCards": {
+    "tab": "year1",
+    "index": 17,
+    "title": "GI System"
+  },
+  "CardiovascularSystemFlashCards": {
+    "tab": "year1",
+    "index": 18,
+    "title": "Cardiovascular System"
+  },
+  "EndocrineSystemFlashCards": {
+    "tab": "year1",
+    "index": 19,
+    "title": "Endocrine System"
+  },
+  "BiochemistrySystemLevelFlashCards": {
+    "tab": "year1",
+    "index": 20,
+    "title": "Biochemistry (System Level)"
+  },
+  "BiochemistryMetabolismGeneticsFlashCards": {
+    "tab": "year1",
+    "index": 21,
+    "title": "Biochemistry (Metabolism + Genetics)"
+  },
+  "MusculoskeletalFlashCards": {
+    "tab": "usmle1",
+    "index": 27,
+    "title": "Musculoskeletal"
+  },
+  "GeneticsFlashCards": {
+    "tab": "usmle1",
+    "index": 19,
+    "title": "Genetics"
+  },
+  "GeneralPharmacologyFlashCards": {
+    "tab": "year2",
+    "index": 0,
+    "title": "General Pharmacology"
+  },
+  "BiostatisticsAndEpidemiologyFlashCards": {
+    "tab": "year2",
+    "index": 1,
+    "title": "Biostatistics and Epidemiology"
+  },
+  "EndocrinePharmacologyFlashCards": {
+    "tab": "year2",
+    "index": 2,
+    "title": "Endocrine Pharmacology"
+  },
+  "ClinicalToxicologyFlashCards": {
+    "tab": "year2",
+    "index": 3,
+    "title": "Clinical Toxicology"
+  },
+  "GIPharmacologyFlashCards": {
+    "tab": "year2",
+    "index": 4,
+    "title": "GI Pharmacology"
+  },
+  "GeneralPathologyFlashCards": {
+    "tab": "year2",
+    "index": 5,
+    "title": "General Pathology"
+  },
+  "MicrobiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 1,
+    "title": "Microbiology"
+  },
+  "SystemicMicrobiologyFlashCards": {
+    "tab": "year2",
+    "index": 7,
+    "title": "Systemic Microbiology"
+  },
+  "GeneralHematologyFlashCards": {
+    "tab": "year2",
+    "index": 8,
+    "title": "General Hematology"
+  },
+  "EndocrinePathologyFlashCards": {
+    "tab": "year2",
+    "index": 9,
+    "title": "Endocrine Pathology"
+  },
+  "SystemicPharmacologyFlashCards": {
+    "tab": "year2",
+    "index": 10,
+    "title": "Systemic Pharmacology"
+  },
+  "CardiovascularFlashCards": {
+    "tab": "year2",
+    "index": 11,
+    "title": "Cardiovascular"
+  },
+  "RenalUrinaryPathologyFlashCards": {
+    "tab": "year2",
+    "index": 12,
+    "title": "Renal/Urinary Pathology"
+  },
+  "ReproductivePathologyFlashCards": {
+    "tab": "year2",
+    "index": 14,
+    "title": "Reproductive Pathology"
+  },
+  "HematologyPathologyFlashCards": {
+    "tab": "year2",
+    "index": 15,
+    "title": "Hematology Pathology"
+  },
+  "SexualForensicPathologyFlashCards": {
+    "tab": "year2",
+    "index": 16,
+    "title": "Sexual & Forensic Pathology"
+  },
+  "ImmunologyFlashCards": {
+    "tab": "usmle1",
+    "index": 17,
+    "title": "Immunology"
+  },
+  "CardiologyACSHeartFailureArrhythmiasValvularDiseaseFlashCards": {
+    "tab": "year3",
+    "index": 0,
+    "title": "Cardiology — ACS, heart failure, arrhythmias, valvular disease"
+  },
+  "PulmonologyPneumoniaCOPDAsthmaPETBFlashCards": {
+    "tab": "year3",
+    "index": 1,
+    "title": "Pulmonology — Pneumonia, COPD, asthma, PE, TB"
+  },
+  "GastroenterologyIBDGIBleedLiverDiseasePancreatitisFlashCards": {
+    "tab": "year3",
+    "index": 2,
+    "title": "Gastroenterology — IBD, GI bleed, liver disease, pancreatitis"
+  },
+  "NephrologyAKICKDElectrolyteAcidbaseDisordersFlashCards": {
+    "tab": "year3",
+    "index": 3,
+    "title": "Nephrology — AKI, CKD, electrolyte & acid-base disorders"
+  },
+  "EndocrinologyDiabetesThyroidAdrenalPituitaryFlashCards": {
+    "tab": "year3",
+    "index": 4,
+    "title": "Endocrinology — Diabetes, thyroid, adrenal, pituitary"
+  },
+  "HematologyOncologyAnemiasLeukemiaLymphomaCoagulopathiesFlashCards": {
+    "tab": "year3",
+    "index": 5,
+    "title": "Hematology/Oncology — Anemias, leukemia, lymphoma, coagulopathies"
+  },
+  "InfectiousDiseaseSepsisHIVFungalParasiticInfectionsFlashCards": {
+    "tab": "year3",
+    "index": 6,
+    "title": "Infectious Disease — Sepsis, HIV, fungal & parasitic infections"
+  },
+  "RheumatologySLERAVasculitisCrystalArthropathiesFlashCards": {
+    "tab": "year3",
+    "index": 7,
+    "title": "Rheumatology — SLE, RA, vasculitis, crystal arthropathies"
+  },
+  "NeurologyStrokeSeizuresHeadacheDementiaMSFlashCards": {
+    "tab": "year3",
+    "index": 8,
+    "title": "Neurology — Stroke, seizures, headache, dementia, MS"
+  },
+  "SurgicalPrinciplesWoundHealingFluidElectrolytesShockFlashCards": {
+    "tab": "year3",
+    "index": 9,
+    "title": "Surgical principles — wound healing, fluid & electrolytes, shock"
+  },
+  "PrepostoperativeCareAnesthesiaBasicsFlashCards": {
+    "tab": "year3",
+    "index": 10,
+    "title": "Pre/post-operative care & anesthesia basics"
+  },
+  "AbdominalSurgeryAppendicitisHerniasBowelObstructionFlashCards": {
+    "tab": "year3",
+    "index": 11,
+    "title": "Abdominal surgery — appendicitis, hernias, bowel obstruction"
+  },
+  "HepatobiliaryCholecystitisLiverAbscessBiliaryDiseaseFlashCards": {
+    "tab": "year3",
+    "index": 12,
+    "title": "Hepatobiliary — cholecystitis, liver abscess, biliary disease"
+  },
+  "BreastSurgeryBenignVsMalignantDiseaseFlashCards": {
+    "tab": "year3",
+    "index": 13,
+    "title": "Breast surgery — benign vs malignant disease"
+  },
+  "TraumaATLSPrinciplesDamageControlSurgeryFlashCards": {
+    "tab": "year3",
+    "index": 14,
+    "title": "Trauma — ATLS principles, damage control surgery"
+  },
+  "SurgicalOncologyBasicsFlashCards": {
+    "tab": "year3",
+    "index": 15,
+    "title": "Surgical oncology basics"
+  },
+  "VascularSurgeryPADAAADVTPEFlashCards": {
+    "tab": "year3",
+    "index": 16,
+    "title": "Vascular surgery — PAD, AAA, DVT/PE"
+  },
+  "MoodDisordersMajorDepressionBipolarIIIFlashCards": {
+    "tab": "year3",
+    "index": 17,
+    "title": "Mood disorders — major depression, bipolar I & II"
+  },
+  "PsychoticDisordersSchizophreniaSpectrumFlashCards": {
+    "tab": "year3",
+    "index": 18,
+    "title": "Psychotic disorders — schizophrenia spectrum"
+  },
+  "AnxietyDisordersGADPanicPTSDOCDFlashCards": {
+    "tab": "year3",
+    "index": 19,
+    "title": "Anxiety disorders — GAD, panic, PTSD, OCD"
+  },
+  "SubstanceUseDisordersAlcoholOpioidsStimulantsFlashCards": {
+    "tab": "year3",
+    "index": 20,
+    "title": "Substance use disorders — alcohol, opioids, stimulants"
+  },
+  "PersonalityDisordersFlashCards": {
+    "tab": "year3",
+    "index": 21,
+    "title": "Personality disorders"
+  },
+  "EatingDisordersFlashCards": {
+    "tab": "year3",
+    "index": 22,
+    "title": "Eating disorders"
+  },
+  "PsychiatricEmergenciesCommitmentLawFlashCards": {
+    "tab": "year3",
+    "index": 23,
+    "title": "Psychiatric emergencies & commitment law"
+  },
+  "PsychopharmacologyEssentialsFlashCards": {
+    "tab": "year3",
+    "index": 24,
+    "title": "Psychopharmacology essentials"
+  },
+  "GrowthDevelopmentMilestonesFlashCards": {
+    "tab": "year3",
+    "index": 25,
+    "title": "Growth & development milestones"
+  },
+  "NeonatalConditionsJaundiceRDSSepsisFlashCards": {
+    "tab": "year3",
+    "index": 26,
+    "title": "Neonatal conditions — jaundice, RDS, sepsis"
+  },
+  "CommonPediatricInfectionsOtitisRSVMeningitisFlashCards": {
+    "tab": "year3",
+    "index": 27,
+    "title": "Common pediatric infections — otitis, RSV, meningitis"
+  },
+  "PediatricVaccinesPreventiveCareFlashCards": {
+    "tab": "year3",
+    "index": 28,
+    "title": "Pediatric vaccines & preventive care"
+  },
+  "CongenitalAnomaliesOverviewFlashCards": {
+    "tab": "year3",
+    "index": 29,
+    "title": "Congenital anomalies overview"
+  },
+  "FailureToThriveNutritionalDisordersFlashCards": {
+    "tab": "year3",
+    "index": 30,
+    "title": "Failure to thrive & nutritional disorders"
+  },
+  "HistoryTakingPhysicalExaminationFlashCards": {
+    "tab": "year3",
+    "index": 31,
+    "title": "History taking & physical examination"
+  },
+  "ECGInterpretationFlashCards": {
+    "tab": "year3",
+    "index": 32,
+    "title": "ECG interpretation"
+  },
+  "ChestXrayBasicRadiologyReadingFlashCards": {
+    "tab": "year3",
+    "index": 33,
+    "title": "Chest X-ray & basic radiology reading"
+  },
+  "ABGInterpretationFlashCards": {
+    "tab": "year3",
+    "index": 34,
+    "title": "ABG interpretation"
+  },
+  "CommonLabInterpretationCBCCMPLFTsFlashCards": {
+    "tab": "year3",
+    "index": 35,
+    "title": "Common lab interpretation (CBC, CMP, LFTs)"
+  },
+  "ClinicalReasoningDifferentialDiagnosisFlashCards": {
+    "tab": "year3",
+    "index": 36,
+    "title": "Clinical reasoning & differential diagnosis"
+  },
+  "NormalLaborDeliveryPostpartumCareFlashCards": {
+    "tab": "year4",
+    "index": 0,
+    "title": "Normal labor, delivery & postpartum care"
+  },
+  "HighriskPregnancyPreeclampsiaGDMPlacentaPreviaFlashCards": {
+    "tab": "year4",
+    "index": 1,
+    "title": "High-risk pregnancy — pre-eclampsia, GDM, placenta previa"
+  },
+  "FetalMonitoringObstetricEmergenciesFlashCards": {
+    "tab": "year4",
+    "index": 2,
+    "title": "Fetal monitoring & obstetric emergencies"
+  },
+  "GynecologicalMalignanciesCervicalUterineOvarianFlashCards": {
+    "tab": "year4",
+    "index": 3,
+    "title": "Gynecological malignancies — cervical, uterine, ovarian"
+  },
+  "BenignGynecologyFibroidsEndometriosisPCOSFlashCards": {
+    "tab": "year4",
+    "index": 4,
+    "title": "Benign gynecology — fibroids, endometriosis, PCOS"
+  },
+  "ContraceptionFamilyPlanningFlashCards": {
+    "tab": "year4",
+    "index": 5,
+    "title": "Contraception & family planning"
+  },
+  "MenstrualDisordersInfertilityBasicsFlashCards": {
+    "tab": "year4",
+    "index": 6,
+    "title": "Menstrual disorders & infertility basics"
+  },
+  "NeonatologyNewbornResuscitationFlashCards": {
+    "tab": "year4",
+    "index": 7,
+    "title": "Neonatology & newborn resuscitation"
+  },
+  "ACLSBLSProtocolsFlashCards": {
+    "tab": "year4",
+    "index": 8,
+    "title": "ACLS & BLS protocols"
+  },
+  "TraumaManagementATLSAdvancedFlashCards": {
+    "tab": "year4",
+    "index": 9,
+    "title": "Trauma management (ATLS advanced)"
+  },
+  "ToxicologyPoisoningManagementFlashCards": {
+    "tab": "year4",
+    "index": 10,
+    "title": "Toxicology & poisoning management"
+  },
+  "ShockTypesResuscitationFlashCards": {
+    "tab": "year4",
+    "index": 11,
+    "title": "Shock types & resuscitation"
+  },
+  "NeurologicalEmergenciesStrokeProtocolStatusEpilepticusFlashCards": {
+    "tab": "year4",
+    "index": 12,
+    "title": "Neurological emergencies — stroke protocol, status epilepticus"
+  },
+  "CardiacEmergenciesFlashCards": {
+    "tab": "year4",
+    "index": 13,
+    "title": "Cardiac emergencies"
+  },
+  "ProceduralSkillsIntubationCentralLinesChestTubesFlashCards": {
+    "tab": "year4",
+    "index": 14,
+    "title": "Procedural skills — intubation, central lines, chest tubes"
+  },
+  "PediatricEmergenciesResuscitationPALSFlashCards": {
+    "tab": "year4",
+    "index": 15,
+    "title": "Pediatric emergencies & resuscitation (PALS)"
+  },
+  "CongenitalHeartDiseaseFlashCards": {
+    "tab": "year4",
+    "index": 16,
+    "title": "Congenital heart disease"
+  },
+  "PediatricRespiratoryDisordersFlashCards": {
+    "tab": "year4",
+    "index": 17,
+    "title": "Pediatric respiratory disorders"
+  },
+  "PediatricOncologyEssentialsFlashCards": {
+    "tab": "year4",
+    "index": 18,
+    "title": "Pediatric oncology essentials"
+  },
+  "DevelopmentalBehavioralPediatricsFlashCards": {
+    "tab": "year4",
+    "index": 19,
+    "title": "Developmental & behavioral pediatrics"
+  },
+  "PediatricNephrologyEndocrinologyFlashCards": {
+    "tab": "year4",
+    "index": 20,
+    "title": "Pediatric nephrology & endocrinology"
+  },
+  "ChildAbuseRecognitionReportingFlashCards": {
+    "tab": "year4",
+    "index": 21,
+    "title": "Child abuse recognition & reporting"
+  },
+  "FracturesDislocationsClassificationManagementFlashCards": {
+    "tab": "year4",
+    "index": 22,
+    "title": "Fractures & dislocations — classification & management"
+  },
+  "SpineDisordersDiscHerniationStenosisScoliosisFlashCards": {
+    "tab": "year4",
+    "index": 23,
+    "title": "Spine disorders — disc herniation, stenosis, scoliosis"
+  },
+  "SportsMedicineSoftTissueInjuriesFlashCards": {
+    "tab": "year4",
+    "index": 24,
+    "title": "Sports medicine & soft tissue injuries"
+  },
+  "JointReplacementsIndicationsComplicationsFlashCards": {
+    "tab": "year4",
+    "index": 25,
+    "title": "Joint replacements — indications & complications"
+  },
+  "BoneSoftTissueTumorsFlashCards": {
+    "tab": "year4",
+    "index": 26,
+    "title": "Bone & soft tissue tumors"
+  },
+  "PediatricOrthopedicsDDHClubfootPerthesFlashCards": {
+    "tab": "year4",
+    "index": 27,
+    "title": "Pediatric orthopedics — DDH, clubfoot, Perthes"
+  },
+  "RedEyeConjunctivitisUveitisKeratitisFlashCards": {
+    "tab": "year4",
+    "index": 28,
+    "title": "Red eye — conjunctivitis, uveitis, keratitis"
+  },
+  "GlaucomaTypesManagementFlashCards": {
+    "tab": "year4",
+    "index": 29,
+    "title": "Glaucoma — types & management"
+  },
+  "RetinalEmergenciesDetachmentCRAOCRVOFlashCards": {
+    "tab": "year4",
+    "index": 30,
+    "title": "Retinal emergencies — detachment, CRAO, CRVO"
+  },
+  "DiabeticHypertensiveRetinopathyFlashCards": {
+    "tab": "year4",
+    "index": 31,
+    "title": "Diabetic & hypertensive retinopathy"
+  },
+  "CataractLensDisordersFlashCards": {
+    "tab": "year4",
+    "index": 32,
+    "title": "Cataract & lens disorders"
+  },
+  "OcularTraumaFlashCards": {
+    "tab": "year4",
+    "index": 33,
+    "title": "Ocular trauma"
+  },
+  "MedicalEthicsAutonomyBeneficenceJusticeFlashCards": {
+    "tab": "year4",
+    "index": 34,
+    "title": "Medical ethics — autonomy, beneficence, justice"
+  },
+  "InformedConsentCapacityAssessmentFlashCards": {
+    "tab": "year4",
+    "index": 35,
+    "title": "Informed consent & capacity assessment"
+  },
+  "EndoflifeCareAdvanceDirectivesFlashCards": {
+    "tab": "year4",
+    "index": 36,
+    "title": "End-of-life care & advance directives"
+  },
+  "HealthcareSystemsMedicareMedicaidInsuranceFlashCards": {
+    "tab": "year4",
+    "index": 37,
+    "title": "Healthcare systems — Medicare, Medicaid, insurance"
+  },
+  "PatientSafetyQualityImprovementFlashCards": {
+    "tab": "year4",
+    "index": 38,
+    "title": "Patient safety & quality improvement"
+  },
+  "PublicHealthPreventiveMedicineFlashCards": {
+    "tab": "year4",
+    "index": 39,
+    "title": "Public health & preventive medicine"
+  },
+  "MultisystemClinicalVignettesFlashCards": {
+    "tab": "year4",
+    "index": 40,
+    "title": "Multi-system clinical vignettes"
+  },
+  "DiagnosticReasoningManagementAlgorithmsFlashCards": {
+    "tab": "year4",
+    "index": 41,
+    "title": "Diagnostic reasoning & management algorithms"
+  },
+  "PharmacotherapyInClinicalContextFlashCards": {
+    "tab": "year4",
+    "index": 42,
+    "title": "Pharmacotherapy in clinical context"
+  },
+  "SurgicalVsMedicalDecisionMakingFlashCards": {
+    "tab": "year4",
+    "index": 43,
+    "title": "Surgical vs medical decision making"
+  },
+  "InterpretationOfLabsImagingBiopsiesInContextFlashCards": {
+    "tab": "year4",
+    "index": 44,
+    "title": "Interpretation of labs, imaging, biopsies in context"
+  },
+  "PhysiologicalAgingFlashCards": {
+    "tab": "year4",
+    "index": 45,
+    "title": "Physiological Aging"
+  },
+  "FallsGaitDisordersRiskAssessmentPreventionWorkupFlashCards": {
+    "tab": "year4",
+    "index": 46,
+    "title": "Falls & gait disorders — risk assessment, prevention, workup"
+  },
+  "DeliriumVsDementiaDifferentiationWorkupManagementFlashCards": {
+    "tab": "year4",
+    "index": 47,
+    "title": "Delirium vs dementia — differentiation, workup, management"
+  },
+  "UrinaryIncontinenceUrgeStressOverflowFunctionalTypesFlashCards": {
+    "tab": "year4",
+    "index": 48,
+    "title": "Urinary incontinence — urge, stress, overflow, functional types"
+  },
+  "ImmobilityPressureUlcersStagingPreventionManagementFlashCards": {
+    "tab": "year4",
+    "index": 49,
+    "title": "Immobility & pressure ulcers — staging, prevention, management"
+  },
+  "MalnutritionUnintentionalWeightLossFlashCards": {
+    "tab": "year4",
+    "index": 50,
+    "title": "Malnutrition & unintentional weight loss"
+  },
+  "PolypharmacyBeersCriteriaHighriskDrugClassesInElderlyFlashCards": {
+    "tab": "year4",
+    "index": 51,
+    "title": "Polypharmacy & Beers Criteria — high-risk drug classes in elderly"
+  },
+  "CognitiveDisordersAlzheimersVascularLewyBodyFrontotemporalDementiaMCIFlashCards": {
+    "tab": "year4",
+    "index": 52,
+    "title": "Cognitive disorders — Alzheimer's, vascular, Lewy body, frontotemporal dementia, MCI"
+  },
+  "FunctionalAssessmentADLsIADLsComprehensiveGeriatricAssessmentFrailtyScoringFlashCards": {
+    "tab": "year4",
+    "index": 53,
+    "title": "Functional assessment — ADLs, iADLs, Comprehensive Geriatric Assessment, frailty scoring"
+  },
+  "OsteoporosisFracturePreventionDEXACriteriaBisphosphonatesFallCascadeFlashCards": {
+    "tab": "year4",
+    "index": 54,
+    "title": "Osteoporosis & fracture prevention — DEXA criteria, bisphosphonates, fall cascade"
+  },
+  "SensoryChangesPresbycusisPresbyopiaFunctionalConsequencesFlashCards": {
+    "tab": "year4",
+    "index": 55,
+    "title": "Sensory changes — presbycusis, presbyopia, functional consequences"
+  },
+  "CardiovascularInElderlyIsolatedSystolicHTNOrthostaticHypotensionHFpEFFlashCards": {
+    "tab": "year4",
+    "index": 56,
+    "title": "Cardiovascular in elderly — isolated systolic HTN, orthostatic hypotension, HFpEF"
+  },
+  "EndoflifePalliativeCareGoalsOfCareAdvanceDirectivesHospiceCriteriaPainManagementFlashCards": {
+    "tab": "year4",
+    "index": 57,
+    "title": "End-of-life & palliative care — goals of care, advance directives, hospice criteria, pain management"
+  },
+  "ElderAbuseTypesRedFlagsMandatoryReportingFlashCards": {
+    "tab": "year4",
+    "index": 58,
+    "title": "Elder abuse — types, red flags, mandatory reporting"
+  },
+  "SocialDeterminantsCaregiverBurdenHousingNursingHomeVsCommunityCareFlashCards": {
+    "tab": "year4",
+    "index": 59,
+    "title": "Social determinants — caregiver burden, housing, nursing home vs community care"
+  },
+  "EthicsProfessionalismFlashCards": {
+    "tab": "usmle1",
+    "index": 0,
+    "title": "Ethics & Professionalism"
+  },
+  "CardiovascularPhysiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 2,
+    "title": "Cardiovascular Physiology"
+  },
+  "RespiratoryPhysiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 3,
+    "title": "Respiratory Physiology"
+  },
+  "BiochemistryMolecularBiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 4,
+    "title": "Biochemistry & Molecular Biology"
+  },
+  "RenalPhysiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 5,
+    "title": "Renal Physiology"
+  },
+  "GastrointestinalPhysiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 6,
+    "title": "Gastrointestinal Physiology"
+  },
+  "EndocrinePhysiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 7,
+    "title": "Endocrine Physiology"
+  },
+  "ReproductivePhysiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 8,
+    "title": "Reproductive Physiology"
+  },
+  "BiostatisticsEpidemiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 10,
+    "title": "Biostatistics & Epidemiology"
+  },
+  "EmbryologyFlashCards": {
+    "tab": "usmle1",
+    "index": 11,
+    "title": "Embryology"
+  },
+  "AnatomyFlashCards": {
+    "tab": "usmle1",
+    "index": 12,
+    "title": "Anatomy"
+  },
+  "PathologyFlashCards": {
+    "tab": "usmle1",
+    "index": 13,
+    "title": "Pathology"
+  },
+  "BiochemistryFlashCards": {
+    "tab": "usmle1",
+    "index": 14,
+    "title": "Biochemistry"
+  },
+  "NutritionFlashCards": {
+    "tab": "usmle1",
+    "index": 15,
+    "title": "Nutrition"
+  },
+  "BehavioralSciencesFlashCards": {
+    "tab": "usmle1",
+    "index": 16,
+    "title": "Behavioral Sciences"
+  },
+  "AgingFlashCards": {
+    "tab": "usmle1",
+    "index": 18,
+    "title": "Aging"
+  },
+  "PharmacologyFlashCards": {
+    "tab": "usmle1",
+    "index": 20,
+    "title": "Pharmacology"
+  },
+  "HematologyFlashCards": {
+    "tab": "usmle1",
+    "index": 21,
+    "title": "Hematology"
+  },
+  "NeuropharmacologyFlashCards": {
+    "tab": "usmle1",
+    "index": 24,
+    "title": "Neuropharmacology"
+  },
+  "NeuropathologyFlashCards": {
+    "tab": "usmle1",
+    "index": 25,
+    "title": "Neuropathology"
+  },
+  "PsychopharmacologyFlashCards": {
+    "tab": "usmle1",
+    "index": 26,
+    "title": "Psychopharmacology"
+  },
+  "DermatologyFlashCards": {
+    "tab": "usmle2",
+    "index": 9,
+    "title": "Dermatology"
+  },
+  "MolecularBiologyFlashCards": {
+    "tab": "usmle1",
+    "index": 29,
+    "title": "Molecular Biology"
+  },
+  "CardiologyFlashCards": {
+    "tab": "usmle2",
+    "index": 0,
+    "title": "Cardiology"
+  },
+  "PulmonologyFlashCards": {
+    "tab": "usmle2",
+    "index": 1,
+    "title": "Pulmonology"
+  },
+  "GIHepatologyFlashCards": {
+    "tab": "usmle2",
+    "index": 2,
+    "title": "GI/Hepatology"
+  },
+  "NephrologyFlashCards": {
+    "tab": "usmle2",
+    "index": 3,
+    "title": "Nephrology"
+  },
+  "EndocrinologyFlashCards": {
+    "tab": "usmle2",
+    "index": 4,
+    "title": "Endocrinology"
+  },
+  "HematologyOncologyFlashCards": {
+    "tab": "usmle2",
+    "index": 5,
+    "title": "Hematology/Oncology"
+  },
+  "RheumatologyFlashCards": {
+    "tab": "usmle2",
+    "index": 6,
+    "title": "Rheumatology"
+  },
+  "InfectiousDiseaseFlashCards": {
+    "tab": "usmle2",
+    "index": 7,
+    "title": "Infectious Disease"
+  },
+  "AllergyImmunologyFlashCards": {
+    "tab": "usmle2",
+    "index": 8,
+    "title": "Allergy/Immunology"
+  }
+}
