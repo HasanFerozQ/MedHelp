@@ -47,11 +47,7 @@
       "destination": "/flash-cards.html"
     },
     {
-      "source": "/flash-cards/",
-      "destination": "/flash-cards.html"
-    },
-    {
-      "source": "/flash-cards/:path*",
+      "source": "/flash-cards/(.*)",
       "destination": "/flash-cards.html"
     },
     {
