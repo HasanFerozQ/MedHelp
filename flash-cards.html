@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <script>(function(s){s.dataset.zone='11475286',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
@@ -1178,7 +1178,7 @@
       const topic = FLASH_DATA[currentTab]?.[index];
       if (!topic) return;
       const slug = flashTopicSlug(topic.topic);
-      const url = `/flash-cards/${encodeURIComponent(slug)}`;
+      const url = `/flash-cards?deck=${encodeURIComponent(slug)}`;
       const state = { tab: currentTab, index };
       if (replace) history.replaceState(state, '', url);
       else history.pushState(state, '', url);
@@ -1249,10 +1249,14 @@
       if (window.renderFAQ) renderFAQ('faq-flashcards', flashFaqs);
 
       const manifest = await loadManifest();
+      const searchParams = new URLSearchParams(window.location.search);
+      const deckParam = searchParams.get('deck') || searchParams.get('topic');
       const pathParts = window.location.pathname.split('/').filter(Boolean);
+      const pathSlug = (pathParts[0] === 'flash-cards' && pathParts[1]) ? pathParts[1] : null;
+      const targetSlug = deckParam || pathSlug;
       
-      if (pathParts[0] === 'flash-cards' && pathParts[1]) {
-        const slug = decodeURIComponent(pathParts[1]);
+      if (targetSlug) {
+        const slug = decodeURIComponent(targetSlug);
         const match = manifest[slug] || findFlashTopic(slug);
         if (match) {
           currentTab = match.tab;
@@ -1272,9 +1276,14 @@
       if (window.lucide) lucide.createIcons();
 
       window.addEventListener('popstate', async () => {
+        const params = new URLSearchParams(window.location.search);
+        const dParam = params.get('deck') || params.get('topic');
         const parts = window.location.pathname.split('/').filter(Boolean);
-        if (parts[0] === 'flash-cards' && parts[1]) {
-          const slug = decodeURIComponent(parts[1]);
+        const pSlug = (parts[0] === 'flash-cards' && parts[1]) ? parts[1] : null;
+        const tSlug = dParam || pSlug;
+
+        if (tSlug) {
+          const slug = decodeURIComponent(tSlug);
           const m = await loadManifest();
           const match = m[slug] || findFlashTopic(slug);
           if (match) {
@@ -1321,7 +1330,7 @@
               const slug = flashTopicSlug(t.topic || 'Untitled Topic');
               const card = document.createElement('a');
               card.className = 'topic-card-item';
-              card.href = `/flash-cards/${encodeURIComponent(slug)}`;
+              card.href = `/flash-cards?deck=${encodeURIComponent(slug)}`;
               card.innerHTML = `
                 ${isFreeDemo ? '<div style="position:absolute; top:12px; right:12px; background:var(--accent); color:white; font-size:10px; font-weight:800; padding:3px 10px; border-radius:6px; text-transform:uppercase; letter-spacing:1px; z-index:1; box-shadow:0 4px 12px rgba(var(--accent-rgb),0.3);">Free Demo</div>' : ''}
                 <div class="topic-card-icon">
