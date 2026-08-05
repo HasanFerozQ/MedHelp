@@ -1750,7 +1750,7 @@ const MediHelp = {
     bannerDiv.id = 'mh-desktop-affiliate-banner';
     bannerDiv.className = 'mh-desktop-affiliate-banner';
     bannerDiv.innerHTML = `
-      <a href="https://www.kqzyfj.com/click-101847975-17327794" target="_top" rel="sponsored noopener">
+      <a href="https://www.kqzyfj.com/click-101847975-17327794" target="_blank" rel="sponsored noopener noreferrer">
         <img src="https://www.awltovhc.com/image-101847975-17327794" width="206" height="800" alt="Special Offer" border="0" style="display:block; width:100%; height:auto; max-height:calc(100vh - 110px); object-fit:contain; border-radius:8px;" />
       </a>
     `;
@@ -1781,9 +1781,74 @@ const MediHelp = {
     }
   },
 
-  // New: Simple sync check for UI rendering
+  // Simple sync check for UI rendering
   isPremiumSync: function() {
     return this._isPremiumCache === true || this.License.isActivated();
+  },
+
+  // ── AD SUPPRESSION FOR PREMIUM MEMBERS ─────────────────────────────────
+  // Prevents ALL ad networks from displaying for users with an active license.
+  // Works on: Ezoic (ezstandalone), Adsterra vignette, Google AdSense, affiliate banner.
+  suppressAdsForPremium: function() {
+    // 1. Neuter ezstandalone.showAds so Ezoic ad slots don't render
+    const noOpShowAds = function() {};
+    if (window.ezstandalone) {
+      window.ezstandalone.showAds = noOpShowAds;
+      window.ezstandalone.cmd = { push: function() {} };
+    } else {
+      window.ezstandalone = { showAds: noOpShowAds, cmd: { push: function() {} } };
+    }
+
+    // 2. CSS: instantly hide all known ad containers
+    if (!document.getElementById('mh-premium-no-ads-style')) {
+      const style = document.createElement('style');
+      style.id = 'mh-premium-no-ads-style';
+      style.textContent = `
+        /* MediHelp Premium: ad-free experience */
+        [id^="ezoic-pub-ad"],
+        .ezoic-adpicker-ad,
+        .ezoic-ad,
+        [class*="ezoic-ad"],
+        ins.adsbygoogle,
+        iframe[src*="adsterra"],
+        iframe[src*="n6wxm"],
+        iframe[src*="googlesyndication"],
+        #mh-desktop-affiliate-banner {
+          display: none !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+          width: 0 !important;
+          height: 0 !important;
+          overflow: hidden !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // 3. Remove affiliate banner element if already injected
+    const affiliate = document.getElementById('mh-desktop-affiliate-banner');
+    if (affiliate) affiliate.remove();
+
+    // 4. MutationObserver: hide dynamically injected ad iframes/slots
+    const adSelector = [
+      '[id^="ezoic-pub-ad"]', '.ezoic-adpicker-ad', '.ezoic-ad',
+      'ins.adsbygoogle', 'iframe[src*="adsterra"]',
+      'iframe[src*="n6wxm"]', 'iframe[src*="googlesyndication"]',
+      '#mh-desktop-affiliate-banner'
+    ].join(',');
+    const adObserver = new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        m.addedNodes.forEach(function(node) {
+          if (node.nodeType !== 1) return;
+          if (node.matches && node.matches(adSelector)) { node.style.display = 'none'; }
+          node.querySelectorAll && node.querySelectorAll(adSelector).forEach(function(ad) {
+            ad.style.display = 'none';
+          });
+        });
+      });
+    });
+    adObserver.observe(document.documentElement, { childList: true, subtree: true });
+    console.log('MediHelp Premium: Ad-free mode active.');
   }
 };
 
@@ -1792,7 +1857,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   MediHelp.initSiteFooter();
   MediHelp.initFeedbackWidget();
   MediHelp.initMobileNav();
-  MediHelp.initAffiliateBanner();
+
+  // ── Premium Ad Suppression ──────────────────────────────────────────────
+  // Check premium status (waits for auth sync up to 5s), then suppress ads
+  // if the user has an active license. Affiliate banner only shown for free users.
+  (async () => {
+    // Quick sync check first (covers cached/localStorage license)
+    if (MediHelp.isPremiumSync()) {
+      MediHelp.suppressAdsForPremium();
+      return; // skip affiliate banner entirely
+    }
+    // Wait for cloud auth sync (covers Supabase-backed premium)
+    try {
+      const premium = await MediHelp.isPremium();
+      if (premium) {
+        MediHelp.suppressAdsForPremium();
+        return; // skip affiliate banner entirely
+      }
+    } catch(e) {
+      console.warn('MediHelp: Premium check error during ad init', e);
+    }
+    // Not premium — show affiliate banner as normal
+    MediHelp.initAffiliateBanner();
+  })();
   
   if (MediHelp.isAuthPage()) {
     MediHelp.initAuthModal();
