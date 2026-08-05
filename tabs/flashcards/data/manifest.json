@@ -848,5 +848,100 @@
     "tab": "usmle2",
     "index": 8,
     "title": "Allergy/Immunology"
+  },
+  "GeneralSurgeryFlashCards": {
+    "tab": "usmle2",
+    "index": 10,
+    "title": "General Surgery"
+  },
+  "PreoperativeAndPostoperativeCareFlashCards": {
+    "tab": "usmle2",
+    "index": 11,
+    "title": "Pre-operative and post-operative care"
+  },
+  "TraumaATLSFlashCards": {
+    "tab": "usmle2",
+    "index": 12,
+    "title": "Trauma & ATLS"
+  },
+  "BurnsWoundManagementFlashCards": {
+    "tab": "usmle2",
+    "index": 13,
+    "title": "Burns & Wound Management"
+  },
+  "SurgicalInfectionsSoftTissueInfectionsWoundCareFlashCards": {
+    "tab": "usmle2",
+    "index": 14,
+    "title": "Surgical Infections, Soft Tissue Infections & Wound Care"
+  },
+  "HerniasFlashCards": {
+    "tab": "usmle2",
+    "index": 15,
+    "title": "Hernias"
+  },
+  "UpperGastrointestinalSurgeryEsophagusStomachDuodenumFlashCards": {
+    "tab": "usmle2",
+    "index": 16,
+    "title": "Upper Gastrointestinal Surgery (Esophagus, Stomach & Duodenum)"
+  },
+  "SmallBowelAppendixColorectalSurgeryFlashCards": {
+    "tab": "usmle2",
+    "index": 17,
+    "title": "Small Bowel, Appendix & Colorectal Surgery"
+  },
+  "HepatobiliarySurgeryGallbladderBileDuctLiverFlashCards": {
+    "tab": "usmle2",
+    "index": 18,
+    "title": "Hepatobiliary Surgery (Gallbladder, Bile Duct & Liver)"
+  },
+  "BreastSurgeryFlashCards": {
+    "tab": "usmle2",
+    "index": 19,
+    "title": "Breast Surgery"
+  },
+  "EndocrineSurgeryFlashCards": {
+    "tab": "usmle2",
+    "index": 20,
+    "title": "Endocrine Surgery"
+  },
+  "VascularSurgeryArterialDiseaseVenousDiseaseAorticDisordersFlashCards": {
+    "tab": "usmle2",
+    "index": 21,
+    "title": "Vascular Surgery (Arterial Disease, Venous Disease & Aortic Disorders)"
+  },
+  "UrologicSurgeryFlashCards": {
+    "tab": "usmle2",
+    "index": 22,
+    "title": "Urologic Surgery"
+  },
+  "ThoracicSurgeryFlashCards": {
+    "tab": "usmle2",
+    "index": 23,
+    "title": "Thoracic Surgery"
+  },
+  "PediatricSurgeryFlashCards": {
+    "tab": "usmle2",
+    "index": 24,
+    "title": "Pediatric Surgery"
+  },
+  "PlasticReconstructiveSkinSoftTissueSurgeryFlashCards": {
+    "tab": "usmle2",
+    "index": 25,
+    "title": "Plastic, Reconstructive, Skin & Soft Tissue Surgery"
+  },
+  "SurgicalCriticalCareICUFlashCards": {
+    "tab": "usmle2",
+    "index": 26,
+    "title": "Surgical Critical Care & ICU"
+  },
+  "AnesthesiaBasicsFlashCards": {
+    "tab": "usmle2",
+    "index": 27,
+    "title": "Anesthesia Basics"
+  },
+  "SurgicalEmergenciesFlashCards": {
+    "tab": "usmle2",
+    "index": 28,
+    "title": "Surgical Emergencies"
   }
 }
