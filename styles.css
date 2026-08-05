@@ -2575,6 +2575,7 @@ textarea.search-input {
   .nav-links a[href*="rx-savings"] { order: 7; }
   .nav-links a[href*="providers"] { order: 8; }
   .nav-links a[href*="blog"] { order: 9; }
+  .nav-links a[href*="global-health-statistics"] { order: 10; }
 }
 
 @media (max-width: 600px) {
