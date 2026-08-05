@@ -25,14 +25,14 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Medical Flashcards for MBBS & USMLE | MediHelp</title>
-  <meta name="description" content="Master medical sciences with 1,000+ interactive medical flashcards. Try free demo decks or unlock full clinical access ($24.99/yr) for MBBS, USMLE, and board exams.">
+  <title>100% Free Medical Flashcards for MBBS & USMLE | MediHelp</title>
+  <meta name="description" content="Master medical sciences with thousands of high-yield medical flashcards. 100% free active recall decks for MBBS, USMLE Step 1, 2, & 3 students with a free account.">
   <link rel="canonical" href="https://www.medihelp.live/flash-cards">
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MediHelp">
-  <meta property="og:title" content="Free Medical Flashcards for MBBS & USMLE Students | MediHelp">
-  <meta property="og:description" content="Study anatomy, physiology, histology, embryology, biochemistry and USMLE topics with interactive medical flashcards. Free demo topics available.">
+  <meta property="og:title" content="100% Free Medical Flashcards for MBBS & USMLE Students | MediHelp">
+  <meta property="og:description" content="Study anatomy, surgery, pathology, pharmacology, and USMLE topics with interactive flashcards. 100% free for medical students with a free account.">
   <meta property="og:url" content="https://www.medihelp.live/flash-cards">
   <meta property="og:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
   <meta name="twitter:card" content="summary_large_image">
@@ -276,85 +276,12 @@
   </script>
     </div>
 
-  <!-- Premium Access Modal -->
-  <div id="premium-modal" class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="grad-text">Unlock Premium Access</h2>
-        <button class="close-modal" onclick="closePremiumModal()">×</button>
-      </div>
-      <div class="modal-body">
-        <div class="premium-feature-list">
-          <div class="feature-item">
-            <div class="feature-icon">✨</div>
-            <div class="feature-text">
-              <strong>Full Curriculum Access</strong>
-              <p>Unlock all 4 years and USMLE Step preparation modules.</p>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">📚</div>
-            <div class="feature-text">
-              <strong>5,000+ Clinical MCQs</strong>
-              <p>High-yield questions with detailed explanations and reasoning.</p>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">⚡</div>
-            <div class="feature-text">
-              <strong>Interactive Flash Cards</strong>
-              <p>Master concepts faster with our active recall system.</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="pricing-box">
-          <div class="price-value">$24.99<small>/year</small></div>
-          <p>One-time annual payment. Cancel anytime.</p>
-          <a href="https://prodat.gumroad.com/l/medical-exam-mastery" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 15px;">Get Instant Access</a>
-        </div>
-
-        <div class="license-entry">
-          <p>Already have a license? Enter it below:</p>
-          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
-            <input type="text" id="license-key" placeholder="Gumroad License Key" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-h); font-size: 14px;">
-            <input type="email" id="license-email" placeholder="Email Address" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-h); font-size: 14px;">
-            <button class="btn btn-secondary" onclick="verifyLicense()" style="width: 100%; padding: 12px; border-radius: 12px; font-weight: 700; margin-top: 4px;">Activate Access</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <style>
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
-      z-index: 10000; display: none; align-items: center; justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.visible { display: flex; }
-    .modal-content {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 24px; max-width: 500px; width: 100%;
-      padding: 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-    }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    .close-modal { background: none; border: none; font-size: 28px; color: var(--text-muted); cursor: pointer; }
-    .feature-item { display: flex; gap: 16px; margin-bottom: 20px; text-align: left; }
-    .feature-icon { font-size: 24px; }
-    .feature-text strong { display: block; color: var(--text-h); font-size: 15px; }
-    .feature-text p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
-    .pricing-box { background: rgba(var(--accent-rgb),0.05); border: 1px solid rgba(var(--accent-rgb),0.2); border-radius: 16px; padding: 24px; margin: 24px 0; text-align: center; }
-    .price-value { font-size: 32px; font-weight: 900; color: var(--accent); }
-    .license-entry p { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-  </style>
-
   <main class="flash-container">
     <div id="selection-view">
-      <div style="text-align: center; margin-bottom: 40px;">
-                        <h1 class="hero-h1">Medical Flashcards</h1>
-        <p class="hero-sub" style="max-width: 780px; margin: 0 auto 20px;">Free active recall decks for MBBS &amp; USMLE students.</p>
+      <div style="text-align: center; margin-bottom: 30px;">
+        <h1 class="hero-h1">Medical Flashcards</h1>
+        <p class="hero-sub" style="max-width: 780px; margin: 0 auto 12px;">100% Free active recall decks for MBBS &amp; USMLE students.</p>
+        <p style="font-size: 14px; color: var(--accent); font-weight: 600;">✨ Free forever — create a free account or sign in to start studying.</p>
       </div>
 
       <!-- ⚠️ Mobile Advisory Banner -->
@@ -1360,58 +1287,8 @@
       }
     }
 
-    async function isPremium() {
-      return await MediHelp.isPremium();
-    }
-
-    function openPremiumModal() {
-      const modal = document.getElementById('premium-modal');
-      if (modal) modal.classList.add('visible');
-    }
-
-    function closePremiumModal() {
-      const modal = document.getElementById('premium-modal');
-      if (modal) modal.classList.remove('visible');
-    }
-
-    async function verifyLicense() {
-      const key = document.getElementById('license-key').value.trim();
-      const email = document.getElementById('license-email').value.trim();
-      
-      if (!key || !email) {
-        alert("Please enter both license key and email.");
-        return;
-      }
-      
-      const btn = document.querySelector('.license-entry .btn-secondary');
-      if (btn) {
-        btn.textContent = "Verifying...";
-        btn.disabled = true;
-      }
-
-      try {
-        const success = await MediHelp.License.verify(key, email);
-        if (success) {
-          location.reload();
-        } else {
-          throw new Error("Verification failed");
-        }
-      } catch (e) {
-        console.error("License Verification Error:", e);
-        let msg = "Invalid license key or email. Please check and try again.";
-        if (e.message === "LICENSE_LIMIT_REACHED") msg = "License limit reached (5 devices max).";
-        if (e.message === "TIMEOUT") msg = "Verification timed out. The server can take up to 90s. If a row was saved in Supabase, refresh the page in a few seconds.";
-        
-        alert(msg);
-        if (btn) {
-          btn.textContent = "Activate Access";
-          btn.disabled = false;
-        }
-      }
-    }
-
     async function startStudyMode(index, urlMode = 'push') {
-      // Flashcards are FREE — only a free signup/account is required, no payment
+      // Flashcards are 100% FREE — only a free signup/account is required, no payment
       if (window.dbClient) {
         const { data: { user } } = await window.dbClient.auth.getUser();
         if (!user) {
