@@ -736,8 +736,12 @@ const MediHelp = {
     modal.className = 'auth-modal';
     modal.innerHTML = `
       <div class="auth-modal-content">
-        <button class="auth-close" onclick="MediHelp.hideAuthModal()">&times;</button>
+        <button type="button" class="auth-close" onclick="MediHelp.hideAuthModal()">&times;</button>
         <h2 id="auth-title">Sign In to MediHelp</h2>
+        
+        <!-- IN-SITE ERROR / ALERT CARD INSIDE MODAL -->
+        <div id="auth-error-card" class="auth-error-card hidden"></div>
+
         <form id="auth-form" class="auth-form">
           <input type="email" id="auth-email" placeholder="Email" required>
           <input type="text" id="auth-username" placeholder="Username" maxlength="24" style="display:none;">
@@ -747,6 +751,9 @@ const MediHelp = {
           </div>
           <div id="password-rules" class="password-rules hidden">
             Password must be 8+ characters with uppercase, lowercase, and a number.
+          </div>
+          <div style="text-align: right; margin-top: 4px; margin-bottom: 8px;">
+            <a href="javascript:void(0)" id="auth-forgot-link" class="auth-forgot-link" onclick="MediHelp.handleForgotPassword()" style="font-size: 12px; color: var(--text-muted); text-decoration: none;">Forgot Password?</a>
           </div>
           <button type="submit" class="btn btn-primary" id="auth-submit">Sign In</button>
         </form>
@@ -786,6 +793,7 @@ const MediHelp = {
         width: 90%;
         text-align: center;
         position: relative;
+        box-sizing: border-box;
       }
       .auth-modal h2 {
         margin-bottom: 20px;
@@ -799,6 +807,7 @@ const MediHelp = {
         border-radius: 8px;
         background: var(--bg);
         color: var(--text);
+        box-sizing: border-box;
       }
       .auth-form .btn {
         width: 100%;
@@ -848,6 +857,66 @@ const MediHelp = {
         cursor: pointer;
         color: var(--text-muted);
       }
+      .auth-error-card {
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        color: #f87171;
+        padding: 12px 14px;
+        border-radius: 10px;
+        font-size: 13px;
+        line-height: 1.45;
+        margin-bottom: 14px;
+        text-align: left;
+      }
+      .auth-error-card.info {
+        background: rgba(59, 130, 246, 0.12);
+        border-color: rgba(59, 130, 246, 0.35);
+        color: #60a5fa;
+      }
+      .auth-error-card.success {
+        background: rgba(34, 197, 94, 0.12);
+        border-color: rgba(34, 197, 94, 0.35);
+        color: #4ade80;
+      }
+      .auth-error-card.hidden { display: none; }
+      .auth-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .auth-card-close {
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: 18px;
+        cursor: pointer;
+        opacity: 0.7;
+        padding: 0;
+        line-height: 1;
+      }
+      .auth-card-close:hover { opacity: 1; }
+      .auth-card-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+      .auth-card-btn {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: inherit;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .auth-card-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+      }
     `;
     document.head.appendChild(style);
 
@@ -861,7 +930,6 @@ const MediHelp = {
       };
       return rules.length && rules.upper && rules.lower && rules.number;
     };
-    const GUMROAD_URL = "https://prodat.gumroad.com/l/medical-exam-mastery";
 
     // Auth logic
     this.isSignUp = false;
@@ -882,17 +950,19 @@ const MediHelp = {
     // Form submit
     document.getElementById('auth-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('auth-email').value.trim();
+      this.hideAuthError();
+
+      const email = document.getElementById('auth-email').value.trim().toLowerCase();
       const username = document.getElementById('auth-username').value.trim();
       const password = document.getElementById('auth-password').value;
       const submitBtn = document.getElementById('auth-submit');
 
       if (!validateEmail(email)) {
-        alert('Please enter a valid email address.');
+        this.showAuthError('Please enter a valid email address.', { title: 'Invalid Email' });
         return;
       }
       if (this.isSignUp && !validatePassword(password)) {
-        alert('Password does not meet requirements:\n- At least 8 characters\n- At least one uppercase letter\n- At least one lowercase letter\n- At least one number');
+        this.showAuthError('Password must contain at least 8 characters, including uppercase, lowercase, and a number.', { title: 'Password Requirements' });
         return;
       }
 
@@ -911,39 +981,79 @@ const MediHelp = {
               }
             }
           });
-          if (result.error) throw result.error;
           
-          this.hideAuthModal();
+          if (result.error) {
+            const errMsg = result.error.message || '';
+            if (errMsg.toLowerCase().includes('already registered') || errMsg.toLowerCase().includes('already exists')) {
+              if (this.isSignUp) this.toggleAuthMode();
+              this.showAuthError(`An account with <strong>${escapeHtml(email)}</strong> already exists. We've switched you to Sign In — please enter your password or click Reset Password.`, {
+                title: 'User Already Registered',
+                action: 'signin'
+              });
+              return;
+            }
+            throw result.error;
+          }
 
-          // Show a clear instruction notification (no action link — the panel is opening)
+          // Check if user already exists (Supabase obfuscation returns empty identities array)
+          if (result.data?.user?.identities && result.data.user.identities.length === 0) {
+            if (this.isSignUp) this.toggleAuthMode();
+            this.showAuthError(`An account with <strong>${escapeHtml(email)}</strong> already exists. We've switched you to Sign In — please enter your password or click Reset Password.`, {
+              title: 'User Already Registered',
+              action: 'signin'
+            });
+            return;
+          }
+
+          const user = result.data?.user;
+          const session = result.data?.session;
+
+          if (user && !session) {
+            // Email confirmation required by Supabase
+            this.showAuthError(`Account created for <strong>${escapeHtml(email)}</strong>! Please check your email inbox and click the confirmation link before signing in.`, {
+              title: 'Verification Required',
+              type: 'info',
+              action: 'resend',
+              email: email
+            });
+            this.showNotification('Verification Required 📧', 'Please check your email to confirm your account before signing in.', 'info');
+            return;
+          }
+
+          this.hideAuthModal();
           this.showNotification(
             'Account Created! 🎉',
             'Gumroad is opening in a new tab. After purchase, return here and paste your license key in the panel that just opened.',
             'success'
           );
 
-          // Open Gumroad in a NEW tab, and simultaneously open the license
-          // activation panel on THIS tab so it is waiting when the user returns.
           setTimeout(() => {
             window.open('https://prodat.gumroad.com/l/medical-exam-mastery', '_blank');
-            // showActivator() opens #premium-modal if it exists on this page,
-            // or redirects to /medical-exam-semester?showActivation=true which opens it there.
             this.License.showActivator();
           }, 800);
 
         } else {
+          // Sign In
           result = await window.dbClient.auth.signInWithPassword({ email, password });
           if (result.error) {
-            if (result.error.message.toLowerCase().includes('invalid login credentials')) {
-              if (confirm('Account not found with these credentials. Would you like to Sign Up instead?')) {
-                this.toggleAuthMode();
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Sign Up';
-                return;
-              }
+            const errMsg = result.error.message || '';
+            if (errMsg.toLowerCase().includes('invalid login credentials')) {
+              this.showAuthError(`Account not found or password incorrect for <strong>${escapeHtml(email)}</strong>. Would you like to Sign Up instead or Reset Password?`, {
+                title: 'Sign In Failed',
+                action: 'signup'
+              });
+              return;
+            } else if (errMsg.toLowerCase().includes('email not confirmed')) {
+              this.showAuthError(`Your email <strong>${escapeHtml(email)}</strong> has not been confirmed yet. Please check your inbox or resend the link.`, {
+                title: 'Email Unconfirmed',
+                action: 'resend',
+                email: email
+              });
+              return;
             }
             throw result.error;
           }
+
           // Clear caches so premium is re-evaluated fresh
           MediHelp._isPremiumCache = null;
           MediHelp._cachedUser = null;
@@ -952,7 +1062,7 @@ const MediHelp = {
           this.showNotification('Welcome Back! 👋', 'You are now signed in. Loading your access...');
         }
       } catch (error) {
-        this.showNotification('Auth Error', error.message, 'error');
+        this.showAuthError(error.message || 'Authentication error. Please try again.', { title: 'Auth Error' });
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = this.isSignUp ? 'Sign Up' : 'Sign In';
@@ -961,6 +1071,130 @@ const MediHelp = {
 
     // Add signin button to navbar
     this.updateAuthButton();
+  },
+
+  showAuthError: function(message, options = {}) {
+    const card = document.getElementById('auth-error-card');
+    if (!card) return;
+
+    const type = options.type || (options.action ? 'info' : 'error');
+    card.className = `auth-error-card ${type}`;
+    
+    let actionsHtml = '';
+    if (options.action === 'signup') {
+      actionsHtml = `
+        <div class="auth-card-actions">
+          <button type="button" class="auth-card-btn" onclick="MediHelp.toggleAuthMode(); MediHelp.hideAuthError();">Sign Up Instead</button>
+          <button type="button" class="auth-card-btn" onclick="MediHelp.handleForgotPassword()">Reset Password</button>
+        </div>
+      `;
+    } else if (options.action === 'signin') {
+      actionsHtml = `
+        <div class="auth-card-actions">
+          <button type="button" class="auth-card-btn" onclick="if (MediHelp.isSignUp) MediHelp.toggleAuthMode(); MediHelp.hideAuthError();">Sign In Now</button>
+          <button type="button" class="auth-card-btn" onclick="MediHelp.handleForgotPassword()">Forgot Password?</button>
+        </div>
+      `;
+    } else if (options.action === 'resend') {
+      actionsHtml = `
+        <div class="auth-card-actions">
+          <button type="button" class="auth-card-btn" onclick="MediHelp.resendConfirmationEmail('${escapeHtml(options.email || '')}')">Resend Confirmation Link</button>
+        </div>
+      `;
+    }
+
+    card.innerHTML = `
+      <div class="auth-card-header">
+        <span>${escapeHtml(options.title || (type === 'info' ? 'Notice' : 'Auth Error'))}</span>
+        <button type="button" class="auth-card-close" onclick="MediHelp.hideAuthError()">&times;</button>
+      </div>
+      <div>${message}</div>
+      ${actionsHtml}
+    `;
+  },
+
+  hideAuthError: function() {
+    const card = document.getElementById('auth-error-card');
+    if (card) card.classList.add('hidden');
+  },
+
+  handleForgotPassword: async function() {
+    const emailInput = document.getElementById('auth-email');
+    const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      this.showAuthError('Please enter your email address in the Email field first.', { title: 'Email Required' });
+      return;
+    }
+    try {
+      const db = window.initDbClient();
+      const { error } = await db.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + window.location.pathname + '?reset=true'
+      });
+      if (error) throw error;
+      this.showAuthError(`Password reset instructions have been sent to <strong>${escapeHtml(email)}</strong>. Please check your inbox.`, {
+        title: 'Check Your Email',
+        type: 'success'
+      });
+    } catch (err) {
+      this.showAuthError(err.message || 'Failed to send password reset email.', { title: 'Reset Error' });
+    }
+  },
+
+  resendConfirmationEmail: async function(email) {
+    if (!email) {
+      const emailInput = document.getElementById('auth-email');
+      email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+    }
+    if (!email) return;
+    try {
+      const db = window.initDbClient();
+      const { error } = await db.auth.resend({ type: 'signup', email });
+      if (error) throw error;
+      this.showAuthError(`Confirmation email resent to <strong>${escapeHtml(email)}</strong>. Please check your inbox!`, {
+        title: 'Email Sent',
+        type: 'success'
+      });
+    } catch (err) {
+      this.showAuthError(err.message || 'Failed to resend confirmation email.', { title: 'Resend Error' });
+    }
+  },
+
+  showAuthModal: function() {
+    if (!document.getElementById('auth-modal')) {
+      this.initAuthModal();
+    }
+    this.hideAuthError();
+    const modal = document.getElementById('auth-modal');
+    if (modal) modal.classList.add('active');
+  },
+
+  hideAuthModal: function() {
+    this.hideAuthError();
+    const modal = document.getElementById('auth-modal');
+    if (modal) modal.classList.remove('active');
+  },
+
+  toggleAuthMode: function() {
+    this.isSignUp = !this.isSignUp;
+    this.hideAuthError();
+    const title = document.getElementById('auth-title');
+    const submitBtn = document.getElementById('auth-submit');
+    const toggleText = document.querySelector('.auth-toggle');
+    const rulesHint = document.getElementById('password-rules');
+    const usernameInput = document.getElementById('auth-username');
+    if (this.isSignUp) {
+      title.textContent = 'Sign Up for MediHelp';
+      submitBtn.textContent = 'Sign Up';
+      toggleText.textContent = 'Already have an account? Sign In';
+      rulesHint.classList.remove('hidden');
+      if (usernameInput) usernameInput.style.display = 'block';
+    } else {
+      title.textContent = 'Sign In to MediHelp';
+      submitBtn.textContent = 'Sign In';
+      toggleText.textContent = "Don't have an account? Sign Up";
+      rulesHint.classList.add('hidden');
+      if (usernameInput) usernameInput.style.display = 'none';
+    }
   },
 
   /**
