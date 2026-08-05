@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -545,19 +545,24 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+      overflow-y: auto;
+      box-sizing: border-box;
     }
     .paywall-card {
       background: #111827;
       border: 1px solid #374151;
-      padding: 48px;
+      padding: 32px 28px;
       border-radius: 24px;
       max-width: 500px;
       width: 100%;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      box-sizing: border-box;
       text-align: center;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
-    .paywall-h { font-size: 32px; font-weight: 900; margin-bottom: 12px; color: white; }
-    .paywall-p { color: #9ca3af; margin-bottom: 32px; line-height: 1.6; }
+    .paywall-h { font-size: 26px; font-weight: 900; margin-bottom: 10px; color: white; }
+    .paywall-p { color: #9ca3af; margin-bottom: 24px; line-height: 1.5; font-size: 14px; }
     .paywall-input {
       width: 100%;
       padding: 16px;
