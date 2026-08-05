@@ -7,11 +7,11 @@
   <meta name="google-adsense-account" content="ca-pub-8367130148973046">
 <!-- Google tag (gtag.js) -->
   <meta name="robots" content="index, follow">
-  <title>Medical Exam Preparation Guide for Doctors (USMLE, MBBS, & US MD) | MediHelp</title>
+  <title>USMLE &amp; MBBS QBank: 1000+ Practice Questions &amp; Scenarios | MediHelp</title>
   <meta name="description" content="Prepare for USMLE, MBBS, and US MD exams with MediHelp’s comprehensive medical exam preparation guide. High-yield MCQs, case scenarios, and licensing exam study plans." />
   <meta name="keywords" content="medical exam preparation, USMLE preparation guide, MBBS exam questions, US MD boards preparation, medical licensing exam study plan" />
   <link rel="canonical" href="https://www.medihelp.live/medical-exam-semester">
-  <meta property="og:title" content="Medical Exam Semester Preparation | MediHelp" />
+  <meta property="og:title" content="USMLE &amp; MBBS QBank: 1000+ Practice Questions &amp; Scenarios | MediHelp" />
   <meta property="og:description" content="Comprehensive medical exam preparation for doctors and students." />
   <meta property="og:url" content="https://www.medihelp.live/medical-exam-semester" />
   <meta property="og:type" content="website" />
@@ -282,9 +282,12 @@
     .modal-overlay.visible { display: flex; }
     .premium-card { 
       background: var(--bg-card); border: 1px solid var(--border-accent); border-radius: 20px;
-      max-width: 500px; width: 100%; max-height: calc(100vh - 40px); overflow-y: auto; padding: 28px 28px 20px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      max-width: 500px; width: 100%; max-height: calc(100vh - 40px); overflow-y: auto; overflow-x: hidden;
+      scrollbar-width: none; -ms-overflow-style: none;
+      padding: 28px 28px 20px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
       position: relative; box-sizing: border-box;
     }
+    .premium-card::-webkit-scrollbar { display: none; }
     .premium-card::before {
       content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
       background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
@@ -380,6 +383,80 @@
       "category": "Free",
       "price": "0"
     }
+  }
+  </script>
+
+  <!-- Google Rich Snippets: Quiz & Question Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Quiz",
+    "name": "USMLE & MBBS Question Bank — Semester & Board Exam Practice",
+    "description": "Practice 1000+ high-yield USMLE Step 1, Step 2 CK, Step 3, and MBBS board-style MCQs with detailed explanations.",
+    "about": {
+      "@type": "Thing",
+      "name": "Medical Licensing Examination & MBBS"
+    },
+    "educationalLevel": "Higher Education",
+    "hasPart": [
+      {
+        "@type": "Question",
+        "name": "Which cardiac biomarker elevates earliest following acute myocardial infarction?",
+        "educationalAlignment": {
+          "@type": "AlignmentObject",
+          "alignmentType": "educationalSubject",
+          "targetName": "Cardiovascular Pathology"
+        },
+        "suggestedAnswer": [
+          {
+            "@type": "Answer",
+            "text": "Cardiac Troponin I elevates within 2-4 hours after acute myocardial infarction and remains elevated for 7-10 days."
+          }
+        ],
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cardiac Troponin I"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the classic triad of normal pressure hydrocephalus (NPH)?",
+        "educationalAlignment": {
+          "@type": "AlignmentObject",
+          "alignmentType": "educationalSubject",
+          "targetName": "Neurology & Neuroanatomy"
+        },
+        "suggestedAnswer": [
+          {
+            "@type": "Answer",
+            "text": "Gait ataxia, urinary incontinence, and cognitive decline (\"wet, wobbly, and wacky\")."
+          }
+        ],
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Gait ataxia, urinary incontinence, and dementia"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What laboratory finding differentiates prerenal azotemia from acute tubular necrosis (ATN)?",
+        "educationalAlignment": {
+          "@type": "AlignmentObject",
+          "alignmentType": "educationalSubject",
+          "targetName": "Renal Pathology"
+        },
+        "suggestedAnswer": [
+          {
+            "@type": "Answer",
+            "text": "Fractional Excretion of Sodium (FENa) < 1% indicates prerenal azotemia, whereas FENa > 2% indicates ATN."
+          }
+        ],
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "FENa < 1% in prerenal azotemia vs FENa > 2% in ATN"
+        }
+      }
+    ]
   }
   </script>
 </head>

@@ -371,11 +371,28 @@
         "sameAs": ["https://www.linkedin.com/company/medihelplive/"]
       },
       {
-        "@type": "WebPage",
+        "@type": "MedicalWebPage",
+        "@id": "https://www.medihelp.live/medical-calculator#webpage",
         "name": "Free Medical Calculators for Clinical Decisions",
         "url": "https://www.medihelp.live/medical-calculator",
         "description": "Role-based clinical calculators for bedside decisions. BMI, creatinine clearance, SOFA, APACHE-II, vancomycin dosing and more. Works offline. Free for all specialties.",
-        "inLanguage": "en-US"
+        "inLanguage": "en-US",
+        "medicalAudience": {
+          "@type": "MedicalAudience",
+          "audienceType": "Clinicians, Physicians, Nurses, Pharmacists, Medical Students"
+        },
+        "reviewedBy": {
+          "@type": "Physician",
+          "name": "Dr. Mark Vance, MD",
+          "specialty": "Internal Medicine & Clinical Pharmacology"
+        },
+        "aspect": "Clinical Calculators & Bedside Decision Support"
+      },
+      {
+        "@type": "MedicalRiskCalculator",
+        "@id": "https://www.medihelp.live/medical-calculator#risk-calculator",
+        "name": "MediHelp Clinical & Bedside Calculator Hub",
+        "medicalSpecialty": ["EmergencyMedicine", "CriticalCare", "InternalMedicine", "Pediatrics", "Nephrology"]
       },
       {
         "@type": "BreadcrumbList",

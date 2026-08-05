@@ -557,10 +557,14 @@
       width: 100%;
       max-height: calc(100vh - 40px);
       overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       box-sizing: border-box;
       text-align: center;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
+    .paywall-card::-webkit-scrollbar { display: none; }
     .paywall-h { font-size: 26px; font-weight: 900; margin-bottom: 10px; color: white; }
     .paywall-p { color: #9ca3af; margin-bottom: 24px; line-height: 1.5; font-size: 14px; }
     .paywall-input {

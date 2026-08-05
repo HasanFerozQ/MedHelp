@@ -1742,6 +1742,45 @@ const MediHelp = {
       return !!this._isPremiumCache;
     }
   },
+  // Desktop Left Affiliate Banner
+  initAffiliateBanner: function() {
+    if (document.getElementById('mh-desktop-affiliate-banner')) return;
+
+    const bannerDiv = document.createElement('div');
+    bannerDiv.id = 'mh-desktop-affiliate-banner';
+    bannerDiv.className = 'mh-desktop-affiliate-banner';
+    bannerDiv.innerHTML = `
+      <a href="https://www.kqzyfj.com/click-101847975-17327794" target="_top" rel="sponsored noopener">
+        <img src="https://www.awltovhc.com/image-101847975-17327794" width="206" height="800" alt="Special Offer" border="0" style="display:block; width:100%; height:auto; max-height:calc(100vh - 110px); object-fit:contain; border-radius:8px;" />
+      </a>
+    `;
+    document.body.appendChild(bannerDiv);
+
+    if (!document.getElementById('mh-affiliate-banner-styles')) {
+      const style = document.createElement('style');
+      style.id = 'mh-affiliate-banner-styles';
+      style.textContent = `
+        .mh-desktop-affiliate-banner {
+          position: fixed;
+          top: 95px;
+          left: 15px;
+          z-index: 90;
+          display: block;
+          width: 206px;
+          height: auto;
+          pointer-events: auto;
+          transition: opacity 0.3s ease;
+        }
+        @media (max-width: 1350px) {
+          .mh-desktop-affiliate-banner {
+            display: none !important;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  },
+
   // New: Simple sync check for UI rendering
   isPremiumSync: function() {
     return this._isPremiumCache === true || this.License.isActivated();
@@ -1753,6 +1792,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   MediHelp.initSiteFooter();
   MediHelp.initFeedbackWidget();
   MediHelp.initMobileNav();
+  MediHelp.initAffiliateBanner();
   
   if (MediHelp.isAuthPage()) {
     MediHelp.initAuthModal();
