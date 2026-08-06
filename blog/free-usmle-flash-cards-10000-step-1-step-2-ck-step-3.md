@@ -71,176 +71,149 @@ Our growing library includes more than **10,000 carefully organized flashcards**
   </a>
 </div>
 
-## Basic Sciences
+<div class="discipline-grid">
 
-* Anatomy
-* Physiology
-* Biochemistry
-* Genetics
-* Histology
-* Embryology
-* Cell Biology
-* Molecular Biology
+<div class="discipline-card">
+<h3>🔬 Basic Sciences</h3>
+<p>Foundational science integration & active recall concepts.</p>
+<div class="subject-pill-grid">
+<span class="subject-pill">Anatomy</span>
+<span class="subject-pill">Physiology</span>
+<span class="subject-pill">Biochemistry</span>
+<span class="subject-pill">Genetics</span>
+<span class="subject-pill">Histology</span>
+<span class="subject-pill">Embryology</span>
+<span class="subject-pill">Cell Biology</span>
+<span class="subject-pill">Molecular Biology</span>
+</div>
+</div>
 
----
+<div class="discipline-card">
+<h3>🔬 Pathology</h3>
+<p>High-yield disease mechanisms, histology & tumor pathology.</p>
+<div class="subject-pill-grid">
+<span class="subject-pill">General Pathology</span>
+<span class="subject-pill">Systemic Pathology</span>
+<span class="subject-pill">Disease Mechanisms</span>
+<span class="subject-pill">Tumors</span>
+<span class="subject-pill">Inflammation</span>
+<span class="subject-pill">Immunopathology</span>
+</div>
+</div>
 
-## Pathology
+<div class="discipline-card">
+<h3>💊 Pharmacology</h3>
+<p>Drug mechanisms, side effects, interactions & high-yield meds.</p>
+<div class="subject-pill-grid">
+<span class="subject-pill">Drug Mechanisms</span>
+<span class="subject-pill">Side Effects</span>
+<span class="subject-pill">Contraindications</span>
+<span class="subject-pill">Drug Interactions</span>
+<span class="subject-pill">High-Yield Meds</span>
+<span class="subject-pill">Clinical Apps</span>
+</div>
+</div>
 
-* General Pathology
-* Systemic Pathology
-* Disease Mechanisms
-* Tumors
-* Inflammation
-* Immunopathology
+<div class="discipline-card">
+<h3>🦠 Microbiology</h3>
+<p>Organism characteristics, antibiotics & lab diagnostic criteria.</p>
+<div class="subject-pill-grid">
+<span class="subject-pill">Bacteria</span>
+<span class="subject-pill">Viruses</span>
+<span class="subject-pill">Fungi</span>
+<span class="subject-pill">Parasites</span>
+<span class="subject-pill">Antibiotics</span>
+<span class="subject-pill">Lab Diagnosis</span>
+</div>
+</div>
 
----
+<div class="discipline-card">
+<h3>🛡️ Immunology</h3>
+<p>Hypersensitivity, autoimmune disorders, vaccines & cytokines.</p>
+<div class="subject-pill-grid">
+<span class="subject-pill">Hypersensitivity</span>
+<span class="subject-pill">Immunodeficiencies</span>
+<span class="subject-pill">Autoimmune</span>
+<span class="subject-pill">Vaccines</span>
+<span class="subject-pill">Cytokines</span>
+<span class="subject-pill">Immunotherapy</span>
+</div>
+</div>
 
-## Pharmacology
+<div class="discipline-card">
+<h3>🩺 Internal Medicine</h3>
+<p>Organ system pathologies, clinical diagnostics & management.</p>
+<div class="subject-pill-grid">
+<span class="subject-pill">Cardiology</span>
+<span class="subject-pill">Pulmonology</span>
+<span class="subject-pill">Gastroenterology</span>
+<span class="subject-pill">Endocrinology</span>
+<span class="subject-pill">Nephrology</span>
+<span class="subject-pill">Rheumatology</span>
+<span class="subject-pill">Infectious Disease</span>
+<span class="subject-pill">Hematology</span>
+<span class="subject-pill">Oncology</span>
+</div>
+</div>
 
-Learn:
+<div class="discipline-card">
+<h3>🔪 Surgery</h3>
+<p>Surgical emergencies, pre/post-op management & trauma algorithms.</p>
+<div class="subject-pill-grid">
+<span class="subject-pill">Trauma</span>
+<span class="subject-pill">Acute Abdomen</span>
+<span class="subject-pill">Emergencies</span>
+<span class="subject-pill">Pre-Op Care</span>
+<span class="subject-pill">Post-Op Care</span>
+<span class="subject-pill">Burns</span>
+<span class="subject-pill">Critical Care</span>
+<span class="subject-pill">Vascular</span>
+<span class="subject-pill">Orthopedics</span>
+</div>
+</div>
 
-* Drug mechanisms
-* Side effects
-* Contraindications
-* Drug interactions
-* High-yield medications
-* Clinical applications
+<div class="discipline-card">
+<h3>👶 Pediatrics & OB/GYN</h3>
+<p>Neonatology, congenital anomalies, pregnancy & labor management.</p>
+<div class="subject-pill-grid">
+<span class="subject-pill">Neonatology</span>
+<span class="subject-pill">Development</span>
+<span class="subject-pill">Pediatric Infections</span>
+<span class="subject-pill">Pregnancy</span>
+<span class="subject-pill">Labor</span>
+<span class="subject-pill">Gynecologic Disorders</span>
+<span class="subject-pill">Infertility</span>
+</div>
+</div>
 
----
+<div class="discipline-card">
+<h3>🧠 Psychiatry & Neurology</h3>
+<p>DSM-5 diagnoses, neuroanatomy, stroke, seizures & psychopharm.</p>
+<div class="subject-pill-grid">
+<span class="subject-pill">Mood Disorders</span>
+<span class="subject-pill">Anxiety</span>
+<span class="subject-pill">Psychopharmacology</span>
+<span class="subject-pill">Stroke</span>
+<span class="subject-pill">Seizures</span>
+<span class="subject-pill">Dementia</span>
+<span class="subject-pill">Neuroanatomy</span>
+</div>
+</div>
 
-## Microbiology
-
-Master:
-
-* Bacteria
-* Viruses
-* Fungi
-* Parasites
-* Antibiotics
-* Laboratory diagnosis
-
----
-
-## Immunology
-
-Review:
-
-* Hypersensitivity reactions
-* Immune deficiencies
-* Autoimmune diseases
-* Vaccines
-* Cytokines
-* Immunotherapy
-
----
-
-## Internal Medicine
-
-Including:
-
-* Cardiology
-* Pulmonology
-* Gastroenterology
-* Endocrinology
-* Nephrology
-* Rheumatology
-* Infectious Disease
-* Hematology
-* Oncology
-
----
-
-## Surgery
-
-Comprehensive flashcards covering:
-
-* Trauma
-* Acute abdomen
-* Surgical emergencies
-* Pre-operative care
-* Post-operative care
-* Burns
-* Critical care
-* Vascular surgery
-* Orthopedics
-
----
-
-## Pediatrics
-
-Topics include:
-
-* Neonatology
-* Growth & Development
-* Pediatric infections
-* Congenital disorders
-* Vaccinations
-* Pediatric emergencies
-
----
-
-## Obstetrics & Gynecology
-
-Study:
-
-* Pregnancy
-* Labor
-* High-risk pregnancy
-* Gynecologic disorders
-* Infertility
-* Reproductive endocrinology
-
----
-
-## Psychiatry
-
-Master:
-
-* Mood disorders
-* Anxiety disorders
-* Personality disorders
-* Substance abuse
-* Psychopharmacology
-* DSM-based diagnoses
-
----
-
-## Neurology
-
-Including:
-
-* Stroke
-* Seizures
-* Dementia
-* Headache disorders
-* Neuromuscular diseases
-* Neuroanatomy
-
----
-
-## Emergency Medicine
-
-Prepare for:
-
-* Shock
-* Cardiac arrest
-* Trauma
-* Toxicology
-* Airway management
-* ACLS concepts
+</div>
 
 ---
 
 # Tailored for Every Stage of Your USMLE Journey
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin: 32px 0;">
-  <div style="text-align: center; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border);">
-    <img src="/images/flashcards/grid-image-1.webp" alt="Foundational Science Integration for USMLE Step 1" style="width:100%; border-radius:12px; aspect-ratio: 16/9; object-fit: cover;" />
-    <p style="font-size:13px; color:var(--text-muted); margin-top:12px; margin-bottom:0;"><em>Foundational science & high-yield recall for Step 1</em></p>
+  <div style="text-align: center; background: rgba(15,23,42,0.6); padding: 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.08);">
+    <img src="/images/flashcards/grid-image-2.webp" alt="Step 1 Active Recall Question Prompt" style="width:100%; border-radius:12px; aspect-ratio: 16/9; object-fit: cover;" />
+    <p style="font-size:13px; color:var(--text-muted); margin-top:12px; margin-bottom:0;"><em><strong>Step 1:</strong> Active recall question prompt</em></p>
   </div>
-  <div style="text-align: center; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border);">
-    <img src="/images/flashcards/grid-image-2.webp" alt="Clinical Decision-Making for USMLE Step 2 CK & Step 3" style="width:100%; border-radius:12px; aspect-ratio: 16/9; object-fit: cover;" />
-    <p style="font-size:13px; color:var(--text-muted); margin-top:12px; margin-bottom:0;"><em>Clinical diagnosis, best-next-step & treatment guidelines</em></p>
+  <div style="text-align: center; background: rgba(15,23,42,0.6); padding: 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.08);">
+    <img src="/images/flashcards/grid-image-1.webp" alt="Step 2 CK & Step 3 High-Yield Answer Key" style="width:100%; border-radius:12px; aspect-ratio: 16/9; object-fit: cover;" />
+    <p style="font-size:13px; color:var(--text-muted); margin-top:12px; margin-bottom:0;"><em><strong>Step 2 CK & Step 3:</strong> High-yield answer breakdown & guidelines</em></p>
   </div>
 </div>
 
@@ -248,52 +221,50 @@ Prepare for:
 
 USMLE Step 1 emphasizes foundational sciences integrated with clinical reasoning.
 
-Our flashcards help reinforce:
+<div class="subject-pill-grid">
+<span class="subject-pill">First Aid Concepts</span>
+<span class="subject-pill">Pathophysiology</span>
+<span class="subject-pill">Pharmacology</span>
+<span class="subject-pill">Microbiology</span>
+<span class="subject-pill">Biochemistry</span>
+<span class="subject-pill">Anatomy</span>
+<span class="subject-pill">Physiology</span>
+<span class="subject-pill">Immunology</span>
+</div>
 
-* First Aid concepts
-* Pathophysiology
-* Pharmacology
-* Microbiology
-* Biochemistry
-* Anatomy
-* Physiology
-* Immunology
-
-Perfect for daily review before question banks.
+*Perfect for daily review alongside First Aid and UWorld question banks.*
 
 ---
 
 # Designed for USMLE Step 2 CK
 
-Clinical decision-making becomes the focus during Step 2 CK.
+Clinical decision-making becomes the primary focus during Step 2 CK.
 
-Our cards emphasize:
+<div class="subject-pill-grid">
+<span class="subject-pill">Clinical Diagnosis</span>
+<span class="subject-pill">Investigations & Labs</span>
+<span class="subject-pill">Best Next Step in Management</span>
+<span class="subject-pill">Treatment Algorithms</span>
+<span class="subject-pill">Emergency Medicine</span>
+<span class="subject-pill">Clinical Reasoning</span>
+</div>
 
-* Diagnosis
-* Investigations
-* Best next step
-* Management algorithms
-* Treatment guidelines
-* Emergency medicine
-* Clinical reasoning
-
-Ideal alongside clinical rotations and question banks.
+*Ideal alongside shelf exams, clinical clerkships, and shelf Q-banks.*
 
 ---
 
 # Designed for USMLE Step 3
 
-Step 3 tests independent physician-level thinking.
+Step 3 tests independent physician-level clinical decision-making.
 
-Our flashcards cover:
-
-* Complex management
-* Hospital medicine
-* Ethics
-* Preventive care
-* Patient safety
-* Quality improvement
-* Evidence-based medicine
+<div class="subject-pill-grid">
+<span class="subject-pill">Complex Inpatient Care</span>
+<span class="subject-pill">Hospital Medicine</span>
+<span class="subject-pill">Medical Ethics & Law</span>
+<span class="subject-pill">Preventive Care</span>
+<span class="subject-pill">Patient Safety & Quality</span>
+<span class="subject-pill">Evidence-Based Medicine</span>
+</div>
 
 ---
 

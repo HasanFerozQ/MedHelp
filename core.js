@@ -1751,7 +1751,9 @@ const MediHelp = {
     bannerDiv.className = 'mh-desktop-affiliate-banner';
     bannerDiv.innerHTML = `
       <a href="https://www.kqzyfj.com/click-101847975-17327794" target="_blank" rel="sponsored noopener noreferrer">
-        <img src="https://www.awltovhc.com/image-101847975-17327794" width="206" height="800" alt="Special Offer" border="0" style="display:block; width:100%; height:auto; max-height:calc(100vh - 110px); object-fit:contain; border-radius:8px;" />
+        <img src="https://www.awltovhc.com/image-101847975-17327794" width="206" height="800" alt="Special Offer — GearUp / Healthcare" border="0" 
+             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80';"
+             style="display:block; width:100%; height:auto; max-height:calc(100vh - 110px); object-fit:contain; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.4);" />
       </a>
     `;
     document.body.appendChild(bannerDiv);
@@ -1763,15 +1765,15 @@ const MediHelp = {
         .mh-desktop-affiliate-banner {
           position: fixed;
           top: 95px;
-          left: 15px;
+          left: 12px;
           z-index: 90;
           display: block;
-          width: 206px;
+          width: 180px;
           height: auto;
           pointer-events: auto;
           transition: opacity 0.3s ease;
         }
-        @media (max-width: 1350px) {
+        @media (max-width: 1180px) {
           .mh-desktop-affiliate-banner {
             display: none !important;
           }
