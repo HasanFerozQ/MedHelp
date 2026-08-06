@@ -31,6 +31,13 @@ function escAttr(str) {
 }
 
 /**
+ * Escape a string for safe insertion inside a JSON string value.
+ */
+function escJson(str) {
+  return String(str || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, ' ').replace(/\r/g, '');
+}
+
+/**
  * Formats a description string to be strictly between 150 and 160 characters for optimal SEO.
  */
 function formatMetaDescription(text) {
@@ -48,6 +55,43 @@ function formatMetaDescription(text) {
     return (truncated + '...').slice(0, 160);
   }
   return (clean + ' Read full clinical evidence and advocacy guidance on MediHelp.').slice(0, 158);
+}
+
+/**
+ * Build a BlogPosting JSON-LD schema block from post metadata.
+ */
+function buildJsonLd(meta, slug, canonicalUrl) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": escJson(meta.title || 'MediHelp Blog Article'),
+    "description": escJson(meta.summary || meta.excerpt || meta.description || ''),
+    "image": meta.thumbnail || 'https://www.medihelp.live/icons/logo.png?v=1.1',
+    "url": canonicalUrl,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
+    },
+    "datePublished": meta.date || new Date().toISOString().split('T')[0],
+    "dateModified": meta.date || new Date().toISOString().split('T')[0],
+    "author": {
+      "@type": "Organization",
+      "name": "MediHelp",
+      "url": "https://www.medihelp.live"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MediHelp",
+      "url": "https://www.medihelp.live",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.medihelp.live/icons/logo.png?v=1.1"
+      }
+    },
+    "articleSection": meta.category || 'Health',
+    "inLanguage": "en-US"
+  };
+  return `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`;
 }
 
 module.exports = async (req, res) => {
@@ -84,13 +128,14 @@ module.exports = async (req, res) => {
 
   const ogImage = meta.thumbnail || 'https://www.medihelp.live/icons/logo.png?v=1.1';
   const canonicalUrl = `https://www.medihelp.live/blog/${encodeURIComponent(slug)}`;
+  const publishedDate = meta.date ? new Date(meta.date).toISOString() : new Date().toISOString();
+  const articleSection = meta.category || 'Health';
 
   // Read the base blog-post.html template
   const templatePath = path.join(process.cwd(), 'blog-post.html');
   let html = fs.readFileSync(templatePath, 'utf8');
 
   // Inject the correct per-post values into the static head.
-  // These replacements target the exact static strings in blog-post.html.
   html = html
     // <title>
     .replace(
@@ -102,6 +147,11 @@ module.exports = async (req, res) => {
       /(<meta name="description" content=")[^"]*(")/,
       `$1${escAttr(descTrimmed)}$2`
     )
+    // canonical link
+    .replace(
+      /(<link rel="canonical"[^>]*href=")[^"]*(")/,
+      `$1${escAttr(canonicalUrl)}$2`
+    )
     // og:title
     .replace(
       /(<meta property="og:title" content=")[^"]*(")/,
@@ -112,15 +162,30 @@ module.exports = async (req, res) => {
       /(<meta property="og:description" content=")[^"]*(")/,
       `$1${escAttr(descTrimmed)}$2`
     )
+    // og:url
+    .replace(
+      /(<meta property="og:url" content=")[^"]*(")/,
+      `$1${escAttr(canonicalUrl)}$2`
+    )
     // og:image
     .replace(
       /(<meta property="og:image" content=")[^"]*(")/,
       `$1${escAttr(ogImage)}$2`
     )
-    // og:url — inject if present, otherwise add after og:image
+    // article:published_time
     .replace(
-      /(<meta property="og:url" content=")[^"]*(")/,
-      `$1${escAttr(canonicalUrl)}$2`
+      /(<meta property="article:published_time" content=")[^"]*(")/,
+      `$1${escAttr(publishedDate)}$2`
+    )
+    // article:section
+    .replace(
+      /(<meta property="article:section" content=")[^"]*(")/,
+      `$1${escAttr(articleSection)}$2`
+    )
+    // author
+    .replace(
+      /(<meta name="author" content=")[^"]*(")/,
+      `$1MediHelp$2`
     )
     // twitter:title
     .replace(
@@ -136,28 +201,11 @@ module.exports = async (req, res) => {
     .replace(
       /(<meta name="twitter:image" content=")[^"]*(")/,
       `$1${escAttr(ogImage)}$2`
-    )
-    // canonical link
-    .replace(
-      /(<link rel="canonical"[^>]*href=")[^"]*(")/,
-      `$1${escAttr(canonicalUrl)}$2`
     );
 
-  // If no static og:url tag existed in head, insert it after og:image
-  if (!html.includes('<meta property="og:url"')) {
-    html = html.replace(
-      /(<meta property="og:image"[^>]*>)/,
-      `$1\n  <meta property="og:url" content="${escAttr(canonicalUrl)}">`
-    );
-  }
-
-  // If no static canonical link existed in head, insert one before </head>
-  if (!html.includes('<link rel="canonical"')) {
-    html = html.replace(
-      '</head>',
-      `  <link rel="canonical" href="${escAttr(canonicalUrl)}">\n</head>`
-    );
-  }
+  // Inject server-side BlogPosting JSON-LD schema before </head>
+  const jsonLdBlock = buildJsonLd(meta, slug, canonicalUrl);
+  html = html.replace('</head>', `${jsonLdBlock}\n</head>`);
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   // Cache for 1 hour on CDN edge; still stale-while-revalidate for freshness

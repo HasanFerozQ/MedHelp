@@ -1732,6 +1732,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://www.medihelp.live/blog/covid-19-summer-surge-2026-symptoms-variants-prevention</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
   <!-- Legal & Static Pages -->
   <url>

@@ -4,6 +4,10 @@
 User-agent: *
 Allow: /
 
+# Allow blog API (Vercel serves /blog/:slug via /api/blog)
+Allow: /api/blog
+Allow: /api/blog*
+
 # Block admin, debug, and non-public paths
 Disallow: /admin/
 Disallow: /private/
@@ -25,22 +29,20 @@ Disallow: /__pycache__/
 Disallow: /docs/
 Disallow: /*.sql$
 Disallow: /*.py$
-Disallow: /*.md$
-# Allow health stats JSON so search engines can render pages that depend on these datasets
+
+# Allow specific JSON/manifest files crawlers need
+# NOTE: Allow rules must appear before the broad Disallow for them to take effect
+Allow: /manifest.json
+Allow: /calculator.webmanifest
+Allow: /blog/manifest.json
 Allow: /tabs/health-stats/data/
 Allow: /tabs/health-stats/data/*.json
 
-# NOTE: previously we disallowed all .json files; that blocked dataset JSON needed for indexing.
-# If you intentionally want to block other JSON endpoints, add specific Disallow rules instead of a blanket rule.
+# Block everything else .json
 Disallow: /*.json$
 Disallow: /tmp_script.js
 Disallow: /sw-calculator.js
 Disallow: /background.js
-
-# Allow specific JSON/manifest files crawlers may need
-Allow: /manifest.json
-Allow: /calculator.webmanifest
-Allow: /blog/manifest.json
 
 # Sitemaps
 Sitemap: https://www.medihelp.live/sitemap.xml
