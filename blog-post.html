@@ -760,6 +760,7 @@
 
       // ── Inject CTA Cards after post body ──
       injectBlogCTAs();
+      repositionBlogAd();
 
       // Sidebar: 3 suggested posts
       const suggested = posts.filter(p => p.slug !== post.slug).slice(0, 3);
@@ -865,6 +866,52 @@
 
       // Insert CTA section before the share section
       shareSection.parentNode.insertBefore(ctaWrapper, shareSection);
+    }
+
+    /**
+     * Reposition Blog Ad Banner (Satisfies FAQ > Tool Card > Mid Page fallback).
+     */
+    function repositionBlogAd() {
+      const adEl = document.getElementById('repositioned-ad-banner');
+      if (!adEl) return;
+
+      const postBody = document.getElementById('post-body');
+
+      // Condition 1: Check for FAQ section inside post body
+      if (postBody) {
+        const headings = Array.from(postBody.querySelectorAll('h1, h2, h3, h4'));
+        const faqHeading = headings.find(h => {
+          const txt = h.textContent.toLowerCase();
+          return txt.includes('faq') || txt.includes('frequently asked');
+        });
+
+        if (faqHeading) {
+          let curr = faqHeading;
+          while (curr.nextElementSibling && !['H1','H2','H3','H4'].includes(curr.nextElementSibling.tagName)) {
+            curr = curr.nextElementSibling;
+          }
+          curr.parentNode.insertBefore(adEl, curr.nextSibling);
+          return;
+        }
+      }
+
+      // Condition 2: Check for Free Tools Card
+      const freeToolsCard = document.querySelector('.free-tools-card');
+      if (freeToolsCard) {
+        freeToolsCard.parentNode.insertBefore(adEl, freeToolsCard.nextSibling);
+        return;
+      }
+
+      // Condition 3: Mid-page paragraph fallback
+      if (postBody) {
+        const paragraphs = postBody.querySelectorAll('p');
+        if (paragraphs.length >= 3) {
+          const midIndex = Math.floor(paragraphs.length / 2);
+          const midP = paragraphs[midIndex];
+          midP.parentNode.insertBefore(adEl, midP.nextSibling);
+          return;
+        }
+      }
     }
 
     /**
@@ -975,8 +1022,8 @@
   </script>
 
   <!-- ── FOOTER ── -->
-      <!-- Adsterra 468x60 Banner -->
-  <div style="text-align:center; margin: 20px auto;">
+  <!-- Adsterra Banner (Dynamically repositioned to FAQ / Tool Card / Mid-Page) -->
+  <div id="repositioned-ad-banner" style="text-align:center; margin: 24px auto;">
     <script>
       atOptions = {
         'key' : 'e8d44c92394feb5769b23337c154c786',
