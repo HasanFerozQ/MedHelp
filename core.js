@@ -1821,7 +1821,7 @@ const MediHelp = {
           transition: opacity 0.3s ease;
         }
 
-        /* Right Vertical Banner Grid (Matches Left in Width & Height) */
+        /* Right Vertical Banner Grid */
         .mh-desktop-affiliate-banner-right {
           position: fixed;
           top: 95px;
@@ -1829,8 +1829,7 @@ const MediHelp = {
           z-index: 90;
           display: flex;
           flex-direction: column;
-          width: 180px;
-          height: calc(100vh - 110px);
+          width: 200px;
           max-height: calc(100vh - 110px);
           overflow-y: auto;
           scrollbar-width: none;
@@ -1844,21 +1843,19 @@ const MediHelp = {
         .mh-ad-box-grid {
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 12px;
           width: 100%;
-          height: 100%;
         }
 
         .mh-ad-box-card {
           position: relative;
-          width: 100%;
-          flex: 1;
-          min-height: 140px;
+          width: 200px;
+          height: 200px;
           background: rgba(17, 24, 39, 0.9);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 12px;
+          border-radius: 14px;
           overflow: hidden;
           box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
           transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -1953,7 +1950,7 @@ const MediHelp = {
     adSection.innerHTML = `
       <div class="mh-prefooter-ad-container">
         <span class="mh-ad-badge">SPONSORED</span>
-        <a href="https://www.kqzyfj.com/click-101847975-13689151" target="_top" rel="sponsored noopener noreferrer" class="mh-prefooter-ad-link">
+        <a href="https://www.kqzyfj.com/click-101847975-13689151" target="_blank" rel="sponsored noopener noreferrer" class="mh-prefooter-ad-link">
           <img src="https://www.tqlkg.com/image-101847975-13689151" width="700" height="148" alt="Special Offer" border="0" 
                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';" />
         </a>
