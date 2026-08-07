@@ -239,6 +239,91 @@ body {
   overflow-x: hidden;
 }
 
+main, aside, .container, .dispatch-header, .post-layout, .post-sidebar, .post-body,
+.post-body > *, .share-section, .free-tools-grid, .sidebar-card {
+  max-width: 100%;
+  min-width: 0;
+}
+
+img, iframe, video, object, embed, svg, canvas, picture, table, pre, code {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-body,
+.post-body p,
+.post-body li,
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body blockquote,
+.post-body td,
+.post-body th,
+.dispatch-subtitle,
+.sidebar-post-link .sp-title,
+.free-tool-link .ftl-name,
+.free-tool-link .ftl-desc,
+.exam-mastery-banner .em-title,
+.exam-mastery-banner .em-desc,
+.exam-mastery-banner .em-price-sub {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+pre, code {
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.free-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.free-tool-link {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .free-tools-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .free-tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .exam-mastery-banner .em-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .exam-mastery-banner .em-price-box {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
 /* ============================================================
    GRADIENT TEXT UTILITY
    ============================================================ */

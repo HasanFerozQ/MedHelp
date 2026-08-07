@@ -29,10 +29,13 @@
   <style>
     .post-layout {
       display: grid;
-      grid-template-columns: 1fr 320px;
+      grid-template-columns: minmax(0, 1fr) 320px;
       gap: 48px;
       align-items: start;
       margin-bottom: 80px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
     .post-sidebar {
       position: sticky;
@@ -40,6 +43,8 @@
       display: flex;
       flex-direction: column;
       gap: 24px;
+      max-width: 100%;
+      min-width: 0;
     }
     .sidebar-card {
       background: var(--bg-card, #0c1d35);
@@ -105,8 +110,18 @@
       width: 0%;
     }
     @media (max-width: 960px) {
-      .post-layout { grid-template-columns: 1fr; gap: 36px; }
+      .post-layout { grid-template-columns: minmax(0, 1fr); gap: 36px; }
       .post-sidebar { position: static; }
+      .free-tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .post-layout { gap: 28px; }
+      .free-tools-grid { grid-template-columns: 1fr; }
+      .sidebar-card { padding: 18px; }
+      .post-stats-bar { padding: 12px 14px; gap: 10px 14px; }
+      .post-hero-img { max-height: 280px; }
+      .exam-mastery-banner { padding: 24px; }
     }
 
     /* ── Editorial Typography & Layout Enhancements ── */
@@ -150,9 +165,13 @@
     }
     .post-body {
       max-width: 100%;
+      min-width: 0;
+      width: 100%;
       font-size: 1.05rem;
       line-height: 1.8;
       color: var(--text-body, #cbd5e1);
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .post-body p {
       font-size: 1.05rem;
@@ -196,11 +215,13 @@
     }
     .post-body img {
       width: 100%;
+      max-width: 100%;
       max-height: 440px;
       object-fit: cover;
       border-radius: 14px;
       margin: 28px 0;
       border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+      display: block;
     }
 
     /* ── Key Takeaway Card (Solid Color, Clean Contrast) ── */
@@ -444,14 +465,18 @@
     }
     .free-tools-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
+      max-width: 100%;
+      min-width: 0;
     }
     .free-tool-link {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
+      min-width: 0;
+      width: 100%;
       padding: 16px 12px;
       background: #0f2338;
       border: 1px solid #1e3a5f;
