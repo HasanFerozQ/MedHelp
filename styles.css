@@ -2803,6 +2803,14 @@ textarea.search-input {
   .nav-links a[href*="providers"] { order: 8; }
   .nav-links a[href*="blog"] { order: 9; }
   .nav-links a[href*="global-health-statistics"] { order: 10; }
+
+  .grid-stack-mobile {
+    grid-template-columns: 1fr !important;
+  }
+  .grid-stack-mobile > * {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 600px) {
@@ -2812,6 +2820,14 @@ textarea.search-input {
   .hero h1 { font-size: 32px; line-height: 1.1; }
   .hero-cta { flex-direction: column; width: 100%; }
   .hero-cta .btn { width: 100%; }
+  .page-section .btn,
+  .page-section .btn-hero-primary,
+  .page-section .btn-hero-expert,
+  .page-section .btn-expert-cta {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center;
+  }
   
   .tools-grid, .stats-grid, .why-grid, .blog-grid, .form-row, .footer-grid, .console-grid {
     grid-template-columns: 1fr !important;
