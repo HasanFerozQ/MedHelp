@@ -239,6 +239,17 @@ body {
   overflow-x: hidden;
 }
 
+.ad-banner-wrapper,
+.ad-banner-wrapper iframe,
+.ad-banner-wrapper object,
+.ad-banner-wrapper embed,
+.ad-banner-wrapper div {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
 main, aside, .container, .dispatch-header, .post-layout, .post-sidebar, .post-body,
 .post-body > *, .share-section, .free-tools-grid, .sidebar-card {
   max-width: 100%;
@@ -2776,6 +2787,24 @@ textarea.search-input {
 
   .container { padding: 0 20px; }
   .section { padding: 40px 0; }
+
+  .ad-banner-wrapper,
+  .ad-banner-wrapper > iframe,
+  .ad-banner-wrapper > div,
+  .ad-banner-wrapper > script {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .ad-banner-wrapper {
+    overflow: hidden;
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
   
   .nav-brand { font-size: 1.1rem; }
   .nav-actions .btn-ghost { display: none; } /* Hide expert help in actions on tiny screens */
