@@ -2223,6 +2223,21 @@ textarea.search-input {
   justify-content: center;
 }
 
+@media (max-width: 900px) {
+  .blog-hero-post {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-hero-img {
+    height: auto;
+    min-height: 260px;
+  }
+
+  .blog-hero-body {
+    padding: 24px;
+  }
+}
+
 .blog-tag {
   display: inline-flex;
   font-size: 11px;
@@ -2537,6 +2552,13 @@ textarea.search-input {
     z-index: 1000;
     box-shadow: -10px 0 30px rgba(0,0,0,0.5);
     border-left: 1px solid var(--border);
+  }
+
+  iframe {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: block;
   }
 
   .nav-links.active {
