@@ -2811,6 +2811,13 @@ textarea.search-input {
     width: 100%;
     max-width: 100%;
   }
+  .calculator-specialties-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .calculator-specialties-grid > * {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 600px) {
@@ -2820,13 +2827,26 @@ textarea.search-input {
   .hero h1 { font-size: 32px; line-height: 1.1; }
   .hero-cta { flex-direction: column; width: 100%; }
   .hero-cta .btn { width: 100%; }
+  .calculator-specialties-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .calculator-specialties-grid > * {
+    width: 100%;
+    max-width: 100%;
+  }
+  .calculator-specialty-card {
+    min-width: 0;
+  }
   .page-section .btn,
   .page-section .btn-hero-primary,
   .page-section .btn-hero-expert,
   .page-section .btn-expert-cta {
+    display: inline-flex !important;
+    width: auto !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    justify-content: center;
+    justify-content: center !important;
+    text-align: center !important;
   }
   
   .tools-grid, .stats-grid, .why-grid, .blog-grid, .form-row, .footer-grid, .console-grid {
