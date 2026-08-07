@@ -333,6 +333,45 @@ pre, code {
     min-width: 0;
     width: 100%;
   }
+
+  .premium-banner-grid,
+  .exam-mastery-grid,
+  .exam-mastery-banner .em-inner {
+    grid-template-columns: 1fr !important;
+  }
+
+  .premium-banner-grid > div,
+  .exam-mastery-grid > div,
+  .exam-mastery-banner .em-price-box {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .premium-banner-grid > div:first-child,
+  .exam-mastery-grid > div:first-child {
+    text-align: center;
+  }
+
+  .exam-mastery-banner .best-value-badge,
+  .premium-banner-grid .best-value-badge,
+  .exam-mastery-grid .best-value-badge {
+    right: -24px !important;
+    top: 12px !important;
+    padding: 4px 28px !important;
+    font-size: 10px !important;
+  }
+
+  .premium-banner-grid h2,
+  .exam-mastery-banner .em-title {
+    font-size: clamp(24px, 6vw, 30px) !important;
+  }
+
+  .premium-banner-grid p,
+  .exam-mastery-banner .em-desc {
+    font-size: 14px !important;
+    max-width: 100% !important;
+  }
 }
 
 /* ============================================================
