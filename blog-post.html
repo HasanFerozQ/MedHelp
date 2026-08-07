@@ -42,11 +42,15 @@
       gap: 24px;
     }
     .sidebar-card {
-      background: var(--bg-card, rgba(15, 23, 42, 0.6));
+      background: var(--bg-card, #0c1d35);
       border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
       border-radius: 16px;
       padding: 24px;
-      backdrop-filter: blur(8px);
+    }
+    [data-theme="light"] .sidebar-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
     }
     .sidebar-card h4 {
       font-size: 11px;
@@ -78,7 +82,7 @@
     .sidebar-post-link .sp-title {
       font-size: 13px;
       font-weight: 600;
-      color: var(--text-body, #e2e8f0);
+      color: var(--text-h, #f8fafc);
       line-height: 1.35;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -95,7 +99,7 @@
       top: 0;
       left: 0;
       height: 3px;
-      background: linear-gradient(90deg, #22c55e, #10b981);
+      background: var(--accent, #22c55e);
       z-index: 9999;
       transition: width 0.15s ease-out;
       width: 0%;
@@ -123,12 +127,17 @@
       align-items: center;
       gap: 16px 24px;
       padding: 12px 18px;
-      background: rgba(30, 41, 59, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--bg-card, #0c1d35);
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
       border-radius: 12px;
       margin: 20px 0 28px;
       font-size: 13px;
       color: var(--text-muted, #94a3b8);
+    }
+    [data-theme="light"] .post-stats-bar {
+      background: #F8FAFC;
+      border-color: #E2E8F0;
+      color: #475569;
     }
     .post-hero-img {
       width: 100%;
@@ -136,35 +145,38 @@
       object-fit: cover;
       border-radius: 16px;
       margin: 0 0 36px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
     }
     .post-body {
       max-width: 100%;
       font-size: 1.05rem;
       line-height: 1.8;
-      color: #cbd5e1;
+      color: var(--text-body, #cbd5e1);
     }
     .post-body p {
       font-size: 1.05rem;
-      color: #cbd5e1;
+      color: var(--text-body, #cbd5e1) !important;
       margin-bottom: 22px;
       line-height: 1.8;
     }
     .post-body h2 {
       font-size: 1.55rem;
       font-weight: 800;
-      color: #f8fafc;
+      color: var(--text-h, #f8fafc) !important;
       margin: 40px 0 16px;
       padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08)) !important;
       letter-spacing: -0.015em;
     }
     .post-body h3 {
       font-size: 1.25rem;
       font-weight: 700;
-      color: #38bdf8;
+      color: var(--accent-light, #38bdf8) !important;
       margin: 30px 0 12px;
+    }
+    [data-theme="light"] .post-body h3 {
+      color: #15803d !important;
     }
     .post-body ul, .post-body ol {
       padding-left: 24px;
@@ -173,7 +185,14 @@
     .post-body li {
       margin-bottom: 10px;
       line-height: 1.75;
-      color: #cbd5e1;
+      color: var(--text-body, #cbd5e1) !important;
+    }
+    .post-body strong, .post-body b {
+      color: var(--text-h, #ffffff) !important;
+      font-weight: 700;
+    }
+    [data-theme="light"] .post-body strong, [data-theme="light"] .post-body b {
+      color: #0f172a !important;
     }
     .post-body img {
       width: 100%;
@@ -181,11 +200,13 @@
       object-fit: cover;
       border-radius: 14px;
       margin: 28px 0;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
     }
+
+    /* ── Key Takeaway Card (Solid Color, Clean Contrast) ── */
     .key-takeaway {
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
-      border: 1px solid rgba(34, 197, 94, 0.25);
+      background: #092014;
+      border: 1px solid #166534;
       border-left: 4px solid #22c55e;
       border-radius: 14px;
       padding: 20px 24px;
@@ -195,7 +216,7 @@
       color: #e2e8f0;
     }
     .key-takeaway strong {
-      color: #22c55e;
+      color: #4ade80;
       font-weight: 800;
       display: block;
       margin-bottom: 6px;
@@ -203,6 +224,17 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
+    [data-theme="light"] .key-takeaway {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-left: 4px solid #16a34a;
+      color: #1e293b;
+    }
+    [data-theme="light"] .key-takeaway strong {
+      color: #15803d;
+    }
+
+    /* ── Blog Stat Cards (Solid Color, NO Gradients, High Contrast) ── */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -210,48 +242,66 @@
       margin: 24px 0 32px;
     }
     .stat-card {
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #0f172a;
+      border: 1px solid #1e293b;
       border-radius: 12px;
-      padding: 14px;
+      padding: 16px 14px;
       text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     .stat-card strong {
       display: block;
       font-size: 20px;
       font-weight: 800;
-      color: #22c55e;
+      color: #4ade80;
       line-height: 1.2;
     }
     .stat-card span {
       font-size: 12px;
       color: #94a3b8;
-      margin-top: 4px;
+      margin-top: 6px;
       display: block;
+      font-weight: 500;
     }
+    .stat-card.amber strong { color: #fbbf24; }
+    .stat-card.blue strong { color: #38bdf8; }
 
-    /* ── Sleek Integrated CTA Section ── */
+    [data-theme="light"] .stat-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="light"] .stat-card strong {
+      color: #15803d;
+    }
+    [data-theme="light"] .stat-card span {
+      color: #475569;
+    }
+    [data-theme="light"] .stat-card.amber strong { color: #d97706; }
+    [data-theme="light"] .stat-card.blue strong { color: #0284c7; }
+
+    /* ── Sleek Integrated CTA Section (Solid Colors, No Gradients) ── */
     .blog-cta-section {
       margin-top: 44px;
       padding-top: 36px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
     }
     .exam-mastery-banner {
       margin: 28px 0;
-      background: linear-gradient(145deg, rgba(15, 26, 18, 0.9) 0%, rgba(34, 197, 94, 0.05) 100%);
-      border: 1px solid rgba(34, 197, 94, 0.3);
+      background: #071a10;
+      border: 1px solid #166534;
       border-radius: 20px;
       padding: 32px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
     }
     .exam-mastery-banner .best-value-badge {
       position: absolute;
       top: 20px;
       right: -36px;
       background: #22c55e;
-      color: #000;
+      color: #05140b;
       padding: 4px 40px;
       font-size: 10px;
       font-weight: 900;
@@ -268,20 +318,20 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(34, 197, 94, 0.12);
-      color: #22c55e;
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
       padding: 4px 12px;
       border-radius: 100px;
       font-size: 11px;
       font-weight: 700;
       margin-bottom: 12px;
-      border: 1px solid rgba(34, 197, 94, 0.25);
+      border: 1px solid rgba(34, 197, 94, 0.3);
     }
     .exam-mastery-banner .em-title {
       font-size: 24px;
       font-weight: 800;
       margin: 0 0 8px;
-      color: #fff;
+      color: #ffffff;
       border: none;
       padding: 0;
     }
@@ -293,16 +343,16 @@
     }
     .exam-mastery-banner .em-price-box {
       text-align: center;
-      background: rgba(255, 255, 255, 0.04);
+      background: #0d281a;
       padding: 20px;
       border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid #166534;
       min-width: 200px;
     }
     .exam-mastery-banner .em-price {
       font-size: 34px;
       font-weight: 900;
-      color: #22c55e;
+      color: #4ade80;
       letter-spacing: -1px;
     }
     .exam-mastery-banner .em-price-sub {
@@ -313,23 +363,59 @@
     }
     .exam-mastery-banner .em-cta-btn {
       display: block;
-      background: linear-gradient(135deg, #22c55e, #10b981);
-      color: #fff;
+      background: #22c55e;
+      color: #05140b;
       text-decoration: none;
       padding: 11px 18px;
       border-radius: 10px;
       font-weight: 800;
       font-size: 13px;
       text-align: center;
-      transition: opacity 0.2s;
+      transition: all 0.2s ease;
     }
-    .exam-mastery-banner .em-cta-btn:hover { opacity: 0.9; }
+    .exam-mastery-banner .em-cta-btn:hover { background: #4ade80; }
+
+    [data-theme="light"] .exam-mastery-banner {
+      background: #F0FDF4;
+      border: 1px solid #86EFAC;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="light"] .exam-mastery-banner .best-value-badge {
+      background: #16a34a;
+      color: #ffffff;
+    }
+    [data-theme="light"] .exam-mastery-banner .em-updated-tag {
+      background: #DCFCE7;
+      color: #15803d;
+      border-color: #86EFAC;
+    }
+    [data-theme="light"] .exam-mastery-banner .em-title {
+      color: #0f172a;
+    }
+    [data-theme="light"] .exam-mastery-banner .em-desc {
+      color: #33475a;
+    }
+    [data-theme="light"] .exam-mastery-banner .em-price-box {
+      background: #FFFFFF;
+      border: 1px solid #BBF7D0;
+    }
+    [data-theme="light"] .exam-mastery-banner .em-price {
+      color: #15803d;
+    }
+    [data-theme="light"] .exam-mastery-banner .em-price-sub {
+      color: #475569;
+    }
+    [data-theme="light"] .exam-mastery-banner .em-cta-btn {
+      background: #16a34a;
+      color: #ffffff;
+    }
+    [data-theme="light"] .exam-mastery-banner .em-cta-btn:hover { background: #15803d; }
 
     /* Free Tools Internal Linking Card */
     .free-tools-card {
       margin: 24px 0 36px;
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.6) 0%, rgba(56, 189, 248, 0.04) 100%);
-      border: 1px solid rgba(56, 189, 248, 0.2);
+      background: #081726;
+      border: 1px solid #0369a1;
       border-radius: 20px;
       padding: 28px 32px;
       position: relative;
@@ -345,7 +431,7 @@
     .free-tools-card .ftc-title {
       font-size: 20px;
       font-weight: 800;
-      color: #f8fafc;
+      color: #ffffff;
       margin: 0 0 6px;
       border: none;
       padding: 0;
@@ -367,8 +453,8 @@
       align-items: center;
       gap: 8px;
       padding: 16px 12px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(56, 189, 248, 0.12);
+      background: #0f2338;
+      border: 1px solid #1e3a5f;
       border-radius: 14px;
       text-decoration: none;
       color: inherit;
@@ -376,8 +462,8 @@
       text-align: center;
     }
     .free-tool-link:hover {
-      background: rgba(56, 189, 248, 0.08);
-      border-color: rgba(56, 189, 248, 0.35);
+      background: #152d47;
+      border-color: #38bdf8;
       transform: translateY(-2px);
     }
     .free-tool-link .ftl-icon {
@@ -393,7 +479,7 @@
     .free-tool-link .ftl-name {
       font-size: 12px;
       font-weight: 700;
-      color: #f8fafc;
+      color: #ffffff;
       line-height: 1.3;
     }
     .free-tool-link .ftl-desc {
@@ -406,10 +492,71 @@
       font-weight: 800;
       padding: 2px 7px;
       border-radius: 100px;
-      background: rgba(34, 197, 94, 0.12);
-      color: #22c55e;
-      border: 1px solid rgba(34, 197, 94, 0.25);
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
     }
+
+    [data-theme="light"] .free-tools-card {
+      background: #F0F9FF;
+      border: 1px solid #BAE6FD;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="light"] .free-tools-card .ftc-label { color: #0284c7; }
+    [data-theme="light"] .free-tools-card .ftc-title { color: #0f172a; }
+    [data-theme="light"] .free-tools-card .ftc-subtitle { color: #33475a; }
+    [data-theme="light"] .free-tool-link {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      color: #1e293b;
+    }
+    [data-theme="light"] .free-tool-link:hover {
+      background: #F8FAFC;
+      border-color: #0284c7;
+    }
+    [data-theme="light"] .free-tool-link .ftl-name { color: #0f172a; }
+    [data-theme="light"] .free-tool-link .ftl-desc { color: #475569; }
+    [data-theme="light"] .free-tool-link .ftl-badge {
+      background: #DCFCE7;
+      color: #15803d;
+      border-color: #86EFAC;
+    }
+
+    /* ── Universal rules for any inline CTA cards in blog posts (Solid Colors, No Gradients) ── */
+    .post-body div[style*="linear-gradient"] {
+      background: #071a10 !important;
+      border: 1px solid #166534 !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+    }
+    .post-body div[style*="linear-gradient"] h3 {
+      color: #4ade80 !important;
+    }
+    .post-body div[style*="linear-gradient"] p {
+      color: #cbd5e1 !important;
+    }
+    .post-body div[style*="linear-gradient"] a {
+      background: #22c55e !important;
+      color: #05140b !important;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3) !important;
+    }
+
+    [data-theme="light"] .post-body div[style*="linear-gradient"] {
+      background: #F0FDF4 !important;
+      border: 1px solid #86EFAC !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+    }
+    [data-theme="light"] .post-body div[style*="linear-gradient"] h3 {
+      color: #15803d !important;
+    }
+    [data-theme="light"] .post-body div[style*="linear-gradient"] p {
+      color: #33475a !important;
+    }
+    [data-theme="light"] .post-body div[style*="linear-gradient"] a {
+      background: #16a34a !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25) !important;
+    }
+
     /* Subject Pills & Grid Cards for blog content formatting */
     .subject-pill-grid {
       display: flex;
@@ -422,8 +569,8 @@
       align-items: center;
       gap: 6px;
       padding: 8px 16px;
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #0f172a;
+      border: 1px solid #1e293b;
       border-radius: 100px;
       font-size: 13px;
       font-weight: 600;
@@ -431,10 +578,20 @@
       transition: all 0.2s ease;
     }
     .subject-pill:hover {
-      background: rgba(56, 189, 248, 0.12);
-      border-color: rgba(56, 189, 248, 0.4);
+      background: #1e293b;
+      border-color: #38bdf8;
       color: #38bdf8;
       transform: translateY(-2px);
+    }
+    [data-theme="light"] .subject-pill {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      color: #1e293b;
+    }
+    [data-theme="light"] .subject-pill:hover {
+      background: #F8FAFC;
+      border-color: #0284c7;
+      color: #0284c7;
     }
     .discipline-grid {
       display: grid;
@@ -443,14 +600,14 @@
       margin: 28px 0 40px;
     }
     .discipline-card {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #0f172a;
+      border: 1px solid #1e293b;
       border-radius: 18px;
       padding: 24px;
       transition: all 0.25s ease;
     }
     .discipline-card:hover {
-      border-color: rgba(34, 197, 94, 0.35);
+      border-color: #22c55e;
       transform: translateY(-3px);
       box-shadow: 0 12px 36px rgba(0,0,0,0.35);
     }
@@ -467,6 +624,17 @@
       color: #94a3b8 !important;
       margin-bottom: 16px !important;
       line-height: 1.5 !important;
+    }
+    [data-theme="light"] .discipline-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .discipline-card h3 {
+      color: #0f172a !important;
+    }
+    [data-theme="light"] .discipline-card p {
+      color: #475569 !important;
     }
   </style><script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js"></script>
 <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js"></script>
