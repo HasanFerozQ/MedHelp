@@ -93,6 +93,11 @@
   ],
   "redirects": [
     {
+      "source": "/management-education",
+      "destination": "/medical-exam-preparation",
+      "permanent": true
+    },
+    {
       "source": "/audit",
       "destination": "/medical-bill-audit",
       "permanent": true
