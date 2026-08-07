@@ -1742,7 +1742,7 @@ const MediHelp = {
       return !!this._isPremiumCache;
     }
   },
-  // Desktop Left & Right Affiliate Banners
+  // Desktop Left & Right Affiliate Banners + Bottom Pre-Footer Ad
   initAffiliateBanner: function() {
     // 1. Left Banner (Tall Vertical)
     if (!document.getElementById('mh-desktop-affiliate-banner')) {
@@ -1816,18 +1816,21 @@ const MediHelp = {
           display: block;
           width: 180px;
           height: auto;
+          max-height: calc(100vh - 110px);
           pointer-events: auto;
           transition: opacity 0.3s ease;
         }
 
-        /* Right Vertical Banner Grid */
+        /* Right Vertical Banner Grid (Matches Left in Width & Height) */
         .mh-desktop-affiliate-banner-right {
           position: fixed;
           top: 95px;
           right: 12px;
           z-index: 90;
-          display: block;
-          width: 200px;
+          display: flex;
+          flex-direction: column;
+          width: 180px;
+          height: calc(100vh - 110px);
           max-height: calc(100vh - 110px);
           overflow-y: auto;
           scrollbar-width: none;
@@ -1841,19 +1844,21 @@ const MediHelp = {
         .mh-ad-box-grid {
           display: flex;
           flex-direction: column;
-          gap: 14px;
+          gap: 10px;
           width: 100%;
+          height: 100%;
         }
 
         .mh-ad-box-card {
           position: relative;
-          width: 200px;
-          height: 200px;
-          background: rgba(17, 24, 39, 0.88);
+          width: 100%;
+          flex: 1;
+          min-height: 140px;
+          background: rgba(17, 24, 39, 0.9);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 14px;
+          border-radius: 12px;
           overflow: hidden;
           box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
           transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -1863,7 +1868,7 @@ const MediHelp = {
         }
 
         .mh-ad-box-card:hover {
-          transform: translateY(-3px);
+          transform: translateY(-2px);
           border-color: rgba(34, 197, 94, 0.5);
           box-shadow: 0 12px 32px rgba(34, 197, 94, 0.2);
         }
@@ -1876,7 +1881,7 @@ const MediHelp = {
           background: rgba(0, 0, 0, 0.7);
           backdrop-filter: blur(4px);
           color: #94a3b8;
-          font-size: 8.5px;
+          font-size: 8px;
           font-weight: 700;
           letter-spacing: 0.5px;
           padding: 2px 5px;
@@ -1893,7 +1898,7 @@ const MediHelp = {
           justify-content: center;
           width: 100%;
           height: 100%;
-          padding: 6px;
+          padding: 0;
           box-sizing: border-box;
         }
 
@@ -1904,7 +1909,7 @@ const MediHelp = {
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          border-radius: 10px;
+          border-radius: 12px;
           background: #0b0f19;
           position: relative;
         }
@@ -1912,11 +1917,9 @@ const MediHelp = {
         .mh-ad-box-img-wrapper img {
           width: 100%;
           height: 100%;
-          max-width: 100%;
-          max-height: 100%;
-          object-fit: contain;
+          object-fit: cover;
           display: block;
-          border-radius: 10px;
+          border-radius: 12px;
           transition: transform 0.3s ease;
         }
 
@@ -1924,15 +1927,87 @@ const MediHelp = {
           transform: scale(1.04);
         }
 
-        @media (max-width: 1280px) {
-          .mh-desktop-affiliate-banner-right {
-            display: none !important;
-          }
-        }
         @media (max-width: 1180px) {
+          .mh-desktop-affiliate-banner-right,
           .mh-desktop-affiliate-banner {
             display: none !important;
           }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // 3. Pre-Footer Ad Banner (Bottom just before footer)
+    this.initPreFooterAd();
+  },
+
+  // Pre-Footer Bottom Banner Ad
+  initPreFooterAd: function() {
+    if (document.getElementById('mh-prefooter-affiliate-ad')) return;
+    const footer = document.querySelector('.site-footer');
+    if (!footer || !footer.parentNode) return;
+
+    const adSection = document.createElement('div');
+    adSection.id = 'mh-prefooter-affiliate-ad';
+    adSection.className = 'mh-prefooter-affiliate-ad';
+    adSection.innerHTML = `
+      <div class="mh-prefooter-ad-container">
+        <span class="mh-ad-badge">SPONSORED</span>
+        <a href="https://www.kqzyfj.com/click-101847975-13689151" target="_top" rel="sponsored noopener noreferrer" class="mh-prefooter-ad-link">
+          <img src="https://www.tqlkg.com/image-101847975-13689151" width="700" height="148" alt="Special Offer" border="0" 
+               onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';" />
+        </a>
+      </div>
+    `;
+
+    footer.parentNode.insertBefore(adSection, footer);
+
+    if (!document.getElementById('mh-prefooter-ad-styles')) {
+      const style = document.createElement('style');
+      style.id = 'mh-prefooter-ad-styles';
+      style.textContent = `
+        .mh-prefooter-affiliate-ad {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 32px 16px 20px;
+          box-sizing: border-box;
+        }
+        .mh-prefooter-ad-container {
+          position: relative;
+          max-width: 720px;
+          width: 100%;
+          background: rgba(17, 24, 39, 0.85);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 16px;
+          padding: 10px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-sizing: border-box;
+          transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .mh-prefooter-ad-container:hover {
+          transform: translateY(-2px);
+          border-color: rgba(34, 197, 94, 0.4);
+          box-shadow: 0 14px 36px rgba(34, 197, 94, 0.12);
+        }
+        .mh-prefooter-ad-link {
+          display: block;
+          width: 100%;
+          text-align: center;
+          line-height: 0;
+        }
+        .mh-prefooter-ad-container img {
+          max-width: 100%;
+          height: auto;
+          display: inline-block;
+          border-radius: 10px;
+          object-fit: contain;
         }
       `;
       document.head.appendChild(style);
@@ -1972,7 +2047,8 @@ const MediHelp = {
         iframe[src*="n6wxm"],
         iframe[src*="googlesyndication"],
         #mh-desktop-affiliate-banner,
-        #mh-desktop-affiliate-banner-right {
+        #mh-desktop-affiliate-banner-right,
+        #mh-prefooter-affiliate-ad {
           display: none !important;
           visibility: hidden !important;
           pointer-events: none !important;
@@ -1989,13 +2065,15 @@ const MediHelp = {
     if (affiliate) affiliate.remove();
     const affiliateRight = document.getElementById('mh-desktop-affiliate-banner-right');
     if (affiliateRight) affiliateRight.remove();
+    const prefooterAd = document.getElementById('mh-prefooter-affiliate-ad');
+    if (prefooterAd) prefooterAd.remove();
 
     // 4. MutationObserver: hide dynamically injected ad iframes/slots
     const adSelector = [
       '[id^="ezoic-pub-ad"]', '.ezoic-adpicker-ad', '.ezoic-ad',
       'ins.adsbygoogle', 'iframe[src*="adsterra"]',
       'iframe[src*="n6wxm"]', 'iframe[src*="googlesyndication"]',
-      '#mh-desktop-affiliate-banner', '#mh-desktop-affiliate-banner-right'
+      '#mh-desktop-affiliate-banner', '#mh-desktop-affiliate-banner-right', '#mh-prefooter-affiliate-ad'
     ].join(',');
     const adObserver = new MutationObserver(function(mutations) {
       mutations.forEach(function(m) {
