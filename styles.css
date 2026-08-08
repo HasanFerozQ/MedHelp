@@ -2891,6 +2891,8 @@ textarea.search-input {
   .ad-banner-wrapper > embed {
     display: block !important;
     margin: 0 auto !important;
+    width: auto !important;
+    max-width: 728px !important;
   }
 
   
