@@ -2888,11 +2888,16 @@ textarea.search-input {
   .ad-banner-wrapper > iframe,
   .ad-banner-wrapper > div,
   .ad-banner-wrapper > object,
-  .ad-banner-wrapper > embed {
+  .ad-banner-wrapper > embed,
+  .ad-banner-wrapper iframe,
+  .ad-banner-wrapper div,
+  .ad-banner-wrapper object,
+  .ad-banner-wrapper embed {
     display: block !important;
     margin: 0 auto !important;
     width: auto !important;
     max-width: 728px !important;
+    text-align: center !important;
   }
 
   
