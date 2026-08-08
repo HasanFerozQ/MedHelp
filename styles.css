@@ -2867,17 +2867,30 @@ textarea.search-input {
   .ad-banner-wrapper > iframe,
   .ad-banner-wrapper > div,
   .ad-banner-wrapper > script {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
     box-sizing: border-box !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   .ad-banner-wrapper {
     overflow: hidden;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     margin-left: auto !important;
     margin-right: auto !important;
+  }
+
+  .ad-banner-wrapper > iframe,
+  .ad-banner-wrapper > div,
+  .ad-banner-wrapper > object,
+  .ad-banner-wrapper > embed {
+    display: block !important;
+    margin: 0 auto !important;
   }
 
   
