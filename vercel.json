@@ -106,6 +106,36 @@
       "source": "/medical-exam-usmle",
       "destination": "/usmle-preparation",
       "permanent": true
+    },
+    {
+      "source": "/medical-exam-preparation.html",
+      "destination": "/medical-exam-preparation",
+      "permanent": true
+    },
+    {
+      "source": "/medical-exam-semester.html",
+      "destination": "/medical-exam-semester",
+      "permanent": true
+    },
+    {
+      "source": "/medical-exam-usmle.html",
+      "destination": "/usmle-preparation",
+      "permanent": true
+    },
+    {
+      "source": "/flash-cards.html",
+      "destination": "/flash-cards",
+      "permanent": true
+    },
+    {
+      "source": "/medical-exam-mock.html",
+      "destination": "/medical-exam-mock",
+      "permanent": true
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog",
+      "permanent": true
     }
   ],
   "functions": {

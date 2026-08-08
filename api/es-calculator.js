@@ -13,10 +13,12 @@ function escAttr(str) {
 }
 
 module.exports = async (req, res) => {
-  // Extract pathname from request URL (e.g., /es/medical-calculator or /es/calculators/bmi-calculator)
-  const rawUrl = req.url.split('?')[0];
-  const reqPath = rawUrl.endsWith('/') && rawUrl.length > 1 ? rawUrl.slice(0, -1) : rawUrl;
-  
+  // Extract request URL and preserve query string for SEO-friendly canonicals.
+  const rawUrl = req.url || '';
+  const queryString = rawUrl.includes('?') ? rawUrl.slice(rawUrl.indexOf('?')) : '';
+  const rawPath = rawUrl.split('?')[0];
+  const reqPath = rawPath.endsWith('/') && rawPath.length > 1 ? rawPath.slice(0, -1) : rawPath;
+
   // Ensure path starts with /es
   const esPath = reqPath.startsWith('/es') ? reqPath : `/es${reqPath}`;
   const enPath = esPath.replace(/^\/es/, '') || '/medical-calculator';
@@ -39,8 +41,8 @@ module.exports = async (req, res) => {
 
   let html = fs.readFileSync(absoluteHtmlPath, 'utf8');
 
-  const canonicalUrl = `https://www.medihelp.live${esPath}`;
-  const enUrl = `https://www.medihelp.live${enPath}`;
+  const canonicalUrl = `https://www.medihelp.live${esPath}${queryString}`;
+  const enUrl = `https://www.medihelp.live${enPath}${queryString}`;
 
   // 1. Set self-referential canonical tag for Spanish URL
   if (html.includes('<link rel="canonical"')) {

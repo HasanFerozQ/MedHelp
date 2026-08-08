@@ -113,6 +113,17 @@ CalcRegistry.roles.forEach(role => {
   }
 });
 
+// Spanish Calculator Pages
+sitemapEntries.push('\n  <!-- Spanish Calculator Pages -->');
+addEntry('/es/medical-calculator', TODAY, 'monthly', 0.8);
+CalcRegistry.roles.forEach(role => {
+  addEntry(`/es/calculators/${role.id}`, TODAY, 'monthly', 0.8);
+  const roleCalcs = CalcRegistry.calculators.filter(c => c.role === role.id && c.implemented !== false);
+  roleCalcs.forEach(calc => {
+    addEntry(`/es/calculators/${role.id}?calc=${calc.id}`, TODAY, 'monthly', 0.7);
+  });
+});
+
 // Medical Exam Preparation Topics (SEO Slugs)
 const examPrepTopics = [
   '/medical-exam-preparation/thorax-anatomy-mcqs-usmle-mbbs-preparation',

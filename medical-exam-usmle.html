@@ -479,7 +479,7 @@
           <h2 style="font-size: 28px; font-weight: 900; margin-bottom: 8px;">Ready for the Big Day?</h2>
           <p style="opacity: 0.9; font-weight: 600;">Simulate the real exam with our 8-hour, 7-block Mock Exam engine.</p>
         </div>
-        <a href="medical-exam-mock.html" class="btn-mock" style="display: inline-flex; align-items: center; gap: 8px; white-space:nowrap;">
+        <a href="/medical-exam-mock" class="btn-mock" style="display: inline-flex; align-items: center; gap: 8px; white-space:nowrap;">
           Take a Mock Exam
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
@@ -1177,7 +1177,7 @@
           <div style="font-size: 12px; font-weight: 800; color: #a855f7;">${totalQuestions} Questions Available</div>
         `;
         card.onclick = () => {
-          window.location.href = `medical-exam-semester.html?topic_id=${topic.id}&usmle=true&free=${isFreeDemo}`;
+          window.location.href = `/medical-exam-semester?topic_id=${topic.id}&usmle=true&free=${isFreeDemo}`;
         };
         grid.appendChild(card);
       });
