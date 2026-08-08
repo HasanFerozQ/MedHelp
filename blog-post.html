@@ -1333,5 +1333,39 @@
       </div>
     </div>
 </footer>
+  <script>
+    (function(){
+      function fixAds(){
+        document.querySelectorAll('.ad-banner-wrapper').forEach(function(w){
+          try{
+            w.style.display = 'flex';
+            w.style.justifyContent = 'center';
+            w.style.alignItems = 'center';
+            w.style.width = '100%';
+            w.style.maxWidth = '100%';
+            w.style.textAlign = 'center';
+            var children = w.querySelectorAll('iframe,div,object,embed');
+            children.forEach(function(ch){
+              ch.style.setProperty('display','block','important');
+              ch.style.setProperty('margin','0 auto','important');
+              ch.style.setProperty('float','none','important');
+              ch.style.setProperty('position','static','important');
+              ch.style.setProperty('left','auto','important');
+              ch.style.setProperty('right','auto','important');
+              ch.style.setProperty('transform','none','important');
+              ch.style.setProperty('width','auto','important');
+              ch.style.setProperty('max-width','728px','important');
+              ch.style.setProperty('text-align','center','important');
+            });
+          }catch(e){}
+        });
+      }
+      if(document.readyState === 'loading'){
+        window.addEventListener('DOMContentLoaded', function(){ fixAds(); setTimeout(fixAds,2000); });
+      } else { fixAds(); setTimeout(fixAds,2000); }
+      var mo = new MutationObserver(function(){ fixAds(); });
+      mo.observe(document.body, { childList:true, subtree:true, attributes:true });
+    })();
+  </script>
 </body>
 </html>
