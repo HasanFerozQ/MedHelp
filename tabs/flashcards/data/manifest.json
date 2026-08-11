@@ -943,5 +943,40 @@
     "tab": "usmle2",
     "index": 28,
     "title": "Surgical Emergencies"
+  },
+  "GrowthDevelopmentFlashCards": {
+    "tab": "usmle2",
+    "index": 29,
+    "title": "Growth & Development"
+  },
+  "NeonatologyFlashCards": {
+    "tab": "usmle2",
+    "index": 30,
+    "title": "Neonatology"
+  },
+  "GeneticCongenitalDisordersFlashCards": {
+    "tab": "usmle2",
+    "index": 31,
+    "title": "Genetic/Congenital Disorders"
+  },
+  "InfectiousDiseaseInChildrenFlashCards": {
+    "tab": "usmle2",
+    "index": 32,
+    "title": "Infectious Disease in Children"
+  },
+  "ImmunizationsFlashCards": {
+    "tab": "usmle2",
+    "index": 33,
+    "title": "Immunizations"
+  },
+  "PediatricGICardioPulmFlashCards": {
+    "tab": "usmle2",
+    "index": 34,
+    "title": "Pediatric GI/Cardio/Pulm"
+  },
+  "AdolescentMedicineFlashCards": {
+    "tab": "usmle2",
+    "index": 35,
+    "title": "Adolescent Medicine"
   }
 }
