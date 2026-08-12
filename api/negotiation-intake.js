@@ -134,8 +134,8 @@ function buildIntakePdfBuffer({ caseId, fields, integrityMeta }) {
 }
 
 async function sendViaSmtp({ caseId, fields, attachments, integrityMeta, consentReceiptText }) {
-  const host = process.env.NEGOTIATION_SMTP_HOST || 'mail.privateemail.com';
-  const port = Number(process.env.NEGOTIATION_SMTP_PORT || 587);
+  const host = process.env.NEGOTIATION_SMTP_HOST || 'smtppro.zoho.com';
+  const port = Number(process.env.NEGOTIATION_SMTP_PORT || 465);
   const user = process.env.NEGOTIATION_SMTP_USER;
   const pass = process.env.NEGOTIATION_SMTP_PASS;
   const from = process.env.NEGOTIATION_FROM_EMAIL || user;

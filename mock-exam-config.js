@@ -91,6 +91,23 @@ window.MockExamConfig = {
       focus: 'Organ-system integration — cardio, pulmonary, renal, GI, endocrine, repro, neuro, MSK/skin (Guyton, Ganong, West, Lilly, Greenspan, Snell, Netter).',
       confirmMessage: 'Ready to start USMLE Step 1 Mock #5? Integrated organ-system vignettes load across 7 blocks.',
     },
+    'step1-mock6': {
+      id: 'step1-mock6',
+      step: 1,
+      tab: 'step1',
+      title: 'USMLE Step 1 Mock #6',
+      badge: 'STEP 1',
+      questions: 280,
+      totalBlocks: 7,
+      questionsPerBlock: 40,
+      totalHours: 8,
+      format: '7 Blocks / 60m ea.',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step1-stratified-mock6',
+      focus: 'Clinical vignette & mechanism integration — pathophysiology, drug toxicities, micro virulence, biostat risk ratios, and molecular genetics (UWorld, First Aid, Pathoma, Divine Intervention, OnlineMedEd).',
+      confirmMessage: 'Ready to start USMLE Step 1 Mock #6? Mechanism-integrated high-yield vignettes load across 7 timed blocks.',
+    },
     'step2-mock1': {
       id: 'step2-mock1',
       step: 2,
@@ -338,6 +355,24 @@ window.MockExamConfig = {
     { count: 8, label: 'General physiology bridge', slugs: ['usmle-1-physiology'] },
   ],
 
+  /**
+   * Mechanism-integrated high-yield emphasis — Mock #6 only (280).
+   * Cross-discipline pathophysiology, pharmacology toxicology, biostat decision trees, and molecular genetics.
+   */
+  step1Mock6Buckets: [
+    { count: 54, label: 'Pathology & Neoplasia Molecular Pathways · Robbins · Pathoma · Goljan', slugs: ['usmle-1-pathology', 'pathology', 'neuropathology'] },
+    { count: 38, label: 'Pharmacology Mechanisms & Toxicology · Katzung · Sketchy Pharm', slugs: ['pharmacology-usmle-1', 'neuropharmacology'] },
+    { count: 28, label: 'Microbiology Virulence & Diagnostics · Gladwin · Sketchy Micro', slugs: ['usmle-1-microbiology'] },
+    { count: 40, label: 'Clinical Physiology & Compensation · Guyton · Ganong · Costanzo', slugs: ['cardiovascular-physiology', 'respiratory-physiology', 'renal-physiology', 'gastrointestinal-physiology', 'endocrine-physiology', 'reproductive-physiology', 'usmle-1-physiology'] },
+    { count: 26, label: 'Biochemistry & Inborn Errors · Harper · Lippincott', slugs: ['usmle-1-biochemistry', 'molecular-biology'] },
+    { count: 24, label: 'Cross-Sectional Neuro & Embryology · Gray\'s · Snell · Moore', slugs: ['usmle-1-anatomy', 'embryology', 'musculoskeletal'] },
+    { count: 18, label: 'Biostatistics, Study Design & Risk Ratios · HY Biostat · Divine Intervention', slugs: ['usmle-1-biostatistics'] },
+    { count: 16, label: 'Immunology & Hypersensitivity · Abbas · First Aid', slugs: ['immunology'] },
+    { count: 16, label: 'Behavioral Science & Ethics · Kaplan · Beauchamp · OnlineMedEd', slugs: ['behavioral-sciences-usmle-1', 'ethics-professionalism'] },
+    { count: 10, label: 'Genetics & Chromosomal Disorders · Thompson & Thompson', slugs: ['usmle-1-genetics'] },
+    { count: 10, label: 'Multisystem Geriatrics & Dermatology · Robbins · Fitzpatrick', slugs: ['dermatology', 'usmle-1-nutrition', 'usmle-1-aging'] },
+  ],
+
   /** All Step 1 topic pools available in Supabase (used across mocks). */
   step1TopicCatalog: [
     { slug: 'usmle-1-pathology', name: 'General Pathology' },
@@ -413,6 +448,8 @@ window.MockExamConfig = {
     "Netter's Clinical Anatomy (Hansen)",
     "Deja Review: USMLE Step 1 Hematology & Oncology (Le)",
     "First Aid Q&A for the USMLE Step 1 (Le & Bhushan)",
+    "Divine Intervention (DI) Step 1 & Step 2 CK Notes",
+    "OnlineMedEd Clinical & Foundational Notes",
   ],
 
   getExam(id) {
@@ -446,6 +483,7 @@ window.MockExamConfig = {
       'step1-stratified-mock3': this.step1Mock3Buckets,
       'step1-stratified-mock4': this.step1Mock4Buckets,
       'step1-stratified-mock5': this.step1Mock5Buckets,
+      'step1-stratified-mock6': this.step1Mock6Buckets,
     };
     return byPool[pool] || null;
   },
@@ -457,6 +495,7 @@ window.MockExamConfig = {
     'Master the Boards USMLE Step 2 CK (Conrad Fischer)',
     'Step-Up to Medicine (Steven Agabegi)',
     'First Aid for the USMLE Step 2 CK (Tao Le & Vikas Bhushan)',
+    'Divine Intervention (DI) Step 2 CK Notes',
     'OnlineMedEd (video + notes)',
     "Harrison's Principles of Internal Medicine",
     'Washington Manual of Medical Therapeutics',
