@@ -20,6 +20,7 @@ MOCK_BUCKETS = {
     3: {"internal_medicine": 128, "surgery": 96, "pediatrics": 32, "obgyn": 32, "psychiatry": 32, "preventive": 0},
     4: {"internal_medicine": 144, "surgery": 64, "pediatrics": 64, "obgyn": 40, "psychiatry": 8, "preventive": 0},
     5: {"internal_medicine": 128, "surgery": 48, "pediatrics": 40, "obgyn": 40, "psychiatry": 48, "preventive": 16},
+    6: {"internal_medicine": 136, "surgery": 64, "pediatrics": 40, "obgyn": 32, "psychiatry": 24, "preventive": 24},
 }
 
 TOPIC_SLUGS = {
@@ -28,6 +29,7 @@ TOPIC_SLUGS = {
     3: "usmle-2-mock-pool-mock3",
     4: "usmle-2-mock-pool-mock4",
     5: "usmle-2-mock-pool-mock5",
+    6: "usmle-2-mock-pool-mock6",
 }
 
 AGES = list(range(22, 84))
@@ -134,8 +136,9 @@ def write_topics_migration():
         3: "USMLE Step 2 CK Mock #3 — Surgery & Acute Care",
         4: "USMLE Step 2 CK Mock #4 — Pediatrics & OB/GYN",
         5: "USMLE Step 2 CK Mock #5 — Psychiatry, Ethics & Multispecialty",
+        6: "USMLE Step 2 CK Mock #6 — Emergency & Clinical Subspecialty Integration",
     }
-    for n in range(1, 6):
+    for n in range(1, 7):
         slug = TOPIC_SLUGS[n]
         title = titles[n]
         lines.append(f"    IF NOT EXISTS (SELECT 1 FROM topics WHERE slug = '{slug}') THEN")
@@ -192,7 +195,7 @@ def main():
     print("Cases per subject:", {k: len(v) for k, v in by_subject.items()})
 
     write_topics_migration()
-    for mock_num in range(1, 6):
+    for mock_num in range(1, 7):
         mcqs = pick_mcqs_for_mock(mock_num, by_subject)
         if len(mcqs) != QUESTIONS_PER_MOCK:
             raise SystemExit(f"Mock {mock_num}: expected {QUESTIONS_PER_MOCK}, got {len(mcqs)}")

@@ -192,6 +192,23 @@ window.MockExamConfig = {
       focus: 'Psychiatry, ethics, geriatrics, derm, ophtho, ENT — Kaplan & Sadock, Beauchamp & Childress, multispecialty integration.',
       confirmMessage: 'Ready to start USMLE Step 2 CK Mock #5? Multispecialty and behavioral health vignettes load across 8 blocks.',
     },
+    'step2-mock6': {
+      id: 'step2-mock6',
+      step: 2,
+      tab: 'step2',
+      title: 'USMLE Step 2 CK Mock #6',
+      badge: 'STEP 2 CK',
+      questions: 320,
+      totalBlocks: 8,
+      questionsPerBlock: 40,
+      totalHours: 9,
+      format: '8 Blocks / 60m ea.',
+      freeDemo: false,
+      premiumOnly: true,
+      pool: 'step2-dedicated-mock6',
+      focus: 'Emergency, critical care & subspecialty integration — Pestana, NMS Surgery, BRS Peds/Psych/Neuro, Blueprints OB/GYN, Tintinalli Just the Facts, Fitzpatrick Derm, Divine Intervention & OnlineMedEd.',
+      confirmMessage: 'Ready to start USMLE Step 2 CK Mock #6? Emergency medicine and subspecialty vignettes load across 8 timed blocks.',
+    },
     'step3-mock1': {
       id: 'step3-mock1',
       step: 3,
@@ -469,6 +486,7 @@ window.MockExamConfig = {
     'step2-dedicated-mock3': 'usmle-2-mock-pool-mock3',
     'step2-dedicated-mock4': 'usmle-2-mock-pool-mock4',
     'step2-dedicated-mock5': 'usmle-2-mock-pool-mock5',
+    'step2-dedicated-mock6': 'usmle-2-mock-pool-mock6',
   },
 
   getDedicatedPoolSlug(examId) {
@@ -515,6 +533,14 @@ window.MockExamConfig = {
     "Bates' Guide to Physical Examination",
     'Case Files Series (Toy et al.)',
     'Symptom to Diagnosis (Stern et al.)',
+    "Pestana's Surgery Notes (Carlos Pestana)",
+    "NMS Surgery Casebook (Jarrell)",
+    "BRS Pediatrics (Brown)",
+    "Blueprints Obstetrics & Gynecology (Callahan & Caughey)",
+    "BRS Psychiatry (Johnson)",
+    "BRS Neuroanatomy (Fix)",
+    "Tintinalli's Emergency Medicine: Just the Facts",
+    "Fitzpatrick's Color Atlas & Synopsis of Clinical Dermatology",
   ],
 
   getStep1Exams() {

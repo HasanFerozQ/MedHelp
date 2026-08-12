@@ -32,5 +32,10 @@ BEGIN
         VALUES ('USMLE Step 2 CK Mock #5 — Psychiatry, Ethics & Multispecialty', 'usmle-2-mock-pool-mock5', 'Mock Exams', 2, v_max_order + 5);
     END IF;
 
+    IF NOT EXISTS (SELECT 1 FROM topics WHERE slug = 'usmle-2-mock-pool-mock6') THEN
+        INSERT INTO topics (title, slug, section, usmle_step, "order")
+        VALUES ('USMLE Step 2 CK Mock #6 — Emergency & Clinical Subspecialty Integration', 'usmle-2-mock-pool-mock6', 'Mock Exams', 2, v_max_order + 6);
+    END IF;
+
 END $$;
 COMMIT;
