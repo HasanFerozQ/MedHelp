@@ -219,6 +219,9 @@ async function showSuggestions(q) {
 }
 
 async function searchDenials(query) {
+  if (window.MediHelp && typeof window.MediHelp.trackEvent === 'function' && query) {
+    window.MediHelp.trackEvent('search_denial_code', { search_term: String(query).substring(0, 50) });
+  }
   if (!window.dbClient) {
     denialResults.innerHTML = '<div class="empty-state"><span class="loading-dots">Initializing Secure Connection...</span></div>';
     for (let i = 0; i < 20; i++) { 

@@ -1179,6 +1179,10 @@ async function searchNPI() {
   const rawQuery = nameInput.value.trim();
   const dropdownState = stateInput ? stateInput.value.trim().toUpperCase() : '';
 
+  if (window.MediHelp && typeof window.MediHelp.trackEvent === 'function' && rawQuery) {
+    window.MediHelp.trackEvent('search_npi_provider', { search_term: rawQuery.substring(0, 50) });
+  }
+
   if (rawQuery.length < 2 && !/^\d{10}$/.test(rawQuery.replace(/\D/g, ''))) {
     resultsEl.innerHTML = '<p class="status-msg">Please enter at least 2 characters or a 10-digit NPI.</p>';
     return;
