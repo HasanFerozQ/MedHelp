@@ -937,6 +937,9 @@ async function triggerAudit() {
   triggerAudit._retryCount = 0;
 
   const rows = window.appGridRows || [];
+  if (rows.length > 0 && window.MediHelp && typeof window.MediHelp.trackEvent === 'function') {
+    window.MediHelp.trackEvent('audit_bill_complete', { row_count: rows.length });
+  }
 
   // Stage 1 & 2: Pre-Audit Validation Gate (Quarantine & Derive)
   const auditableRows = [];

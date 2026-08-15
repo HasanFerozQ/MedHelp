@@ -203,6 +203,7 @@
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/medical-exam-preparation">Medical Exams</a>
+        <a href="/flash-cards">Flashcards</a>
         <a href="/medical-bill-audit">Medical Bill Audit</a>
         <div class="nav-dropdown">
           <div class="nav-dropdown-btn">Codes ▼</div>
@@ -589,5 +590,20 @@
 </footer>
 
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const ctaBtns = document.querySelectorAll('.btn-expert-cta, .btn-instant, a[href*="gumroad.com"]');
+    ctaBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        if (window.MediHelp && typeof window.MediHelp.trackEvent === 'function') {
+          window.MediHelp.trackEvent('generate_lead', {
+            item_name: btn.textContent.trim().substring(0, 50),
+            link_url: btn.getAttribute('href') || ''
+          });
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>

@@ -299,6 +299,16 @@ function switchTab(tabId, btn) {
 
 // 6. MediHelp Global Namespace & Advanced Fetch (v4.9)
 const MediHelp = {
+  trackEvent: function(eventName, params = {}) {
+    try {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', eventName, params);
+      }
+    } catch (e) {
+      console.warn('MediHelp trackEvent error:', e);
+    }
+  },
+
   initTheme: function() {
     const saved = localStorage.getItem('mh-theme') || 'dark';
     document.documentElement.setAttribute('data-theme', saved);

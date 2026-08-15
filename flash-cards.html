@@ -279,6 +279,7 @@
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/medical-exam-preparation">Medical Exams</a>
+        <a href="/flash-cards" class="active">Flashcards</a>
         <a href="/medical-bill-audit">Medical Bill Audit</a>
         <div class="nav-dropdown">
           <div class="nav-dropdown-btn">Codes ▼</div>
@@ -1157,6 +1158,9 @@
       const topic = FLASH_DATA[currentTab]?.[index];
       if (!topic) return;
       const slug = flashTopicSlug(topic.topic);
+      if (window.MediHelp && typeof window.MediHelp.trackEvent === 'function') {
+        window.MediHelp.trackEvent('flashcard_deck_start', { deck_name: topic.topic, deck_slug: slug });
+      }
       const url = `/flash-cards?deck=${encodeURIComponent(slug)}`;
       const state = { tab: currentTab, index };
       if (replace) history.replaceState(state, '', url);
@@ -1199,6 +1203,9 @@
       // Card Flip
       cardElement.onclick = () => {
         cardElement.classList.toggle('is-flipped');
+        if (window.MediHelp && typeof window.MediHelp.trackEvent === 'function') {
+          window.MediHelp.trackEvent('flashcard_review', { action: 'flip' });
+        }
       };
 
       // Nav Buttons

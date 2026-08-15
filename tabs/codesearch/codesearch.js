@@ -755,6 +755,9 @@ function setupEventListeners() {
 }
 
 async function performSearch(query) {
+  if (window.MediHelp && typeof window.MediHelp.trackEvent === 'function') {
+    window.MediHelp.trackEvent('search_cpt_code', { search_term: String(query || '').substring(0, 100) });
+  }
   const listContainer = document.getElementById('search-results-list');
   const parsed = parseSearchQuery(query);
   const validation = validateSearchQuery(parsed, query);
