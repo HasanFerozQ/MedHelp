@@ -201,6 +201,11 @@ module.exports = async (req, res) => {
     .replace(
       /(<meta name="twitter:image" content=")[^"]*(")/,
       `$1${escAttr(ogImage)}$2`
+    )
+    // robots — template defaults to noindex; SSR posts must be indexable
+    .replace(
+      /(<meta name="robots" content=")[^"]*(")/,
+      '$1index, follow$2'
     );
 
   // Inject server-side BlogPosting JSON-LD schema before </head>

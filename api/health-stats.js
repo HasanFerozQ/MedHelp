@@ -61,10 +61,14 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const categoryInfo = CATEGORY_FILES[category] || {
-    name: category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-    file: `tabs/health-stats/data/${category.replace('-statistics-2026', '')}-2026.json`
-  };
+  // Return 404 for unknown/invalid categories (e.g. garbage URLs like /${key})
+  // so search engines don't crawl and attempt to index junk URLs.
+  if (!CATEGORY_FILES[category]) {
+    res.status(404).send('Not Found');
+    return;
+  }
+
+  const categoryInfo = CATEGORY_FILES[category];
 
   let pageTitle = `${categoryInfo.name} | MediHelp`;
   let h1Text = categoryInfo.name;

@@ -4,17 +4,17 @@
 User-agent: *
 Allow: /
 
-# Allow blog API (Vercel serves /blog/:slug via /api/blog)
-Allow: /api/blog
-Allow: /api/blog*
-
-# Block admin, debug, and non-public paths
+# Block admin, debug, and private API endpoints only
+# NOTE: /api/blog, /api/health-stats, /api/es-calculator serve real indexable pages — do NOT block them
 Disallow: /admin/
 Disallow: /private/
 Disallow: /med-trivia-admin
 Disallow: /med-trivia-admin.html
 Disallow: /debug
-Disallow: /api/
+Disallow: /api/feedback
+Disallow: /api/negotiation-intake
+Disallow: /api/npi
+Disallow: /api/audit-bill
 Disallow: /.git/
 Disallow: /.github/
 Disallow: /.vscode/
@@ -27,6 +27,8 @@ Disallow: /popup/
 Disallow: /vision/
 Disallow: /__pycache__/
 Disallow: /docs/
+Disallow: /bad_file.html
+Disallow: /medical-exam-usmle
 Disallow: /*.sql$
 Disallow: /*.py$
 

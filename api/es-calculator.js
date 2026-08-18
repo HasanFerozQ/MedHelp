@@ -15,7 +15,6 @@ function escAttr(str) {
 module.exports = async (req, res) => {
   // Extract request URL and preserve query string for SEO-friendly canonicals.
   const rawUrl = req.url || '';
-  const queryString = rawUrl.includes('?') ? rawUrl.slice(rawUrl.indexOf('?')) : '';
   const rawPath = rawUrl.split('?')[0];
   const reqPath = rawPath.endsWith('/') && rawPath.length > 1 ? rawPath.slice(0, -1) : rawPath;
 
@@ -41,8 +40,9 @@ module.exports = async (req, res) => {
 
   let html = fs.readFileSync(absoluteHtmlPath, 'utf8');
 
-  const canonicalUrl = `https://www.medihelp.live${esPath}${queryString}`;
-  const enUrl = `https://www.medihelp.live${enPath}${queryString}`;
+  // Canonical: always the clean URL without query params — prevents duplicate indexing.
+  const canonicalUrl = `https://www.medihelp.live${esPath}`;
+  const enUrl = `https://www.medihelp.live${enPath}`;
 
   // 1. Set self-referential canonical tag for Spanish URL
   if (html.includes('<link rel="canonical"')) {
