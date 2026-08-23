@@ -2,7 +2,7 @@
   "meta": {
     "title": "HIV/AIDS Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-08-16",
+    "lastUpdated": "2026-08-23",
     "primarySources": [
       "UNAIDS Global AIDS Update 2024",
       "WHO HIV/AIDS Programme",
@@ -10,7 +10,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-08-16",
+      "lastCheck": "2026-08-23",
       "status": "Auto-Synced: HIV incidence 1100000/1K (World Bank 2024)"
     }
   },
