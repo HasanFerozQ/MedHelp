@@ -2,7 +2,7 @@
   "meta": {
     "title": "Smoking & Tobacco Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-08-30",
+    "lastUpdated": "2026-09-06",
     "primarySources": [
       "WHO Report on the Global Tobacco Epidemic 2023-2025",
       "CDC Tobacco Control Data",
@@ -11,7 +11,7 @@
     "syncStatus": "Auto-Synced via World Bank Open Data API",
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-08-30",
+      "lastCheck": "2026-09-06",
       "status": "Auto-Synced: Smoking prevalence 20.3% (World Bank 2024)"
     }
   },
