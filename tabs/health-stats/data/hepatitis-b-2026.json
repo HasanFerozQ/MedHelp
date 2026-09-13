@@ -2,7 +2,7 @@
   "meta": {
     "title": "Hepatitis B Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-09-06",
+    "lastUpdated": "2026-09-13",
     "primarySources": [
       "WHO Hepatitis B Fact Sheet 2024",
       "World Hepatitis Alliance",
@@ -10,7 +10,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-09-06",
+      "lastCheck": "2026-09-13",
       "status": "Verified — WHO HBV Fact Sheet 2024"
     }
   },
