@@ -136,6 +136,135 @@
       "source": "/blog.html",
       "destination": "/blog",
       "permanent": true
+    },
+    {
+      "source": "/blog-post",
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "(?<slug>[^/]+)"
+        }
+      ],
+      "destination": "/blog/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/blog-post.html",
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "(?<slug>[^/]+)"
+        }
+      ],
+      "destination": "/blog/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/blog-post",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/cpt-code-search.html",
+      "destination": "/cpt-code-search",
+      "permanent": true
+    },
+    {
+      "source": "/claim-denial-codes.html",
+      "destination": "/claim-denial-codes",
+      "permanent": true
+    },
+    {
+      "source": "/medical-bill-audit.html",
+      "destination": "/medical-bill-audit",
+      "permanent": true
+    },
+    {
+      "source": "/audit.html",
+      "destination": "/medical-bill-audit",
+      "permanent": true
+    },
+    {
+      "source": "/medical-calculator.html",
+      "destination": "/medical-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/rx-savings.html",
+      "destination": "/rx-savings",
+      "permanent": true
+    },
+    {
+      "source": "/providers.html",
+      "destination": "/providers",
+      "permanent": true
+    },
+    {
+      "source": "/global-health-statistics.html",
+      "destination": "/global-health-statistics",
+      "permanent": true
+    },
+    {
+      "source": "/medical-exam-nbme.html",
+      "destination": "/medical-exam-nbme",
+      "permanent": true
+    },
+    {
+      "source": "/medical-exam-simulator.html",
+      "destination": "/medical-exam-simulator",
+      "permanent": true
+    },
+    {
+      "source": "/medical-exam-simulator-step3.html",
+      "destination": "/medical-exam-simulator-step3",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/editorial-policy.html",
+      "destination": "/editorial-policy",
+      "permanent": true
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/terms.html",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/refund.html",
+      "destination": "/refund",
+      "permanent": true
+    },
+    {
+      "source": "/pricing.html",
+      "destination": "/pricing",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/contact",
+      "permanent": true
     }
   ],
   "functions": {

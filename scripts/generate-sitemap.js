@@ -58,7 +58,7 @@ const mainPages = [
   { loc: '/medical-exam-preparation/second-year-mbbs', priority: 0.9, changefreq: 'weekly' },
   { loc: '/medical-exam-preparation/third-year-mbbs', priority: 0.9, changefreq: 'weekly' },
   { loc: '/medical-exam-preparation/fourth-year-mbbs', priority: 0.9, changefreq: 'weekly' },
-  { loc: '/medical-exam-usmle', priority: 0.9, changefreq: 'weekly' },
+  { loc: '/usmle-preparation', priority: 0.9, changefreq: 'weekly' },
   { loc: '/medical-exam-semester', priority: 0.9, changefreq: 'weekly' },
   { loc: '/medical-exam-mock', priority: 0.9, changefreq: 'weekly' },
   { loc: '/medical-exam-nbme', priority: 0.9, changefreq: 'weekly' },
@@ -146,6 +146,8 @@ if (blogPosts.length > 0) {
 
 // Legal & Static Pages
 const legalPages = [
+  '/about',
+  '/editorial-policy',
   '/pricing',
   '/privacy',
   '/terms',

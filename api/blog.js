@@ -94,20 +94,95 @@ function buildJsonLd(meta, slug, canonicalUrl) {
   return `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`;
 }
 
+const KNOWN_ALIASES = {
+  'medical-dispatch-may-2026-zombie-cells-glp1-sl': 'medical-dispatch-may-2026-zombie-cells-glp1-ai',
+  'fish-oil-warning-tbl-omega3-2026': 'fish-oil-warning-tbi-omega3-2026'
+};
+
+let cachedPosts = null;
+function getAvailablePosts(blogDir) {
+  if (!cachedPosts) {
+    if (fs.existsSync(blogDir)) {
+      cachedPosts = fs.readdirSync(blogDir).filter(f => f.endsWith('.md')).map(f => f.slice(0, -3));
+    } else {
+      cachedPosts = [];
+    }
+  }
+  return cachedPosts;
+}
+
+function resolveSlug(raw, blogDir) {
+  if (!raw) return null;
+  let s = decodeURIComponent(String(raw).trim());
+  s = s.replace(/[\s+]+/g, '-');
+  const posts = getAvailablePosts(blogDir);
+  if (posts.includes(s)) return s;
+  if (KNOWN_ALIASES[s]) return KNOWN_ALIASES[s];
+
+  const lower = s.toLowerCase();
+  for (const f of posts) {
+    if (f.toLowerCase() === lower) return f;
+  }
+  for (const [k, v] of Object.entries(KNOWN_ALIASES)) {
+    if (k.toLowerCase() === lower) return v;
+  }
+
+  const simplified = lower.replace(/[^a-z0-9]/g, '');
+  for (const f of posts) {
+    if (f.toLowerCase().replace(/[^a-z0-9]/g, '') === simplified) return f;
+  }
+
+  return null;
+}
+
 module.exports = async (req, res) => {
-  // Extract slug from URL: /blog/:slug  (vercel rewrite passes it as query param)
-  const slug =
-    req.query.slug ||
-    (req.url.split('?')[0].replace(/^\/blog\//, '').trim());
+  const blogDir = path.join(process.cwd(), 'blog');
+
+  // Extract raw slug candidate from query or path
+  let rawSlug = req.query.slug;
+  if (!rawSlug && req.query) {
+    for (const key of Object.keys(req.query)) {
+      if (/^slug[-=]/i.test(key)) {
+        rawSlug = key.replace(/^slug[-=]/i, '') || req.query[key];
+        break;
+      }
+    }
+  }
+  if (!rawSlug && req.url) {
+    const urlMatch = req.url.match(/slug[-=]([^&]+)/i);
+    if (urlMatch) {
+      rawSlug = urlMatch[1];
+    }
+  }
+  if (!rawSlug && req.url) {
+    rawSlug = req.url.split('?')[0].replace(/^\/blog\//, '').trim();
+  }
+
+  const slug = resolveSlug(rawSlug, blogDir);
 
   if (!slug) {
-    res.setHeader('Location', '/blog');
-    res.status(302).end();
+    res.writeHead(301, { Location: '/blog' });
+    res.end();
+    return;
+  }
+
+  // Determine requested URL to detect legacy / non-canonical access
+  const forwardedUri = req.headers['x-forwarded-uri'] || req.url || '';
+  const isLegacyPath = forwardedUri.includes('/blog-post') || !forwardedUri.startsWith('/blog/');
+  const isCleanCanonical = forwardedUri.startsWith(`/blog/${encodeURIComponent(slug)}`) || forwardedUri.startsWith(`/blog/${slug}`);
+
+  // If accessed via legacy endpoint (/blog-post, /blog-post.html) or an un-normalized slug:
+  // issue a 301 Permanent Redirect to the canonical /blog/:slug clean URL
+  if (isLegacyPath || !isCleanCanonical) {
+    res.writeHead(301, {
+      Location: `/blog/${encodeURIComponent(slug)}`,
+      'Cache-Control': 'public, max-age=86400'
+    });
+    res.end();
     return;
   }
 
   // Locate the markdown file
-  const blogDir = path.join(process.cwd(), 'blog');
   const mdFile = path.join(blogDir, `${slug}.md`);
 
   let meta = {};

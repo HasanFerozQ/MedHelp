@@ -6,7 +6,7 @@
   const EXAM_ID = urlParams.get('exam_id') || 'step3-mock1';
   const EXAM = MockExamConfig.getExam(EXAM_ID);
   if (!EXAM.step3Exam) {
-    window.location.href = `medical-exam-simulator.html?exam_id=${encodeURIComponent(EXAM_ID)}`;
+    window.location.href = `/medical-exam-simulator?exam_id=${encodeURIComponent(EXAM_ID)}`;
     return;
   }
 
@@ -428,13 +428,13 @@
   };
 
   window._s3Exit = function () {
-    window.location.href = 'medical-exam-mock.html?tab=step3';
+    window.location.href = '/medical-exam-mock?tab=step3';
   };
 
   async function init() {
     if (EXAM.comingSoon) {
       alert('This mock is not available yet.');
-      window.location.href = 'medical-exam-mock.html?tab=step3';
+      window.location.href = '/medical-exam-mock?tab=step3';
       return;
     }
     const premium = await MediHelp.isPremium();

@@ -13,7 +13,7 @@ function setupBlogDemos() {
       if (demoData) {
         // Store in localStorage to bridge the page transition (standardized key)
         localStorage.setItem('mh_pending_audit', demoData.billText);
-        window.location.href = 'audit.html';
+        window.location.href = '/medical-bill-audit';
       }
     });
   });

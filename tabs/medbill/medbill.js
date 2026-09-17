@@ -239,7 +239,7 @@ function renderAuditResults(findings) {
   document.getElementById('full-audit-link')?.addEventListener('click', () => {
     const text = document.getElementById('paste-area')?.value || '';
     sessionStorage.setItem('mh_pending_audit', text);
-    window.location.href = 'audit.html?action=advanced';
+    window.location.href = '/medical-bill-audit?action=advanced';
   });
 }
 

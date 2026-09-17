@@ -585,8 +585,8 @@ window.MockExamConfig = {
 
   getSimulatorPath(examId) {
     const exam = this.getExam(examId);
-    if (exam.step3Exam) return 'medical-exam-simulator-step3.html';
-    return 'medical-exam-simulator.html';
+    if (exam.step3Exam) return '/medical-exam-simulator-step3';
+    return '/medical-exam-simulator';
   },
 
   getStep1Readiness(scorePct) {

@@ -792,7 +792,7 @@
     const EXAM_ID = urlParams.get('exam_id') || 'step1-mock1';
     const EXAM = MockExamConfig.getExam(EXAM_ID);
     if (EXAM.step3Exam) {
-      window.location.replace(`medical-exam-simulator-step3.html?exam_id=${encodeURIComponent(EXAM_ID)}`);
+      window.location.replace(`/medical-exam-simulator-step3?exam_id=${encodeURIComponent(EXAM_ID)}`);
     }
     const TOTAL_BLOCKS = EXAM.totalBlocks || (EXAM.step === 2 ? 8 : (MockExamConfig.TOTAL_BLOCKS || 7));
     const Q_PER_BLOCK = EXAM.questionsPerBlock || MockExamConfig.Q_PER_BLOCK || 40;
@@ -902,7 +902,7 @@
         confirmText: 'Quit & Save',
         onConfirm: () => {
           saveState();
-          window.location.href = 'medical-exam-mock.html';
+          window.location.href = '/medical-exam-mock';
         },
       });
     }
@@ -917,7 +917,7 @@
         danger: true,
         onConfirm: () => {
           localStorage.removeItem(STATE_KEY);
-          window.location.href = 'medical-exam-mock.html';
+          window.location.href = '/medical-exam-mock';
         },
       });
     }
@@ -1039,7 +1039,7 @@
           body: 'This mock exam is not available yet. Please choose another exam from the lobby.',
           confirmText: 'Back to Lobby',
           alertOnly: true,
-          onConfirm: () => { window.location.href = 'medical-exam-mock.html'; },
+          onConfirm: () => { window.location.href = '/medical-exam-mock'; },
         });
         return;
       }
@@ -1082,7 +1082,7 @@
         initUI();
       } catch (err) {
         console.error(err);
-        loader.innerHTML = `<p style="color:#ef4444; text-align:center;">${err.message || 'Failed to load exam.'} <a href="medical-exam-mock.html" style="color:#a855f7;">Return to lobby</a></p>`;
+        loader.innerHTML = `<p style="color:#ef4444; text-align:center;">${err.message || 'Failed to load exam.'} <a href="/medical-exam-mock" style="color:#a855f7;">Return to lobby</a></p>`;
       }
     }
 
@@ -1632,7 +1632,7 @@
 
     function exitSimulator() {
       localStorage.removeItem(STATE_KEY);
-      window.location.href = 'medical-exam-mock.html';
+      window.location.href = '/medical-exam-mock';
     }
 
 
