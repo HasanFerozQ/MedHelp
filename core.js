@@ -1801,10 +1801,10 @@ const MediHelp = {
           <!-- Box Ad 3 -->
           <div class="mh-ad-box-card">
             <span class="mh-ad-badge">SPONSORED</span>
-            <a href="https://www.jdoqocy.com/click-101847975-17183529?url=https%3A%2F%2Frexing.com%2Fproducts%2Frexing-3-in-1%3Fvariant%3D42803164315838&cjsku=42803164315838" target="_blank" rel="sponsored noopener noreferrer" class="mh-ad-box-link">
+            <a href="https://www.anrdoezrs.net/click-101847975-11680307" target="_top" rel="sponsored noopener noreferrer" class="mh-ad-box-link">
               <div class="mh-ad-box-img-wrapper">
-                <img src="https://cdn.shopify.com/s/files/1/0556/5536/6846/products/main_9f7cb063-b698-4da1-829a-0f1fc8230f87.jpg?v=1678126787" alt="Rexing 3-in-1 Smart Device"
-                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&q=80';" />
+                Discreet STD Testing - $10 off your complete order with code: 10OffOrder
+                <img src="https://www.lduhtrp.net/image-101847975-11680307" width="1" height="1" alt="" border="0" />
               </div>
             </a>
           </div>
