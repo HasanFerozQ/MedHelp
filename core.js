@@ -1803,8 +1803,7 @@ const MediHelp = {
             <span class="mh-ad-badge">SPONSORED</span>
             <a href="https://www.anrdoezrs.net/click-101847975-11680307" target="_top" rel="sponsored noopener noreferrer" class="mh-ad-box-link">
               <div class="mh-ad-box-img-wrapper">
-                Discreet STD Testing - $10 off your complete order with code: 10OffOrder
-                <img src="https://www.lduhtrp.net/image-101847975-11680307" width="1" height="1" alt="" border="0" />
+                <img src="https://www.tqlkg.com/image-101847975-11648983" width="250" height="250" alt="" border="0" />
               </div>
             </a>
           </div>
