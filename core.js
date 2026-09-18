@@ -1960,8 +1960,8 @@ const MediHelp = {
     adSection.innerHTML = `
       <div class="mh-prefooter-ad-container">
         <span class="mh-ad-badge">SPONSORED</span>
-        <a href="https://www.kqzyfj.com/click-101847975-13689151" target="_blank" rel="sponsored noopener noreferrer" class="mh-prefooter-ad-link">
-          <img src="https://www.tqlkg.com/image-101847975-13689151" width="700" height="148" alt="Special Offer" border="0" 
+        <a href="https://www.tkqlhce.com/click-101847975-11648782" target="_top" rel="sponsored noopener noreferrer" class="mh-prefooter-ad-link">
+          <img src="https://www.tqlkg.com/image-101847975-11648782" width="728" height="90" alt="" border="0"
                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';" />
         </a>
       </div>
