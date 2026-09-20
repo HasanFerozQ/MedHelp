@@ -2,7 +2,7 @@
   "meta": {
     "title": "Cholera Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-09-13",
+    "lastUpdated": "2026-09-20",
     "primarySources": [
       "WHO Global Task Force on Cholera Control (GTFCC)",
       "WHO Disease Outbreak News",
@@ -10,7 +10,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-09-13",
+      "lastCheck": "2026-09-20",
       "status": "Verified — WHO GTFCC & Outbreak News"
     }
   },
