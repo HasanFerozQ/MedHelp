@@ -2747,7 +2747,13 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- Blog Posts (all 40 from manifest.json) -->
+  <!-- Blog Posts (all 41 from manifest.json) -->
+  <url>
+    <loc>https://www.medihelp.live/blog/how-to-spot-fake-medical-bill</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
   <url>
     <loc>https://www.medihelp.live/blog/wilderness-medical-guide-hiking-first-aid</loc>
     <lastmod>2026-09-20</lastmod>
