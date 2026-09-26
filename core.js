@@ -1752,8 +1752,17 @@ const MediHelp = {
       return !!this._isPremiumCache;
     }
   },
+  isBlogPostPage: function() {
+    const path = (window.location.pathname || '').replace(/\/+$/, '') || '/';
+    if (path === '/blog' || path === '/blog.html') return false;
+    if (document.querySelector('.post-layout .post-sidebar')) return true;
+    return path.indexOf('/blog/') === 0;
+  },
+
   // Desktop Left & Right Affiliate Banners + Bottom Pre-Footer Ad
   initAffiliateBanner: function() {
+    const isBlogPost = this.isBlogPostPage();
+
     // 1. Left Banner (Tall Vertical)
     if (!document.getElementById('mh-desktop-affiliate-banner')) {
       const bannerLeft = document.createElement('div');
@@ -1770,6 +1779,8 @@ const MediHelp = {
     }
 
     // 2. Right Banner Grid (Tiled Box Ads Vertically)
+    // On blog posts only: stack these under the Audit Your Bill sidebar card
+    // so the article can use the extra horizontal space.
     if (!document.getElementById('mh-desktop-affiliate-banner-right')) {
       const bannerRight = document.createElement('div');
       bannerRight.id = 'mh-desktop-affiliate-banner-right';
@@ -1809,7 +1820,16 @@ const MediHelp = {
           </div>
         </div>
       `;
-      document.body.appendChild(bannerRight);
+      const sidebarMount = isBlogPost && (
+        document.getElementById('sidebar-affiliate-ads') ||
+        document.querySelector('.post-sidebar')
+      );
+      if (sidebarMount) {
+        bannerRight.classList.add('mh-sidebar-placed');
+        sidebarMount.appendChild(bannerRight);
+      } else {
+        document.body.appendChild(bannerRight);
+      }
     }
 
     if (!document.getElementById('mh-affiliate-banner-styles')) {
@@ -1933,8 +1953,23 @@ const MediHelp = {
           transform: scale(1.04);
         }
 
+        /* Blog post: sit in the article sidebar instead of a fixed right rail */
+        .mh-desktop-affiliate-banner-right.mh-sidebar-placed {
+          position: static;
+          top: auto;
+          right: auto;
+          width: 100%;
+          max-height: none;
+          overflow: visible;
+          z-index: 1;
+        }
+        .mh-desktop-affiliate-banner-right.mh-sidebar-placed .mh-ad-box-card {
+          width: 100%;
+          height: 200px;
+        }
+
         @media (max-width: 1180px) {
-          .mh-desktop-affiliate-banner-right,
+          .mh-desktop-affiliate-banner-right:not(.mh-sidebar-placed),
           .mh-desktop-affiliate-banner {
             display: none !important;
           }
