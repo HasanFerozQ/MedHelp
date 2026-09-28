@@ -22,17 +22,33 @@ The terms **STI** and **STD** are often used interchangeably, but they describe 
 
 STIs may be caused by bacteria, viruses, or parasites. Common examples include chlamydia, gonorrhea, syphilis, HIV, herpes simplex virus (HSV), human papillomavirus (HPV), trichomoniasis, and hepatitis B. Some bacterial STIs can be cured with treatment. Viral infections may not always be curable, but diagnosis and medical care can reduce complications and transmission risk.
 
+### Explore an STI testing option
+
+If you are considering testing, review the available options and choose tests suited to your situation. A healthcare professional can help you decide what to test for and when.
+
+<p style="text-align:center; margin:24px 0;"><a href="https://www.dpbolvw.net/click-101847975-11648778" target="_top" rel="sponsored noopener noreferrer" style="display:inline-block; width:100%; max-width:420px; box-sizing:border-box; padding:14px 18px; background:#22c55e; color:#05140b; border-radius:8px; text-decoration:none; font-weight:800;">Explore an STI testing option</a></p>
+
+MediHelp may receive compensation if you use this referral link, at no additional cost to you. The link is not an endorsement of a particular test for your circumstances.
+
 ## The U.S. numbers: why screening matters
 
 CDC's provisional 2024 surveillance data reported the following cases:
 
-| Infection | Reported U.S. cases in 2024 |
-| --- | ---: |
-| Chlamydia | 1,515,985 |
-| Gonorrhea | 543,409 |
-| Total syphilis | 190,242 |
-| Congenital syphilis | 3,941 |
-| Chlamydia, gonorrhea, and syphilis combined | 2,249,636 |
+<div class="post-table-scroll" role="region" aria-label="Reported STI cases in the United States in 2024" tabindex="0">
+<table class="post-data-table">
+<caption>CDC provisional reported cases in 2024</caption>
+<thead>
+<tr><th scope="col">Infection</th><th scope="col">Reported U.S. cases in 2024</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">Chlamydia</th><td>1,515,985</td></tr>
+<tr><th scope="row">Gonorrhea</th><td>543,409</td></tr>
+<tr><th scope="row">Total syphilis</th><td>190,242</td></tr>
+<tr><th scope="row">Congenital syphilis</th><td>3,941</td></tr>
+<tr><th scope="row">Chlamydia, gonorrhea, and syphilis combined</th><td>2,249,636</td></tr>
+</tbody>
+</table>
+</div>
 
 These are reported cases of nationally notifiable infections, not estimates of every infection in the country. Some infections cause no symptoms, are never tested for, or are not reported to surveillance systems. The 2024 figures are provisional and may change when finalized.
 
@@ -107,7 +123,7 @@ Some at-home services offer self-testing or self-collected samples for particula
 
 This sponsored referral link is one option for exploring STI testing. It is not a substitute for medical advice; confirm that any service and test meet your needs.
 
-<p style="text-align:center; margin:24px 0;"><a href="https://www.dpbolvw.net/click-101847975-11648778" target="_top" rel="sponsored noopener noreferrer"><img src="https://www.ftjcfx.com/image-101847975-11648778" width="728" height="90" alt="Explore an STI testing option" border="0" style="display:inline-block; width:100%; max-width:728px; height:auto;"></a></p>
+<p style="text-align:center; margin:24px 0;"><a href="https://www.dpbolvw.net/click-101847975-11648778" target="_top" rel="sponsored noopener noreferrer" style="display:inline-block; width:100%; max-width:420px; box-sizing:border-box; padding:14px 18px; background:#22c55e; color:#05140b; border-radius:8px; text-decoration:none; font-weight:800;">Explore an STI testing option</a></p>
 
 MediHelp may receive compensation if you use this referral link, at no additional cost to you. The link is not an endorsement of a particular test for your circumstances. Discuss the right testing and follow-up with a qualified healthcare professional.
 
@@ -138,3 +154,17 @@ More than 2.2 million reported cases of chlamydia, gonorrhea, and syphilis were 
 ### Important medical disclaimer
 
 This article is for general educational purposes and does not replace professional medical advice, diagnosis, or treatment. Testing recommendations vary according to age, anatomy, sexual practices, pregnancy status, symptoms, medical history, location, and other factors. A healthcare professional can help determine which tests are right for you. If you have symptoms or think you may have recently been exposed to an STI, seek medical advice promptly.
+
+<p style="margin:24px 0 8px; text-align:center; font-size:12px; font-weight:700; color:#94a3b8;">Sponsored testing options</p>
+<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px; max-width:516px; margin:0 auto 24px;">
+	<div style="flex:1 1 220px; width:100%; max-width:250px; text-align:center;">
+		<a href="https://www.tkqlhce.com/click-101847975-11648965" target="_top" rel="sponsored noopener noreferrer" aria-label="Explore an STI testing option" style="display:block; line-height:0;"><img src="https://www.lduhtrp.net/image-101847975-11648965" width="250" height="250" alt="Sponsored STI testing option" border="0" style="display:block; width:100%; max-width:250px; max-height:none; height:auto; aspect-ratio:1/1; object-fit:contain; margin:0; border-radius:8px;"></a>
+		<a href="https://www.tkqlhce.com/click-101847975-11648965" target="_top" rel="sponsored noopener noreferrer" style="display:block; margin-top:8px; padding:10px 12px; background:#22c55e; color:#05140b; border-radius:8px; text-decoration:none; font-weight:800;">Explore STI testing</a>
+	</div>
+	<div style="flex:1 1 220px; width:100%; max-width:250px; text-align:center;">
+		<a href="https://www.dpbolvw.net/click-101847975-11648983" target="_top" rel="sponsored noopener noreferrer" aria-label="Explore an STI testing option" style="display:block; line-height:0;"><img src="https://www.awltovhc.com/image-101847975-11648983" width="250" height="250" alt="Sponsored STI testing option" border="0" style="display:block; width:100%; max-width:250px; max-height:none; height:auto; aspect-ratio:1/1; object-fit:contain; margin:0; border-radius:8px;"></a>
+		<a href="https://www.dpbolvw.net/click-101847975-11648983" target="_top" rel="sponsored noopener noreferrer" style="display:block; margin-top:8px; padding:10px 12px; background:#22c55e; color:#05140b; border-radius:8px; text-decoration:none; font-weight:800;">Explore STI testing</a>
+	</div>
+</div>
+
+MediHelp may receive compensation if you use either sponsored referral link, at no additional cost to you.

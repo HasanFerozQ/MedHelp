@@ -64,7 +64,7 @@
     }
     .sidebar-affiliate-ads .mh-ad-box-card {
       width: 100%;
-      height: 200px;
+      height: auto;
     }
     .post-sidebar {
       position: sticky;
@@ -263,6 +263,52 @@
       margin: 28px 0;
       border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
       display: block;
+    }
+    .post-body .post-table-scroll {
+      max-width: 100%;
+      overflow-x: auto;
+      margin: 20px 0 28px;
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+      border-radius: 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .post-body .post-data-table {
+      display: table;
+      width: 100%;
+      min-width: 520px;
+      margin: 0;
+      border-collapse: collapse;
+      background: var(--bg-card, #0c1d35);
+    }
+    .post-body .post-data-table caption {
+      padding: 12px 16px;
+      color: var(--text-h, #f8fafc);
+      font-weight: 700;
+      text-align: left;
+    }
+    .post-body .post-data-table th,
+    .post-body .post-data-table td {
+      padding: 11px 16px;
+      border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+      text-align: left;
+      vertical-align: top;
+    }
+    .post-body .post-data-table thead th {
+      background: var(--bg-secondary, #10243b);
+      color: var(--text-h, #f8fafc);
+      font-weight: 700;
+    }
+    .post-body .post-data-table tbody th {
+      font-weight: 600;
+    }
+    .post-body .post-data-table tbody tr:nth-child(even) {
+      background: var(--bg-secondary, rgba(148, 163, 184, 0.06));
+    }
+    .post-body .post-data-table td:last-child,
+    .post-body .post-data-table thead th:last-child {
+      text-align: right;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
     }
 
     /* ── Key Takeaway Card (Solid Color, Clean Contrast) ── */

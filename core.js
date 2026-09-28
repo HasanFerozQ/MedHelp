@@ -1965,7 +1965,16 @@ const MediHelp = {
         }
         .mh-desktop-affiliate-banner-right.mh-sidebar-placed .mh-ad-box-card {
           width: 100%;
-          height: 200px;
+          height: auto;
+        }
+        .mh-desktop-affiliate-banner-right.mh-sidebar-placed .mh-ad-box-img-wrapper {
+          height: auto;
+        }
+        .mh-desktop-affiliate-banner-right.mh-sidebar-placed .mh-ad-box-img-wrapper img {
+          width: auto;
+          max-width: 100%;
+          height: auto;
+          object-fit: contain;
         }
 
         @media (max-width: 1180px) {
