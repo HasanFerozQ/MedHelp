@@ -2,7 +2,7 @@
   "meta": {
     "title": "Kidney Disease Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-09-27",
+    "lastUpdated": "2026-10-01",
     "primarySources": [
       "ISN Global Kidney Health Atlas 2024",
       "WHO Global Health Estimates",
@@ -10,7 +10,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-09-27",
+      "lastCheck": "2026-10-01",
       "status": "Verified — IHME GBD 2021"
     }
   },
