@@ -28,7 +28,6 @@ Disallow: /vision/
 Disallow: /__pycache__/
 Disallow: /docs/
 Disallow: /bad_file.html
-Disallow: /medical-exam-usmle
 Disallow: /*.sql$
 Disallow: /*.py$
 
