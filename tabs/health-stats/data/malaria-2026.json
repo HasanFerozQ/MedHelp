@@ -2,7 +2,7 @@
   "meta": {
     "title": "Malaria Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-10-04",
+    "lastUpdated": "2026-10-11",
     "primarySources": [
       "WHO World Malaria Report 2024",
       "IHME Global Burden of Disease",
@@ -10,7 +10,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-10-04",
+      "lastCheck": "2026-10-11",
       "status": "Auto-Synced: Malaria cases 224,863 (World Bank 2024)"
     }
   },

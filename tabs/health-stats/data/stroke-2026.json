@@ -2,7 +2,7 @@
   "meta": {
     "title": "Stroke Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-10-04",
+    "lastUpdated": "2026-10-11",
     "primarySources": [
       "World Stroke Organization (WSO) Global Stroke Fact Sheet 2024",
       "WHO Global Health Observatory",
@@ -10,7 +10,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-10-04",
+      "lastCheck": "2026-10-11",
       "status": "Verified — WHO GHO & IHME GBD"
     }
   },
