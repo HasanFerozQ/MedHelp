@@ -239,15 +239,36 @@ body {
   overflow-x: hidden;
 }
 
-.ad-banner-wrapper,
-.ad-banner-wrapper iframe,
-.ad-banner-wrapper object,
-.ad-banner-wrapper embed,
-.ad-banner-wrapper div {
+.ad-banner-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
   width: 100% !important;
   max-width: 100% !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
+  margin: 16px auto !important;
+  text-align: center !important;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.ad-banner-728 iframe,
+.ad-banner-728 > div,
+.ad-banner-728 div[id^="atContainer"] {
+  width: 728px !important;
+  height: 90px !important;
+  max-width: 100%;
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+.ad-banner-468 iframe,
+.ad-banner-468 > div,
+.ad-banner-468 div[id^="atContainer"] {
+  width: 468px !important;
+  height: 60px !important;
+  max-width: 100%;
+  margin: 0 auto !important;
+  display: block !important;
 }
 
 main, aside, .container, .dispatch-header, .post-layout, .post-sidebar, .post-body,
@@ -2863,15 +2884,6 @@ textarea.search-input {
   .container { padding: 0 20px; }
   .section { padding: 40px 0; }
 
-  .ad-banner-wrapper,
-  .ad-banner-wrapper > iframe,
-  .ad-banner-wrapper > div,
-  .ad-banner-wrapper > script {
-    box-sizing: border-box !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-
   .ad-banner-wrapper {
     overflow: hidden;
     display: flex;
@@ -2880,9 +2892,9 @@ textarea.search-input {
     text-align: center !important;
     width: 100% !important;
     max-width: 100% !important;
-    min-width: 0 !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    box-sizing: border-box !important;
   }
 
   .ad-banner-wrapper > iframe,
@@ -2895,8 +2907,6 @@ textarea.search-input {
   .ad-banner-wrapper embed {
     display: block !important;
     margin: 0 auto !important;
-    width: auto !important;
-    max-width: 728px !important;
     text-align: center !important;
     float: none !important;
     position: static !important;
