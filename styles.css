@@ -241,6 +241,7 @@ body {
 
 .ad-banner-wrapper {
   display: flex !important;
+  flex-direction: column !important;
   justify-content: center !important;
   align-items: center !important;
   width: 100% !important;
@@ -251,9 +252,37 @@ body {
   box-sizing: border-box;
 }
 
+.ad-banner-wrapper > *,
+.ad-banner-wrapper iframe,
+.ad-banner-wrapper div,
+.ad-banner-wrapper ins,
+.ad-banner-wrapper object,
+.ad-banner-wrapper embed {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+  float: none !important;
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+}
+
+.ad-banner-wrapper div:empty {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.ad-banner-728 {
+  min-height: 90px;
+}
+
 .ad-banner-728 iframe,
-.ad-banner-728 > div,
-.ad-banner-728 div[id^="atContainer"] {
+.ad-banner-728 > div:not(:empty),
+.ad-banner-728 div[id^="atContainer"]:not(:empty) {
   width: 728px !important;
   height: 90px !important;
   max-width: 100%;
@@ -261,9 +290,13 @@ body {
   display: block !important;
 }
 
+.ad-banner-468 {
+  min-height: 60px;
+}
+
 .ad-banner-468 iframe,
-.ad-banner-468 > div,
-.ad-banner-468 div[id^="atContainer"] {
+.ad-banner-468 > div:not(:empty),
+.ad-banner-468 div[id^="atContainer"]:not(:empty) {
   width: 468px !important;
   height: 60px !important;
   max-width: 100%;
@@ -2886,9 +2919,10 @@ textarea.search-input {
 
   .ad-banner-wrapper {
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
     text-align: center !important;
     width: 100% !important;
     max-width: 100% !important;

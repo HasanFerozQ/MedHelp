@@ -26,8 +26,62 @@
   <meta name="twitter:image" content="https://www.medihelp.live/icons/logo.png?v=1.1">
   <link rel="icon" href="/icons/favicon.ico?v=1.1" type="image/x-icon">
   <link rel="shortcut icon" href="/icons/favicon.ico?v=1.1" type="image/x-icon">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css?v=1.2">
   <style>
+    .ad-banner-wrapper {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 16px auto !important;
+      text-align: center !important;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .ad-banner-wrapper > *,
+    .ad-banner-wrapper iframe,
+    .ad-banner-wrapper div,
+    .ad-banner-wrapper ins,
+    .ad-banner-wrapper object,
+    .ad-banner-wrapper embed {
+      margin-left: auto !important;
+      margin-right: auto !important;
+      text-align: center !important;
+      float: none !important;
+      position: static !important;
+      left: auto !important;
+      right: auto !important;
+      transform: none !important;
+    }
+    .ad-banner-wrapper div:empty {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .ad-banner-728 { min-height: 90px; }
+    .ad-banner-728 iframe,
+    .ad-banner-728 > div:not(:empty),
+    .ad-banner-728 div[id^="atContainer"]:not(:empty) {
+      width: 728px !important;
+      height: 90px !important;
+      max-width: 100%;
+      margin: 0 auto !important;
+      display: block !important;
+    }
+    .ad-banner-468 { min-height: 60px; }
+    .ad-banner-468 iframe,
+    .ad-banner-468 > div:not(:empty),
+    .ad-banner-468 div[id^="atContainer"]:not(:empty) {
+      width: 468px !important;
+      height: 60px !important;
+      max-width: 100%;
+      margin: 0 auto !important;
+      display: block !important;
+    }
     /* Use leftover viewport width now that right-rail ads sit in the sidebar */
     @media (min-width: 1181px) {
       .container {
@@ -822,7 +876,7 @@
     </div>
   </nav>
     <!-- Adsterra 728x90 Banner -->
-    <div class="ad-banner-wrapper ad-banner-728" style="display:flex; justify-content:center; align-items:center; width:100%; max-width:100%; text-align:center; margin: 10px auto;">
+    <div class="ad-banner-wrapper ad-banner-728" style="display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%; max-width:100%; text-align:center; margin: 10px auto;">
       <script>
         atOptions = {
           'key' : 'a7a04a547a8e6bdc2777d62f0cbd7656',
@@ -1319,7 +1373,7 @@
 
   <!-- ── FOOTER ── -->
   <!-- Adsterra Banner (Dynamically repositioned to FAQ / Tool Card / Mid-Page) -->
-  <div id="repositioned-ad-banner" class="ad-banner-wrapper ad-banner-468" style="display:flex; justify-content:center; align-items:center; width:100%; max-width:100%; text-align:center; margin: 24px auto;">
+  <div id="repositioned-ad-banner" class="ad-banner-wrapper ad-banner-468" style="display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%; max-width:100%; text-align:center; margin: 24px auto;">
     <script>
       atOptions = {
         'key' : 'e8d44c92394feb5769b23337c154c786',
