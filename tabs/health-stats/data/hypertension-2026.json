@@ -2,7 +2,7 @@
   "meta": {
     "title": "Hypertension Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-10-18",
+    "lastUpdated": "2026-10-25",
     "primarySources": [
       "WHO Global Report on Hypertension 2023-2025",
       "NCD-RisC Global Blood Pressure Data",
@@ -10,7 +10,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-10-18",
+      "lastCheck": "2026-10-25",
       "status": "Verified — WHO Global Health Observatory"
     }
   },
