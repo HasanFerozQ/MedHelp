@@ -2,7 +2,7 @@
   "meta": {
     "title": "Mental Health Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-11-01",
+    "lastUpdated": "2026-11-08",
     "primarySources": [
       "WHO World Mental Health Report",
       "IHME Global Burden of Disease",
@@ -10,7 +10,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-11-01",
+      "lastCheck": "2026-11-08",
       "status": "Verified — WHO World Mental Health Report"
     }
   },

@@ -2,7 +2,7 @@
   "meta": {
     "title": "Cancer Statistics 2026",
     "year": 2026,
-    "lastUpdated": "2026-11-01",
+    "lastUpdated": "2026-11-08",
     "primarySources": [
       "IARC GLOBOCAN 2024",
       "American Cancer Society Global Cancer Facts 2024",
@@ -10,7 +10,7 @@
     ],
     "autoSync": {
       "enabled": true,
-      "lastCheck": "2026-11-01",
+      "lastCheck": "2026-11-08",
       "status": "Verified — IARC GLOBOCAN 2024"
     }
   },
