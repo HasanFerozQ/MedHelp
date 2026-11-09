@@ -1,1 +1,822 @@
-[{"cards":[{"a":"ST elevation in 2 neighbouring (contiguous) leads. For example, ST elevation in leads II, III and aVF means an inferior STEMI. Treat it as an emergency — the heart muscle is not getting blood.","q":"What ECG finding defines a STEMI?"},{"a":"Aspirin 325 mg, chewed, as soon as possible — unless the patient is allergic. Aspirin stops platelets clumping and limits the clot. Then add oxygen only if oxygen is low, nitrates, and reperfusion (PCI or thrombolysis).","q":"What is the first drug to give in an acute heart attack (myocardial infarction)?"},{"a":"MAP = (systolic blood pressure + 2 x diastolic blood pressure) / 3. Example: BP 120/80 gives MAP = (120 + 160) / 3 = 93 mmHg. MAP is the average pressure driving blood to the organs — a MAP below 65 mmHg is too low in shock.","q":"What is the formula for mean arterial pressure (MAP)?"},{"a":"Cardiac output = heart rate x stroke volume. Example: heart rate 70 beats per minute x stroke volume 70 mL = 4,900 mL per minute, about 5 litres per minute. If the heart beats faster or pumps more per beat, output rises.","q":"What is the formula for cardiac output?"},{"a":"1. ACE inhibitor or ARNI, 2. Beta-blocker, 3. Mineralocorticoid receptor antagonist (MRA, e.g. spironolactone), 4. SGLT2 inhibitor (e.g. dapagliflozin). All 4 together lower death and hospital admissions — do not stop them just because the patient feels better.","q":"What are the 4 drug pillars for heart failure with reduced ejection fraction (HFrEF)?"},{"a":"Use the CHA2DS2-VASc score. Anticoagulate if the score is 2 or more in men, or 3 or more in women. The score counts heart failure, high blood pressure, age, diabetes, previous stroke, vascular disease and sex. Atrial fibrillation can cause a clot in the heart that travels to the brain and causes a stroke.","q":"When do you anticoagulate a patient with atrial fibrillation?"},{"a":"Chest pain, fainting (syncope) on exertion, and breathlessness. The aortic valve is narrowed, so the heart cannot push enough blood out, especially during exercise. A harsh systolic murmur at the right upper chest, radiating to the neck, is typical.","q":"What is the classic triad of aortic stenosis?"},{"a":"Staphylococcus aureus is the most common cause overall, especially after skin infection or IV drug use. The mitral valve is most often affected in general, the tricuspid valve in IV drug users. Look for fever, a new murmur, and emboli — small clots breaking off to brain, lungs or fingers.","q":"What is the most common cause of infective endocarditis, and which valve is most often affected?"},{"a":"Widespread (diffuse) ST elevation in most leads, with PR depression. This is different from a heart attack, where ST elevation is in one area only. Treatment is an NSAID (e.g. ibuprofen) plus colchicine, which lowers recurrence.","q":"What ECG changes are seen in acute pericarditis, and how is it treated?"},{"a":"Emergency = very high blood pressure PLUS organ damage (e.g. chest pain, breathlessness, confusion, kidney failure). Treat in hospital with IV drugs, lowering MAP by only 10-20% in the first hour — do not drop it to normal quickly. Urgency = very high blood pressure with NO organ damage. Treat slowly with oral drugs as an outpatient.","q":"What is the difference between hypertensive emergency and hypertensive urgency?"}],"icon":"heart-pulse","section":"INTERNAL MEDICINE","topic":"Cardiology"},{"cards":[{"a":"FEV1/FVC ratio below 0.70 after a bronchodilator. FEV1 is the air breathed out in the first second, FVC is the total air breathed out. A low ratio means the airways are narrowed and air is trapped. Smoking is the main cause.","q":"How is COPD diagnosed on spirometry?"},{"a":"Short-acting beta-agonist (albuterol/salbutamol) by nebuliser or inhaler, plus ipratropium, plus a steroid (e.g. prednisolone) early. Give oxygen to keep saturation 94-98%. Magnesium sulfate is added in severe attacks. Steroids take hours to work, so give them early.","q":"What is the treatment for an acute asthma attack?"},{"a":"It predicts how sick a patient with pneumonia is and whether they need hospital admission. 1 point each for: Confusion, Urea >7 mmol/L, Respiratory rate 30 or more, Blood pressure low (systolic <90 or diastolic 60 or less), age 65 or more. Score 0-1: treat at home. Score 2: admit. Score 3 or more: consider ICU.","q":"What is CURB-65 used for in pneumonia?"},{"a":"Use the Wells score first. If risk is low and D-dimer is negative, PE is unlikely. If risk is high, do a CT pulmonary angiogram (CTPA). Treatment is anticoagulation (blood thinner) — heparin, then warfarin or a DOAC. A massive PE with low blood pressure needs thrombolysis (clot-busting drug).","q":"How do you diagnose and treat a pulmonary embolism (PE)?"},{"a":"A-a gradient = PAO2 - PaO2. PAO2 is the oxygen in the alveoli, PaO2 is the oxygen in arterial blood. A high gradient means oxygen is getting into the lungs but not into the blood — for example in PE, pneumonia or ARDS. A normal gradient is roughly (age / 4) + 4 mmHg.","q":"What is the A-a gradient formula, and what does a high value mean?"},{"a":"PaO2/FiO2 below 300 mmHg, with bilateral lung infiltrates on chest X-ray and no heart failure explaining it. Below 200 is moderate ARDS, below 100 is severe. FiO2 is the fraction of oxygen breathed in — for example on room air FiO2 is 0.21.","q":"What PaO2/FiO2 ratio defines ARDS?"},{"a":"It is an exudate if ANY of these are true: pleural fluid protein / serum protein >0.5, pleural fluid LDH / serum LDH >0.6, or pleural fluid LDH > two-thirds of the upper limit of normal serum LDH. Transudate (e.g. heart failure) is low protein; exudate (e.g. infection, cancer) is high protein.","q":"How do Light's criteria separate transudate from exudate in a pleural effusion?"},{"a":"RIPE for 2 months, then RI for 4 months — total 6 months. R = rifampicin, I = isoniazid, P = pyrazinamide, E = ethambutol. Add pyridoxine (vitamin B6) with isoniazid to prevent nerve damage. TB usually affects the upper lobes of the lung.","q":"What is the standard treatment for active tuberculosis (TB)?"},{"a":"Needle decompression first, then a chest drain. Insert a large needle in the 2nd intercostal space, mid-clavicular line, on the affected side. Tension pneumothorax is air trapped in the chest that squeezes the heart and lungs — the patient is hypotensive, breathless, with trachea pushed away and absent breath sounds.","q":"What is the emergency treatment for a tension pneumothorax?"},{"a":"Repeated pauses in breathing during sleep, usually because the upper airway collapses. Signs: loud snoring, daytime sleepiness, morning headache, high blood pressure. Use the STOP-BANG score to screen. Treatment is CPAP — a mask that keeps the airway open with air pressure — plus weight loss and avoiding alcohol/sedatives.","q":"What is sleep apnoea, and how is it treated?"}],"icon":"stethoscope","section":"INTERNAL MEDICINE","topic":"Pulmonology"},{"cards":[{"a":"The normal squamous lining of the lower oesophagus is replaced by intestinal-type lining, after years of acid reflux (GERD). It matters because it can progress to oesophageal adenocarcinoma. Patients need surveillance endoscopy.","q":"What is Barrett's oesophagus, and why does it matter?"},{"a":"The two main causes are H. pylori infection and NSAIDs. H. pylori is treated with triple therapy: a PPI + clarithromycin + amoxicillin (or metronidazole if allergic to penicillin) for 14 days. Then re-test to confirm the infection is gone.","q":"What causes a peptic ulcer, and how is H. pylori treated?"},{"a":"Ulcerative colitis: continuous inflammation starting in the rectum, only the colon, bloody diarrhoea, no skip areas. Crohn's: skip lesions anywhere from mouth to anus, often the terminal ileum, non-bloody diarrhoea, strictures and fistulas, granulomas on biopsy. Both are inflammatory bowel disease.","q":"How do you tell ulcerative colitis from Crohn's disease?"},{"a":"It grades how severe liver failure is, using bilirubin, albumin, INR, ascites and encephalopathy. Class A = mild, B = moderate, C = severe. A higher score means worse liver function and higher risk of death — it helps decide about transplant.","q":"What is the Child-Pugh score used for in cirrhosis?"},{"a":"Infection of ascitic fluid in a patient with cirrhosis, without an obvious source. Diagnose by ascitic fluid neutrophil count (PMN) of 250 cells/mm3 or more. Treat with cefotaxime plus albumin. SAAG (serum-ascites albumin gradient) of 1.1 g/dL or more points to portal hypertension as the cause of the ascites.","q":"What is spontaneous bacterial peritonitis (SBP), and how is it diagnosed?"},{"a":"Gallstones and alcohol — together they cause most cases. Diagnosis needs 2 of 3: typical upper abdominal pain radiating to the back, lipase or amylase more than 3 times the upper limit, and imaging showing pancreatitis. Treatment is IV fluids, pain control, and nothing by mouth initially.","q":"What are the two most common causes of acute pancreatitis?"},{"a":"Charcot's triad = fever + right upper quadrant pain + jaundice. It means cholangitis — infection of the bile ducts, usually from a gallstone blocking the duct. Reynolds' pentad adds confusion and low blood pressure (shock) — that is severe cholangitis and needs urgent antibiotics and bile duct drainage (ERCP).","q":"What is Charcot's triad, and what does Reynolds' pentad add?"},{"a":"IV octreotide (or terlipressin) plus IV antibiotics (e.g. ceftriaxone), plus urgent endoscopy with band ligation. Give blood transfusion carefully — aim for haemoglobin around 7 g/dL, not normal, because over-transfusion raises portal pressure and worsens bleeding.","q":"What is the first treatment for a variceal bleed in cirrhosis?"},{"a":"HBsAg positive = current infection. Anti-HBs positive = immunity (after vaccine or past infection). Anti-HBc IgM = acute infection. HBeAg positive = high infectivity. If HBsAg is positive for more than 6 months, it is chronic hepatitis B.","q":"How do you interpret hepatitis B serology?"},{"a":"Stop the triggering antibiotic if possible. First-line treatment is fidaxomicin, or oral vancomycin. Do NOT use metronidazole as first line anymore. For severe or recurrent cases, faecal microbiota transplant is used. C. difficile causes watery diarrhoea after antibiotics.","q":"What is the treatment for Clostridioides difficile infection?"}],"icon":"stethoscope","section":"INTERNAL MEDICINE","topic":"Gastroenterology"},{"cards":[{"a":"Anion gap = Na+ - (Cl- + HCO3-). Normal is 8-12 mEq/L. Example: Na 140, Cl 100, HCO3 24 gives 140 - 124 = 16, which is high. A high anion gap means metabolic acidosis from acids like lactate, ketones (DKA), renal failure or toxins.","q":"What is the anion gap formula?"},{"a":"Expected PaCO2 = 1.5 x HCO3- + 8, plus or minus 2. It is used in metabolic acidosis to check if the lungs are compensating correctly. Example: HCO3- 12 gives expected PaCO2 = 1.5 x 12 + 8 = 26 mmHg. If the actual PaCO2 is much higher, there is also a respiratory acidosis.","q":"What is Winter's formula, and what is it used for?"},{"a":"pH = 6.1 + log [ HCO3- / (0.03 x PaCO2) ]. HCO3- is bicarbonate, PaCO2 is carbon dioxide pressure. If HCO3- falls, pH falls (metabolic acidosis). If PaCO2 rises, pH falls (respiratory acidosis). Normal pH is 7.35-7.45.","q":"What is the Henderson-Hasselbalch equation for blood pH?"},{"a":"FeNa = fractional excretion of sodium. FeNa below 1% means pre-renal AKI — the kidneys are holding on to sodium because blood flow is low (dehydration, heart failure). FeNa above 2% means ATN — the tubules are damaged and cannot reabsorb sodium. FeNa is not reliable if the patient is on diuretics.","q":"How does FeNa separate pre-renal AKI from acute tubular necrosis (ATN)?"},{"a":"1. Calcium gluconate IV — protects the heart, does not lower potassium. 2. Insulin + glucose IV — moves potassium into cells. 3. Salbutamol nebuliser and sodium bicarbonate — also shift potassium in. 4. Dialysis if severe or not responding. Always do an ECG first — look for peaked T waves and wide QRS.","q":"What is the emergency treatment for high potassium (hyperkalaemia)?"},{"a":"No faster than 8-10 mEq/L in 24 hours (even slower, 4-6, if high risk). Correcting too fast can cause osmotic demyelination syndrome — permanent brain damage. If the patient has seizures from very low sodium, correct faster at first, then slow down.","q":"How fast can you safely correct low sodium (hyponatraemia)?"},{"a":"Stage 1: GFR 90 or more, with kidney damage. Stage 2: 60-89. Stage 3a: 45-59, 3b: 30-44. Stage 4: 15-29. Stage 5: below 15, or on dialysis — kidney failure. GFR is measured in mL/min/1.73 m2. Lower GFR means worse kidney function.","q":"What are the stages of chronic kidney disease (CKD) by GFR?"},{"a":"Nephrotic: heavy protein in urine (more than 3.5 g per day), low albumin, swelling (oedema), high cholesterol, frothy urine. Nephritic: blood in urine (red cell casts), high blood pressure, raised creatinine, less protein. Nephrotic loses protein, nephritic is inflamed and bleeds.","q":"How do you tell nephrotic from nephritic syndrome?"},{"a":"Osmolality = 2 x Na+ + glucose/18 + BUN/2.8. All in mg/dL for glucose and BUN, Na+ in mEq/L. Normal is 275-295 mOsm/kg. Example: Na 140, glucose 180, BUN 14 gives 280 + 10 + 5 = 295. A high osmolality with low sodium suggests pseudohyponatraemia or added osmoles like mannitol.","q":"What is the formula for serum osmolality?"},{"a":"Corrected calcium = measured calcium + 0.8 x (4.0 - albumin). Albumin in g/dL, calcium in mg/dL. Example: calcium 8.0, albumin 2.0 gives 8.0 + 0.8 x 2 = 9.6 mg/dL — actually normal. Use this because calcium binds to albumin, so low albumin makes total calcium look falsely low.","q":"What is the corrected calcium formula?"}],"icon":"stethoscope","section":"INTERNAL MEDICINE","topic":"Nephrology, Electrolytes and Acid-Base"},{"cards":[{"a":"Glucose over 250 mg/dL, pH below 7.30, bicarbonate below 18, and ketones in blood or urine. It is caused by insulin deficiency, often triggered by infection or missed insulin. Treatment: IV fluids first, then fixed-rate insulin, and replace potassium — check potassium before starting insulin, because insulin lowers it further.","q":"What are the diagnostic criteria for diabetic ketoacidosis (DKA)?"},{"a":"DKA: glucose usually 250-600, pH low, ketones present, patient often young with type 1 diabetes. HHS: glucose very high, often over 600, pH near normal, ketones absent or minimal, severe dehydration, patient often older with type 2 diabetes. Both need IV fluids; DKA needs insulin sooner.","q":"How do you tell DKA from hyperosmolar hyperglycaemic state (HHS)?"},{"a":"Diabetes is diagnosed if any one is true: HbA1c 6.5% or more, fasting glucose 126 mg/dL or more, 2-hour glucose 200 mg/dL or more after a glucose load, or random glucose 200 mg/dL or more with symptoms. HbA1c shows average glucose over 2-3 months.","q":"What are the diagnostic cut-offs for diabetes?"},{"a":"Low cortisol with high ACTH means primary adrenal failure (Addison's disease) — the adrenal gland itself has failed. Low cortisol with low ACTH means secondary — the pituitary is not sending ACTH. Addison's: fatigue, weight loss, low blood pressure, high potassium, low sodium, and darkening of the skin. Treatment is hydrocortisone, with extra dose in illness.","q":"How do you tell primary from secondary adrenal insufficiency?"},{"a":"Too much cortisol. Causes: long-term steroid use (most common), pituitary tumour (Cushing's disease), adrenal tumour, or ectopic ACTH from a lung cancer. Signs: central obesity, moon face, buffalo hump, purple stretch marks, high blood pressure, high glucose, weak muscles, easy bruising.","q":"What causes Cushing syndrome, and what does it look like?"},{"a":"High calcium (over 10.5 mg/dL) is usually from hyperparathyroidism or cancer. Symptoms: stones (kidney stones), bones (bone pain), groans (abdominal pain, constipation), moans (confusion, depression). Treatment: IV fluids first, then a bisphosphonate (e.g. zoledronate). Calcitonin works fast but only for a short time.","q":"What causes high calcium, and how is it treated?"},{"a":"SIADH: too much ADH, so the body holds water, sodium falls, urine is concentrated, patient is clinically euvolaemic (not dry, not overloaded). Diabetes insipidus: too little ADH (central) or kidneys do not respond to ADH (nephrogenic) — patient makes large amounts of very dilute urine and is very thirsty.","q":"How do you tell SIADH from diabetes insipidus?"},{"a":"Thyroid storm is life-threatening overactive thyroid: high fever, fast heart rate, confusion, agitation. Treatment: 1. Beta-blocker (propranolol) to slow the heart, 2. Propylthiouracil (PTU) to block new thyroid hormone, 3. Steroids, 4. Iodine — given AFTER the PTU, at least 1 hour later, otherwise iodine feeds hormone production.","q":"What is the treatment for thyroid storm, and in what order?"},{"a":"It is a tumour of the adrenal medulla that releases adrenaline and noradrenaline in bursts. Symptoms: episodic headache, sweating, palpitations and very high blood pressure. Diagnose with plasma or urine metanephrines. Treatment: alpha-blocker (phenoxybenzamine) FIRST, then beta-blocker — never beta-blocker alone, because that leaves alpha vasoconstriction unopposed and blood pressure can rise further.","q":"What is phaeochromocytoma, and what is the key treatment rule?"},{"a":"A serious skin reaction to drugs, with fever, eosinophilia (high eosinophils) and internal organ involvement (liver, kidney). It starts 2-6 weeks after starting a drug like allopurinol, carbamazepine or phenytoin. Stop the drug immediately, give steroids if severe. It is different from a simple drug rash — organs are involved.","q":"What is DRESS syndrome?"},{"a":"Hypothyroidism: low T4, high TSH, weight gain, cold intolerance, slow heart rate, constipation, fatigue. Treat with levothyroxine. Hyperthyroidism: high T4, low TSH, weight loss, heat intolerance, fast heart rate, tremor, diarrhoea. Treat with methimazole, beta-blocker, and consider radioiodine or surgery.","q":"How do thyroid function tests differ in hypo- and hyperthyroidism?"}],"icon":"stethoscope","section":"INTERNAL MEDICINE","topic":"Endocrinology"},{"cards":[{"a":"Low ferritin is the most reliable test — ferritin below 30 ng/mL confirms iron deficiency in most patients. Also: low haemoglobin, low MCV (small red cells), low iron, high TIBC. Causes: blood loss (especially GI in adults), poor diet, malabsorption. Treat the cause plus oral iron.","q":"What lab finding confirms iron deficiency anaemia?"},{"a":"B12 deficiency: large red cells (high MCV), low B12, neurological symptoms — numbness, tingling, loss of vibration sense, and dorsal column problems. Folate deficiency: same blood picture, but NO neurological symptoms. Treat B12 with B12 injections or high-dose oral B12; treat folate with folate — but check B12 first, because giving folate alone can worsen B12 nerve damage.","q":"How do you tell B12 deficiency from folate deficiency?"},{"a":"HbS is abnormal haemoglobin that sickles red cells when oxygen is low. Crises: painful vaso-occlusive crisis, acute chest syndrome, splenic sequestration, aplastic crisis (parvovirus B19). Hydroxyurea increases fetal haemoglobin and reduces crises. Patients need vaccinations and penicillin prophylaxis in childhood.","q":"What is sickle cell disease, and what does hydroxyurea do?"},{"a":"AML is usually in adults, with Auer rods in the blood/bone marrow, and blasts in the blood. ALL is usually in children, with lymphoblasts, and often presents with bone pain and fever. Both present with anaemia, low platelets, low white cells, and infections from bone marrow failure.","q":"How do you tell AML from ALL?"},{"a":"Hodgkin lymphoma: Reed-Sternberg cells on biopsy, often young adults, painless lymph nodes, B symptoms (fever, night sweats, weight loss), spreads in a predictable pattern. Non-Hodgkin lymphoma: more varied, often extranodal, no Reed-Sternberg cells. Both need biopsy, not just imaging.","q":"What is the key cell in Hodgkin lymphoma?"},{"a":"Prolonged PT and aPTT, low platelets, low fibrinogen, high D-dimer, and schistocytes (fragmented red cells) on the blood film. It is caused by widespread clotting and bleeding at the same time, often from sepsis, trauma or obstetric catastrophe. Treat the cause, give platelets, plasma and cryoprecipitate as needed.","q":"What labs are seen in disseminated intravascular coagulation (DIC)?"},{"a":"TTP: fever, low platelets, microangiopathic haemolytic anaemia, neurological symptoms, and kidney failure — the pentad. It is due to low ADAMTS13, which normally cuts von Willebrand factor. Treatment is urgent plasma exchange (plasmapheresis) plus steroids. Do NOT give platelets unless there is life-threatening bleeding — they worsen clotting.","q":"What is thrombotic thrombocytopenic purpura (TTP), and what is the treatment?"},{"a":"CRAB: C = hyperCalcaemia, R = Renal failure, A = Anaemia, B = Bone lesions (lytic, punched-out lesions on X-ray). It is a plasma cell cancer with monoclonal protein (M-spike) on electrophoresis and Bence Jones protein in urine. Back pain and kidney failure are common presentations.","q":"What is the CRAB acronym in multiple myeloma?"},{"a":"Warfarin is monitored by INR (target usually 2-3), and reversed with vitamin K or 4-factor prothrombin complex concentrate. Heparin is monitored by aPTT, reversed with protamine. DOACs (apixaban, rivaroxaban) do not need routine monitoring; apixaban is reversed with andexanet alfa, dabigatran with idarucizumab.","q":"How do you monitor and reverse warfarin, heparin and DOACs?"},{"a":"Stop the transfusion immediately, check the patient, and send blood samples. Fever alone may be a febrile reaction; fever + low blood pressure + flank pain + dark urine suggests acute haemolytic reaction from ABO mismatch — this is an emergency. TRALI (transfusion-related acute lung injury) causes breathlessness and low oxygen within 6 hours of transfusion.","q":"What do you do first in a transfusion reaction, and what is TRALI?"}],"icon":"stethoscope","section":"INTERNAL MEDICINE","topic":"Haematology and Oncology"},{"cards":[{"a":"1-hour bundle: measure lactate, take blood cultures BEFORE antibiotics, give broad-spectrum antibiotics within 1 hour, give 30 mL/kg crystalloid fluids if hypotensive or lactate 4 or more, and start vasopressors (norepinephrine) if blood pressure stays low. qSOFA of 2 or more (low BP, fast breathing, altered mental state) predicts a bad outcome.","q":"What is the 1-hour sepsis bundle?"},{"a":"Bacterial: high white cells and protein in CSF, low glucose, high opening pressure. Viral: white cells raised (mostly lymphocytes), protein mildly raised, glucose normal. Empiric treatment for bacterial meningitis: ceftriaxone + vancomycin + dexamethasone (given before or with antibiotics), plus ampicillin if age over 50, pregnant, or immunocompromised — to cover Listeria.","q":"How does bacterial meningitis differ from viral meningitis on CSF, and what is empiric treatment?"},{"a":"CD4 below 200 cells/uL: risk of Pneumocystis pneumonia (PCP) — give co-trimoxazole prophylaxis. CD4 below 100: toxoplasmosis. CD4 below 50: Mycobacterium avium complex (MAC) and CMV retinitis. ART (antiretroviral therapy) is started regardless of CD4 count, and it reduces opportunistic infections.","q":"What opportunistic infections occur at which CD4 counts in HIV?"},{"a":"Cellulitis is a spreading skin infection, usually streptococci or Staph aureus, with redness, warmth and pain — treat with flucloxacillin or cephalexin. Necrotising fasciitis is a surgical emergency: severe pain out of proportion to the skin changes, rapid spread, crepitus (gas in tissue), low blood pressure — needs urgent surgery (debridement) plus broad-spectrum antibiotics.","q":"How do you tell cellulitis from necrotising fasciitis?"},{"a":"Lyme disease is caused by Borrelia burgdorferi, spread by Ixodes ticks. Stage 1: erythema migrans — a bull's-eye rash. Stage 2: heart block, facial nerve palsy, arthritis. Stage 3: chronic arthritis, skin changes. Treatment: doxycycline for early disease, ceftriaxone for severe late disease.","q":"What are the stages of Lyme disease?"},{"a":"Primary: painless chancre. Secondary: rash on palms and soles, condyloma lata. Latent: no symptoms but tests positive. Tertiary: gummas, neurosyphilis, cardiovascular disease. Screening is with RPR or VDRL (non-treponemal), confirmed with a treponemal test (FTA-ABS / TP-PA). Treatment is penicillin G.","q":"What are the stages of syphilis, and how is it diagnosed?"},{"a":"A hot, swollen, painful single joint with fever. Aspirate the joint immediately — send for white cell count, Gram stain and culture. Do NOT delay aspiration to wait for blood tests. Treatment is urgent drainage plus IV antibiotics (e.g. flucloxacillin / vancomycin if MRSA risk). Septic arthritis can destroy a joint in days.","q":"What is the emergency action in suspected septic arthritis?"},{"a":"MRSA: vancomycin or linezolid. Pseudomonas: piperacillin-tazobactam, cefepime or meropenem. Anaerobes (e.g. abdominal infection): metronidazole. Atypical pneumonia (Mycoplasma, Legionella): macrolide or doxycycline. Always check local resistance patterns and allergies.","q":"Which antibiotic covers MRSA, Pseudomonas, anaerobes and atypical pneumonia?"},{"a":"Influenza A/B causes fever, cough, myalgia and headache in winter. Complications include secondary bacterial pneumonia (Staph aureus, Strep pneumoniae). Treatment: oseltamivir within 48 hours of symptoms in high-risk patients. Vaccination is the main prevention, especially in older people and those with chronic disease.","q":"What are the features and treatment of influenza?"},{"a":"Fever, rigors, low blood pressure and a new heart murmur after a dental procedure or IV drug use. Blood cultures must be taken BEFORE antibiotics — at least 3 sets. Diagnosis uses the Duke criteria (blood cultures, echocardiogram showing vegetation, fever, risk factors, emboli). Treatment is prolonged IV antibiotics for 4-6 weeks.","q":"What are the key steps in diagnosing infective endocarditis?"}],"icon":"stethoscope","section":"INTERNAL MEDICINE","topic":"Infectious Disease"},{"cards":[{"a":"Anti-CCP antibody is the most specific test for rheumatoid arthritis. It is often positive years before symptoms. RF (rheumatoid factor) is sensitive but less specific. RA affects MCP and PIP joints symmetrically, spares DIP joints, causes morning stiffness over 1 hour, and can cause erosions and deformity. First-line treatment is methotrexate.","q":"What is the most specific antibody test for rheumatoid arthritis?"},{"a":"ANA positive in almost all patients, anti-dsDNA is specific for SLE and tracks disease activity, anti-Smith is very specific. Signs: malar (butterfly) rash sparing the nasolabial folds, photosensitivity, mouth ulcers, arthritis, kidney disease (lupus nephritis), and low complement (C3, C4). Young women are most affected.","q":"Which antibodies are used in SLE, and what are the classic signs?"},{"a":"Gout: needle-shaped, negatively birefringent crystals of monosodium urate, under polarised light. Pseudogout: rhomboid, positively birefringent crystals of calcium pyrophosphate. Gout usually affects the big toe (podagra), pseudogout usually affects the knee. Treat acute gout with NSAID, colchicine or steroids — do not start allopurinol during an acute attack.","q":"How do gout and pseudogout crystals differ under the microscope?"},{"a":"Giant cell arteritis (temporal arteritis) affects people over 50, with headache, scalp tenderness, jaw pain when chewing, and vision loss. It is associated with polymyalgia rheumatica. Start high-dose steroids IMMEDIATELY if suspected — do not wait for a biopsy — because vision loss can be permanent. ESR is usually very high.","q":"What is giant cell arteritis, and why must steroids be started immediately?"},{"a":"Polymyalgia rheumatica: pain and stiffness in shoulders and hips in people over 50, high ESR/CRP, no muscle weakness, responds quickly to low-dose steroids. Fibromyalgia: widespread pain and fatigue, tender points, normal labs, no inflammation, sleep disturbance — treat with exercise, sleep hygiene and amitriptyline/duloxetine, not steroids.","q":"How do you tell polymyalgia rheumatica from fibromyalgia?"},{"a":"HLA-B27 is associated with ankylosing spondylitis. It causes inflammatory back pain in young men, worse in the morning and at night, better with exercise (not rest), sacroiliitis on X-ray, and a stiff spine (bamboo spine) over time. Treatment is NSAIDs first, then TNF inhibitors.","q":"What is HLA-B27 associated with, and what is the pattern of back pain?"},{"a":"CREST: Calcinosis, Raynaud's, oEsophageal dysmotility, Sclerodactyly, Telangiectasia. Anti-centromere antibody is seen in limited scleroderma (CREST). Anti-Scl-70 (anti-topoisomerase I) is seen in diffuse scleroderma, with lung and kidney involvement. Both cause tight, thickened skin.","q":"What is CREST syndrome, and which antibodies are seen in scleroderma?"},{"a":"Sjögren's syndrome causes dry eyes and dry mouth, due to autoimmune destruction of lacrimal and salivary glands. Antibodies: anti-Ro (SSA) and anti-La (SSB). Patients are at increased risk of lymphoma. Use artificial tears and saliva substitutes, and check for other autoimmune diseases.","q":"What is Sjögren's syndrome?"},{"a":"Osteoarthritis: wear-and-tear, affects weight-bearing joints and DIP joints (Heberden's nodes), pain worse with use, better with rest, no morning stiffness or only briefly, X-ray shows joint space narrowing and osteophytes. RA: inflammatory, MCP/PIP, morning stiffness over 1 hour, pain better with use, erosions on X-ray.","q":"How do you tell osteoarthritis from rheumatoid arthritis?"},{"a":"Aspirate the joint. Septic arthritis: very high white cell count in fluid (usually over 50,000), positive Gram stain/culture, needs urgent drainage and antibiotics. Gout: urate crystals, white cells lower, patient may have fever but joint is less hot and the history is typical. Never assume gout — always aspirate a hot joint if infection is possible.","q":"How do you tell septic arthritis from gout in a hot, swollen joint?"}],"icon":"stethoscope","section":"INTERNAL MEDICINE","topic":"Rheumatology"}]
+[
+  {
+    "cards": [
+      {
+        "a": "ST elevation in 2 neighbouring (contiguous) leads. For example, ST elevation in leads II, III and aVF means an inferior STEMI. Treat it as an emergency — the heart muscle is not getting blood.",
+        "q": "What ECG finding defines a STEMI?"
+      },
+      {
+        "a": "Aspirin 325 mg, chewed, as soon as possible — unless the patient is allergic. Aspirin stops platelets clumping and limits the clot. Then add oxygen only if oxygen is low, nitrates, and reperfusion (PCI or thrombolysis).",
+        "q": "What is the first drug to give in an acute heart attack (myocardial infarction)?"
+      },
+      {
+        "a": "MAP = (systolic blood pressure + 2 x diastolic blood pressure) / 3. Example: BP 120/80 gives MAP = (120 + 160) / 3 = 93 mmHg. MAP is the average pressure driving blood to the organs — a MAP below 65 mmHg is too low in shock.",
+        "q": "What is the formula for mean arterial pressure (MAP)?"
+      },
+      {
+        "a": "Cardiac output = heart rate x stroke volume. Example: heart rate 70 beats per minute x stroke volume 70 mL = 4,900 mL per minute, about 5 litres per minute. If the heart beats faster or pumps more per beat, output rises.",
+        "q": "What is the formula for cardiac output?"
+      },
+      {
+        "a": "1. ACE inhibitor or ARNI, 2. Beta-blocker, 3. Mineralocorticoid receptor antagonist (MRA, e.g. spironolactone), 4. SGLT2 inhibitor (e.g. dapagliflozin). All 4 together lower death and hospital admissions — do not stop them just because the patient feels better.",
+        "q": "What are the 4 drug pillars for heart failure with reduced ejection fraction (HFrEF)?"
+      },
+      {
+        "a": "Use the CHA2DS2-VASc score. Anticoagulate if the score is 2 or more in men, or 3 or more in women. The score counts heart failure, high blood pressure, age, diabetes, previous stroke, vascular disease and sex. Atrial fibrillation can cause a clot in the heart that travels to the brain and causes a stroke.",
+        "q": "When do you anticoagulate a patient with atrial fibrillation?"
+      },
+      {
+        "a": "Chest pain, fainting (syncope) on exertion, and breathlessness. The aortic valve is narrowed, so the heart cannot push enough blood out, especially during exercise. A harsh systolic murmur at the right upper chest, radiating to the neck, is typical.",
+        "q": "What is the classic triad of aortic stenosis?"
+      },
+      {
+        "a": "Staphylococcus aureus is the most common cause overall, especially after skin infection or IV drug use. The mitral valve is most often affected in general, the tricuspid valve in IV drug users. Look for fever, a new murmur, and emboli — small clots breaking off to brain, lungs or fingers.",
+        "q": "What is the most common cause of infective endocarditis, and which valve is most often affected?"
+      },
+      {
+        "a": "Widespread (diffuse) ST elevation in most leads, with PR depression. This is different from a heart attack, where ST elevation is in one area only. Treatment is an NSAID (e.g. ibuprofen) plus colchicine, which lowers recurrence.",
+        "q": "What ECG changes are seen in acute pericarditis, and how is it treated?"
+      },
+      {
+        "a": "Emergency = very high blood pressure PLUS organ damage (e.g. chest pain, breathlessness, confusion, kidney failure). Treat in hospital with IV drugs, lowering MAP by only 10-20% in the first hour — do not drop it to normal quickly. Urgency = very high blood pressure with NO organ damage. Treat slowly with oral drugs as an outpatient.",
+        "q": "What is the difference between hypertensive emergency and hypertensive urgency?"
+      },
+      {
+        "a": "Risk-stratify and arrange an early invasive strategy — coronary angiography within 24 hours. Dynamic ST changes, a rising troponin and ongoing ischaemia mark high risk, and these patients benefit from early revascularisation rather than a conservative, stress-test-first approach.",
+        "q": "A patient with NSTEMI is pain-free on aspirin and heparin, with a rising troponin and dynamic ST depression. What is the next best step?"
+      },
+      {
+        "a": "Take them urgently for coronary angiography and PCI. Chest pain that will not settle on medical therapy means ongoing ischaemia, which is a high-risk feature — waiting risks a bigger infarct, so revascularisation becomes urgent rather than routine.",
+        "q": "A patient with NSTEMI keeps having chest pain despite aspirin, heparin, nitrates and a beta-blocker. What should you do next?"
+      },
+      {
+        "a": "Hold ticagrelor for 5 days before CABG (clopidogrel also 5 days, prasugrel 7 days). These drugs block platelets irreversibly or for days, so operating too soon risks major bleeding. Keep the aspirin going — stopping both leaves the patient unprotected.",
+        "q": "A patient with NSTEMI on ticagrelor needs urgent CABG. How long should ticagrelor be held before surgery?"
+      },
+      {
+        "a": "Give benzodiazepines first — they reduce heart rate, blood pressure and coronary spasm. Avoid beta-blockers: blocking beta receptors leaves alpha-driven vasoconstriction unopposed, which worsens coronary spasm and can make the ischaemia worse. Nitrates and calcium channel blockers are safe.",
+        "q": "A patient with chest pain after cocaine use has ST elevation. What is the first treatment, and what drug must you avoid?"
+      },
+      {
+        "a": "Transfuse red cells. Anaemia reduces the oxygen the blood can carry to an already starving heart muscle, so ischaemia worsens. In active ischaemia, aim to keep haemoglobin above 8 g/dL, ideally 9 to 10, while you also treat the coronary disease.",
+        "q": "A patient with NSTEMI has a haemoglobin of 7 g/dL and ongoing chest pain. What is the next step?"
+      },
+      {
+        "a": "Suspect papillary muscle rupture causing acute mitral regurgitation, with cardiogenic shock. Get an urgent echocardiogram, reduce afterload (for example IV nitroprusside) and arrange emergency surgical repair — diuretics alone will not fix a torn papillary muscle, and this is rapidly fatal without surgery.",
+        "q": "Two days after an MI, a patient becomes hypotensive with a new loud systolic murmur at the apex. What has happened and what is the next step?"
+      },
+      {
+        "a": "Ventricular septal rupture. The infarcted septum tears, blood shunts left to right, and a right-heart catheter shows a step-up in oxygen saturation. Confirm with echo, stabilise with afterload reduction, and arrange surgical repair — this carries very high mortality without an operation.",
+        "q": "A week after an MI, a patient develops a new harsh holosystolic murmur at the left sternal border and worsening heart failure. What is the diagnosis and management?"
+      },
+      {
+        "a": "Free wall rupture with cardiac tamponade. Blood fills the pericardium and the heart cannot fill. Pericardiocentesis can buy time, but the definitive treatment is emergency surgery — this is one of the few causes of PEA that is potentially fixable if recognised fast.",
+        "q": "Three days after an MI, a patient suddenly collapses with pulseless electrical activity and a pericardial effusion on bedside echo. What is the diagnosis and the immediate management?"
+      },
+      {
+        "a": "Dressler syndrome — pericarditis after myocardial injury, an immune reaction to damaged heart tissue. Treat with NSAIDs plus colchicine. Avoid anticoagulation if possible, because it can turn the pericardial inflammation into a bloody effusion and tamponade.",
+        "q": "Three weeks after an MI, a patient develops fever, pleuritic chest pain and diffuse ST elevation. What is this and how is it treated?"
+      },
+      {
+        "a": "Primary PCI. When it can be done within 90 minutes of arrival, PCI opens the artery more reliably and with less bleeding risk than fibrinolysis. Speed still matters — every minute of delay means more heart muscle dies.",
+        "q": "A patient arrives with a STEMI and the cath lab can do PCI within 90 minutes. What is the preferred reperfusion strategy?"
+      },
+      {
+        "a": "Give fibrinolysis within 30 minutes of arrival (door-to-needle time 30 minutes), then transfer for angiography within 24 hours. When PCI is too far away, lysis saves muscle — but it is a bridge, not the whole treatment, so the patient still needs a cath afterwards.",
+        "q": "A patient has a STEMI but PCI cannot be done within 120 minutes. What should you do?"
+      },
+      {
+        "a": "Any prior intracranial bleed, ischaemic stroke within 3 months, active bleeding, suspected aortic dissection, severe uncontrolled hypertension, or recent major surgery or trauma. Lysis dissolves clots everywhere, so in these patients it can cause a catastrophic bleed — and giving it to a dissection can be fatal.",
+        "q": "Before giving fibrinolysis for a STEMI, what must you check for — what are the key contraindications?"
+      },
+      {
+        "a": "Rescue PCI immediately. Less than 50% ST resolution means the artery has not reopened — the lysis has failed. Do not give a second dose of lytic; go straight to the cath lab.",
+        "q": "After fibrinolysis for STEMI, the ST elevation has resolved by less than 50% at 90 minutes and the pain continues. What is the next step?"
+      },
+      {
+        "a": "No — revascularise emergently regardless of how much time has passed. In shock, opening the artery is the only treatment that improves survival, so PCI or CABG is done urgently, with vasopressors or inotropes and mechanical support as a bridge.",
+        "q": "A patient with STEMI develops cardiogenic shock. Does the time window for revascularisation still apply?"
+      },
+      {
+        "a": "Stop the lytic infusion and get an urgent CT of the head. Intracranial haemorrhage is the most feared complication of fibrinolysis. Do not give more lytic or heparin until bleeding is excluded.",
+        "q": "A patient given fibrinolysis for STEMI suddenly develops a severe headache and becomes drowsy. What should you do?"
+      },
+      {
+        "a": "Stent the culprit artery only. In shock, multivessel PCI increases death and kidney injury compared with culprit-only PCI. Fix the artery causing the infarct and deal with the others later, once the patient is stable.",
+        "q": "In a STEMI with cardiogenic shock and disease in several vessels, should you stent all of them or just the culprit artery?"
+      },
+      {
+        "a": "At least 12 months of aspirin plus a P2Y12 inhibitor (such as ticagrelor or clopidogrel). Stopping early risks stent thrombosis, which usually causes a large MI or death. The full year matters most after ACS, when the plaque is unstable.",
+        "q": "How long should dual antiplatelet therapy (DAPT) continue after a drug-eluting stent placed for ACS?"
+      },
+      {
+        "a": "At least 6 months. Elective stenting is lower risk than ACS, so a shorter course is enough — but stopping in the first month is still dangerous, because the stent has not yet healed over.",
+        "q": "How long is DAPT needed after an elective drug-eluting stent for stable angina?"
+      },
+      {
+        "a": "Continue the aspirin and hold the P2Y12 inhibitor (5 days for clopidogrel or ticagrelor, 7 for prasugrel), and discuss the plan with cardiology. Never stop both drugs — that leaves the stent unprotected — and never stop them without a plan to restart.",
+        "q": "A patient on DAPT needs non-cardiac surgery. How do you manage the antiplatelets?"
+      },
+      {
+        "a": "Use triple therapy (anticoagulant plus aspirin plus clopidogrel) for the shortest time possible, then drop the aspirin and continue anticoagulant plus clopidogrel. Clopidogrel is the P2Y12 inhibitor of choice here — avoid prasugrel and ticagrelor with an anticoagulant because bleeding risk becomes too high.",
+        "q": "A patient with atrial fibrillation who needs anticoagulation has just had a stent placed. How do you combine the blood thinners?"
+      },
+      {
+        "a": "Ticagrelor commonly causes dyspnoea, which is usually benign but frightening. First exclude heart failure, pulmonary oedema or a lung problem — if the heart and lungs are fine and the breathlessness is tolerable, the drug can continue; if it is severe, switch to clopidogrel.",
+        "q": "A patient on ticagrelor complains of new breathlessness. What is the likely cause and what should you do?"
+      },
+      {
+        "a": "Patients with a prior stroke or TIA, those aged 75 or older, and those weighing under 60 kg. Prasugrel is a very strong antiplatelet, and in these groups the bleeding risk outweighs the benefit — use clopidogrel or ticagrelor instead.",
+        "q": "In which patients should prasugrel be avoided?"
+      },
+      {
+        "a": "Some people carry a CYP2C19 loss-of-function gene, so they cannot activate clopidogrel into its working form. Switch to ticagrelor or prasugrel, which do not depend on that enzyme — and check adherence first, because missed doses are the commonest cause.",
+        "q": "A patient on clopidogrel has a stent thrombosis. What might explain it and what would you change?"
+      },
+      {
+        "a": "Heparin-induced thrombocytopenia (HIT). Stop all heparin immediately, including flushes, and start a non-heparin anticoagulant such as argatroban. Do not transfuse platelets — it feeds the clotting — and do not start warfarin until the platelets have recovered.",
+        "q": "A patient on heparin develops a falling platelet count and a new clot. What is the diagnosis and the immediate management?"
+      },
+      {
+        "a": "At least 3 months, with a repeat echo to check the clot has gone. A left ventricular thrombus can embolise and cause a stroke, so anticoagulation (usually warfarin) is needed until it resolves — then reassess.",
+        "q": "An echo after an anterior MI shows a clot in the left ventricle. How long should the patient be anticoagulated?"
+      },
+      {
+        "a": "An IV loop diuretic, such as furosemide, given promptly. It removes fluid and reduces the pressure backing up into the lungs. Give a dose based on their usual home dose — patients already on diuretics often need a higher IV dose to get a response.",
+        "q": "A patient arrives with acute decompensated heart failure and pulmonary oedema. What is the first drug to give?"
+      },
+      {
+        "a": "Add a thiazide diuretic such as metolazone — sequential nephron blockade. The loop diuretic works in one part of the kidney and the thiazide in another, so together they overcome diuretic resistance. Watch potassium and kidney function closely.",
+        "q": "A patient with acute heart failure is not responding to IV furosemide. What is the next step?"
+      },
+      {
+        "a": "This is cardiogenic shock, not simple congestion — start an inotrope such as dobutamine, or a vasopressor such as norepinephrine, and admit to intensive care. Avoid beta-blockers in this moment; a failing heart that cannot maintain pressure needs support, not slowing down.",
+        "q": "A patient with acute heart failure has a systolic BP of 85 and cold, clammy hands. What is the management?"
+      },
+      {
+        "a": "IV vasodilators (such as nitroglycerin) plus diuretics. The high afterload is driving fluid into the lungs, so reducing it lets the heart pump forward more easily. Diuretics alone are slower when blood pressure is this high.",
+        "q": "A patient with acute heart failure has a BP of 190/110 and severe breathlessness. What is the best initial approach?"
+      },
+      {
+        "a": "Hold it during the acute decompensation if they are hypotensive, bradycardic or in shock — but restart it before discharge once they are stable and euvolaemic. Long term, beta-blockers save lives in heart failure; stopping them permanently because of one admission is a common and harmful mistake.",
+        "q": "A patient admitted with acute heart failure is on a beta-blocker at home. Should you stop it?"
+      },
+      {
+        "a": "Only for refractory congestion with worsening kidney function that does not respond to diuretics. It is not first-line therapy — diuretics work for most patients, and ultrafiltration is reserved for the few who are truly diuretic-resistant.",
+        "q": "When is ultrafiltration used in acute decompensated heart failure?"
+      },
+      {
+        "a": "Hold the ACE inhibitor temporarily, treat the high potassium, and recheck. Do not abandon the drug permanently for one episode — ACE inhibitors improve survival, so once potassium and kidney function settle, restart it, often at a lower dose, with dietary advice.",
+        "q": "A patient with heart failure on an ACE inhibitor develops a potassium of 6.0. How do you manage the ACE inhibitor?"
+      },
+      {
+        "a": "A high BNP supports the diagnosis of heart failure and a falling level suggests decongestion — but treat the patient, not the number. Decisions about diuretics, discharge and follow-up are based on symptoms, examination and weight, with BNP as supporting evidence.",
+        "q": "A patient with acute heart failure has a very high BNP. How should you use this result?"
+      },
+      {
+        "a": "Daily weights, a low-salt diet, a clear medicine list with doses, and follow-up within 7 to 14 days. Teach the patient the red flags — rapid weight gain, worsening breathlessness, swollen legs — and what to do when they appear, because early action prevents readmission.",
+        "q": "What should discharge planning include after an admission for acute heart failure?"
+      },
+      {
+        "a": "When the ejection fraction is 35% or less, measured at least 40 days after the MI, despite optimal medical therapy, in a patient with NYHA class II or III symptoms. The wait matters — the heart can recover in the first weeks, and an ICD placed too early may never have been needed.",
+        "q": "When is an ICD indicated after a myocardial infarction?"
+      },
+      {
+        "a": "No — wait at least 40 days and re-measure the ejection fraction first. Early after an MI the heart may still recover, so guidelines require the delay. If the patient is at high risk in the meantime, a wearable defibrillator can bridge the gap.",
+        "q": "A patient has an ejection fraction of 30% two weeks after an MI. Should you implant an ICD now?"
+      },
+      {
+        "a": "When the ejection fraction is 35% or less, the QRS is wide with a left bundle branch block pattern (ideally 150 ms or more), and the patient has NYHA II to IV symptoms despite optimal medical therapy. CRT paces both ventricles together so they contract in sync, improving symptoms and survival.",
+        "q": "When is cardiac resynchronisation therapy (CRT) indicated in heart failure?"
+      },
+      {
+        "a": "Survivors of cardiac arrest caused by VT or VF, when the cause was not reversible. If the arrest was due to a one-off reversible problem — such as a severe electrolyte disturbance or an acute MI — an ICD is not needed, because removing the cause removes the risk.",
+        "q": "Which patients need an ICD for secondary prevention?"
+      },
+      {
+        "a": "When life expectancy is under a year, in refractory NYHA class IV heart failure without CRT, or when VT is incessant and uncontrolled. An ICD prevents sudden death — it does not treat dying from other causes or from pump failure, so it only helps if the patient is likely to live long enough to benefit.",
+        "q": "When should you NOT implant an ICD?"
+      },
+      {
+        "a": "Vagal manoeuvres first, such as a Valsalva or carotid sinus massage. If that fails, give adenosine 6 mg as a rapid IV push, followed by 12 mg if needed. Adenosine briefly blocks the AV node and breaks the re-entry circuit — warn the patient it causes a few seconds of chest discomfort.",
+        "q": "A patient has stable narrow-complex SVT with a heart rate of 180. What is the first treatment?"
+      },
+      {
+        "a": "Synchronised cardioversion — a shock timed to the R wave. An unstable patient does not have time for drugs, and cardioversion restores sinus rhythm immediately. Sedate first if the patient is conscious and time allows.",
+        "q": "A patient with SVT is hypotensive and confused. What is the treatment?"
+      },
+      {
+        "a": "Synchronised cardioversion if they are unstable. If they are stable, slow the rate with a beta-blocker or diltiazem. Digoxin is slower and less effective in the acute setting, so it is not the first choice when the rate needs controlling quickly.",
+        "q": "A patient with atrial fibrillation at 150 beats per minute is hypotensive. What is the management?"
+      },
+      {
+        "a": "Rate control is preferred in most older or minimally symptomatic patients — it is as good for survival and simpler. Rhythm control is better for patients who are young, very symptomatic, have a first episode, or have heart failure where restoring sinus rhythm improves the pump.",
+        "q": "In atrial fibrillation, when should you choose rate control and when rhythm control?"
+      },
+      {
+        "a": "Yes, if the onset is clearly under 48 hours and the stroke risk is low. A clot is unlikely to have formed that quickly, so cardioversion can go ahead without weeks of anticoagulation — but if the onset time is uncertain, treat it as over 48 hours.",
+        "q": "A patient with new atrial fibrillation of less than 48 hours needs cardioversion. Can you cardiovert without prior anticoagulation?"
+      },
+      {
+        "a": "Either anticoagulate for 3 weeks before elective cardioversion, or do a transoesophageal echo (TEE) to exclude a left atrial clot and cardiovert, then anticoagulate for at least 4 weeks afterwards. Cardioversion can dislodge a clot, so you must either prove there is none or let anticoagulation dissolve it first.",
+        "q": "A patient has atrial fibrillation of unknown duration and wants cardioversion. What must happen first?"
+      },
+      {
+        "a": "Avoid AV nodal blockers — beta-blockers, diltiazem, digoxin and adenosine. In WPW, the extra pathway can conduct very fast, and blocking the AV node leaves it unopposed, which can degenerate into ventricular fibrillation. Use procainamide or cardiovert instead.",
+        "q": "A patient with WPW syndrome develops atrial fibrillation. Which drugs must you avoid and why?"
+      },
+      {
+        "a": "If stable, give IV procainamide or amiodarone. If unstable, synchronised cardioversion. Monomorphic VT has one shape and usually comes from scar, so drugs can work — but instability always means electricity first.",
+        "q": "A patient is haemodynamically stable with monomorphic VT. What is the treatment, and what changes if they become unstable?"
+      },
+      {
+        "a": "Stop all QT-prolonging drugs, give IV magnesium sulfate, and correct potassium. If it keeps recurring, overdrive pacing or an isoproterenol infusion raises the heart rate and shortens the QT. This is torsades de pointes — a long QT that twists into a lethal rhythm.",
+        "q": "A patient on a QT-prolonging drug develops polymorphic VT with a long QT. What is the treatment?"
+      },
+      {
+        "a": "Atropine first. If that fails, use transcutaneous pacing, then a dopamine or epinephrine infusion, then transvenous pacing. Atropine works on the vagus nerve, so it helps nodal blocks but often fails when the block is lower down — that is why pacing is the backup.",
+        "q": "A patient is symptomatic with a heart rate of 35. What is the stepwise management?"
+      },
+      {
+        "a": "Pacing — transcutaneous first, then transvenous and permanent. Atropine rarely works in complete heart block because the block is below the AV node. Do not wait for drugs to work while the patient is hypotensive.",
+        "q": "A patient has third-degree heart block with a BP of 80/50. What is the treatment?"
+      },
+      {
+        "a": "Symptomatic sinus node dysfunction, Mobitz type II block, complete heart block, and alternating bundle branch block with syncope. These are all blocks that cause symptoms or risk sudden deterioration — a pacemaker fixes the rate and prevents collapse.",
+        "q": "What are the main indications for a permanent pacemaker?"
+      },
+      {
+        "a": "Yes — Mobitz II and complete heart block after an MI usually need pacing, because the block is below the AV node and will not resolve. Mobitz I (Wenckebach) is usually nodal, often benign, and rarely needs a pacemaker unless the patient is symptomatic.",
+        "q": "A patient develops Mobitz II heart block after an MI. Does this need pacing, and how does it differ from Mobitz I?"
+      },
+      {
+        "a": "Valve replacement — TAVR or surgery (SAVR). Once aortic stenosis causes symptoms (chest pain, breathlessness, syncope), survival without replacement is poor, and no medicine prolongs life. The choice between TAVR and SAVR depends on age, surgical risk and patient preference.",
+        "q": "A patient has severe symptomatic aortic stenosis. What is the definitive treatment?"
+      },
+      {
+        "a": "Yes — surgery is indicated even without symptoms when the ejection fraction falls below 50%, or when the stenosis is very severe. A failing ventricle means the valve is already doing damage, so waiting for symptoms would be too late.",
+        "q": "A patient has severe aortic stenosis with no symptoms but an ejection fraction of 45%. Should you operate?"
+      },
+      {
+        "a": "Younger, low-surgical-risk patients usually get SAVR (surgical replacement), which lasts longer. Older or high-risk patients usually get TAVR, which is less invasive. It is a shared decision — age, anatomy, other diseases and patient preference all matter.",
+        "q": "How do you choose between TAVR and surgical valve replacement for aortic stenosis?"
+      },
+      {
+        "a": "Mitral repair is preferred over replacement when the valve can be repaired — it preserves the patient's own valve and has better long-term outcomes. This is for symptomatic severe mitral regurgitation with an ejection fraction of 30 to 60%.",
+        "q": "A patient has symptomatic severe mitral regurgitation. Is repair or replacement preferred?"
+      },
+      {
+        "a": "Emergency surgery. Stabilise with afterload reduction (for example IV nitroprusside) and an intra-aortic balloon pump to help the heart pump forward, but the torn papillary muscle must be fixed surgically — medicines alone will not save this patient.",
+        "q": "A patient develops acute severe mitral regurgitation from papillary muscle rupture after an MI. What is the management?"
+      },
+      {
+        "a": "Balloon valvotomy (percutaneous mitral commissurotomy) if the valve is pliable, there is no left atrial clot and no significant mitral regurgitation. If the valve is calcified or stiff, or there is a clot or regurgitation, surgery is needed instead.",
+        "q": "A patient has symptomatic severe mitral stenosis. When is balloon valvotomy the right treatment?"
+      },
+      {
+        "a": "Warfarin, not a DOAC. Mitral stenosis with atrial fibrillation is classed as valvular AF, and DOACs have not been shown to be safe or effective in this setting — warfarin is the anticoagulant that prevents stroke here.",
+        "q": "A patient with mitral stenosis and atrial fibrillation needs anticoagulation. Which drug do you use?"
+      },
+      {
+        "a": "Aortic valve replacement, even without symptoms. A dilated, failing ventricle in chronic severe aortic regurgitation means the valve is destroying the heart, so surgery should not wait for symptoms to appear.",
+        "q": "A patient has chronic severe aortic regurgitation with an ejection fraction of 45% but no symptoms. What should you do?"
+      },
+      {
+        "a": "Emergency surgery. Acute severe aortic regurgitation — from endocarditis or dissection — floods the ventricle, which has had no time to adapt, so medical therapy alone fails. Afterload reduction can temporise, but avoid an intra-aortic balloon pump because it worsens the regurgitation.",
+        "q": "A patient develops acute severe aortic regurgitation from endocarditis. What is the management?"
+      },
+      {
+        "a": "It depends on size and symptoms: small, non-obstructive clots can be treated with anticoagulation or thrombolysis, but a large obstructive left-sided prosthetic valve thrombosis usually needs surgery. Echo and the patient's stability decide — a stuck valve causing shock is a surgical emergency.",
+        "q": "A patient with a prosthetic mitral valve develops valve thrombosis. How do you decide between thrombolysis and surgery?"
+      },
+      {
+        "a": "Heart failure from valve dysfunction, uncontrolled infection such as a valve abscess, a large mobile vegetation over 10 mm with embolic events, or prosthetic valve dehiscence. Antibiotics alone cannot fix a destroyed valve or an abscess — these patients need the valve operated on while antibiotics continue.",
+        "q": "In infective endocarditis, what are the indications for surgery?"
+      },
+      {
+        "a": "An ACE inhibitor or ARB first line. They protect the kidneys by reducing pressure inside the glomerulus and slowing protein loss, on top of lowering blood pressure. This renal protection is why they are chosen over other drugs in diabetes and CKD with albuminuria.",
+        "q": "A patient has hypertension, diabetes and albumin in the urine. Which blood pressure drug is preferred and why?"
+      },
+      {
+        "a": "An ACE inhibitor or ARB, plus a beta-blocker and a diuretic — guideline-directed heart failure therapy. Each drug improves survival in heart failure, so the blood pressure treatment and the heart failure treatment are the same regimen.",
+        "q": "A patient has hypertension and heart failure with reduced ejection fraction. What blood pressure regimen should they be on?"
+      },
+      {
+        "a": "A thiazide diuretic or a calcium channel blocker. These work better as first-line treatment in Black patients, who more often have salt-sensitive, low-renin hypertension. ACE inhibitors alone are less effective as initial therapy in this group.",
+        "q": "Which blood pressure drugs work best as first line in Black patients with hypertension?"
+      },
+      {
+        "a": "Avoid thiazides — they raise uric acid and can trigger gout attacks. Use a calcium channel blocker or an ACE inhibitor instead, which do not worsen uric acid.",
+        "q": "A patient with hypertension and gout needs a blood pressure drug. Which one should you avoid?"
+      },
+      {
+        "a": "Add spironolactone. Resistant hypertension — uncontrolled on three drugs including a diuretic — is often driven by aldosterone, so a mineralocorticoid antagonist works well. Also check adherence and look for secondary causes such as primary aldosteronism, renal artery stenosis and sleep apnoea.",
+        "q": "A patient's blood pressure is uncontrolled on three drugs including a diuretic. What do you add next?"
+      },
+      {
+        "a": "Methyldopa, labetalol or nifedipine — these are safe in pregnancy. Avoid ACE inhibitors and ARBs, which are teratogenic and can cause fetal kidney failure. Treat the blood pressure, but choose drugs proven safe for the baby.",
+        "q": "Which blood pressure drugs are safe in pregnancy, and which must be avoided?"
+      },
+      {
+        "a": "An alpha-blocker such as doxazosin, which relaxes the prostate and the bladder neck as well as lowering blood pressure. One drug treats both problems — but warn about dizziness on standing, especially with the first dose.",
+        "q": "A patient has hypertension and an enlarged prostate causing urinary symptoms. Which blood pressure drug helps both?"
+      },
+      {
+        "a": "High-intensity statin — atorvastatin 40 to 80 mg or rosuvastatin 20 to 40 mg — regardless of the starting LDL. After ACS the risk of another event is very high, and high-intensity statins cut that risk the most, so the dose is based on risk, not on the cholesterol number.",
+        "q": "After an ACS, what statin dose should the patient get, and does it depend on their LDL level?"
+      },
+      {
+        "a": "Add ezetimibe. It blocks cholesterol absorption in the gut and lowers LDL further. In very high-risk patients (such as after ACS) whose LDL stays at 70 mg/dL or above on a maximum statin, adding ezetimibe reduces further events.",
+        "q": "A patient's LDL is still 85 mg/dL on a maximum-dose statin after an MI. What do you add?"
+      },
+      {
+        "a": "A PCSK9 inhibitor, such as evolocumab or alirocumab. For very high-risk patients whose LDL stays at 70 mg/dL or above despite a statin plus ezetimibe, PCSK9 inhibitors cut LDL dramatically and reduce cardiovascular events — but they are injections and expensive, so they are reserved for this group.",
+        "q": "When should you add a PCSK9 inhibitor for cholesterol?"
+      },
+      {
+        "a": "Check the CK level and stop the statin. Muscle pain with a raised CK is statin myopathy — once it settles, try a different statin, a lower dose, or alternate-day dosing. True rhabdomyolysis (very high CK, dark urine, kidney injury) needs stopping the drug and IV fluids.",
+        "q": "A patient on a statin develops muscle pain and weakness. What should you do?"
+      },
+      {
+        "a": "LDL of 190 mg/dL or higher, early heart disease in the patient or family, or tendon xanthomas. Treat with a high-intensity statin plus ezetimibe and often a PCSK9 inhibitor, and screen first-degree relatives — this is a genetic condition, so the family is at risk too.",
+        "q": "How do you recognise familial hypercholesterolaemia, and what is the management?"
+      },
+      {
+        "a": "Hypotension, a raised jugular venous pressure and muffled heart sounds — Beck's triad — plus pulsus paradoxus (a fall in systolic BP of more than 10 mmHg on inspiration). Echo shows fluid around the heart with chambers collapsing, because the heart cannot fill.",
+        "q": "What are the clinical signs of cardiac tamponade?"
+      },
+      {
+        "a": "Pericardiocentesis — draining the fluid — urgently, or a surgical pericardial window. IV fluids and pressors can buy a little time, but they do not fix the problem. Do NOT give diuretics or vasodilators: they reduce filling further and will make tamponade worse.",
+        "q": "A patient has cardiac tamponade. What is the definitive treatment, and what must you avoid?"
+      },
+      {
+        "a": "Monitor it and treat the underlying cause. Drain it if it is large, causing symptoms, or suspected to be bacterial or purulent. A large effusion without tamponade does not always need draining — but a purulent one does, because infection in the pericardium is dangerous.",
+        "q": "A patient has a large pericardial effusion but no tamponade. Does it need draining?"
+      },
+      {
+        "a": "Constrictive pericarditis is treated by pericardiectomy — removing the stiff pericardium. Look for Kussmaul sign (JVP rising on inspiration), equalised pressures in the heart chambers, and a septal bounce on echo. It mimics restrictive cardiomyopathy, but the treatment is surgical, not medical.",
+        "q": "How do you recognise constrictive pericarditis and how is it treated?"
+      },
+      {
+        "a": "Beta-blocker or verapamil for symptoms, to slow the heart and improve filling. Avoid nitrates, diuretics and afterload-reducing drugs — they reduce preload and make the obstruction worse. An ICD is indicated if there is high sudden-death risk, such as syncope or a family history of sudden death.",
+        "q": "How is hypertrophic cardiomyopathy managed, and what drugs should be avoided?"
+      },
+      {
+        "a": "Yes — an ICD is indicated. Syncope or a family history of sudden cardiac death marks high risk in HCM. Risk is also assessed by wall thickness, non-sustained VT on monitoring and unexplained syncope — an ICD is the only treatment that prevents sudden death here.",
+        "q": "A patient with hypertrophic cardiomyopathy has syncope and a father who died suddenly at 40. What is indicated?"
+      },
+      {
+        "a": "Digoxin and pure vasodilators. In obstructive HCM, anything that makes the heart squeeze harder or drops the afterload increases the outflow gradient and makes the obstruction worse. Beta-blockers and verapamil do the opposite — they slow the heart and reduce the gradient.",
+        "q": "In obstructive hypertrophic cardiomyopathy, which drugs must you avoid?"
+      },
+      {
+        "a": "Guideline-directed heart failure therapy — ACE inhibitor or ARB, beta-blocker, mineralocorticoid antagonist and diuretics as needed — plus finding the cause: alcohol, chemotherapy, viral infection, peripartum, thyroid disease or iron overload. Treating the cause can sometimes reverse the cardiomyopathy.",
+        "q": "How is dilated cardiomyopathy managed?"
+      },
+      {
+        "a": "Heart failure with an ejection fraction under 45% in the last month of pregnancy or within 5 months after delivery. Treat as heart failure — but avoid ACE inhibitors while pregnant or breastfeeding, using hydralazine and nitrates instead. Many patients recover, but a future pregnancy carries risk of recurrence.",
+        "q": "What is peripartum cardiomyopathy and how does its management differ?"
+      },
+      {
+        "a": "Cardiac amyloidosis — thick walls on echo but low voltage on ECG. Avoid digoxin, calcium channel blockers and beta-blockers, which are poorly tolerated. Treat the underlying type: chemotherapy for AL amyloid, and tafamidis for ATTR amyloid.",
+        "q": "A patient has thick heart walls on echo but low voltage on ECG. What is the diagnosis and what drugs should be avoided?"
+      },
+      {
+        "a": "An IV beta-blocker (such as esmolol) first, to reduce heart rate and shear stress on the aorta — and only then a vasodilator. Never give a vasodilator alone: it causes reflex tachycardia, which increases shear stress and can extend the tear.",
+        "q": "In aortic dissection, which drug do you give first and why?"
+      },
+      {
+        "a": "Emergency surgery. A tear in the ascending aorta can rupture into the pericardium, block the coronary arteries or damage the aortic valve — so it is operated on immediately, whatever the time of day.",
+        "q": "What is the management of a type A (ascending) aortic dissection?"
+      },
+      {
+        "a": "Medical management — keep systolic BP under 120 mmHg and heart rate under 60 with beta-blockers. Surgery or endovascular repair (TEVAR) is only needed if there are complications such as rupture, organ malperfusion or uncontrolled pain.",
+        "q": "What is the management of an uncomplicated type B (descending) aortic dissection?"
+      },
+      {
+        "a": "Dissection causes tearing pain radiating to the back, a blood pressure difference between the arms, and a widened mediastinum on chest X-ray. Get a CT angiogram before giving thrombolysis — giving a clot-buster to a dissection can cause fatal bleeding into the aorta.",
+        "q": "How do you distinguish an aortic dissection from an MI, and why does it matter before giving thrombolysis?"
+      },
+      {
+        "a": "Supervised exercise training, smoking cessation, a high-intensity statin and an antiplatelet (aspirin or clopidogrel). Cilostazol improves walking distance in claudication. These measures treat the underlying atherosclerosis — the leg pain is a symptom of a systemic disease.",
+        "q": "What is the medical management of peripheral artery disease with claudication?"
+      },
+      {
+        "a": "Revascularise when symptoms limit daily life despite medical therapy. Critical limb ischaemia — rest pain, ulcers or gangrene — needs urgent revascularisation to save the limb, because the leg will not heal without blood flow.",
+        "q": "When does peripheral artery disease need revascularisation?"
+      },
+      {
+        "a": "Heparin immediately, then urgent vascular surgery or embolectomy. Acute limb ischaemia (pain, pallor, pulselessness, paraesthesia, paralysis, cold — the six Ps) is a limb-threatening emergency. Do not delay treatment for imaging when the leg is severely ischaemic.",
+        "q": "A patient suddenly develops a cold, pale, pulseless, painful leg. What is the management?"
+      },
+      {
+        "a": "History, examination, orthostatic blood pressure and an ECG first. Then risk-stratify: echo if there is a murmur or known heart disease, and rhythm monitoring if arrhythmia is suspected. Do not order every test on everyone — the ECG and history catch most of the dangerous causes.",
+        "q": "What is the initial workup for syncope?"
+      },
+      {
+        "a": "Think aortic stenosis, hypertrophic cardiomyopathy or arrhythmia — and admit for urgent cardiac evaluation. Syncope on exertion is never vasovagal until proven otherwise; discharging these patients without a cardiac workup risks sudden death.",
+        "q": "A patient faints while exercising. What should you suspect and what should you do?"
+      },
+      {
+        "a": "Reassurance, hydration, salt and avoiding triggers such as prolonged standing or heat. No pacemaker is needed unless there is recurrent severe syncope with a documented bradycardic pause. Most vasovagal syncope is benign and managed with lifestyle measures.",
+        "q": "How is vasovagal syncope managed?"
+      },
+      {
+        "a": "Use the Revised Cardiac Risk Index (RCRI) and assess functional capacity. For low-risk surgery, no cardiac testing is needed. If the patient can manage 4 METs (such as climbing a flight of stairs) without symptoms, they can usually proceed to surgery without further testing.",
+        "q": "How do you assess cardiac risk before non-cardiac surgery?"
+      },
+      {
+        "a": "Continue it. Stopping a chronic beta-blocker around surgery causes rebound tachycardia and hypertension. But do NOT start a beta-blocker on the day of surgery in a patient who was not on one — that increases the risk of stroke and death.",
+        "q": "A patient on a beta-blocker at home needs surgery. Should you stop it, and should you start one in a patient not already on it?"
+      },
+      {
+        "a": "Hold the ACE inhibitor or ARB on the morning of surgery — they increase the risk of low blood pressure during anaesthesia — and restart it once the patient is stable and eating. This is a temporary hold, not a permanent stop.",
+        "q": "Should a patient take their ACE inhibitor on the morning of surgery?"
+      },
+      {
+        "a": "Only when the patient has poor functional capacity and is having high-risk surgery, and only if the result would change management. A stress test that will not change what you do is a waste of time and can delay needed surgery.",
+        "q": "When is a pre-operative stress test indicated?"
+      },
+      {
+        "a": "Revascularise the culprit artery, give norepinephrine as first-line vasopressor and dobutamine for low output, and consider mechanical support such as an intra-aortic balloon pump or Impella as a bridge. The treatment is opening the artery — drugs and devices only support the patient until that happens.",
+        "q": "How is cardiogenic shock managed?"
+      },
+      {
+        "a": "Cardiogenic shock is cold and clammy with a high JVP and pulmonary oedema; septic shock is warm with low vascular resistance. Echo, lactate and examination help tell them apart. Do not give large fluid boluses in cardiogenic shock — the heart cannot handle the volume and the lungs will flood.",
+        "q": "How do you distinguish cardiogenic shock from septic shock, and how does fluid management differ?"
+      },
+      {
+        "a": "Thrombolysis, or surgical embolectomy if lysis is contraindicated. When a pulmonary embolism causes hypotension, anticoagulation alone is too slow — the clot must be dissolved or removed to restore blood flow to the lungs.",
+        "q": "A patient with a large pulmonary embolism is hypotensive. Is anticoagulation alone enough?"
+      },
+      {
+        "a": "Thyroid disease (both under- and overactive), pulmonary fibrosis, liver injury, corneal deposits, blue-grey skin discoloration and photosensitivity. Check thyroid function, liver tests, chest X-ray and eyes at baseline and regularly — amiodarone is effective but toxic, so it needs monitoring.",
+        "q": "What are the side effects of amiodarone and what monitoring is needed?"
+      },
+      {
+        "a": "Switch to an ARB — the cough is a class effect of ACE inhibitors. But angioedema is different: stop the ACE inhibitor forever and never rechallenge, and be cautious with ARBs at first because of a small cross-reaction risk.",
+        "q": "A patient on an ACE inhibitor develops a dry cough. What should you do — and what if they develop angioedema instead?"
+      },
+      {
+        "a": "Check liver tests only if there are symptoms, such as jaundice or abdominal pain. Mild rises in liver enzymes do not always mean the statin must be stopped — the decision depends on how high they are and whether the patient has symptoms.",
+        "q": "Should you routinely check liver function in a patient on a statin?"
+      },
+      {
+        "a": "Nausea, visual changes such as yellow vision, confusion and arrhythmias. Toxicity is precipitated by low potassium, kidney failure and old age. For severe toxicity, give digoxin immune Fab — it binds the digoxin and reverses the poisoning.",
+        "q": "What are the signs of digoxin toxicity, what precipitates it, and how is severe toxicity treated?"
+      },
+      {
+        "a": "Treat it as a STEMI equivalent and activate the cath lab. A new left bundle branch block with ischaemic chest pain can hide an occluded artery, so do not wait — the Sgarbossa criteria can help, but they should not delay reperfusion.",
+        "q": "A patient with chest pain has a new left bundle branch block on ECG. How should this be managed?"
+      },
+      {
+        "a": "Give calcium gluconate first to stabilise the heart membrane, then insulin with glucose, nebulised salbutamol and sodium bicarbonate to shift potassium into cells, and finally remove potassium from the body. Calcium does not lower potassium — it protects the heart while the other treatments work.",
+        "q": "An ECG shows peaked T waves and a widened QRS. What is the diagnosis and the first treatment?"
+      },
+      {
+        "a": "Hypokalaemia. The ECG shows U waves, flat T waves and a long QT. Replace potassium carefully and watch for torsades de pointes — a low potassium makes the heart prone to this dangerous rhythm.",
+        "q": "An ECG shows U waves and a long QT interval. What is the cause and what is the risk?"
+      },
+      {
+        "a": "Refer for ICD evaluation. Brugada pattern with syncope marks high risk of sudden death. Avoid sodium channel blockers, and treat fever promptly — fever can unmask the Brugada pattern and trigger a lethal arrhythmia.",
+        "q": "A patient with a Brugada pattern on ECG has syncope. What is the management?"
+      }
+    ],
+    "icon": "heart-pulse",
+    "section": "INTERNAL MEDICINE",
+    "topic": "Cardiology"
+  },
+  {
+    "cards": [
+      {
+        "a": "FEV1/FVC ratio below 0.70 after a bronchodilator. FEV1 is the air breathed out in the first second, FVC is the total air breathed out. A low ratio means the airways are narrowed and air is trapped. Smoking is the main cause.",
+        "q": "How is COPD diagnosed on spirometry?"
+      },
+      {
+        "a": "Short-acting beta-agonist (albuterol/salbutamol) by nebuliser or inhaler, plus ipratropium, plus a steroid (e.g. prednisolone) early. Give oxygen to keep saturation 94-98%. Magnesium sulfate is added in severe attacks. Steroids take hours to work, so give them early.",
+        "q": "What is the treatment for an acute asthma attack?"
+      },
+      {
+        "a": "It predicts how sick a patient with pneumonia is and whether they need hospital admission. 1 point each for: Confusion, Urea >7 mmol/L, Respiratory rate 30 or more, Blood pressure low (systolic <90 or diastolic 60 or less), age 65 or more. Score 0-1: treat at home. Score 2: admit. Score 3 or more: consider ICU.",
+        "q": "What is CURB-65 used for in pneumonia?"
+      },
+      {
+        "a": "Use the Wells score first. If risk is low and D-dimer is negative, PE is unlikely. If risk is high, do a CT pulmonary angiogram (CTPA). Treatment is anticoagulation (blood thinner) — heparin, then warfarin or a DOAC. A massive PE with low blood pressure needs thrombolysis (clot-busting drug).",
+        "q": "How do you diagnose and treat a pulmonary embolism (PE)?"
+      },
+      {
+        "a": "A-a gradient = PAO2 - PaO2. PAO2 is the oxygen in the alveoli, PaO2 is the oxygen in arterial blood. A high gradient means oxygen is getting into the lungs but not into the blood — for example in PE, pneumonia or ARDS. A normal gradient is roughly (age / 4) + 4 mmHg.",
+        "q": "What is the A-a gradient formula, and what does a high value mean?"
+      },
+      {
+        "a": "PaO2/FiO2 below 300 mmHg, with bilateral lung infiltrates on chest X-ray and no heart failure explaining it. Below 200 is moderate ARDS, below 100 is severe. FiO2 is the fraction of oxygen breathed in — for example on room air FiO2 is 0.21.",
+        "q": "What PaO2/FiO2 ratio defines ARDS?"
+      },
+      {
+        "a": "It is an exudate if ANY of these are true: pleural fluid protein / serum protein >0.5, pleural fluid LDH / serum LDH >0.6, or pleural fluid LDH > two-thirds of the upper limit of normal serum LDH. Transudate (e.g. heart failure) is low protein; exudate (e.g. infection, cancer) is high protein.",
+        "q": "How do Light's criteria separate transudate from exudate in a pleural effusion?"
+      },
+      {
+        "a": "RIPE for 2 months, then RI for 4 months — total 6 months. R = rifampicin, I = isoniazid, P = pyrazinamide, E = ethambutol. Add pyridoxine (vitamin B6) with isoniazid to prevent nerve damage. TB usually affects the upper lobes of the lung.",
+        "q": "What is the standard treatment for active tuberculosis (TB)?"
+      },
+      {
+        "a": "Needle decompression first, then a chest drain. Insert a large needle in the 2nd intercostal space, mid-clavicular line, on the affected side. Tension pneumothorax is air trapped in the chest that squeezes the heart and lungs — the patient is hypotensive, breathless, with trachea pushed away and absent breath sounds.",
+        "q": "What is the emergency treatment for a tension pneumothorax?"
+      },
+      {
+        "a": "Repeated pauses in breathing during sleep, usually because the upper airway collapses. Signs: loud snoring, daytime sleepiness, morning headache, high blood pressure. Use the STOP-BANG score to screen. Treatment is CPAP — a mask that keeps the airway open with air pressure — plus weight loss and avoiding alcohol/sedatives.",
+        "q": "What is sleep apnoea, and how is it treated?"
+      }
+    ],
+    "icon": "stethoscope",
+    "section": "INTERNAL MEDICINE",
+    "topic": "Pulmonology"
+  },
+  {
+    "cards": [
+      {
+        "a": "The normal squamous lining of the lower oesophagus is replaced by intestinal-type lining, after years of acid reflux (GERD). It matters because it can progress to oesophageal adenocarcinoma. Patients need surveillance endoscopy.",
+        "q": "What is Barrett's oesophagus, and why does it matter?"
+      },
+      {
+        "a": "The two main causes are H. pylori infection and NSAIDs. H. pylori is treated with triple therapy: a PPI + clarithromycin + amoxicillin (or metronidazole if allergic to penicillin) for 14 days. Then re-test to confirm the infection is gone.",
+        "q": "What causes a peptic ulcer, and how is H. pylori treated?"
+      },
+      {
+        "a": "Ulcerative colitis: continuous inflammation starting in the rectum, only the colon, bloody diarrhoea, no skip areas. Crohn's: skip lesions anywhere from mouth to anus, often the terminal ileum, non-bloody diarrhoea, strictures and fistulas, granulomas on biopsy. Both are inflammatory bowel disease.",
+        "q": "How do you tell ulcerative colitis from Crohn's disease?"
+      },
+      {
+        "a": "It grades how severe liver failure is, using bilirubin, albumin, INR, ascites and encephalopathy. Class A = mild, B = moderate, C = severe. A higher score means worse liver function and higher risk of death — it helps decide about transplant.",
+        "q": "What is the Child-Pugh score used for in cirrhosis?"
+      },
+      {
+        "a": "Infection of ascitic fluid in a patient with cirrhosis, without an obvious source. Diagnose by ascitic fluid neutrophil count (PMN) of 250 cells/mm3 or more. Treat with cefotaxime plus albumin. SAAG (serum-ascites albumin gradient) of 1.1 g/dL or more points to portal hypertension as the cause of the ascites.",
+        "q": "What is spontaneous bacterial peritonitis (SBP), and how is it diagnosed?"
+      },
+      {
+        "a": "Gallstones and alcohol — together they cause most cases. Diagnosis needs 2 of 3: typical upper abdominal pain radiating to the back, lipase or amylase more than 3 times the upper limit, and imaging showing pancreatitis. Treatment is IV fluids, pain control, and nothing by mouth initially.",
+        "q": "What are the two most common causes of acute pancreatitis?"
+      },
+      {
+        "a": "Charcot's triad = fever + right upper quadrant pain + jaundice. It means cholangitis — infection of the bile ducts, usually from a gallstone blocking the duct. Reynolds' pentad adds confusion and low blood pressure (shock) — that is severe cholangitis and needs urgent antibiotics and bile duct drainage (ERCP).",
+        "q": "What is Charcot's triad, and what does Reynolds' pentad add?"
+      },
+      {
+        "a": "IV octreotide (or terlipressin) plus IV antibiotics (e.g. ceftriaxone), plus urgent endoscopy with band ligation. Give blood transfusion carefully — aim for haemoglobin around 7 g/dL, not normal, because over-transfusion raises portal pressure and worsens bleeding.",
+        "q": "What is the first treatment for a variceal bleed in cirrhosis?"
+      },
+      {
+        "a": "HBsAg positive = current infection. Anti-HBs positive = immunity (after vaccine or past infection). Anti-HBc IgM = acute infection. HBeAg positive = high infectivity. If HBsAg is positive for more than 6 months, it is chronic hepatitis B.",
+        "q": "How do you interpret hepatitis B serology?"
+      },
+      {
+        "a": "Stop the triggering antibiotic if possible. First-line treatment is fidaxomicin, or oral vancomycin. Do NOT use metronidazole as first line anymore. For severe or recurrent cases, faecal microbiota transplant is used. C. difficile causes watery diarrhoea after antibiotics.",
+        "q": "What is the treatment for Clostridioides difficile infection?"
+      }
+    ],
+    "icon": "stethoscope",
+    "section": "INTERNAL MEDICINE",
+    "topic": "Gastroenterology"
+  },
+  {
+    "cards": [
+      {
+        "a": "Anion gap = Na+ - (Cl- + HCO3-). Normal is 8-12 mEq/L. Example: Na 140, Cl 100, HCO3 24 gives 140 - 124 = 16, which is high. A high anion gap means metabolic acidosis from acids like lactate, ketones (DKA), renal failure or toxins.",
+        "q": "What is the anion gap formula?"
+      },
+      {
+        "a": "Expected PaCO2 = 1.5 x HCO3- + 8, plus or minus 2. It is used in metabolic acidosis to check if the lungs are compensating correctly. Example: HCO3- 12 gives expected PaCO2 = 1.5 x 12 + 8 = 26 mmHg. If the actual PaCO2 is much higher, there is also a respiratory acidosis.",
+        "q": "What is Winter's formula, and what is it used for?"
+      },
+      {
+        "a": "pH = 6.1 + log [ HCO3- / (0.03 x PaCO2) ]. HCO3- is bicarbonate, PaCO2 is carbon dioxide pressure. If HCO3- falls, pH falls (metabolic acidosis). If PaCO2 rises, pH falls (respiratory acidosis). Normal pH is 7.35-7.45.",
+        "q": "What is the Henderson-Hasselbalch equation for blood pH?"
+      },
+      {
+        "a": "FeNa = fractional excretion of sodium. FeNa below 1% means pre-renal AKI — the kidneys are holding on to sodium because blood flow is low (dehydration, heart failure). FeNa above 2% means ATN — the tubules are damaged and cannot reabsorb sodium. FeNa is not reliable if the patient is on diuretics.",
+        "q": "How does FeNa separate pre-renal AKI from acute tubular necrosis (ATN)?"
+      },
+      {
+        "a": "1. Calcium gluconate IV — protects the heart, does not lower potassium. 2. Insulin + glucose IV — moves potassium into cells. 3. Salbutamol nebuliser and sodium bicarbonate — also shift potassium in. 4. Dialysis if severe or not responding. Always do an ECG first — look for peaked T waves and wide QRS.",
+        "q": "What is the emergency treatment for high potassium (hyperkalaemia)?"
+      },
+      {
+        "a": "No faster than 8-10 mEq/L in 24 hours (even slower, 4-6, if high risk). Correcting too fast can cause osmotic demyelination syndrome — permanent brain damage. If the patient has seizures from very low sodium, correct faster at first, then slow down.",
+        "q": "How fast can you safely correct low sodium (hyponatraemia)?"
+      },
+      {
+        "a": "Stage 1: GFR 90 or more, with kidney damage. Stage 2: 60-89. Stage 3a: 45-59, 3b: 30-44. Stage 4: 15-29. Stage 5: below 15, or on dialysis — kidney failure. GFR is measured in mL/min/1.73 m2. Lower GFR means worse kidney function.",
+        "q": "What are the stages of chronic kidney disease (CKD) by GFR?"
+      },
+      {
+        "a": "Nephrotic: heavy protein in urine (more than 3.5 g per day), low albumin, swelling (oedema), high cholesterol, frothy urine. Nephritic: blood in urine (red cell casts), high blood pressure, raised creatinine, less protein. Nephrotic loses protein, nephritic is inflamed and bleeds.",
+        "q": "How do you tell nephrotic from nephritic syndrome?"
+      },
+      {
+        "a": "Osmolality = 2 x Na+ + glucose/18 + BUN/2.8. All in mg/dL for glucose and BUN, Na+ in mEq/L. Normal is 275-295 mOsm/kg. Example: Na 140, glucose 180, BUN 14 gives 280 + 10 + 5 = 295. A high osmolality with low sodium suggests pseudohyponatraemia or added osmoles like mannitol.",
+        "q": "What is the formula for serum osmolality?"
+      },
+      {
+        "a": "Corrected calcium = measured calcium + 0.8 x (4.0 - albumin). Albumin in g/dL, calcium in mg/dL. Example: calcium 8.0, albumin 2.0 gives 8.0 + 0.8 x 2 = 9.6 mg/dL — actually normal. Use this because calcium binds to albumin, so low albumin makes total calcium look falsely low.",
+        "q": "What is the corrected calcium formula?"
+      }
+    ],
+    "icon": "stethoscope",
+    "section": "INTERNAL MEDICINE",
+    "topic": "Nephrology, Electrolytes and Acid-Base"
+  },
+  {
+    "cards": [
+      {
+        "a": "Glucose over 250 mg/dL, pH below 7.30, bicarbonate below 18, and ketones in blood or urine. It is caused by insulin deficiency, often triggered by infection or missed insulin. Treatment: IV fluids first, then fixed-rate insulin, and replace potassium — check potassium before starting insulin, because insulin lowers it further.",
+        "q": "What are the diagnostic criteria for diabetic ketoacidosis (DKA)?"
+      },
+      {
+        "a": "DKA: glucose usually 250-600, pH low, ketones present, patient often young with type 1 diabetes. HHS: glucose very high, often over 600, pH near normal, ketones absent or minimal, severe dehydration, patient often older with type 2 diabetes. Both need IV fluids; DKA needs insulin sooner.",
+        "q": "How do you tell DKA from hyperosmolar hyperglycaemic state (HHS)?"
+      },
+      {
+        "a": "Diabetes is diagnosed if any one is true: HbA1c 6.5% or more, fasting glucose 126 mg/dL or more, 2-hour glucose 200 mg/dL or more after a glucose load, or random glucose 200 mg/dL or more with symptoms. HbA1c shows average glucose over 2-3 months.",
+        "q": "What are the diagnostic cut-offs for diabetes?"
+      },
+      {
+        "a": "Low cortisol with high ACTH means primary adrenal failure (Addison's disease) — the adrenal gland itself has failed. Low cortisol with low ACTH means secondary — the pituitary is not sending ACTH. Addison's: fatigue, weight loss, low blood pressure, high potassium, low sodium, and darkening of the skin. Treatment is hydrocortisone, with extra dose in illness.",
+        "q": "How do you tell primary from secondary adrenal insufficiency?"
+      },
+      {
+        "a": "Too much cortisol. Causes: long-term steroid use (most common), pituitary tumour (Cushing's disease), adrenal tumour, or ectopic ACTH from a lung cancer. Signs: central obesity, moon face, buffalo hump, purple stretch marks, high blood pressure, high glucose, weak muscles, easy bruising.",
+        "q": "What causes Cushing syndrome, and what does it look like?"
+      },
+      {
+        "a": "High calcium (over 10.5 mg/dL) is usually from hyperparathyroidism or cancer. Symptoms: stones (kidney stones), bones (bone pain), groans (abdominal pain, constipation), moans (confusion, depression). Treatment: IV fluids first, then a bisphosphonate (e.g. zoledronate). Calcitonin works fast but only for a short time.",
+        "q": "What causes high calcium, and how is it treated?"
+      },
+      {
+        "a": "SIADH: too much ADH, so the body holds water, sodium falls, urine is concentrated, patient is clinically euvolaemic (not dry, not overloaded). Diabetes insipidus: too little ADH (central) or kidneys do not respond to ADH (nephrogenic) — patient makes large amounts of very dilute urine and is very thirsty.",
+        "q": "How do you tell SIADH from diabetes insipidus?"
+      },
+      {
+        "a": "Thyroid storm is life-threatening overactive thyroid: high fever, fast heart rate, confusion, agitation. Treatment: 1. Beta-blocker (propranolol) to slow the heart, 2. Propylthiouracil (PTU) to block new thyroid hormone, 3. Steroids, 4. Iodine — given AFTER the PTU, at least 1 hour later, otherwise iodine feeds hormone production.",
+        "q": "What is the treatment for thyroid storm, and in what order?"
+      },
+      {
+        "a": "It is a tumour of the adrenal medulla that releases adrenaline and noradrenaline in bursts. Symptoms: episodic headache, sweating, palpitations and very high blood pressure. Diagnose with plasma or urine metanephrines. Treatment: alpha-blocker (phenoxybenzamine) FIRST, then beta-blocker — never beta-blocker alone, because that leaves alpha vasoconstriction unopposed and blood pressure can rise further.",
+        "q": "What is phaeochromocytoma, and what is the key treatment rule?"
+      },
+      {
+        "a": "A serious skin reaction to drugs, with fever, eosinophilia (high eosinophils) and internal organ involvement (liver, kidney). It starts 2-6 weeks after starting a drug like allopurinol, carbamazepine or phenytoin. Stop the drug immediately, give steroids if severe. It is different from a simple drug rash — organs are involved.",
+        "q": "What is DRESS syndrome?"
+      },
+      {
+        "a": "Hypothyroidism: low T4, high TSH, weight gain, cold intolerance, slow heart rate, constipation, fatigue. Treat with levothyroxine. Hyperthyroidism: high T4, low TSH, weight loss, heat intolerance, fast heart rate, tremor, diarrhoea. Treat with methimazole, beta-blocker, and consider radioiodine or surgery.",
+        "q": "How do thyroid function tests differ in hypo- and hyperthyroidism?"
+      }
+    ],
+    "icon": "stethoscope",
+    "section": "INTERNAL MEDICINE",
+    "topic": "Endocrinology"
+  },
+  {
+    "cards": [
+      {
+        "a": "Low ferritin is the most reliable test — ferritin below 30 ng/mL confirms iron deficiency in most patients. Also: low haemoglobin, low MCV (small red cells), low iron, high TIBC. Causes: blood loss (especially GI in adults), poor diet, malabsorption. Treat the cause plus oral iron.",
+        "q": "What lab finding confirms iron deficiency anaemia?"
+      },
+      {
+        "a": "B12 deficiency: large red cells (high MCV), low B12, neurological symptoms — numbness, tingling, loss of vibration sense, and dorsal column problems. Folate deficiency: same blood picture, but NO neurological symptoms. Treat B12 with B12 injections or high-dose oral B12; treat folate with folate — but check B12 first, because giving folate alone can worsen B12 nerve damage.",
+        "q": "How do you tell B12 deficiency from folate deficiency?"
+      },
+      {
+        "a": "HbS is abnormal haemoglobin that sickles red cells when oxygen is low. Crises: painful vaso-occlusive crisis, acute chest syndrome, splenic sequestration, aplastic crisis (parvovirus B19). Hydroxyurea increases fetal haemoglobin and reduces crises. Patients need vaccinations and penicillin prophylaxis in childhood.",
+        "q": "What is sickle cell disease, and what does hydroxyurea do?"
+      },
+      {
+        "a": "AML is usually in adults, with Auer rods in the blood/bone marrow, and blasts in the blood. ALL is usually in children, with lymphoblasts, and often presents with bone pain and fever. Both present with anaemia, low platelets, low white cells, and infections from bone marrow failure.",
+        "q": "How do you tell AML from ALL?"
+      },
+      {
+        "a": "Hodgkin lymphoma: Reed-Sternberg cells on biopsy, often young adults, painless lymph nodes, B symptoms (fever, night sweats, weight loss), spreads in a predictable pattern. Non-Hodgkin lymphoma: more varied, often extranodal, no Reed-Sternberg cells. Both need biopsy, not just imaging.",
+        "q": "What is the key cell in Hodgkin lymphoma?"
+      },
+      {
+        "a": "Prolonged PT and aPTT, low platelets, low fibrinogen, high D-dimer, and schistocytes (fragmented red cells) on the blood film. It is caused by widespread clotting and bleeding at the same time, often from sepsis, trauma or obstetric catastrophe. Treat the cause, give platelets, plasma and cryoprecipitate as needed.",
+        "q": "What labs are seen in disseminated intravascular coagulation (DIC)?"
+      },
+      {
+        "a": "TTP: fever, low platelets, microangiopathic haemolytic anaemia, neurological symptoms, and kidney failure — the pentad. It is due to low ADAMTS13, which normally cuts von Willebrand factor. Treatment is urgent plasma exchange (plasmapheresis) plus steroids. Do NOT give platelets unless there is life-threatening bleeding — they worsen clotting.",
+        "q": "What is thrombotic thrombocytopenic purpura (TTP), and what is the treatment?"
+      },
+      {
+        "a": "CRAB: C = hyperCalcaemia, R = Renal failure, A = Anaemia, B = Bone lesions (lytic, punched-out lesions on X-ray). It is a plasma cell cancer with monoclonal protein (M-spike) on electrophoresis and Bence Jones protein in urine. Back pain and kidney failure are common presentations.",
+        "q": "What is the CRAB acronym in multiple myeloma?"
+      },
+      {
+        "a": "Warfarin is monitored by INR (target usually 2-3), and reversed with vitamin K or 4-factor prothrombin complex concentrate. Heparin is monitored by aPTT, reversed with protamine. DOACs (apixaban, rivaroxaban) do not need routine monitoring; apixaban is reversed with andexanet alfa, dabigatran with idarucizumab.",
+        "q": "How do you monitor and reverse warfarin, heparin and DOACs?"
+      },
+      {
+        "a": "Stop the transfusion immediately, check the patient, and send blood samples. Fever alone may be a febrile reaction; fever + low blood pressure + flank pain + dark urine suggests acute haemolytic reaction from ABO mismatch — this is an emergency. TRALI (transfusion-related acute lung injury) causes breathlessness and low oxygen within 6 hours of transfusion.",
+        "q": "What do you do first in a transfusion reaction, and what is TRALI?"
+      }
+    ],
+    "icon": "stethoscope",
+    "section": "INTERNAL MEDICINE",
+    "topic": "Haematology and Oncology"
+  },
+  {
+    "cards": [
+      {
+        "a": "1-hour bundle: measure lactate, take blood cultures BEFORE antibiotics, give broad-spectrum antibiotics within 1 hour, give 30 mL/kg crystalloid fluids if hypotensive or lactate 4 or more, and start vasopressors (norepinephrine) if blood pressure stays low. qSOFA of 2 or more (low BP, fast breathing, altered mental state) predicts a bad outcome.",
+        "q": "What is the 1-hour sepsis bundle?"
+      },
+      {
+        "a": "Bacterial: high white cells and protein in CSF, low glucose, high opening pressure. Viral: white cells raised (mostly lymphocytes), protein mildly raised, glucose normal. Empiric treatment for bacterial meningitis: ceftriaxone + vancomycin + dexamethasone (given before or with antibiotics), plus ampicillin if age over 50, pregnant, or immunocompromised — to cover Listeria.",
+        "q": "How does bacterial meningitis differ from viral meningitis on CSF, and what is empiric treatment?"
+      },
+      {
+        "a": "CD4 below 200 cells/uL: risk of Pneumocystis pneumonia (PCP) — give co-trimoxazole prophylaxis. CD4 below 100: toxoplasmosis. CD4 below 50: Mycobacterium avium complex (MAC) and CMV retinitis. ART (antiretroviral therapy) is started regardless of CD4 count, and it reduces opportunistic infections.",
+        "q": "What opportunistic infections occur at which CD4 counts in HIV?"
+      },
+      {
+        "a": "Cellulitis is a spreading skin infection, usually streptococci or Staph aureus, with redness, warmth and pain — treat with flucloxacillin or cephalexin. Necrotising fasciitis is a surgical emergency: severe pain out of proportion to the skin changes, rapid spread, crepitus (gas in tissue), low blood pressure — needs urgent surgery (debridement) plus broad-spectrum antibiotics.",
+        "q": "How do you tell cellulitis from necrotising fasciitis?"
+      },
+      {
+        "a": "Lyme disease is caused by Borrelia burgdorferi, spread by Ixodes ticks. Stage 1: erythema migrans — a bull's-eye rash. Stage 2: heart block, facial nerve palsy, arthritis. Stage 3: chronic arthritis, skin changes. Treatment: doxycycline for early disease, ceftriaxone for severe late disease.",
+        "q": "What are the stages of Lyme disease?"
+      },
+      {
+        "a": "Primary: painless chancre. Secondary: rash on palms and soles, condyloma lata. Latent: no symptoms but tests positive. Tertiary: gummas, neurosyphilis, cardiovascular disease. Screening is with RPR or VDRL (non-treponemal), confirmed with a treponemal test (FTA-ABS / TP-PA). Treatment is penicillin G.",
+        "q": "What are the stages of syphilis, and how is it diagnosed?"
+      },
+      {
+        "a": "A hot, swollen, painful single joint with fever. Aspirate the joint immediately — send for white cell count, Gram stain and culture. Do NOT delay aspiration to wait for blood tests. Treatment is urgent drainage plus IV antibiotics (e.g. flucloxacillin / vancomycin if MRSA risk). Septic arthritis can destroy a joint in days.",
+        "q": "What is the emergency action in suspected septic arthritis?"
+      },
+      {
+        "a": "MRSA: vancomycin or linezolid. Pseudomonas: piperacillin-tazobactam, cefepime or meropenem. Anaerobes (e.g. abdominal infection): metronidazole. Atypical pneumonia (Mycoplasma, Legionella): macrolide or doxycycline. Always check local resistance patterns and allergies.",
+        "q": "Which antibiotic covers MRSA, Pseudomonas, anaerobes and atypical pneumonia?"
+      },
+      {
+        "a": "Influenza A/B causes fever, cough, myalgia and headache in winter. Complications include secondary bacterial pneumonia (Staph aureus, Strep pneumoniae). Treatment: oseltamivir within 48 hours of symptoms in high-risk patients. Vaccination is the main prevention, especially in older people and those with chronic disease.",
+        "q": "What are the features and treatment of influenza?"
+      },
+      {
+        "a": "Fever, rigors, low blood pressure and a new heart murmur after a dental procedure or IV drug use. Blood cultures must be taken BEFORE antibiotics — at least 3 sets. Diagnosis uses the Duke criteria (blood cultures, echocardiogram showing vegetation, fever, risk factors, emboli). Treatment is prolonged IV antibiotics for 4-6 weeks.",
+        "q": "What are the key steps in diagnosing infective endocarditis?"
+      }
+    ],
+    "icon": "stethoscope",
+    "section": "INTERNAL MEDICINE",
+    "topic": "Infectious Disease"
+  },
+  {
+    "cards": [
+      {
+        "a": "Anti-CCP antibody is the most specific test for rheumatoid arthritis. It is often positive years before symptoms. RF (rheumatoid factor) is sensitive but less specific. RA affects MCP and PIP joints symmetrically, spares DIP joints, causes morning stiffness over 1 hour, and can cause erosions and deformity. First-line treatment is methotrexate.",
+        "q": "What is the most specific antibody test for rheumatoid arthritis?"
+      },
+      {
+        "a": "ANA positive in almost all patients, anti-dsDNA is specific for SLE and tracks disease activity, anti-Smith is very specific. Signs: malar (butterfly) rash sparing the nasolabial folds, photosensitivity, mouth ulcers, arthritis, kidney disease (lupus nephritis), and low complement (C3, C4). Young women are most affected.",
+        "q": "Which antibodies are used in SLE, and what are the classic signs?"
+      },
+      {
+        "a": "Gout: needle-shaped, negatively birefringent crystals of monosodium urate, under polarised light. Pseudogout: rhomboid, positively birefringent crystals of calcium pyrophosphate. Gout usually affects the big toe (podagra), pseudogout usually affects the knee. Treat acute gout with NSAID, colchicine or steroids — do not start allopurinol during an acute attack.",
+        "q": "How do gout and pseudogout crystals differ under the microscope?"
+      },
+      {
+        "a": "Giant cell arteritis (temporal arteritis) affects people over 50, with headache, scalp tenderness, jaw pain when chewing, and vision loss. It is associated with polymyalgia rheumatica. Start high-dose steroids IMMEDIATELY if suspected — do not wait for a biopsy — because vision loss can be permanent. ESR is usually very high.",
+        "q": "What is giant cell arteritis, and why must steroids be started immediately?"
+      },
+      {
+        "a": "Polymyalgia rheumatica: pain and stiffness in shoulders and hips in people over 50, high ESR/CRP, no muscle weakness, responds quickly to low-dose steroids. Fibromyalgia: widespread pain and fatigue, tender points, normal labs, no inflammation, sleep disturbance — treat with exercise, sleep hygiene and amitriptyline/duloxetine, not steroids.",
+        "q": "How do you tell polymyalgia rheumatica from fibromyalgia?"
+      },
+      {
+        "a": "HLA-B27 is associated with ankylosing spondylitis. It causes inflammatory back pain in young men, worse in the morning and at night, better with exercise (not rest), sacroiliitis on X-ray, and a stiff spine (bamboo spine) over time. Treatment is NSAIDs first, then TNF inhibitors.",
+        "q": "What is HLA-B27 associated with, and what is the pattern of back pain?"
+      },
+      {
+        "a": "CREST: Calcinosis, Raynaud's, oEsophageal dysmotility, Sclerodactyly, Telangiectasia. Anti-centromere antibody is seen in limited scleroderma (CREST). Anti-Scl-70 (anti-topoisomerase I) is seen in diffuse scleroderma, with lung and kidney involvement. Both cause tight, thickened skin.",
+        "q": "What is CREST syndrome, and which antibodies are seen in scleroderma?"
+      },
+      {
+        "a": "Sjögren's syndrome causes dry eyes and dry mouth, due to autoimmune destruction of lacrimal and salivary glands. Antibodies: anti-Ro (SSA) and anti-La (SSB). Patients are at increased risk of lymphoma. Use artificial tears and saliva substitutes, and check for other autoimmune diseases.",
+        "q": "What is Sjögren's syndrome?"
+      },
+      {
+        "a": "Osteoarthritis: wear-and-tear, affects weight-bearing joints and DIP joints (Heberden's nodes), pain worse with use, better with rest, no morning stiffness or only briefly, X-ray shows joint space narrowing and osteophytes. RA: inflammatory, MCP/PIP, morning stiffness over 1 hour, pain better with use, erosions on X-ray.",
+        "q": "How do you tell osteoarthritis from rheumatoid arthritis?"
+      },
+      {
+        "a": "Aspirate the joint. Septic arthritis: very high white cell count in fluid (usually over 50,000), positive Gram stain/culture, needs urgent drainage and antibiotics. Gout: urate crystals, white cells lower, patient may have fever but joint is less hot and the history is typical. Never assume gout — always aspirate a hot joint if infection is possible.",
+        "q": "How do you tell septic arthritis from gout in a hot, swollen joint?"
+      }
+    ],
+    "icon": "stethoscope",
+    "section": "INTERNAL MEDICINE",
+    "topic": "Rheumatology"
+  }
+]
