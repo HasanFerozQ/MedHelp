@@ -4576,6 +4576,286 @@
       {
         "q": "What is the primary treatment for mild localized plaque psoriasis?",
         "a": "Topical <b>Corticosteroids</b> (high-potency) + topical Vitamin D analogs (<b>Calcipotriene</b>)."
+      },
+      {
+        "a": "Non-purulent cellulitis, usually caused by Streptococcus pyogenes, sometimes Staphylococcus aureus. It is an infection of the dermis and subcutaneous fat. Treat with an oral antibiotic that covers streptococci, such as cephalexin, plus leg elevation and marking the border to track spread. It needs antibiotics because the infection can spread along tissue planes and into the bloodstream.",
+        "q": "A patient has a warm, red, swollen, tender area on the leg with fever but no pus. What is the most likely diagnosis, the usual organisms, and the treatment?"
+      },
+      {
+        "a": "Erysipelas is a superficial infection of the upper dermis and lymphatics, usually Streptococcus pyogenes. It has a sharply demarcated, raised, bright-red edge and often comes with high fever and a hot, painful plaque, classically on the face or leg. Cellulitis is deeper, with a poorly defined edge. The sharp raised border is the clue to erysipelas.",
+        "q": "How do you distinguish erysipelas from cellulitis?"
+      },
+      {
+        "a": "Necrotising fasciitis, a surgical emergency. The pain out of proportion, rapid spread, bullae and crepitus (gas in tissue) mean the infection is destroying fascia and muscle. The next step is urgent surgical debridement plus broad-spectrum IV antibiotics. Do not wait for imaging or antibiotics to work — delay is fatal because the infection spreads along fascial planes within hours.",
+        "q": "A patient with diabetes has severe leg pain that seems out of proportion to the exam, rapid spread of redness, blisters, and a crackling feeling under the skin. What is the diagnosis and the next step?"
+      },
+      {
+        "a": "This is purulent cellulitis or an abscess, where MRSA is likely. The key treatment is incision and drainage of the abscess — antibiotics alone will not clear a collection of pus. Add an antibiotic that covers MRSA, such as trimethoprim-sulfamethoxazole or doxycycline, especially if there is surrounding cellulitis, fever, or the patient is immunocompromised. Non-purulent cellulitis without pus is usually streptococcal and does not need MRSA cover.",
+        "q": "A patient has a painful, red, swollen boil with pus. How does management differ from non-purulent cellulitis?"
+      },
+      {
+        "a": "Staphylococcal scalded skin syndrome (SSSS), caused by Staphylococcus aureus exfoliative toxin A, which splits the skin very superficially at the granular layer. The mouth is spared and the child is usually not as systemically ill as in TEN. In TEN the split is deeper, the mucosa is always involved, and a drug is the trigger. Treat SSSS with supportive care and an anti-staphylococcal antibiotic such as nafcillin or cephalexin.",
+        "q": "An infant develops widespread red skin with large flaccid blisters that peel off easily, but the mouth is normal. What is the diagnosis and how does it differ from toxic epidermal necrolysis?"
+      },
+      {
+        "a": "Toxic shock syndrome, caused by Staphylococcus aureus toxin TSST-1, often associated with tampon use, or Streptococcus pyogenes from a wound. The toxin causes massive cytokine release, so the patient has fever, hypotension, diffuse erythroderma and later desquamation of the palms and soles. Remove the source (tampon or infected wound), give IV fluids and broad-spectrum antibiotics, and admit to intensive care because shock can progress rapidly.",
+        "q": "A menstruating teenager presents with high fever, low blood pressure, a diffuse red rash, and vomiting. Two weeks later the skin on her palms and soles peels. What is the diagnosis and the immediate management?"
+      },
+      {
+        "a": "Scarlet fever, caused by Streptococcus pyogenes producing erythrogenic toxin. The sandpaper rash, strawberry tongue and Pastia lines (accentuated rash in flexural creases) are classic, and the skin peels as it heals. Treat with penicillin, which clears the infection and prevents rheumatic fever. It is a streptococcal infection, so the rash is toxin-mediated rather than a primary skin disease.",
+        "q": "A child has fever, sore throat, a rough sandpaper rash, a red strawberry tongue, and lines of darker rash in the skin folds. What is the diagnosis and treatment?"
+      },
+      {
+        "a": "Incision and drainage is the definitive treatment for a cutaneous abscess, because antibiotics cannot penetrate a walled-off collection of pus. Add antibiotics when there is extensive surrounding cellulitis, fever, multiple lesions, an immunocompromised patient, or a facial abscess. A simple small abscess in a healthy person often needs drainage alone.",
+        "q": "A patient has a painful red boil that has formed a collection of pus. What is the definitive treatment, and when should antibiotics be added?"
+      },
+      {
+        "a": "Ecthyma, a deeper ulcerative form of impetigo caused by Streptococcus pyogenes. Unlike superficial impetigo, which forms honey-coloured crusts on the surface, ecthyma penetrates into the dermis and forms punched-out ulcers with raised edges and thick crusts, usually on the lower legs. It heals with scarring and needs oral antibiotics, not just topical treatment.",
+        "q": "A child has deep, punched-out ulcers with thick crusts on the lower legs that heal with scarring. What is this, and how does it differ from impetigo?"
+      },
+      {
+        "a": "This is orbital cellulitis, an infection behind the orbital septum, whereas preseptal cellulitis is in front of the septum and does not affect eye movement or vision. Pain with eye movement, proptosis and visual loss mean the infection threatens the eye and can spread to the brain. The next step is urgent CT of the orbits and sinuses, IV antibiotics, and ophthalmology referral.",
+        "q": "A patient has swelling around one eye with pain when moving the eye, bulging of the eyeball, and reduced vision. How is this different from preseptal cellulitis, and what is the next step?"
+      },
+      {
+        "a": "Chickenpox (varicella), caused by varicella-zoster virus. Lesions appear in crops so all stages are present at once, described as a dew drop on a rose petal, starting on the trunk and spreading outward. The child is contagious from 1 to 2 days before the rash appears until all lesions have crusted. Adults and pregnant women can get severe disease, so exposure in these groups needs urgent advice.",
+        "q": "A child develops crops of itchy blisters in different stages at the same time — some red spots, some fluid-filled, some crusted — starting on the trunk. What is the diagnosis, and when is the child contagious?"
+      },
+      {
+        "a": "Herpes simplex virus infection (cold sore). The grouped vesicles on an erythematous base that recur in the same place are typical, and a Tzanck smear shows multinucleated giant cells. Treat with an oral antiviral such as acyclovir or valacyclovir, started early, which shortens the episode. The virus stays latent in the nerve ganglion, which is why it recurs in the same spot.",
+        "q": "A patient has painful grouped blisters on a red base on the lip that keep coming back in the same spot. What is the diagnosis, how is it confirmed, and what is the treatment?"
+      },
+      {
+        "a": "Eczema herpeticum, a herpes simplex infection spreading over broken eczema skin. The punched-out vesicles and erosions over large areas of eczema, plus fever and feeling unwell, are the clue. It is an emergency because the virus can spread to the eyes and the bloodstream. Give IV acyclovir urgently and admit the child.",
+        "q": "A child with eczema suddenly develops widespread punched-out blisters, fever, and looks unwell. What is this complication and what is the urgent treatment?"
+      },
+      {
+        "a": "A common wart (verruca vulgaris), caused by human papillomavirus. The black dots are thrombosed capillaries, and paring the surface produces pinpoint bleeding. Treat with cryotherapy or topical salicylic acid, which destroy the infected skin. Warts are benign and often resolve on their own, but treatment is offered when they are painful, spreading, or bothersome.",
+        "q": "A patient has a rough, raised, skin-coloured bump on the hand with tiny black dots in it. What is it, what are the black dots, and how is it treated?"
+      },
+      {
+        "a": "A plantar wart interrupts the normal skin lines, is tender when squeezed from the sides, and shows tiny black dots (thrombosed capillaries) when pared. A callus preserves the skin lines, is tender with direct pressure rather than lateral squeeze, and has no black dots. The distinction matters because warts are treated with cryotherapy or salicylic acid, while calluses are treated by removing pressure and paring thick skin.",
+        "q": "A patient has a painful thickened lesion on the sole of the foot. How do you tell a plantar wart from a callus?"
+      },
+      {
+        "a": "Measles, caused by measles virus. The white spots are Koplik spots on the buccal mucosa, which appear before the rash and are diagnostic. The rash is maculopapular, starts behind the ears and on the face, then spreads downward over the body. Complications include pneumonia and encephalitis, and years later subacute sclerosing panencephalitis, which is why vaccination matters.",
+        "q": "A child has cough, runny nose, red eyes, white spots inside the cheek, then a red rash that starts on the face and spreads downward. What is the diagnosis, and what are the white spots?"
+      },
+      {
+        "a": "Rubella (German measles). The postauricular lymphadenopathy and mild pink rash are typical, and it is usually a mild illness. But if a woman catches rubella in the first trimester, the virus crosses the placenta and causes congenital rubella syndrome — deafness, cataracts and heart defects in the baby. That is why rubella immunity is checked before pregnancy.",
+        "q": "A young woman has a mild pink rash, swollen glands behind her ears, and a low fever. Why is this rash more concerning in early pregnancy than measles, and what is the diagnosis?"
+      },
+      {
+        "a": "Tinea corporis (ringworm of the body), a dermatophyte fungal infection. The annular plaque with an active scaly border and central clearing is classic. Confirm with a KOH preparation showing branching hyphae. Treat with a topical antifungal such as terbinafine, because the infection is superficial and limited to the skin.",
+        "q": "A wrestler has a ring-shaped red scaly patch with a raised edge and clearing in the centre on the arm. What is the diagnosis and treatment?"
+      },
+      {
+        "a": "Tinea cruris (jock itch), a dermatophyte infection of the groin. It spares the scrotum, whereas candidiasis of the groin involves the scrotum and has satellite pustules. Treat with a topical antifungal and advise keeping the area dry, because dermatophytes thrive in warm, moist skin folds.",
+        "q": "A man has an itchy red scaly rash in the groin that spares the scrotum. What is the diagnosis, and what finding separates it from candidiasis?"
+      },
+      {
+        "a": "Tinea pedis (athlete's foot), a dermatophyte infection. The interdigital scaling and moccasin distribution are typical. It matters because the cracks in the skin are a portal for bacterial cellulitis, especially in patients with diabetes or poor circulation. Treat with a topical antifungal and advise drying between the toes and wearing breathable footwear.",
+        "q": "A patient has scaling and cracking between the toes and a scaly rash over the soles in a moccasin pattern. What is the diagnosis, and why does it matter beyond the itch?"
+      },
+      {
+        "a": "Onychomycosis, a fungal infection of the nail, usually a dermatophyte. Confirm with a nail clipping for KOH preparation or culture. Topical antifungals rarely work because they cannot penetrate the thick nail plate, so oral terbinafine is the treatment of choice. Check liver function before starting it, because terbinafine can affect the liver.",
+        "q": "An elderly man has a thickened, yellow, crumbly toenail with debris under it. What is the diagnosis, how is it confirmed, and why are creams usually not enough?"
+      },
+      {
+        "a": "Candidal diaper dermatitis, caused by Candida albicans thriving in the warm, moist nappy area. The beefy red plaques with satellite pustules and scrotal involvement distinguish it from irritant nappy rash, which spares the folds. Treat with a topical antifungal such as nystatin or clotrimazole and frequent nappy changes to keep the area dry.",
+        "q": "An infant has a bright red, beefy rash in the nappy area with small red spots around the edge, including the scrotum. What is the diagnosis and treatment?"
+      },
+      {
+        "a": "This is chronic paronychia, usually due to Candida after repeated wet work damages the cuticle. It is a low-grade, recurrent inflammation without a frank abscess. Acute paronychia is usually Staphylococcus aureus, very painful, with a collection of pus that may need drainage. Treat chronic paronychia by avoiding wet work and irritants plus a topical antifungal, sometimes with a mild topical steroid.",
+        "q": "A dishwasher has a swollen, red, tender area around the fingernail that keeps coming back, without a lot of pus. How is this different from an acute paronychia?"
+      },
+      {
+        "a": "Head lice (pediculosis capitis). The nits are glued to the hair shafts and do not slide off, unlike dandruff. Treat with permethrin 1% lotion or oral ivermectin, repeat in a week to kill newly hatched lice, and treat close contacts. Wash bedding and hats in hot water, because lice spread by close head-to-head contact.",
+        "q": "A schoolchild has intense scalp itching, worse behind the ears and at the back of the head, with tiny white eggs stuck to the hair shafts. What is the diagnosis and treatment?"
+      },
+      {
+        "a": "Erythema migrans, the skin sign of early Lyme disease from Borrelia burgdorferi. It is an expanding annular red patch, usually larger than 5 cm, with central clearing. Blood tests are often negative this early because antibodies have not yet formed, so the diagnosis is made clinically and treatment is doxycycline. Early treatment prevents later arthritis, facial palsy and heart block.",
+        "q": "A hiker notices an expanding red ring with a clear centre on the thigh a week after a tick bite. What is the lesion, and why is the diagnosis clinical rather than by blood test?"
+      },
+      {
+        "a": "Allergic contact dermatitis is a type IV delayed hypersensitivity reaction, appearing 48 to 72 hours after contact with an allergen such as nickel or poison ivy, often with linear streaks and intense itch. Irritant contact dermatitis is direct damage from soaps or chemicals, appearing quickly where the irritant touches, with burning and dryness. Patch testing identifies the allergen in allergic contact dermatitis, while irritant dermatitis is diagnosed by the exposure history.",
+        "q": "A patient develops an itchy rash on the hands 2 days after starting a new soap at work, and the rash is worst where the soap touches. How do you distinguish allergic from irritant contact dermatitis?"
+      },
+      {
+        "a": "Nickel allergy, the most common cause of allergic contact dermatitis. Nickel is in cheap jewellery, belt buckles and watch straps, and the rash appears exactly where the metal touches the skin. Confirm with patch testing and advise avoiding nickel-containing items, because repeated exposure keeps the rash coming back.",
+        "q": "A woman gets an itchy red rash on her earlobes after wearing earrings, around her belly button under her belt buckle, and on her wrist under her watch. What is the cause and the next step?"
+      },
+      {
+        "a": "Daily emollients to repair the skin barrier, avoidance of triggers such as harsh soaps and heat, and topical corticosteroids during flares. For the face and skin folds, use a low-potency steroid or a topical calcineurin inhibitor such as tacrolimus, because strong steroids thin the skin in these delicate areas. Wet wraps and bleach baths can help severe flares and reduce bacterial superinfection.",
+        "q": "A child with eczema has dry, itchy skin and frequent flares. What is the day-to-day management, and what is used for the face and skin folds?"
+      },
+      {
+        "a": "Dupilumab, a monoclonal antibody that blocks interleukin-4 and interleukin-13. These are the Th2 cytokines that drive the itch and inflammation in atopic dermatitis. It is used for moderate to severe eczema that has failed topical treatment, and it works because it targets the immune pathway driving the disease rather than just suppressing the skin.",
+        "q": "An adult has severe eczema that does not respond to creams and keeps them awake at night. What systemic treatment is used, and how does it work?"
+      },
+      {
+        "a": "Topical corticosteroid side effects: skin atrophy, striae, telangiectasia and perioral dermatitis from prolonged use of a potent steroid on delicate skin. Strong steroids can also suppress the adrenal axis if used over large areas. Stop the potent steroid, switch to a milder agent or a calcineurin inhibitor for the face, and use the lowest potency that controls the disease for the shortest time needed.",
+        "q": "A patient has used a strong steroid cream on the face for months and now has thin shiny skin, stretch marks, visible blood vessels, and spots around the mouth. What has happened, and what should be done?"
+      },
+      {
+        "a": "Lichen simplex chronicus, a thickened lichenified plaque caused by chronic scratching and rubbing. The itch-scratch cycle is the driver, so the key is to break it: a potent topical steroid to reduce inflammation, an antihistamine at night to stop scratching in sleep, and covering the area. Without stopping the scratching, the plaque will not heal.",
+        "q": "A patient has a thick, leathery, itchy plaque on the back of the neck from years of scratching. What is the diagnosis and the key to treatment?"
+      },
+      {
+        "a": "Polymorphous light eruption, the most common sun-induced rash, caused by an immune reaction to ultraviolet light. It appears hours to days after sun exposure on sun-exposed skin and recurs each spring. A drug-induced photosensitivity reaction is caused by a medicine such as doxycycline, a thiazide or amiodarone, and appears only while taking the drug. Both are managed with sun protection, but the drug reaction resolves when the drug is stopped.",
+        "q": "A young woman gets itchy red bumps on her chest and arms every spring a few hours after being in the sun. What is the diagnosis, and how does it differ from a drug-induced sun reaction?"
+      },
+      {
+        "a": "Guttate psoriasis, triggered by a streptococcal throat infection. The sudden eruption of small drop-like plaques is typical in children and young adults. It often resolves on its own over weeks to months, but some patients go on to develop chronic plaque psoriasis, so the throat infection should be treated and the child followed.",
+        "q": "A child develops many small, drop-shaped red scaly spots all over the body two weeks after a sore throat. What is the diagnosis and the likely course?"
+      },
+      {
+        "a": "Generalised pustular psoriasis (von Zumbusch), a dermatologic emergency. The widespread sterile pustules with fever and systemic illness are the clue — the pustules are not infected, they are filled with neutrophils from intense inflammation. It is often triggered by stopping systemic steroids suddenly, and the patient needs hospital admission, supportive care and dermatology input.",
+        "q": "A patient with psoriasis suddenly develops widespread sterile pus-filled blisters, fever, and feels unwell. What is this, and what commonly triggers it?"
+      },
+      {
+        "a": "Inverse psoriasis, which affects skin folds. The plaques are smooth and red with little scale because the moist fold environment prevents scale building up. Strong steroids must be avoided in folds because the thin, occluded skin absorbs them readily and develops atrophy and stretch marks quickly. Use a low-potency steroid, a vitamin D analogue, or a topical calcineurin inhibitor instead.",
+        "q": "A patient has smooth, red, shiny plaques in the armpits and groin with almost no scale. What type of psoriasis is this, and why must strong steroids be avoided here?"
+      },
+      {
+        "a": "Psoriatic arthritis. The dactylitis (sausage digit), enthesitis (tendon insertion pain) and nail pitting are classic, and it typically affects the distal interphalangeal joints asymmetrically. Every psoriasis patient should be asked about joint pain and swelling, because untreated psoriatic arthritis causes permanent joint damage.",
+        "q": "A patient with psoriasis complains of a swollen sausage-like finger, pain where tendons attach to bone, and pitted nails. What is the diagnosis, and which joints are typically involved?"
+      },
+      {
+        "a": "Nail psoriasis, with pitting from defective nail formation, oil-drop discoloration from psoriasis under the nail bed, and onycholysis where the nail lifts off the bed. Nail involvement is important because it is strongly associated with psoriatic arthritis, so these patients should be screened for joint symptoms.",
+        "q": "A patient with psoriasis has small pits in the nails, yellow-brown discoloration under the nail, and lifting of the nail plate. What do these findings suggest?"
+      },
+      {
+        "a": "Methotrexate, which suppresses the immune system, and biologics such as anti-TNF drugs (adalimumab), anti-IL-17 drugs (secukinumab) and anti-IL-23 drugs. Narrowband UVB phototherapy is tried first for widespread disease. Before a biologic, screen for latent tuberculosis and hepatitis B, because these drugs suppress immunity and can reactivate infection.",
+        "q": "A patient has psoriasis covering most of the body that has not responded to creams or light therapy. What systemic options exist, and what must be checked before starting a biologic?"
+      },
+      {
+        "a": "High-dose systemic corticosteroids to control the blistering, plus rituximab as a steroid-sparing agent. Rituximab is an anti-CD20 antibody that depletes B cells, which are the cells making the antibodies against desmoglein that cause the blisters. Removing the antibody source lets the steroid dose be reduced, which matters because long-term high-dose steroids cause serious harm.",
+        "q": "A patient with pemphigus vulgaris has widespread painful blisters in the mouth and on the skin. What is the treatment, and why is rituximab used?"
+      },
+      {
+        "a": "Bullous pemphigoid, an autoimmune blistering disease of the elderly. The tense blisters and itch with sparing of the mouth fit, and it is much less severe than pemphigus. First-line treatment is topical or systemic corticosteroids, and for mild disease doxycycline plus nicotinamide can be used. The prognosis is much better than pemphigus because the blisters are subepidermal and heal without scarring.",
+        "q": "An elderly patient has tense, itchy blisters on the arms and legs but a normal mouth. What is the likely diagnosis and the first-line treatment?"
+      },
+      {
+        "a": "DRESS syndrome — drug reaction with eosinophilia and systemic symptoms. It appears 2 to 6 weeks after starting a drug such as allopurinol or an anticonvulsant, with fever, facial oedema, eosinophilia and internal organ involvement, usually the liver. Stop the culprit drug immediately, admit the patient, and give systemic corticosteroids. The delayed onset and organ involvement distinguish it from a simple drug rash.",
+        "q": "A patient starts allopurinol and 4 weeks later develops fever, a widespread rash, swollen face, a high eosinophil count, and abnormal liver tests. What is the syndrome and the management?"
+      },
+      {
+        "a": "Acute generalised exanthematous pustulosis (AGEP), a drug reaction, usually to an antibiotic. The sudden onset of many small non-follicular sterile pustules on red skin with fever, starting days after the drug, is typical. It resolves quickly within days of stopping the drug. Pustular psoriasis is slower to resolve, has a history of psoriasis, and the pustules are larger and more persistent.",
+        "q": "A patient develops a sudden widespread eruption of tiny sterile pustules with fever two days after starting an antibiotic. What is the diagnosis, and how does it differ from pustular psoriasis?"
+      },
+      {
+        "a": "Fixed drug eruption. The same lesion recurs at exactly the same site with each exposure to the drug, heals with hyperpigmentation, and is often on the lips or genitals. Common culprits are NSAIDs, tetracyclines and sulfonamides. The fixed location is the clue — the immune cells stay in that patch of skin and react again when the drug returns.",
+        "q": "A patient gets the same round, dusky, sore patch on the lip every time they take ibuprofen, and it heals leaving a dark mark. What is the diagnosis and the culprit pattern?"
+      },
+      {
+        "a": "Allopurinol, carbamazepine, lamotrigine, sulfonamides and phenytoin are the classic culprits. Genetic screening matters for two: HLA-B*5801 before allopurinol, because carriers have a high risk of severe reactions, and HLA-B*1502 before carbamazepine in patients of Asian ancestry. Testing before starting these drugs in high-risk groups can prevent a life-threatening reaction.",
+        "q": "Which drugs most commonly cause Stevens-Johnson syndrome, and what genetic tests are relevant before starting two of them?"
+      },
+      {
+        "a": "Erythema multiforme minor has typical target lesions with little or no mucosal involvement, while major has mucosal involvement as well. It differs from Stevens-Johnson syndrome because erythema multiforme has typical raised three-zone target lesions, while SJS has flat atypical targets, more skin detachment, and is usually drug-induced rather than infection-triggered.",
+        "q": "A patient has classic target lesions on the hands and feet with sore mouth ulcers after a herpes infection. How is erythema multiforme major different from minor, and from Stevens-Johnson syndrome?"
+      },
+      {
+        "a": "Chronic spontaneous urticaria. The wheals last less than 24 hours each but keep recurring for over 6 weeks without an identifiable cause. First-line treatment is a second-generation antihistamine, which can be increased up to four times the standard dose, and omalizumab is second-line. Extensive allergy testing is not useful, because no external trigger is found in most cases.",
+        "q": "A patient has itchy red welts almost every day for more than 6 weeks with no clear trigger. What is the diagnosis, the first-line treatment, and what should not be done?"
+      },
+      {
+        "a": "Dermatographism, an exaggerated triple response of Lewis where stroking the skin produces a wheal. It is a form of physical urticaria and is not dangerous — it is simply an overactive mast-cell response to pressure. Antihistamines control the itching, and no further workup is needed.",
+        "q": "A patient develops a raised red welt wherever their skin is scratched or pressed, such as from a tight waistband. What is this, and is it dangerous?"
+      },
+      {
+        "a": "Hereditary angioedema, caused by C1 esterase inhibitor deficiency. The swelling is bradykinin-mediated, so there is no itch or urticaria, and the abdominal attacks come from bowel wall swelling. A low C4 level supports the diagnosis, and C1 inhibitor level and function confirm it. Treat acute attacks with C1 concentrate or icatibant, and avoid ACE inhibitors, which worsen bradykinin-mediated swelling.",
+        "q": "A patient has recurrent episodes of lip and tongue swelling without any itch or rash, plus severe abdominal pain attacks, and a family history of similar episodes. What is the diagnosis, and what blood test supports it?"
+      },
+      {
+        "a": "ACE inhibitor angioedema, which is bradykinin-mediated rather than histamine-mediated. The ACE inhibitor blocks bradykinin breakdown, so bradykinin builds up and causes swelling without itch or hives. Antihistamines and steroids do not work because histamine is not involved. Stop the ACE inhibitor permanently, secure the airway if the tongue is involved, and never restart it.",
+        "q": "A patient on an ACE inhibitor for years suddenly develops swelling of the lips and tongue without itching. Why will antihistamines and steroids not help, and what is the management?"
+      },
+      {
+        "a": "Urticarial vasculitis. Unlike ordinary hives, which last less than 24 hours and itch, these lesions persist, burn or hurt, and leave hyperpigmentation. A skin biopsy shows leukocytoclastic vasculitis — inflammation of small blood vessels with nuclear debris. It is associated with lupus and low complement levels, so these patients need a workup for systemic disease.",
+        "q": "A patient has red welts that last more than a day, feel painful or burning rather than itchy, and leave a bruise-like mark when they fade. What is the diagnosis, and what does a biopsy show?"
+      },
+      {
+        "a": "Nodular melanoma. It grows vertically from the start without a radial spreading phase, so it becomes thick quickly and is often diagnosed late. The other subtypes are superficial spreading melanoma (the most common, with a flat spreading phase), lentigo maligna melanoma (slow-growing on sun-damaged skin of the elderly), and acral lentiginous melanoma (palms, soles and nails, the most common type in dark-skinned patients).",
+        "q": "A patient has a dark mole that grew quickly, is raised, uniformly dark, and has no flat spreading phase. Which melanoma subtype is this, and why does it carry a worse prognosis?"
+      },
+      {
+        "a": "The Hutchinson sign — pigmentation extending from the nail onto the proximal nail fold. It suggests an acral lentiginous melanoma of the nail unit. A new dark streak in a nail in an adult, especially with spread onto the surrounding skin, needs urgent dermatology referral and biopsy.",
+        "q": "A patient has dark pigmentation spreading from the nail onto the skin of the finger around it. What is this sign, and what does it suggest?"
+      },
+      {
+        "a": "The subtypes are nodular (the most common, a pearly papule), superficial (a scaly patch, often on the trunk), and morpheaform or infiltrative (a scar-like plaque that grows aggressively and has ill-defined edges). Mohs micrographic surgery is preferred for high-risk sites such as the face, for large or recurrent tumours, and for the morpheaform subtype, because it checks the margins during surgery and spares healthy tissue. Superficial low-risk lesions can be treated with topical imiquimod or 5-fluorouracil.",
+        "q": "A patient has a pearly nodule on the cheek. What are the subtypes of basal cell carcinoma, and when is Mohs surgery preferred over simple excision?"
+      },
+      {
+        "a": "Squamous cell carcinoma in both cases. The cancer in a chronic wound or burn scar is called a Marjolin ulcer. Transplant patients are at much higher risk because immunosuppression removes immune surveillance against sun-damaged skin, and their squamous cell carcinomas behave more aggressively and metastasise more often. Other risk factors are chronic sun exposure, HPV infection, arsenic, and chronic inflammation.",
+        "q": "A kidney transplant patient develops multiple rapidly growing scaly skin cancers, and another patient has a skin cancer growing in an old burn scar. What is the diagnosis in both, and why is the transplant patient at higher risk?"
+      },
+      {
+        "a": "Keratoacanthoma, a rapidly growing crateriform tumour with a central keratin core that closely resembles squamous cell carcinoma. It grows over weeks, may regress on its own, but cannot be reliably distinguished from squamous cell carcinoma without removing it, so it is treated like squamous cell carcinoma with surgical excision.",
+        "q": "An elderly man has a rapidly growing dome-shaped tumour with a central crater filled with keratin on his cheek. What is the likely diagnosis, and how is it managed?"
+      },
+      {
+        "a": "Merkel cell carcinoma, an aggressive skin cancer of neuroendocrine cells. The AEIOU features suggest it: asymptomatic, expanding rapidly, immunosuppression, older than 50, and ultraviolet-exposed skin. It grows fast and metastasises early, so it needs wide excision with sentinel lymph node biopsy and oncology referral.",
+        "q": "An elderly immunosuppressed man has a rapidly growing painless red-violet nodule on his face. What is the diagnosis, and what features suggest it?"
+      },
+      {
+        "a": "Mycosis fungoides, the most common cutaneous T-cell lymphoma. It presents as patches and plaques in sun-protected areas such as the bathing trunk, and a skin biopsy shows Pautrier microabscesses (collections of malignant T cells in the epidermis). Sezary syndrome is its leukaemic form: erythroderma, circulating Sezary cells in the blood, and lymphadenopathy.",
+        "q": "A patient has itchy red patches and plaques for years, mainly on the buttocks and other areas usually covered by clothing, that do not respond to eczema creams. What is the diagnosis, and what is the triad of Sezary syndrome?"
+      },
+      {
+        "a": "Kaposi sarcoma, caused by human herpesvirus 8 (HHV-8). The violaceous plaques and nodules are due to proliferation of blood vessels. In HIV-associated disease the key treatment is antiretroviral therapy to restore immunity, because the tumour is driven by immunosuppression. The classic form affects elderly Mediterranean men and is much more indolent.",
+        "q": "A patient with advanced HIV has multiple purple plaques and nodules on the skin and in the mouth. What is the diagnosis, the causative virus, and the key treatment?"
+      },
+      {
+        "a": "A dermatofibroma, a benign fibrous skin tumour. The dimple sign — the lesion puckers inward on lateral pressure — is diagnostic. It is harmless and needs no treatment unless it is painful or the diagnosis is uncertain, in which case a biopsy confirms it.",
+        "q": "A patient has a firm brown papule on the leg that dimples inward when squeezed from the sides. What is it, and does it need treatment?"
+      },
+      {
+        "a": "A pyogenic granuloma (granuloma gravidarum in pregnancy), a benign overgrowth of blood vessels that bleeds easily with minor trauma. It often appears in pregnancy because of hormonal changes and local irritation. It is treated by excision or cautery if it bleeds or interferes with eating, and it may shrink after delivery.",
+        "q": "A pregnant woman develops a rapidly growing red, soft, bleeding bump on the gum. What is it, and how is it treated?"
+      },
+      {
+        "a": "A port-wine stain (nevus flammeus), a capillary malformation that persists for life, unlike a salmon patch (nevus simplex), which fades by age 1 to 2. A port-wine stain in the distribution of the first branch of the trigeminal nerve suggests Sturge-Weber syndrome, which causes seizures and glaucoma from abnormal blood vessels in the brain and eye. The child needs neurology and ophthalmology follow-up.",
+        "q": "A newborn has a large red birthmark over the forehead and upper eyelid that does not fade, and later develops seizures. What is the birthmark, and what syndrome should be considered?"
+      },
+      {
+        "a": "Melasma, increased melanin production triggered by pregnancy hormones, oral contraceptives and sun exposure. It is a cosmetic condition, not dangerous. Treatment is strict sun protection plus topical hydroquinone, which reduces pigment production. It often fades after delivery or stopping the contraceptive, but sun exposure makes it return.",
+        "q": "A pregnant woman develops symmetric brown patches on her cheeks and forehead that worsen in the sun. What is the diagnosis and the treatment?"
+      },
+      {
+        "a": "Neurofibromatosis type 1. Six or more café-au-lait spots larger than 5 mm before puberty (or larger than 15 mm after puberty) plus axillary freckling meet the diagnostic criteria. Look for Lisch nodules in the iris, neurofibromas on the skin, and learning difficulties. It is autosomal dominant, caused by a mutation in the NF1 gene.",
+        "q": "A child has more than six light-brown flat spots larger than 5 mm and freckling in the armpits. What condition does this suggest, and what other findings should be looked for?"
+      },
+      {
+        "a": "Tuberous sclerosis. The leaf-shaped pale spots are ash-leaf spots, best seen with a Wood's lamp; the red facial bumps are angiofibromas (adenoma sebaceum); and the rough patch is a shagreen patch. Periungual fibromas (Koenen tumours) around the nails are another sign. The condition causes seizures and learning difficulties, so the skin signs are the clue to look for brain and kidney involvement.",
+        "q": "A child has pale white leaf-shaped spots on the skin, red bumps on the face, and a rough patch on the lower back. What syndrome is this, and what are these skin signs called?"
+      },
+      {
+        "a": "Androgenetic alopecia (male pattern hair loss), caused by dihydrotestosterone shrinking susceptible hair follicles so the hairs become thinner and shorter. Treat with topical minoxidil, which prolongs the growth phase, and oral finasteride, which blocks the conversion of testosterone to dihydrotestosterone. Finasteride is only for men because it is teratogenic.",
+        "q": "A man has gradual hair loss with recession at the temples and thinning at the crown, with miniaturised hairs. What is the diagnosis and the treatment?"
+      },
+      {
+        "a": "Telogen effluvium. A stressful event such as illness, surgery, childbirth or a new drug pushes many hairs into the resting (telogen) phase at once, and they shed 2 to 3 months later. It is diffuse and reversible once the trigger passes. Chemotherapy causes anagen effluvium, where hairs fall out abruptly during the growth phase, within days to weeks of treatment.",
+        "q": "A woman notices diffuse hair shedding three months after a major illness. What is the diagnosis, and how does it differ from hair loss caused by chemotherapy?"
+      },
+      {
+        "a": "Beau lines, transverse grooves caused by a temporary halt in nail growth during a severe systemic illness, chemotherapy, or major stress. The nail grows about 3 mm a month, so the distance of the line from the cuticle estimates how long ago the illness happened. They grow out on their own and need no treatment.",
+        "q": "A patient's fingernails have deep horizontal grooves across them. What are these called, what causes them, and what can the distance from the cuticle tell you?"
+      },
+      {
+        "a": "Clubbing, the loss of the Lovibond angle with bulbous enlargement of the fingertips. The main causes are lung cancer, bronchiectasis and other chronic lung disease, cyanotic heart disease, inflammatory bowel disease, and cirrhosis. It reflects chronic hypoxia and growth factor release, so finding clubbing should prompt a search for an underlying lung or heart cause.",
+        "q": "A patient has bulbous fingertips with loss of the normal angle between the nail and the skin. What is this finding called, and what are the main causes?"
+      },
+      {
+        "a": "A KOH preparation confirms a fungal infection by showing branching hyphae under the microscope. For a pigmented lesion, an excisional biopsy is used so the whole lesion and its depth can be examined, because depth determines melanoma prognosis. A Wood's lamp is also useful: erythrasma glows coral-red, and tinea capitis caused by Microsporum fluoresces green. A punch biopsy is better for inflammatory rashes where a small full-thickness sample is enough.",
+        "q": "A patient has a scaly rash that could be fungal, and a pigmented mole that needs a tissue diagnosis. Which test confirms the fungus, and which biopsy technique is used for the mole?"
+      },
+      {
+        "a": "Generalised itching without a primary rash points to a systemic cause: cholestasis from liver disease, uraemia from chronic kidney disease, Hodgkin lymphoma, iron deficiency, and polycythaemia vera, which classically causes aquagenic pruritus after a hot shower. The workup includes a full blood count, liver and kidney function tests, iron studies and thyroid function. Treating the underlying cause relieves the itch, while antihistamines alone will not.",
+        "q": "A patient has severe generalised itching but no rash, and the itch is worse after a hot shower. What systemic causes should be considered, and what blood tests are part of the workup?"
       }
     ]
   },
