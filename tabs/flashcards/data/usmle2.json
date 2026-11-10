@@ -5090,7 +5090,7 @@
       },
       {
         "q": "Which symptoms suggest bowel ischemia rather than uncomplicated obstruction?",
-        "a": "<b>Fever, leukocytosis, tachycardia, metabolic acidosis, localized peritonitis, or severe continuous pain.</b> Appendicitis"
+        "a": "<b>Fever, leukocytosis, tachycardia, metabolic acidosis, localized peritonitis, or severe continuous pain.</b>"
       },
       {
         "q": "A young adult has periumbilical pain migrating to the right lower quadrant with fever and leukocytosis. What is the diagnosis?",
@@ -5102,7 +5102,7 @@
       },
       {
         "q": "What is the preferred imaging study for suspected appendicitis in children and pregnant patients?",
-        "a": "<b>Ultrasound first (MRI if ultrasound is nondiagnostic in pregnancy).</b> Cholecystitis"
+        "a": "<b>Ultrasound first (MRI if ultrasound is nondiagnostic in pregnancy).</b>"
       },
       {
         "q": "A patient has fever, right upper quadrant pain, leukocytosis, and a positive Murphy sign. What is the diagnosis?",
@@ -5114,7 +5114,7 @@
       },
       {
         "q": "Which imaging study is most sensitive if the ultrasound is equivocal but suspicion remains high?",
-        "a": "<b>Hepatobiliary iminodiacetic acid (HIDA) scan.</b> Cholangitis"
+        "a": "<b>Hepatobiliary iminodiacetic acid (HIDA) scan.</b>"
       },
       {
         "q": "What is Charcot triad?",
@@ -5126,7 +5126,7 @@
       },
       {
         "q": "What is the definitive treatment for ascending cholangitis?",
-        "a": "<b>Urgent biliary decompression (usually ERCP) after resuscitation and IV antibiotics.</b> Pancreatitis"
+        "a": "<b>ERCP with biliary decompression after resuscitation and antibiotics.</b>"
       },
       {
         "q": "Which laboratory test is most useful for diagnosing acute pancreatitis?",
@@ -5162,7 +5162,7 @@
       },
       {
         "q": "What is the preferred biopsy for a suspicious breast lesion?",
-        "a": "<b>Core needle biopsy. Thyroid</b>"
+        "a": "<b>Core needle biopsy.</b>"
       },
       {
         "q": "What is the first laboratory test in evaluating a thyroid nodule?",
@@ -5325,10 +5325,6 @@
         "a": "<b>HIDA scan.</b>"
       },
       {
-        "q": "What is the definitive treatment for ascending cholangitis?",
-        "a": "<b>ERCP with biliary decompression after resuscitation and antibiotics.</b>"
-      },
-      {
         "q": "What is the hallmark laboratory test for acute pancreatitis?",
         "a": "<b>Elevated serum lipase.</b>"
       },
@@ -5363,10 +5359,6 @@
       {
         "q": "Which thyroid cancer produces calcitonin?",
         "a": "<b>Medullary thyroid carcinoma.</b> Breast Surgery"
-      },
-      {
-        "q": "What is the preferred biopsy for a suspicious breast lesion?",
-        "a": "<b>Core needle biopsy.</b>"
       },
       {
         "q": "Which breast cancer is associated with HER2 overexpression?",
@@ -5550,7 +5542,7 @@
       },
       {
         "q": "What is the classic presentation of wound dehiscence?",
-        "a": "<b>Sudden drainage of pink serosanguineous fluid from the incision.</b> Evisceration"
+        "a": "<b>Sudden drainage of pink serosanguineous fluid from the incision.</b>"
       },
       {
         "q": "What is wound evisceration?",
@@ -5581,10 +5573,6 @@
         "a": "<b>Drainage of infected material and antibiotics when indicated.</b> Anastomotic Leak"
       },
       {
-        "q": "What is an anastomotic leak?",
-        "a": "<b>Breakdown of a surgical connection between two hollow organs.</b>"
-      },
-      {
         "q": "When do anastomotic leaks commonly occur?",
         "a": "<b>Usually within the first postoperative week.</b>"
       },
@@ -5599,10 +5587,6 @@
       {
         "q": "What is the treatment for anastomotic leak?",
         "a": "<b>Depends on severity: Antibiotics Drainage Bowel rest Surgery if uncontrolled contamination or sepsis Enterocutaneous Fistula</b>"
-      },
-      {
-        "q": "What is an enterocutaneous fistula?",
-        "a": "<b>Abnormal connection between bowel and skin causing intestinal drainage.</b>"
       },
       {
         "q": "What are major causes of enterocutaneous fistula?",
@@ -5790,7 +5774,7 @@
       },
       {
         "q": "What is the safe correction rate for chronic hyponatremia?",
-        "a": "<b>Usually no more than: 8−10 mEq/L per 24 hours to prevent osmotic demyelination.</b> Hypernatremia"
+        "a": "<b>Usually no more than: 8−10 mEq/L per 24 hours to prevent osmotic demyelination.</b>"
       },
       {
         "q": "What causes hypernatremia?",
@@ -6478,7 +6462,7 @@
       },
       {
         "q": "What is the relationship between PTH and phosphate?",
-        "a": "<b>PTH decreases serum phosphate by increasing renal phosphate excretion.</b> Hyperparathyroidism"
+        "a": "<b>PTH decreases serum phosphate by increasing renal phosphate excretion.</b>"
       },
       {
         "q": "What is primary hyperparathyroidism?",
@@ -7364,7 +7348,7 @@
       },
       {
         "q": "What is the primary treatment for pulmonary contusion?",
-        "a": "<b>Supportive care with adequate oxygenation, pain control, and cautious fluid administration.</b> Circulation"
+        "a": "<b>Supportive care with adequate oxygenation, pain control, and cautious fluid administration.</b>"
       },
       {
         "q": "What is the leading preventable cause of death after trauma?",
@@ -7396,7 +7380,7 @@
       },
       {
         "q": "Why is permissive hypotension avoided in traumatic brain injury?",
-        "a": "<b>Because adequate cerebral perfusion pressure must be maintained.</b> Disability"
+        "a": "<b>Because adequate cerebral perfusion pressure must be maintained.</b>"
       },
       {
         "q": "What does the \"D\" in the primary survey assess?",
@@ -8611,7 +8595,7 @@
       },
       {
         "q": "What is the treatment of cecal volvulus?",
-        "a": "<b>Surgical resection or fixation; endoscopic decompression is generally ineffective.</b> Intussusception"
+        "a": "<b>Surgical resection or fixation; endoscopic decompression is generally ineffective.</b>"
       },
       {
         "q": "What is intussusception?",
@@ -8998,7 +8982,7 @@
       },
       {
         "q": "Why is acalculous cholecystitis associated with higher mortality?",
-        "a": "<b>Diagnosis is often delayed, increasing the risk of gangrene and perforation.</b> Choledocholithiasis"
+        "a": "<b>Diagnosis is often delayed, increasing the risk of gangrene and perforation.</b>"
       },
       {
         "q": "What is choledocholithiasis?",
@@ -9361,7 +9345,7 @@
       },
       {
         "q": "Why is core needle biopsy preferred over fine-needle aspiration for suspicious breast masses?",
-        "a": "<b>It preserves tissue architecture, allowing histologic diagnosis and receptor testing (ER, PR, HER2).</b> Fibroadenoma"
+        "a": "<b>It preserves tissue architecture, allowing histologic diagnosis and receptor testing (ER, PR, HER2).</b>"
       },
       {
         "q": "What is the most common benign breast tumor in young women?",
@@ -9429,7 +9413,7 @@
       },
       {
         "q": "Why is fat necrosis clinically important?",
-        "a": "<b>It may mimic breast cancer on physical examination and imaging.</b> Mammography"
+        "a": "<b>It may mimic breast cancer on physical examination and imaging.</b>"
       },
       {
         "q": "Which mammographic finding is highly suspicious for malignancy?",
@@ -9596,7 +9580,7 @@
       },
       {
         "q": "Which thyroid cancer is the most aggressive?",
-        "a": "<b>Anaplastic thyroid carcinoma.</b> Hyperthyroidism"
+        "a": "<b>Anaplastic thyroid carcinoma.</b>"
       },
       {
         "q": "What is the most common cause of hyperthyroidism?",
@@ -9640,7 +9624,7 @@
       },
       {
         "q": "Why should iodine be administered only after antithyroid medication?",
-        "a": "<b>To prevent new thyroid hormone synthesis before blocking hormone release.</b> Hypothyroidism"
+        "a": "<b>To prevent new thyroid hormone synthesis before blocking hormone release.</b>"
       },
       {
         "q": "What is the treatment for primary hypothyroidism?",
@@ -9652,7 +9636,7 @@
       },
       {
         "q": "How is myxedema coma treated?",
-        "a": "<b>IV levothyroxine, stress-dose glucocorticoids until adrenal insufficiency is excluded, supportive care, and treatment of precipitating factors.</b> Hyperparathyroidism"
+        "a": "<b>IV levothyroxine, stress-dose glucocorticoids until adrenal insufficiency is excluded, supportive care, and treatment of precipitating factors.</b>"
       },
       {
         "q": "What is the most common cause of primary hyperparathyroidism?",
@@ -9668,7 +9652,7 @@
       },
       {
         "q": "What is the definitive treatment for symptomatic primary hyperparathyroidism?",
-        "a": "<b>Parathyroidectomy.</b> Hypoparathyroidism"
+        "a": "<b>Parathyroidectomy.</b>"
       },
       {
         "q": "What is the most common cause of hypoparathyroidism?",
@@ -9692,7 +9676,7 @@
       },
       {
         "q": "What tumors are associated with MEN2B?",
-        "a": "<b>Medullary thyroid carcinoma, pheochromocytoma, mucosal neuromas, marfanoid habitus, and intestinal ganglioneuromatosis.</b> Pheochromocytoma"
+        "a": "<b>Medullary thyroid carcinoma, pheochromocytoma, mucosal neuromas, marfanoid habitus, and intestinal ganglioneuromatosis.</b>"
       },
       {
         "q": "What is pheochromocytoma?",
@@ -10438,7 +10422,7 @@
       },
       {
         "q": "Why is rapid treatment of testicular torsion essential?",
-        "a": "<b>Testicular salvage rates decrease rapidly as ischemia duration increases.</b> Epididymitis"
+        "a": "<b>Testicular salvage rates decrease rapidly as ischemia duration increases.</b>"
       },
       {
         "q": "What is the most common cause of epididymitis in sexually active men <35 years?",
@@ -10502,7 +10486,7 @@
       },
       {
         "q": "Which condition is classically associated with ischemic priapism?",
-        "a": "<b>Sickle cell disease.</b> Paraphimosis"
+        "a": "<b>Sickle cell disease.</b>"
       },
       {
         "q": "What is paraphimosis?",
@@ -10621,7 +10605,7 @@
       },
       {
         "q": "When can a chest tube usually be removed?",
-        "a": "<b>After lung re-expansion, resolution of the air leak, and minimal appropriate drainage.</b> Hemothorax"
+        "a": "<b>After lung re-expansion, resolution of the air leak, and minimal appropriate drainage.</b>"
       },
       {
         "q": "What is a hemothorax?",
@@ -11004,7 +10988,7 @@
       },
       {
         "q": "What is the definitive treatment for hypertrophic pyloric stenosis?",
-        "a": "<b>Ramstedt pyloromyotomy.</b> Intussusception"
+        "a": "<b>Ramstedt pyloromyotomy.</b>"
       },
       {
         "q": "What is intussusception?",
@@ -11216,7 +11200,7 @@
       },
       {
         "q": "What is the definitive treatment for CDH?",
-        "a": "<b>Surgical repair after cardiopulmonary stabilization.</b> Omphalocele"
+        "a": "<b>Surgical repair after cardiopulmonary stabilization.</b>"
       },
       {
         "q": "What is an omphalocele?",
@@ -11228,7 +11212,7 @@
       },
       {
         "q": "What is the initial management of omphalocele?",
-        "a": "<b>Protect the sac, prevent heat and fluid loss, stabilize the infant, and plan surgical repair.</b> Gastroschisis"
+        "a": "<b>Protect the sac, prevent heat and fluid loss, stabilize the infant, and plan surgical repair.</b>"
       },
       {
         "q": "What is gastroschisis?",
@@ -11614,7 +11598,7 @@
       },
       {
         "q": "What is source control in sepsis?",
-        "a": "<b>Elimination of the infection source (e.g., abscess drainage, debridement, removal of infected devices, surgery).</b> Vasopressors"
+        "a": "<b>Elimination of the infection source (e.g., abscess drainage, debridement, removal of infected devices, surgery).</b>"
       },
       {
         "q": "Which vasopressor is first-line for septic shock?",
@@ -11759,10 +11743,6 @@
       {
         "q": "What is the most effective strategy for preventing ventilator-associated pneumonia (VAP)?",
         "a": "<b>Ventilator care bundles (e.g., head-of-bed elevation, oral hygiene, minimizing sedation, and daily assessment for extubation readiness).</b> High-Yield Review"
-      },
-      {
-        "q": "Which vasopressor is first-line for septic shock?",
-        "a": "<b>Norepinephrine.</b>"
       },
       {
         "q": "Which ventilator strategy reduces mortality in ARDS?",
@@ -11918,7 +11898,7 @@
       },
       {
         "q": "What is the definitive treatment for compartment syndrome?",
-        "a": "<b>Emergent fasciotomy.</b> Rhabdomyolysis"
+        "a": "<b>Emergent fasciotomy.</b>"
       },
       {
         "q": "What is rhabdomyolysis?",
@@ -11971,10 +11951,6 @@
       {
         "q": "What is the preferred nutritional route in critically ill patients with a functioning gastrointestinal tract?",
         "a": "<b>Enteral nutrition.</b>"
-      },
-      {
-        "q": "What is the highest-yield USMLE Step 2 CK principle for surgical critical care?",
-        "a": "<b>Feed the gut when possible, recognize hypophosphatemia as the hallmark of refeeding syndrome, stop any transfusion immediately if a reaction is suspected, treat compartment syndrome with emergent fasciotomy, aggressively hydrate rhabdomyolysis, and stabilize the myocardium first with IV calcium in hyperkalemia with ECG changes. -------------------------------------- -------------------------------------- For FlashCards USMLE 2 Section: Surgery</b>"
       }
     ]
   },
@@ -12380,10 +12356,6 @@
         "a": "<b>Cricothyrotomy.</b>"
       },
       {
-        "q": "What is the highest-yield USMLE Step 2 CK anesthesia principle?",
-        "a": "<b>Know the fasting guidelines, recognize aspiration risk, understand when to perform Rapid Sequence Intubation, confirm endotracheal tube placement with continuous waveform capnography, and remember that oxygenation takes priority over intubation—perform an emergency cricothyrotomy in a cannot-intubate, cannot-oxygenate scenario.</b>"
-      },
-      {
         "q": "What are the three major classes of drugs used to induce general anesthesia?",
         "a": "<b>Induction agents (hypnotics), analgesics (usually opioids), and neuromuscular blocking agents.</b>"
       },
@@ -12457,7 +12429,7 @@
       },
       {
         "q": "Which medication may reduce ketamine-associated emergence reactions?",
-        "a": "<b>A benzodiazepine (e.g., midazolam) in selected patients.</b> Benzodiazepines"
+        "a": "<b>A benzodiazepine (e.g., midazolam) in selected patients.</b>"
       },
       {
         "q": "Which benzodiazepine is most commonly used perioperatively?",
@@ -12473,7 +12445,7 @@
       },
       {
         "q": "What is the major adverse effect of benzodiazepines?",
-        "a": "<b>Respiratory depression, especially when combined with opioids.</b> Dexmedetomidine"
+        "a": "<b>Respiratory depression, especially when combined with opioids.</b>"
       },
       {
         "q": "What is the mechanism of action of dexmedetomidine?",
@@ -12509,7 +12481,7 @@
       },
       {
         "q": "What are common adverse effects of morphine?",
-        "a": "<b>Respiratory depression, constipation, urinary retention, pruritus, nausea, vomiting, and histamine-mediated hypotension.</b> Succinylcholine"
+        "a": "<b>Respiratory depression, constipation, urinary retention, pruritus, nausea, vomiting, and histamine-mediated hypotension.</b>"
       },
       {
         "q": "What type of neuromuscular blocker is succinylcholine?",
@@ -12840,7 +12812,7 @@
       },
       {
         "q": "Which patients may have minimal abdominal findings despite severe intra-abdominal disease?",
-        "a": "<b>Elderly patients, immunocompromised patients, and those receiving corticosteroids.</b> Peritonitis"
+        "a": "<b>Elderly patients, immunocompromised patients, and those receiving corticosteroids.</b>"
       },
       {
         "q": "What is peritonitis?",
@@ -13644,7 +13616,7 @@
       },
       {
         "q": "What complication should be suspected if appendicitis pain suddenly decreases followed by worsening diffuse abdominal pain?",
-        "a": "<b>Appendiceal perforation with generalized peritonitis.</b> Diverticulitis"
+        "a": "<b>Appendiceal perforation with generalized peritonitis.</b>"
       },
       {
         "q": "What is the most common location of diverticulitis?",
@@ -18836,10 +18808,6 @@
         "a": "Coarse facial features<br>Hepatosplenomegaly<br>Skeletal abnormalities<br>Developmental impairment<br>Airway obstruction"
       },
       {
-        "q": "What enzyme deficiency causes Pompe disease?",
-        "a": "Acid α-glucosidase (acid maltase) deficiency, resulting in lysosomal glycogen accumulation."
-      },
-      {
         "q": "What distinguishes infantile Pompe disease from McArdle disease?",
         "a": "Infantile Pompe disease prominently causes hypotonia and hypertrophic cardiomyopathy, whereas McArdle disease causes exercise-induced muscle cramps and myoglobinuria.<br>Additional Genetic Neurologic Disorders"
       },
@@ -20651,10 +20619,6 @@
         "a": "Infected purulent fluid within the pleural space, usually complicating bacterial pneumonia.<br>Pertussis"
       },
       {
-        "q": "What organism causes pertussis?",
-        "a": "Bordetella pertussis, a gram-negative coccobacillus."
-      },
-      {
         "q": "What are the classic stages of pertussis?",
         "a": "Catarrhal stage<br>Paroxysmal stage<br>Convalescent stage"
       },
@@ -20669,10 +20633,6 @@
       {
         "q": "Why may infants with pertussis not develop the classic whoop?",
         "a": "Infants may instead present with apnea, cyanosis, bradycardia, or respiratory distress."
-      },
-      {
-        "q": "What hematologic finding is classically associated with pertussis?",
-        "a": "Marked lymphocytosis, particularly in infants and young children."
       },
       {
         "q": "What is the preferred antibiotic for treating pertussis?",
@@ -20781,10 +20741,6 @@
       {
         "q": "What virus is an important treatable cause of sporadic encephalitis in children?",
         "a": "Herpes simplex virus (HSV)."
-      },
-      {
-        "q": "What MRI finding is classically associated with HSV encephalitis?",
-        "a": "Abnormalities involving the temporal lobes, often with edema and/or hemorrhagic changes."
       },
       {
         "q": "What CSF finding can occur in HSV encephalitis?",
@@ -22302,7 +22258,7 @@
       },
       {
         "q": "What is the definitive treatment for celiac disease?",
-        "a": "A strict lifelong gluten-free diet.<br>PEDIATRIC CARDIOLOGY"
+        "a": "A lifelong strict gluten-free diet avoiding wheat, barley, and rye."
       },
       {
         "q": "What is the most common congenital heart disease?",
@@ -22366,7 +22322,7 @@
       },
       {
         "q": "What medication can maintain PDA patency when systemic or pulmonary blood flow is ductal-dependent?",
-        "a": "Prostaglandin E₁ (PGE₁).<br>PEDIATRIC PULMONOLOGY"
+        "a": "Prostaglandin E₁ (PGE₁)."
       },
       {
         "q": "What is the most common cause of bronchiolitis in infants?",
@@ -22510,7 +22466,7 @@
       },
       {
         "q": "Which inflammatory bowel disease commonly causes bloody diarrhea and continuous colonic inflammation?",
-        "a": "Ulcerative colitis.<br>PEDIATRIC CARDIOLOGY"
+        "a": "Ulcerative colitis."
       },
       {
         "q": "What is the characteristic murmur of an atrial septal defect (ASD)?",
@@ -22578,7 +22534,7 @@
       },
       {
         "q": "Why should a significant left-to-right shunt generally be repaired before irreversible pulmonary vascular disease develops?",
-        "a": "Persistent high pulmonary blood flow and pressure can cause pulmonary vascular remodeling, eventually making the shunt irreversible.<br>PEDIATRIC PULMONOLOGY"
+        "a": "Persistent high pulmonary blood flow and pressure can cause pulmonary vascular remodeling, eventually making the shunt irreversible."
       },
       {
         "q": "What is the most common cause of stridor in an otherwise healthy infant?",
@@ -22710,7 +22666,7 @@
       },
       {
         "q": "What is the first-line treatment for a typical anal fissure caused by constipation?",
-        "a": "Stool softening, adequate dietary fiber/fluid intake, and treatment of the underlying constipation.<br>PEDIATRIC CARDIOLOGY"
+        "a": "Stool softening, adequate dietary fiber/fluid intake, and treatment of the underlying constipation."
       },
       {
         "q": "What is the characteristic murmur of a patent ductus arteriosus?",
@@ -22770,7 +22726,7 @@
       },
       {
         "q": "What is the standard initial treatment for Kawasaki disease?",
-        "a": "IVIG plus aspirin, with additional therapy for IVIG-resistant or high-risk disease when indicated.<br>PEDIATRIC PULMONOLOGY"
+        "a": "IVIG plus aspirin, with additional therapy for IVIG-resistant or high-risk disease when indicated."
       },
       {
         "q": "What is the classic presentation of bacterial tracheitis?",
@@ -22910,7 +22866,7 @@
       },
       {
         "q": "What is the preferred imaging approach for suspected appendicitis in children?",
-        "a": "Ultrasound is generally preferred as initial imaging, especially to avoid radiation exposure; CT or MRI may follow if the diagnosis remains uncertain.<br>PEDIATRIC CARDIOLOGY"
+        "a": "Ultrasound is generally preferred as initial imaging, especially to avoid radiation exposure; CT or MRI may follow if the diagnosis remains uncertain."
       },
       {
         "q": "What is the most common congenital cardiac lesion associated with Turner syndrome?",
@@ -22970,7 +22926,7 @@
       },
       {
         "q": "Why can cardiac tamponade cause pulsus paradoxus?",
-        "a": "Increased ventricular interdependence within a constrained pericardial space causes inspiratory reduction in left ventricular filling and stroke volume.<br>PEDIATRIC PULMONOLOGY"
+        "a": "Increased ventricular interdependence within a constrained pericardial space causes inspiratory reduction in left ventricular filling and stroke volume."
       },
       {
         "q": "What is the classic presentation of pneumonia caused by Mycoplasma pneumoniae in a school-aged child?",
@@ -23090,7 +23046,7 @@
       },
       {
         "q": "What embryologic remnant forms Meckel diverticulum?",
-        "a": "The vitelline (omphalomesenteric) duct.<br>PEDIATRIC CARDIOLOGY"
+        "a": "The vitelline (omphalomesenteric) duct."
       },
       {
         "q": "What is the most common arrhythmia in children?",
@@ -23170,7 +23126,7 @@
       },
       {
         "q": "Why can excessive oxygen administration be problematic in certain ductal-dependent systemic lesions?",
-        "a": "Oxygen can lower pulmonary vascular resistance, potentially increasing pulmonary blood flow at the expense of systemic perfusion in some lesions.<br>PEDIATRIC PULMONOLOGY"
+        "a": "Oxygen can lower pulmonary vascular resistance, potentially increasing pulmonary blood flow at the expense of systemic perfusion in some lesions."
       },
       {
         "q": "What is the most common cause of wheezing in an infant?",
@@ -23233,10 +23189,6 @@
         "a": "Recurrent exacerbations and airway inflammation can lead to airway remodeling and persistent impairment of lung function."
       },
       {
-        "q": "What is the classic presentation of celiac disease in a child?",
-        "a": "Chronic diarrhea, abdominal distention, poor weight gain, iron-deficiency anemia, and other manifestations of malabsorption after exposure to gluten."
-      },
-      {
         "q": "Which intestinal portion is primarily affected in celiac disease?",
         "a": "The proximal small intestine, particularly the duodenum and jejunum."
       },
@@ -23251,10 +23203,6 @@
       {
         "q": "Why should total IgA be checked when screening for celiac disease?",
         "a": "Selective IgA deficiency can cause a falsely negative IgA-based celiac serology."
-      },
-      {
-        "q": "What is the definitive treatment for celiac disease?",
-        "a": "A lifelong strict gluten-free diet avoiding wheat, barley, and rye."
       },
       {
         "q": "What nutritional deficiency is particularly common in untreated celiac disease?",
@@ -23298,7 +23246,7 @@
       },
       {
         "q": "Why should antibiotics generally be avoided in suspected STEC infection?",
-        "a": "They may increase Shiga toxin release and potentially increase the risk of HUS.<br>PEDIATRIC CARDIOLOGY"
+        "a": "They may increase Shiga toxin release and potentially increase the risk of HUS."
       },
       {
         "q": "What is the most common cause of acquired heart disease in children in developed countries?",
@@ -23366,7 +23314,7 @@
       },
       {
         "q": "What is the classic complication of an unrepaired large ASD in adulthood?",
-        "a": "Pulmonary hypertension and eventual Eisenmenger syndrome, although this typically develops later than with some other large shunts.<br>PEDIATRIC PULMONOLOGY"
+        "a": "Pulmonary hypertension and eventual Eisenmenger syndrome, although this typically develops later than with some other large shunts."
       },
       {
         "q": "What is the most common cause of respiratory distress syndrome in premature infants?",
@@ -23494,7 +23442,7 @@
       },
       {
         "q": "What is a major cause of portal hypertension in children worldwide?",
-        "a": "Chronic liver disease/cirrhosis is an important cause; extrahepatic portal vein obstruction is also a major pediatric cause in some settings.<br>PEDIATRIC CARDIOLOGY"
+        "a": "Chronic liver disease/cirrhosis is an important cause; extrahepatic portal vein obstruction is also a major pediatric cause in some settings."
       },
       {
         "q": "What is the most common cause of acquired heart disease following an upper respiratory infection in children?",
@@ -23566,7 +23514,7 @@
       },
       {
         "q": "What organism commonly causes infective endocarditis in children with congenital heart disease?",
-        "a": "Viridans group streptococci and Staphylococcus aureus are important causes, depending on the clinical setting.<br>PEDIATRIC PULMONOLOGY"
+        "a": "Viridans group streptococci and Staphylococcus aureus are important causes, depending on the clinical setting."
       },
       {
         "q": "What is the classic presentation of pneumococcal pneumonia on chest x-ray?",
@@ -23710,7 +23658,7 @@
       },
       {
         "q": "What is the classic presentation of functional abdominal pain in children?",
-        "a": "Chronic or recurrent abdominal pain without evidence of an organic disorder, often with normal growth and physical examination.<br>PEDIATRIC CARDIOLOGY"
+        "a": "Chronic or recurrent abdominal pain without evidence of an organic disorder, often with normal growth and physical examination."
       },
       {
         "q": "What is the classic ECG finding in atrial septal defect?",
@@ -23790,7 +23738,7 @@
       },
       {
         "q": "What is the immediate physiologic goal in a severely cyanotic newborn with suspected TGA?",
-        "a": "Improve mixing of systemic and pulmonary circulations, often by maintaining ductal patency with PGE₁ and, when necessary, performing balloon atrial septostomy.<br>PEDIATRIC PULMONOLOGY"
+        "a": "Improve mixing of systemic and pulmonary circulations, often by maintaining ductal patency with PGE₁ and, when necessary, performing balloon atrial septostomy."
       },
       {
         "q": "What is the classic presentation of neonatal transient tachypnea?",
@@ -23890,7 +23838,7 @@
       },
       {
         "q": "Which finding is most concerning for hypovolemic shock in a dehydrated child?",
-        "a": "Hypotension, because it is generally a late sign in pediatric hypovolemic shock.<br>PEDIATRIC CARDIOLOGY"
+        "a": "Hypotension, because it is generally a late sign in pediatric hypovolemic shock."
       },
       {
         "q": "What is the most common congenital heart defect overall?",
@@ -23958,7 +23906,7 @@
       },
       {
         "q": "What is the classic radiographic appearance of unobstructed supracardiac TAPVR?",
-        "a": "The \"snowman\" or \"figure-of-8\" appearance, usually developing after the first few months rather than immediately after birth.<br>PEDIATRIC PULMONOLOGY"
+        "a": "The \"snowman\" or \"figure-of-8\" appearance, usually developing after the first few months rather than immediately after birth."
       },
       {
         "q": "What is the classic presentation of respiratory syncytial virus bronchiolitis?",
@@ -23989,20 +23937,12 @@
         "a": "Its α₁-adrenergic vasoconstrictive effect reduces subglottic mucosal edema."
       },
       {
-        "q": "What is the classic presentation of epiglottitis?",
-        "a": "High fever, toxic appearance, drooling, dysphagia, muffled voice, tripod positioning, and inspiratory distress."
-      },
-      {
         "q": "Why should a child with suspected epiglottitis not be forced to lie down?",
         "a": "Agitation or positioning changes can worsen upper-airway obstruction and precipitate complete airway collapse."
       },
       {
         "q": "What organism caused most classic childhood epiglottitis before widespread vaccination?",
         "a": "Haemophilus influenzae type b (Hib)."
-      },
-      {
-        "q": "What is the classic presentation of bacterial tracheitis?",
-        "a": "High fever, toxic appearance, stridor, respiratory distress, and thick purulent airway secretions, often following viral croup."
       },
       {
         "q": "What is the key difference between bacterial tracheitis and viral croup?",
@@ -24081,10 +24021,6 @@
         "a": "Multifocal strictures and dilation of the intrahepatic and extrahepatic bile ducts, producing a \"beaded\" appearance on cholangiography."
       },
       {
-        "q": "What is the classic presentation of acute pancreatitis in an older child?",
-        "a": "Acute epigastric abdominal pain, nausea, and vomiting, often with elevated serum lipase."
-      },
-      {
         "q": "Which pancreatic enzyme is generally more useful for diagnosing acute pancreatitis?",
         "a": "Serum lipase, because it remains elevated longer and is more specific than amylase."
       },
@@ -24101,16 +24037,8 @@
         "a": "Children with hemolytic disorders, obesity, rapid weight loss, or certain chronic illnesses are at increased risk."
       },
       {
-        "q": "What is the classic presentation of biliary atresia?",
-        "a": "Persistent neonatal jaundice, pale/acholic stools, dark urine, and hepatomegaly."
-      },
-      {
         "q": "Why are pale stools important in suspected biliary atresia?",
         "a": "They indicate lack of bile reaching the intestine, suggesting extrahepatic biliary obstruction."
-      },
-      {
-        "q": "What is the definitive treatment for biliary atresia?",
-        "a": "Kasai portoenterostomy, preferably performed early, followed by liver transplantation if progressive liver disease develops.<br>PEDIATRIC CARDIOLOGY"
       },
       {
         "q": "What is the classic presentation of Kawasaki disease in the acute phase?",
@@ -24125,16 +24053,8 @@
         "a": "It provides anti-inflammatory and antiplatelet effects, particularly important during the subacute phase."
       },
       {
-        "q": "What is the most important cardiac complication of Kawasaki disease?",
-        "a": "Coronary artery aneurysm."
-      },
-      {
         "q": "What should be suspected when a child has fever for several days plus conjunctival injection, rash, oral changes, and extremity edema?",
         "a": "Kawasaki disease, particularly if no alternative diagnosis explains the findings."
-      },
-      {
-        "q": "What is the classic presentation of myocarditis in a child?",
-        "a": "Fatigue, tachycardia disproportionate to fever, dyspnea, chest pain, arrhythmias, and signs of heart failure."
       },
       {
         "q": "What viral infection is classically associated with myocarditis?",
@@ -24165,10 +24085,6 @@
         "a": "Hypotension, elevated jugular venous pressure, and muffled heart sounds—Beck triad—although the complete triad is not always present in children."
       },
       {
-        "q": "What is pulsus paradoxus?",
-        "a": "An exaggerated inspiratory fall in systolic blood pressure, classically >10 mm Hg."
-      },
-      {
         "q": "Why does cardiac tamponade cause pulsus paradoxus?",
         "a": "During inspiration, increased right-sided filling shifts the interventricular septum toward the left ventricle within the constrained pericardial space, reducing LV filling and stroke volume."
       },
@@ -24190,11 +24106,7 @@
       },
       {
         "q": "What is the major cause of sudden death in children with hypertrophic cardiomyopathy?",
-        "a": "Ventricular arrhythmias are a major mechanism of sudden cardiac death.<br>PEDIATRIC PULMONOLOGY"
-      },
-      {
-        "q": "What is the classic presentation of cystic fibrosis in infancy?",
-        "a": "Meconium ileus, failure to thrive, recurrent respiratory symptoms, or pancreatic insufficiency may be presenting features."
+        "a": "Ventricular arrhythmias are a major mechanism of sudden cardiac death."
       },
       {
         "q": "What is the underlying genetic defect in cystic fibrosis?",
@@ -24241,14 +24153,6 @@
         "a": "Rectal suction biopsy demonstrating absence of ganglion cells, with associated hypertrophic nerve fibers."
       },
       {
-        "q": "What is the underlying defect in Hirschsprung disease?",
-        "a": "Failure of neural crest cells to migrate into the distal bowel, resulting in absence of enteric ganglion cells."
-      },
-      {
-        "q": "What is the classic presentation of anal fissure in a child?",
-        "a": "Painful defecation with bright-red blood on the surface of the stool or toilet paper, commonly associated with constipation."
-      },
-      {
         "q": "Where are typical anal fissures located in children?",
         "a": "Usually in the posterior midline."
       },
@@ -24263,10 +24167,6 @@
       {
         "q": "What behavior commonly perpetuates functional constipation?",
         "a": "Voluntary stool withholding, which causes progressive rectal distention and reduced sensation."
-      },
-      {
-        "q": "What is encopresis?",
-        "a": "Involuntary passage of stool into inappropriate locations, commonly caused by overflow around retained stool in chronic constipation."
       },
       {
         "q": "What is the initial treatment for fecal impaction in functional constipation?",
@@ -24310,7 +24210,7 @@
       },
       {
         "q": "How does meconium plug syndrome differ from Hirschsprung disease?",
-        "a": "Meconium plug syndrome may resolve after passage of the plug, whereas Hirschsprung disease has persistent aganglionosis and requires definitive evaluation and treatment.<br>PEDIATRIC CARDIOLOGY"
+        "a": "Meconium plug syndrome may resolve after passage of the plug, whereas Hirschsprung disease has persistent aganglionosis and requires definitive evaluation and treatment."
       },
       {
         "q": "What is the classic clinical finding in significant aortic stenosis?",
@@ -24353,10 +24253,6 @@
         "a": "Right ventricular hypertrophy and right-axis deviation may be present."
       },
       {
-        "q": "What is Eisenmenger syndrome?",
-        "a": "Reversal of a longstanding left-to-right shunt to a right-to-left shunt due to severe pulmonary vascular disease and pulmonary hypertension."
-      },
-      {
         "q": "What clinical finding indicates development of Eisenmenger physiology?",
         "a": "New or worsening cyanosis and clubbing in a patient with a longstanding congenital left-to-right shunt."
       },
@@ -24390,7 +24286,7 @@
       },
       {
         "q": "What is the major cardiac manifestation of Friedreich ataxia?",
-        "a": "Hypertrophic cardiomyopathy is a major cause of morbidity and mortality.<br>PEDIATRIC PULMONOLOGY"
+        "a": "Hypertrophic cardiomyopathy is a major cause of morbidity and mortality."
       },
       {
         "q": "What is the classic presentation of pulmonary aspiration in a child with swallowing dysfunction?",
@@ -24430,11 +24326,7 @@
       },
       {
         "q": "What imaging study best establishes the diagnosis of bronchiectasis?",
-        "a": "High-resolution CT of the chest, showing dilated bronchi, lack of normal tapering, and airway-wall abnormalities.<br>PEDIATRIC GASTROENTEROLOGY"
-      },
-      {
-        "q": "What is the classic presentation of gastroesophageal reflux disease (GERD) in an infant?",
-        "a": "Regurgitation/vomiting associated with feeding, irritability, feeding refusal, poor weight gain, or respiratory symptoms when reflux is pathologic."
+        "a": "High-resolution CT of the chest, showing dilated bronchi, lack of normal tapering, and airway-wall abnormalities."
       },
       {
         "q": "How does physiologic infant reflux differ from GERD?",
@@ -24463,10 +24355,6 @@
       {
         "q": "What is an important complication of untreated eosinophilic esophagitis?",
         "a": "Esophageal remodeling and stricture formation, increasing the risk of food impaction."
-      },
-      {
-        "q": "What is the classic presentation of appendicitis in a young child?",
-        "a": "It may be atypical, with diffuse abdominal pain, vomiting, fever, irritability, and delayed diagnosis compared with older children."
       },
       {
         "q": "What is the typical migration of pain in acute appendicitis?",
@@ -24510,7 +24398,7 @@
       },
       {
         "q": "Why can severe diarrhea cause hypokalemia?",
-        "a": "Gastrointestinal losses cause direct potassium depletion, which can become significant with prolonged diarrhea.<br>PEDIATRIC CARDIOLOGY"
+        "a": "Gastrointestinal losses cause direct potassium depletion, which can become significant with prolonged diarrhea."
       },
       {
         "q": "What is the classic presentation of acute rheumatic carditis?",
@@ -24573,10 +24461,6 @@
         "a": "Right ventricular volume overload, often manifested by incomplete RBBB and right-axis deviation depending on the defect and age."
       },
       {
-        "q": "What is the usual direction of blood flow through an uncomplicated ASD?",
-        "a": "Left-to-right, because left atrial pressure normally exceeds right atrial pressure."
-      },
-      {
         "q": "What is the classic congenital cardiac lesion associated with an \"egg-on-a-string\" appearance?",
         "a": "Transposition of the great arteries, particularly on older radiographs."
       },
@@ -24590,7 +24474,7 @@
       },
       {
         "q": "What is the definitive surgical repair for TGA?",
-        "a": "Arterial switch operation, generally performed early in life.<br>PEDIATRIC PULMONOLOGY"
+        "a": "Arterial switch operation, generally performed early in life."
       },
       {
         "q": "What is the classic presentation of pulmonary tuberculosis in a child?",
@@ -24710,7 +24594,7 @@
       },
       {
         "q": "What enzyme is deficient in hereditary fructose intolerance?",
-        "a": "Aldolase B.<br>PEDIATRIC CARDIOLOGY"
+        "a": "Aldolase B."
       },
       {
         "q": "What is the classic presentation of myocarditis-associated heart failure in an infant?",
@@ -24790,7 +24674,7 @@
       },
       {
         "q": "What is the classic cardiac lesion associated with maternal diabetes?",
-        "a": "Transposition of the great arteries is an important association; ventricular septal defects and hypertrophic cardiomyopathy may also occur.<br>PEDIATRIC PULMONOLOGY"
+        "a": "Transposition of the great arteries is an important association; ventricular septal defects and hypertrophic cardiomyopathy may also occur."
       },
       {
         "q": "What is the classic presentation of pulmonary tuberculosis in a young child?",
@@ -24857,10 +24741,6 @@
         "a": "Progressive aortic stenosis, aortic regurgitation, infective endocarditis, and ascending aortic dilation."
       },
       {
-        "q": "What is the classic murmur of aortic regurgitation?",
-        "a": "A high-pitched, early diastolic decrescendo murmur along the left sternal border."
-      },
-      {
         "q": "What maneuver generally increases the intensity of aortic regurgitation?",
         "a": "Handgrip, because increased systemic vascular resistance increases regurgitant flow."
       },
@@ -24871,10 +24751,6 @@
       {
         "q": "What happens to pulmonary vascular resistance in an untreated large left-to-right shunt over time?",
         "a": "Chronic pulmonary overcirculation can cause pulmonary vascular remodeling and pulmonary hypertension, eventually producing right-to-left shunting."
-      },
-      {
-        "q": "What is Eisenmenger syndrome?",
-        "a": "Irreversible pulmonary vascular disease caused by a longstanding left-to-right shunt, eventually causing pulmonary hypertension and reversal to a right-to-left shunt."
       },
       {
         "q": "Why can a patient with Eisenmenger syndrome become cyanotic?",
@@ -24941,10 +24817,6 @@
         "a": "Persistent pulmonary hypertension or certain ductal-dependent cardiovascular lesions causing differential oxygenation."
       },
       {
-        "q": "What is the classic presentation of acute rheumatic fever after streptococcal pharyngitis?",
-        "a": "Migratory polyarthritis, carditis, chorea, erythema marginatum, and subcutaneous nodules."
-      },
-      {
         "q": "What cardiac manifestation is most important in acute rheumatic fever?",
         "a": "Pancarditis, particularly valvulitis causing mitral regurgitation."
       },
@@ -24977,10 +24849,6 @@
         "a": "Coronary artery thrombosis or aneurysm-related myocardial ischemia."
       },
       {
-        "q": "What is the classic ECG finding in acute pericarditis?",
-        "a": "Diffuse ST-segment elevation with PR-segment depression, rather than a localized coronary distribution."
-      },
-      {
         "q": "What symptom strongly suggests pericarditis in a child?",
         "a": "Sharp, pleuritic chest pain that improves when sitting forward."
       },
@@ -24991,10 +24859,6 @@
       {
         "q": "What echocardiographic finding is characteristic of cardiac tamponade?",
         "a": "Pericardial effusion with right-sided chamber collapse, particularly during diastole."
-      },
-      {
-        "q": "What is the definitive emergency treatment for hemodynamically significant cardiac tamponade?",
-        "a": "Urgent pericardial drainage, usually by pericardiocentesis or surgical drainage depending on the situation."
       },
       {
         "q": "What is the most common cause of bacterial tracheitis?",
@@ -25031,10 +24895,6 @@
       {
         "q": "What is the next diagnostic step when a child with pneumonia has persistent fever and worsening respiratory symptoms despite appropriate antibiotics?",
         "a": "Evaluate for complications such as parapneumonic effusion/empyema, lung abscess, necrotizing pneumonia, or an alternative diagnosis, often with chest imaging and ultrasound when pleural disease is suspected."
-      },
-      {
-        "q": "What is the classic presentation of myocarditis in a child?",
-        "a": "Recent viral illness followed by fatigue, tachycardia, dyspnea, exercise intolerance, chest pain, or signs of heart failure."
       },
       {
         "q": "What ECG abnormality can occur in pediatric myocarditis?",
@@ -25081,16 +24941,8 @@
         "a": "Familial sarcomeric mutations, commonly involving β-myosin heavy chain or myosin-binding protein C."
       },
       {
-        "q": "What is the classic presentation of myocarditis progressing to dilated cardiomyopathy?",
-        "a": "Ventricular dilation with reduced systolic function, leading to congestive heart failure."
-      },
-      {
         "q": "What is the key difference between systolic and diastolic heart failure?",
         "a": "Systolic failure involves impaired ventricular contraction; diastolic failure involves impaired ventricular relaxation/filling."
-      },
-      {
-        "q": "What is pulsus paradoxus?",
-        "a": "An exaggerated inspiratory fall in systolic blood pressure, classically >10 mm Hg."
       },
       {
         "q": "In which pediatric conditions can pulsus paradoxus be prominent?",
@@ -25139,10 +24991,6 @@
       {
         "q": "What is congenital diaphragmatic hernia (CDH)?",
         "a": "A defect in the diaphragm allowing abdominal organs to herniate into the thoracic cavity, impairing lung development."
-      },
-      {
-        "q": "Which side is most commonly affected by congenital diaphragmatic hernia?",
-        "a": "Left side, classically due to a posterolateral Bochdalek hernia."
       },
       {
         "q": "What is the characteristic presentation of severe congenital diaphragmatic hernia immediately after birth?",
@@ -25493,20 +25341,12 @@
         "a": "Permanent pacemaker placement."
       },
       {
-        "q": "What is the classic ECG finding in atrial septal defect?",
-        "a": "Right-axis deviation and an incomplete right bundle-branch block pattern may occur, along with the characteristic fixed split S2."
-      },
-      {
         "q": "What long-term arrhythmia can develop in adults with an unrepaired ASD?",
         "a": "Atrial arrhythmias, including atrial fibrillation and atrial flutter, due to chronic right atrial/ventricular volume overload."
       },
       {
         "q": "What is the major physiologic difference between an ASD and VSD?",
         "a": "ASD primarily causes right-sided volume overload, whereas VSD causes left-sided volume overload from pulmonary venous return."
-      },
-      {
-        "q": "Why can a small VSD produce a louder murmur than a large VSD?",
-        "a": "A small defect creates high-velocity turbulent flow, whereas a large defect has less pressure difference between ventricles and may produce a softer murmur."
       },
       {
         "q": "What does a palpable thrill over a murmur generally indicate?",
@@ -25615,10 +25455,6 @@
       {
         "q": "What is the classic presentation of pertussis in an infant?",
         "a": "Paroxysmal coughing, apnea, cyanosis, and feeding difficulty; infants may not develop the classic whoop."
-      },
-      {
-        "q": "Which organism causes pertussis?",
-        "a": "Bordetella pertussis."
       },
       {
         "q": "What antibiotic is used to treat pertussis and reduce transmission?",
@@ -25885,14 +25721,6 @@
         "a": "PDA with pulmonary hypertension/Eisenmenger physiology, producing cyanosis of the lower extremities more than the upper extremities."
       },
       {
-        "q": "What are the four components of Tetralogy of Fallot?",
-        "a": "VSD, right ventricular outflow obstruction, overriding aorta, and right ventricular hypertrophy."
-      },
-      {
-        "q": "What determines the severity of cyanosis in Tetralogy of Fallot?",
-        "a": "The degree of right ventricular outflow obstruction."
-      },
-      {
         "q": "What is a Tet spell?",
         "a": "An acute episode of increased right-to-left shunting in Tetralogy of Fallot causing severe cyanosis, tachypnea, and sometimes syncope."
       },
@@ -25961,36 +25789,12 @@
         "a": "Vagal maneuvers, followed by adenosine if unsuccessful."
       },
       {
-        "q": "What is the treatment for unstable pediatric SVT?",
-        "a": "Synchronized cardioversion."
-      },
-      {
-        "q": "What is the most common cause of bronchiolitis in infants?",
-        "a": "Respiratory syncytial virus (RSV)."
-      },
-      {
-        "q": "What age group is most commonly affected by bronchiolitis?",
-        "a": "Primarily children <2 years, especially infants."
-      },
-      {
-        "q": "What is the classic presentation of bronchiolitis?",
-        "a": "A viral prodrome followed by tachypnea, wheezing, crackles, increased work of breathing, and feeding difficulty."
-      },
-      {
-        "q": "What is the main treatment for uncomplicated bronchiolitis?",
-        "a": "Supportive care, including hydration and oxygen when hypoxemia is present."
-      },
-      {
         "q": "Are routine antibiotics indicated for uncomplicated bronchiolitis?",
         "a": "No. Bronchiolitis is usually viral; antibiotics are reserved for a separate suspected bacterial infection."
       },
       {
         "q": "What clinical finding strongly suggests severe bronchiolitis requiring escalation of respiratory support?",
         "a": "Hypoxemia, apnea, exhaustion, or significant respiratory distress."
-      },
-      {
-        "q": "What is the classic presentation of viral croup?",
-        "a": "Barking cough, hoarseness, inspiratory stridor, and symptoms that often worsen at night."
       },
       {
         "q": "What virus most commonly causes croup?",
@@ -26017,10 +25821,6 @@
         "a": "Do not forcibly examine the pharynx with a tongue depressor, because this can precipitate airway obstruction."
       },
       {
-        "q": "What is the classic presentation of bacterial pneumonia in a child?",
-        "a": "Acute fever, cough, tachypnea, respiratory distress, and focal crackles/decreased breath sounds, sometimes with focal infiltrates on chest x-ray."
-      },
-      {
         "q": "What is the most common bacterial cause of community-acquired pneumonia in children?",
         "a": "Streptococcus pneumoniae is a major cause of typical bacterial pneumonia."
       },
@@ -26031,10 +25831,6 @@
       {
         "q": "What is the characteristic respiratory presentation of cystic fibrosis?",
         "a": "Recurrent sinopulmonary infections, chronic cough, bronchiectasis, and thick airway secretions due to defective CFTR-mediated chloride transport."
-      },
-      {
-        "q": "What is the most common cause of wheezing in an infant?",
-        "a": "Viral bronchiolitis, especially during the first 2 years of life."
       },
       {
         "q": "What clinical features favor asthma over bronchiolitis in a child with recurrent wheezing?",
@@ -26123,10 +25919,6 @@
       {
         "q": "What major complication is associated with severe meconium aspiration syndrome?",
         "a": "Persistent pulmonary hypertension of the newborn (PPHN)."
-      },
-      {
-        "q": "What is the underlying problem in persistent pulmonary hypertension of the newborn?",
-        "a": "Failure of normal postnatal reduction in pulmonary vascular resistance, causing right-to-left shunting through fetal circulatory pathways."
       },
       {
         "q": "What clinical finding suggests persistent pulmonary hypertension of the newborn?",
@@ -26476,10 +26268,6 @@
         "a": "Breast development (thelarche) due to estrogen exposure."
       },
       {
-        "q": "What is usually the first sign of puberty in boys?",
-        "a": "Testicular enlargement (>4 mL), reflecting activation of the hypothalamic-pituitary-gonadal axis."
-      },
-      {
         "q": "What is the usual sequence of male pubertal development?",
         "a": "Testicular enlargement → pubic/axillary hair → penile growth → voice deepening → facial hair."
       },
@@ -26528,10 +26316,6 @@
         "a": "Development of secondary sexual characteristics before age 9."
       },
       {
-        "q": "What is the most common cause of precocious puberty in girls?",
-        "a": "Idiopathic central precocious puberty."
-      },
-      {
         "q": "What is an important concern when a boy develops precocious puberty?",
         "a": "Search carefully for a pathologic CNS or adrenal/testicular source, because pathologic causes are more common in boys."
       },
@@ -26556,16 +26340,8 @@
         "a": "Combined hormonal contraception or high-dose estrogen-containing therapy when appropriate; NSAIDs can also reduce menstrual blood loss."
       },
       {
-        "q": "What is the most common cause of secondary amenorrhea in an adolescent?",
-        "a": "Pregnancy until proven otherwise."
-      },
-      {
         "q": "What should be done first in an adolescent with secondary amenorrhea?",
         "a": "Obtain a pregnancy test (β-hCG)."
-      },
-      {
-        "q": "What is the most common cause of dysmenorrhea in adolescents?",
-        "a": "Primary dysmenorrhea caused by increased endometrial prostaglandin production."
       },
       {
         "q": "What is first-line treatment for primary dysmenorrhea?",
@@ -26574,14 +26350,6 @@
       {
         "q": "When should secondary dysmenorrhea be suspected?",
         "a": "Severe or progressively worsening pain, abnormal pelvic examination, abnormal bleeding, dyspareunia, or failure to respond to NSAIDs/hormonal therapy."
-      },
-      {
-        "q": "What is the most common cause of secondary dysmenorrhea in adolescents?",
-        "a": "Endometriosis."
-      },
-      {
-        "q": "What adolescent symptoms strongly suggest endometriosis?",
-        "a": "Dysmenorrhea refractory to NSAIDs/hormonal therapy, chronic pelvic pain, dyspareunia, or pain causing significant functional impairment."
       },
       {
         "q": "What is the most common contraceptive method used by adolescents?",
@@ -26954,14 +26722,6 @@
       {
         "q": "What is an important exception to confidentiality involving sexual activity?",
         "a": "Suspected sexual abuse or exploitation, depending on the circumstances and applicable mandatory-reporting laws."
-      },
-      {
-        "q": "What is the most common cause of primary amenorrhea with normal secondary sexual characteristics and absent uterus?",
-        "a": "Müllerian agenesis or androgen insensitivity syndrome."
-      },
-      {
-        "q": "How can Müllerian agenesis be distinguished from androgen insensitivity syndrome?",
-        "a": "Müllerian agenesis: 46,XX, normal ovaries, absent uterus, normal pubic hair.<br>Androgen insensitivity: 46,XY, testes present, absent uterus, sparse/absent pubic and axillary hair."
       },
       {
         "q": "What is the most common cause of primary amenorrhea with absent secondary sexual characteristics?",
