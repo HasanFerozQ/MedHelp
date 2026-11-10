@@ -2071,31 +2071,16 @@ const MediHelp = {
 
   // ── AD SUPPRESSION FOR PREMIUM MEMBERS ─────────────────────────────────
   // Prevents ALL ad networks from displaying for users with an active license.
-  // Works on: Ezoic (ezstandalone), Adsterra vignette, Google AdSense, affiliate banner.
+  // Works on: Adsterra vignette, affiliate banner.
   suppressAdsForPremium: function() {
-    // 1. Neuter ezstandalone.showAds so Ezoic ad slots don't render
-    const noOpShowAds = function() {};
-    if (window.ezstandalone) {
-      window.ezstandalone.showAds = noOpShowAds;
-      window.ezstandalone.cmd = { push: function() {} };
-    } else {
-      window.ezstandalone = { showAds: noOpShowAds, cmd: { push: function() {} } };
-    }
-
-    // 2. CSS: instantly hide all known ad containers
+    // 1. CSS: instantly hide all known ad containers
     if (!document.getElementById('mh-premium-no-ads-style')) {
       const style = document.createElement('style');
       style.id = 'mh-premium-no-ads-style';
       style.textContent = `
         /* MediHelp Premium: ad-free experience */
-        [id^="ezoic-pub-ad"],
-        .ezoic-adpicker-ad,
-        .ezoic-ad,
-        [class*="ezoic-ad"],
-        ins.adsbygoogle,
         iframe[src*="adsterra"],
         iframe[src*="n6wxm"],
-        iframe[src*="googlesyndication"],
         #mh-desktop-affiliate-banner,
         #mh-desktop-affiliate-banner-right,
         #mh-prefooter-affiliate-ad {
@@ -2110,7 +2095,7 @@ const MediHelp = {
       document.head.appendChild(style);
     }
 
-    // 3. Remove affiliate banner element if already injected
+    // 2. Remove affiliate banner element if already injected
     const affiliate = document.getElementById('mh-desktop-affiliate-banner');
     if (affiliate) affiliate.remove();
     const affiliateRight = document.getElementById('mh-desktop-affiliate-banner-right');
@@ -2118,11 +2103,10 @@ const MediHelp = {
     const prefooterAd = document.getElementById('mh-prefooter-affiliate-ad');
     if (prefooterAd) prefooterAd.remove();
 
-    // 4. MutationObserver: hide dynamically injected ad iframes/slots
+    // 3. MutationObserver: hide dynamically injected ad iframes/slots
     const adSelector = [
-      '[id^="ezoic-pub-ad"]', '.ezoic-adpicker-ad', '.ezoic-ad',
-      'ins.adsbygoogle', 'iframe[src*="adsterra"]',
-      'iframe[src*="n6wxm"]', 'iframe[src*="googlesyndication"]',
+      'iframe[src*="adsterra"]',
+      'iframe[src*="n6wxm"]',
       '#mh-desktop-affiliate-banner', '#mh-desktop-affiliate-banner-right', '#mh-prefooter-affiliate-ad'
     ].join(',');
     const adObserver = new MutationObserver(function(mutations) {

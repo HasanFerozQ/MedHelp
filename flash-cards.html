@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-<head>  <!-- Ezoic Privacy & Header Scripts -->
-  <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js"></script>
-  <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js"></script>
-  <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-  <script>
-    window.ezstandalone = window.ezstandalone || {};
-    ezstandalone.cmd = ezstandalone.cmd || [];
-  </script>
-  <script src="//ezoanalytics.com/analytics.js"></script>
-  <meta name="google-adsense-account" content="ca-pub-8367130148973046">
+<head>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QRXGS9WBY8"></script>
@@ -327,12 +318,6 @@
         };
       </script>
       <script src="https://www.highperformanceformat.com/a7a04a547a8e6bdc2777d62f0cbd7656/invoke.js"></script>
-  <!-- Ezoic Ad Placement -->
-  <script>
-    ezstandalone.cmd.push(function () {
-      ezstandalone.showAds({});
-    });
-  </script>
     </div>
 
   <main class="flash-container">
@@ -1149,6 +1134,28 @@
       return null;
     }
 
+    // Known flashcard tabs (must match the data-tab values in the page).
+    const FLASH_TABS = ['year1', 'year2', 'year3', 'year4', 'usmle1', 'usmle2', 'usmle3'];
+
+    // Resolve a deck link to {tab, index}. A `tab` URL param wins over the
+    // manifest, so same-named decks (e.g. Cardiology in USMLE 2 and USMLE 3)
+    // always open their own cards. Without a tab param, the manifest and the
+    // already-loaded tabs are used exactly as before.
+    async function resolveDeckTarget(slug, tabParam) {
+      if (!slug) return null;
+      const decoded = decodeURIComponent(slug);
+      if (tabParam) {
+        const tab = decodeURIComponent(tabParam);
+        if (FLASH_TABS.includes(tab)) {
+          const topics = await loadTabData(tab);
+          const idx = (topics || []).findIndex(t => flashTopicSlug(t.topic) === decoded);
+          if (idx >= 0) return { tab, index: idx };
+        }
+      }
+      const manifest = await loadManifest();
+      return manifest[decoded] || findFlashTopic(decoded);
+    }
+
     function syncFlashTabUI(tab) {
       const mainTabs = document.getElementById('main-tabs');
       const mobileDropdown = document.getElementById('mobile-tab-dropdown');
@@ -1167,7 +1174,7 @@
       if (window.MediHelp && typeof window.MediHelp.trackEvent === 'function') {
         window.MediHelp.trackEvent('flashcard_deck_start', { deck_name: topic.topic, deck_slug: slug });
       }
-      const url = `/flash-cards?deck=${encodeURIComponent(slug)}`;
+      const url = `/flash-cards?deck=${encodeURIComponent(slug)}&tab=${encodeURIComponent(currentTab)}`;
       const state = { tab: currentTab, index };
       if (replace) history.replaceState(state, '', url);
       else history.pushState(state, '', url);
@@ -1240,16 +1247,15 @@
       ];
       if (window.renderFAQ) renderFAQ('faq-flashcards', flashFaqs);
 
-      const manifest = await loadManifest();
       const searchParams = new URLSearchParams(window.location.search);
       const deckParam = searchParams.get('deck') || searchParams.get('topic');
+      const tabParam = searchParams.get('tab');
       const pathParts = window.location.pathname.split('/').filter(Boolean);
       const pathSlug = (pathParts[0] === 'flash-cards' && pathParts[1]) ? pathParts[1] : null;
       const targetSlug = deckParam || pathSlug;
       
       if (targetSlug) {
-        const slug = decodeURIComponent(targetSlug);
-        const match = manifest[slug] || findFlashTopic(slug);
+        const match = await resolveDeckTarget(targetSlug, tabParam);
         if (match) {
           currentTab = match.tab;
           syncFlashTabUI(currentTab);
@@ -1270,14 +1276,13 @@
       window.addEventListener('popstate', async () => {
         const params = new URLSearchParams(window.location.search);
         const dParam = params.get('deck') || params.get('topic');
+        const tParam = params.get('tab');
         const parts = window.location.pathname.split('/').filter(Boolean);
         const pSlug = (parts[0] === 'flash-cards' && parts[1]) ? parts[1] : null;
         const tSlug = dParam || pSlug;
 
         if (tSlug) {
-          const slug = decodeURIComponent(tSlug);
-          const m = await loadManifest();
-          const match = m[slug] || findFlashTopic(slug);
+          const match = await resolveDeckTarget(tSlug, tParam);
           if (match) {
             currentTab = match.tab;
             syncFlashTabUI(currentTab);
@@ -1321,7 +1326,7 @@
               const slug = flashTopicSlug(t.topic || 'Untitled Topic');
               const card = document.createElement('a');
               card.className = 'topic-card-item';
-              card.href = `/flash-cards?deck=${encodeURIComponent(slug)}`;
+              card.href = `/flash-cards?deck=${encodeURIComponent(slug)}&tab=${encodeURIComponent(currentTab)}`;
               card.innerHTML = `
                 <div class="topic-card-icon">
                   <i data-lucide="${t.icon || 'book'}"></i>
