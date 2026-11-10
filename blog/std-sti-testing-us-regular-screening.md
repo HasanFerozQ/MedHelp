@@ -22,14 +22,6 @@ The terms **STI** and **STD** are often used interchangeably, but they describe 
 
 STIs may be caused by bacteria, viruses, or parasites. Common examples include chlamydia, gonorrhea, syphilis, HIV, herpes simplex virus (HSV), human papillomavirus (HPV), trichomoniasis, and hepatitis B. Some bacterial STIs can be cured with treatment. Viral infections may not always be curable, but diagnosis and medical care can reduce complications and transmission risk.
 
-### Explore an STI testing option
-
-If you are considering testing, review the available options and choose tests suited to your situation. A healthcare professional can help you decide what to test for and when.
-
-<p style="margin:24px 0;"><a href="https://www.dpbolvw.net/click-101847975-11648778" target="_top" rel="sponsored noopener noreferrer" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 20px; width:100%; max-width:728px; box-sizing:border-box; margin:0 auto; padding:16px 20px; background:#071a10; border:1px solid #166534; border-radius:14px; color:#fff; text-decoration:none;"><span style="display:block; flex:1 1 240px; min-width:0;"><span style="display:block; margin-bottom:4px; color:#4ade80; font-size:11px; font-weight:800; letter-spacing:0.08em;">SPONSORED TESTING OPTION</span><strong style="display:block; color:#fff; font-size:18px; line-height:1.3;">Explore STI testing</strong><span style="display:block; margin-top:4px; color:#cbd5e1; font-size:13px; line-height:1.5;">Browse available testing options and choose with clinical guidance.</span></span><span style="display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:0 16px; box-sizing:border-box; border-radius:8px; background:#22c55e; color:#05140b; font-size:13px; font-weight:800;">View testing options</span></a></p>
-
-MediHelp may receive compensation if you use this referral link, at no additional cost to you. The link is not an endorsement of a particular test for your circumstances.
-
 ## The U.S. numbers: why screening matters
 
 CDC's provisional 2024 surveillance data reported the following cases:
@@ -119,14 +111,6 @@ Testing may be available through primary-care offices, sexual-health clinics, co
 
 Some at-home services offer self-testing or self-collected samples for particular infections. Not every advertised “STD panel” checks for every STI, and a test may not cover every exposed site or be appropriate for every situation. Before ordering, confirm what is tested, how specimens are processed, whether the test is authorized for its intended use, how results are delivered, and what clinical support is available if a result is positive or unclear.
 
-### Explore a testing option
-
-This sponsored referral link is one option for exploring STI testing. It is not a substitute for medical advice; confirm that any service and test meet your needs.
-
-<p style="margin:24px 0;"><a href="https://www.dpbolvw.net/click-101847975-11648778" target="_top" rel="sponsored noopener noreferrer" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 20px; width:100%; max-width:728px; box-sizing:border-box; margin:0 auto; padding:16px 20px; background:#071a10; border:1px solid #166534; border-radius:14px; color:#fff; text-decoration:none;"><span style="display:block; flex:1 1 240px; min-width:0;"><span style="display:block; margin-bottom:4px; color:#4ade80; font-size:11px; font-weight:800; letter-spacing:0.08em;">SPONSORED TESTING OPTION</span><strong style="display:block; color:#fff; font-size:18px; line-height:1.3;">Explore STI testing</strong><span style="display:block; margin-top:4px; color:#cbd5e1; font-size:13px; line-height:1.5;">Browse available testing options and choose with clinical guidance.</span></span><span style="display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:0 16px; box-sizing:border-box; border-radius:8px; background:#22c55e; color:#05140b; font-size:13px; font-weight:800;">View testing options</span></a></p>
-
-MediHelp may receive compensation if you use this referral link, at no additional cost to you. The link is not an endorsement of a particular test for your circumstances. Discuss the right testing and follow-up with a qualified healthcare professional.
-
 ## What can happen after a test?
 
 A negative result may need to be interpreted alongside the date of possible exposure, symptoms, and the test's window period. A healthcare professional can advise whether repeat or additional testing is appropriate.
@@ -155,16 +139,3 @@ More than 2.2 million reported cases of chlamydia, gonorrhea, and syphilis were 
 
 This article is for general educational purposes and does not replace professional medical advice, diagnosis, or treatment. Testing recommendations vary according to age, anatomy, sexual practices, pregnancy status, symptoms, medical history, location, and other factors. A healthcare professional can help determine which tests are right for you. If you have symptoms or think you may have recently been exposed to an STI, seek medical advice promptly.
 
-<p style="margin:24px 0 8px; text-align:center; font-size:12px; font-weight:700; color:#94a3b8;">Sponsored testing options</p>
-<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px; max-width:516px; margin:0 auto 24px;">
-	<div style="flex:1 1 220px; width:100%; max-width:250px; text-align:center;">
-		<a href="https://www.tkqlhce.com/click-101847975-11648965" target="_top" rel="sponsored noopener noreferrer" aria-label="Explore an STI testing option" style="display:block; line-height:0;"><img src="https://www.lduhtrp.net/image-101847975-11648965" width="250" height="250" alt="Sponsored STI testing option" border="0" style="display:block; width:100%; max-width:250px; max-height:none; height:auto; aspect-ratio:1/1; object-fit:contain; margin:0; border-radius:8px;"></a>
-		<a href="https://www.tkqlhce.com/click-101847975-11648965" target="_top" rel="sponsored noopener noreferrer" style="display:block; margin-top:8px; padding:10px 12px; background:#22c55e; color:#05140b; border-radius:8px; text-decoration:none; font-weight:800;">Explore STI testing</a>
-	</div>
-	<div style="flex:1 1 220px; width:100%; max-width:250px; text-align:center;">
-		<a href="https://www.dpbolvw.net/click-101847975-11648983" target="_top" rel="sponsored noopener noreferrer" aria-label="Explore an STI testing option" style="display:block; line-height:0;"><img src="https://www.awltovhc.com/image-101847975-11648983" width="250" height="250" alt="Sponsored STI testing option" border="0" style="display:block; width:100%; max-width:250px; max-height:none; height:auto; aspect-ratio:1/1; object-fit:contain; margin:0; border-radius:8px;"></a>
-		<a href="https://www.dpbolvw.net/click-101847975-11648983" target="_top" rel="sponsored noopener noreferrer" style="display:block; margin-top:8px; padding:10px 12px; background:#22c55e; color:#05140b; border-radius:8px; text-decoration:none; font-weight:800;">Explore STI testing</a>
-	</div>
-</div>
-
-MediHelp may receive compensation if you use either sponsored referral link, at no additional cost to you.

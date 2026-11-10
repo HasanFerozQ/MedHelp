@@ -1759,311 +1759,6 @@ const MediHelp = {
     return path.indexOf('/blog/') === 0;
   },
 
-  // Desktop Left & Right Affiliate Banners + Bottom Pre-Footer Ad
-  initAffiliateBanner: function() {
-    const isBlogPost = this.isBlogPostPage();
-
-    // 1. Left Banner (Tall Vertical)
-    if (!document.getElementById('mh-desktop-affiliate-banner')) {
-      const bannerLeft = document.createElement('div');
-      bannerLeft.id = 'mh-desktop-affiliate-banner';
-      bannerLeft.className = 'mh-desktop-affiliate-banner';
-      bannerLeft.innerHTML = `
-        <a href="https://www.kqzyfj.com/click-101847975-17327794" target="_blank" rel="sponsored noopener noreferrer">
-          <img src="https://www.awltovhc.com/image-101847975-17327794" width="206" height="800" alt="Special Offer — GearUp / Healthcare" border="0" 
-               onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80';"
-               style="display:block; width:100%; height:auto; max-height:calc(100vh - 110px); object-fit:contain; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.4);" />
-        </a>
-      `;
-      document.body.appendChild(bannerLeft);
-    }
-
-    // 2. Right Banner Grid (Tiled Box Ads Vertically)
-    // On blog posts only: stack these under the Audit Your Bill sidebar card
-    // so the article can use the extra horizontal space.
-    if (!document.getElementById('mh-desktop-affiliate-banner-right')) {
-      const bannerRight = document.createElement('div');
-      bannerRight.id = 'mh-desktop-affiliate-banner-right';
-      bannerRight.className = 'mh-desktop-affiliate-banner-right';
-      bannerRight.innerHTML = `
-        <div class="mh-ad-box-grid">
-          <!-- Box Ad 1 -->
-          <div class="mh-ad-box-card">
-            <span class="mh-ad-badge">SPONSORED</span>
-            <a href="https://www.anrdoezrs.net/click-101847975-13689149" target="_blank" rel="sponsored noopener noreferrer" class="mh-ad-box-link">
-              <div class="mh-ad-box-img-wrapper">
-                <img src="https://www.ftjcfx.com/image-101847975-13689149" width="190" height="196" alt="Special Offer" border="0"
-                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80';" />
-              </div>
-            </a>
-          </div>
-
-          <!-- Box Ad 2 -->
-          <div class="mh-ad-box-card">
-            <span class="mh-ad-badge">SPONSORED</span>
-            <a href="https://www.anrdoezrs.net/click-101847975-17183529?url=https%3A%2F%2Frexing.com%2Fproducts%2Frexing-r316-dash-cam-4k-front-1080p-cabin-with-wi-fi-gps%3Fvariant%3D43851262492862&cjsku=43851262492862" target="_blank" rel="sponsored noopener noreferrer" class="mh-ad-box-link">
-              <div class="mh-ad-box-img-wrapper">
-                <img src="https://cdn.shopify.com/s/files/1/0556/5536/6846/files/R316-2-Main-scaled.jpg?v=1712594342" alt="Rexing R316 Dash Cam 4K Front"
-                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1508974239320-0a029497e820?w=400&q=80';" />
-              </div>
-            </a>
-          </div>
-
-          <!-- Box Ad 3 -->
-          <div class="mh-ad-box-card">
-            <span class="mh-ad-badge">SPONSORED</span>
-            <a href="https://www.anrdoezrs.net/click-101847975-11680307" target="_top" rel="sponsored noopener noreferrer" class="mh-ad-box-link">
-              <div class="mh-ad-box-img-wrapper">
-                <img src="https://www.tqlkg.com/image-101847975-11648983" width="250" height="250" alt="" border="0" />
-              </div>
-            </a>
-          </div>
-        </div>
-      `;
-      const sidebarMount = isBlogPost && (
-        document.getElementById('sidebar-affiliate-ads') ||
-        document.querySelector('.post-sidebar')
-      );
-      if (sidebarMount) {
-        bannerRight.classList.add('mh-sidebar-placed');
-        sidebarMount.appendChild(bannerRight);
-      } else {
-        document.body.appendChild(bannerRight);
-      }
-    }
-
-    if (!document.getElementById('mh-affiliate-banner-styles')) {
-      const style = document.createElement('style');
-      style.id = 'mh-affiliate-banner-styles';
-      style.textContent = `
-        /* Left Vertical Banner */
-        .mh-desktop-affiliate-banner {
-          position: fixed;
-          top: 95px;
-          left: 12px;
-          z-index: 90;
-          display: block;
-          width: 180px;
-          height: auto;
-          max-height: calc(100vh - 110px);
-          pointer-events: auto;
-          transition: opacity 0.3s ease;
-        }
-
-        /* Right Vertical Banner Grid */
-        .mh-desktop-affiliate-banner-right {
-          position: fixed;
-          top: 95px;
-          right: 12px;
-          z-index: 90;
-          display: flex;
-          flex-direction: column;
-          width: 200px;
-          max-height: calc(100vh - 110px);
-          overflow-y: auto;
-          scrollbar-width: none;
-          pointer-events: auto;
-          transition: opacity 0.3s ease;
-        }
-        .mh-desktop-affiliate-banner-right::-webkit-scrollbar {
-          display: none;
-        }
-
-        .mh-ad-box-grid {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          width: 100%;
-        }
-
-        .mh-ad-box-card {
-          position: relative;
-          width: 200px;
-          height: 200px;
-          background: rgba(17, 24, 39, 0.9);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 14px;
-          overflow: hidden;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-          transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .mh-ad-box-card:hover {
-          transform: translateY(-2px);
-          border-color: rgba(34, 197, 94, 0.5);
-          box-shadow: 0 12px 32px rgba(34, 197, 94, 0.2);
-        }
-
-        .mh-ad-badge {
-          position: absolute;
-          top: 6px;
-          right: 6px;
-          z-index: 5;
-          background: rgba(0, 0, 0, 0.7);
-          backdrop-filter: blur(4px);
-          color: #94a3b8;
-          font-size: 8px;
-          font-weight: 700;
-          letter-spacing: 0.5px;
-          padding: 2px 5px;
-          border-radius: 4px;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          pointer-events: none;
-        }
-
-        .mh-ad-box-link {
-          text-decoration: none;
-          color: inherit;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          height: 100%;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        .mh-ad-box-img-wrapper {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          border-radius: 12px;
-          background: #0b0f19;
-          position: relative;
-        }
-
-        .mh-ad-box-img-wrapper img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          border-radius: 12px;
-          transition: transform 0.3s ease;
-        }
-
-        .mh-ad-box-card:hover .mh-ad-box-img-wrapper img {
-          transform: scale(1.04);
-        }
-
-        /* Blog post: sit in the article sidebar instead of a fixed right rail */
-        .mh-desktop-affiliate-banner-right.mh-sidebar-placed {
-          position: static;
-          top: auto;
-          right: auto;
-          width: 100%;
-          max-height: none;
-          overflow: visible;
-          z-index: 1;
-        }
-        .mh-desktop-affiliate-banner-right.mh-sidebar-placed .mh-ad-box-card {
-          width: 100%;
-          height: auto;
-        }
-        .mh-desktop-affiliate-banner-right.mh-sidebar-placed .mh-ad-box-img-wrapper {
-          height: auto;
-        }
-        .mh-desktop-affiliate-banner-right.mh-sidebar-placed .mh-ad-box-img-wrapper img {
-          width: auto;
-          max-width: 100%;
-          height: auto;
-          object-fit: contain;
-        }
-
-        @media (max-width: 1180px) {
-          .mh-desktop-affiliate-banner-right:not(.mh-sidebar-placed),
-          .mh-desktop-affiliate-banner {
-            display: none !important;
-          }
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    // 3. Pre-Footer Ad Banner (Bottom just before footer)
-    this.initPreFooterAd();
-  },
-
-  // Pre-Footer Bottom Banner Ad
-  initPreFooterAd: function() {
-    if (document.getElementById('mh-prefooter-affiliate-ad')) return;
-    const footer = document.querySelector('.site-footer');
-    if (!footer || !footer.parentNode) return;
-
-    const adSection = document.createElement('div');
-    adSection.id = 'mh-prefooter-affiliate-ad';
-    adSection.className = 'mh-prefooter-affiliate-ad';
-    adSection.innerHTML = `
-      <div class="mh-prefooter-ad-container">
-        <span class="mh-ad-badge">SPONSORED</span>
-        <a href="https://www.tkqlhce.com/click-101847975-11648782" target="_top" rel="sponsored noopener noreferrer" class="mh-prefooter-ad-link">
-          <img src="https://www.tqlkg.com/image-101847975-11648782" width="728" height="90" alt="" border="0"
-               onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';" />
-        </a>
-      </div>
-    `;
-
-    footer.parentNode.insertBefore(adSection, footer);
-
-    if (!document.getElementById('mh-prefooter-ad-styles')) {
-      const style = document.createElement('style');
-      style.id = 'mh-prefooter-ad-styles';
-      style.textContent = `
-        .mh-prefooter-affiliate-ad {
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 32px 16px 20px;
-          box-sizing: border-box;
-        }
-        .mh-prefooter-ad-container {
-          position: relative;
-          max-width: 720px;
-          width: 100%;
-          background: rgba(17, 24, 39, 0.85);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 16px;
-          padding: 10px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          box-sizing: border-box;
-          transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .mh-prefooter-ad-container:hover {
-          transform: translateY(-2px);
-          border-color: rgba(34, 197, 94, 0.4);
-          box-shadow: 0 14px 36px rgba(34, 197, 94, 0.12);
-        }
-        .mh-prefooter-ad-link {
-          display: block;
-          width: 100%;
-          text-align: center;
-          line-height: 0;
-        }
-        .mh-prefooter-ad-container img {
-          max-width: 100%;
-          height: auto;
-          display: inline-block;
-          border-radius: 10px;
-          object-fit: contain;
-        }
-      `;
-      document.head.appendChild(style);
-    }
-  },
-
   // Simple sync check for UI rendering
   isPremiumSync: function() {
     return this._isPremiumCache === true || this.License.isActivated();
@@ -2071,7 +1766,7 @@ const MediHelp = {
 
   // ── AD SUPPRESSION FOR PREMIUM MEMBERS ─────────────────────────────────
   // Prevents ALL ad networks from displaying for users with an active license.
-  // Works on: Adsterra vignette, affiliate banner.
+  // Works on: Adsterra vignette.
   suppressAdsForPremium: function() {
     // 1. CSS: instantly hide all known ad containers
     if (!document.getElementById('mh-premium-no-ads-style')) {
@@ -2080,10 +1775,7 @@ const MediHelp = {
       style.textContent = `
         /* MediHelp Premium: ad-free experience */
         iframe[src*="adsterra"],
-        iframe[src*="n6wxm"],
-        #mh-desktop-affiliate-banner,
-        #mh-desktop-affiliate-banner-right,
-        #mh-prefooter-affiliate-ad {
+        iframe[src*="n6wxm"] {
           display: none !important;
           visibility: hidden !important;
           pointer-events: none !important;
@@ -2095,19 +1787,10 @@ const MediHelp = {
       document.head.appendChild(style);
     }
 
-    // 2. Remove affiliate banner element if already injected
-    const affiliate = document.getElementById('mh-desktop-affiliate-banner');
-    if (affiliate) affiliate.remove();
-    const affiliateRight = document.getElementById('mh-desktop-affiliate-banner-right');
-    if (affiliateRight) affiliateRight.remove();
-    const prefooterAd = document.getElementById('mh-prefooter-affiliate-ad');
-    if (prefooterAd) prefooterAd.remove();
-
-    // 3. MutationObserver: hide dynamically injected ad iframes/slots
+    // 2. MutationObserver: hide dynamically injected ad iframes/slots
     const adSelector = [
       'iframe[src*="adsterra"]',
-      'iframe[src*="n6wxm"]',
-      '#mh-desktop-affiliate-banner', '#mh-desktop-affiliate-banner-right', '#mh-prefooter-affiliate-ad'
+      'iframe[src*="n6wxm"]'
     ].join(',');
     const adObserver = new MutationObserver(function(mutations) {
       mutations.forEach(function(m) {
@@ -2133,25 +1816,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ── Premium Ad Suppression ──────────────────────────────────────────────
   // Check premium status (waits for auth sync up to 5s), then suppress ads
-  // if the user has an active license. Affiliate banner only shown for free users.
+  // if the user has an active license.
   (async () => {
     // Quick sync check first (covers cached/localStorage license)
     if (MediHelp.isPremiumSync()) {
       MediHelp.suppressAdsForPremium();
-      return; // skip affiliate banner entirely
+      return;
     }
     // Wait for cloud auth sync (covers Supabase-backed premium)
     try {
       const premium = await MediHelp.isPremium();
       if (premium) {
         MediHelp.suppressAdsForPremium();
-        return; // skip affiliate banner entirely
+        return;
       }
     } catch(e) {
       console.warn('MediHelp: Premium check error during ad init', e);
     }
-    // Not premium — show affiliate banner as normal
-    MediHelp.initAffiliateBanner();
   })();
   
   if (MediHelp.isAuthPage()) {
