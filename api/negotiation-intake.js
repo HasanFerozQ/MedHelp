@@ -55,6 +55,15 @@ function sha256(buffer) {
   return crypto.createHash('sha256').update(buffer).digest('hex');
 }
 
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function buildIntakePdfBuffer({ caseId, fields, integrityMeta }) {
   return new Promise((resolve, reject) => {
     try {
@@ -102,6 +111,10 @@ function buildIntakePdfBuffer({ caseId, fields, integrityMeta }) {
 
       h('Negotiation Request');
       row('Goal', fields.negotiationGoal);
+
+      h('Billing Issues');
+      row('Issues Noticed', fields.issues);
+      row('Other Details', fields.otherDetails);
 
       h('Audit Snapshot');
       row('Savings Potential', fields.savingsPotential);
@@ -174,6 +187,10 @@ async function sendViaSmtp({ caseId, fields, attachments, integrityMeta, consent
     '== Negotiation Request ==',
     `Negotiation Goal: ${fields.negotiationGoal || ''}`,
     '',
+    '== Billing Issues ==',
+    `Issues Noticed: ${fields.issues || ''}`,
+    `Other Details: ${fields.otherDetails || ''}`,
+    '',
     '== Consent ==',
     `Authorization Consent: ${fields.authorizationConsent || ''}`,
     `Payment 15% Consent: ${fields.successFeeConsent || ''}`,
@@ -195,6 +212,50 @@ async function sendViaSmtp({ caseId, fields, attachments, integrityMeta, consent
 
   const intakePdf = await buildIntakePdfBuffer({ caseId, fields, integrityMeta });
 
+  // Formatted HTML version of the intake (same content as the plain-text body).
+  const htmlSection = (title, rows) => `
+    <h3 style="margin:18px 0 6px; font-size:14px; color:#111827; border-bottom:1px solid #e5e7eb; padding-bottom:4px;">${title}</h3>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; color:#374151;">
+      ${rows.map(([label, value]) => `
+        <tr>
+          <td style="padding:5px 10px 5px 0; vertical-align:top; font-weight:700; color:#111827; white-space:nowrap;">${label}</td>
+          <td style="padding:5px 0; vertical-align:top;">${escapeHtml(value || '') || '<span style="color:#9ca3af;">—</span>'}</td>
+        </tr>`).join('')}
+    </table>`;
+  const intakeHtml = `
+    <div style="font-family:Arial,Helvetica,sans-serif; max-width:640px; margin:0 auto; color:#111827; line-height:1.6;">
+      <h2 style="margin:0 0 4px;">MediHelp Negotiation Intake</h2>
+      <p style="margin:0 0 12px; color:#6b7280; font-size:13px;">Submitted ${escapeHtml(integrityMeta.submittedAtUtc)} (UTC) &middot; Reply to this email to contact the patient directly.</p>
+      <div style="padding:14px; border:1px solid #d1d5db; border-radius:8px; background:#f9fafb; margin-bottom:8px;">
+        <div style="font-size:12px; color:#6b7280; margin-bottom:4px;">Case ID</div>
+        <div style="font-size:22px; font-weight:800; letter-spacing:0.4px;">${escapeHtml(caseId)}</div>
+      </div>
+      ${htmlSection('Basic Info', [
+        ['Full Name', fields.fullName], ['Email', fields.email], ['Phone', fields.phone]])}
+      ${htmlSection('Bill Details', [
+        ['Provider Name', fields.providerName], ['Bill Amount', fields.billAmount], ['Date of Service', fields.dateOfService]])}
+      ${htmlSection('Insurance', [
+        ['Has Insurance', fields.hasInsurance], ['Claim Status', fields.claimStatus]])}
+      ${htmlSection('Visit', [
+        ['Visit Type', fields.visitType], ['Visit Type Other', fields.visitTypeOther]])}
+      ${htmlSection('Financial', [
+        ['Financial Difficulty', fields.financialDifficulty], ['Monthly Income', fields.monthlyIncome], ['Hardship Checked', fields.hardshipChecked]])}
+      ${htmlSection('Negotiation Request', [
+        ['Goal', fields.negotiationGoal]])}
+      ${htmlSection('Billing Issues', [
+        ['Issues Noticed', fields.issues], ['Other Details', fields.otherDetails]])}
+      ${htmlSection('Consent & Authorization', [
+        ['Authorization Consent', fields.authorizationConsent], ['15% Success Fee Consent', fields.successFeeConsent],
+        ['Upfront $15 Consent', fields.upfrontFeeConsent], ['Digital Signature Name', fields.signatureName],
+        ['Digital Signature Date', fields.signatureDate]])}
+      ${htmlSection('Audit Snapshot', [
+        ['Savings Potential', fields.savingsPotential], ['Findings Count', fields.findingsCount], ['Source', fields.source || 'audit-page']])}
+      ${htmlSection('Evidence Integrity', [
+        ['Consent Receipt SHA-256', integrityMeta.consentReceiptHash], ['Bill SHA-256', integrityMeta.billHash],
+        ['EOB SHA-256', integrityMeta.eobHash || 'N/A']])}
+      <p style="margin:16px 0 0; font-size:11px; color:#6b7280;">Attachments: the uploaded bill${attachments.length > 1 ? ' and EOB' : ''}, plus the generated intake PDF, consent receipt and integrity metadata. MediHelp is a billing advocacy service and does not provide legal, medical, or insurance advice.</p>
+    </div>`;
+
   const transporter = nodemailer.createTransport({
     host,
     port,
@@ -209,6 +270,7 @@ async function sendViaSmtp({ caseId, fields, attachments, integrityMeta, consent
     replyTo: fields.email || undefined,
     subject: `MediHelp Negotiation Intake - ${caseId}`,
     text: lines.join('\n'),
+    html: intakeHtml,
     attachments: [
       ...attachments,
       {

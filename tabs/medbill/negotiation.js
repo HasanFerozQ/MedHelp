@@ -121,6 +121,43 @@ console.log('MediHelp: negotiation.js loaded.');
       });
     }
 
+    // Drop-zone helpers: show the chosen file name + allow drag & drop onto the cards.
+    function formatFileSize(bytes) {
+      if (bytes === undefined || bytes === null) return '';
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    }
+    function bindDropZone(cardId, input, nameId, emptyText) {
+      const card = document.getElementById(cardId);
+      const nameEl = document.getElementById(nameId);
+      if (!card || !input) return;
+      const showName = () => {
+        if (!nameEl) return;
+        const file = input.files?.[0];
+        if (file) {
+          nameEl.textContent = `${file.name} (${formatFileSize(file.size)})`;
+          nameEl.classList.add('has-file');
+        } else {
+          nameEl.textContent = emptyText;
+          nameEl.classList.remove('has-file');
+        }
+      };
+      input.addEventListener('change', showName);
+      ['dragenter', 'dragover'].forEach((ev) => card.addEventListener(ev, (e) => { e.preventDefault(); card.classList.add('drag-over'); }));
+      ['dragleave', 'drop'].forEach((ev) => card.addEventListener(ev, (e) => { e.preventDefault(); card.classList.remove('drag-over'); }));
+      card.addEventListener('drop', (e) => {
+        const file = e.dataTransfer?.files?.[0];
+        if (!file) return;
+        try {
+          input.files = e.dataTransfer.files;
+        } catch (_) { return; }
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    }
+    bindDropZone('neg-bill-card', billInput, 'neg-bill-name', 'No file chosen — PDF up to 8 MB');
+    bindDropZone('neg-eob-card', document.getElementById('neg-eob'), 'neg-eob-name', 'No file chosen — optional');
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!signedAt) {
@@ -170,6 +207,9 @@ console.log('MediHelp: negotiation.js loaded.');
         fd.append('monthlyIncome', (document.getElementById('neg-income-range')?.value || '').trim());
         fd.append('hardshipChecked', String(!!document.getElementById('neg-hardship')?.checked));
         fd.append('negotiationGoal', selectedGoal.value);
+        const selectedIssues = Array.from(form.querySelectorAll('input[name="neg-issue"]:checked')).map((el) => el.value);
+        fd.append('issues', selectedIssues.join('; '));
+        fd.append('otherDetails', (document.getElementById('neg-other-details')?.value || '').trim());
         fd.append('authorizationConsent', String(!!document.getElementById('neg-auth-consent')?.checked));
         fd.append('successFeeConsent', String(!!document.getElementById('neg-success-fee')?.checked));
         fd.append('upfrontFeeConsent', String(!!document.getElementById('neg-upfront-fee')?.checked));
@@ -229,6 +269,8 @@ console.log('MediHelp: negotiation.js loaded.');
             monthlyIncome: (document.getElementById('neg-income-range')?.value || '').trim(),
             hardshipChecked: String(!!document.getElementById('neg-hardship')?.checked),
             negotiationGoal: selectedGoal.value,
+            issues: Array.from(form.querySelectorAll('input[name="neg-issue"]:checked')).map((el) => el.value).join('; '),
+            otherDetails: (document.getElementById('neg-other-details')?.value || '').trim(),
             authorizationConsent: String(!!document.getElementById('neg-auth-consent')?.checked),
             successFeeConsent: String(!!document.getElementById('neg-success-fee')?.checked),
             upfrontFeeConsent: String(!!document.getElementById('neg-upfront-fee')?.checked),
@@ -242,7 +284,7 @@ console.log('MediHelp: negotiation.js loaded.');
           if (result) {
             result.style.color = fallback ? '#f59e0b' : '#ef4444';
             result.textContent = fallback
-              ? 'API unavailable. Opened email draft fallback. Please attach Bill/EOB and send.'
+              ? `Submission failed: ${err.message}. Opened email draft fallback — please attach Bill/EOB and send.`
               : `Submission failed: ${err.message}`;
           }
         }
@@ -308,6 +350,8 @@ console.log('MediHelp: negotiation.js loaded.');
         `Monthly Income: ${data.monthlyIncome}`,
         `Hardship Checked: ${data.hardshipChecked}`,
         `Negotiation Goal: ${data.negotiationGoal}`,
+        `Issues Noticed: ${data.issues || ''}`,
+        `Other Details: ${data.otherDetails || ''}`,
         `Authorization Consent: ${data.authorizationConsent}`,
         `15% Consent: ${data.successFeeConsent}`,
         `$15 Consent: ${data.upfrontFeeConsent}`,
